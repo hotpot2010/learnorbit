@@ -225,23 +225,180 @@ export function AIChatInterface({
     }
   };
 
-  const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+  // 发送消息的函数
+  const sendMessage = async (messageContent: string) => {
+    if (!messageContent.trim()) return;
 
+    setIsLoading(true);
+
+    // 创建用户消息
     const userMessage: Message = {
       id: Date.now().toString(),
-      content: input,
+      content: messageContent.trim(),
       role: 'user',
       timestamp: new Date()
     };
 
     setMessages(prev => [...prev, userMessage]);
     setInput('');
-    setIsLoading(true);
 
+    // 🔥 关键优化：带重试机制的API调用
+    const callAIWithRetry = async (retries = 3): Promise<Response> => {
+      for (let i = 0; i < retries; i++) {
+        try {
+          console.log(`📡 尝试调用AI API (第${i + 1}次)`);
+          
+          // 确定使用的API端点
+          const apiEndpoint = useStudyAPI ? '/api/chat/stream' : '/api/chat1/stream';
+          console.log('使用的API端点:', apiEndpoint);
+
+          // 构建请求数据
+          let requestData: any;
+          
+          if (!useStudyAPI && callbackUrl && sessionId) {
+            // 🔥 课程定制页面：传递回调信息
+            requestData = {
+              id: sessionId,
+              url: callbackUrl,
+              messages: [userMessage]
+            };
+            
+            console.log('\n📤 发送给课程定制API的完整数据:');
+            console.log('SessionId:', requestData.id);
+            console.log('回调URL:', requestData.url);
+            console.log('消息数量:', requestData.messages.length);
+            console.log('最后一条用户消息:', userMessage.content);
+          } else {
+            // 学习页面：发送所有消息历史
+            requestData = {
+              messages: [...messages, userMessage]
+            };
+            
+            console.log('\n📤 发送给学习API的数据:');
+            console.log('消息数量:', requestData.messages.length);
+          }
+
+          const response = await fetch(apiEndpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData),
+          });
+
+          console.log(`API响应状态: ${response.status}`);
+
+          if (response.ok) {
+            return response;
+          }
+          
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          
+        } catch (error) {
+          console.error(`第${i + 1}次尝试失败:`, error);
+          
+          if (i === retries - 1) {
+            // 最后一次重试失败
+            throw error;
+          }
+          
+          // 等待后重试（递增延迟）
+          const delay = 1000 * (i + 1);
+          console.log(`等待${delay}ms后重试...`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+        }
+      }
+      
+      throw new Error('所有重试都失败了');
+    };
+
+    try {
+      // 🔥 使用重试机制调用API
+      const response = await callAIWithRetry();
+
+      if (!response.body) {
+        throw new Error('响应体为空');
+      }
+
+      // 创建助手消息
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content: '',
+        role: 'assistant',
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, assistantMessage]);
+
+      // 处理流式响应
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let accumulatedContent = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        
+        if (done) {
+          console.log('流式响应完成，内容长度:', accumulatedContent.length);
+          break;
+        }
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.trim() && line.startsWith('data: ')) {
+            const dataStr = line.slice(6); // 移除 'data: ' 前缀
+            try {
+              const data = JSON.parse(dataStr);
+              
+              if (data.chunk) {
+                accumulatedContent += data.chunk;
+                // 更新助手消息内容
+                setMessages(prev => prev.map(msg => 
+                  msg.id === assistantMessage.id 
+                    ? { ...msg, content: accumulatedContent }
+                    : msg
+                ));
+              } else if (data.done) {
+                console.log('AI响应完成，最终内容长度:', accumulatedContent.length);
+                break;
+              } else if (data.error) {
+                console.error('AI响应错误:', data.error);
+                throw new Error(data.error);
+              }
+            } catch (e) {
+              // 静默处理解析错误
+            }
+          }
+        }
+      }
+
+    } catch (error) {
+      console.error('调用AI接口失败:', error);
+      
+      // 显示错误消息
+      const errorMessage: Message = {
+        id: (Date.now() + 2).toString(),
+        content: `抱歉，AI服务暂时不可用。错误信息: ${error instanceof Error ? error.message : '未知错误'}`,
+        role: 'assistant',
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSend = async () => {
+    if (!input.trim() || isLoading) return;
+
+    // 触发回调
     onMessageSent?.();
-
-    await callAPI(userMessage, messages);
+    
+    // 使用优化后的sendMessage函数
+    await sendMessage(input);
   };
 
   const scrollToBottom = () => {

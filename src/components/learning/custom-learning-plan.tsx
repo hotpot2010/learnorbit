@@ -44,7 +44,7 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
   const [showLearningPlan, setShowLearningPlan] = useState(false);
   const [learningInput, setLearningInput] = useState<string>('');
   const [learningPlan, setLearningPlan] = useState<LearningPlan | null>(null);
-  const [planUpdateStatus, setPlanUpdateStatus] = useState<'idle' | 'updating' | 'completed'>('idle');
+  const [planUpdateStatus, setPlanUpdateStatus] = useState<'idle' | 'updating' | 'completed' | 'error'>('idle');
   const [sessionId] = useState(() => {
     const id = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     console.log('🆔 生成SessionId:', id);
@@ -64,7 +64,7 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
         setPlanUpdateStatus('updating'); // 首页输入也设置为更新状态
       }
 
-      // 设置回调URL - 使用本机IP
+      // 设置回调URL - 使用本机IP并包含sessionId
       const getLocalIP = () => {
         // 优先使用环境变量配置的IP
         const envIP = process.env.NEXT_PUBLIC_LOCAL_IP;
@@ -86,13 +86,15 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
       const localIP = getLocalIP();
       const port = window.location.port || '3000';
       const protocol = window.location.protocol;
-      const callback = `${protocol}//${localIP}:${port}/api/plan/update`;
+      // 🔥 关键优化：在回调URL中包含sessionId
+      const callback = `${protocol}//${localIP}:${port}/api/plan/update?sessionId=${sessionId}`;
       
       setCallbackUrl(callback);
-      console.log('设置计划更新回调URL:', callback);
-      console.log('外部API可以通过此URL回调更新学习计划');
+      console.log('🔗 设置回调URL:', callback);
+      console.log('📋 SessionId:', sessionId);
+      console.log('💡 外部AI将通过此URL回调更新学习计划');
     }
-  }, []);
+  }, [sessionId]);
 
   // 监听计划更新
   useEffect(() => {
@@ -104,6 +106,13 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
     console.log('监听URL:', `/api/plan/update?sessionId=${sessionId}`);
     
     const eventSource = new EventSource(`/api/plan/update?sessionId=${sessionId}`);
+    
+    // 🔥 关键优化：设置超时定时器
+    const timeoutId = setTimeout(() => {
+      console.warn('⏰ 学习计划生成超时（5分钟）');
+      setPlanUpdateStatus('error');
+      eventSource.close();
+    }, 5 * 60 * 1000); // 5分钟超时
     
     eventSource.onopen = () => {
       console.log('✅ SSE连接已建立');
@@ -119,10 +128,13 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
         console.log('消息类型:', data.type);
         
         if (data.type === 'connected') {
-          console.log('🔗 SSE连接确认');
+          console.log('🔗 SSE连接确认，SessionId:', data.sessionId);
         } else if (data.type === 'plan_update' && data.plan) {
           console.log('📚 收到学习计划更新:');
           console.log('计划步骤数:', data.plan.plan?.length || 0);
+          
+          // 🔥 关键优化：清除超时定时器
+          clearTimeout(timeoutId);
           
           if (data.plan.plan) {
             data.plan.plan.forEach((step: any, index: number) => {
@@ -147,6 +159,12 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
           setTimeout(() => {
             setPlanUpdateStatus('idle');
           }, 3000);
+        } else if (data.type === 'error') {
+          // 🔥 新增：处理服务端错误
+          console.error('❌ 收到服务端错误:', data.message);
+          clearTimeout(timeoutId);
+          setPlanUpdateStatus('error');
+          eventSource.close();
         }
       } catch (error) {
         console.error('❌ 解析SSE消息失败:', error);
@@ -162,10 +180,19 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
         1: 'OPEN', 
         2: 'CLOSED'
       }[eventSource.readyState]);
+      
+      // 🔥 关键优化：错误时清理资源
+      clearTimeout(timeoutId);
+      
+      // 如果是连接错误，设置错误状态
+      if (eventSource.readyState === EventSource.CLOSED) {
+        setPlanUpdateStatus('error');
+      }
     };
 
     return () => {
-      console.log('🔌 关闭SSE连接');
+      console.log('🔌 关闭SSE连接和超时定时器');
+      clearTimeout(timeoutId);
       eventSource.close();
     };
   }, [sessionId, callbackUrl, showLearningPlan]);
@@ -331,6 +358,7 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
               <span className={`px-3 py-1 rounded-lg inline-block shadow-sm transition-all duration-500 ${
                 planUpdateStatus === 'updating' ? 'bg-orange-200 animate-pulse' :
                 planUpdateStatus === 'completed' ? 'bg-green-200' :
+                planUpdateStatus === 'error' ? 'bg-red-200' :
                 'bg-yellow-200'
               }`}>
                 {planUpdateStatus === 'updating' ? (
@@ -342,6 +370,11 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
                   <>
                     <span className="mr-2">✅</span>
                     Plan Updated!
+                  </>
+                ) : planUpdateStatus === 'error' ? (
+                  <>
+                    <span className="mr-2">❌</span>
+                    Generation Failed
                   </>
                 ) : (
                   <>
