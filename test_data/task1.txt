@@ -1,0 +1,50 @@
+{
+  "step_name": "步骤1: 了解基本概念",
+  "task_data": {
+    "type": "quiz",
+    "ppt_slide": {
+      "title": "强化学习基本概念和术语",
+      "content": [
+        "核心概念：强化学习是智能体通过与环境交互，不断尝试以最大化累积奖励的机器学习方法。",
+        "重要元素：包含智能体、环境、状态、动作和奖励。智能体在环境中感知状态并执行动作，环境给予奖励反馈。",
+        "策略含义：策略是智能体根据当前状态选择动作的规则，目标是获取最大长期奖励。",
+        "价值函数：用于评估在某个状态或状态 - 动作对下，智能体未来可能获得的累积奖励。"
+      ],
+      "video":"<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=114829389995999&bvid=BV11PG5zFEMP&cid=30962879724&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>"
+    },
+    "questions": [
+      {
+        "question": "强化学习中，智能体的主要目标是什么？",
+        "type": "choice",
+        "options": [
+          "尽可能多地探索环境",
+          "最大化累积奖励",
+          "准确预测环境状态"
+        ],
+        "answer": "最大化累积奖励"
+      },
+      {
+        "question": "以下哪个是强化学习中的重要元素？",
+        "type": "choice",
+        "options": [
+          "模型",
+          "智能体",
+          "算法"
+        ],
+        "answer": "智能体"
+      },
+      {
+        "question": "策略在强化学习中是指什么？",
+        "type": "choice",
+        "options": [
+          "智能体执行动作的顺序",
+          "智能体根据当前状态选择动作的规则",
+          "智能体评估奖励的方法"
+        ],
+        "answer": "智能体根据当前状态选择动作的规则"
+      }
+    ],
+    "task": {}
+  },
+  "created_at": 1752305881.0716808
+}

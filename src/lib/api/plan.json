@@ -1,0 +1,360 @@
+{
+    "plan": [
+        {
+            "step": 1,
+            "title": "机器学习与深度学习概述",
+            "description": "**学习目标：** 了解机器学习和深度学习的基本概念、应用场景及两者关系。**任务类型：** 概念理解",
+            "animation_type": "无",
+            "status": "当前进行",
+            "type": "quiz",
+            "difficulty": "beginner",
+            "videos": [
+                {
+                    "title": "什么是人工智能/机器学习/深度学习/神经网络?",
+                    "url": "http://www.bilibili.com/video/av80179024",
+                    "cover": "//i1.hdslb.com/bfs/archive/8dce432829ad775526d1fa9d4462c4699eda3050.jpg",
+                    "duration": "11:25"
+                },
+                {
+                    "title": "机器学习和深度学习中的学习到底是什么？小白能看懂的AI科普",
+                    "url": "http://www.bilibili.com/video/av902581324",
+                    "cover": "//i0.hdslb.com/bfs/archive/c892e5da8b8706002015648cccba4718d5103818.jpg",
+                    "duration": "12:14"
+                },
+                {
+                    "title": "超实用！悄悄告诉你，这个深度学习必备网站一定要收藏啊！——人工智能/神经网络/机器学习",
+                    "url": "http://www.bilibili.com/video/av114874503924813",
+                    "cover": "//i2.hdslb.com/bfs/archive/4f201bcf249dbb3b42b7951b84153ba33124be5b.jpg",
+                    "duration": "1:20"
+                },
+                {
+                    "title": "机器学习与深度学习的基本概念介绍（上）",
+                    "url": "http://www.bilibili.com/video/av673786351",
+                    "cover": "//i0.hdslb.com/bfs/archive/2d6f1ab5e2c23a2593f17fc55e81cfc25455ae6d.jpg",
+                    "duration": "15:35"
+                }
+            ]
+        },
+        {
+            "step": 2,
+            "title": "数据预处理基础",
+            "description": "**学习目标：** 掌握数据清洗、特征选择和归一化等基本数据预处理方法。**任务类型：** 编程实践",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "coding",
+            "difficulty": "beginner",
+            "videos": [
+                {
+                    "title": "【机器学习 数据预处理】数据预处理与数据转换、数据清洗、数据压缩（附：代码  课件）",
+                    "url": "http://www.bilibili.com/video/av112884776503933",
+                    "cover": "//i0.hdslb.com/bfs/archive/cbab3789c7fe26ae6866986d919a0733a3b7acc3.jpg",
+                    "duration": "44:54"
+                },
+                {
+                    "title": "[数模必看]数据预处理速成———二十分钟学会数据预处理",
+                    "url": "http://www.bilibili.com/video/av966272757",
+                    "cover": "//i1.hdslb.com/bfs/archive/53bbef1b922ad248baa232e180c16283b731a429.jpg",
+                    "duration": "22:41"
+                },
+                {
+                    "title": "【手把手教你用Python数据预处理】数据导入 | 数据查看 | 数据清洗 | 数据提取&amp;筛选 | 数据排序 | 数据汇总&amp;统计 | 数据标准化 | 数据存储",
+                    "url": "http://www.bilibili.com/video/av668728420",
+                    "cover": "//i0.hdslb.com/bfs/archive/24faf44dea76757360d49af2df2ab52d89f03828.jpg",
+                    "duration": "8:26"
+                },
+                {
+                    "title": "【数据预处理】数模国赛保姆级教程+真题实战（手把手教学） | 缺失值、异常值、特征筛选、降维",
+                    "url": "http://www.bilibili.com/video/av114766039227219",
+                    "cover": "//i0.hdslb.com/bfs/archive/2b2e89c5a0ae2c0149da2fba788134fd8d8df2c2.jpg",
+                    "duration": "208:33"
+                }
+            ]
+        },
+        {
+            "step": 3,
+            "title": "机器学习算法入门",
+            "description": "**学习目标：** 熟悉常见机器学习算法如线性回归、逻辑回归的原理。**任务类型：** 选择题练习",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "quiz",
+            "difficulty": "intermediate",
+            "videos": [
+                {
+                    "title": "2025新版【机器学习十大算法全集】17分钟让你看懂所有机器学习算法！一口学透回归算法、聚类算法、决策树、随机森林、神经网络、贝叶斯算法、支持向量机、神经网络等",
+                    "url": "http://www.bilibili.com/video/av114697823127212",
+                    "cover": "//i2.hdslb.com/bfs/archive/e1252a33ed531dfba1c5eb92ec0dbe85392f48b4.jpg",
+                    "duration": "934:20"
+                },
+                {
+                    "title": "强推！这绝对是2025年机器学习入门天花板教程！清华大佬36集精讲，绝对通俗易懂！（人工智能/算法）",
+                    "url": "http://www.bilibili.com/video/av114176504634673",
+                    "cover": "//i2.hdslb.com/bfs/archive/88fbf72d0f198570711438a6ad1c156467b9a65d.jpg",
+                    "duration": "634:36"
+                },
+                {
+                    "title": "强推！这绝对是B站最好的神经网络算法教程，从入门到实战，全程干货讲解，零基础也能轻松学会的深度学习算法！-神经网络/GAN/人工智能/CNN/机器学习",
+                    "url": "http://www.bilibili.com/video/av114901548795976",
+                    "cover": "//i0.hdslb.com/bfs/archive/f8eb2ca79a8a4e8bff48ff57873e8e9339f65cb6.jpg",
+                    "duration": "1086:49"
+                },
+                {
+                    "title": "这也太全了！回归算法、聚类算法、决策树、随机森林、神经网络、贝叶斯算法、支持向量机等十大机器学习算法一口气学完！",
+                    "url": "http://www.bilibili.com/video/av605834693",
+                    "cover": "//i2.hdslb.com/bfs/archive/dd7da22061258e6be5a3ce96dc2d5ff294de94fe.png",
+                    "duration": "1790:56"
+                }
+            ]
+        },
+        {
+            "step": 4,
+            "title": "深度学习网络结构",
+            "description": "**学习目标：** 了解神经网络、卷积神经网络和循环神经网络的基本结构。**任务类型：** 概念理解",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "quiz",
+            "difficulty": "intermediate",
+            "videos": [
+                {
+                    "title": "深度学习基本框架是什么？零基础研0对深度学习神经网络的理解",
+                    "url": "http://www.bilibili.com/video/av471575029",
+                    "cover": "//i1.hdslb.com/bfs/archive/0fd9c986363dd2b593e40ad9fde9ca48369a0399.jpg",
+                    "duration": "20:18"
+                },
+                {
+                    "title": "【官方双语】深度学习之神经网络的结构 Part 1 ver 2.0",
+                    "url": "http://www.bilibili.com/video/av15532370",
+                    "cover": "//i1.hdslb.com/bfs/archive/3fddf427ddef5a78105deb60180727a7ad47c4d8.jpg",
+                    "duration": "19:13"
+                },
+                {
+                    "title": "【Visio制图】深度学习网络模块结构图1.0",
+                    "url": "http://www.bilibili.com/video/av653896820",
+                    "cover": "//i1.hdslb.com/bfs/archive/ef8ac7213742b4ebb06d594d62342073cf108640.jpg",
+                    "duration": "38:44"
+                },
+                {
+                    "title": "5分钟看懂什么是深度学习",
+                    "url": "http://www.bilibili.com/video/av692257624",
+                    "cover": "//i0.hdslb.com/bfs/archive/5378d6aaed1ae3137ce7d8a42e55c0dafd7d6833.jpg",
+                    "duration": "5:16"
+                }
+            ]
+        },
+        {
+            "step": 5,
+            "title": "损失函数与优化算法",
+            "description": "**学习目标：** 掌握常见损失函数和优化算法的原理及应用。**任务类型：** 编程实践",
+            "animation_type": "表格",
+            "status": "待完成",
+            "type": "coding",
+            "difficulty": "intermediate",
+            "videos": [
+                {
+                    "title": "“损失函数”是如何设计出来的？直观理解“最小二乘法”和“极大似然估计法”",
+                    "url": "http://www.bilibili.com/video/av758940884",
+                    "cover": "//i2.hdslb.com/bfs/archive/871307e88c1190ab9ec3653599ce6846a8afc62e.jpg",
+                    "duration": "22:7"
+                },
+                {
+                    "title": "3.9 损失函数",
+                    "url": "http://www.bilibili.com/video/av857766098",
+                    "cover": "//i0.hdslb.com/bfs/archive/3ddc99cbcfa1d85daf63f388a1733a5031607707.jpg",
+                    "duration": "4:14"
+                },
+                {
+                    "title": "【官方双语】零基础梯度下降法，手把手教你优化损失函数！",
+                    "url": "http://www.bilibili.com/video/av1851537405",
+                    "cover": "//i0.hdslb.com/bfs/archive/674dabb74dcf39eb2d82a5408c9b26a226b679d4.jpg",
+                    "duration": "23:54"
+                },
+                {
+                    "title": "【数之道 32】6分钟理解机器学习核心知识之&lt;损失函数&gt;",
+                    "url": "http://www.bilibili.com/video/av513994584",
+                    "cover": "//i0.hdslb.com/bfs/archive/d601d5e64741acac80cf9b120af08f53125de7ae.jpg",
+                    "duration": "6:3"
+                }
+            ]
+        },
+        {
+            "step": 6,
+            "title": "使用框架搭建模型",
+            "description": "**学习目标：** 学会使用TensorFlow或PyTorch搭建简单的深度学习模型。**任务类型：** 编程实践",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "coding",
+            "difficulty": "advanced",
+            "videos": [
+                {
+                    "title": "30分钟搞懂tensorflow深度学习框架，零基础教学，从环境配置到模型搭建、训练、推理、可视化",
+                    "url": "http://www.bilibili.com/video/av112938245425774",
+                    "cover": "//i0.hdslb.com/bfs/archive/049833636156034526b65f03a2eec2320fcfdb9d.jpg",
+                    "duration": "29:34"
+                },
+                {
+                    "title": "尚硅谷Android视频教程《软件框架搭建》",
+                    "url": "http://www.bilibili.com/video/av22625500",
+                    "cover": "//i1.hdslb.com/bfs/archive/4b6fabe49e7ab24737abe4a3764b12bf1a4e794c.png",
+                    "duration": "96:20"
+                },
+                {
+                    "title": "【B站最强编程详解】20分钟通俗讲解编程的基本框架，最形象的比喻，一看全懂了！",
+                    "url": "http://www.bilibili.com/video/av895235343",
+                    "cover": "//i1.hdslb.com/bfs/archive/f48beb88b4925160d4df7e038a5081ca9be4c26a.jpg",
+                    "duration": "20:37"
+                },
+                {
+                    "title": "公共管理最实用的的模型详解+框架搭建思路：史密斯政策模型、CIPP模型、胜任力模型、PDCA循环、SFIC模型、新公共服务理论；看完就会用模型",
+                    "url": "http://www.bilibili.com/video/av114824138725323",
+                    "cover": "//i2.hdslb.com/bfs/archive/d3357be66ea5751f40501364330644e6d48f2e1d.jpg",
+                    "duration": "16:28"
+                }
+            ]
+        },
+        {
+            "step": 7,
+            "title": "模型评估与调优",
+            "description": "**学习目标：** 掌握模型评估指标和调优方法，提升模型性能。**任务类型：** 综合应用",
+            "animation_type": "表格",
+            "status": "待完成",
+            "type": "quiz",
+            "difficulty": "advanced",
+            "videos": [
+                {
+                    "title": "模型评估与优化指标详解——准确率、召回率、BLEU与ROUGE",
+                    "url": "http://www.bilibili.com/video/av114427877662397",
+                    "cover": "//i2.hdslb.com/bfs/archive/e73681fcb5cc03f7683a91a1e5ec3c7e49a97ae0.jpg",
+                    "duration": "13:51"
+                },
+                {
+                    "title": "机器学习-第二章：模型评估与选择（一）",
+                    "url": "http://www.bilibili.com/video/av958119671",
+                    "cover": "//i2.hdslb.com/bfs/archive/5cd2b902b2b10aa79e7f86ee3f99233d0fb6d277.jpg",
+                    "duration": "17:16"
+                },
+                {
+                    "title": "模型评估与选择",
+                    "url": "http://www.bilibili.com/video/av558945659",
+                    "cover": "//i2.hdslb.com/bfs/archive/e58fc04e7a0553c1a8b28cb42186a22fab08cd7e.jpg",
+                    "duration": "82:10"
+                },
+                {
+                    "title": "15、回归模型的指标评估与机器学习的调参",
+                    "url": "http://www.bilibili.com/video/av87405284",
+                    "cover": "//i0.hdslb.com/bfs/archive/5d397c64ff13dfb335bc63e41c3bffef293fda9a.jpg",
+                    "duration": "21:13"
+                }
+            ]
+        },
+        {
+            "step": 8,
+            "title": "强化学习基础",
+            "description": "**学习目标：** 了解强化学习的基本概念、算法和应用场景。**任务类型：** 选择题练习",
+            "animation_type": "迷宫",
+            "status": "待完成",
+            "type": "quiz",
+            "difficulty": "advanced",
+            "videos": [
+                {
+                    "title": "【强化学习的数学原理】课程：从零开始到透彻理解（完结）",
+                    "url": "http://www.bilibili.com/video/av388100433",
+                    "cover": "//i0.hdslb.com/bfs/archive/ee1d0291f5f9892d5a5dac5c729b32d79cc4697b.jpg",
+                    "duration": "669:22"
+                },
+                {
+                    "title": "强化学习基础 （本科生课程） 北京邮电大学 鲁鹏",
+                    "url": "http://www.bilibili.com/video/av645344946",
+                    "cover": "//i2.hdslb.com/bfs/archive/510991256abce6441740b46ffb5288d2809a44c3.jpg",
+                    "duration": "93:0"
+                },
+                {
+                    "title": "张志华+王树森联合出品，2025版深度强化学习零基础入门视频全套课程（88集），PPO算法/DQN算法/A3C 保姆级教程（学完即可就业）",
+                    "url": "http://www.bilibili.com/video/av114141759015205",
+                    "cover": "//i2.hdslb.com/bfs/archive/a0406c24546d02e735f2fa99cfb503c58e0afc5b.jpg",
+                    "duration": "1209:30"
+                },
+                {
+                    "title": "【普林斯顿-强化学习公开课】强化学习基础 ECE524（Foundations of Reinforcement Learning",
+                    "url": "http://www.bilibili.com/video/av114903528510388",
+                    "cover": "//i1.hdslb.com/bfs/archive/89622eaa9b708daf71a2a64c82f8c42d44ca1984.jpg",
+                    "duration": "1708:6"
+                }
+            ]
+        },
+        {
+            "step": 9,
+            "title": "项目实战：图像分类",
+            "description": "**学习目标：** 运用所学知识完成一个图像分类的深度学习项目。**任务类型：** 综合应用",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "coding",
+            "difficulty": "advanced",
+            "videos": [
+                {
+                    "title": "【强推】研一、研二必学！基于Pytorch框架的花卉图像识别模型实战，原理详解+项目实战，看完就能跑通，毕设有救了！",
+                    "url": "http://www.bilibili.com/video/av1705602723",
+                    "cover": "//i2.hdslb.com/bfs/archive/f1a30cdf07383ce32c90819d1f5c475a1ec87618.jpg",
+                    "duration": "131:23"
+                },
+                {
+                    "title": "【逐行手敲Vit】基于Pytorch从零搭建完整Vit模型，图像分类项目实战",
+                    "url": "http://www.bilibili.com/video/av114895995603597",
+                    "cover": "//i1.hdslb.com/bfs/archive/34ca1b9c6941fed238a7fca3e5dd591d10d5bd9c.jpg",
+                    "duration": "76:36"
+                },
+                {
+                    "title": "2025最好的项目：基于Resnet模型实现医学细胞图像分类，原理详解＋项目实战，通俗易懂！",
+                    "url": "http://www.bilibili.com/video/av114681163357748",
+                    "cover": "//i0.hdslb.com/bfs/archive/b6ebd03135564f33a76fc26937082b8beedda4e8.png",
+                    "duration": "71:39"
+                },
+                {
+                    "title": "爆肝整理！Github最热门的8个计算机视觉实战项目！快速入门OpenCV项目实战！人脸识别/目标检测/数字识别/疲劳检测/图像处理",
+                    "url": "http://www.bilibili.com/video/av861153764",
+                    "cover": "//i0.hdslb.com/bfs/archive/07138f8ca1793e1811d417ffba445e1a63fe3454.png",
+                    "duration": "833:23"
+                }
+            ]
+        },
+        {
+            "step": 10,
+            "title": "总结与拓展",
+            "description": "**学习目标：** 总结所学内容，了解机器学习和深度学习的前沿发展。**任务类型：** 概念理解",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "quiz",
+            "difficulty": "intermediate",
+            "videos": [
+                {
+                    "title": "直线题型总结与拓展",
+                    "url": "http://www.bilibili.com/video/av114883597175344",
+                    "cover": "//i2.hdslb.com/bfs/archive/aa1356e82b277230412848489116dcd51b9ccaba.jpg",
+                    "duration": "149:29"
+                },
+                {
+                    "title": "07.复数方法总结与题型拓展",
+                    "url": "http://www.bilibili.com/video/av114209689964354",
+                    "cover": "//i2.hdslb.com/bfs/archive/6df94ad8cfee43efdc3b7622c80a75a308762754.jpg",
+                    "duration": "128:19"
+                },
+                {
+                    "title": "07.复数方法总结与题型拓展",
+                    "url": "http://www.bilibili.com/video/av114328959193929",
+                    "cover": "//i0.hdslb.com/bfs/archive/832ea061a6f0f813618d132c0ce4524d72da5f20.jpg",
+                    "duration": "132:10"
+                },
+                {
+                    "title": "5-11 总结与思路拓展",
+                    "url": "http://www.bilibili.com/video/av1806424681",
+                    "cover": "//i0.hdslb.com/bfs/archive/ac0ad071efe1670296279197985827bf28bf8d01.jpg",
+                    "duration": "3:19"
+                },
+                {
+                    "title": "第07讲 直线题型总结与拓展（1）",
+                    "url": "http://www.bilibili.com/video/av114392511287934",
+                    "cover": "//i1.hdslb.com/bfs/archive/1ef135f68f16d1cb3f59aaa7ebd13c86cc9a60eb.jpg",
+                    "duration": "50:4"
+                }
+            ]
+        }
+    ]
+}

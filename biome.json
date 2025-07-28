@@ -1,0 +1,95 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "ignore": [
+      ".next/**",
+      ".cursor/**",
+      ".vscode/**",
+      ".content-collections/**",
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      "drizzle/**",
+      "tailwind.config.ts",
+      "src/components/ui/*.tsx",
+      "src/components/magicui/*.tsx",
+      "src/components/tailark/*.tsx",
+      "src/app/[[]locale]/preview/**",
+      "src/db/schema.ts",
+      "src/payment/types.ts",
+      "src/types/index.d.ts",
+      "public/sw.js"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80,
+    "formatWithErrors": true
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noSparseArray": "off",
+        "noArrayIndexKey": "off",
+        "noExplicitAny": "off",
+        "noShadowRestrictedNames": "off"
+      },
+      "complexity": {
+        "noForEach": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off"
+      },
+      "style": {
+        "useTemplate": "off",
+        "noNonNullAssertion": "off",
+        "useShorthandArrayType": "off",
+        "useNodejsImportProtocol": "off"
+      },
+      "a11y": {
+        "useValidAnchor": "off",
+        "noSvgWithoutTitle": "off",
+        "useKeyWithClickEvents": "off"
+      }
+    },
+    "ignore": [
+      ".next/**",
+      ".cursor/**",
+      ".vscode/**",
+      ".content-collections/**",
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      "drizzle/**",
+      "tailwind.config.ts",
+      "src/components/ui/*.tsx",
+      "src/components/magicui/*.tsx",
+      "src/components/tailark/*.tsx",
+      "src/app/[[]locale]/preview/**",
+      "src/db/schema.ts",
+      "src/payment/types.ts",
+      "src/types/index.d.ts",
+      "public/sw.js"
+    ]
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "trailingCommas": "es5",
+      "semicolons": "always"
+    }
+  }
+}
