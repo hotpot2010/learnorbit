@@ -5,28 +5,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // const userCourseRepo = new UserCourseRepository();
 
-// 获取用户所有课程 - 暂时返回空数据
-export async function GET(request: NextRequest) {
-  try {
-    // TODO: 重新启用用户验证和数据库查询
-    // const session = await authClient.getSession();
-    // if (!session?.data?.user) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    // }
-
-    // const userId = session.data.user.id;
-    // const courses = await userCourseRepo.getUserCourses(userId);
-    
-    return NextResponse.json({ courses: [] });
-  } catch (error) {
-    console.error('Error fetching user courses:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch courses' }, 
-      { status: 500 }
-    );
-  }
-}
-
 // 创建新课程 - 暂时返回模拟数据
 export async function POST(request: NextRequest) {
   try {
@@ -54,4 +32,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-} 
+}

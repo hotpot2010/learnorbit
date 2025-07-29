@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Bot, Send, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
 
 interface Message {
   id: string;
@@ -25,6 +25,7 @@ interface AIChatInterfaceProps {
   skipDefaultWelcome?: boolean; // 是否跳过默认欢迎语
   callbackUrl?: string; // 计划更新回调URL
   sessionId?: string; // 会话ID
+  externalMessage?: string; // 外部发送的消息
 }
 
 export function AIChatInterface({ 
@@ -37,7 +38,8 @@ export function AIChatInterface({
   userInputFromHome,
   skipDefaultWelcome = false,
   callbackUrl,
-  sessionId
+  sessionId,
+  externalMessage
 }: AIChatInterfaceProps) {
   const t = useTranslations('LearningPlatform');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -93,6 +95,27 @@ export function AIChatInterface({
       callAPI(userMessage, messages);
     }
   }, [userInputFromHome, messages]);
+
+  // 处理外部发送的消息
+  useEffect(() => {
+    if (externalMessage && !messages.some(msg => msg.content === externalMessage && msg.role === 'user')) {
+      console.log('处理外部发送的消息:', externalMessage);
+      
+      // 添加用户消息
+      const userMessage: Message = {
+        id: Date.now().toString(),
+        content: externalMessage,
+        role: 'user',
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, userMessage]);
+      setIsLoading(true);
+      
+      // 自动调用API
+      callAPI(userMessage, messages);
+    }
+  }, [externalMessage, messages]);
 
   const callAPI = async (userMessage: Message, currentMessages: Message[]) => {
     try {

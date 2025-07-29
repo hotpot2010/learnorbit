@@ -38,13 +38,15 @@ interface CustomLearningPlanProps {
     estimatedTime: string;
     difficulty: 'beginner' | 'intermediate' | 'advanced';
   }>;
+  onSendMessage?: (message: string) => void; // 新增：发送消息的回调
 }
 
-export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanProps) {
+export function CustomLearningPlan({ recommendedCourses, onSendMessage }: CustomLearningPlanProps) {
   const [showLearningPlan, setShowLearningPlan] = useState(false);
   const [learningInput, setLearningInput] = useState<string>('');
   const [learningPlan, setLearningPlan] = useState<LearningPlan | null>(null);
   const [planUpdateStatus, setPlanUpdateStatus] = useState<'idle' | 'updating' | 'completed' | 'error'>('idle');
+  const [externalMessage, setExternalMessage] = useState<string>(''); // 新增：外部消息状态
   const [sessionId] = useState(() => {
     const id = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     console.log('🆔 生成SessionId:', id);
@@ -202,6 +204,14 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
     setPlanUpdateStatus('updating');
   };
 
+  // 处理推荐课程点击
+  const handleRecommendedCourseClick = (course: any) => {
+    const message = `我要学习${course.title}`;
+    setExternalMessage(message);
+    // 清除之前的消息，确保每次点击都能触发
+    setTimeout(() => setExternalMessage(''), 100);
+  };
+
   // 计算步骤时长
   const calculateTotalDuration = (videos: any[]) => {
     if (!videos || videos.length === 0) return '估算中...';
@@ -343,6 +353,7 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
             initialMessage="我来帮你定制课程"
             callbackUrl={callbackUrl}
             sessionId={sessionId}
+            externalMessage={externalMessage}
           />
         </div>
       </div>
@@ -494,14 +505,14 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
                     </span>
                   </div>
                   
-                  <Link href={`/study/${course.id}`}>
-                    <button className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-xs transform hover:rotate-1 shadow-md"
-                            style={{
-                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                            }}>
-                      Start Learning 🚀
-                    </button>
-                  </Link>
+                  <button 
+                    onClick={() => handleRecommendedCourseClick(course)}
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-xs transform hover:rotate-1 shadow-md"
+                    style={{
+                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    }}>
+                    Start Learning 🚀
+                  </button>
                 </div>
                 
                 {/* 图钉装饰 */}
@@ -515,4 +526,4 @@ export function CustomLearningPlan({ recommendedCourses }: CustomLearningPlanPro
       </div>
     </div>
   );
-} 
+}

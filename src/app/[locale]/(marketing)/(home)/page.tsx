@@ -1,6 +1,6 @@
 import Container from "@/components/layout/container";
 import { CourseInputSection } from "@/components/learning/course-input-section";
-import { CourseRecommendationGrid } from "@/components/learning/course-recommendation-grid";
+import { CourseRecommendationWithNavigation } from "@/components/learning/course-recommendation-with-navigation";
 import { constructMetadata } from '@/lib/metadata';
 import { getUrlWithLocale } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
@@ -84,7 +84,7 @@ export default async function HomePage(props: HomePageProps) {
         {/* 课程推荐区域 */}
         <section className="relative py-8 md:py-12">
           <Container>
-            <CourseRecommendationGrid />
+            <CourseRecommendationWithNavigation />
           </Container>
         </section>
       </div>

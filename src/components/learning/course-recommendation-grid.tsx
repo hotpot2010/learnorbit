@@ -2,6 +2,7 @@
 
 import { CourseCard } from './course-card';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
 interface Course {
   id: string;
@@ -16,6 +17,7 @@ interface CourseRecommendationGridProps {
   courses?: Course[];
   showProgress?: boolean;
   className?: string;
+  onCourseClick?: (course: Course) => void; // 新增：点击课程时的回调
 }
 
 // 默认推荐课程数据
@@ -89,9 +91,19 @@ const defaultCourses: Course[] = [
 export function CourseRecommendationGrid({ 
   courses = defaultCourses, 
   showProgress = false,
-  className = '' 
+  className = '',
+  onCourseClick 
 }: CourseRecommendationGridProps) {
   const t = useTranslations('LearningPlatform');
+  const router = useRouter();
+
+  const handleCourseClick = (course: Course) => {
+    if (onCourseClick) {
+      onCourseClick(course);
+    } else {
+      router.push(`/learning/course/${course.id}`);
+    }
+  };
 
   return (
     <div className={`${className} -mt-4`}>
@@ -103,6 +115,7 @@ export function CourseRecommendationGrid({
             <div
               key={`first-${course.id}`}
               className="w-64 flex-shrink-0 group cursor-pointer transform hover:rotate-1 hover:scale-105 transition-all duration-300 relative"
+              onClick={() => handleCourseClick(course)}
             >
               {/* 照片外框 - 白色边框模拟相片但不显示图片 */}
               <div className="bg-white p-4 rounded-lg shadow-lg transform rotate-2 group-hover:rotate-0 transition-all duration-300">
@@ -164,6 +177,7 @@ export function CourseRecommendationGrid({
             <div
               key={`second-${course.id}`}
               className="w-64 flex-shrink-0 group cursor-pointer transform hover:rotate-1 hover:scale-105 transition-all duration-300 relative"
+              onClick={() => handleCourseClick(course)}
             >
               {/* 照片外框 - 白色边框模拟相片但不显示图片 */}
               <div className="bg-white p-4 rounded-lg shadow-lg transform rotate-2 group-hover:rotate-0 transition-all duration-300">
@@ -227,4 +241,4 @@ export function CourseRecommendationGrid({
       </div>
     </div>
   );
-} 
+}

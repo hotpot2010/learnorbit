@@ -75,7 +75,7 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   // 并行生成所有步骤的任务
   const generateAllTasks = async (plan: LearningPlan) => {
-    console.log('\n=== 🚀 开始并行生成所有任务 ===');
+    console.log('\n=== 🚀 开始顺序触发并行任务生成 ===');
     console.log('总步骤数:', plan.plan.length);
     
     // 初始化状态
@@ -85,87 +85,77 @@ export default function StudyPage({ params }: StudyPageProps) {
     });
     setTaskGenerationStatus(initialStatus);
     
-    // 并行发起所有请求
-    const promises = plan.plan.map(async (step) => {
-      console.log(`📤 开始生成步骤 ${step.step}: ${step.title}`);
+    // 使用带延时的循环来按顺序触发，但请求本身是并行执行的
+    for (const step of plan.plan) {
+      console.log(`📤 触发步骤 ${step.step} 的任务生成: ${step.title}`);
       
-      try {
-        const requestData: TaskGenerateRequest = {
-          step: step.step,
-          title: step.title,
-          description: step.description,
-          animation_type: step.animation_type,
-          status: step.status,
-          type: step.type,
-          difficulty: step.difficulty,
-          videos: step.videos
-        };
+      // 立即执行异步任务，不等待它完成
+      (async () => {
+        try {
+          const requestData: TaskGenerateRequest = {
+            step: step.step,
+            title: step.title,
+            description: step.description,
+            animation_type: step.animation_type,
+            status: step.status,
+            type: step.type,
+            difficulty: step.difficulty,
+            videos: step.videos
+          };
 
-        const response = await fetch('/api/task/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(requestData)
-        });
+          const response = await fetch('/api/task/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestData)
+          });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
 
-        const result: TaskGenerateResponse = await response.json();
-        
-        if (result.success) {
-          console.log(`✅ 步骤 ${step.step} 生成成功`);
+          const result: TaskGenerateResponse = await response.json();
           
-          // 更新缓存
-          setTaskCache(prev => ({
-            ...prev,
-            [step.step]: result.task
-          }));
+          if (result.success) {
+            console.log(`✅ 步骤 ${step.step} 生成成功`);
+            
+            // 更新缓存
+            setTaskCache(prev => ({
+              ...prev,
+              [step.step]: result.task
+            }));
+            
+            // 更新状态
+            setTaskGenerationStatus(prev => ({
+              ...prev,
+              [step.step]: 'completed'
+            }));
+            
+            console.log(`💾 步骤 ${step.step} 已缓存:`, {
+              type: result.task.type,
+              title: result.task.ppt_slide?.title,
+              hasQuestions: !!result.task.questions,
+              hasTask: !!result.task.task
+            });
+            
+          } else {
+            throw new Error('Task generation failed');
+          }
+        } catch (error) {
+          console.error(`❌ 步骤 ${step.step} 生成失败:`, error);
           
-          // 更新状态
+          // 更新失败状态
           setTaskGenerationStatus(prev => ({
             ...prev,
-            [step.step]: 'completed'
+            [step.step]: 'failed'
           }));
-          
-          console.log(`💾 步骤 ${step.step} 已缓存:`, {
-            type: result.task.type,
-            title: result.task.ppt_slide?.title,
-            hasQuestions: !!result.task.questions,
-            hasTask: !!result.task.task
-          });
-          
-          return { step: step.step, task: result.task, success: true };
-        } else {
-          throw new Error('Task generation failed');
         }
-      } catch (error) {
-        console.error(`❌ 步骤 ${step.step} 生成失败:`, error);
-        
-        // 更新失败状态
-        setTaskGenerationStatus(prev => ({
-          ...prev,
-          [step.step]: 'failed'
-        }));
-        
-        return { step: step.step, error, success: false };
-      }
-    });
-
-    // 等待所有请求完成
-    const results = await Promise.allSettled(promises);
+      })();
+      
+      // 等待2秒再触发下一个
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
     
-    console.log('🏁 所有任务生成完成');
-    results.forEach((result, index) => {
-      if (result.status === 'fulfilled') {
-        const stepResult = result.value;
-        console.log(`步骤 ${stepResult.step}: ${stepResult.success ? '成功' : '失败'}`);
-      } else {
-        console.error(`步骤 ${index + 1} Promise rejected:`, result.reason);
-      }
-    });
-    
-    console.log('=== 并行生成完成 ===\n');
+    console.log('�� 所有任务生成请求已按顺序触发 ===\n');
   };
 
   // 获取当前步骤的任务（从缓存）
