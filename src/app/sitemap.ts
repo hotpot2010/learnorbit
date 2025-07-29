@@ -60,62 +60,63 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     )
   );
 
+  // TODO: 重新启用当blog和category数据源配置完成后
   // add paginated blog list pages
-  routing.locales.forEach((locale) => {
-    const posts = blogSource
-      .getPages(locale)
-      .filter((post) => post.data.published);
-    const totalPages = Math.max(
-      1,
-      Math.ceil(posts.length / websiteConfig.blog.paginationSize)
-    );
-    // /blog/page/[page] (from 2)
-    for (let page = 2; page <= totalPages; page++) {
-      sitemapList.push({
-        url: getUrl(`/blog/page/${page}`, locale),
-        lastModified: new Date(),
-        priority: 0.8,
-        changeFrequency: 'weekly' as const,
-      });
-    }
-  });
+  // routing.locales.forEach((locale) => {
+  //   try {
+  //     const posts = blogSource
+  //       .getPages(locale)
+  //       .filter((post) => post.data?.published === true);
+  //     const totalPages = Math.max(
+  //       1,
+  //       Math.ceil(posts.length / websiteConfig.blog.paginationSize)
+  //     );
+  //     // /blog/page/[page] (from 2)
+  //     for (let page = 2; page <= totalPages; page++) {
+  //       sitemapList.push({
+  //         url: getUrl(`/blog/page/${page}`, locale),
+  //         lastModified: new Date(),
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.warn('Blog source not available, skipping blog sitemap entries');
+  //   }
+  // });
 
+  // TODO: 重新启用当category数据源配置完成后
   // add paginated category pages
-  routing.locales.forEach((locale) => {
-    const localeCategories = categorySource.getPages(locale);
-    localeCategories.forEach((category) => {
-      // posts in this category and locale
-      const postsInCategory = blogSource
-        .getPages(locale)
-        .filter((post) => post.data.published)
-        .filter((post) =>
-          post.data.categories.some((cat) => cat === category.slugs[0])
-        );
-      const totalPages = Math.max(
-        1,
-        Math.ceil(postsInCategory.length / websiteConfig.blog.paginationSize)
-      );
-      // /blog/category/[slug] (first page)
-      sitemapList.push({
-        url: getUrl(`/blog/category/${category.slugs[0]}`, locale),
-        lastModified: new Date(),
-        priority: 0.8,
-        changeFrequency: 'weekly' as const,
-      });
-      // /blog/category/[slug]/page/[page] (from 2)
-      for (let page = 2; page <= totalPages; page++) {
-        sitemapList.push({
-          url: getUrl(
-            `/blog/category/${category.slugs[0]}/page/${page}`,
-            locale
-          ),
-          lastModified: new Date(),
-          priority: 0.8,
-          changeFrequency: 'weekly' as const,
-        });
-      }
-    });
-  });
+  // routing.locales.forEach((locale) => {
+  //   try {
+  //     const localeCategories = categorySource.getPages(locale);
+  //     localeCategories.forEach((category) => {
+  //       // posts in this category and locale
+  //       const postsInCategory = blogSource
+  //         .getPages(locale)
+  //         .filter((post) => post.data?.published === true)
+  //         .filter((post) =>
+  //           post.data?.categories?.some((cat: any) => cat === category.slugs[0])
+  //         );
+  //       const totalPages = Math.max(
+  //         1,
+  //         Math.ceil(postsInCategory.length / websiteConfig.blog.paginationSize)
+  //       );
+  //       // /blog/category/[slug] (first page)
+  //       sitemapList.push({
+  //         url: getUrl(`/blog/category/${category.slugs[0]}`, locale),
+  //         lastModified: new Date(),
+  //       });
+  //       // /blog/category/[slug]/page/[page] (from 2)
+  //       for (let page = 2; page <= totalPages; page++) {
+  //         sitemapList.push({
+  //           url: getUrl(`/blog/category/${category.slugs[0]}/page/${page}`, locale),
+  //           lastModified: new Date(),
+  //         });
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.warn('Category source not available, skipping category sitemap entries');
+  //   }
+  // });
 
   // add posts (single post pages)
   sitemapList.push(

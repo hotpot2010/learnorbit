@@ -3,7 +3,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* 
+/*
  * 1. Themes Documentation
  * https://mksaas.com/docs/themes
 
@@ -14,7 +14,7 @@
  *
  * default theme: Clean Slate
  * https://tweakcn.com/editor/theme
- * 
+ *
  * NOTICE: when you change the theme, you need to check the fonts and keep the animation variables
  *
  * 3. How to Add a Theme Selector to Your Next.js App
@@ -394,124 +394,20 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
-/* 浮动循环动画 */
-@keyframes float-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+/* Fix for Fumadocs empty banner appearing in Cloudflare Worker */
+/* This targets the specific banner issue where empty:hidden doesn't work properly */
+div[class*="border-t"][class*="bg-fd-secondary"]:not(:has(*)):not(
+    [data-content]
+  ) {
+  display: none !important;
 }
 
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+/* Fallback for banners with the exact classes found in the issue */
+.border-t.bg-fd-secondary\/50.p-3:empty {
+  display: none !important;
 }
 
-@keyframes scroll-right {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.animate-float-scroll {
-  animation: float-scroll 60s linear infinite;
-}
-
-.animate-scroll-left {
-  animation: scroll-left 40s linear infinite;
-}
-
-.animate-scroll-right {
-  animation: scroll-right 40s linear infinite;
-}
-
-.animate-float-scroll:hover,
-.animate-scroll-left:hover,
-.animate-scroll-right:hover {
-  animation-play-state: paused;
-}
-
-.line-clamp-1 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-}
-
-.line-clamp-2 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.line-clamp-3 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-}
-
-/* 粉笔笔刷样式 */
-.chalk-brush-green {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 30'%3E%3Cpath d='M2,15 Q8,5 20,12 Q35,20 50,8 Q65,25 80,10 Q95,18 110,12 Q125,22 140,8 Q155,20 170,15 Q185,25 200,10 Q215,6 230,18 Q245,24 260,12 Q275,8 290,20 Q298,15 300,18' fill='%2334d399' opacity='0.8'/%3E%3C/svg%3E");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  padding: 6px 12px;
-  border-radius: 6px;
-  margin: 2px 0;
-}
-
-.chalk-brush-blue {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 30'%3E%3Cpath d='M2,18 Q12,6 25,15 Q40,24 55,10 Q70,5 85,20 Q100,16 115,8 Q130,25 145,12 Q160,6 175,18 Q190,22 205,14 Q220,8 235,20 Q250,26 265,12 Q280,18 295,15 Q298,12 300,16' fill='%2360a5fa' opacity='0.8'/%3E%3C/svg%3E");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  padding: 6px 12px;
-  border-radius: 6px;
-  margin: 2px 0;
-}
-
-.chalk-brush-gray {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 30'%3E%3Cpath d='M2,12 Q15,22 30,16 Q45,6 60,18 Q75,24 90,10 Q105,8 120,20 Q135,16 150,18 Q165,26 180,8 Q195,14 210,20 Q225,12 240,16 Q255,24 270,18 Q285,8 298,12' fill='%239ca3af' opacity='0.7'/%3E%3C/svg%3E");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  padding: 6px 12px;
-  border-radius: 6px;
-  margin: 2px 0;
-}
-
-.chalk-brush-yellow {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 30'%3E%3Cpath d='M2,20 Q18,8 32,16 Q47,25 62,12 Q77,6 92,22 Q107,14 122,18 Q137,26 152,8 Q167,16 182,22 Q197,10 212,14 Q227,20 242,12 Q257,18 272,24 Q287,14 298,16' fill='%23fbbf24' opacity='0.8'/%3E%3C/svg%3E");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  padding: 6px 12px;
-  border-radius: 6px;
-  margin: 2px 0;
-}
-
-.chalk-brush-orange {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 30'%3E%3Cpath d='M2,14 Q16,24 30,10 Q45,6 60,20 Q75,16 90,26 Q105,8 120,14 Q135,20 150,12 Q165,24 180,18 Q195,8 210,20 Q225,26 240,14 Q255,10 270,22 Q285,18 298,14' fill='%23f97316' opacity='0.8'/%3E%3C/svg%3E");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  padding: 6px 12px;
-  border-radius: 6px;
-  margin: 2px 0;
-}
-
-.chalk-brush-teal {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 30'%3E%3Cpath d='M2,16 Q14,10 28,20 Q43,24 58,12 Q73,8 88,18 Q103,26 118,10 Q133,6 148,22 Q163,14 178,20 Q193,26 208,10 Q223,16 238,22 Q253,8 268,14 Q283,20 298,16' fill='%2314b8a6' opacity='0.8'/%3E%3C/svg%3E");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  padding: 6px 12px;
-  border-radius: 6px;
-  margin: 2px 0;
+/* Additional safety for any empty Fumadocs banner */
+[class*="fd-secondary"]:empty:not([data-banner-content]) {
+  display: none !important;
 }

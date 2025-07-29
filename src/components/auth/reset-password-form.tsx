@@ -23,6 +23,8 @@ import { notFound, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 /**
  * https://www.better-auth.com/docs/authentication/email-password#forget-password
@@ -30,19 +32,19 @@ import * as z from 'zod';
 export const ResetPasswordForm = () => {
   const t = useTranslations('AuthPage.resetPassword');
   const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  const router = useRouter();
+  const token = searchParams?.get('token');
   if (!token) {
     notFound();
   }
 
-  // If the token is valid, the user will be redirected to this URL with the token in the query string.
-  // If the token is invalid, the user will be redirected to this URL with an error message in the query string ?error=invalid_token.
-  // OPTIMIZE: check if the token is valid, show error message instead of redirecting to the 404 page
-  if (searchParams.get('error') === 'invalid_token') {
-    notFound();
-  }
+  // Pre-fill error if token is invalid
+  useEffect(() => {
+    if (searchParams?.get('error') === 'invalid_token') {
+      notFound();
+    }
+  }, [searchParams]);
 
-  const router = useLocaleRouter();
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, setIsPending] = useState(false);
