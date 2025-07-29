@@ -54,7 +54,7 @@ export const getActiveSubscriptionAction = actionClient
       });
       // console.log('get user subscriptions:', subscriptions);
 
-      let subscriptionData = null;
+      let subscriptionData: any = null;
       // Find the most recent active subscription (if any)
       if (subscriptions && subscriptions.length > 0) {
         // First try to find an active subscription
