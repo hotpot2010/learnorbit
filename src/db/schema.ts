@@ -1,4 +1,35 @@
-import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { relations } from 'drizzle-orm';
+import {
+  boolean,
+  integer,
+  jsonb,
+  pgEnum,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
+  uniqueIndex,
+} from 'drizzle-orm/pg-core';
+import { LearningPlan } from '@/types/learning-plan';
+
+export const userCourses = pgTable('user_courses', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => `course_${crypto.randomUUID()}`),
+  userId: text('user_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  coursePlan: jsonb('course_plan').notNull().$type<LearningPlan>(),
+  currentStep: integer('current_step').default(0).notNull(),
+  status: text('status', { enum: ['in-progress', 'completed'] })
+    .default('in-progress')
+    .notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .notNull()
+    .$onUpdate(() => new Date()),
+});
 
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),

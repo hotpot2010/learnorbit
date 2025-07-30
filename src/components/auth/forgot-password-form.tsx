@@ -46,7 +46,7 @@ export const ForgotPasswordForm = ({ className }: { className?: string }) => {
 
   // Pre-fill the email field if it's provided in the URL
   useEffect(() => {
-    const emailFromUrl = searchParams?.get('email');
+    const emailFromUrl = searchParams.get('email');
     if (emailFromUrl) {
       form.setValue('email', emailFromUrl);
     }

@@ -37,7 +37,7 @@ export const RegisterForm = ({
 }: RegisterFormProps) => {
   const t = useTranslations('AuthPage.register');
   const searchParams = useSearchParams();
-  const paramCallbackUrl = searchParams?.get('callbackUrl');
+  const paramCallbackUrl = searchParams.get('callbackUrl');
   // Use prop callback URL or param callback URL if provided, otherwise use the default login redirect
   const locale = useLocale();
   const defaultCallbackUrl = getUrlWithLocaleInCallbackUrl(
@@ -95,7 +95,7 @@ export const RegisterForm = ({
 
       if (!captchaResult?.data?.success || !captchaResult?.data?.valid) {
         console.error('register, captcha invalid:', values.captchaToken);
-        const errorMessage = captchaResult?.data?.error || 'Captcha validation failed';
+        const errorMessage = captchaResult?.data?.error || t('captchaInvalid');
         setError(errorMessage);
         return;
       }

@@ -38,7 +38,7 @@ export const websiteConfig: WebsiteConfig = {
     enableAffonsoAffiliate: false,
     enablePromotekitAffiliate: false,
     enableDatafastRevenueTrack: false,
-    enableTurnstileCaptcha: true,
+    enableTurnstileCaptcha: false,
   },
   routes: {
     defaultLoginRedirect: '/dashboard',
@@ -48,8 +48,8 @@ export const websiteConfig: WebsiteConfig = {
     enableSpeedInsights: false,
   },
   auth: {
-    enableGoogleLogin: true,
-    enableGithubLogin: true,
+    enableGoogleLogin: false,
+    enableGithubLogin: false,
   },
   i18n: {
     defaultLocale: 'en',
