@@ -3,11 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { id, messages } = body;
+    const { id, messages, advise } = body;
 
-    console.log('\n=== 📤 调用课程定制API（非流式） ===');
+    console.log('\n=== 📤 调用流式学习计划生成API ===');
     console.log('SessionId:', id);
     console.log('消息数量:', messages?.length || 0);
+    console.log('建议信息:', advise);
     
     if (messages && messages.length > 0) {
       console.log('最后一条消息:', messages[messages.length - 1]);
@@ -16,11 +17,12 @@ export async function POST(request: NextRequest) {
     // 构造发送给外部API的数据
     const externalApiData = {
       id,
-      messages
+      messages,
+      ...(advise && { advise })
     };
 
-    const externalApiUrl = process.env.NEXT_PUBLIC_EXTERNAL_API_URL || 'http://172.30.106.167:5000';
-    const url = `${externalApiUrl}/api/chat1/stream`;
+    const externalApiUrl = process.env.NEXT_PUBLIC_EXTERNAL_API_URL || 'http://172.30.106.167:5001';
+    const url = `${externalApiUrl}/api/learning/plan/stream_generate`;
     
     console.log('外部API URL:', url);
     console.log('发送数据:', JSON.stringify(externalApiData, null, 2));
@@ -41,25 +43,25 @@ export async function POST(request: NextRequest) {
       throw new Error(`外部API错误: ${response.status} ${errorText}`);
     }
 
-    // 直接返回JSON响应，而不是流式响应
-    const result = await response.json();
-    console.log('外部API返回结果:', result);
-
-    // 确保返回的格式符合要求
-    const formattedResult = {
-      response: result.response || "我来帮您分析学习需求并生成个性化课程计划。",
-      updateSteps: result.updateSteps || [],
-      reason: result.reason || ""
-    };
-
-    console.log('格式化后的结果:', formattedResult);
-    return NextResponse.json(formattedResult);
+    // 返回流式响应
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    });
 
   } catch (error) {
     console.error('API路由错误:', error);
     return NextResponse.json(
       { 
-        error: '服务暂时不可用',
+        error: '学习计划生成服务暂时不可用',
         details: error instanceof Error ? error.message : '未知错误'
       },
       { status: 500 }

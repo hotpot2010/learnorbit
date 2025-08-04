@@ -11,11 +11,11 @@ export const websiteConfig: WebsiteConfig = {
   metadata: {
     theme: {
       defaultTheme: 'default',
-      enableSwitch: true,
+      enableSwitch: false, // 隐藏主题色切换功能
     },
     mode: {
-      defaultMode: 'system',
-      enableSwitch: true,
+      defaultMode: 'light', // 默认白天模式
+      enableSwitch: false, // 隐藏主题模式切换功能
     },
     images: {
       ogImage: '/og.png',
@@ -58,10 +58,10 @@ export const websiteConfig: WebsiteConfig = {
         flag: '🇺🇸',
         name: 'English',
       },
-      zh: {
-        flag: '🇨🇳',
-        name: '中文',
-      },
+      // zh: {  // 隐藏中文选项
+      //   flag: '🇨🇳',
+      //   name: '中文',
+      // },
     },
   },
   blog: {
