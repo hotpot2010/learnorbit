@@ -23,7 +23,6 @@ interface AIChatInterfaceProps {
   useStudyAPI?: boolean;
   userInputFromHome?: string;
   skipDefaultWelcome?: boolean;
-  callbackUrl?: string;
   sessionId?: string;
   externalMessage?: string;
   onPlanGeneration?: (updateSteps: number[], reason: string) => void;
@@ -40,7 +39,6 @@ export function AIChatInterface({
   useStudyAPI = false,
   userInputFromHome,
   skipDefaultWelcome = false,
-  callbackUrl,
   sessionId,
   externalMessage,
   onPlanGeneration,

@@ -38,8 +38,8 @@ export const LoginForm = ({
 }: LoginFormProps) => {
   const t = useTranslations('AuthPage.login');
   const searchParams = useSearchParams();
-  const urlError = searchParams.get('error');
-  const paramCallbackUrl = searchParams.get('callbackUrl');
+  const urlError = searchParams?.get('error');
+  const paramCallbackUrl = searchParams?.get('callbackUrl');
   // Use prop callback URL or param callback URL if provided, otherwise use the default login redirect
   const locale = useLocale();
   const defaultCallbackUrl = getUrlWithLocaleInCallbackUrl(

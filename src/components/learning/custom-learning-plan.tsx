@@ -56,7 +56,6 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     console.log('🆔 生成SessionId:', id);
     return id;
   });
-  const [callbackUrl, setCallbackUrl] = useState<string>('');
 
   useEffect(() => {
     // 从sessionStorage读取首页的输入
@@ -69,139 +68,8 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         setShowLearningPlan(true);
         setPlanUpdateStatus('updating'); // 首页输入也设置为更新状态
       }
-
-      // 设置回调URL - 使用本机IP并包含sessionId
-      const getLocalIP = () => {
-        // 优先使用环境变量配置的IP
-        const envIP = process.env.NEXT_PUBLIC_LOCAL_IP;
-        if (envIP) {
-          return envIP;
-        }
-        
-        // 尝试从当前URL获取IP
-        const currentHost = window.location.hostname;
-        if (currentHost !== 'localhost' && currentHost !== '127.0.0.1') {
-          return currentHost;
-        }
-        
-        // 默认回退IP，请根据实际情况修改
-        console.warn('未配置NEXT_PUBLIC_LOCAL_IP环境变量，使用默认IP地址');
-        return '192.168.1.100';
-      };
-      
-      const localIP = getLocalIP();
-      const port = window.location.port || '3000';
-      const protocol = window.location.protocol;
-      // 🔥 关键优化：在回调URL中包含sessionId
-      const callback = `${protocol}//${localIP}:${port}/api/plan/update?sessionId=${sessionId}`;
-      
-      setCallbackUrl(callback);
-      console.log('🔗 设置回调URL:', callback);
-      console.log('📋 SessionId:', sessionId);
-      console.log('💡 外部AI将通过此URL回调更新学习计划');
     }
   }, [sessionId]);
-
-  // 监听计划更新
-  useEffect(() => {
-    if (!callbackUrl || !showLearningPlan) return;
-
-    console.log('\n=== 🔗 建立计划更新监听 ===');
-    console.log('SessionId:', sessionId);
-    console.log('回调URL:', callbackUrl);
-    console.log('监听URL:', `/api/plan/update?sessionId=${sessionId}`);
-    
-    const eventSource = new EventSource(`/api/plan/update?sessionId=${sessionId}`);
-    
-    // 🔥 关键优化：设置超时定时器
-    const timeoutId = setTimeout(() => {
-      console.warn('⏰ 学习计划生成超时（5分钟）');
-      setPlanUpdateStatus('error');
-      eventSource.close();
-    }, 5 * 60 * 1000); // 5分钟超时
-    
-    eventSource.onopen = () => {
-      console.log('✅ SSE连接已建立');
-    };
-    
-    eventSource.onmessage = (event) => {
-      try {
-        console.log('\n📨 收到SSE消息:');
-        console.log('原始数据:', event.data);
-        
-        const data = JSON.parse(event.data);
-        console.log('解析后数据:', data);
-        console.log('消息类型:', data.type);
-        
-        if (data.type === 'connected') {
-          console.log('🔗 SSE连接确认，SessionId:', data.sessionId);
-        } else if (data.type === 'plan_update' && data.plan) {
-          console.log('📚 收到学习计划更新:');
-          console.log('计划步骤数:', data.plan.plan?.length || 0);
-          
-          // 🔥 关键优化：清除超时定时器
-          clearTimeout(timeoutId);
-          
-          if (data.plan.plan) {
-            data.plan.plan.forEach((step: any, index: number) => {
-              console.log(`前端-步骤 ${index + 1}:`, {
-                step: step.step,
-                title: step.title,
-                status: step.status,
-                videoCount: step.videos?.length || 0
-              });
-            });
-          }
-          
-          setLearningPlan(data.plan);
-          setPlanUpdateStatus('completed');
-          console.log('✅ 学习计划已更新到前端状态');
-          
-          // 保存学习计划到sessionStorage，供学习页面使用
-          sessionStorage.setItem('learningPlan', JSON.stringify(data.plan));
-          console.log('💾 学习计划已保存到sessionStorage');
-          
-          // 3秒后恢复idle状态
-          setTimeout(() => {
-            setPlanUpdateStatus('idle');
-          }, 3000);
-        } else if (data.type === 'error') {
-          // 🔥 新增：处理服务端错误
-          console.error('❌ 收到服务端错误:', data.message);
-          clearTimeout(timeoutId);
-          setPlanUpdateStatus('error');
-          eventSource.close();
-        }
-      } catch (error) {
-        console.error('❌ 解析SSE消息失败:', error);
-        console.error('原始消息:', event.data);
-      }
-    };
-
-    eventSource.onerror = (error) => {
-      console.error('❌ SSE连接错误:', error);
-      console.log('连接状态:', eventSource.readyState);
-      console.log('状态说明:', {
-        0: 'CONNECTING',
-        1: 'OPEN', 
-        2: 'CLOSED'
-      }[eventSource.readyState]);
-      
-      // 🔥 关键优化：错误时清理资源
-      clearTimeout(timeoutId);
-      
-      // 如果是连接错误，设置错误状态
-      if (eventSource.readyState === EventSource.CLOSED) {
-        setPlanUpdateStatus('error');
-      }
-    };
-
-    return () => {
-      console.log('🔌 关闭SSE连接和超时定时器');
-      clearTimeout(timeoutId);
-      eventSource.close();
-    };
-  }, [sessionId, callbackUrl, showLearningPlan]);
 
   const handleChatMessage = () => {
     setShowLearningPlan(true);
@@ -589,7 +457,6 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             onMessageSent={handleChatMessage}
             userInputFromHome={learningInput}
             initialMessage="我来帮你定制课程"
-            callbackUrl={callbackUrl}
             sessionId={sessionId}
             externalMessage={externalMessage}
             onPlanGeneration={handlePlanGeneration}
