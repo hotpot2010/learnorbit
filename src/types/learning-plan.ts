@@ -60,7 +60,7 @@ export interface CodingTask {
 export interface TaskContent {
   type: 'quiz' | 'coding';
   difficulty: string;
-  ppt_slide: PptSlide;
+  ppt_slide: string; // 改为string类型，支持markdown格式
   questions?: QuizQuestion[];
   task?: CodingTask;
   videos: Video[];
