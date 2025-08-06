@@ -14,7 +14,11 @@ export type ContentType = 'ppt' | 'video' | 'quiz' | 'coding';
 export type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced';
 
 // 学习活动类型
-export type ActivityType = 'course_started' | 'step_completed' | 'quiz_attempted' | 'course_completed';
+export type ActivityType =
+  | 'course_started'
+  | 'step_completed'
+  | 'quiz_attempted'
+  | 'course_completed';
 
 // 用户课程接口
 export interface UserCourse {
@@ -150,4 +154,4 @@ export interface UpdateProgressRequest {
 export interface SubmitAnswersRequest {
   stepId: string;
   answers: Record<number, any>;
-} 
+}

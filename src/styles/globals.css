@@ -237,6 +237,7 @@
   --shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
 }
 
+/*
 .dark {
   --background: oklch(0.21 0.04 265.75);
   --foreground: oklch(0.93 0.01 255.51);
@@ -288,6 +289,7 @@
     hsl(0 0% 0% / 0.1);
   --shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
 }
+*/
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,

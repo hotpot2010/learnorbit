@@ -11,8 +11,8 @@ import { NextResponse } from 'next/server';
  */
 export const GET = async (request: Request) => {
   // TODO: 实现完整的搜索功能
-  return NextResponse.json({ 
+  return NextResponse.json({
     results: [],
-    message: 'Search functionality temporarily disabled' 
+    message: 'Search functionality temporarily disabled',
   });
 };

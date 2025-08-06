@@ -1,6 +1,5 @@
 'use client';
 
-import { DividerWithText } from '@/components/auth/divider-with-text';
 import { GitHubIcon } from '@/components/icons/github';
 import { GoogleIcon } from '@/components/icons/google';
 import { Button } from '@/components/ui/button';
@@ -93,7 +92,7 @@ export const SocialLoginButton = ({
 
   return (
     <div className="w-full flex flex-col gap-4">
-      <DividerWithText text={t('or')} />
+      {/* 移除分割线，因为只有社交登录 */}
       {websiteConfig.auth.enableGoogleLogin && (
         <Button
           size="lg"

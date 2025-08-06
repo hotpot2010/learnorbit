@@ -1,7 +1,7 @@
 {
   "Metadata": {
-    "name": "learnorbit",
-    "title": "learnorbit - AI Learning Platform",
+    "name": "Aitutorly",
+    "title": "Aitutorly - AI Learning Platform",
     "description": "AI-powered personalized learning platform that creates customized learning paths and course content"
   },
   "Common": {
@@ -40,7 +40,7 @@
     "recommendedCourses": "Recommended Courses",
     "myCourses": "My Courses",
     "aiTutor": "AI Tutor",
-    "learningPath": "Learning Path", 
+    "learningPath": "Learning Path",
     "practiceArea": "Practice Area",
     "chatArea": "Chat Area",
     "customizeLearning": "Customize Learning Plan",
@@ -52,7 +52,7 @@
     "currentProgress": "Current Progress",
     "completed": "Completed",
     "inProgress": "In Progress",
-    "pending": "Pending", 
+    "pending": "Pending",
     "noCoursesYet": "No courses yet",
     "createFirstCourse": "Create your first course",
     "backToHome": "Back to Home",

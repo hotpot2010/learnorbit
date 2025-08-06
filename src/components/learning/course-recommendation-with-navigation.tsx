@@ -1,7 +1,7 @@
 'use client';
 
-import { CourseRecommendationGrid } from './course-recommendation-grid';
 import { useRouter } from 'next/navigation';
+import { CourseRecommendationGrid } from './course-recommendation-grid';
 
 interface Course {
   id: string;
@@ -21,7 +21,7 @@ interface CourseRecommendationWithNavigationProps {
 export function CourseRecommendationWithNavigation({
   courses,
   showProgress,
-  className
+  className,
 }: CourseRecommendationWithNavigationProps) {
   const router = useRouter();
 
@@ -32,7 +32,7 @@ export function CourseRecommendationWithNavigation({
       sessionStorage.setItem('learningInput', message); // 使用 'learningInput' 作为 key
       sessionStorage.removeItem('aiResponse'); // 清除旧的AI响应
     }
-    
+
     // 导航到课程定制页面，并指定/en/前缀
     router.push('/en/custom');
   };
@@ -45,4 +45,4 @@ export function CourseRecommendationWithNavigation({
       onCourseClick={handleCourseClick}
     />
   );
-} 
+}

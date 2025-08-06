@@ -23,10 +23,10 @@ export function CustomPage({ page }: CustomPageProps) {
 
   const { title, description, date } = page.data;
   const formattedDate = date ? formatDate(new Date(date)) : '';
-  
+
   // 检查是否存在body属性
   const hasBody = 'body' in page.data && (page.data as any).body;
-  
+
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Header */}
@@ -51,11 +51,7 @@ export function CustomPage({ page }: CustomPageProps) {
       <Card className="mb-8">
         <CardContent>
           <div className="max-w-none prose prose-neutral dark:prose-invert prose-img:rounded-lg">
-            {hasBody ? (
-              <div>MDX内容渲染区域</div>
-            ) : (
-              <p>暂无内容</p>
-            )}
+            {hasBody ? <div>MDX内容渲染区域</div> : <p>暂无内容</p>}
           </div>
         </CardContent>
       </Card>

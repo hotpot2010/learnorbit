@@ -69,4 +69,4 @@ export interface TaskContent {
 export interface TaskGenerateResponse {
   success: boolean;
   task: TaskContent;
-} 
+}

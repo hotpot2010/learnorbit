@@ -24,6 +24,43 @@ export const userCourses = pgTable('user_courses', {
   status: text('status', { enum: ['in-progress', 'completed'] })
     .default('in-progress')
     .notNull(),
+  tasksGenerated: boolean('tasks_generated').default(false).notNull(), // 新增：标记任务是否已生成
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .notNull()
+    .$onUpdate(() => new Date()),
+});
+
+// 新增：存储课程任务内容
+export const courseTasks = pgTable('course_tasks', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => `task_${crypto.randomUUID()}`),
+  courseId: text('course_id')
+    .notNull()
+    .references(() => userCourses.id, { onDelete: 'cascade' }),
+  stepNumber: integer('step_number').notNull(),
+  taskContent: jsonb('task_content').notNull(), // 存储TaskContent对象
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .notNull()
+    .$onUpdate(() => new Date()),
+}, (table) => ({
+  courseStepUnique: uniqueIndex('course_step_unique').on(table.courseId, table.stepNumber),
+}));
+
+// 新增：存储聊天记录
+export const courseChatHistory = pgTable('course_chat_history', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => `chat_${crypto.randomUUID()}`),
+  courseId: text('course_id')
+    .notNull()
+    .references(() => userCourses.id, { onDelete: 'cascade' }),
+  sessionId: text('session_id').notNull(),
+  messages: jsonb('messages').notNull(), // 存储消息数组
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at')
     .defaultNow()
@@ -100,3 +137,23 @@ export const payment = pgTable("payment", {
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
+
+// 定义关系
+export const userCoursesRelations = relations(userCourses, ({ many }) => ({
+  tasks: many(courseTasks),
+  chatHistory: many(courseChatHistory),
+}));
+
+export const courseTasksRelations = relations(courseTasks, ({ one }) => ({
+  course: one(userCourses, {
+    fields: [courseTasks.courseId],
+    references: [userCourses.id],
+  }),
+}));
+
+export const courseChatHistoryRelations = relations(courseChatHistory, ({ one }) => ({
+  course: one(userCourses, {
+    fields: [courseChatHistory.courseId],
+    references: [userCourses.id],
+  }),
+}));

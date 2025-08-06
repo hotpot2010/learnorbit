@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Zap, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
+import { Sparkles, Zap } from 'lucide-react';
 
-export type QualityMode = "performance" | "quality";
+export type QualityMode = 'performance' | 'quality';
 
 interface QualityModeToggleProps {
   value: QualityMode;
@@ -25,9 +25,9 @@ export function QualityModeToggle({
           variant="secondary"
           disabled={disabled}
           onClick={() => {
-            onValueChange("performance");
+            onValueChange('performance');
             toast({
-              description: "Switching to faster models for quicker generation",
+              description: 'Switching to faster models for quicker generation',
               duration: 2000,
             });
           }}
@@ -39,10 +39,10 @@ export function QualityModeToggle({
           variant="secondary"
           disabled={disabled}
           onClick={() => {
-            onValueChange("quality");
+            onValueChange('quality');
             toast({
               description:
-                "Switching to higher quality models for better results",
+                'Switching to higher quality models for better results',
               duration: 2000,
             });
           }}

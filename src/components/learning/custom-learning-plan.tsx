@@ -5,6 +5,8 @@ import { AIChatInterface } from './ai-chat-interface';
 import { CourseRecommendationGrid } from './course-recommendation-grid';
 import { LearningPlan, LearningStep } from '@/types/learning-plan';
 import Link from 'next/link';
+import { useAuthCheck } from '@/components/shared/login-check';
+import { useRouter } from 'next/navigation';
 
 // 生成随机评分
 const generateRating = (courseId: string) => {
@@ -16,7 +18,7 @@ const generateRating = (courseId: string) => {
 const StarRating = ({ rating }: { rating: number }) => {
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 !== 0;
-  
+
   return (
     <div className="flex items-center space-x-1">
       {[...Array(5)].map((_, i) => (
@@ -51,17 +53,53 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   const [newStepIndex, setNewStepIndex] = useState<number | null>(null); // 新增：用于动画效果的新步骤索引
   const [updatedStepIndex, setUpdatedStepIndex] = useState<number | null>(null); // 新增：用于更新步骤动画效果的索引
   const [updatingSteps, setUpdatingSteps] = useState<number[]>([]); // 新增：正在更新的步骤列表
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'success' | 'error'>('idle'); // 新增：保存状态
+  const [taskGenerationStatus, setTaskGenerationStatus] = useState<'idle' | 'generating' | 'completed' | 'error'>('idle'); // 任务生成状态
+  const [showCompletionNotification, setShowCompletionNotification] = useState(false); // 新增：显示完成通知
+  const [isGeneratingCourse, setIsGeneratingCourse] = useState(false); // 整体课程生成状态
   const [sessionId] = useState(() => {
     const id = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     console.log('🆔 生成SessionId:', id);
     return id;
   });
 
+  const { requireAuth } = useAuthCheck();
+  const router = useRouter();
+
+  // 页面离开警告 - 当课程正在生成时
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      // 只有在课程正在生成且还未完成时才显示警告
+      if (planUpdateStatus === 'updating' || (partialPlan && !learningPlan)) {
+        e.preventDefault();
+        e.returnValue = '课程正在生成中，离开页面将丢失当前生成的内容。确定要离开吗？';
+        return e.returnValue;
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [planUpdateStatus, partialPlan, learningPlan]);
+
+  // 监听任务生成完成状态，显示完成通知
+  useEffect(() => {
+    if (taskGenerationStatus === 'completed' && saveStatus === 'success' && !showCompletionNotification) {
+      console.log('🎉 课程和任务都已生成完成，显示完成通知');
+      setShowCompletionNotification(true);
+      setIsGeneratingCourse(false); // 停止整体生成状态
+      // 8秒后自动隐藏通知（给用户更多时间阅读）
+      setTimeout(() => {
+        setShowCompletionNotification(false);
+        console.log('🔕 自动隐藏完成通知');
+      }, 8000);
+    }
+  }, [taskGenerationStatus, saveStatus, showCompletionNotification]);
+
   useEffect(() => {
     // 从sessionStorage读取首页的输入
     if (typeof window !== 'undefined') {
       const savedInput = sessionStorage.getItem('learningInput');
-      
+
       if (savedInput) {
         setLearningInput(savedInput);
         console.log('课程定制页面读取到用户输入:', savedInput);
@@ -100,28 +138,28 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       stepStep: step.step,  // 步骤对象的step字段
       stepTitle: step.title
     });
-    
+
     // 如果这个步骤正在更新中，从更新列表中移除
     setUpdatingSteps(prev => {
       const filtered = prev.filter(s => s !== stepNumber);
       console.log('更新updatingSteps:', { prev, filtered });
       return filtered;
     });
-    
+
     setPartialPlan(prevPlan => {
       console.log('当前partialPlan状态:', prevPlan);
-      
+
       // 🔧 修复：如果没有partialPlan，但有learningPlan，则使用learningPlan作为基础
       const basePlan = prevPlan || learningPlan;
       console.log('使用的基础计划:', basePlan ? 'basePlan存在' : 'basePlan为空', basePlan);
-      
+
       if (!basePlan) {
         console.log('🆕 创建新的部分计划（无任何现有计划）');
         const newPlan: LearningPlan = {
           plan: [step]
         };
         console.log('📚 创建新的部分计划:', newPlan);
-        
+
         // 设置新增动画效果
         console.log('🎬 设置新增动画: setNewStepIndex(0)');
         setNewStepIndex(0);
@@ -129,19 +167,19 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
           console.log('🎬 清除新增动画: setNewStepIndex(null)');
           setNewStepIndex(null);
         }, 1000);
-        
+
         return newPlan;
       } else {
         console.log('🔄 基于现有计划进行更新');
-        console.log('基础计划步骤:', basePlan.plan.map((s, idx) => ({ 
-          arrayIndex: idx, 
-          stepNumber: s.step, 
-          title: s.title 
+        console.log('基础计划步骤:', basePlan.plan.map((s, idx) => ({
+          arrayIndex: idx,
+          stepNumber: s.step,
+          title: s.title
         })));
-        
+
         // 检查是否是更新现有步骤还是添加新步骤
         const existingStepIndex = basePlan.plan.findIndex(s => s.step === step.step);
-        
+
         console.log('📋 🔍 关键调试信息:');
         console.log({
           '查找目标': `step.step = ${step.step}`,
@@ -150,11 +188,11 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
           '数组长度': basePlan.plan.length,
           '所有步骤的step值': basePlan.plan.map(s => s.step)
         });
-        
+
         if (existingStepIndex !== -1) {
           console.log(`✅ 找到现有步骤，数组索引: ${existingStepIndex}`);
           console.log(`将要更新的步骤:`, basePlan.plan[existingStepIndex]);
-          
+
           // 更新现有步骤
           const updatedPlan: LearningPlan = {
             plan: basePlan.plan.map((s, index) => {
@@ -163,13 +201,13 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
               return isTarget ? step : s;
             })
           };
-          
-          console.log('📚 更新后的计划:', updatedPlan.plan.map((s, idx) => ({ 
-            arrayIndex: idx, 
-            stepNumber: s.step, 
-            title: s.title 
+
+          console.log('📚 更新后的计划:', updatedPlan.plan.map((s, idx) => ({
+            arrayIndex: idx,
+            stepNumber: s.step,
+            title: s.title
           })));
-          
+
           // 设置更新动画效果
           console.log(`🎬 设置更新动画: setUpdatedStepIndex(${existingStepIndex})`);
           setUpdatedStepIndex(existingStepIndex);
@@ -177,18 +215,18 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             console.log('🎬 清除更新动画: setUpdatedStepIndex(null)');
             setUpdatedStepIndex(null);
           }, 1000);
-          
+
           console.log(`📋 ===== 步骤更新结束 (更新模式) =====\n`);
           return updatedPlan;
         } else {
           console.log(`🆕 未找到现有步骤，将作为新步骤添加`);
-          
+
           // 添加新步骤
           const updatedPlan: LearningPlan = {
             plan: [...basePlan.plan, step]
           };
           console.log(`📚 添加新步骤，当前步骤数: ${updatedPlan.plan.length}/${total}`);
-          
+
           // 设置新增动画效果
           const newIndex = updatedPlan.plan.length - 1;
           console.log(`🎬 设置新增动画: setNewStepIndex(${newIndex})`);
@@ -197,7 +235,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             console.log('🎬 清除新增动画: setNewStepIndex(null)');
             setNewStepIndex(null);
           }, 1000);
-          
+
           console.log(`📋 ===== 步骤更新结束 (新增模式) =====\n`);
           return updatedPlan;
         }
@@ -209,7 +247,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   const handlePlanUpdate = (plan: any) => {
     console.log('📚 收到完整计划更新:', plan);
     setLearningPlan(plan);
-    
+
     // 🔧 修复：只有在非更新状态时才清除部分计划
     // 如果正在更新中，保留partialPlan以供后续步骤更新使用
     if (planUpdateStatus !== 'updating') {
@@ -218,14 +256,14 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     } else {
       console.log('⚠️ 保留部分计划（正在更新中）');
     }
-    
+
     setUpdatingSteps([]); // 清除正在更新的步骤
     setPlanUpdateStatus('completed');
-    
+
     // 保存学习计划到sessionStorage，供学习页面使用
     sessionStorage.setItem('learningPlan', JSON.stringify(plan));
     console.log('💾 学习计划已保存到sessionStorage');
-    
+
     // 3秒后恢复idle状态并清除部分计划
     setTimeout(() => {
       setPlanUpdateStatus('idle');
@@ -242,6 +280,72 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     setTimeout(() => setExternalMessage(''), 100);
   };
 
+    // 保存课程到数据库
+  const saveCourseToDatabase = async (coursePlan: LearningPlan) => {
+    try {
+      setSaveStatus('saving');
+      console.log('💾 开始保存课程到数据库:', coursePlan);
+
+      // 1. 保存课程到数据库
+      const response = await fetch('/api/user-courses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(coursePlan),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('✅ 课程保存成功:', data);
+
+      // 2. 保存到sessionStorage供学习页面使用
+      sessionStorage.setItem('learningPlan', JSON.stringify(coursePlan));
+
+      // 3. 触发任务生成（后台进行，跟踪状态）
+      const courseId = data.course.id;
+      console.log('🚀 开始生成课程任务...');
+      setTaskGenerationStatus('generating');
+      setIsGeneratingCourse(true);
+
+      fetch(`/api/user-courses/${courseId}/tasks/generate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(taskResponse => {
+        if (taskResponse.ok) {
+          console.log('✅ 课程任务生成成功');
+          setTaskGenerationStatus('completed');
+        } else {
+          console.warn('⚠️ 课程任务生成失败，但不影响课程学习');
+          setTaskGenerationStatus('error');
+          setIsGeneratingCourse(false);
+        }
+      }).catch(taskError => {
+        console.warn('⚠️ 课程任务生成遇到问题:', taskError);
+        setTaskGenerationStatus('error');
+        setIsGeneratingCourse(false);
+      });
+
+      setSaveStatus('success');
+
+      // 4. 跳转到学习页面
+      router.push(`/study/${courseId}`);
+
+    } catch (error) {
+      console.error('❌ 保存课程失败:', error);
+      setSaveStatus('error');
+
+      // 错误情况下仍然保存到sessionStorage，使用custom ID
+      sessionStorage.setItem('learningPlan', JSON.stringify(coursePlan));
+      router.push('/study/custom');
+    }
+  };
+
   // 计算步骤时长
   const calculateTotalDuration = (videos: any[]) => {
     if (!videos || videos.length === 0) return '估算中...';
@@ -253,7 +357,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   const renderLearningStep = (step: LearningStep, index: number) => {
     const leftMargins = ['ml-2', 'ml-6', 'ml-4', 'ml-8', 'ml-3', 'ml-5'];
     const marginClass = leftMargins[index % leftMargins.length];
-    
+
     // 随机颜色配置
     const colors = [
       { bg: 'bg-blue-400', text: 'text-white', border: 'border-blue-400', textColor: 'text-blue-700' },
@@ -261,16 +365,16 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       { bg: 'bg-yellow-400', text: 'text-white', border: 'border-yellow-400', textColor: 'text-yellow-700' }
     ];
     const colorScheme = colors[index % colors.length];
-    
+
     // 检查是否是新添加的步骤
     const isNewStep = newStepIndex === index;
-    
+
     // 检查是否是刚更新的步骤
     const isUpdatedStep = updatedStepIndex === index;
-    
+
     // 检查是否是正在更新的步骤
     const isUpdatingStep = updatingSteps.includes(step.step);
-    
+
     // 调试日志：只在有动画状态时打印
     if (isNewStep || isUpdatedStep || isUpdatingStep) {
       console.log(`🎬 渲染步骤 ${index} (step.step=${step.step}) 动画状态:`, {
@@ -285,7 +389,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         updatingSteps: updatingSteps
       });
     }
-    
+
     return (
       <div
         key={step.step}
@@ -298,7 +402,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         }`}
         style={{
           transform: index % 2 === 0 ? 'rotate(0.2deg)' : 'rotate(-0.2deg)',
-          animation: isNewStep ? 'slideInFromRight 0.8s ease-out, pulse 1s ease-in-out' : 
+          animation: isNewStep ? 'slideInFromRight 0.8s ease-out, pulse 1s ease-in-out' :
                     isUpdatedStep ? 'updateBounce 0.6s ease-out' :
                     isUpdatingStep ? 'blink 1s infinite' : undefined
         }}
@@ -310,13 +414,13 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
           } ${colorScheme.text} ${colorScheme.border} ${
             index % 3 === 0 ? 'rotate-12' : index % 3 === 1 ? '-rotate-12' : 'rotate-6'
           } ${
-            isNewStep ? 'animate-bounce' : 
+            isNewStep ? 'animate-bounce' :
             isUpdatedStep ? 'animate-pulse bg-green-400 border-green-400' :
             isUpdatingStep ? 'animate-pulse bg-orange-400 border-orange-400' : ''
           }`}>
             {step.step}
           </div>
-          
+
           {/* 标题 */}
           <h3 className={`text-base font-bold ${colorScheme.textColor} ${
             isNewStep ? 'animate-pulse' : ''
@@ -324,7 +428,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             isUpdatedStep ? 'text-green-700 animate-pulse' : ''
           } ${
             isUpdatingStep ? 'text-orange-700 animate-pulse' : ''
-          }`} 
+          }`}
               style={{
                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
               }}>
@@ -333,11 +437,11 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             {isUpdatedStep && <span className="ml-2 text-sm text-green-600">✅ 更新完成!</span>}
             {isUpdatingStep && <span className="ml-2 text-sm text-orange-600">🔄 更新中...</span>}
           </h3>
-          
+
           {/* 视频封面 - 只显示第一个视频的封面 */}
           {step.videos && step.videos.length > 0 && step.videos[0].cover && (
             <div className="w-32 h-20 bg-gray-200 rounded border transform -rotate-1 flex items-center justify-center flex-shrink-0 overflow-hidden">
-              <img 
+              <img
                 src={(() => {
                   const originalUrl = step.videos[0].cover;
                   const finalUrl = originalUrl.startsWith('//') ? `https:${originalUrl}` : originalUrl;
@@ -364,7 +468,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
               </span>
             </div>
           )}
-          
+
           {/* Animation Type */}
           {step.animation_type && step.animation_type !== '无' && (
             <span className="px-2 py-1 rounded text-xs transform rotate-3 bg-purple-100 text-purple-800"
@@ -374,7 +478,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
               Animation: {step.animation_type}
             </span>
           )}
-          
+
           {/* Task Type */}
           <span className={`px-2 py-1 rounded text-xs transform rotate-1 ${
             step.type === 'quiz' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
@@ -383,7 +487,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
           }}>
             {step.type === 'quiz' ? '📝 Quiz' : '💻 Coding'}
           </span>
-          
+
           {/* Difficulty Level */}
           <span className={`px-2 py-1 rounded text-xs transform -rotate-2 ${
             step.difficulty === 'beginner' ? 'bg-green-100 text-green-800' :
@@ -395,7 +499,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             {step.difficulty === 'beginner' ? '🌱 Beginner' :
              step.difficulty === 'intermediate' ? '🌿 Intermediate' : '🌳 Advanced'}
           </span>
-          
+
           {/* Duration Time */}
           {step.videos && step.videos.length > 0 && step.videos[0].duration && (
             <span className="px-2 py-1 rounded text-xs transform rotate-0.5 bg-gray-100 text-gray-700"
@@ -440,7 +544,38 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
           100% { transform: scale(1); }
         }
       `}</style>
-      
+
+      {/* 整体加载状态覆盖层 */}
+      {isGeneratingCourse && (
+        <div className="fixed inset-0 z-40 bg-white bg-opacity-90 flex items-center justify-center">
+          <div className="text-center space-y-6 max-w-md mx-auto p-8">
+            <div className="relative">
+              <div className="w-20 h-20 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto"></div>
+              <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-r-blue-400 rounded-full animate-ping mx-auto"></div>
+            </div>
+            <div className="space-y-3">
+              <h2 className="text-3xl font-bold text-gray-800 transform -rotate-1"
+                  style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
+                ✨ 正在生成完整课程...
+              </h2>
+              <div className="space-y-2">
+                <p className="text-gray-600 transform rotate-0.5"
+                   style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
+                  {saveStatus === 'saving' && '💾 正在保存课程计划...'}
+                  {saveStatus === 'success' && taskGenerationStatus === 'generating' && '🚀 正在生成课程内容...'}
+                  {taskGenerationStatus === 'completed' && '🎉 课程生成完成！'}
+                </p>
+                <div className="flex justify-center space-x-1">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="h-[calc(100vh-4rem)] flex"
            style={{
              backgroundImage: `
@@ -452,8 +587,8 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       {/* AI聊天区域 */}
       <div className="w-1/4 p-4">
         <div className="h-full rounded-lg border border-gray-200 shadow-sm bg-white/80 backdrop-blur-sm p-4">
-          <AIChatInterface 
-            className="h-full" 
+          <AIChatInterface
+            className="h-full"
             onMessageSent={handleChatMessage}
             userInputFromHome={learningInput}
             initialMessage="我来帮你定制课程"
@@ -503,7 +638,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
               </span>
             </h2>
           </div>
-          
+
           <div className="flex-1 overflow-y-auto">
             {!learningPlan && !partialPlan ? (
               <div className="h-full flex items-center justify-center">
@@ -536,7 +671,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                            }}>
                           Start chatting with AI assistant to generate your custom learning path 💡
                         </p>
-                        
+
                         {/* 装饰性元素 */}
                         <div className="flex justify-center space-x-4 mt-6">
                           <div className="text-2xl transform -rotate-12">📝</div>
@@ -552,7 +687,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
               <div className="space-y-4 pb-20">
                 {/* 显示部分计划或完整计划 */}
                 {(learningPlan || partialPlan)?.plan.map((step, index) => renderLearningStep(step, index))}
-                
+
                 {/* 如果正在更新且只有部分计划，显示生成中的提示 */}
                 {partialPlan && planUpdateStatus === 'updating' && (
                   <div className="flex items-center justify-center py-8">
@@ -571,28 +706,56 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
               </div>
             )}
           </div>
-          
+
           {/* 固定在底部的开始学习按钮 */}
           {(learningPlan || partialPlan) && (
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-              <Link href="/en/study/custom">
-                <button 
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-medium text-base transform rotate-1 hover:rotate-0 transition-all duration-300 shadow-lg"
-                  style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                  }}
-                  onClick={() => {
+              <button
+                className={`text-white px-6 py-2 rounded-lg font-medium text-base transform rotate-1 hover:rotate-0 transition-all duration-300 shadow-lg ${
+                  saveStatus === 'saving' || isGeneratingCourse
+                    ? 'bg-gray-500 cursor-not-allowed'
+                    : 'bg-blue-500 hover:bg-blue-600'
+                }`}
+                style={{
+                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                }}
+                disabled={saveStatus === 'saving' || isGeneratingCourse}
+                onClick={() => {
+                  requireAuth(() => {
                     // 保存当前计划（完整计划优先，否则使用部分计划）
                     const currentPlan = learningPlan || partialPlan;
                     if (currentPlan) {
-                      sessionStorage.setItem('learningPlan', JSON.stringify(currentPlan));
-                      console.log('💾 点击开始学习，已保存当前计划到sessionStorage');
+                      saveCourseToDatabase(currentPlan);
+                    } else {
+                      console.warn('⚠️ 没有可保存的学习计划');
                     }
-                  }}
-                >
-                  Start Learning Journey! 🚀
-                </button>
-              </Link>
+                  });
+                }}
+              >
+                {saveStatus === 'saving' ? (
+                  <>
+                    <span className="inline-block animate-spin mr-2">⏳</span>
+                    Saving Course...
+                  </>
+                ) : isGeneratingCourse ? (
+                  <>
+                    <span className="inline-block animate-spin mr-2">🚀</span>
+                    Generating Content...
+                  </>
+                ) : (
+                  'Start Learning Journey! 🚀'
+                )}
+              </button>
+
+              {saveStatus === 'error' && (
+                <div className="mt-2 text-center">
+                  <p className="text-red-500 text-sm" style={{
+                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  }}>
+                    ⚠️ 保存失败，但您仍可以继续学习
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -603,8 +766,8 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         <div className="h-full flex flex-col">
           <div className="flex-1 overflow-y-auto space-y-4">
             {recommendedCourses.map((course, index) => (
-              <div 
-                key={course.id} 
+              <div
+                key={course.id}
                 className={`group relative bg-white p-3 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 border-2 border-gray-200 ${
                   index % 2 === 0 ? 'rotate-1 hover:rotate-0' : '-rotate-1 hover:rotate-0'
                 }`}
@@ -622,9 +785,9 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                      }}>
                     {course.description}
                   </p>
-                  
+
                   <StarRating rating={generateRating(course.id)} />
-                  
+
                   <div className="flex items-center justify-between text-xs">
                     <span className="bg-yellow-100 px-2 py-1 rounded transform -rotate-3 text-blue-600 font-medium"
                           style={{
@@ -639,8 +802,8 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                       {course.difficulty}
                     </span>
                   </div>
-                  
-                  <button 
+
+                  <button
                     onClick={() => handleRecommendedCourseClick(course)}
                     className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-xs transform hover:rotate-1 shadow-md"
                     style={{
@@ -649,7 +812,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                     Start Learning 🚀
                   </button>
                 </div>
-                
+
                 {/* 图钉装饰 */}
                 <div className={`absolute -top-2 -right-2 w-3 h-3 rounded-full shadow-md transform rotate-45 opacity-80 ${
                   index % 3 === 0 ? 'bg-red-400' : index % 3 === 1 ? 'bg-blue-400' : 'bg-green-400'
@@ -660,6 +823,44 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         </div>
       </div>
     </div>
+
+    {/* 课程生成完成通知 */}
+    {showCompletionNotification && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="bg-white rounded-lg shadow-2xl p-8 max-w-md mx-4 transform animate-pulse">
+          <div className="text-center space-y-4">
+            <div className="text-6xl">🎉</div>
+            <h3 className="text-2xl font-bold text-green-600 transform -rotate-1"
+                style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
+              课程已保存！
+            </h3>
+            <p className="text-gray-600"
+               style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
+              您的个性化课程已经保存到数据库！<br/>
+              现在可以在 My Courses 页面查看和管理您的课程。
+            </p>
+            <div className="flex space-x-3 justify-center">
+              <button
+                onClick={() => setShowCompletionNotification(false)}
+                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition-colors transform hover:rotate-1"
+                style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}
+              >
+                知道了
+              </button>
+              <Link href="/my-courses">
+                <button
+                  onClick={() => setShowCompletionNotification(false)}
+                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors transform hover:rotate-1"
+                  style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}
+                >
+                  查看 My Courses 📚
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
     </>
   );
 }

@@ -9,13 +9,9 @@ import type { WebsiteConfig } from '@/types';
  */
 export const websiteConfig: WebsiteConfig = {
   metadata: {
-    theme: {
-      defaultTheme: 'default',
-      enableSwitch: false, // 隐藏主题色切换功能
-    },
     mode: {
-      defaultMode: 'light', // 默认白天模式
-      enableSwitch: false, // 隐藏主题模式切换功能
+      defaultMode: 'light' as const,
+      enableSwitch: false, // 禁用主题切换
     },
     images: {
       ogImage: '/og.png',
@@ -41,15 +37,15 @@ export const websiteConfig: WebsiteConfig = {
     enableTurnstileCaptcha: false,
   },
   routes: {
-    defaultLoginRedirect: '/dashboard',
+    defaultLoginRedirect: '/my-courses', // 修改为现有的课程页面
   },
   analytics: {
     enableVercelAnalytics: false,
     enableSpeedInsights: false,
   },
   auth: {
-    enableGoogleLogin: false,
-    enableGithubLogin: false,
+    enableGoogleLogin: true, // 启用Google登录
+    enableGithubLogin: false, // 禁用GitHub登录
   },
   i18n: {
     defaultLocale: 'en',
@@ -75,7 +71,7 @@ export const websiteConfig: WebsiteConfig = {
   },
   newsletter: {
     provider: 'resend',
-    autoSubscribeAfterSignUp: true,
+    autoSubscribeAfterSignUp: false, // 禁用自动订阅，避免环境变量错误
   },
   storage: {
     provider: 's3',
