@@ -39,7 +39,6 @@ export function Navbar({ scroll }: NavBarProps) {
   const menuItems = [
     { title: 'Home', href: '/' },
     { title: 'My Courses', href: '/my-courses' },
-    { title: 'Pricing', href: '/pricing' },
     { title: 'Contact', href: '/contact' },
   ];
 
@@ -75,9 +74,9 @@ export function Navbar({ scroll }: NavBarProps) {
                 href={item.href}
                 className={cn(
                   'text-sm font-medium transition-colors hover:text-primary',
-                  localePathname === item.href || 
+                  localePathname === item.href ||
                   (item.href !== '/' && localePathname.startsWith(item.href))
-                    ? 'text-foreground' 
+                    ? 'text-foreground'
                     : 'text-muted-foreground'
                 )}
               >

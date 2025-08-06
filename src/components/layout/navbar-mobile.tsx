@@ -145,7 +145,6 @@ function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
   const menuLinks = [
     { title: 'Home', href: '/' },
     { title: 'My Courses', href: '/my-courses' },
-    { title: 'Pricing', href: '/pricing' },
     { title: 'Contact', href: '/contact' },
   ];
   const localePathname = useLocalePathname();

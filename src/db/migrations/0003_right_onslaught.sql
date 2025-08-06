@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "course_step_unique" ON "course_tasks" USING btree ("course_id","step_number");

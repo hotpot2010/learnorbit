@@ -1,19 +1,22 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
-const EXTERNAL_API_URL = process.env.EXTERNAL_API_URL || 'http://172.30.106.167:5000';
+const EXTERNAL_API_URL =
+  process.env.EXTERNAL_API_URL || 'http://172.30.106.167:5000';
 
 export async function POST(request: NextRequest) {
   try {
     const requestData = await request.json();
     console.log('🔧 环境变量调试信息 (evaluate):', {
       'process.env.EXTERNAL_API_URL': process.env.EXTERNAL_API_URL,
-      'EXTERNAL_API_URL常量': EXTERNAL_API_URL,
-      '最终请求URL': `${EXTERNAL_API_URL}/api/task/evaluate`
+      EXTERNAL_API_URL常量: EXTERNAL_API_URL,
+      最终请求URL: `${EXTERNAL_API_URL}/api/task/evaluate`,
     });
     console.log('📤 代理转发评估请求:', {
       task_type: requestData.task_type,
-      submission_length: Array.isArray(requestData.submission) ? requestData.submission.length : typeof requestData.submission,
-      has_task_data: !!requestData.task_data
+      submission_length: Array.isArray(requestData.submission)
+        ? requestData.submission.length
+        : typeof requestData.submission,
+      has_task_data: !!requestData.task_data,
     });
 
     // 转发请求到外部API
@@ -21,7 +24,7 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        Accept: 'application/json',
       },
       body: JSON.stringify(requestData),
     });
@@ -29,8 +32,14 @@ export async function POST(request: NextRequest) {
     console.log('📥 外部API响应状态:', response.status, response.statusText);
 
     if (!response.ok) {
-      console.error('❌ 外部评估API请求失败:', response.status, response.statusText);
-      throw new Error(`External API error: ${response.status} ${response.statusText}`);
+      console.error(
+        '❌ 外部评估API请求失败:',
+        response.status,
+        response.statusText
+      );
+      throw new Error(
+        `External API error: ${response.status} ${response.statusText}`
+      );
     }
 
     const result = await response.json();
@@ -38,23 +47,22 @@ export async function POST(request: NextRequest) {
       is_correct: result.is_correct,
       has_incorrect_indices: !!result.incorrect_indices,
       has_feedback: !!result.feedback,
-      error_reason: result.error_reason
+      error_reason: result.error_reason,
     });
 
     // 直接返回外部API的响应
     return NextResponse.json(result);
-
   } catch (error) {
     console.error('🚨 评估API代理错误:', error);
-    
+
     // 返回错误响应，前端会使用fallback数据
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: 'External evaluation API call failed',
         message: error instanceof Error ? error.message : 'Unknown error',
-        details: `Failed to connect to ${EXTERNAL_API_URL}/api/task/evaluate`
-      }, 
+        details: `Failed to connect to ${EXTERNAL_API_URL}/api/task/evaluate`,
+      },
       { status: 500 }
     );
   }
@@ -69,4 +77,4 @@ export async function OPTIONS() {
       'Access-Control-Allow-Headers': 'Content-Type',
     },
   });
-} 
+}

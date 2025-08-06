@@ -7,7 +7,7 @@ import {
 } from '@/assets/fonts';
 import AffonsoScript from '@/components/affiliate/affonso';
 import PromotekitScript from '@/components/affiliate/promotekit';
-import { TailwindIndicator } from '@/components/layout/tailwind-indicator';
+
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 import { type Locale, NextIntlClientProvider, hasLocale } from 'next-intl';
@@ -62,11 +62,10 @@ export default async function LocaleLayout({
             {children}
 
             <Toaster richColors position="top-right" offset={64} />
-            <TailwindIndicator />
             <Analytics />
           </Providers>
         </NextIntlClientProvider>
       </body>
     </html>
   );
-} 
+}

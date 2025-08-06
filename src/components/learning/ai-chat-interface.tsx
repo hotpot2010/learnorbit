@@ -1,11 +1,11 @@
 'use client';
 
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Bot, Send, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Message {
   id: string;
@@ -30,10 +30,10 @@ interface AIChatInterfaceProps {
   onStepUpdate?: (step: any, stepNumber: number, total: number) => void; // 新增：逐步更新步骤的回调
 }
 
-export function AIChatInterface({ 
-  className, 
-  initialMessage, 
-  onMessageSent, 
+export function AIChatInterface({
+  className,
+  initialMessage,
+  onMessageSent,
   recommendations,
   aiResponse,
   useStudyAPI = false,
@@ -43,7 +43,7 @@ export function AIChatInterface({
   externalMessage,
   onPlanGeneration,
   onPlanUpdate,
-  onStepUpdate
+  onStepUpdate,
 }: AIChatInterfaceProps) {
   const t = useTranslations('LearningPlatform');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -56,43 +56,57 @@ export function AIChatInterface({
   useEffect(() => {
     if (!messages.length && !skipDefaultWelcome) {
       let welcomeContent = '您好！我是您的AI学习助手。';
-      
+
       if (aiResponse) {
         welcomeContent = aiResponse;
         console.log('使用首页AI响应作为欢迎消息:', aiResponse);
       } else if (useStudyAPI) {
-        welcomeContent = '请【阅读笔记】和【观看视频】~~ \n并试着回答下面的问题。\n有任何不懂的都可以向我提问哈~~';
+        welcomeContent =
+          '请【阅读笔记】和【观看视频】~~ \n并试着回答下面的问题。\n有任何不懂的都可以向我提问哈~~';
       } else if (initialMessage) {
         welcomeContent = initialMessage;
       } else {
-        welcomeContent += '请告诉我您想学习什么，我会为您制定个性化的学习计划。';
+        welcomeContent +=
+          '请告诉我您想学习什么，我会为您制定个性化的学习计划。';
       }
-      
+
       const welcomeMessage: Message = {
         id: 'welcome',
         content: welcomeContent,
         role: 'assistant',
-        timestamp: new Date()
+        timestamp: new Date(),
       };
       setMessages([welcomeMessage]);
     }
-  }, [initialMessage, messages.length, aiResponse, useStudyAPI, skipDefaultWelcome]);
+  }, [
+    initialMessage,
+    messages.length,
+    aiResponse,
+    useStudyAPI,
+    skipDefaultWelcome,
+  ]);
 
   // 处理来自首页的用户输入
   useEffect(() => {
-    if (userInputFromHome && messages.length > 0 && !messages.some(msg => msg.content === userInputFromHome && msg.role === 'user')) {
+    if (
+      userInputFromHome &&
+      messages.length > 0 &&
+      !messages.some(
+        (msg) => msg.content === userInputFromHome && msg.role === 'user'
+      )
+    ) {
       console.log('处理来自首页的用户输入:', userInputFromHome);
-      
+
       const userMessage: Message = {
         id: Date.now().toString(),
         content: userInputFromHome,
         role: 'user',
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-      
-      setMessages(prev => [...prev, userMessage]);
+
+      setMessages((prev) => [...prev, userMessage]);
       setIsLoading(true);
-      
+
       if (useStudyAPI) {
         callStudyAPI(userMessage, messages);
       } else {
@@ -104,19 +118,24 @@ export function AIChatInterface({
 
   // 处理外部发送的消息（课程卡片点击）
   useEffect(() => {
-    if (externalMessage && !messages.some(msg => msg.content === externalMessage && msg.role === 'user')) {
+    if (
+      externalMessage &&
+      !messages.some(
+        (msg) => msg.content === externalMessage && msg.role === 'user'
+      )
+    ) {
       console.log('处理外部发送的消息:', externalMessage);
-      
+
       const userMessage: Message = {
         id: Date.now().toString(),
         content: externalMessage,
         role: 'user',
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-      
-      setMessages(prev => [...prev, userMessage]);
+
+      setMessages((prev) => [...prev, userMessage]);
       setIsLoading(true);
-      
+
       if (useStudyAPI) {
         callStudyAPI(userMessage, messages);
       } else {
@@ -127,22 +146,29 @@ export function AIChatInterface({
   }, [externalMessage, messages]);
 
   // 两步式流程处理函数
-  const handleTwoStepFlow = async (userMessage: Message, currentMessages: Message[]) => {
+  const handleTwoStepFlow = async (
+    userMessage: Message,
+    currentMessages: Message[]
+  ) => {
     try {
       console.log('\n=== 🔄 开始两步式流程 ===');
-      
+
       // 第一步：调用 /api/chat1/stream 获取非流式响应
       const requestData = {
         id: sessionId || 'user123',
-        messages: currentMessages.map(msg => ({
-          role: msg.role,
-          content: msg.content
-        })).concat([{
-          role: 'user',
-          content: userMessage.content
-        }])
+        messages: currentMessages
+          .map((msg) => ({
+            role: msg.role,
+            content: msg.content,
+          }))
+          .concat([
+            {
+              role: 'user',
+              content: userMessage.content,
+            },
+          ]),
       };
-      
+
       console.log('📤 第一步：调用课程分析API');
       console.log('发送数据:', requestData);
 
@@ -165,73 +191,78 @@ export function AIChatInterface({
       if (analysisResult.updateSteps && analysisResult.updateSteps.length > 0) {
         console.log('📋 需要更新步骤:', analysisResult.updateSteps);
         console.log('📝 更新原因:', analysisResult.reason);
-        
+
         // 显示修改步骤信息
         const stepNumbers = analysisResult.updateSteps.join('、');
         const updateMessage: Message = {
           id: (Date.now() + 1).toString(),
           content: `为你修改第${stepNumbers}步`,
           role: 'assistant',
-          timestamp: new Date()
+          timestamp: new Date(),
         };
-        setMessages(prev => [...prev, updateMessage]);
+        setMessages((prev) => [...prev, updateMessage]);
 
         // 然后显示AI回复
         const assistantMessage: Message = {
           id: (Date.now() + 2).toString(),
           content: analysisResult.response || '我来帮您分析学习需求。',
           role: 'assistant',
-          timestamp: new Date()
+          timestamp: new Date(),
         };
-        setMessages(prev => [...prev, assistantMessage]);
+        setMessages((prev) => [...prev, assistantMessage]);
 
         // 通知父组件开始计划生成（这里会设置updating状态）
-        onPlanGeneration?.(analysisResult.updateSteps, analysisResult.reason || '');
+        onPlanGeneration?.(
+          analysisResult.updateSteps,
+          analysisResult.reason || ''
+        );
 
         // 调用流式计划生成API
         await generateLearningPlan(requestData, analysisResult);
       } else {
         console.log('ℹ️ 无需更新学习计划');
-        
+
         // 只显示AI回复
         const assistantMessage: Message = {
           id: (Date.now() + 1).toString(),
           content: analysisResult.response || '我来帮您分析学习需求。',
           role: 'assistant',
-          timestamp: new Date()
+          timestamp: new Date(),
         };
-        setMessages(prev => [...prev, assistantMessage]);
+        setMessages((prev) => [...prev, assistantMessage]);
       }
-
     } catch (error) {
       console.error('❌ 两步式流程错误:', error);
-      
+
       const errorMessage: Message = {
         id: (Date.now() + 3).toString(),
         content: `抱歉，处理您的请求时出现了问题：${error instanceof Error ? error.message : '未知错误'}`,
         role: 'assistant',
-        timestamp: new Date()
+        timestamp: new Date(),
       };
 
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
   };
 
   // 生成学习计划的函数
-  const generateLearningPlan = async (requestData: any, analysisResult: any) => {
+  const generateLearningPlan = async (
+    requestData: any,
+    analysisResult: any
+  ) => {
     try {
       console.log('\n📚 第二步：开始流式生成学习计划');
-      
+
       // 构造学习计划生成请求
       const planRequestData = {
         id: requestData.id,
         messages: requestData.messages,
         advise: JSON.stringify({
           should_update: analysisResult.updateSteps,
-          reason: analysisResult.reason || '用户需求分析'
-        })
+          reason: analysisResult.reason || '用户需求分析',
+        }),
       };
 
       console.log('📤 发送计划生成请求:', planRequestData);
@@ -261,7 +292,7 @@ export function AIChatInterface({
 
         while (true) {
           const { done, value } = await reader.read();
-          
+
           if (done) {
             console.log('✅ 学习计划流式响应处理完成');
             break;
@@ -269,7 +300,7 @@ export function AIChatInterface({
 
           const chunk = decoder.decode(value, { stream: true });
           buffer += chunk;
-          
+
           // 按行分割处理
           const lines = buffer.split('\n');
           // 保留最后一行（可能不完整）
@@ -280,7 +311,7 @@ export function AIChatInterface({
               const dataStr = line.slice(6).trim();
               try {
                 const data = JSON.parse(dataStr);
-                
+
                 if (data.error) {
                   console.error('❌ 计划生成错误:', data.error);
                   throw new Error(data.error);
@@ -293,16 +324,21 @@ export function AIChatInterface({
                   const step = data.step;
                   const stepNumber = data.step_number || stepCount;
                   const total = data.total || '未知';
-                  
-                  console.log(`📋 生成步骤 ${stepNumber}/${total}:`, step.title);
+
+                  console.log(
+                    `📋 生成步骤 ${stepNumber}/${total}:`,
+                    step.title
+                  );
                   // 不在聊天区域更新，计划内容通过SSE显示在计划区域
                   onStepUpdate?.(step, stepNumber, total);
                 } else if (data.done && data.done === true) {
                   console.log('✅ 计划生成完成!');
-                  
+
                   if (data.plan) {
                     const plan = data.plan;
-                    console.log(`📚 生成的计划包含 ${plan.plan?.length || 0} 个步骤`);
+                    console.log(
+                      `📚 生成的计划包含 ${plan.plan?.length || 0} 个步骤`
+                    );
                     onPlanUpdate?.(plan); // 调用回调通知父组件更新计划
                   }
                   return; // 完成后直接返回
@@ -314,7 +350,7 @@ export function AIChatInterface({
             }
           }
         }
-        
+
         // 处理缓冲区中剩余的数据
         if (buffer.trim() && buffer.startsWith('data: ')) {
           const dataStr = buffer.slice(6).trim();
@@ -329,23 +365,25 @@ export function AIChatInterface({
           }
         }
       }
-
     } catch (error) {
       console.error('❌ 学习计划生成失败:', error);
-      
+
       // 不在聊天区域显示错误信息，只记录日志
     }
   };
 
   // 学习页面API调用
-  const callStudyAPI = async (userMessage: Message, currentMessages: Message[]) => {
+  const callStudyAPI = async (
+    userMessage: Message,
+    currentMessages: Message[]
+  ) => {
     try {
       const requestData = {
         message: userMessage.content,
-        conversation_history: currentMessages.map(msg => ({
+        conversation_history: currentMessages.map((msg) => ({
           role: msg.role,
-          content: msg.content
-        }))
+          content: msg.content,
+        })),
       };
 
       console.log('📤 调用学习页面API:', requestData);
@@ -370,10 +408,10 @@ export function AIChatInterface({
         id: (Date.now() + 1).toString(),
         content: '',
         role: 'assistant',
-        timestamp: new Date()
+        timestamp: new Date(),
       };
 
-      setMessages(prev => [...prev, assistantMessage]);
+      setMessages((prev) => [...prev, assistantMessage]);
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -381,7 +419,7 @@ export function AIChatInterface({
 
       while (true) {
         const { done, value } = await reader.read();
-        
+
         if (done) {
           console.log('流式响应完成，内容长度:', accumulatedContent.length);
           break;
@@ -395,16 +433,21 @@ export function AIChatInterface({
             const dataStr = line.slice(6);
             try {
               const data = JSON.parse(dataStr);
-              
+
               if (data.chunk) {
                 accumulatedContent += data.chunk;
-                setMessages(prev => prev.map(msg => 
-                  msg.id === assistantMessage.id 
-                    ? { ...msg, content: accumulatedContent }
-                    : msg
-                ));
+                setMessages((prev) =>
+                  prev.map((msg) =>
+                    msg.id === assistantMessage.id
+                      ? { ...msg, content: accumulatedContent }
+                      : msg
+                  )
+                );
               } else if (data.done) {
-                console.log('AI响应完成，最终内容长度:', accumulatedContent.length);
+                console.log(
+                  'AI响应完成，最终内容长度:',
+                  accumulatedContent.length
+                );
                 break;
               } else if (data.error) {
                 console.error('AI响应错误:', data.error);
@@ -416,38 +459,44 @@ export function AIChatInterface({
           }
         }
       }
-
     } catch (error) {
       console.error('调用AI接口失败:', error);
-      
+
       const errorMessage: Message = {
         id: (Date.now() + 2).toString(),
         content: `抱歉，AI服务暂时不可用。错误信息: ${error instanceof Error ? error.message : '未知错误'}`,
         role: 'assistant',
-        timestamp: new Date()
+        timestamp: new Date(),
       };
 
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
   };
 
   // 新增：处理第一条消息的学习计划生成
-  const handleFirstMessagePlanGeneration = async (userMessage: Message, currentMessages: Message[]) => {
+  const handleFirstMessagePlanGeneration = async (
+    userMessage: Message,
+    currentMessages: Message[]
+  ) => {
     try {
       console.log('\n=== 🚀 第一条消息：生成回复 + 生成学习计划 ===');
-      
+
       // 构造请求数据
       const requestData = {
         id: sessionId || 'user123',
-        messages: currentMessages.map(msg => ({
-          role: msg.role,
-          content: msg.content
-        })).concat([{
-          role: 'user',
-          content: userMessage.content
-        }])
+        messages: currentMessages
+          .map((msg) => ({
+            role: msg.role,
+            content: msg.content,
+          }))
+          .concat([
+            {
+              role: 'user',
+              content: userMessage.content,
+            },
+          ]),
       };
 
       console.log('📤 发送第一条消息请求:', requestData);
@@ -472,36 +521,36 @@ export function AIChatInterface({
       // 创建并添加AI助手回复消息
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: chatResult.response || '我来帮您分析学习需求并生成个性化课程计划。',
+        content:
+          chatResult.response || '我来帮您分析学习需求并生成个性化课程计划。',
         role: 'assistant',
-        timestamp: new Date()
+        timestamp: new Date(),
       };
 
-      setMessages(prev => [...prev, assistantMessage]);
+      setMessages((prev) => [...prev, assistantMessage]);
 
       // 第二步：同时调用学习计划生成API
       console.log('🔹 步骤2：调用 plan/stream_generate 生成学习计划');
-      
+
       // 通知父组件开始计划生成（这里会设置updating状态）
       onPlanGeneration?.([1], '初次生成学习计划'); // 传递非空数组以触发updating状态
 
       // 调用流式计划生成API
       await generateLearningPlanDirect(requestData);
-      
+
       // 标记已经不是第一条消息了
       setIsFirstMessage(false);
-
     } catch (error) {
       console.error('❌ 第一条消息处理错误:', error);
-      
+
       const errorMessage: Message = {
         id: (Date.now() + 3).toString(),
         content: `抱歉，处理您的请求时出现了问题：${error instanceof Error ? error.message : '未知错误'}`,
         role: 'assistant',
-        timestamp: new Date()
+        timestamp: new Date(),
       };
 
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
@@ -538,7 +587,7 @@ export function AIChatInterface({
 
         while (true) {
           const { done, value } = await reader.read();
-          
+
           if (done) {
             console.log('✅ 学习计划流式响应处理完成');
             break;
@@ -546,7 +595,7 @@ export function AIChatInterface({
 
           const chunk = decoder.decode(value, { stream: true });
           buffer += chunk;
-          
+
           // 按行分割处理
           const lines = buffer.split('\n');
           // 保留最后一行（可能不完整）
@@ -557,7 +606,7 @@ export function AIChatInterface({
               const dataStr = line.slice(6).trim();
               try {
                 const data = JSON.parse(dataStr);
-                
+
                 if (data.error) {
                   console.error('❌ 计划生成错误:', data.error);
                   throw new Error(data.error);
@@ -570,16 +619,21 @@ export function AIChatInterface({
                   const step = data.step;
                   const stepNumber = data.step_number || stepCount;
                   const total = data.total || '未知';
-                  
-                  console.log(`📋 生成步骤 ${stepNumber}/${total}:`, step.title);
+
+                  console.log(
+                    `📋 生成步骤 ${stepNumber}/${total}:`,
+                    step.title
+                  );
                   // 不在聊天区域更新，计划内容通过SSE显示在计划区域
                   onStepUpdate?.(step, stepNumber, total);
                 } else if (data.done && data.done === true) {
                   console.log('✅ 计划生成完成!');
-                  
+
                   if (data.plan) {
                     const plan = data.plan;
-                    console.log(`📚 生成的计划包含 ${plan.plan?.length || 0} 个步骤`);
+                    console.log(
+                      `📚 生成的计划包含 ${plan.plan?.length || 0} 个步骤`
+                    );
                     onPlanUpdate?.(plan); // 调用回调通知父组件更新计划
                   }
                   return; // 完成后直接返回
@@ -591,7 +645,7 @@ export function AIChatInterface({
             }
           }
         }
-        
+
         // 处理缓冲区中剩余的数据
         if (buffer.trim() && buffer.startsWith('data: ')) {
           const dataStr = buffer.slice(6).trim();
@@ -606,10 +660,9 @@ export function AIChatInterface({
           }
         }
       }
-
     } catch (error) {
       console.error('❌ 直接学习计划生成失败:', error);
-      
+
       // 不在聊天区域显示错误信息，只记录日志
     }
   };
@@ -624,10 +677,10 @@ export function AIChatInterface({
       id: Date.now().toString(),
       content: messageContent.trim(),
       role: 'user',
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput('');
 
     if (useStudyAPI) {
@@ -652,7 +705,8 @@ export function AIChatInterface({
 
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
     }
   };
 
@@ -674,7 +728,7 @@ export function AIChatInterface({
   return (
     <div className={`flex flex-col h-full ${className}`}>
       {/* 消息区域 */}
-      <div 
+      <div
         ref={messagesContainerRef}
         className="flex-1 overflow-y-auto pr-2 scroll-smooth"
         style={{ scrollbarWidth: 'thin' }}
@@ -696,15 +750,16 @@ export function AIChatInterface({
                   )}
                 </AvatarFallback>
               </Avatar>
-              
+
               <div
                 className={`rounded-lg px-4 py-2 max-w-[80%] ${
                   message.role === 'user'
-                  ? 'bg-blue-500 text-white ml-auto'
-                  : 'bg-gray-100 text-gray-800'
+                    ? 'bg-blue-500 text-white ml-auto'
+                    : 'bg-gray-100 text-gray-800'
                 }`}
                 style={{
-                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  fontFamily:
+                    '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                 }}
               >
                 <p className="text-sm whitespace-pre-wrap">{message.content}</p>
@@ -714,7 +769,7 @@ export function AIChatInterface({
               </div>
             </div>
           ))}
-          
+
           {isLoading && (
             <div className="flex items-start gap-3">
               <Avatar className="w-8 h-8 flex-shrink-0">
@@ -725,15 +780,21 @@ export function AIChatInterface({
               <div className="bg-gray-100 rounded-lg px-4 py-2">
                 <div className="flex space-x-1">
                   <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                  <div
+                    className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                    style={{ animationDelay: '0.1s' }}
+                  ></div>
+                  <div
+                    className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                    style={{ animationDelay: '0.2s' }}
+                  ></div>
                 </div>
               </div>
             </div>
           )}
         </div>
       </div>
-      
+
       {/* 推荐问题区域 */}
       {recommendations && recommendations.length > 0 && (
         <div className="flex-shrink-0 px-2 py-2 space-y-2">
@@ -743,15 +804,16 @@ export function AIChatInterface({
               onClick={() => handleRecommendationClick(question)}
               className="w-full text-left p-2 bg-red-100 hover:bg-red-200 border border-red-300 rounded-lg text-xs transition-colors transform hover:rotate-0.5"
               style={{
-                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
               }}
             >
-              <span className="text-red-700 font-medium">Q{index + 1}:</span> <span className="text-red-600">{question}</span>
+              <span className="text-red-700 font-medium">Q{index + 1}:</span>{' '}
+              <span className="text-red-600">{question}</span>
             </button>
           ))}
         </div>
       )}
-      
+
       {/* 输入框区域 */}
       <div className="flex-shrink-0 pt-4 border-t border-gray-200 bg-white/90 backdrop-blur-sm">
         <div className="flex gap-2">
@@ -763,10 +825,10 @@ export function AIChatInterface({
             disabled={isLoading}
             className="flex-1 border-gray-300 rounded-lg"
             style={{
-              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
             }}
           />
-          <Button 
+          <Button
             onClick={handleSend}
             disabled={!input.trim() || isLoading}
             size="icon"
@@ -778,4 +840,4 @@ export function AIChatInterface({
       </div>
     </div>
   );
-} 
+}

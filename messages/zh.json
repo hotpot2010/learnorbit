@@ -1,7 +1,7 @@
 {
   "Metadata": {
-    "name": "learnorbit",
-    "title": "learnorbit - AI学习平台",
+    "name": "Aitutorly",
+    "title": "Aitutorly - AI学习平台",
     "description": "基于AI技术的个性化学习平台，为您创建定制化的学习路径和课程内容"
   },
   "Common": {
@@ -39,7 +39,7 @@
     "confirmInput": "确认",
     "recommendedCourses": "推荐课程",
     "myCourses": "我的课程",
-    "aiTutor": "AI导师", 
+    "aiTutor": "AI导师",
     "learningPath": "学习路径",
     "practiceArea": "练习区域",
     "chatArea": "对话区域",
@@ -51,7 +51,7 @@
     "estimatedTime": "预计时间",
     "currentProgress": "当前进度",
     "completed": "已完成",
-    "inProgress": "进行中", 
+    "inProgress": "进行中",
     "pending": "待开始",
     "noCoursesYet": "还没有课程",
     "createFirstCourse": "创建您的第一个课程",

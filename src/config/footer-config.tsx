@@ -26,11 +26,12 @@ export function getFooterLinks(): NestedMenuItem[] {
           href: Routes.Features,
           external: false,
         },
-        {
-          title: t('product.items.pricing'),
-          href: Routes.Pricing,
-          external: false,
-        },
+        // Pricing链接已隐藏
+        // {
+        //   title: t('product.items.pricing'),
+        //   href: '/pricing',
+        //   external: false,
+        // },
         {
           title: t('product.items.faq'),
           href: Routes.FAQ,

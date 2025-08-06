@@ -6,6 +6,7 @@ import { Sparkles } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuthCheck } from '@/components/shared/login-check';
 
 interface CourseInputSectionProps {
   className?: string;
@@ -16,23 +17,27 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
   const router = useRouter();
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { requireAuth } = useAuthCheck();
 
   const handleSubmit = async () => {
     if (!input.trim()) return;
-    
-    setIsLoading(true);
-    
-    // 保存用户输入并立即跳转
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('learningInput', input);
-      sessionStorage.removeItem('aiResponse'); // 清除之前的响应
-    }
-    
-    console.log('首页输入框调用chat1接口:', input);
-    console.log('首页API调用: /api/chat1/stream');
-    
-    // 立即跳转到课程定制页面
-    router.push('/en/custom');
+
+    // 检查登录状态
+    requireAuth(() => {
+      setIsLoading(true);
+
+      // 保存用户输入并立即跳转
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('learningInput', input);
+        sessionStorage.removeItem('aiResponse'); // 清除之前的响应
+      }
+
+      console.log('首页输入框调用chat1接口:', input);
+      console.log('首页API调用: /api/chat1/stream');
+
+      // 立即跳转到课程定制页面
+      router.push('/en/custom');
+    });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -53,9 +58,9 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
           className="w-full min-h-[80px] resize-none text-sm px-4 py-3 bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl shadow-sm focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
           disabled={isLoading}
         />
-        
+
         <div className="absolute bottom-3 right-3">
-          <Button 
+          <Button
             onClick={handleSubmit}
             disabled={!input.trim() || isLoading}
             size="sm"
@@ -74,4 +79,4 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
       </div>
     </div>
   );
-} 
+}

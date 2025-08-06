@@ -38,52 +38,16 @@ export const auth = betterAuth({
     // disable freshness check for user deletion
     freshAge: 0 /* 60 * 60 * 24 */,
   },
+  // 禁用邮箱密码登录
   emailAndPassword: {
-    enabled: true,
-    // https://www.better-auth.com/docs/concepts/email#2-require-email-verification
-    requireEmailVerification: true,
-    // https://www.better-auth.com/docs/authentication/email-password#forget-password
-    async sendResetPassword({ user, url }, request) {
-      const locale = getLocaleFromRequest(request);
-      const localizedUrl = getUrlWithLocaleInCallbackUrl(url, locale);
-
-      await sendEmail({
-        to: user.email,
-        template: 'forgotPassword',
-        context: {
-          url: localizedUrl,
-          name: user.name,
-        },
-        locale,
-      });
-    },
+    enabled: false,
   },
+  // 禁用邮箱验证
   emailVerification: {
-    // https://www.better-auth.com/docs/concepts/email#auto-signin-after-verification
-    autoSignInAfterVerification: true,
-    // https://www.better-auth.com/docs/authentication/email-password#require-email-verification
-    sendVerificationEmail: async ({ user, url, token }, request) => {
-      const locale = getLocaleFromRequest(request);
-      const localizedUrl = getUrlWithLocaleInCallbackUrl(url, locale);
-
-      await sendEmail({
-        to: user.email,
-        template: 'verifyEmail',
-        context: {
-          url: localizedUrl,
-          name: user.name,
-        },
-        locale,
-      });
-    },
+    sendVerificationEmail: undefined,
   },
   socialProviders: {
-    // https://www.better-auth.com/docs/authentication/github
-    github: {
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-    },
-    // https://www.better-auth.com/docs/authentication/google
+    // 只保留Google登录
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
@@ -93,7 +57,7 @@ export const auth = betterAuth({
     // https://www.better-auth.com/docs/concepts/users-accounts#account-linking
     accountLinking: {
       enabled: true,
-      trustedProviders: ['google', 'github'],
+      trustedProviders: ['google'], // 只信任Google
     },
   },
   user: {
@@ -135,7 +99,7 @@ export const auth = betterAuth({
   },
   plugins: [
     // https://www.better-auth.com/docs/plugins/admin
-    // support user management, ban/unban user, manage user roles, etc.
+    // support user management, ban/unban user, etc.
     admin({
       // https://www.better-auth.com/docs/plugins/admin#default-ban-reason
       // defaultBanReason: 'Spamming',
