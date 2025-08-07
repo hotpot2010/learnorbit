@@ -1284,7 +1284,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                     <h4 className="text-xl font-bold text-blue-700" style={{
                       fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                     }}>
-                      推荐视频：
+                      Recommended Videos:
                     </h4>
                     
                     <div className="relative">
@@ -1383,7 +1383,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                     <h4 className="text-xl font-bold text-blue-700" style={{
                       fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                     }}>
-                      推荐资料：
+                      Recommended Resources:
                     </h4>
                     
                     <div className="space-y-1">

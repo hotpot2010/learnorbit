@@ -183,7 +183,7 @@ export function CourseRecommendationGrid({
                         '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                     }}
                   >
-                    开始学习 🚀
+                    Start Learning 🚀
                   </button>
                 </div>
               </div>
@@ -263,7 +263,7 @@ export function CourseRecommendationGrid({
                         '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                     }}
                   >
-                    开始学习 🚀
+                    Start Learning 🚀
                   </button>
                 </div>
               </div>

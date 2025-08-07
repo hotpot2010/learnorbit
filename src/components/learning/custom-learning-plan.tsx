@@ -71,7 +71,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       // 只有在课程正在生成且还未完成时才显示警告
       if (planUpdateStatus === 'updating' || (partialPlan && !learningPlan)) {
         e.preventDefault();
-        e.returnValue = '课程正在生成中，离开页面将丢失当前生成的内容。确定要离开吗？';
+        e.returnValue = 'Course is being generated. Leaving the page will lose the current generated content. Are you sure you want to leave?';
         return e.returnValue;
       }
     };
@@ -392,9 +392,9 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
               }}>
             {step.title}
-            {isNewStep && <span className="ml-2 text-sm">✨ 新增!</span>}
-            {isUpdatedStep && <span className="ml-2 text-sm text-green-600">✅ 更新完成!</span>}
-            {isUpdatingStep && <span className="ml-2 text-sm text-orange-600">🔄 更新中...</span>}
+            {isNewStep && <span className="ml-2 text-sm">✨ New!</span>}
+            {isUpdatedStep && <span className="ml-2 text-sm text-green-600">✅ Updated!</span>}
+            {isUpdatingStep && <span className="ml-2 text-sm text-orange-600">🔄 Updating...</span>}
           </h3>
 
           {/* 视频封面 - 只显示第一个视频的封面 */}
@@ -515,14 +515,14 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             <div className="space-y-3">
               <h2 className="text-3xl font-bold text-gray-800 transform -rotate-1"
                   style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
-                ✨ 正在生成完整课程...
+                ✨ Generating complete course...
               </h2>
               <div className="space-y-2">
                 <p className="text-gray-600 transform rotate-0.5"
                    style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
-                  {saveStatus === 'saving' && '💾 正在保存课程计划...'}
-                  {saveStatus === 'success' && taskGenerationStatus === 'generating' && '🚀 正在生成课程内容...'}
-                  {taskGenerationStatus === 'completed' && '🎉 课程生成完成！'}
+                  {saveStatus === 'saving' && '💾 Saving course plan...'}
+                  {saveStatus === 'success' && taskGenerationStatus === 'generating' && '🚀 Generating course content...'}
+                  {taskGenerationStatus === 'completed' && '🎉 Course generation completed!'}
                 </p>
                 <div className="flex justify-center space-x-1">
                   <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
@@ -550,7 +550,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             className="h-full"
             onMessageSent={handleChatMessage}
             userInputFromHome={learningInput}
-            initialMessage="我来帮你定制课程"
+            initialMessage="I'm here to help you customize courses"
             sessionId={sessionId}
             externalMessage={externalMessage}
             onPlanGeneration={handlePlanGeneration}
@@ -656,7 +656,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                         <span className="text-blue-700 font-medium" style={{
                           fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                         }}>
-                          正在生成更多学习步骤... ✨
+                          Generating more learning steps... ✨
                         </span>
                       </div>
                     </div>
@@ -791,7 +791,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             <div className="text-6xl">🎉</div>
             <h3 className="text-2xl font-bold text-green-600 transform -rotate-1"
                 style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
-              课程已保存！
+              Course Saved!
             </h3>
             <p className="text-gray-600"
                style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
@@ -804,7 +804,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                 className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition-colors transform hover:rotate-1"
                 style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}
               >
-                知道了
+                Got it
               </button>
               <LocaleLink href="/my-courses">
                 <button
@@ -812,7 +812,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                   className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors transform hover:rotate-1"
                   style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}
                 >
-                  查看 My Courses 📚
+                  View My Courses 📚
                 </button>
               </LocaleLink>
             </div>

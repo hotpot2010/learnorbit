@@ -55,19 +55,17 @@ export function AIChatInterface({
   // 初始化欢迎消息
   useEffect(() => {
     if (!messages.length && !skipDefaultWelcome) {
-      let welcomeContent = '您好！我是您的AI学习助手。';
+      let welcomeContent = 'Hello! I am your AI learning assistant.';
 
       if (aiResponse) {
         welcomeContent = aiResponse;
         console.log('使用首页AI响应作为欢迎消息:', aiResponse);
       } else if (useStudyAPI) {
-        welcomeContent =
-          '请【阅读笔记】和【观看视频】~~ \n并试着回答下面的问题。\n有任何不懂的都可以向我提问哈~~';
+        welcomeContent = 'Please 【Read Notes】 and 【Watch Videos】~~ \n\nTry to answer the questions below.\nFeel free to ask me anything you don\'t understand~~';
       } else if (initialMessage) {
         welcomeContent = initialMessage;
       } else {
-        welcomeContent +=
-          '请告诉我您想学习什么，我会为您制定个性化的学习计划。';
+        welcomeContent += 'Please tell me what you want to learn, and I\'ll create a personalized learning plan for you.';
       }
 
       const welcomeMessage: Message = {
@@ -83,7 +81,7 @@ export function AIChatInterface({
     messages.length,
     aiResponse,
     useStudyAPI,
-    skipDefaultWelcome,
+    skipDefaultWelcome
   ]);
 
   // 处理来自首页的用户输入
@@ -202,13 +200,14 @@ export function AIChatInterface({
         };
         setMessages((prev) => [...prev, updateMessage]);
 
-        // 然后显示AI回复
+        // 创建并添加AI助手回复消息
         const assistantMessage: Message = {
-          id: (Date.now() + 2).toString(),
-          content: analysisResult.response || '我来帮您分析学习需求。',
+          id: (Date.now() + 1).toString(),
+          content: analysisResult.response || 'I\'ll help you analyze your learning needs.',
           role: 'assistant',
           timestamp: new Date(),
         };
+
         setMessages((prev) => [...prev, assistantMessage]);
 
         // 通知父组件开始计划生成（这里会设置updating状态）
@@ -225,7 +224,7 @@ export function AIChatInterface({
         // 只显示AI回复
         const assistantMessage: Message = {
           id: (Date.now() + 1).toString(),
-          content: analysisResult.response || '我来帮您分析学习需求。',
+          content: analysisResult.response || 'I\'ll help you analyze your learning needs.',
           role: 'assistant',
           timestamp: new Date(),
         };
