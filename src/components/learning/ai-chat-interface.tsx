@@ -55,17 +55,17 @@ export function AIChatInterface({
   // 初始化欢迎消息
   useEffect(() => {
     if (!messages.length && !skipDefaultWelcome) {
-      let welcomeContent = 'Hello! I am your AI learning assistant.';
+      let welcomeContent = t('aiAssistant.welcome');
 
       if (aiResponse) {
         welcomeContent = aiResponse;
         console.log('使用首页AI响应作为欢迎消息:', aiResponse);
       } else if (useStudyAPI) {
-        welcomeContent = 'Please 【Read Notes】 and 【Watch Videos】~~ \n\nTry to answer the questions below.\nFeel free to ask me anything you don\'t understand~~';
+        welcomeContent = t('aiAssistant.welcomeStudy');
       } else if (initialMessage) {
         welcomeContent = initialMessage;
       } else {
-        welcomeContent += 'Please tell me what you want to learn, and I\'ll create a personalized learning plan for you.';
+        welcomeContent += t('aiAssistant.tellMeWhatToLearn');
       }
 
       const welcomeMessage: Message = {
@@ -81,7 +81,8 @@ export function AIChatInterface({
     messages.length,
     aiResponse,
     useStudyAPI,
-    skipDefaultWelcome
+    skipDefaultWelcome,
+    t
   ]);
 
   // 处理来自首页的用户输入
@@ -203,7 +204,7 @@ export function AIChatInterface({
         // 创建并添加AI助手回复消息
         const assistantMessage: Message = {
           id: (Date.now() + 1).toString(),
-          content: analysisResult.response || 'I\'ll help you analyze your learning needs.',
+          content: analysisResult.response || t('aiAssistant.helpCustomize'),
           role: 'assistant',
           timestamp: new Date(),
         };
@@ -224,7 +225,7 @@ export function AIChatInterface({
         // 只显示AI回复
         const assistantMessage: Message = {
           id: (Date.now() + 1).toString(),
-          content: analysisResult.response || 'I\'ll help you analyze your learning needs.',
+          content: analysisResult.response || t('aiAssistant.helpCustomize'),
           role: 'assistant',
           timestamp: new Date(),
         };
@@ -530,7 +531,7 @@ export function AIChatInterface({
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         content:
-          chatResult.response || '我来帮您分析学习需求并生成个性化课程计划。',
+          chatResult.response || t('aiAssistant.helpAnalyze'),
         role: 'assistant',
         timestamp: new Date(),
       };
@@ -822,7 +823,7 @@ export function AIChatInterface({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="输入消息..."
+            placeholder="Type your message..."
             disabled={isLoading}
             className="flex-1 border-gray-300 rounded-lg"
             style={{

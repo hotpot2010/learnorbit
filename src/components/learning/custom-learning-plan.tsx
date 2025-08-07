@@ -6,6 +6,7 @@ import { CourseRecommendationGrid } from './course-recommendation-grid';
 import { LearningPlan, LearningStep } from '@/types/learning-plan';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { useAuthCheck } from '@/components/shared/login-check';
+import { useTranslations } from 'next-intl';
 
 // 生成随机评分
 const generateRating = (courseId: string) => {
@@ -43,6 +44,7 @@ interface CustomLearningPlanProps {
 }
 
 export function CustomLearningPlan({ recommendedCourses, onSendMessage }: CustomLearningPlanProps) {
+  const t = useTranslations('LearningPlatform');
   const [showLearningPlan, setShowLearningPlan] = useState(false);
   const [learningInput, setLearningInput] = useState<string>('');
   const [learningPlan, setLearningPlan] = useState<LearningPlan | null>(null);
@@ -550,7 +552,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             className="h-full"
             onMessageSent={handleChatMessage}
             userInputFromHome={learningInput}
-            initialMessage="I'm here to help you customize courses"
+            initialMessage={t('aiAssistant.welcomeCustomize')}
             sessionId={sessionId}
             externalMessage={externalMessage}
             onPlanGeneration={handlePlanGeneration}

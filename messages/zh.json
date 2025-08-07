@@ -63,6 +63,14 @@
     "recommendationsFor": "为您推荐以下相关课程",
     "letsCustomize": "让我们一起定制您的专属学习计划",
     "loading": "生成中...",
+    "aiAssistant": {
+      "welcome": "您好！我是您的AI学习助手。",
+      "welcomeStudy": "请【阅读笔记】和【观看视频】~~ \n\n并试着回答下面的问题。\n有任何不懂的都可以向我提问哦~~",
+      "welcomeCustomize": "我来帮你定制课程",
+      "helpAnalyze": "我来帮您分析学习需求并生成个性化课程计划。",
+      "helpCustomize": "我来帮您分析学习需求。",
+      "tellMeWhatToLearn": "请告诉我您想学习什么，我会为您制定个性化的学习计划。"
+    },
     "meta": {
       "title": "AI学习平台 - 个性化智能学习体验",
       "description": "基于AI技术的个性化学习平台，为您创建定制化的学习路径和课程内容，提升学习效率"

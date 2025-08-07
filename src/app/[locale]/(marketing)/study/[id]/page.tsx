@@ -402,7 +402,7 @@ export default function StudyPage({ params }: StudyPageProps) {
           setCurrentTask({
             type: 'quiz',
             difficulty: 'beginner',
-            ppt_slide: '# 任务数据缺失\n\n⚠️ 任务数据可能存在问题，请重新上传课程',
+            ppt_slide: '# Task Data Missing\n\n⚠️ Task data may have issues, please re-upload the course',
             videos: currentStep.videos
           });
           setIsLoadingTask(false);
@@ -1132,29 +1132,14 @@ export default function StudyPage({ params }: StudyPageProps) {
               <div className="h-full flex items-center justify-center">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-                  <p className="text-lg text-gray-700">生成学习任务中...</p>
+                  <p className="text-lg text-gray-700">Generating learning tasks...</p>
                   
-                  {/* 调试信息 */}
-                  {learningPlan && (
+                  {/* 调试信息 - 仅在开发环境显示 */}
+                  {process.env.NODE_ENV === 'development' && learningPlan && (
                     <div className="mt-4 text-sm text-gray-500">
-                      <p>当前步骤: {learningPlan.plan[currentStepIndex]?.step}</p>
-                      <p>状态: {taskGenerationStatus[learningPlan.plan[currentStepIndex]?.step]}</p>
-                      <p>已缓存: {taskCache[learningPlan.plan[currentStepIndex]?.step] ? '是' : '否'}</p>
-                      
-                      <button 
-                        onClick={() => {
-                          const currentStep = learningPlan.plan[currentStepIndex];
-                          const cachedTask = taskCache[currentStep.step];
-                          console.log('🔍 手动检查缓存:', { currentStep: currentStep.step, cachedTask });
-                          if (cachedTask) {
-                            setCurrentTask(cachedTask);
-                            setIsLoadingTask(false);
-                          }
-                        }}
-                        className="mt-2 px-3 py-1 bg-blue-500 text-white rounded text-xs"
-                      >
-                        手动刷新
-                      </button>
+                      <p>Current Step: {learningPlan.plan[currentStepIndex]?.step}</p>
+                      <p>Status: {taskGenerationStatus[learningPlan.plan[currentStepIndex]?.step]}</p>
+                      <p>Cached: {taskCache[learningPlan.plan[currentStepIndex]?.step] ? 'Yes' : 'No'}</p>
                     </div>
                   )}
                 </div>
