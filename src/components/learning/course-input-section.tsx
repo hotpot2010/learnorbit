@@ -2,11 +2,11 @@
 
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Sparkles } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { Loader2, Send } from 'lucide-react';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useLocaleRouter } from '@/i18n/navigation';
 import { useAuthCheck } from '@/components/shared/login-check';
+import { useTranslations } from 'next-intl';
 
 interface CourseInputSectionProps {
   className?: string;
@@ -14,7 +14,7 @@ interface CourseInputSectionProps {
 
 export function CourseInputSection({ className }: CourseInputSectionProps) {
   const t = useTranslations('LearningPlatform');
-  const router = useRouter();
+  const router = useLocaleRouter();
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { requireAuth } = useAuthCheck();
@@ -36,7 +36,7 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
       console.log('首页API调用: /api/chat1/stream');
 
       // 立即跳转到课程定制页面
-      router.push('/en/custom');
+      router.push('/custom');
     });
   };
 
@@ -70,7 +70,7 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
-                <Sparkles className="w-3.5 h-3.5 mr-1" />
+                <Send className="w-3.5 h-3.5 mr-1" />
                 {t('generatePlan')}
               </>
             )}

@@ -4,9 +4,8 @@ import { useState, useEffect } from 'react';
 import { AIChatInterface } from './ai-chat-interface';
 import { CourseRecommendationGrid } from './course-recommendation-grid';
 import { LearningPlan, LearningStep } from '@/types/learning-plan';
-import Link from 'next/link';
+import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { useAuthCheck } from '@/components/shared/login-check';
-import { useRouter } from 'next/navigation';
 
 // 生成随机评分
 const generateRating = (courseId: string) => {
@@ -64,7 +63,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   });
 
   const { requireAuth } = useAuthCheck();
-  const router = useRouter();
+  const router = useLocaleRouter();
 
   // 页面离开警告 - 当课程正在生成时
   useEffect(() => {
@@ -807,7 +806,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
               >
                 知道了
               </button>
-              <Link href="/my-courses">
+              <LocaleLink href="/my-courses">
                 <button
                   onClick={() => setShowCompletionNotification(false)}
                   className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors transform hover:rotate-1"
@@ -815,7 +814,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                 >
                   查看 My Courses 📚
                 </button>
-              </Link>
+              </LocaleLink>
             </div>
           </div>
         </div>

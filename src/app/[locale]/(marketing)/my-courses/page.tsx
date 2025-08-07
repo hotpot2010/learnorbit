@@ -13,11 +13,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCurrentUser } from '@/hooks/use-current-user';
-import { LocaleLink } from '@/i18n/navigation';
+import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
+import { Routes } from '@/routes';
 import { Trash2 } from 'lucide-react';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 // 生成随机评分
 const generateRating = (courseId: string) => {
@@ -100,7 +99,7 @@ export default function MyCoursesPage() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [courseToDelete, setCourseToDelete] = useState<any>(null);
   const [deletingCourseId, setDeletingCourseId] = useState<string | null>(null);
-  const router = useRouter();
+  const router = useLocaleRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -189,7 +188,7 @@ export default function MyCoursesPage() {
         <div className="text-center">
           <p className="text-lg mb-4">Please log in to view your courses</p>
           <LocaleLink
-            href="/auth/login"
+            href={Routes.Login}
             className="text-blue-600 hover:text-blue-800 font-semibold"
           >
             Go to Login
