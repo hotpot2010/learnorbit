@@ -16,7 +16,7 @@ import {
   Maximize2,
   Minimize2
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { LearningPlan, LearningStep, TaskGenerateRequest, TaskGenerateResponse, TaskContent, QuizQuestion, CodingTask } from '@/types/learning-plan';
 import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
@@ -41,29 +41,100 @@ export default function StudyPage({ params }: StudyPageProps) {
   const [codeValue, setCodeValue] = useState<string>('');
   const [codeOutput, setCodeOutput] = useState<string>('');
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isVideoExpanded, setIsVideoExpanded] = useState(false);
   
   // 任务缓存和并行生成相关状态
   const [taskCache, setTaskCache] = useState<Record<number, TaskContent>>({});
   const [taskGenerationStatus, setTaskGenerationStatus] = useState<Record<number, 'pending' | 'loading' | 'completed' | 'failed'>>({});
   const [pollingInterval, setPollingInterval] = useState<NodeJS.Timeout | null>(null);
+  
+  // 防止重复生成任务的标志
+  const taskGenerationStarted = useRef<boolean>(false);
+
+  // 上传状态
+  const [isUploading, setIsUploading] = useState(false);
+
+  // 标识是否从数据库加载
+  const [isFromDatabase, setIsFromDatabase] = useState(false);
+
+  // 防止React Strict Mode重复执行的标志
+  const initialLoadCompleted = useRef<boolean>(false);
 
   useEffect(() => {
     const resolveParams = async () => {
       const resolvedParams = await params;
       setRouteParams(resolvedParams);
       
+      // 防止React Strict Mode重复执行
+      if (initialLoadCompleted.current) {
+        console.log('⚠️ 初始加载已完成，跳过重复执行');
+        return;
+      }
+      
       // 如果是custom课程，从sessionStorage加载学习计划
       if (resolvedParams.id === 'custom') {
         const savedPlan = sessionStorage.getItem('learningPlan');
+        const fromDatabase = sessionStorage.getItem('fromDatabase');
+        const savedTaskCache = sessionStorage.getItem('taskCache');
+        
+        console.log('🔍 检查sessionStorage状态:', {
+          hasSavedPlan: !!savedPlan,
+          fromDatabase: fromDatabase,
+          hasSavedTaskCache: !!savedTaskCache,
+          taskGenerationStarted: taskGenerationStarted.current,
+          initialLoadCompleted: initialLoadCompleted.current
+        });
+        
         if (savedPlan) {
           try {
             const plan: LearningPlan = JSON.parse(savedPlan);
             setLearningPlan(plan);
             console.log('✅ 加载自定义学习计划:', plan);
             
-            // 启动并行任务生成
-            console.log('🚀 启动并行任务生成...');
-            generateAllTasks(plan);
+            // 如果来自数据库且有任务缓存，直接加载任务
+            if (fromDatabase === 'true' && savedTaskCache) {
+              console.log('📁 检测到数据库课程，准备加载任务缓存...');
+              
+              const tasks = JSON.parse(savedTaskCache);
+              setTaskCache(tasks);
+              setIsFromDatabase(true); // 设置数据库标识
+              
+              // 设置所有任务状态为已完成
+              const completedStatus: Record<number, 'completed'> = {};
+              Object.keys(tasks).forEach(stepNum => {
+                completedStatus[parseInt(stepNum)] = 'completed';
+              });
+              setTaskGenerationStatus(completedStatus);
+              
+              console.log('✅ 从数据库加载任务缓存，跳过任务生成:', {
+                taskCount: Object.keys(tasks).length,
+                taskKeys: Object.keys(tasks)
+              });
+              
+              // 标记任务生成已完成，防止后续调用
+              taskGenerationStarted.current = true;
+              initialLoadCompleted.current = true;
+              
+              // 清除数据库标记
+              sessionStorage.removeItem('fromDatabase');
+              sessionStorage.removeItem('taskCache');
+            } else {
+              console.log('🆕 检测到新课程，需要生成任务:', {
+                fromDatabase: fromDatabase,
+                hasSavedTaskCache: !!savedTaskCache,
+                taskGenerationStarted: taskGenerationStarted.current
+              });
+              
+              // 启动并行任务生成（防止重复执行）
+              if (!taskGenerationStarted.current) {
+                console.log('🚀 启动并行任务生成...');
+                taskGenerationStarted.current = true;
+                initialLoadCompleted.current = true;
+                generateAllTasks(plan);
+              } else {
+                console.log('⚠️ 任务生成已经启动，跳过重复执行');
+              }
+            }
             
           } catch (error) {
             console.error('解析学习计划失败:', error);
@@ -93,29 +164,63 @@ export default function StudyPage({ params }: StudyPageProps) {
       // 立即执行异步任务，不等待它完成
       (async () => {
         try {
-          const requestData: TaskGenerateRequest = {
+          console.log(`🔄 开始生成步骤 ${step.step}: ${step.title}`);
+          
+          // 构造正确的请求数据格式
+          const requestData = {
             step: step.step,
             title: step.title,
             description: step.description,
-            animation_type: step.animation_type,
+            animation_type: step.animation_type || '无',
             status: step.status,
             type: step.type,
             difficulty: step.difficulty,
+            search_keyword: step.search_keyword || step.title, // 如果没有search_keyword就用title
             videos: step.videos
           };
-
+          
+          console.log('📤 发送任务生成请求:', requestData);
+          
           const response = await fetch('/api/task/generate', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(requestData)
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData),
           });
 
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
 
-          const result: TaskGenerateResponse = await response.json();
+          const result = await response.json();
           
+          // 详细的调试信息
+          console.log(`🔍 步骤 ${step.step} API 返回结果:`, {
+            success: result.success,
+            taskType: result.task?.type,
+            ppt_slide: {
+              exists: !!result.task?.ppt_slide,
+              type: typeof result.task?.ppt_slide,
+              isString: typeof result.task?.ppt_slide === 'string',
+              length: result.task?.ppt_slide?.length || 0,
+              preview: typeof result.task?.ppt_slide === 'string' 
+                ? result.task.ppt_slide.substring(0, 100) + '...'
+                : result.task?.ppt_slide,
+              fullContent: result.task?.ppt_slide
+            },
+            task: result.task?.task ? {
+              exists: true,
+              type: typeof result.task.task,
+              keys: Object.keys(result.task.task || {})
+            } : { exists: false },
+            questions: result.task?.questions ? {
+              exists: true,
+              type: typeof result.task.questions,
+              length: Array.isArray(result.task.questions) ? result.task.questions.length : 'not array'
+            } : { exists: false }
+          });
+
           if (result.success) {
             console.log(`✅ 步骤 ${step.step} 生成成功`);
             
@@ -137,6 +242,21 @@ export default function StudyPage({ params }: StudyPageProps) {
               hasQuestions: !!result.task.questions,
               hasTask: !!result.task.task
             });
+            
+            // 立即检查是否需要更新当前步骤的显示
+            setTimeout(() => {
+              if (learningPlan?.plan[currentStepIndex]?.step === step.step) {
+                console.log(`🎯 任务生成完成，立即更新当前步骤 ${step.step} 的显示`);
+                setCurrentTask(result.task);
+                setIsLoadingTask(false);
+                
+                // 如果是编程题，设置初始代码
+                if (result.task?.type === 'coding' && result.task.task) {
+                  setCodeValue(result.task.task.starter_code || '');
+                  console.log('💻 设置编程任务初始代码');
+                }
+              }
+            }, 100);
             
           } else {
             throw new Error('Task generation failed');
@@ -192,7 +312,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       
       console.log(`⏰ 轮询检查步骤 ${stepNumber}:`, { hasCached: !!cachedTask, status });
       
-      if (cachedTask || status === 'completed') {
+      if (cachedTask && status === 'completed') {
         console.log(`✅ 步骤 ${stepNumber} 任务已准备就绪`);
         clearInterval(interval);
         setPollingInterval(null);
@@ -276,10 +396,22 @@ export default function StudyPage({ params }: StudyPageProps) {
         });
         setIsLoadingTask(false);
       } else {
-        console.log('⏳ 任务还未开始生成，等待');
-        setCurrentTask(null);
-        setIsLoadingTask(true);
-        startPollingForTask(currentStep.step);
+        // 检查是否从数据库加载
+        if (isFromDatabase) {
+          console.log('📁 从数据库加载的课程，任务应该已存在，但未找到缓存');
+          setCurrentTask({
+            type: 'quiz',
+            difficulty: 'beginner',
+            ppt_slide: '# 任务数据缺失\n\n⚠️ 任务数据可能存在问题，请重新上传课程',
+            videos: currentStep.videos
+          });
+          setIsLoadingTask(false);
+        } else {
+          console.log('⏳ 任务还未开始生成，等待');
+          setCurrentTask(null);
+          setIsLoadingTask(true);
+          startPollingForTask(currentStep.step);
+        }
       }
     } else {
       console.log('❌ 条件不满足，跳过任务获取');
@@ -314,6 +446,21 @@ export default function StudyPage({ params }: StudyPageProps) {
       }
     };
   }, [pollingInterval]);
+
+  // 键盘事件监听 - 支持ESC键退出视频放大
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isVideoExpanded) {
+        setIsVideoExpanded(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isVideoExpanded]);
 
   // 监听任务缓存变化，实时更新当前步骤的任务
   useEffect(() => {
@@ -768,6 +915,60 @@ export default function StudyPage({ params }: StudyPageProps) {
     return videoUrl;
   };
 
+  // 上传课程到数据库
+  const handleUploadCourse = async () => {
+    if (!learningPlan) {
+      alert('学习计划不存在，无法上传。');
+      return;
+    }
+
+    try {
+      setIsUploading(true);
+      console.log('📤 开始上传课程到数据库...');
+      
+      // 构造上传数据，包含课程计划和生成的任务
+      const uploadData = {
+        plan: learningPlan,
+        tasks: taskCache
+      };
+
+      const response = await fetch('/api/user-courses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(uploadData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('✅ 课程上传成功:', result);
+      
+      alert('🎉 课程已成功上传到【我的课程】！');
+      
+    } catch (error) {
+      console.error('❌ 课程上传失败:', error);
+      alert('❌ 课程上传失败，请稍后重试。');
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  // 检查所有任务是否已生成
+  const areAllTasksGenerated = () => {
+    if (!learningPlan) return false;
+    return learningPlan.plan.every(step => taskGenerationStatus[step.step] === 'completed');
+  };
+
+  // 获取已生成的任务数量
+  const getGeneratedTasksCount = () => {
+    if (!learningPlan) return 0;
+    return learningPlan.plan.filter(step => taskGenerationStatus[step.step] === 'completed').length;
+  };
+
   return (
     <div className="h-[calc(100vh-4rem)] flex"
          style={{
@@ -847,6 +1048,43 @@ export default function StudyPage({ params }: StudyPageProps) {
                   ))}
         </div>
       </div>
+              
+              {/* 上传课程按钮 */}
+              {routeParams?.id === 'custom' && learningPlan && (
+                <div className="p-4">
+                  <Button
+                    onClick={handleUploadCourse}
+                    disabled={!areAllTasksGenerated() || isUploading}
+                    className={`w-full font-bold transform shadow-lg ${
+                      areAllTasksGenerated() && !isUploading 
+                        ? 'bg-primary hover:bg-primary/90 rotate-1 hover:rotate-0' 
+                        : 'bg-gray-400 hover:bg-gray-400 cursor-not-allowed rotate-0'
+                    }`}
+                    style={{
+                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    }}
+                  >
+                    <div className="flex items-center justify-center space-x-2">
+                      {isUploading ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span>Uploading Course...</span>
+                        </>
+                      ) : areAllTasksGenerated() ? (
+                        <>
+                          <span className="text-lg">📤</span>
+                          <span>Upload Course!</span>
+                        </>
+                      ) : (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span>Generating Tasks... ({getGeneratedTasksCount()}/{learningPlan.plan.length})</span>
+                        </>
+                      )}
+                    </div>
+                  </Button>
+                </div>
+              )}
             </>
           )}
           
@@ -1036,7 +1274,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                       ),
                     }}
                   >
-                    {currentTask.ppt_slide}
+                    {currentTask.ppt_slide || ''}
                   </ReactMarkdown>
                  </div>
 
@@ -1050,10 +1288,10 @@ export default function StudyPage({ params }: StudyPageProps) {
                     </h4>
                     
                     <div className="relative">
-                      {/* 单个视频显示 - 适配16:9长宽比 */}
+                      {/* 单个视频显示 - 支持简单放大 */}
                       {getCurrentStepVideos()[currentVideoIndex] && (
-                        <div className="w-96 relative group">
-                          <div className="bg-white p-2 rounded-lg shadow-lg transform -rotate-1">
+                        <div className={`${isVideoExpanded ? 'w-[768px]' : 'w-96'} relative group transition-all duration-300`}>
+                          <div className="bg-white p-2 rounded-lg shadow-lg">
                             <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black relative transition-all duration-300">
                               {processVideoUrl(getCurrentStepVideos()[currentVideoIndex].url).includes('player.bilibili.com') ? (
                                 <iframe 
@@ -1077,7 +1315,21 @@ export default function StudyPage({ params }: StudyPageProps) {
                                   </div>
                                 </div>
                               )}
+                              
+                              {/* 放大/缩小按钮 */}
+                              <button
+                                onClick={() => setIsVideoExpanded(!isVideoExpanded)}
+                                className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110"
+                                title={isVideoExpanded ? "缩小视频" : "放大视频"}
+                              >
+                                {isVideoExpanded ? (
+                                  <Minimize2 className="w-4 h-4" />
+                                ) : (
+                                  <Maximize2 className="w-4 h-4" />
+                                )}
+                              </button>
                             </div>
+                            
                             {/* 视频标题 */}
                             <div className="mt-2 px-1">
                               <p className="text-sm font-medium text-gray-700 truncate" style={{
@@ -1095,7 +1347,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                         </div>
                       )}
                       
-                      {/* 笔记风格切换按钮 - 右下角位置 */}
+                      {/* 视频切换按钮 */}
                       {getCurrentStepVideos().length > 1 && (
                         <div className="absolute bottom-4 right-4 z-10">
                           <div className="bg-yellow-100 p-2 rounded-lg shadow-lg transform rotate-3 border-2 border-dashed border-yellow-400">
@@ -1121,6 +1373,48 @@ export default function StudyPage({ params }: StudyPageProps) {
                           </div>
                         </div>
                       )}
+                    </div>
+                  </div>
+                )}
+
+                {/* 推荐资料区域 */}
+                {currentTask?.web_res?.results && currentTask.web_res.results.length > 0 && (
+                  <div className="space-y-4">
+                    <h4 className="text-xl font-bold text-blue-700" style={{
+                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    }}>
+                      推荐资料：
+                    </h4>
+                    
+                    <div className="space-y-1">
+                      {currentTask.web_res.results.slice(0, 8).map((result, index) => (
+                        <div 
+                          key={index} 
+                          className="group cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                          onClick={() => window.open(result.url, '_blank')}
+                        >
+                          <div className="flex items-center space-x-2">
+                            <span className={`text-base font-bold ${
+                              index % 3 === 0 ? 'text-blue-500' : 
+                              index % 3 === 1 ? 'text-green-500' : 
+                              'text-purple-500'
+                            }`}>
+                              {index + 1}.
+                            </span>
+                            
+                            <h5 className="text-base font-bold text-gray-800 hover:text-blue-600 transition-colors flex-1" style={{
+                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            }}>
+                              {result.title}
+                            </h5>
+                            
+                            <span className="text-sm">
+                              {result.score > 0.9 ? '🔥' :
+                               result.score > 0.8 ? '👍' : '📖'}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}

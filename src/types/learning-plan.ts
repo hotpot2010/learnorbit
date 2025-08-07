@@ -15,6 +15,7 @@ export interface LearningStep {
   status: 'current' | 'completed' | 'pending' | '当前进行' | '待完成';
   type: 'quiz' | 'coding';
   difficulty: 'beginner' | 'intermediate' | 'advanced';
+  search_keyword?: string; // 添加可选的搜索关键词
   videos: Video[];
 }
 
@@ -35,6 +36,7 @@ export interface TaskGenerateRequest {
   status: string;
   type: 'quiz' | 'coding';
   difficulty: 'beginner' | 'intermediate' | 'advanced';
+  search_keyword?: string; // 添加可选的搜索关键词
   videos: Video[];
 }
 
@@ -57,6 +59,29 @@ export interface CodingTask {
   answer: string;
 }
 
+// Web搜索结果类型
+export interface WebSearchResult {
+  url: string;
+  title: string;
+  content: string;
+  score: number;
+  raw_content: string | null;
+}
+
+export interface WebSearchImage {
+  url: string;
+  description: string;
+}
+
+export interface WebSearchResponse {
+  query: string;
+  follow_up_questions: string[] | null;
+  answer: string | null;
+  images: WebSearchImage[];
+  results: WebSearchResult[];
+  response_time: number;
+}
+
 export interface TaskContent {
   type: 'quiz' | 'coding';
   difficulty: string;
@@ -64,6 +89,7 @@ export interface TaskContent {
   questions?: QuizQuestion[];
   task?: CodingTask;
   videos: Video[];
+  web_res?: WebSearchResponse; // 新增：Web搜索结果
 }
 
 export interface TaskGenerateResponse {

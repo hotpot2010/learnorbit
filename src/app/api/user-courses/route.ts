@@ -17,7 +17,17 @@ export async function POST(request: NextRequest) {
     }
 
     const userId = session.user.id;
-    const coursePlan = await request.json();
+    const requestData = await request.json();
+    
+    // 检查数据格式：新格式包含 plan 和 tasks，旧格式直接是 coursePlan
+    const coursePlan = requestData.plan || requestData;
+    const taskData = requestData.tasks || {};
+    
+    console.log('📥 接收到课程数据:', {
+      hasPlan: !!coursePlan,
+      hasTaskData: !!requestData.tasks,
+      taskCount: Object.keys(taskData).length
+    });
 
     // 保存课程信息到数据库
     const db = await getDb();
@@ -25,13 +35,21 @@ export async function POST(request: NextRequest) {
       .insert(userCourses)
       .values({
         userId: userId,
-        coursePlan: coursePlan,
+        coursePlan: {
+          plan: coursePlan.plan || coursePlan,
+          tasks: taskData // 存储生成的任务数据
+        },
         currentStep: 0,
         status: 'in-progress',
       })
       .returning();
 
-    return NextResponse.json({ course: newCourse }, { status: 201 });
+    console.log('✅ 课程保存成功:', { courseId: newCourse.id });
+
+    return NextResponse.json({ 
+      course: newCourse,
+      message: 'Course uploaded successfully'
+    }, { status: 201 });
   } catch (error) {
     console.error('Error creating course:', error);
     return NextResponse.json(

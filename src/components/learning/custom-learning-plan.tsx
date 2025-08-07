@@ -284,65 +284,25 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   const saveCourseToDatabase = async (coursePlan: LearningPlan) => {
     try {
       setSaveStatus('saving');
-      console.log('💾 开始保存课程到数据库:', coursePlan);
+      console.log('💾 开始保存课程到sessionStorage:', coursePlan);
 
-      // 1. 保存课程到数据库
-      const response = await fetch('/api/user-courses', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(coursePlan),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log('✅ 课程保存成功:', data);
-
-      // 2. 保存到sessionStorage供学习页面使用
+      // 1. 保存到sessionStorage供学习页面使用
       sessionStorage.setItem('learningPlan', JSON.stringify(coursePlan));
-
-      // 3. 触发任务生成（后台进行，跟踪状态）
-      const courseId = data.course.id;
-      console.log('🚀 开始生成课程任务...');
-      setTaskGenerationStatus('generating');
-      setIsGeneratingCourse(true);
-
-      fetch(`/api/user-courses/${courseId}/tasks/generate`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then(taskResponse => {
-        if (taskResponse.ok) {
-          console.log('✅ 课程任务生成成功');
-          setTaskGenerationStatus('completed');
-        } else {
-          console.warn('⚠️ 课程任务生成失败，但不影响课程学习');
-          setTaskGenerationStatus('error');
-          setIsGeneratingCourse(false);
-        }
-      }).catch(taskError => {
-        console.warn('⚠️ 课程任务生成遇到问题:', taskError);
-        setTaskGenerationStatus('error');
-        setIsGeneratingCourse(false);
-      });
 
       setSaveStatus('success');
 
-      // 4. 跳转到学习页面
-      router.push(`/study/${courseId}`);
+      // 2. 直接跳转到 custom 学习页面，使用统一的任务生成逻辑
+      router.push('/study/custom');
 
     } catch (error) {
-      console.error('❌ 保存课程失败:', error);
+      console.error('🚨 保存课程失败:', error);
       setSaveStatus('error');
-
-      // 错误情况下仍然保存到sessionStorage，使用custom ID
-      sessionStorage.setItem('learningPlan', JSON.stringify(coursePlan));
-      router.push('/study/custom');
+      
+      // 即使保存失败，也允许用户继续学习
+      setTimeout(() => {
+        sessionStorage.setItem('learningPlan', JSON.stringify(coursePlan));
+        router.push('/study/custom');
+      }, 1000);
     }
   };
 

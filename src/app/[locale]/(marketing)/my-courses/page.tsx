@@ -17,6 +17,7 @@ import { LocaleLink } from '@/i18n/navigation';
 import { Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 // 生成随机评分
 const generateRating = (courseId: string) => {
@@ -46,7 +47,10 @@ const StarRating = ({ rating }: { rating: number }) => {
 
 // 从LearningPlan提取课程信息的辅助函数
 const extractCourseInfo = (coursePlan: any) => {
-  if (!coursePlan || !coursePlan.plan || !Array.isArray(coursePlan.plan)) {
+  // 处理新格式（包含plan和tasks）和旧格式
+  const planData = coursePlan?.plan || coursePlan;
+  
+  if (!planData || !Array.isArray(planData)) {
     return {
       title: 'Unknown Course',
       description: 'Course description not available',
@@ -55,7 +59,7 @@ const extractCourseInfo = (coursePlan: any) => {
     };
   }
 
-  const plan = coursePlan.plan;
+  const plan = planData;
   const title = plan.length > 0 ? plan[0].title : 'Unknown Course';
   const totalTime = plan.reduce((acc: number, step: any) => {
     const time = Number.parseInt(step.estimatedTime || '0');
@@ -96,6 +100,7 @@ export default function MyCoursesPage() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [courseToDelete, setCourseToDelete] = useState<any>(null);
   const [deletingCourseId, setDeletingCourseId] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -150,6 +155,27 @@ export default function MyCoursesPage() {
     setDeleteDialogOpen(true);
   };
 
+  // 点击课程卡片
+  const handleCourseClick = (course: any) => {
+    // 将课程数据存储到 sessionStorage
+    const learningPlan = {
+      plan: course.coursePlan.plan || course.coursePlan
+    };
+    
+    // 如果有任务数据，也一并存储
+    if (course.coursePlan.tasks) {
+      sessionStorage.setItem('taskCache', JSON.stringify(course.coursePlan.tasks));
+    }
+    
+    sessionStorage.setItem('learningPlan', JSON.stringify(learningPlan));
+    sessionStorage.setItem('fromDatabase', 'true'); // 标记来源于数据库
+    
+    console.log('📖 加载数据库课程:', course);
+    
+    // 跳转到学习页面
+    router.push('/study/custom');
+  };
+
   useEffect(() => {
     if (currentUser && mounted) {
       fetchCourses();
@@ -177,14 +203,14 @@ export default function MyCoursesPage() {
   const inProgressCourses = courses.filter(
     (course: any) =>
       course.status === 'in-progress' &&
-      (course.currentStep || 0) < (course.coursePlan?.plan?.length || 1)
+      (course.currentStep || 0) < (course.coursePlan?.plan?.length || course.coursePlan?.length || 1)
   );
 
   const completedCourses = courses.filter(
     (course: any) =>
       course.status === 'completed' ||
       (course.status === 'in-progress' &&
-        (course.currentStep || 0) >= (course.coursePlan?.plan?.length || 1))
+        (course.currentStep || 0) >= (course.coursePlan?.plan?.length || course.coursePlan?.length || 1))
   );
 
   // 注意：数据库中没有'published'状态，这里可能需要根据实际需求调整
@@ -192,9 +218,10 @@ export default function MyCoursesPage() {
 
   const CourseCard = ({ course, index }: { course: any; index: number }) => {
     const courseInfo = extractCourseInfo(course.coursePlan);
-    const progress = course.coursePlan?.plan
+    const planData = course.coursePlan?.plan || course.coursePlan;
+    const progress = Array.isArray(planData)
       ? Math.round(
-          ((course.currentStep || 0) / course.coursePlan.plan.length) * 100
+          ((course.currentStep || 0) / planData.length) * 100
         )
       : 0;
 
@@ -204,6 +231,7 @@ export default function MyCoursesPage() {
           className={`bg-white p-4 rounded-lg shadow-lg transform transition-all duration-300 ${
             index % 2 === 0 ? 'rotate-2' : '-rotate-1'
           } group-hover:rotate-0`}
+          onClick={() => handleCourseClick(course)}
         >
           {/* 删除按钮 */}
           <button
@@ -247,6 +275,7 @@ export default function MyCoursesPage() {
           )}
 
           {/* 任务生成状态 */}
+          {/* 移除任务生成状态显示
           {!course.tasksGenerated && (
             <div className="mb-3">
               <span
@@ -261,6 +290,7 @@ export default function MyCoursesPage() {
               </span>
             </div>
           )}
+          */}
 
           {/* 完成状态标识 */}
           {course.status === 'completed' && (
@@ -327,20 +357,18 @@ export default function MyCoursesPage() {
               </div>
             </div>
 
-            <Link href={`/study/${course.id}`}>
-              <button
-                type="button"
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm transform rotate-1 hover:rotate-0 shadow-md"
-                style={{
-                  fontFamily:
-                    '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
-                }}
-              >
-                {course.status === 'completed'
-                  ? 'Review Course 📚'
-                  : 'Continue Learning ⚡'}
-              </button>
-            </Link>
+            <button
+              type="button"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm transform rotate-1 hover:rotate-0 shadow-md"
+              style={{
+                fontFamily:
+                  '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+              }}
+            >
+              {course.status === 'completed'
+                ? 'Review Course 📚'
+                : 'Continue Learning ⚡'}
+            </button>
           </div>
         </div>
 

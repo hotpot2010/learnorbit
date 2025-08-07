@@ -12,6 +12,12 @@ import {
 } from 'drizzle-orm/pg-core';
 import { LearningPlan } from '@/types/learning-plan';
 
+// 扩展的课程计划类型，包含任务数据
+export interface ExtendedCoursePlan {
+  plan: LearningPlan | any[];  // 兼容旧格式和新格式
+  tasks?: Record<string, any>; // 生成的任务数据
+}
+
 export const userCourses = pgTable('user_courses', {
   id: text('id')
     .primaryKey()
@@ -19,7 +25,7 @@ export const userCourses = pgTable('user_courses', {
   userId: text('user_id')
     .notNull()
     .references(() => user.id, { onDelete: 'cascade' }),
-  coursePlan: jsonb('course_plan').notNull().$type<LearningPlan>(),
+  coursePlan: jsonb('course_plan').notNull().$type<ExtendedCoursePlan>(),
   currentStep: integer('current_step').default(0).notNull(),
   status: text('status', { enum: ['in-progress', 'completed'] })
     .default('in-progress')

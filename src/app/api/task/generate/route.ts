@@ -13,18 +13,12 @@ export async function POST(request: NextRequest) {
 
     body.animation_type = '无';
 
-    console.log('🔧 环境变量调试信息:', {
-      'process.env.EXTERNAL_API_URL': process.env.EXTERNAL_API_URL,
-      EXTERNAL_API_URL常量: EXTERNAL_API_URL,
-      最终请求URL: `${EXTERNAL_API_URL}/api/task/generate`,
-    });
-
-    console.log('📤 代理请求到外部API:', {
-      externalUrl: `${EXTERNAL_API_URL}/api/task/generate`,
+    console.log('📤 任务生成请求:', {
       step: body.step,
       title: body.title,
       type: body.type,
       difficulty: body.difficulty,
+      externalUrl: `${EXTERNAL_API_URL}/api/task/generate`
     });
 
     // 调用外部API
