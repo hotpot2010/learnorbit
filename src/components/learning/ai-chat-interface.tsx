@@ -481,7 +481,7 @@ export function AIChatInterface({
     currentMessages: Message[]
   ) => {
     try {
-      console.log('\n=== 🚀 第一条消息：生成回复 + 生成学习计划 ===');
+      console.log('\n=== 🚀 第一条消息：并行处理回复 + 学习计划 ===');
 
       // 构造请求数据
       const requestData = {
@@ -499,10 +499,19 @@ export function AIChatInterface({
           ]),
       };
 
-      console.log('📤 发送第一条消息请求:', requestData);
+      console.log('📤 并行启动两个API请求:', requestData);
 
-      // 第一步：调用 /api/chat1/stream 生成AI回复
-      console.log('🔹 步骤1：调用 chat1/stream 生成回复');
+      // 通知父组件开始计划生成（这里会设置updating状态）
+      onPlanGeneration?.([1], '初次生成学习计划');
+
+      // 立即启动学习计划生成（不等待结果）
+      console.log('🔹 启动学习计划生成（异步）');
+      generateLearningPlanDirect(requestData).catch(error => {
+        console.error('❌ 学习计划生成失败:', error);
+      });
+
+      // 同时处理聊天回复（独立执行）
+      console.log('🔹 处理聊天回复（独立）');
       const chatResponse = await fetch('/api/chat1/stream', {
         method: 'POST',
         headers: {
@@ -518,7 +527,7 @@ export function AIChatInterface({
       const chatResult = await chatResponse.json();
       console.log('📥 聊天API响应:', chatResult);
 
-      // 创建并添加AI助手回复消息
+      // 立即显示AI回复（不等待学习计划）
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         content:
@@ -529,17 +538,10 @@ export function AIChatInterface({
 
       setMessages((prev) => [...prev, assistantMessage]);
 
-      // 第二步：同时调用学习计划生成API
-      console.log('🔹 步骤2：调用 plan/stream_generate 生成学习计划');
-
-      // 通知父组件开始计划生成（这里会设置updating状态）
-      onPlanGeneration?.([1], '初次生成学习计划'); // 传递非空数组以触发updating状态
-
-      // 调用流式计划生成API
-      await generateLearningPlanDirect(requestData);
-
       // 标记已经不是第一条消息了
       setIsFirstMessage(false);
+      
+      console.log('✅ 聊天回复已显示，学习计划仍在后台生成');
     } catch (error) {
       console.error('❌ 第一条消息处理错误:', error);
 
