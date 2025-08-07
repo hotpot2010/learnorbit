@@ -58,14 +58,19 @@ export async function POST(
       );
     }
 
+    // 获取步骤数组
+    const steps = Array.isArray(coursePlan.plan) 
+      ? coursePlan.plan 
+      : coursePlan.plan.plan || [];
+
     console.log(
-      `🚀 开始为课程 ${courseId} 生成所有任务，共 ${coursePlan.plan.length} 个步骤`
+      `🚀 开始为课程 ${courseId} 生成所有任务，共 ${steps.length} 个步骤`
     );
 
     const results = [];
 
     // 并行生成所有任务
-    const taskPromises = coursePlan.plan.map(async (step: any) => {
+    const taskPromises = steps.map(async (step: any) => {
       try {
         console.log(`📤 生成步骤 ${step.step} 的任务: ${step.title}`);
 
