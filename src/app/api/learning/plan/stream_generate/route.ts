@@ -1,14 +1,22 @@
 import { type NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
+import { type LearningPlanGenerateRequest } from '@/types/learning-plan';
+import { getApiRequestContext, enhanceApiRequest } from '@/lib/api-utils';
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body: LearningPlanGenerateRequest = await request.json();
     const { id, messages, advise } = body;
+
+    // 获取用户信息和语言设置
+    const context = await getApiRequestContext(request);
 
     console.log('\n=== 📤 调用流式学习计划生成API ===');
     console.log('SessionId:', id);
     console.log('消息数量:', messages?.length || 0);
     console.log('建议信息:', advise);
+    console.log('用户ID:', context.userId || 'anonymous');
+    console.log('语言:', context.lang);
 
     if (messages && messages.length > 0) {
       console.log('最后一条消息:', messages[messages.length - 1]);
@@ -19,6 +27,8 @@ export async function POST(request: NextRequest) {
       id,
       messages,
       ...(advise && { advise }),
+      userId: context.userId || null,
+      lang: context.lang,
     };
 
     const externalApiUrl =

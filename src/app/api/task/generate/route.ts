@@ -3,6 +3,8 @@ import {
   TaskGenerateResponse,
 } from '@/types/learning-plan';
 import { type NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
+import { getApiRequestContext, enhanceApiRequest } from '@/lib/api-utils';
 
 const EXTERNAL_API_URL =
   process.env.EXTERNAL_API_URL || 'http://172.30.106.167:5000';
@@ -11,13 +13,21 @@ export async function POST(request: NextRequest) {
   try {
     const body: TaskGenerateRequest = await request.json();
 
+    // 获取用户信息和语言设置
+    const context = await getApiRequestContext(request);
+
     body.animation_type = '无';
+
+    // 添加用户ID和语言字段
+    const requestData = enhanceApiRequest(body, context);
 
     console.log('📤 任务生成请求:', {
       step: body.step,
       title: body.title,
       type: body.type,
       difficulty: body.difficulty,
+      userId: context.userId || 'anonymous',
+      lang: context.lang,
       externalUrl: `${EXTERNAL_API_URL}/api/task/generate`
     });
 
@@ -28,7 +38,7 @@ export async function POST(request: NextRequest) {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(requestData),
     });
 
     console.log('📥 外部API响应状态:', response.status, response.statusText);

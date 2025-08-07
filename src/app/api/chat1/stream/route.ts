@@ -1,13 +1,21 @@
 import { type NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
+import { type Chat1StreamRequest } from '@/types/learning-plan';
+import { getApiRequestContext, enhanceApiRequest } from '@/lib/api-utils';
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body: Chat1StreamRequest = await request.json();
     const { id, messages } = body;
+
+    // 获取用户信息和语言设置
+    const context = await getApiRequestContext(request);
 
     console.log('\n=== 📤 调用课程定制API（非流式） ===');
     console.log('SessionId:', id);
     console.log('消息数量:', messages?.length || 0);
+    console.log('用户ID:', context.userId || 'anonymous');
+    console.log('语言:', context.lang);
 
     if (messages && messages.length > 0) {
       console.log('最后一条消息:', messages[messages.length - 1]);
@@ -17,6 +25,8 @@ export async function POST(request: NextRequest) {
     const externalApiData = {
       id,
       messages,
+      userId: context.userId || null,
+      lang: context.lang,
     };
 
     const externalApiUrl =

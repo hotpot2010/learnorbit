@@ -1,17 +1,31 @@
 import type { NextRequest } from 'next/server';
+import { auth } from '@/lib/auth';
+import { type ChatStreamRequest } from '@/types/learning-plan';
+import { getApiRequestContext, enhanceApiRequest } from '@/lib/api-utils';
 
 const EXTERNAL_API_URL =
   process.env.EXTERNAL_API_URL || 'http://172.30.106.167:5000';
 
 export async function POST(request: NextRequest) {
   try {
-    const requestData = await request.json();
+    const requestData: ChatStreamRequest = await request.json();
+
+    // 获取用户信息和语言设置
+    const context = await getApiRequestContext(request);
+
+    // 添加用户ID和语言字段
+    const enhancedRequestData = enhanceApiRequest(requestData, context);
+
     console.log('🔧 环境变量调试信息 (chat):', {
       'process.env.EXTERNAL_API_URL': process.env.EXTERNAL_API_URL,
       EXTERNAL_API_URL常量: EXTERNAL_API_URL,
       最终请求URL: `${EXTERNAL_API_URL}/api/chat/stream`,
     });
-    console.log('代理转发 /api/chat/stream 请求:', requestData);
+    console.log('代理转发 /api/chat/stream 请求:', {
+      ...requestData,
+      userId: context.userId || 'anonymous',
+      lang: context.lang,
+    });
 
     // 转发请求到外部API
     const response = await fetch(`${EXTERNAL_API_URL}/api/chat/stream`, {
@@ -19,7 +33,7 @@ export async function POST(request: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(requestData),
+      body: JSON.stringify(enhancedRequestData),
     });
 
     console.log('外部API响应状态:', response.status);

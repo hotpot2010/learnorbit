@@ -1,11 +1,21 @@
 import { type NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
+import { type SuggestQuestionsRequest } from '@/types/learning-plan';
+import { getApiRequestContext, enhanceApiRequest } from '@/lib/api-utils';
 
 const EXTERNAL_API_URL =
   process.env.EXTERNAL_API_URL || 'http://172.30.106.167:5000';
 
 export async function POST(request: NextRequest) {
   try {
-    const requestData = await request.json();
+    const requestData: SuggestQuestionsRequest = await request.json();
+
+    // 获取用户信息和语言设置
+    const context = await getApiRequestContext(request);
+
+    // 添加用户ID和语言字段
+    const enhancedRequestData = enhanceApiRequest(requestData, context);
+
     console.log('🔧 环境变量调试信息 (suggest_questions):', {
       'process.env.EXTERNAL_API_URL': process.env.EXTERNAL_API_URL,
       EXTERNAL_API_URL常量: EXTERNAL_API_URL,
@@ -16,6 +26,8 @@ export async function POST(request: NextRequest) {
       has_task_description: !!requestData.task_description,
       has_user_submission: !!requestData.user_submission,
       has_error_reason: !!requestData.error_reason,
+      userId: context.userId || 'anonymous',
+      lang: context.lang,
     });
 
     // 转发请求到外部API
@@ -27,7 +39,7 @@ export async function POST(request: NextRequest) {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify(requestData),
+        body: JSON.stringify(enhancedRequestData),
       }
     );
 
