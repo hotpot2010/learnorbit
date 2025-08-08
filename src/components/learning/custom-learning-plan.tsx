@@ -5,7 +5,6 @@ import { AIChatInterface } from './ai-chat-interface';
 import { CourseRecommendationGrid } from './course-recommendation-grid';
 import { LearningPlan, LearningStep } from '@/types/learning-plan';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
-import { useAuthCheck } from '@/components/shared/login-check';
 import { useTranslations } from 'next-intl';
 
 // 生成随机评分
@@ -64,7 +63,6 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     return id;
   });
 
-  const { requireAuth } = useAuthCheck();
   const router = useLocaleRouter();
 
   // 页面离开警告 - 当课程正在生成时
@@ -682,15 +680,14 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                 }}
                 disabled={saveStatus === 'saving' || isGeneratingCourse}
                 onClick={() => {
-                  requireAuth(() => {
-                    // 保存当前计划（完整计划优先，否则使用部分计划）
-                    const currentPlan = learningPlan || partialPlan;
-                    if (currentPlan) {
-                      saveCourseToDatabase(currentPlan);
-                    } else {
-                      console.warn('⚠️ 没有可保存的学习计划');
-                    }
-                  });
+                  // 直接执行，无需登录检查
+                  // 保存当前计划（完整计划优先，否则使用部分计划）
+                  const currentPlan = learningPlan || partialPlan;
+                  if (currentPlan) {
+                    saveCourseToDatabase(currentPlan);
+                  } else {
+                    console.warn('⚠️ 没有可保存的学习计划');
+                  }
                 }}
               >
                 {saveStatus === 'saving' ? (

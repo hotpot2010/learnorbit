@@ -1,10 +1,11 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Clock, Play } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Play, Clock, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useAuthCheck } from '@/components/shared/login-check';
 
 interface CourseCardProps {
   id: string;
@@ -30,7 +31,6 @@ export function CourseCard({
   showProgress = false,
 }: CourseCardProps) {
   const t = useTranslations('LearningPlatform');
-  const { requireAuth } = useAuthCheck();
 
   const getDifficultyColor = () => {
     switch (difficulty) {
@@ -42,14 +42,12 @@ export function CourseCard({
   };
 
   const handleClick = () => {
-    requireAuth(() => {
-      if (onClick) {
-        onClick();
-      } else {
-        // 如果没有onClick，导航到学习页面
-        window.location.href = `/study/${id}`;
-      }
-    });
+    if (onClick) {
+      onClick();
+    } else {
+      // 如果没有onClick，导航到学习页面（无需登录检查）
+      // 可以在这里添加默认的导航逻辑
+    }
   };
 
   const courseContent = (

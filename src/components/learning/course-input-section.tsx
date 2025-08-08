@@ -5,7 +5,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Loader2, Send } from 'lucide-react';
 import { useState } from 'react';
 import { useLocaleRouter } from '@/i18n/navigation';
-import { useAuthCheck } from '@/components/shared/login-check';
 import { useTranslations } from 'next-intl';
 
 interface CourseInputSectionProps {
@@ -17,27 +16,24 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
   const router = useLocaleRouter();
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { requireAuth } = useAuthCheck();
 
   const handleSubmit = async () => {
     if (!input.trim()) return;
 
-    // 检查登录状态
-    requireAuth(() => {
-      setIsLoading(true);
+    // 直接执行，无需登录检查
+    setIsLoading(true);
 
-      // 保存用户输入并立即跳转
-      if (typeof window !== 'undefined') {
-        sessionStorage.setItem('learningInput', input);
-        sessionStorage.removeItem('aiResponse'); // 清除之前的响应
-      }
+    // 保存用户输入并立即跳转
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('learningInput', input);
+      sessionStorage.removeItem('aiResponse'); // 清除之前的响应
+    }
 
-      console.log('首页输入框调用chat1接口:', input);
-      console.log('首页API调用: /api/chat1/stream');
+    console.log('首页输入框调用chat1接口:', input);
+    console.log('首页API调用: /api/chat1/stream');
 
-      // 立即跳转到课程定制页面
-      router.push('/custom');
-    });
+    // 立即跳转到课程定制页面
+    router.push('/custom');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
