@@ -1304,76 +1304,52 @@ export default function StudyPage({ params }: StudyPageProps) {
                               {(() => {
                                 const processedVideo = processVideoUrl(getCurrentStepVideos()[currentVideoIndex].url);
                                 const { url, platform } = processedVideo;
+                                const currentLocale = routeParams?.locale || 'en';
                                 
-                                // 只有YouTube视频使用iframe嵌入
-                                if (platform === 'youtube') {
+                                // 根据语言环境和平台决定显示方式
+                                // 中文环境优先显示B站视频，英文环境优先显示YouTube视频
+                                const shouldShowVideo = 
+                                  (currentLocale === 'zh' && platform === 'bilibili') ||
+                                  (currentLocale === 'en' && platform === 'youtube') ||
+                                  (platform === 'youtube' || platform === 'bilibili'); // 兜底：任何平台都可以显示
+                                
+                                if (shouldShowVideo && (platform === 'youtube' || platform === 'bilibili')) {
                                   return (
                                     <iframe 
                                       src={url}
                                       frameBorder="0"
                                       allowFullScreen={true}
-                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                      allow={platform === 'youtube' ? 
+                                        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" :
+                                        "autoplay; fullscreen"
+                                      }
                                       className="w-full h-full"
+                                      referrerPolicy={platform === 'bilibili' ? "no-referrer" : undefined}
+                                      sandbox={platform === 'bilibili' ? 
+                                        "allow-same-origin allow-scripts allow-popups allow-presentation" : 
+                                        undefined
+                                      }
                                       onError={(e) => {
-                                        console.error(`YouTube视频播放器加载失败:`, e);
+                                        console.error(`${platform}视频播放器加载失败:`, e);
                                       }}
                                       onLoad={() => {
-                                        console.log('YouTube视频加载成功:', url);
+                                        console.log(`${platform}视频加载成功:`, url);
                                       }}
                                     />
                                   );
-                                } else if (platform === 'bilibili') {
-                                  // B站视频显示预览图和播放按钮，点击跳转到新窗口
-                                  const video = getCurrentStepVideos()[currentVideoIndex];
-                                  return (
-                                    <div 
-                                      className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800 cursor-pointer hover:from-blue-700 hover:to-blue-900 transition-all duration-300"
-                                      onClick={() => {
-                                        // 使用原始URL在新窗口打开B站视频
-                                        window.open(video.url, '_blank', 'noopener,noreferrer');
-                                      }}
-                                    >
-                                      <div className="text-center text-white">
-                                        {video.cover ? (
-                                          <div className="relative">
-                                            <img 
-                                              src={video.cover} 
-                                              alt={video.title}
-                                              className="w-full h-full object-cover rounded-lg opacity-80"
-                                              onError={(e) => {
-                                                e.currentTarget.style.display = 'none';
-                                              }}
-                                            />
-                                            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 rounded-lg">
-                                              <div className="text-center">
-                                                <PlayCircle className="w-16 h-16 mx-auto mb-2 text-white opacity-90 hover:opacity-100 transition-opacity" />
-                                                <p className="text-sm font-medium">点击观看 Bilibili 视频</p>
-                                                <p className="text-xs opacity-75 mt-1">将在新窗口打开</p>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        ) : (
-                                          <div className="text-center">
-                                            <PlayCircle className="w-16 h-16 mx-auto mb-4 text-white opacity-90 hover:opacity-100 transition-opacity" />
-                                            <p className="text-lg font-medium mb-2">Bilibili Video</p>
-                                            <p className="text-sm opacity-75 mb-1">点击观看视频</p>
-                                            <p className="text-xs opacity-60">将在新窗口打开</p>
-                                          </div>
-                                        )}
-                                      </div>
-                                    </div>
-                                  );
                                 } else {
-                                  // 无法识别的视频格式
+                                  // 无法识别的视频格式或语言环境不匹配
                                   return (
                                     <div className="w-full h-full flex items-center justify-center bg-gray-800 text-white">
                                       <div className="text-center">
                                         <PlayCircle className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                                        <p className="text-sm opacity-75">Unsupported video format</p>
+                                        <p className="text-sm opacity-75">Video not available</p>
                                         <p className="text-xs opacity-50 mt-1 text-yellow-300">
-                                          Currently supports: YouTube (embedded), Bilibili (new window)
+                                          {currentLocale === 'zh' ? 'Bilibili videos in Chinese mode' : 'YouTube videos in English mode'}
                                         </p>
-                                        <p className="text-xs opacity-50 mt-1 break-all max-w-xs">{url}</p>
+                                        <p className="text-xs opacity-50 mt-1">
+                                          Current: {platform} | Locale: {currentLocale}
+                                        </p>
                                       </div>
                                     </div>
                                   );

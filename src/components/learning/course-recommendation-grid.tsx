@@ -110,6 +110,24 @@ export function CourseRecommendationGrid({
 
   return (
     <div className={`${className} -mt-4`}>
+      {/* 添加滚动动画样式 */}
+      <style jsx>{`
+        @keyframes scroll-right {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-scroll-right {
+          animation: scroll-right 60s linear infinite;
+        }
+        .animate-scroll-right:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+      
       {/* 横向滚动卡片容器 */}
       <div className="relative overflow-hidden">
         <div className="flex animate-scroll-right space-x-4 py-2">
