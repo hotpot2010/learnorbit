@@ -16,9 +16,10 @@ import {
   Maximize2,
   Minimize2
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { LearningPlan, LearningStep, TaskGenerateRequest, TaskGenerateResponse, TaskContent, QuizQuestion, CodingTask } from '@/types/learning-plan';
 import Editor from '@monaco-editor/react';
+import ReactMarkdown from 'react-markdown';
 
 interface StudyPageProps {
   params: Promise<{ locale: string; id: string }>;
@@ -28,7 +29,6 @@ export default function StudyPage({ params }: StudyPageProps) {
   const [isPathCollapsed, setIsPathCollapsed] = useState(false);
   const [routeParams, setRouteParams] = useState<{ locale: string; id: string } | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [isVideoExpanded, setIsVideoExpanded] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
   const [wrongAnswers, setWrongAnswers] = useState<Set<number>>(new Set());
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -40,29 +40,101 @@ export default function StudyPage({ params }: StudyPageProps) {
   const [isLoadingTask, setIsLoadingTask] = useState(false);
   const [codeValue, setCodeValue] = useState<string>('');
   const [codeOutput, setCodeOutput] = useState<string>('');
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isVideoExpanded, setIsVideoExpanded] = useState(false);
   
   // 任务缓存和并行生成相关状态
   const [taskCache, setTaskCache] = useState<Record<number, TaskContent>>({});
   const [taskGenerationStatus, setTaskGenerationStatus] = useState<Record<number, 'pending' | 'loading' | 'completed' | 'failed'>>({});
   const [pollingInterval, setPollingInterval] = useState<NodeJS.Timeout | null>(null);
+  
+  // 防止重复生成任务的标志
+  const taskGenerationStarted = useRef<boolean>(false);
+
+  // 上传状态
+  const [isUploading, setIsUploading] = useState(false);
+
+  // 标识是否从数据库加载
+  const [isFromDatabase, setIsFromDatabase] = useState(false);
+
+  // 防止React Strict Mode重复执行的标志
+  const initialLoadCompleted = useRef<boolean>(false);
 
   useEffect(() => {
     const resolveParams = async () => {
       const resolvedParams = await params;
       setRouteParams(resolvedParams);
       
+      // 防止React Strict Mode重复执行
+      if (initialLoadCompleted.current) {
+        console.log('⚠️ 初始加载已完成，跳过重复执行');
+        return;
+      }
+      
       // 如果是custom课程，从sessionStorage加载学习计划
       if (resolvedParams.id === 'custom') {
         const savedPlan = sessionStorage.getItem('learningPlan');
+        const fromDatabase = sessionStorage.getItem('fromDatabase');
+        const savedTaskCache = sessionStorage.getItem('taskCache');
+        
+        console.log('🔍 检查sessionStorage状态:', {
+          hasSavedPlan: !!savedPlan,
+          fromDatabase: fromDatabase,
+          hasSavedTaskCache: !!savedTaskCache,
+          taskGenerationStarted: taskGenerationStarted.current,
+          initialLoadCompleted: initialLoadCompleted.current
+        });
+        
         if (savedPlan) {
           try {
             const plan: LearningPlan = JSON.parse(savedPlan);
             setLearningPlan(plan);
             console.log('✅ 加载自定义学习计划:', plan);
             
-            // 启动并行任务生成
-            console.log('🚀 启动并行任务生成...');
-            generateAllTasks(plan);
+            // 如果来自数据库且有任务缓存，直接加载任务
+            if (fromDatabase === 'true' && savedTaskCache) {
+              console.log('📁 检测到数据库课程，准备加载任务缓存...');
+              
+              const tasks = JSON.parse(savedTaskCache);
+              setTaskCache(tasks);
+              setIsFromDatabase(true); // 设置数据库标识
+              
+              // 设置所有任务状态为已完成
+              const completedStatus: Record<number, 'completed'> = {};
+              Object.keys(tasks).forEach(stepNum => {
+                completedStatus[parseInt(stepNum)] = 'completed';
+              });
+              setTaskGenerationStatus(completedStatus);
+              
+              console.log('✅ 从数据库加载任务缓存，跳过任务生成:', {
+                taskCount: Object.keys(tasks).length,
+                taskKeys: Object.keys(tasks)
+              });
+              
+              // 标记任务生成已完成，防止后续调用
+              taskGenerationStarted.current = true;
+              initialLoadCompleted.current = true;
+              
+              // 清除数据库标记
+              sessionStorage.removeItem('fromDatabase');
+              sessionStorage.removeItem('taskCache');
+            } else {
+              console.log('🆕 检测到新课程，需要生成任务:', {
+                fromDatabase: fromDatabase,
+                hasSavedTaskCache: !!savedTaskCache,
+                taskGenerationStarted: taskGenerationStarted.current
+              });
+              
+              // 启动并行任务生成（防止重复执行）
+              if (!taskGenerationStarted.current) {
+                console.log('🚀 启动并行任务生成...');
+                taskGenerationStarted.current = true;
+                initialLoadCompleted.current = true;
+                generateAllTasks(plan);
+              } else {
+                console.log('⚠️ 任务生成已经启动，跳过重复执行');
+              }
+            }
             
           } catch (error) {
             console.error('解析学习计划失败:', error);
@@ -92,29 +164,63 @@ export default function StudyPage({ params }: StudyPageProps) {
       // 立即执行异步任务，不等待它完成
       (async () => {
         try {
-          const requestData: TaskGenerateRequest = {
+          console.log(`🔄 开始生成步骤 ${step.step}: ${step.title}`);
+          
+          // 构造正确的请求数据格式
+          const requestData = {
             step: step.step,
             title: step.title,
             description: step.description,
-            animation_type: step.animation_type,
+            animation_type: step.animation_type || '无',
             status: step.status,
             type: step.type,
             difficulty: step.difficulty,
+            search_keyword: step.search_keyword || step.title, // 如果没有search_keyword就用title
             videos: step.videos
           };
-
+          
+          console.log('📤 发送任务生成请求:', requestData);
+          
           const response = await fetch('/api/task/generate', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(requestData)
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData),
           });
 
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
 
-          const result: TaskGenerateResponse = await response.json();
+          const result = await response.json();
           
+          // 详细的调试信息
+          console.log(`🔍 步骤 ${step.step} API 返回结果:`, {
+            success: result.success,
+            taskType: result.task?.type,
+            ppt_slide: {
+              exists: !!result.task?.ppt_slide,
+              type: typeof result.task?.ppt_slide,
+              isString: typeof result.task?.ppt_slide === 'string',
+              length: result.task?.ppt_slide?.length || 0,
+              preview: typeof result.task?.ppt_slide === 'string' 
+                ? result.task.ppt_slide.substring(0, 100) + '...'
+                : result.task?.ppt_slide,
+              fullContent: result.task?.ppt_slide
+            },
+            task: result.task?.task ? {
+              exists: true,
+              type: typeof result.task.task,
+              keys: Object.keys(result.task.task || {})
+            } : { exists: false },
+            questions: result.task?.questions ? {
+              exists: true,
+              type: typeof result.task.questions,
+              length: Array.isArray(result.task.questions) ? result.task.questions.length : 'not array'
+            } : { exists: false }
+          });
+
           if (result.success) {
             console.log(`✅ 步骤 ${step.step} 生成成功`);
             
@@ -132,10 +238,25 @@ export default function StudyPage({ params }: StudyPageProps) {
             
             console.log(`💾 步骤 ${step.step} 已缓存:`, {
               type: result.task.type,
-              title: result.task.ppt_slide?.title,
+              hasMarkdownContent: !!result.task.ppt_slide,
               hasQuestions: !!result.task.questions,
               hasTask: !!result.task.task
             });
+            
+            // 立即检查是否需要更新当前步骤的显示
+            setTimeout(() => {
+              if (learningPlan?.plan[currentStepIndex]?.step === step.step) {
+                console.log(`🎯 任务生成完成，立即更新当前步骤 ${step.step} 的显示`);
+                setCurrentTask(result.task);
+                setIsLoadingTask(false);
+                
+                // 如果是编程题，设置初始代码
+                if (result.task?.type === 'coding' && result.task.task) {
+                  setCodeValue(result.task.task.starter_code || '');
+                  console.log('💻 设置编程任务初始代码');
+                }
+              }
+            }, 100);
             
           } else {
             throw new Error('Task generation failed');
@@ -191,7 +312,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       
       console.log(`⏰ 轮询检查步骤 ${stepNumber}:`, { hasCached: !!cachedTask, status });
       
-      if (cachedTask || status === 'completed') {
+      if (cachedTask && status === 'completed') {
         console.log(`✅ 步骤 ${stepNumber} 任务已准备就绪`);
         clearInterval(interval);
         setPollingInterval(null);
@@ -219,10 +340,7 @@ export default function StudyPage({ params }: StudyPageProps) {
           setCurrentTask({
             type: 'quiz',
             difficulty: 'beginner',
-            ppt_slide: {
-              title: '任务生成失败',
-              content: ['⚠️ 任务生成失败，请稍后重试']
-            },
+            ppt_slide: '# 任务生成失败\n\n⚠️ 任务生成失败，请稍后重试',
             videos: []
           });
         }
@@ -273,18 +391,27 @@ export default function StudyPage({ params }: StudyPageProps) {
         setCurrentTask({
           type: 'quiz',
           difficulty: 'beginner',
-          ppt_slide: {
-            title: '任务生成失败',
-            content: ['⚠️ 任务生成失败，请稍后重试']
-          },
+          ppt_slide: '# 任务生成失败\n\n⚠️ 任务生成失败，请稍后重试',
           videos: currentStep.videos
         });
         setIsLoadingTask(false);
       } else {
-        console.log('⏳ 任务还未开始生成，等待');
-        setCurrentTask(null);
-        setIsLoadingTask(true);
-        startPollingForTask(currentStep.step);
+        // 检查是否从数据库加载
+        if (isFromDatabase) {
+          console.log('📁 从数据库加载的课程，任务应该已存在，但未找到缓存');
+          setCurrentTask({
+            type: 'quiz',
+            difficulty: 'beginner',
+            ppt_slide: '# Task Data Missing\n\n⚠️ Task data may have issues, please re-upload the course',
+            videos: currentStep.videos
+          });
+          setIsLoadingTask(false);
+        } else {
+          console.log('⏳ 任务还未开始生成，等待');
+          setCurrentTask(null);
+          setIsLoadingTask(true);
+          startPollingForTask(currentStep.step);
+        }
       }
     } else {
       console.log('❌ 条件不满足，跳过任务获取');
@@ -306,6 +433,7 @@ export default function StudyPage({ params }: StudyPageProps) {
     setAiRecommendations([]);
     setCodeValue('');
     setCodeOutput('');
+    setCurrentVideoIndex(0); // 重置视频索引
     console.log('=== 步骤切换完成 ===\n');
   }, [currentStepIndex, learningPlan, routeParams]);
 
@@ -318,6 +446,21 @@ export default function StudyPage({ params }: StudyPageProps) {
       }
     };
   }, [pollingInterval]);
+
+  // 键盘事件监听 - 支持ESC键退出视频放大
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isVideoExpanded) {
+        setIsVideoExpanded(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isVideoExpanded]);
 
   // 监听任务缓存变化，实时更新当前步骤的任务
   useEffect(() => {
@@ -417,8 +560,8 @@ export default function StudyPage({ params }: StudyPageProps) {
           // 答错了，调用问题推荐API
           try {
             const suggestData = {
-              task_title: currentTask.ppt_slide?.title || 'Quiz Task',
-              task_description: currentTask.ppt_slide?.content?.join(' ') || '',
+              task_title: extractTitleFromMarkdown(currentTask.ppt_slide || ''),
+              task_description: currentTask.ppt_slide || '',
               user_submission: currentTask.questions.map((_, index) => selectedAnswers[index] || '').join(', '),
               error_reason: evaluationResponse.error_reason || '部分答案错误'
             };
@@ -604,6 +747,18 @@ export default function StudyPage({ params }: StudyPageProps) {
     }
   };
 
+  // 从markdown内容中提取标题的工具函数
+  const extractTitleFromMarkdown = (markdown: string): string => {
+    const lines = markdown.split('\n');
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (trimmed.startsWith('# ')) {
+        return trimmed.replace(/^#\s*/, '');
+      }
+    }
+    return 'Learning Task';
+  };
+
   // 使用默认步骤数据（非custom课程）
   const defaultLearningSteps = [
     {
@@ -681,41 +836,160 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   // 获取当前视频URL
   const getCurrentVideoUrl = () => {
-    if (routeParams.id === 'custom' && learningPlan && learningPlan.plan[currentStepIndex]) {
+    if (routeParams?.id === 'custom' && learningPlan && learningPlan.plan[currentStepIndex]) {
       const step = learningPlan.plan[currentStepIndex];
       const videoUrl = step.videos[0]?.url || '';
       
       console.log('原始视频URL:', videoUrl);
       
-      // 处理B站视频URL
-      if (videoUrl.includes('bilibili.com/video/')) {
-        // 从URL中提取视频ID，支持不同格式
-        const bvMatch = videoUrl.match(/\/video\/(BV\w+)/);
-        const avMatch = videoUrl.match(/\/video\/av(\d+)/);
-        
-        if (bvMatch) {
-          // BV号格式
-          const playerUrl = `//player.bilibili.com/player.html?bvid=${bvMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
-          console.log('转换后的BV播放器URL:', playerUrl);
-          return playerUrl;
-        } else if (avMatch) {
-          // AV号格式 - 适配plan.json中的格式
-          const playerUrl = `//player.bilibili.com/player.html?aid=${avMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
-          console.log('转换后的AV播放器URL:', playerUrl);
-          return playerUrl;
+      // 使用统一的视频URL处理函数
+      const processedVideo = processVideoUrl(videoUrl);
+      return processedVideo.url;
+    }
+    return '';
+  };
+
+  // 获取当前步骤的所有视频
+  const getCurrentStepVideos = () => {
+    if (routeParams?.id === 'custom' && learningPlan && learningPlan.plan[currentStepIndex]) {
+      const step = learningPlan.plan[currentStepIndex];
+      return step.videos || [];
+    }
+    return [];
+  };
+
+  // 处理视频URL转换
+  const processVideoUrl = (videoUrl: string) => {
+    console.log('处理视频URL:', videoUrl);
+    
+    // 开发环境下，在window对象上暴露测试函数
+    if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+      (window as any).testVideoUrl = (testUrl: string) => {
+        console.log('测试视频URL处理:', testUrl);
+        return processVideoUrl(testUrl);
+      };
+    }
+    
+    // 处理B站视频URL
+    if (videoUrl.includes('bilibili.com/video/')) {
+      // 从URL中提取视频ID，支持不同格式
+      const bvMatch = videoUrl.match(/\/video\/(BV\w+)/);
+      const avMatch = videoUrl.match(/\/video\/av(\d+)/);
+      
+      if (bvMatch) {
+        // BV号格式
+        const playerUrl = `//player.bilibili.com/player.html?bvid=${bvMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
+        console.log('转换后的BV播放器URL:', playerUrl);
+        return { url: playerUrl, platform: 'bilibili' };
+      } else if (avMatch) {
+        // AV号格式
+        const playerUrl = `//player.bilibili.com/player.html?aid=${avMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
+        console.log('转换后的AV播放器URL:', playerUrl);
+        return { url: playerUrl, platform: 'bilibili' };
+      }
+    }
+    
+    // 处理YouTube视频URL
+    if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+      let videoId = '';
+      
+      console.log('检测到YouTube URL，开始处理:', videoUrl);
+      
+      // 各种YouTube URL格式
+      // 标准格式: https://www.youtube.com/watch?v=VIDEO_ID
+      // 短链接: https://youtu.be/VIDEO_ID
+      // 移动版: https://m.youtube.com/watch?v=VIDEO_ID
+      // 嵌入格式: https://www.youtube.com/embed/VIDEO_ID
+      const youtubePatterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|m\.youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/,
+        /youtube\.com\/.*[?&]v=([a-zA-Z0-9_-]{11})/
+      ];
+      
+      for (const pattern of youtubePatterns) {
+        const match = videoUrl.match(pattern);
+        if (match) {
+          videoId = match[1];
+          console.log('成功提取YouTube视频ID:', videoId);
+          break;
         }
       }
       
-      // 如果已经是iframe格式的URL，直接返回
-      if (videoUrl.includes('player.bilibili.com')) {
-        console.log('已是播放器URL，直接使用:', videoUrl);
-        return videoUrl;
+      if (videoId) {
+        const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&mute=0&controls=1&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
+        console.log('转换后的YouTube嵌入URL:', embedUrl);
+        return { url: embedUrl, platform: 'youtube' };
+      } else {
+        console.warn('无法从YouTube URL中提取视频ID:', videoUrl);
       }
-      
-      console.log('无法识别的视频URL格式:', videoUrl);
-      return videoUrl;
     }
-    return '';
+    
+    // 检查是否已经是嵌入格式的URL
+    if (videoUrl.includes('player.bilibili.com')) {
+      console.log('已是B站播放器URL，直接使用:', videoUrl);
+      return { url: videoUrl, platform: 'bilibili' };
+    }
+    
+    if (videoUrl.includes('youtube.com/embed/')) {
+      console.log('已是YouTube嵌入URL，直接使用:', videoUrl);
+      return { url: videoUrl, platform: 'youtube' };
+    }
+    
+    console.log('无法识别的视频URL格式:', videoUrl);
+    return { url: videoUrl, platform: 'unknown' };
+  };
+
+  // 上传课程到数据库
+  const handleUploadCourse = async () => {
+    if (!learningPlan) {
+      alert('学习计划不存在，无法上传。');
+      return;
+    }
+
+    try {
+      setIsUploading(true);
+      console.log('📤 开始上传课程到数据库...');
+      
+      // 构造上传数据，包含课程计划和生成的任务
+      const uploadData = {
+        plan: learningPlan,
+        tasks: taskCache
+      };
+
+      const response = await fetch('/api/user-courses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(uploadData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('✅ 课程上传成功:', result);
+      
+      alert('🎉 课程已成功上传到【我的课程】！');
+      
+    } catch (error) {
+      console.error('❌ 课程上传失败:', error);
+      alert('❌ 课程上传失败，请稍后重试。');
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  // 检查所有任务是否已生成
+  const areAllTasksGenerated = () => {
+    if (!learningPlan) return false;
+    return learningPlan.plan.every(step => taskGenerationStatus[step.step] === 'completed');
+  };
+
+  // 获取已生成的任务数量
+  const getGeneratedTasksCount = () => {
+    if (!learningPlan) return 0;
+    return learningPlan.plan.filter(step => taskGenerationStatus[step.step] === 'completed').length;
   };
 
   return (
@@ -797,6 +1071,43 @@ export default function StudyPage({ params }: StudyPageProps) {
                   ))}
         </div>
       </div>
+              
+              {/* 上传课程按钮 */}
+              {routeParams?.id === 'custom' && learningPlan && (
+                <div className="p-4">
+                  <Button
+                    onClick={handleUploadCourse}
+                    disabled={!areAllTasksGenerated() || isUploading}
+                    className={`w-full font-bold transform shadow-lg ${
+                      areAllTasksGenerated() && !isUploading 
+                        ? 'bg-primary hover:bg-primary/90 rotate-1 hover:rotate-0' 
+                        : 'bg-gray-400 hover:bg-gray-400 cursor-not-allowed rotate-0'
+                    }`}
+                    style={{
+                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    }}
+                  >
+                    <div className="flex items-center justify-center space-x-2">
+                      {isUploading ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span>Uploading Course...</span>
+                        </>
+                      ) : areAllTasksGenerated() ? (
+                        <>
+                          <span className="text-lg">📤</span>
+                          <span>Upload Course!</span>
+                        </>
+                      ) : (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span>Generating Tasks... ({getGeneratedTasksCount()}/{learningPlan.plan.length})</span>
+                        </>
+                      )}
+                    </div>
+                  </Button>
+                </div>
+              )}
             </>
           )}
           
@@ -838,121 +1149,476 @@ export default function StudyPage({ params }: StudyPageProps) {
 
       <div className={`${isPathCollapsed ? 'w-3/4' : 'w-7/12'} transition-all duration-300`}>
         <div className="h-full flex flex-col">
-          {/* 上半部分：PPT区 */}
-          <div className={`${isVideoExpanded ? 'h-auto' : 'h-1/2'} mb-4 transition-all duration-300`}>
+          {/* 合并的内容区域 */}
+          <div className="h-full p-6 overflow-y-auto">
             {isLoadingTask ? (
               <div className="h-full flex items-center justify-center">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-                  <p className="text-lg text-gray-700">生成学习任务中...</p>
+                  <p className="text-lg text-gray-700">Generating learning tasks...</p>
                   
-                  {/* 调试信息 */}
-                  {learningPlan && (
+                  {/* 调试信息 - 仅在开发环境显示 */}
+                  {process.env.NODE_ENV === 'development' && learningPlan && (
                     <div className="mt-4 text-sm text-gray-500">
-                      <p>当前步骤: {learningPlan.plan[currentStepIndex]?.step}</p>
-                      <p>状态: {taskGenerationStatus[learningPlan.plan[currentStepIndex]?.step]}</p>
-                      <p>已缓存: {taskCache[learningPlan.plan[currentStepIndex]?.step] ? '是' : '否'}</p>
-                      
-                      <button 
-                        onClick={() => {
-                          const currentStep = learningPlan.plan[currentStepIndex];
-                          const cachedTask = taskCache[currentStep.step];
-                          console.log('🔍 手动检查缓存:', { currentStep: currentStep.step, cachedTask });
-                          if (cachedTask) {
-                            setCurrentTask(cachedTask);
-                            setIsLoadingTask(false);
-                          }
-                        }}
-                        className="mt-2 px-3 py-1 bg-blue-500 text-white rounded text-xs"
-                      >
-                        手动刷新
-                      </button>
+                      <p>Current Step: {learningPlan.plan[currentStepIndex]?.step}</p>
+                      <p>Status: {taskGenerationStatus[learningPlan.plan[currentStepIndex]?.step]}</p>
+                      <p>Cached: {taskCache[learningPlan.plan[currentStepIndex]?.step] ? 'Yes' : 'No'}</p>
                     </div>
                   )}
                 </div>
               </div>
             ) : currentTask ? (
-              <div className="h-full p-6 overflow-y-auto">
-                <div className="max-w-full">
-                  <h3 className="text-2xl font-bold mb-6 text-center text-blue-700 relative">
-                    <span className="bg-yellow-200 px-3 py-1 rounded-lg inline-block transform -rotate-1 shadow-sm">
-                      {currentTask.ppt_slide?.title}
-                    </span>
-                  </h3>
-                  
-                  <div className={`flex gap-6 ${isVideoExpanded ? 'flex-col' : ''}`}>
-                    {/* 文本内容 */}
-                    <div className={`${getCurrentVideoUrl() && !isVideoExpanded ? 'w-1/2' : 'w-full'} ${isVideoExpanded && getCurrentVideoUrl() ? 'order-2' : ''}`}>
-                      <div className="space-y-4">
-                        {currentTask.ppt_slide?.content.map((paragraph, index) => (
-                          <div key={index} className="relative">
-                            <div className="flex items-start space-x-3">
-                              <div className="w-6 h-6 rounded-full bg-yellow-400 text-black text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                                {index + 1}
-                              </div>
-                              <div className="flex-1">
-                                <p className="text-base leading-relaxed text-gray-800 font-bold" style={{
-                                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                                }}>
-                                  {paragraph}
-                                </p>
-                              </div>
-                            </div>
+              <div className="space-y-12">
+                {/* PPT 标题和内容 */}
+                <div className="space-y-4">
+                  <ReactMarkdown 
+                    components={{
+                      h1: ({ children, ...props }) => (
+                        <h1 className="text-3xl font-bold text-center text-blue-700 relative mb-8" {...props}>
+                          <span className="bg-yellow-200 px-3 py-1 rounded-lg inline-block transform -rotate-1 shadow-sm">
+                            {children}
+                          </span>
+                        </h1>
+                      ),
+                      h2: ({ children, ...props }) => (
+                        <h2 className="text-xl font-bold text-blue-700 mb-6 mt-8" style={{
+                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        }} {...props}>
+                          {children}
+                        </h2>
+                      ),
+                      h3: ({ children, ...props }) => (
+                        <h3 className="text-lg font-bold text-purple-700 mb-5 mt-7" style={{
+                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        }} {...props}>
+                          {children}
+                        </h3>
+                      ),
+                      p: ({ children, ...props }) => (
+                        <div className="flex items-start space-x-3 mb-8 ml-6">
+                          <div className="w-6 h-6 rounded-full bg-yellow-400 text-black text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                            📝
                           </div>
-                        ))}
-                        
-                        {/* AI交流提示 */}
-                        <div className="mt-6 pt-4">
-                          <div className="flex items-start space-x-3">
-                            <div className="w-6 h-6 rounded-full bg-orange-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform -rotate-12 shadow-sm">
-                              💡
-                      </div>
-                            <div className="flex-1">
-                              <p className="text-base leading-relaxed text-orange-700 font-bold" style={{
+                          <div className="flex-1">
+                            <p className="text-base leading-loose text-gray-800 font-bold" style={{
+                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            }} {...props}>
+                              {children}
+                            </p>
+                          </div>
+                        </div>
+                      ),
+                      ul: ({ children, ...props }) => (
+                        <div className="flex items-start space-x-3 mb-8 ml-6">
+                          <div className="w-6 h-6 rounded-full bg-blue-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                            📋
+                          </div>
+                          <div className="flex-1">
+                            <ul className="list-disc list-inside text-gray-800 space-y-4" style={{
+                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            }} {...props}>
+                              {children}
+                            </ul>
+                          </div>
+                        </div>
+                      ),
+                      ol: ({ children, ...props }) => (
+                        <div className="flex items-start space-x-3 mb-8 ml-6">
+                          <div className="w-6 h-6 rounded-full bg-purple-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                            🔢
+                          </div>
+                          <div className="flex-1">
+                            <ol className="list-decimal list-inside text-gray-800 space-y-4" style={{
+                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            }} {...props}>
+                              {children}
+                            </ol>
+                          </div>
+                        </div>
+                      ),
+                      li: ({ children, ...props }) => (
+                        <li className="text-base text-gray-800 leading-loose" style={{
+                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        }} {...props}>
+                          {children}
+                        </li>
+                      ),
+                      strong: ({ children, ...props }) => (
+                        <strong className="text-gray-900 font-bold mx-1" {...props}>{children}</strong>
+                      ),
+                      em: ({ children, ...props }) => (
+                        <em className="text-gray-700 italic mx-1" {...props}>{children}</em>
+                      ),
+                      code: ({ children, ...props }) => (
+                        <code className="bg-gray-200 text-gray-800 px-2 py-1 rounded font-mono text-sm" {...props}>
+                          {children}
+                        </code>
+                      ),
+                      pre: ({ children, ...props }) => (
+                        <div className="flex items-start space-x-3 mb-8 ml-6">
+                          <div className="w-6 h-6 rounded-full bg-green-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                            💻
+                          </div>
+                          <div className="flex-1">
+                            <pre className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto" {...props}>
+                              {children}
+                            </pre>
+                          </div>
+                        </div>
+                      ),
+                      blockquote: ({ children, ...props }) => (
+                        <div className="flex items-start space-x-3 mb-8 ml-6">
+                          <div className="w-6 h-6 rounded-full bg-orange-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                            💡
+                          </div>
+                          <div className="flex-1">
+                            <blockquote className="bg-orange-50 text-gray-800 p-3 rounded-lg italic border-l-4 border-orange-400" style={{
+                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            }} {...props}>
+                              {children}
+                            </blockquote>
+                          </div>
+                        </div>
+                      ),
+                    }}
+                  >
+                    {currentTask.ppt_slide || ''}
+                  </ReactMarkdown>
+                 </div>
+
+                {/* 推荐视频区域 */}
+                {getCurrentStepVideos().length > 0 && (
+                  <div className="space-y-4">
+                    <h4 className="text-xl font-bold text-blue-700" style={{
+                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    }}>
+                      Recommended Videos:
+                    </h4>
+                    
+                    <div className="relative">
+                      {/* 单个视频显示 - 支持简单放大 */}
+                      {getCurrentStepVideos()[currentVideoIndex] && (
+                        <div className={`${isVideoExpanded ? 'w-[768px]' : 'w-96'} relative group transition-all duration-300`}>
+                          <div className="bg-white p-2 rounded-lg shadow-lg">
+                            <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black relative transition-all duration-300">
+                              {(() => {
+                                const processedVideo = processVideoUrl(getCurrentStepVideos()[currentVideoIndex].url);
+                                const { url, platform } = processedVideo;
+                                const currentLocale = routeParams?.locale || 'en';
+                                
+                                // 根据语言环境和平台决定显示方式
+                                // 中文环境优先显示B站视频，英文环境优先显示YouTube视频
+                                const shouldShowVideo = 
+                                  (currentLocale === 'zh' && platform === 'bilibili') ||
+                                  (currentLocale === 'en' && platform === 'youtube') ||
+                                  (platform === 'youtube' || platform === 'bilibili'); // 兜底：任何平台都可以显示
+                                
+                                if (shouldShowVideo && (platform === 'youtube' || platform === 'bilibili')) {
+                                  return (
+                                    <iframe 
+                                      src={url}
+                                      frameBorder="0"
+                                      allowFullScreen={true}
+                                      allow={platform === 'youtube' ? 
+                                        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" :
+                                        "autoplay; fullscreen"
+                                      }
+                                      className="w-full h-full"
+                                      referrerPolicy={platform === 'bilibili' ? "no-referrer" : undefined}
+                                      sandbox={platform === 'bilibili' ? 
+                                        "allow-same-origin allow-scripts allow-popups allow-presentation" : 
+                                        undefined
+                                      }
+                                      onError={(e) => {
+                                        console.error(`${platform}视频播放器加载失败:`, e);
+                                      }}
+                                      onLoad={() => {
+                                        console.log(`${platform}视频加载成功:`, url);
+                                      }}
+                                    />
+                                  );
+                                } else {
+                                  // 无法识别的视频格式或语言环境不匹配
+                                  return (
+                                    <div className="w-full h-full flex items-center justify-center bg-gray-800 text-white">
+                                      <div className="text-center">
+                                        <PlayCircle className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                                        <p className="text-sm opacity-75">Video not available</p>
+                                        <p className="text-xs opacity-50 mt-1 text-yellow-300">
+                                          {currentLocale === 'zh' ? 'Bilibili videos in Chinese mode' : 'YouTube videos in English mode'}
+                                        </p>
+                                        <p className="text-xs opacity-50 mt-1">
+                                          Current: {platform} | Locale: {currentLocale}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  );
+                                }
+                              })()}
+                              
+                              {/* 放大/缩小按钮 */}
+                              <button
+                                onClick={() => setIsVideoExpanded(!isVideoExpanded)}
+                                className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110"
+                                title={isVideoExpanded ? "缩小视频" : "放大视频"}
+                              >
+                                {isVideoExpanded ? (
+                                  <Minimize2 className="w-4 h-4" />
+                                ) : (
+                                  <Maximize2 className="w-4 h-4" />
+                                )}
+                              </button>
+                            </div>
+                            
+                            {/* 视频标题 */}
+                            <div className="mt-2 px-1">
+                              <p className="text-sm font-medium text-gray-700 truncate" style={{
                                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                               }}>
-                                请通过与AI交流回答下面问题
+                                {getCurrentStepVideos()[currentVideoIndex].title}
                               </p>
+                              {getCurrentStepVideos()[currentVideoIndex].duration && (
+                                <p className="text-xs text-gray-500">
+                                  {getCurrentStepVideos()[currentVideoIndex].duration}
+                                </p>
+                              )}
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    
-                    {/* 视频区域 */}
-                    {getCurrentVideoUrl() && (
-                      <div className={`${isVideoExpanded ? 'w-full order-1' : 'w-1/2'} relative group`}>
-                        <div className="bg-white p-2 rounded-lg shadow-lg transform -rotate-1">
-                          <div 
-                            className={`w-full ${isVideoExpanded ? 'h-96' : 'h-72'} rounded-lg overflow-hidden shadow-md bg-black relative transition-all duration-300`}
-                          >
-                            {getCurrentVideoUrl().includes('player.bilibili.com') ? (
-                              <iframe 
-                                src={getCurrentVideoUrl()}
-                                scrolling="no"
-                                frameBorder="no"
-                                allowFullScreen={true}
-                                referrerPolicy="no-referrer"
-                                sandbox="allow-same-origin allow-scripts allow-popups allow-presentation"
-                                className="w-full h-full"
-                                onError={(e) => {
-                                  console.error('视频播放器加载失败:', e);
-                                }}
-                              />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center bg-gray-800 text-white">
-                                <div className="text-center">
-                                  <PlayCircle className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                                  <p className="text-sm opacity-75">无法加载视频播放器</p>
-                                  <p className="text-xs opacity-50 mt-1">URL: {getCurrentVideoUrl()}</p>
-                                </div>
-                              </div>
-                            )}
+                      )}
+                      
+                      {/* 视频切换按钮 */}
+                      {getCurrentStepVideos().length > 1 && (
+                        <div className="absolute bottom-4 right-4 z-10">
+                          <div className="bg-yellow-100 p-2 rounded-lg shadow-lg transform rotate-3 border-2 border-dashed border-yellow-400">
+                            <button
+                              onClick={() => {
+                                const nextIndex = (currentVideoIndex + 1) % getCurrentStepVideos().length;
+                                setCurrentVideoIndex(nextIndex);
+                                console.log(`🔄 切换到视频 ${nextIndex + 1}/${getCurrentStepVideos().length}`);
+                              }}
+                              className="bg-blue-200 hover:bg-blue-300 text-blue-800 w-10 h-10 rounded-full flex items-center justify-center transform hover:rotate-12 transition-all duration-300 shadow-md border-2 border-blue-400 font-bold text-sm"
+                              title="切换视频"
+                              style={{
+                                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                              }}
+                            >
+                              🔄
+                            </button>
+                            <p className="text-xs text-blue-700 text-center mt-1 font-bold transform -rotate-2" style={{
+                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            }}>
+                              {currentVideoIndex + 1}/{getCurrentStepVideos().length}
+                            </p>
                           </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
+                )}
+
+                {/* 推荐资料区域 */}
+                {currentTask?.web_res?.results && currentTask.web_res.results.length > 0 && (
+                  <div className="space-y-4">
+                    <h4 className="text-xl font-bold text-blue-700" style={{
+                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    }}>
+                      Recommended Resources:
+                    </h4>
+                    
+                    <div className="space-y-1">
+                      {currentTask.web_res.results.slice(0, 8).map((result, index) => (
+                        <div 
+                          key={index} 
+                          className="group cursor-pointer hover:text-blue-600 transition-colors duration-200"
+                          onClick={() => window.open(result.url, '_blank')}
+                        >
+                          <div className="flex items-center space-x-2">
+                            <span className={`text-base font-bold ${
+                              index % 3 === 0 ? 'text-blue-500' : 
+                              index % 3 === 1 ? 'text-green-500' : 
+                              'text-purple-500'
+                            }`}>
+                              {index + 1}.
+                            </span>
+                            
+                            <h5 className="text-base font-bold text-gray-800 hover:text-blue-600 transition-colors flex-1" style={{
+                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            }}>
+                              {result.title}
+                            </h5>
+                            
+                            <span className="text-sm">
+                              {result.score > 0.9 ? '🔥' :
+                               result.score > 0.8 ? '👍' : '📖'}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 答题区域 */}
+                <div className="space-y-4">
+                  {currentTask?.type === 'coding' ? (
+                    /* 代码题 */
+                    <div className="space-y-4">
+                      {currentTask.task && (
+                        <>
+                          {/* 题目描述 - 使用quiz同款样式 */}
+                          <h4 className={`font-bold text-base text-gray-800 border-b-2 border-dashed border-blue-400 pb-2 mb-3`} style={{
+                            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                          }}>
+                            <span className="mr-2 text-blue-700">
+                              Task:
+                            </span>
+                            {currentTask.task.description}
+                          </h4>
+                          
+                          <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+                            <Editor
+                              height="280px"
+                              defaultLanguage="python"
+                              value={codeValue}
+                              onChange={(value: string | undefined) => setCodeValue(value || '')}
+                              theme="vs-dark"
+                              options={{
+                                minimap: { enabled: false },
+                                fontSize: 16,
+                                fontFamily: '"Fira Code", "JetBrains Mono", "Monaco", "Consolas", monospace',
+                                lineNumbers: 'on',
+                                wordWrap: 'on',
+                                scrollBeyondLastLine: true,
+                                automaticLayout: true,
+                                tabSize: 4,
+                                insertSpaces: true,
+                                renderWhitespace: 'selection',
+                                renderLineHighlight: 'all',
+                                cursorStyle: 'line',
+                                cursorBlinking: 'blink',
+                                smoothScrolling: true,
+                                mouseWheelZoom: true,
+                                scrollbar: {
+                                  vertical: 'visible',
+                                  horizontal: 'visible',
+                                  verticalScrollbarSize: 10,
+                                  horizontalScrollbarSize: 10
+                                },
+                                overviewRulerBorder: false,
+                                bracketPairColorization: { enabled: true },
+                                guides: {
+                                  indentation: true,
+                                  bracketPairs: true
+                                }
+                              }}
+                            />
+                          </div>
+                          
+                          {codeOutput && (
+                            <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm border border-gray-700">
+                              <div className="flex items-center mb-2">
+                                <span className="text-gray-400">💻 输出结果：</span>
+                              </div>
+                              <pre className="whitespace-pre-wrap">{codeOutput}</pre>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  ) : (
+                    /* 选择题 */
+                    <div className="space-y-4">
+                      {currentTask?.questions?.map((question, qIndex) => (
+                        <div key={qIndex} className="space-y-2">
+                          <h4 className={`font-bold text-base text-gray-800 border-b-2 border-dashed pb-2 mb-3 ${
+                            wrongAnswers.has(qIndex) ? 'border-red-400 text-red-700' : 'border-blue-400'
+                          }`} style={{
+                            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                          }}>
+                            <span className={`mr-2 ${wrongAnswers.has(qIndex) ? 'text-red-700' : 'text-blue-700'}`}>
+                              Question {qIndex + 1}:
+                            </span>
+                            {question.question}
+                          </h4>
+                          <div className="grid grid-cols-3 gap-3">
+                            {question.options.map((option: string, index: number) => {
+                              const stickyStyles = [
+                                'bg-sky-50 border-sky-200 transform rotate-1 hover:rotate-0',
+                                'bg-slate-50 border-slate-200 transform -rotate-1 hover:rotate-0', 
+                                'bg-sky-50 border-sky-200 transform rotate-0.5 hover:rotate-0'
+                              ];
+                              const shadowStyles = [
+                                'shadow-sky-100/50',
+                                'shadow-slate-100/50',
+                                'shadow-sky-100/50'
+                              ];
+                              
+                              const isSelected = selectedAnswers[qIndex] === option;
+                              const isWrongAnswer = hasSubmitted && isSelected && option !== question.answer;
+                              
+                              return (
+                                <label key={index} className={`flex items-center space-x-2 p-3 border-2 rounded-lg cursor-pointer text-sm transition-all duration-300 hover:scale-105 shadow-lg ${
+                                  isWrongAnswer ? 'bg-red-200 border-red-400 text-red-800' :
+                                  isSelected ? 'ring-2 ring-blue-400' : stickyStyles[index % 3]
+                                } ${!isWrongAnswer ? shadowStyles[index % 3] : ''}`}>
+                                  <input 
+                                    type="radio" 
+                                    name={`question-${qIndex}`}
+                                    value={option}
+                                    checked={isSelected}
+                                    onChange={(e) => handleAnswerSelect(qIndex, e.target.value)}
+                                    className="text-primary scale-75" 
+                                  />
+                                  <span className="text-xs leading-tight font-medium" style={{
+                                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                  }}>
+                                    {String.fromCharCode(65 + index)}. {option}
+                                  </span>
+                                  {isWrongAnswer && (
+                                    <span className="text-red-600 text-sm font-bold">✗</span>
+                                  )}
+                                </label>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* 提交按钮 */}
+                <div className="flex justify-end pt-4">
+                  {!hasSubmitted ? (
+                    <Button 
+                      onClick={handleSubmitAnswers}
+                      disabled={currentTask?.type === 'quiz' && Object.keys(selectedAnswers).length !== (currentTask?.questions?.length || 0)}
+                      className="bg-primary hover:bg-primary/90 transform rotate-1 shadow-lg font-bold"
+                      style={{
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      }}
+                    >
+                      Submit Answer 🚀
+                    </Button>
+                  ) : wrongAnswers.size === 0 ? (
+                    <div className="text-green-600 font-bold transform rotate-1" style={{
+                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    }}>
+                      Correct! Switching to the next step... ✨
+                    </div>
+                  ) : (
+                    <Button 
+                      onClick={handleSubmitAnswers}
+                      disabled={currentTask?.type === 'quiz' && Object.keys(selectedAnswers).length !== (currentTask?.questions?.length || 0)}
+                      className="bg-primary hover:bg-primary/90 transform rotate-1 shadow-lg font-bold"
+                      style={{
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      }}
+                    >
+                      Re-submit 🔄
+                    </Button>
+                  )}
                 </div>
               </div>
             ) : (
@@ -961,172 +1627,8 @@ export default function StudyPage({ params }: StudyPageProps) {
               </div>
             )}
           </div>
-
-          {/* 下半部分：答题区 */}
-          <div className={`${isVideoExpanded ? 'h-auto min-h-[300px]' : 'h-1/2'} p-4 relative transition-all duration-300`}>
-            <div className="h-full overflow-y-auto">
-              {currentTask?.type === 'coding' ? (
-                /* 代码题 */
-                  <div className="space-y-4">
-                  {currentTask.task && (
-                    <>
-                      {/* 题目描述 - 使用quiz同款样式 */}
-                      <h4 className={`font-bold text-base text-gray-800 border-b-2 border-dashed border-blue-400 pb-2 mb-3`} style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                      }}>
-                        <span className="mr-2 text-blue-700">
-                          Task:
-                        </span>
-                        {currentTask.task.description}
-                      </h4>
-                      
-                      <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
-                        <Editor
-                          height="280px"
-                          defaultLanguage="python"
-                          value={codeValue}
-                          onChange={(value: string | undefined) => setCodeValue(value || '')}
-                          theme="vs-dark"
-                          options={{
-                            minimap: { enabled: false },
-                            fontSize: 16,
-                            fontFamily: '"Fira Code", "JetBrains Mono", "Monaco", "Consolas", monospace',
-                            lineNumbers: 'on',
-                            wordWrap: 'on',
-                            scrollBeyondLastLine: true,
-                            automaticLayout: true,
-                            tabSize: 4,
-                            insertSpaces: true,
-                            renderWhitespace: 'selection',
-                            renderLineHighlight: 'all',
-                            cursorStyle: 'line',
-                            cursorBlinking: 'blink',
-                            smoothScrolling: true,
-                            mouseWheelZoom: true,
-                            scrollbar: {
-                              vertical: 'visible',
-                              horizontal: 'visible',
-                              verticalScrollbarSize: 10,
-                              horizontalScrollbarSize: 10
-                            },
-                            overviewRulerBorder: false,
-                            bracketPairColorization: { enabled: true },
-                            guides: {
-                              indentation: true,
-                              bracketPairs: true
-                            }
-                          }}
-                        />
-                      </div>
-                      
-                      {codeOutput && (
-                        <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm border border-gray-700">
-                          <div className="flex items-center mb-2">
-                            <span className="text-gray-400">💻 输出结果：</span>
-                          </div>
-                          <pre className="whitespace-pre-wrap">{codeOutput}</pre>
-                      </div>
-                      )}
-                    </>
-                  )}
-                    </div>
-              ) : (
-                /* 选择题 */
-                <div className="space-y-4 h-full">
-                  {currentTask?.questions?.map((question, qIndex) => (
-                    <div key={qIndex} className="space-y-2">
-                      <h4 className={`font-bold text-base text-gray-800 border-b-2 border-dashed pb-2 mb-3 ${
-                        wrongAnswers.has(qIndex) ? 'border-red-400 text-red-700' : 'border-blue-400'
-                      }`} style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                      }}>
-                        <span className={`mr-2 ${wrongAnswers.has(qIndex) ? 'text-red-700' : 'text-blue-700'}`}>
-                          Question {qIndex + 1}:
-                        </span>
-                        {question.question}
-                      </h4>
-                      <div className="grid grid-cols-3 gap-3">
-                        {question.options.map((option: string, index: number) => {
-                          const stickyStyles = [
-                            'bg-sky-50 border-sky-200 transform rotate-1 hover:rotate-0',
-                            'bg-slate-50 border-slate-200 transform -rotate-1 hover:rotate-0', 
-                            'bg-sky-50 border-sky-200 transform rotate-0.5 hover:rotate-0'
-                          ];
-                          const shadowStyles = [
-                            'shadow-sky-100/50',
-                            'shadow-slate-100/50',
-                            'shadow-sky-100/50'
-                          ];
-                          
-                          const isSelected = selectedAnswers[qIndex] === option;
-                          const isWrongAnswer = hasSubmitted && isSelected && option !== question.answer;
-                          
-                          return (
-                            <label key={index} className={`flex items-center space-x-2 p-3 border-2 rounded-lg cursor-pointer text-sm transition-all duration-300 hover:scale-105 shadow-lg ${
-                              isWrongAnswer ? 'bg-red-200 border-red-400 text-red-800' :
-                              isSelected ? 'ring-2 ring-blue-400' : stickyStyles[index % 3]
-                            } ${!isWrongAnswer ? shadowStyles[index % 3] : ''}`}>
-                              <input 
-                                type="radio" 
-                                name={`question-${qIndex}`}
-                                value={option}
-                                checked={isSelected}
-                                onChange={(e) => handleAnswerSelect(qIndex, e.target.value)}
-                                className="text-primary scale-75" 
-                              />
-                              <span className="text-xs leading-tight font-medium" style={{
-                                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                              }}>
-                                {String.fromCharCode(65 + index)}. {option}
-                              </span>
-                              {isWrongAnswer && (
-                                <span className="text-red-600 text-sm font-bold">✗</span>
-                              )}
-                            </label>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            
-            {/* 提交按钮 */}
-            <div className="absolute bottom-4 right-4">
-              {!hasSubmitted ? (
-                <Button 
-                  onClick={handleSubmitAnswers}
-                  disabled={currentTask?.type === 'quiz' && Object.keys(selectedAnswers).length !== (currentTask?.questions?.length || 0)}
-                  className="bg-primary hover:bg-primary/90 transform rotate-1 shadow-lg font-bold"
-                  style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                  }}
-                >
-                  Submit Answer 🚀
-                </Button>
-              ) : wrongAnswers.size === 0 ? (
-                <div className="text-green-600 font-bold transform rotate-1" style={{
-                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                }}>
-                  Correct! Switching to the next step... ✨
-                  </div>
-                ) : (
-                <Button 
-                  onClick={handleSubmitAnswers}
-                  disabled={currentTask?.type === 'quiz' && Object.keys(selectedAnswers).length !== (currentTask?.questions?.length || 0)}
-                  className="bg-primary hover:bg-primary/90 transform rotate-1 shadow-lg font-bold"
-                  style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                  }}
-                >
-                  Re-submit 🔄
-                </Button>
-              )}
-                      </div>
-                    </div>
-                  </div>
-          </div>
+        </div>
+      </div>
 
       <div className="w-1/4 transition-all duration-300">
         <div className="h-full p-4">

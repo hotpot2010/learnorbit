@@ -1,34 +1,91 @@
-import { NextRequest, NextResponse } from 'next/server';
-// TODO: 重新启用当Supabase配置完成后
-// import { UserCourseRepository } from '@/lib/repositories/user-course-repository';
-// import { authClient } from '@/lib/auth-client';
+import { getDb } from '@/db';
+import { userCourses } from '@/db/schema';
+import { auth } from '@/lib/auth';
+import { desc, eq } from 'drizzle-orm';
+import { type NextRequest, NextResponse } from 'next/server';
 
-// const userCourseRepo = new UserCourseRepository();
-
-// 创建新课程 - 暂时返回模拟数据
+// 创建新课程
 export async function POST(request: NextRequest) {
   try {
-    // TODO: 重新启用用户验证和数据库操作
-    // const session = await authClient.getSession();
-    // if (!session?.data?.user) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    // }
+    // 验证用户身份
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
 
-    // const userId = session.data.user.id;
-    const courseData = await request.json();
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const userId = session.user.id;
+    const requestData = await request.json();
     
-    // const course = await userCourseRepo.createUserCourse(userId, courseData);
-    const mockCourse = {
-      id: `course-${Date.now()}`,
-      ...courseData,
-      created_at: new Date().toISOString()
-    };
+    // 检查数据格式：新格式包含 plan 和 tasks，旧格式直接是 coursePlan
+    const coursePlan = requestData.plan || requestData;
+    const taskData = requestData.tasks || {};
     
-    return NextResponse.json({ course: mockCourse }, { status: 201 });
+    console.log('📥 接收到课程数据:', {
+      hasPlan: !!coursePlan,
+      hasTaskData: !!requestData.tasks,
+      taskCount: Object.keys(taskData).length
+    });
+
+    // 保存课程信息到数据库
+    const db = await getDb();
+    const [newCourse] = await db
+      .insert(userCourses)
+      .values({
+        userId: userId,
+        coursePlan: {
+          plan: coursePlan.plan || coursePlan,
+          tasks: taskData // 存储生成的任务数据
+        },
+        currentStep: 0,
+        status: 'in-progress',
+      })
+      .returning();
+
+    console.log('✅ 课程保存成功:', { courseId: newCourse.id });
+
+    return NextResponse.json({ 
+      course: newCourse,
+      message: 'Course uploaded successfully'
+    }, { status: 201 });
   } catch (error) {
     console.error('Error creating course:', error);
     return NextResponse.json(
-      { error: 'Failed to create course' }, 
+      { error: 'Failed to create course' },
+      { status: 500 }
+    );
+  }
+}
+
+// 获取用户的所有课程
+export async function GET(request: NextRequest) {
+  try {
+    // 验证用户身份
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const userId = session.user.id;
+
+    // 从数据库获取用户课程
+    const db = await getDb();
+    const courses = await db
+      .select()
+      .from(userCourses)
+      .where(eq(userCourses.userId, userId))
+      .orderBy(desc(userCourses.createdAt));
+
+    return NextResponse.json({ courses }, { status: 200 });
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch courses' },
       { status: 500 }
     );
   }

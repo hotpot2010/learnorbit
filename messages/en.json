@@ -1,7 +1,7 @@
 {
   "Metadata": {
-    "name": "learnorbit",
-    "title": "learnorbit - AI Learning Platform",
+    "name": "Aitutorly",
+    "title": "Aitutorly - AI Learning Platform",
     "description": "AI-powered personalized learning platform that creates customized learning paths and course content"
   },
   "Common": {
@@ -28,7 +28,9 @@
     "save": "Save",
     "loading": "Loading...",
     "cancel": "Cancel",
-    "logoutFailed": "Failed to log out"
+    "loginRequired": "Login required",
+    "logoutFailed": "Failed to log out",
+    "logoutSuccess": "Logged out successfully"
   },
   "LearningPlatform": {
     "title": "What to Learn?",
@@ -40,7 +42,7 @@
     "recommendedCourses": "Recommended Courses",
     "myCourses": "My Courses",
     "aiTutor": "AI Tutor",
-    "learningPath": "Learning Path", 
+    "learningPath": "Learning Path",
     "practiceArea": "Practice Area",
     "chatArea": "Chat Area",
     "customizeLearning": "Customize Learning Plan",
@@ -52,7 +54,7 @@
     "currentProgress": "Current Progress",
     "completed": "Completed",
     "inProgress": "In Progress",
-    "pending": "Pending", 
+    "pending": "Pending",
     "noCoursesYet": "No courses yet",
     "createFirstCourse": "Create your first course",
     "backToHome": "Back to Home",
@@ -63,6 +65,78 @@
     "recommendationsFor": "We recommend the following related courses for you",
     "letsCustomize": "Let's customize your personalized learning plan together",
     "loading": "Generating...",
+    "aiAssistant": {
+      "welcome": "Hello! I am your AI learning assistant.",
+      "welcomeStudy": "Please 【Read Notes】 and 【Watch Videos】~~ \n\nTry to answer the questions below.\nFeel free to ask me anything you don't understand~~",
+      "welcomeCustomize": "I'm here to help you customize courses",
+      "helpAnalyze": "I'll help you analyze your learning needs and generate a personalized course plan.",
+      "helpCustomize": "I'll help you analyze your learning needs.",
+      "tellMeWhatToLearn": "Please tell me what you want to learn, and I'll create a personalized learning plan for you."
+    },
+    "course": {
+      "wantToLearn": "I want to learn",
+      "generating": "Generating...",
+      "generatingComplete": "✨ Generating complete course...",
+      "savingPlan": "💾 Saving course plan...",
+      "generatingContent": "🚀 Generating course content...",
+      "generationComplete": "🎉 Course generation complete!",
+      "saved": "Course Saved!",
+      "savedDescription": "Your personalized course has been saved to the database!<br/>You can now view and manage your courses on the My Courses page.",
+      "gotIt": "Got it",
+      "viewMyCourses": "View My Courses 📚",
+      "uploadCourse": "Upload Course",
+      "uploading": "Uploading...",
+      "uploadSuccess": "🎉 Course successfully uploaded to 【My Courses】!",
+      "uploadFailed": "❌ Course upload failed, please try again later."
+    },
+    "plan": {
+      "updating": "Plan Updating...",
+      "updated": "✅ Plan Updated!",
+      "generationFailed": "❌ Generation Failed",
+      "personalizedPlan": "Personalized Learning Plan 📚",
+      "aiGenerating": "AI is generating your personalized learning plan...",
+      "planWillAppear": "Your personalized learning plan will appear here ✨",
+      "startChatting": "Start chatting with AI assistant to generate your custom learning path 💡",
+      "generatingMoreSteps": "Generating more learning steps... ✨",
+      "startLearningJourney": "Start Learning Journey! 🚀",
+      "savingCourse": "Saving Course...",
+      "generatingContent": "Generating Content...",
+      "saveFailed": "⚠️ Save failed, but you can still continue learning"
+    },
+    "steps": {
+      "newStep": "✨ New!",
+      "updateComplete": "✅ Update complete!",
+      "updating": "🔄 Updating..."
+    },
+    "study": {
+      "generatingTasks": "Generating learning tasks...",
+      "noLearningPlan": "No learning plan available",
+      "taskDataMissing": "# Task Data Missing\n\n⚠️ Task data may have issues, please re-upload the course",
+      "recommendedVideos": "Recommended Videos",
+      "referenceImages": "Reference Images",
+      "recommendedMaterials": "Recommended Materials"
+    },
+    "confirmDialog": {
+      "deleteCourse": "Confirm Delete Course? 🗑️",
+      "confirmDelete": "Are you sure you want to delete the course",
+      "cannotUndo": "This action cannot be undone and your learning progress will be lost.",
+      "cancel": "Cancel",
+      "confirmDeleteButton": "Confirm Delete",
+      "deleting": "Deleting..."
+    },
+    "status": {
+      "pleaseLogin": "Please log in to view your courses",
+      "goToLogin": "Go to Login",
+      "noCoursesYet": "No courses yet! ✨",
+      "startFirstCourse": "Start your first learning course and explore infinite possibilities 💡",
+      "backToHome": "← Back to Home",
+      "courseGenerating": "Course Generating...",
+      "complete": "Complete"
+    },
+    "warnings": {
+      "courseGenerating": "Course is being generated. Leaving the page will lose the current generated content. Are you sure you want to leave?",
+      "noLearningPlan": "⚠️ No learning plan available to save"
+    },
     "meta": {
       "title": "AI Learning Platform - Personalized Intelligent Learning Experience",
       "description": "AI-powered personalized learning platform that creates customized learning paths and course content to enhance your learning efficiency"

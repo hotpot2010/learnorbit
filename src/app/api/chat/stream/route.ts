@@ -1,16 +1,31 @@
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { auth } from '@/lib/auth';
+import { type ChatStreamRequest } from '@/types/learning-plan';
+import { getApiRequestContext, enhanceApiRequest } from '@/lib/api-utils';
 
-const EXTERNAL_API_URL = process.env.EXTERNAL_API_URL || 'http://172.30.106.167:5000';
+const EXTERNAL_API_URL =
+  process.env.EXTERNAL_API_URL || 'http://172.30.106.167:5000';
 
 export async function POST(request: NextRequest) {
   try {
-    const requestData = await request.json();
+    const requestData: ChatStreamRequest = await request.json();
+
+    // 获取用户信息和语言设置
+    const context = await getApiRequestContext(request);
+
+    // 添加用户ID和语言字段
+    const enhancedRequestData = enhanceApiRequest(requestData, context);
+
     console.log('🔧 环境变量调试信息 (chat):', {
       'process.env.EXTERNAL_API_URL': process.env.EXTERNAL_API_URL,
-      'EXTERNAL_API_URL常量': EXTERNAL_API_URL,
-      '最终请求URL': `${EXTERNAL_API_URL}/api/chat/stream`
+      EXTERNAL_API_URL常量: EXTERNAL_API_URL,
+      最终请求URL: `${EXTERNAL_API_URL}/api/chat/stream`,
     });
-    console.log('代理转发 /api/chat/stream 请求:', requestData);
+    console.log('代理转发 /api/chat/stream 请求:', {
+      ...requestData,
+      userId: context.userId || 'anonymous',
+      lang: context.lang,
+    });
 
     // 转发请求到外部API
     const response = await fetch(`${EXTERNAL_API_URL}/api/chat/stream`, {
@@ -18,7 +33,7 @@ export async function POST(request: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(requestData),
+      body: JSON.stringify(enhancedRequestData),
     });
 
     console.log('外部API响应状态:', response.status);
@@ -34,25 +49,21 @@ export async function POST(request: NextRequest) {
       headers: {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
+        Connection: 'keep-alive',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type',
       },
     });
-
   } catch (error) {
     console.error('API代理错误:', error);
-    return new Response(
-      JSON.stringify({ error: '服务暂时不可用' }), 
-      { 
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        }
-      }
-    );
+    return new Response(JSON.stringify({ error: '服务暂时不可用' }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
   }
 }
 
@@ -65,4 +76,4 @@ export async function OPTIONS() {
       'Access-Control-Allow-Headers': 'Content-Type',
     },
   });
-} 
+}

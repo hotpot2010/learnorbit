@@ -1,13 +1,18 @@
 import { adminClient, inferAdditionalFields } from 'better-auth/client/plugins';
 import { createAuthClient } from 'better-auth/react';
 import type { auth } from './auth';
-import { getBaseUrl } from './urls/urls';
+import { getClientBaseUrl, logEnvironmentInfo } from './env';
+
+// 记录环境信息用于调试
+if (typeof window !== 'undefined') {
+  logEnvironmentInfo();
+}
 
 /**
  * https://www.better-auth.com/docs/installation#create-client-instance
  */
 export const authClient = createAuthClient({
-  baseURL: getBaseUrl(),
+  baseURL: getClientBaseUrl(),
   plugins: [
     // https://www.better-auth.com/docs/plugins/admin#add-the-client-plugin
     adminClient(),

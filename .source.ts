@@ -12,4 +12,4 @@ export const changelog = [];
 export const pages = [];
 export const author = [];
 export const category = [];
-export const blog = []; 
+export const blog = [];

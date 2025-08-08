@@ -15,6 +15,7 @@ export interface LearningStep {
   status: 'current' | 'completed' | 'pending' | '当前进行' | '待完成';
   type: 'quiz' | 'coding';
   difficulty: 'beginner' | 'intermediate' | 'advanced';
+  search_keyword?: string; // 添加可选的搜索关键词
   videos: Video[];
 }
 
@@ -35,7 +36,10 @@ export interface TaskGenerateRequest {
   status: string;
   type: 'quiz' | 'coding';
   difficulty: 'beginner' | 'intermediate' | 'advanced';
+  search_keyword?: string; // 添加可选的搜索关键词
   videos: Video[];
+  id?: string | null; // 用户ID
+  lang?: string; // 语言设置: en/zh
 }
 
 export interface PptSlide {
@@ -57,16 +61,86 @@ export interface CodingTask {
   answer: string;
 }
 
+// Web搜索结果类型
+export interface WebSearchResult {
+  url: string;
+  title: string;
+  content: string;
+  score: number;
+  raw_content: string | null;
+}
+
+export interface WebSearchImage {
+  url: string;
+  description: string;
+}
+
+export interface WebSearchResponse {
+  query: string;
+  follow_up_questions: string[] | null;
+  answer: string | null;
+  images: WebSearchImage[];
+  results: WebSearchResult[];
+  response_time: number;
+}
+
 export interface TaskContent {
   type: 'quiz' | 'coding';
   difficulty: string;
-  ppt_slide: PptSlide;
+  ppt_slide: string; // 改为string类型，支持markdown格式
   questions?: QuizQuestion[];
   task?: CodingTask;
   videos: Video[];
+  web_res?: WebSearchResponse; // 新增：Web搜索结果
+}
+
+// 任务评估请求接口
+export interface TaskEvaluateRequest {
+  task_type: 'quiz' | 'coding';
+  submission: any;
+  task_data: any;
+  id?: string | null; // 用户ID
+  lang?: string; // 语言设置: en/zh
+}
+
+// 聊天请求接口
+export interface ChatStreamRequest {
+  message?: string;
+  messages?: any[];
+  [key: string]: any; // 允许其他字段
+  id?: string | null; // 用户ID
+  lang?: string; // 语言设置: en/zh
+}
+
+// 课程定制请求接口
+export interface Chat1StreamRequest {
+  id: string;
+  messages: any[];
+  userId?: string | null; // 用户ID
+  lang?: string; // 语言设置: en/zh
+}
+
+// 学习计划生成请求接口
+export interface LearningPlanGenerateRequest {
+  id: string;
+  messages: any[];
+  advise?: any;
+  userId?: string | null; // 用户ID
+  lang?: string; // 语言设置: en/zh
+}
+
+// AI问题建议请求接口
+export interface SuggestQuestionsRequest {
+  task_title: string;
+  task_description?: string;
+  user_submission?: any;
+  error_reason?: string;
+  [key: string]: any; // 允许其他字段
+  id?: string | null; // 用户ID
+  lang?: string; // 语言设置: en/zh
 }
 
 export interface TaskGenerateResponse {
   success: boolean;
   task: TaskContent;
-} 
+}

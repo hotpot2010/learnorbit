@@ -9,7 +9,7 @@ export enum Routes {
   // marketing pages
   FAQ = '/#faq',
   Features = '/#features',
-  Pricing = '/pricing', // change to /#pricing if you want to use the pricing section in homepage
+  // Pricing = '/pricing', // 已隐藏 - change to /#pricing if you want to use the pricing section in homepage
   Blog = '/blog',
   Docs = '/docs',
   About = '/about',

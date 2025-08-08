@@ -1,7 +1,7 @@
 {
   "Metadata": {
-    "name": "learnorbit",
-    "title": "learnorbit - AI学习平台",
+    "name": "Aitutorly",
+    "title": "Aitutorly - AI学习平台",
     "description": "基于AI技术的个性化学习平台，为您创建定制化的学习路径和课程内容"
   },
   "Common": {
@@ -28,7 +28,9 @@
     "saving": "保存中...",
     "loading": "加载中...",
     "cancel": "取消",
-    "logoutFailed": "退出失败"
+    "loginRequired": "需要登录",
+    "logoutFailed": "退出失败",
+    "logoutSuccess": "退出成功"
   },
   "LearningPlatform": {
     "title": "学什么呢？",
@@ -39,7 +41,7 @@
     "confirmInput": "确认",
     "recommendedCourses": "推荐课程",
     "myCourses": "我的课程",
-    "aiTutor": "AI导师", 
+    "aiTutor": "AI导师",
     "learningPath": "学习路径",
     "practiceArea": "练习区域",
     "chatArea": "对话区域",
@@ -51,7 +53,7 @@
     "estimatedTime": "预计时间",
     "currentProgress": "当前进度",
     "completed": "已完成",
-    "inProgress": "进行中", 
+    "inProgress": "进行中",
     "pending": "待开始",
     "noCoursesYet": "还没有课程",
     "createFirstCourse": "创建您的第一个课程",
@@ -63,6 +65,14 @@
     "recommendationsFor": "为您推荐以下相关课程",
     "letsCustomize": "让我们一起定制您的专属学习计划",
     "loading": "生成中...",
+    "aiAssistant": {
+      "welcome": "您好！我是您的AI学习助手。",
+      "welcomeStudy": "请【阅读笔记】和【观看视频】~~ \n\n并试着回答下面的问题。\n有任何不懂的都可以向我提问哦~~",
+      "welcomeCustomize": "我来帮你定制课程",
+      "helpAnalyze": "我来帮您分析学习需求并生成个性化课程计划。",
+      "helpCustomize": "我来帮您分析学习需求。",
+      "tellMeWhatToLearn": "请告诉我您想学习什么，我会为您制定个性化的学习计划。"
+    },
     "meta": {
       "title": "AI学习平台 - 个性化智能学习体验",
       "description": "基于AI技术的个性化学习平台，为您创建定制化的学习路径和课程内容，提升学习效率"

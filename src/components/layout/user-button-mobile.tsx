@@ -36,20 +36,33 @@ export function UserButtonMobile({ user }: UserButtonProps) {
   };
 
   const handleSignOut = async () => {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          console.log('sign out success');
-          // Reset payment state on sign out
-          resetState();
-          localeRouter.replace('/');
+    try {
+      console.log('🚪 [Mobile] Starting sign out process...');
+      
+      const result = await authClient.signOut({
+        fetchOptions: {
+          onSuccess: (ctx) => {
+            console.log('✅ [Mobile] Sign out success:', ctx);
+            // Reset payment state on sign out
+            resetState();
+            // 关闭drawer
+            closeDrawer();
+            // 使用 replace 而不是 push 避免返回按钮问题
+            localeRouter.replace('/');
+            toast.success(t('Common.logoutSuccess') || 'Logout successful');
+          },
+          onError: (ctx) => {
+            console.error('❌ [Mobile] Sign out error:', ctx.error);
+            toast.error(t('Common.logoutFailed') || 'Logout failed');
+          },
         },
-        onError: (error) => {
-          console.error('sign out error:', error);
-          toast.error(t('Common.logoutFailed'));
-        },
-      },
-    });
+      });
+      
+      console.log('🚪 [Mobile] Sign out result:', result);
+    } catch (error) {
+      console.error('❌ [Mobile] Sign out caught error:', error);
+      toast.error(t('Common.logoutFailed') || 'Logout failed');
+    }
   };
 
   return (

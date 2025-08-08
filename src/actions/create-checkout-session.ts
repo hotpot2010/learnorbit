@@ -90,7 +90,7 @@ export const createCheckoutAction = actionClient
         '/settings/billing?session_id={CHECKOUT_SESSION_ID}',
         locale
       );
-      const cancelUrl = getUrlWithLocale(Routes.Pricing, locale);
+      const cancelUrl = getUrlWithLocale('/', locale); // 原本指向Pricing，现在指向首页
       const params: CreateCheckoutParams = {
         planId,
         priceId,
