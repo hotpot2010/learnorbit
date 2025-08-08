@@ -76,11 +76,15 @@ export default function StudyPage({ params }: StudyPageProps) {
         const savedPlan = sessionStorage.getItem('learningPlan');
         const fromDatabase = sessionStorage.getItem('fromDatabase');
         const savedTaskCache = sessionStorage.getItem('taskCache');
+        const fromCustomPage = sessionStorage.getItem('fromCustomPage');
+        const savedTaskStatus = sessionStorage.getItem('stepTaskStatus');
         
         console.log('🔍 检查sessionStorage状态:', {
           hasSavedPlan: !!savedPlan,
           fromDatabase: fromDatabase,
+          fromCustomPage: fromCustomPage,
           hasSavedTaskCache: !!savedTaskCache,
+          hasSavedTaskStatus: !!savedTaskStatus,
           taskGenerationStarted: taskGenerationStarted.current,
           initialLoadCompleted: initialLoadCompleted.current
         });
@@ -118,9 +122,55 @@ export default function StudyPage({ params }: StudyPageProps) {
               // 清除数据库标记
               sessionStorage.removeItem('fromDatabase');
               sessionStorage.removeItem('taskCache');
-            } else {
+            } 
+            // 如果来自课程定制页面且有任务缓存，加载缓存的任务
+            else if (fromCustomPage === 'true' && savedTaskCache) {
+              console.log('🎨 检测到来自课程定制页面，加载任务缓存...');
+              
+              const tasks = JSON.parse(savedTaskCache);
+              const taskStatus = savedTaskStatus ? JSON.parse(savedTaskStatus) : {};
+              
+              setTaskCache(tasks);
+              setTaskGenerationStatus(taskStatus);
+              
+              console.log('✅ 从课程定制页面加载任务缓存:', {
+                taskCount: Object.keys(tasks).length,
+                taskKeys: Object.keys(tasks),
+                completedTasks: Object.keys(taskStatus).filter(key => taskStatus[key] === 'completed').length,
+                taskStatus: taskStatus
+              });
+              
+              // 检查是否还有未完成的任务需要继续生成
+              const pendingTasks = plan.plan.filter(step => 
+                !tasks[step.step] || taskStatus[step.step] !== 'completed'
+              );
+              
+              if (pendingTasks.length > 0) {
+                console.log('📋 还有', pendingTasks.length, '个任务需要继续生成:', 
+                  pendingTasks.map(s => `步骤${s.step}: ${s.title}`));
+                
+                // 标记这些任务为需要生成
+                taskGenerationStarted.current = true;
+                initialLoadCompleted.current = true;
+                
+                // 对未完成的任务启动生成
+                setTimeout(() => {
+                  generateTasksForMissingSteps(plan, tasks, taskStatus);
+                }, 1000);
+              } else {
+                console.log('🎉 所有任务都已完成，无需额外生成');
+                taskGenerationStarted.current = true;
+                initialLoadCompleted.current = true;
+              }
+              
+              // 清除课程定制页面标记
+              sessionStorage.removeItem('fromCustomPage');
+              sessionStorage.removeItem('stepTaskStatus');
+            } 
+            else {
               console.log('🆕 检测到新课程，需要生成任务:', {
                 fromDatabase: fromDatabase,
+                fromCustomPage: fromCustomPage,
                 hasSavedTaskCache: !!savedTaskCache,
                 taskGenerationStarted: taskGenerationStarted.current
               });
@@ -144,6 +194,124 @@ export default function StudyPage({ params }: StudyPageProps) {
     };
     resolveParams();
   }, [params]);
+
+  // 为缺失的步骤生成任务
+  const generateTasksForMissingSteps = async (plan: LearningPlan, existingTasks: Record<number, any>, taskStatus: Record<number, string>) => {
+    console.log('\n=== 🔄 开始为缺失步骤生成任务 ===');
+    
+    // 找出需要生成任务的步骤
+    const stepsToGenerate = plan.plan.filter(step => 
+      !existingTasks[step.step] || taskStatus[step.step] !== 'completed'
+    );
+    
+    console.log('需要生成任务的步骤:', stepsToGenerate.map(s => `${s.step}: ${s.title}`));
+    
+    if (stepsToGenerate.length === 0) {
+      console.log('✅ 所有任务都已完成');
+      return;
+    }
+    
+    // 设置初始状态 - 创建新的状态对象
+    const updatedStatus: Record<number, 'pending' | 'loading' | 'completed' | 'failed'> = {};
+    
+    // 复制现有状态，确保类型正确
+    Object.keys(taskStatus).forEach(key => {
+      const stepNum = parseInt(key);
+      const status = taskStatus[stepNum];
+      if (status === 'pending' || status === 'loading' || status === 'completed' || status === 'failed') {
+        updatedStatus[stepNum] = status;
+      }
+    });
+    
+    // 更新需要生成的步骤状态
+    stepsToGenerate.forEach(step => {
+      if (!updatedStatus[step.step] || updatedStatus[step.step] === 'failed') {
+        updatedStatus[step.step] = 'loading';
+      }
+    });
+    
+    setTaskGenerationStatus(updatedStatus);
+    
+    // 使用与原来相同的生成逻辑，但只处理缺失的步骤
+    for (const step of stepsToGenerate) {
+      console.log(`📤 触发缺失步骤 ${step.step} 的任务生成: ${step.title}`);
+      
+      // 如果已经有任务但状态不是completed，跳过
+      if (existingTasks[step.step] && taskStatus[step.step] === 'completed') {
+        continue;
+      }
+      
+      // 立即执行异步任务，不等待它完成
+      (async () => {
+        try {
+          console.log(`🔄 开始生成缺失步骤 ${step.step}: ${step.title}`);
+          
+          // 构造正确的请求数据格式
+          const requestData = {
+            step: step.step,
+            title: step.title,
+            description: step.description,
+            animation_type: step.animation_type || '无',
+            status: step.status,
+            type: step.type,
+            difficulty: step.difficulty,
+            search_keyword: step.search_keyword || step.title,
+            videos: step.videos
+          };
+          
+          console.log('📤 发送缺失任务生成请求:', requestData);
+          
+          const response = await fetch('/api/task/generate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const result = await response.json();
+
+          if (result.success) {
+            console.log(`✅ 缺失步骤 ${step.step} 生成成功`);
+            
+            // 更新缓存
+            setTaskCache(prev => ({
+              ...prev,
+              [step.step]: result.task
+            }));
+            
+            // 更新状态
+            setTaskGenerationStatus(prev => ({
+              ...prev,
+              [step.step]: 'completed'
+            }));
+            
+            console.log(`💾 缺失步骤 ${step.step} 已缓存`);
+            
+          } else {
+            throw new Error('Task generation failed');
+          }
+        } catch (error) {
+          console.error(`❌ 缺失步骤 ${step.step} 生成失败:`, error);
+          
+          // 更新失败状态
+          setTaskGenerationStatus(prev => ({
+            ...prev,
+            [step.step]: 'failed'
+          }));
+        }
+      })();
+      
+      // 等待1秒再触发下一个
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    
+    console.log('🎯 所有缺失任务生成请求已触发 ===\n');
+  };
 
   // 并行生成所有步骤的任务
   const generateAllTasks = async (plan: LearningPlan) => {
