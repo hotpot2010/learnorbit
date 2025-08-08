@@ -4,6 +4,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { AhrefsAnalytics } from './ahrefs-analytics';
 import DataFastAnalytics from './data-fast-analytics';
 import GoogleAnalytics from './google-analytics';
+import CustomGoogleAnalytics from './gtag';
 import OpenPanelAnalytics from './open-panel-analytics';
 import { PlausibleAnalytics } from './plausible-analytics';
 import { SelineAnalytics } from './seline-analytics';
@@ -19,32 +20,36 @@ import { UmamiAnalytics } from './umami-analytics';
  * https://mksaas.com/docs/analytics
  */
 export function Analytics() {
-  if (process.env.NODE_ENV !== 'production') {
-    return null;
-  }
-
   return (
     <>
-      {/* google analytics */}
+      {/* Custom Google Analytics with gtag.js */}
+      <CustomGoogleAnalytics />
+
+      {/* Next.js Google Analytics (fallback) */}
       <GoogleAnalytics />
 
-      {/* umami analytics */}
-      <UmamiAnalytics />
+      {/* Other analytics only in production */}
+      {process.env.NODE_ENV === 'production' && (
+        <>
+          {/* umami analytics */}
+          <UmamiAnalytics />
 
-      {/* plausible analytics */}
-      <PlausibleAnalytics />
+          {/* plausible analytics */}
+          <PlausibleAnalytics />
 
-      {/* ahrefs analytics */}
-      <AhrefsAnalytics />
+          {/* ahrefs analytics */}
+          <AhrefsAnalytics />
 
-      {/* datafast analytics */}
-      <DataFastAnalytics />
+          {/* datafast analytics */}
+          <DataFastAnalytics />
 
-      {/* openpanel analytics */}
-      <OpenPanelAnalytics />
+          {/* openpanel analytics */}
+          <OpenPanelAnalytics />
 
-      {/* seline analytics */}
-      <SelineAnalytics />
+          {/* seline analytics */}
+          <SelineAnalytics />
+        </>
+      )}
 
       {/* vercel analytics */}
       {/* https://vercel.com/docs/analytics/quickstart */}
