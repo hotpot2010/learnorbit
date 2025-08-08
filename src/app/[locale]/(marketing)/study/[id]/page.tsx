@@ -842,33 +842,9 @@ export default function StudyPage({ params }: StudyPageProps) {
       
       console.log('原始视频URL:', videoUrl);
       
-      // 处理B站视频URL
-      if (videoUrl.includes('bilibili.com/video/')) {
-        // 从URL中提取视频ID，支持不同格式
-        const bvMatch = videoUrl.match(/\/video\/(BV\w+)/);
-        const avMatch = videoUrl.match(/\/video\/av(\d+)/);
-        
-        if (bvMatch) {
-          // BV号格式
-          const playerUrl = `//player.bilibili.com/player.html?bvid=${bvMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
-          console.log('转换后的BV播放器URL:', playerUrl);
-          return playerUrl;
-        } else if (avMatch) {
-          // AV号格式 - 适配plan.json中的格式
-          const playerUrl = `//player.bilibili.com/player.html?aid=${avMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
-          console.log('转换后的AV播放器URL:', playerUrl);
-          return playerUrl;
-        }
-      }
-      
-      // 如果已经是iframe格式的URL，直接返回
-      if (videoUrl.includes('player.bilibili.com')) {
-        console.log('已是播放器URL，直接使用:', videoUrl);
-        return videoUrl;
-      }
-      
-      console.log('无法识别的视频URL格式:', videoUrl);
-      return videoUrl;
+      // 使用统一的视频URL处理函数
+      const processedVideo = processVideoUrl(videoUrl);
+      return processedVideo.url;
     }
     return '';
   };
@@ -886,6 +862,14 @@ export default function StudyPage({ params }: StudyPageProps) {
   const processVideoUrl = (videoUrl: string) => {
     console.log('处理视频URL:', videoUrl);
     
+    // 开发环境下，在window对象上暴露测试函数
+    if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+      (window as any).testVideoUrl = (testUrl: string) => {
+        console.log('测试视频URL处理:', testUrl);
+        return processVideoUrl(testUrl);
+      };
+    }
+    
     // 处理B站视频URL
     if (videoUrl.includes('bilibili.com/video/')) {
       // 从URL中提取视频ID，支持不同格式
@@ -896,23 +880,62 @@ export default function StudyPage({ params }: StudyPageProps) {
         // BV号格式
         const playerUrl = `//player.bilibili.com/player.html?bvid=${bvMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
         console.log('转换后的BV播放器URL:', playerUrl);
-        return playerUrl;
+        return { url: playerUrl, platform: 'bilibili' };
       } else if (avMatch) {
         // AV号格式
         const playerUrl = `//player.bilibili.com/player.html?aid=${avMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
         console.log('转换后的AV播放器URL:', playerUrl);
-        return playerUrl;
+        return { url: playerUrl, platform: 'bilibili' };
       }
     }
     
-    // 如果已经是iframe格式的URL，直接返回
+    // 处理YouTube视频URL
+    if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+      let videoId = '';
+      
+      console.log('检测到YouTube URL，开始处理:', videoUrl);
+      
+      // 各种YouTube URL格式
+      // 标准格式: https://www.youtube.com/watch?v=VIDEO_ID
+      // 短链接: https://youtu.be/VIDEO_ID
+      // 移动版: https://m.youtube.com/watch?v=VIDEO_ID
+      // 嵌入格式: https://www.youtube.com/embed/VIDEO_ID
+      const youtubePatterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|m\.youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/,
+        /youtube\.com\/.*[?&]v=([a-zA-Z0-9_-]{11})/
+      ];
+      
+      for (const pattern of youtubePatterns) {
+        const match = videoUrl.match(pattern);
+        if (match) {
+          videoId = match[1];
+          console.log('成功提取YouTube视频ID:', videoId);
+          break;
+        }
+      }
+      
+      if (videoId) {
+        const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&mute=0&controls=1&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
+        console.log('转换后的YouTube嵌入URL:', embedUrl);
+        return { url: embedUrl, platform: 'youtube' };
+      } else {
+        console.warn('无法从YouTube URL中提取视频ID:', videoUrl);
+      }
+    }
+    
+    // 检查是否已经是嵌入格式的URL
     if (videoUrl.includes('player.bilibili.com')) {
-      console.log('已是播放器URL，直接使用:', videoUrl);
-      return videoUrl;
+      console.log('已是B站播放器URL，直接使用:', videoUrl);
+      return { url: videoUrl, platform: 'bilibili' };
+    }
+    
+    if (videoUrl.includes('youtube.com/embed/')) {
+      console.log('已是YouTube嵌入URL，直接使用:', videoUrl);
+      return { url: videoUrl, platform: 'youtube' };
     }
     
     console.log('无法识别的视频URL格式:', videoUrl);
-    return videoUrl;
+    return { url: videoUrl, platform: 'unknown' };
   };
 
   // 上传课程到数据库
@@ -1278,28 +1301,84 @@ export default function StudyPage({ params }: StudyPageProps) {
                         <div className={`${isVideoExpanded ? 'w-[768px]' : 'w-96'} relative group transition-all duration-300`}>
                           <div className="bg-white p-2 rounded-lg shadow-lg">
                             <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black relative transition-all duration-300">
-                              {processVideoUrl(getCurrentStepVideos()[currentVideoIndex].url).includes('player.bilibili.com') ? (
-                                <iframe 
-                                  src={processVideoUrl(getCurrentStepVideos()[currentVideoIndex].url)}
-                                  scrolling="no"
-                                  frameBorder="no"
-                                  allowFullScreen={true}
-                                  referrerPolicy="no-referrer"
-                                  sandbox="allow-same-origin allow-scripts allow-popups allow-presentation"
-                                  className="w-full h-full"
-                                  onError={(e) => {
-                                    console.error('视频播放器加载失败:', e);
-                                  }}
-                                />
-                              ) : (
-                                <div className="w-full h-full flex items-center justify-center bg-gray-800 text-white">
-                                  <div className="text-center">
-                                    <PlayCircle className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                                    <p className="text-sm opacity-75">无法加载视频播放器</p>
-                                    <p className="text-xs opacity-50 mt-1 break-all">{getCurrentStepVideos()[currentVideoIndex].url}</p>
-                                  </div>
-                                </div>
-                              )}
+                              {(() => {
+                                const processedVideo = processVideoUrl(getCurrentStepVideos()[currentVideoIndex].url);
+                                const { url, platform } = processedVideo;
+                                
+                                // 只有YouTube视频使用iframe嵌入
+                                if (platform === 'youtube') {
+                                  return (
+                                    <iframe 
+                                      src={url}
+                                      frameBorder="0"
+                                      allowFullScreen={true}
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                      className="w-full h-full"
+                                      onError={(e) => {
+                                        console.error(`YouTube视频播放器加载失败:`, e);
+                                      }}
+                                      onLoad={() => {
+                                        console.log('YouTube视频加载成功:', url);
+                                      }}
+                                    />
+                                  );
+                                } else if (platform === 'bilibili') {
+                                  // B站视频显示预览图和播放按钮，点击跳转到新窗口
+                                  const video = getCurrentStepVideos()[currentVideoIndex];
+                                  return (
+                                    <div 
+                                      className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800 cursor-pointer hover:from-blue-700 hover:to-blue-900 transition-all duration-300"
+                                      onClick={() => {
+                                        // 使用原始URL在新窗口打开B站视频
+                                        window.open(video.url, '_blank', 'noopener,noreferrer');
+                                      }}
+                                    >
+                                      <div className="text-center text-white">
+                                        {video.cover ? (
+                                          <div className="relative">
+                                            <img 
+                                              src={video.cover} 
+                                              alt={video.title}
+                                              className="w-full h-full object-cover rounded-lg opacity-80"
+                                              onError={(e) => {
+                                                e.currentTarget.style.display = 'none';
+                                              }}
+                                            />
+                                            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 rounded-lg">
+                                              <div className="text-center">
+                                                <PlayCircle className="w-16 h-16 mx-auto mb-2 text-white opacity-90 hover:opacity-100 transition-opacity" />
+                                                <p className="text-sm font-medium">点击观看 Bilibili 视频</p>
+                                                <p className="text-xs opacity-75 mt-1">将在新窗口打开</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        ) : (
+                                          <div className="text-center">
+                                            <PlayCircle className="w-16 h-16 mx-auto mb-4 text-white opacity-90 hover:opacity-100 transition-opacity" />
+                                            <p className="text-lg font-medium mb-2">Bilibili Video</p>
+                                            <p className="text-sm opacity-75 mb-1">点击观看视频</p>
+                                            <p className="text-xs opacity-60">将在新窗口打开</p>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+                                  );
+                                } else {
+                                  // 无法识别的视频格式
+                                  return (
+                                    <div className="w-full h-full flex items-center justify-center bg-gray-800 text-white">
+                                      <div className="text-center">
+                                        <PlayCircle className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                                        <p className="text-sm opacity-75">Unsupported video format</p>
+                                        <p className="text-xs opacity-50 mt-1 text-yellow-300">
+                                          Currently supports: YouTube (embedded), Bilibili (new window)
+                                        </p>
+                                        <p className="text-xs opacity-50 mt-1 break-all max-w-xs">{url}</p>
+                                      </div>
+                                    </div>
+                                  );
+                                }
+                              })()}
                               
                               {/* 放大/缩小按钮 */}
                               <button
