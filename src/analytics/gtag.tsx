@@ -2,8 +2,8 @@
 
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
-    dataLayer: any[];
+    gtag?: (...args: any[]) => void;
+    dataLayer?: any[];
   }
 }
 
@@ -18,19 +18,22 @@ export const initGA = () => {
 
   // Define gtag function
   window.gtag = (...args: any[]) => {
-    window.dataLayer.push(args);
+    if (window.dataLayer) {
+      window.dataLayer.push(args);
+    }
   };
 
   // Initialize with current date
-  window.gtag('js', new Date());
-
-  // Configure with tracking ID
-  window.gtag('config', GA_TRACKING_ID);
+  if (window.gtag) {
+    window.gtag('js', new Date());
+    // Configure with tracking ID
+    window.gtag('config', GA_TRACKING_ID);
+  }
 };
 
 // Track page views
 export const trackPageView = (url: string) => {
-  if (!GA_TRACKING_ID) return;
+  if (!GA_TRACKING_ID || !window.gtag) return;
 
   window.gtag('config', GA_TRACKING_ID, {
     page_location: url,
@@ -39,7 +42,7 @@ export const trackPageView = (url: string) => {
 
 // Track events
 export const trackEvent = (action: string, category?: string, label?: string, value?: number) => {
-  if (!GA_TRACKING_ID) return;
+  if (!GA_TRACKING_ID || !window.gtag) return;
 
   window.gtag('event', action, {
     event_category: category,
