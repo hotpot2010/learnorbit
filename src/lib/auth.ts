@@ -9,7 +9,11 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin } from 'better-auth/plugins';
 import { parse as parseCookies } from 'cookie';
 import type { Locale } from 'next-intl';
-import { getBaseUrl, getUrlWithLocaleInCallbackUrl } from './urls/urls';
+import { getServerBaseUrl, logEnvironmentInfo } from './env';
+import { getUrlWithLocaleInCallbackUrl } from './urls/urls';
+
+// 记录环境信息用于调试
+logEnvironmentInfo();
 
 /**
  * Better Auth configuration
@@ -19,16 +23,12 @@ import { getBaseUrl, getUrlWithLocaleInCallbackUrl } from './urls/urls';
  * https://www.better-auth.com/docs/reference/options
  */
 export const auth = betterAuth({
-  baseURL: getBaseUrl(),
+  baseURL: getServerBaseUrl(),
   appName: defaultMessages.Metadata.name,
-  // Add trusted origins to support both localhost and production
+  // 简化 trusted origins，专注于核心域名
   trustedOrigins: [
     "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://localhost:3000",
-    "https://127.0.0.1:3000",
     "https://www.aitutorly.ai",
-    "https://aitutorly.ai"
   ],
   database: drizzleAdapter(await getDb(), {
     provider: 'pg', // or "mysql", "sqlite"
@@ -46,6 +46,14 @@ export const auth = betterAuth({
     // https://www.better-auth.com/docs/concepts/users-accounts#authentication-requirements
     // disable freshness check for user deletion
     freshAge: 0 /* 60 * 60 * 24 */,
+    // 确保 cookie 设置正确
+    cookieName: "better-auth.session_token",
+    cookieAttributes: {
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      httpOnly: true,
+      path: "/",
+    },
   },
   // 禁用邮箱密码登录
   emailAndPassword: {

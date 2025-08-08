@@ -28,7 +28,9 @@
     "saving": "保存中...",
     "loading": "加载中...",
     "cancel": "取消",
-    "logoutFailed": "退出失败"
+    "loginRequired": "需要登录",
+    "logoutFailed": "退出失败",
+    "logoutSuccess": "退出成功"
   },
   "LearningPlatform": {
     "title": "学什么呢？",

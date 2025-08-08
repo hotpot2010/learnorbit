@@ -43,6 +43,9 @@ export const SocialLoginButton = ({
   console.log('social login button, callbackUrl', callbackUrl);
 
   const onClick = async (provider: 'google' | 'github') => {
+    console.log('🔐 Starting social login with:', provider);
+    console.log('🔗 Callback URL:', callbackUrl);
+    
     await authClient.signIn.social(
       {
         /**
@@ -71,19 +74,20 @@ export const SocialLoginButton = ({
       },
       {
         onRequest: (ctx) => {
-          // console.log("onRequest", ctx);
+          console.log('📤 Auth request starting:', ctx);
           setIsLoading(provider);
         },
         onResponse: (ctx) => {
-          // console.log("onResponse", ctx.response);
+          console.log('📥 Auth response received:', ctx.response.status, ctx.response.statusText);
           setIsLoading(null);
         },
         onSuccess: (ctx) => {
-          // console.log("onSuccess", ctx.data);
+          console.log('✅ Social login success:', ctx.data);
           setIsLoading(null);
         },
         onError: (ctx) => {
-          console.log('social login error', ctx.error.message);
+          console.error('❌ Social login error:', ctx.error.message);
+          console.error('Error details:', ctx.error);
           setIsLoading(null);
         },
       }

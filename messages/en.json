@@ -28,7 +28,9 @@
     "save": "Save",
     "loading": "Loading...",
     "cancel": "Cancel",
-    "logoutFailed": "Failed to log out"
+    "loginRequired": "Login required",
+    "logoutFailed": "Failed to log out",
+    "logoutSuccess": "Logged out successfully"
   },
   "LearningPlatform": {
     "title": "What to Learn?",
