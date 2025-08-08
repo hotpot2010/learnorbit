@@ -28,7 +28,7 @@ export function generateSEOMetadata({
     description,
     keywords: keywords.join(', '),
     robots: noIndex ? 'noindex, nofollow' : 'index, follow',
-    canonical: canonical ? `${baseUrl}${canonical}` : undefined,
+
     openGraph: {
       title: fullTitle,
       description,

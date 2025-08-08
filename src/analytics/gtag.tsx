@@ -1,9 +1,9 @@
 'use client';
 
+// 扩展已有的Window接口，@next/third-parties已经声明了dataLayer
 declare global {
   interface Window {
     gtag?: (...args: any[]) => void;
-    dataLayer?: any[];
   }
 }
 
