@@ -20,6 +20,7 @@ import { useState, useEffect, useRef } from 'react';
 import { LearningPlan, LearningStep, TaskGenerateRequest, TaskGenerateResponse, TaskContent, QuizQuestion, CodingTask } from '@/types/learning-plan';
 import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
+import { TextSelectionPopup } from '@/components/learning/text-selection-popup';
 
 interface StudyPageProps {
   params: Promise<{ locale: string; id: string }>;
@@ -59,6 +60,31 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   // 防止React Strict Mode重复执行的标志
   const initialLoadCompleted = useRef<boolean>(false);
+
+  // 文字选择浮框处理函数
+  const handleWhatClick = (selectedText: string) => {
+    console.log('🔍 What clicked:', selectedText);
+    // TODO: 实现What功能 - 解释选中文字的含义
+    alert(`What功能暂未实现\n选中文字: "${selectedText}"`);
+  };
+
+  const handleWhyClick = (selectedText: string) => {
+    console.log('💡 Why clicked:', selectedText);
+    // TODO: 实现Why功能 - 解释选中文字的原因或背景
+    alert(`Why功能暂未实现\n选中文字: "${selectedText}"`);
+  };
+
+  const handleNoteClick = (selectedText: string) => {
+    console.log('📝 Note clicked:', selectedText);
+    // TODO: 实现Note功能 - 为选中文字添加笔记
+    alert(`Note功能暂未实现\n选中文字: "${selectedText}"`);
+  };
+
+  const handleVideoClick = (selectedText: string) => {
+    console.log('📹 Video clicked:', selectedText);
+    // TODO: 实现Video功能 - 搜索相关视频
+    alert(`Video功能暂未实现\n选中文字: "${selectedText}"`);
+  };
 
   useEffect(() => {
     const resolveParams = async () => {
@@ -1161,6 +1187,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   };
 
   return (
+    <>
     <div className="h-[calc(100vh-4rem)] flex"
          style={{
            backgroundImage: `
@@ -1811,5 +1838,14 @@ export default function StudyPage({ params }: StudyPageProps) {
         </div>
       </div>
     </div>
+
+    {/* 文字选择浮框 */}
+    <TextSelectionPopup
+      onWhatClick={handleWhatClick}
+      onWhyClick={handleWhyClick}
+      onNoteClick={handleNoteClick}
+      onVideoClick={handleVideoClick}
+    />
+    </>
   );
 } 
