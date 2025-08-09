@@ -20,6 +20,7 @@ import { useState, useEffect, useRef } from 'react';
 import { LearningPlan, LearningStep, TaskGenerateRequest, TaskGenerateResponse, TaskContent, QuizQuestion, CodingTask } from '@/types/learning-plan';
 import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
+import { TextSelectionPopup } from '@/components/learning/text-selection-popup';
 
 interface StudyPageProps {
   params: Promise<{ locale: string; id: string }>;
@@ -27,6 +28,7 @@ interface StudyPageProps {
 
 export default function StudyPage({ params }: StudyPageProps) {
   const [isPathCollapsed, setIsPathCollapsed] = useState(false);
+  const [externalMessage, setExternalMessage] = useState<string>('');
   const [routeParams, setRouteParams] = useState<{ locale: string; id: string } | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
@@ -42,6 +44,14 @@ export default function StudyPage({ params }: StudyPageProps) {
   const [codeOutput, setCodeOutput] = useState<string>('');
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isVideoExpanded, setIsVideoExpanded] = useState(false);
+  // 紧凑列表高度与主视频对齐
+  const videoAreaRef = useRef<HTMLDivElement | null>(null);
+  const [videoAreaHeight, setVideoAreaHeight] = useState<number>(0);
+  // 备选视频列表滚动与分页
+  const listRef = useRef<HTMLDivElement | null>(null);
+  const [listItemHeight, setListItemHeight] = useState<number>(52);
+  const [canPageUp, setCanPageUp] = useState<boolean>(false);
+  const [canPageDown, setCanPageDown] = useState<boolean>(false);
   
   // 任务缓存和并行生成相关状态
   const [taskCache, setTaskCache] = useState<Record<number, TaskContent>>({});
@@ -60,6 +70,104 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 防止React Strict Mode重复执行的标志
   const initialLoadCompleted = useRef<boolean>(false);
 
+  // 监听主视频容器高度以限制右侧列表高度
+  useEffect(() => {
+    const updateHeight = () => {
+      if (videoAreaRef.current) {
+        setVideoAreaHeight(videoAreaRef.current.clientHeight);
+      }
+    };
+    // 初始与下一帧各测量一次，避免首次渲染高度为 0
+    updateHeight();
+    const raf = requestAnimationFrame(updateHeight);
+    window.addEventListener('resize', updateHeight);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, [currentVideoIndex, isVideoExpanded, learningPlan, currentTask, currentStepIndex]);
+
+  // 测量列表项高度，并根据滚动计算分页可用性
+  useEffect(() => {
+    const measureAndUpdate = () => {
+      const container = listRef.current;
+      if (!container) return;
+      const firstItem = container.querySelector('button');
+      if (firstItem) {
+        const rect = (firstItem as HTMLButtonElement).getBoundingClientRect();
+        if (rect.height > 0) setListItemHeight(rect.height);
+      }
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      setCanPageUp(scrollTop > 2);
+      setCanPageDown(scrollTop + clientHeight < scrollHeight - 2);
+    };
+
+    // 初始两次：同步 + 下一帧，确保有高度
+    measureAndUpdate();
+    const raf = requestAnimationFrame(measureAndUpdate);
+
+    const onScroll = () => measureAndUpdate();
+    listRef.current?.addEventListener('scroll', onScroll);
+    window.addEventListener('resize', measureAndUpdate);
+    return () => {
+      cancelAnimationFrame(raf);
+      listRef.current?.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', measureAndUpdate);
+    };
+  }, [learningPlan, currentStepIndex, videoAreaHeight]);
+
+  // 切换主视频时，确保对应列表项可见
+  useEffect(() => {
+    const container = listRef.current;
+    if (!container) return;
+    const items = container.querySelectorAll('button');
+    const target = items[currentVideoIndex] as HTMLButtonElement | undefined;
+    if (target) {
+      target.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  }, [currentVideoIndex]);
+
+  const pageDown = () => {
+    const container = listRef.current;
+    if (!container) return;
+    container.scrollBy({ top: listItemHeight * 4, behavior: 'smooth' });
+  };
+
+  const pageUp = () => {
+    const container = listRef.current;
+    if (!container) return;
+    container.scrollBy({ top: -listItemHeight * 4, behavior: 'smooth' });
+  };
+
+  // 文字选择浮框处理函数
+  const handleWhatClick = (selectedText: string) => {
+    console.log('🔍 What clicked:', selectedText);
+    // 向右侧聊天助手发送 "what is ..." 消息
+    const message = `what is ${selectedText}`;
+    setExternalMessage(''); // 先清空，确保可以重复发送相同消息
+    setTimeout(() => setExternalMessage(message), 10);
+  };
+
+  const handleWhyClick = (selectedText: string) => {
+    console.log('💡 Why clicked:', selectedText);
+    // 向右侧聊天助手发送 "why does ..." 消息  
+    const message = `why does ${selectedText}`;
+    setExternalMessage(''); // 先清空，确保可以重复发送相同消息
+    setTimeout(() => setExternalMessage(message), 10);
+  };
+
+  const handleNoteClick = (selectedText: string) => {
+    console.log('📝 Note clicked:', selectedText);
+    // TODO: 实现Note功能 - 为选中文字添加笔记
+    alert(`Note功能暂未实现\n选中文字: "${selectedText}"`);
+  };
+
+  const handleVideoClick = (selectedText: string) => {
+    console.log('📹 Video clicked:', selectedText);
+    // TODO: 实现Video功能 - 搜索相关视频
+    alert(`Video功能暂未实现\n选中文字: "${selectedText}"`);
+  };
+
   useEffect(() => {
     const resolveParams = async () => {
       const resolvedParams = await params;
@@ -76,11 +184,15 @@ export default function StudyPage({ params }: StudyPageProps) {
         const savedPlan = sessionStorage.getItem('learningPlan');
         const fromDatabase = sessionStorage.getItem('fromDatabase');
         const savedTaskCache = sessionStorage.getItem('taskCache');
+        const fromCustomPage = sessionStorage.getItem('fromCustomPage');
+        const savedTaskStatus = sessionStorage.getItem('stepTaskStatus');
         
         console.log('🔍 检查sessionStorage状态:', {
           hasSavedPlan: !!savedPlan,
           fromDatabase: fromDatabase,
+          fromCustomPage: fromCustomPage,
           hasSavedTaskCache: !!savedTaskCache,
+          hasSavedTaskStatus: !!savedTaskStatus,
           taskGenerationStarted: taskGenerationStarted.current,
           initialLoadCompleted: initialLoadCompleted.current
         });
@@ -118,9 +230,55 @@ export default function StudyPage({ params }: StudyPageProps) {
               // 清除数据库标记
               sessionStorage.removeItem('fromDatabase');
               sessionStorage.removeItem('taskCache');
-            } else {
+            } 
+            // 如果来自课程定制页面且有任务缓存，加载缓存的任务
+            else if (fromCustomPage === 'true' && savedTaskCache) {
+              console.log('🎨 检测到来自课程定制页面，加载任务缓存...');
+              
+              const tasks = JSON.parse(savedTaskCache);
+              const taskStatus = savedTaskStatus ? JSON.parse(savedTaskStatus) : {};
+              
+              setTaskCache(tasks);
+              setTaskGenerationStatus(taskStatus);
+              
+              console.log('✅ 从课程定制页面加载任务缓存:', {
+                taskCount: Object.keys(tasks).length,
+                taskKeys: Object.keys(tasks),
+                completedTasks: Object.keys(taskStatus).filter(key => taskStatus[key] === 'completed').length,
+                taskStatus: taskStatus
+              });
+              
+              // 检查是否还有未完成的任务需要继续生成
+              const pendingTasks = plan.plan.filter(step => 
+                !tasks[step.step] || taskStatus[step.step] !== 'completed'
+              );
+              
+              if (pendingTasks.length > 0) {
+                console.log('📋 还有', pendingTasks.length, '个任务需要继续生成:', 
+                  pendingTasks.map(s => `步骤${s.step}: ${s.title}`));
+                
+                // 标记这些任务为需要生成
+                taskGenerationStarted.current = true;
+                initialLoadCompleted.current = true;
+                
+                // 对未完成的任务启动生成
+                setTimeout(() => {
+                  generateTasksForMissingSteps(plan, tasks, taskStatus);
+                }, 1000);
+              } else {
+                console.log('🎉 所有任务都已完成，无需额外生成');
+                taskGenerationStarted.current = true;
+                initialLoadCompleted.current = true;
+              }
+              
+              // 清除课程定制页面标记
+              sessionStorage.removeItem('fromCustomPage');
+              sessionStorage.removeItem('stepTaskStatus');
+            } 
+            else {
               console.log('🆕 检测到新课程，需要生成任务:', {
                 fromDatabase: fromDatabase,
+                fromCustomPage: fromCustomPage,
                 hasSavedTaskCache: !!savedTaskCache,
                 taskGenerationStarted: taskGenerationStarted.current
               });
@@ -144,6 +302,124 @@ export default function StudyPage({ params }: StudyPageProps) {
     };
     resolveParams();
   }, [params]);
+
+  // 为缺失的步骤生成任务
+  const generateTasksForMissingSteps = async (plan: LearningPlan, existingTasks: Record<number, any>, taskStatus: Record<number, string>) => {
+    console.log('\n=== 🔄 开始为缺失步骤生成任务 ===');
+    
+    // 找出需要生成任务的步骤
+    const stepsToGenerate = plan.plan.filter(step => 
+      !existingTasks[step.step] || taskStatus[step.step] !== 'completed'
+    );
+    
+    console.log('需要生成任务的步骤:', stepsToGenerate.map(s => `${s.step}: ${s.title}`));
+    
+    if (stepsToGenerate.length === 0) {
+      console.log('✅ 所有任务都已完成');
+      return;
+    }
+    
+    // 设置初始状态 - 创建新的状态对象
+    const updatedStatus: Record<number, 'pending' | 'loading' | 'completed' | 'failed'> = {};
+    
+    // 复制现有状态，确保类型正确
+    Object.keys(taskStatus).forEach(key => {
+      const stepNum = parseInt(key);
+      const status = taskStatus[stepNum];
+      if (status === 'pending' || status === 'loading' || status === 'completed' || status === 'failed') {
+        updatedStatus[stepNum] = status;
+      }
+    });
+    
+    // 更新需要生成的步骤状态
+    stepsToGenerate.forEach(step => {
+      if (!updatedStatus[step.step] || updatedStatus[step.step] === 'failed') {
+        updatedStatus[step.step] = 'loading';
+      }
+    });
+    
+    setTaskGenerationStatus(updatedStatus);
+    
+    // 使用与原来相同的生成逻辑，但只处理缺失的步骤
+    for (const step of stepsToGenerate) {
+      console.log(`📤 触发缺失步骤 ${step.step} 的任务生成: ${step.title}`);
+      
+      // 如果已经有任务但状态不是completed，跳过
+      if (existingTasks[step.step] && taskStatus[step.step] === 'completed') {
+        continue;
+      }
+      
+      // 立即执行异步任务，不等待它完成
+      (async () => {
+        try {
+          console.log(`🔄 开始生成缺失步骤 ${step.step}: ${step.title}`);
+          
+          // 构造正确的请求数据格式
+          const requestData = {
+            step: step.step,
+            title: step.title,
+            description: step.description,
+            animation_type: step.animation_type || '无',
+            status: step.status,
+            type: step.type,
+            difficulty: step.difficulty,
+            search_keyword: step.search_keyword || step.title,
+            videos: step.videos
+          };
+          
+          console.log('📤 发送缺失任务生成请求:', requestData);
+          
+          const response = await fetch('/api/task/generate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const result = await response.json();
+
+          if (result.success) {
+            console.log(`✅ 缺失步骤 ${step.step} 生成成功`);
+            
+            // 更新缓存
+            setTaskCache(prev => ({
+              ...prev,
+              [step.step]: result.task
+            }));
+            
+            // 更新状态
+            setTaskGenerationStatus(prev => ({
+              ...prev,
+              [step.step]: 'completed'
+            }));
+            
+            console.log(`💾 缺失步骤 ${step.step} 已缓存`);
+            
+          } else {
+            throw new Error('Task generation failed');
+          }
+        } catch (error) {
+          console.error(`❌ 缺失步骤 ${step.step} 生成失败:`, error);
+          
+          // 更新失败状态
+          setTaskGenerationStatus(prev => ({
+            ...prev,
+            [step.step]: 'failed'
+          }));
+        }
+      })();
+      
+      // 等待1秒再触发下一个
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    
+    console.log('🎯 所有缺失任务生成请求已触发 ===\n');
+  };
 
   // 并行生成所有步骤的任务
   const generateAllTasks = async (plan: LearningPlan) => {
@@ -938,6 +1214,24 @@ export default function StudyPage({ params }: StudyPageProps) {
     return { url: videoUrl, platform: 'unknown' };
   };
 
+  // 获取视频缩略图：优先使用 cover；YouTube 回退到官方缩略图；否则无图
+  const getVideoThumbnail = (video: any): string | null => {
+    if (!video) return null;
+    if (video.cover) return video.cover as string;
+    const videoUrl: string = video.url || '';
+    if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+      const patterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|m\.youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/,
+        /youtube\.com\/.*[?&]v=([a-zA-Z0-9_-]{11})/,
+      ];
+      for (const p of patterns) {
+        const m = videoUrl.match(p);
+        if (m) return `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg`;
+      }
+    }
+    return null;
+  };
+
   // 上传课程到数据库
   const handleUploadCourse = async () => {
     if (!learningPlan) {
@@ -993,6 +1287,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   };
 
   return (
+    <>
     <div className="h-[calc(100vh-4rem)] flex"
          style={{
            backgroundImage: `
@@ -1295,10 +1590,10 @@ export default function StudyPage({ params }: StudyPageProps) {
                       Recommended Videos:
                     </h4>
                     
-                    <div className="relative">
+                    <div className="flex gap-4 items-start">
                       {/* 单个视频显示 - 支持简单放大 */}
                       {getCurrentStepVideos()[currentVideoIndex] && (
-                        <div className={`${isVideoExpanded ? 'w-[768px]' : 'w-96'} relative group transition-all duration-300`}>
+                        <div ref={videoAreaRef} className={`${isVideoExpanded ? 'w-[768px]' : 'w-96'} relative group transition-all duration-300`}>
                           <div className="bg-white p-2 rounded-lg shadow-lg">
                             <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black relative transition-all duration-300">
                               {(() => {
@@ -1387,32 +1682,88 @@ export default function StudyPage({ params }: StudyPageProps) {
                         </div>
                       )}
                       
-                      {/* 视频切换按钮 */}
-                      {getCurrentStepVideos().length > 1 && (
-                        <div className="absolute bottom-4 right-4 z-10">
-                          <div className="bg-yellow-100 p-2 rounded-lg shadow-lg transform rotate-3 border-2 border-dashed border-yellow-400">
-                            <button
-                              onClick={() => {
-                                const nextIndex = (currentVideoIndex + 1) % getCurrentStepVideos().length;
-                                setCurrentVideoIndex(nextIndex);
-                                console.log(`🔄 切换到视频 ${nextIndex + 1}/${getCurrentStepVideos().length}`);
-                              }}
-                              className="bg-blue-200 hover:bg-blue-300 text-blue-800 w-10 h-10 rounded-full flex items-center justify-center transform hover:rotate-12 transition-all duration-300 shadow-md border-2 border-blue-400 font-bold text-sm"
-                              title="切换视频"
-                              style={{
-                                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                              }}
-                            >
-                              🔄
-                            </button>
-                            <p className="text-xs text-blue-700 text-center mt-1 font-bold transform -rotate-2" style={{
-                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                            }}>
-                              {currentVideoIndex + 1}/{getCurrentStepVideos().length}
-                            </p>
+                      {/* 紧凑视频列表 */}
+                      <div className="relative">
+                        {/* 顶部渐隐遮罩 */}
+                        {canPageUp && (
+                          <div className="pointer-events-none absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-white to-transparent z-10" />
+                        )}
+
+                        <div
+                          ref={listRef}
+                          className="w-72 overflow-y-auto p-1"
+                          style={{ maxHeight: videoAreaHeight ? `${videoAreaHeight}px` : undefined }}
+                          onKeyDown={(e) => {
+                            if (e.key === 'PageDown') {
+                              e.preventDefault();
+                              pageDown();
+                            } else if (e.key === 'PageUp') {
+                              e.preventDefault();
+                              pageUp();
+                            }
+                          }}
+                        >
+                          <div className="space-y-1">
+                          {getCurrentStepVideos().map((v, idx) => {
+                            const active = idx === currentVideoIndex;
+                            return (
+                              <button
+                                key={idx}
+                                onClick={() => setCurrentVideoIndex(idx)}
+                                className={`w-full flex items-start gap-2 p-2 text-left transition-colors ${
+                                  active ? 'bg-yellow-100 rotate-1' : 'hover:bg-yellow-50'
+                                }`}
+                                aria-pressed={active}
+                              >
+                                <div className="min-w-0 flex-1">
+                                  <div className="text-sm font-bold text-gray-800 truncate" style={{
+                                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                  }}>
+                                    {v.title}
+                                  </div>
+                                  {v.duration && (
+                                    <div className="text-xs text-gray-600 mt-0.5" style={{
+                                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                    }}>
+                                      {v.duration}
+                                    </div>
+                                  )}
+                                </div>
+                              </button>
+                            );
+                          })}
                           </div>
                         </div>
-                      )}
+
+                        {/* 底部渐隐遮罩 */}
+                        {canPageDown && (
+                          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white to-transparent z-10" />
+                        )}
+
+                        {/* 翻页按钮 */}
+                        <div className="absolute bottom-2 right-2 flex gap-2 z-20">
+                          {canPageUp && (
+                            <button
+                              onClick={pageUp}
+                              className="w-8 h-8 rounded-full bg-yellow-200 text-yellow-900 shadow border border-yellow-300 hover:bg-yellow-300 transition-transform transform hover:-rotate-3"
+                              title="回到上方"
+                              aria-label="Page up"
+                            >
+                              ↑
+                            </button>
+                          )}
+                          {canPageDown && (
+                            <button
+                              onClick={pageDown}
+                              className="w-8 h-8 rounded-full bg-yellow-200 text-yellow-900 shadow border border-yellow-300 hover:bg-yellow-300 transition-transform transform hover:rotate-3"
+                              title="向下查看更多"
+                              aria-label="Page down"
+                            >
+                              ↓
+                            </button>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -1638,10 +1989,20 @@ export default function StudyPage({ params }: StudyPageProps) {
               initialMessage="I am learning Q-Learning algorithm"
               recommendations={aiRecommendations}
               useStudyAPI={true}
+              externalMessage={externalMessage}
             />
           </div>
         </div>
       </div>
     </div>
+
+    {/* 文字选择浮框 */}
+    <TextSelectionPopup
+      onWhatClick={handleWhatClick}
+      onWhyClick={handleWhyClick}
+      onNoteClick={handleNoteClick}
+      onVideoClick={handleVideoClick}
+    />
+    </>
   );
 } 

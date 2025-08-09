@@ -561,8 +561,13 @@ export function AIChatInterface({
   // 新增：直接生成学习计划（用于第一条消息）
   const generateLearningPlanDirect = async (requestData: any) => {
     try {
-      console.log('\n📚 直接流式生成学习计划');
+      console.log('\n📚 ============ 直接流式生成学习计划 ============');
       console.log('📤 发送计划生成请求:', requestData);
+      console.log('🌐 当前语言环境:', {
+        locale: document.documentElement.lang,
+        pathname: window.location.pathname,
+        cookieLocale: document.cookie.split(';').find(c => c.trim().startsWith('NEXT_LOCALE='))?.split('=')[1]
+      });
 
       const planResponse = await fetch('/api/learning/plan/stream_generate', {
         method: 'POST',
@@ -572,13 +577,16 @@ export function AIChatInterface({
         body: JSON.stringify(requestData),
       });
 
+      console.log('📡 API响应状态:', planResponse.status, planResponse.statusText);
+      console.log('📡 响应头:', Object.fromEntries(planResponse.headers.entries()));
+
       if (!planResponse.ok) {
-        throw new Error(`计划生成API错误: ${planResponse.status}`);
+        throw new Error(`计划生成API错误: ${planResponse.status} - ${planResponse.statusText}`);
       }
 
       // 不在聊天区域显示计划生成进度，直接处理流式响应
       // 计划内容将通过SSE机制更新到中间的计划展示区域
-      console.log('✅ 计划生成API调用成功，流式结果将通过SSE更新到计划展示区');
+      console.log('✅ 计划生成API调用成功，开始处理流式响应...');
 
       // 处理流式响应（仅用于日志记录，不显示在聊天区）
       if (planResponse.body) {
@@ -586,28 +594,44 @@ export function AIChatInterface({
         const decoder = new TextDecoder();
         let stepCount = 0;
         let buffer = ''; // 用于缓存不完整的数据
+        let totalChunks = 0;
+
+        console.log('🔄 开始读取流式数据...');
 
         while (true) {
           const { done, value } = await reader.read();
+          totalChunks++;
 
           if (done) {
             console.log('✅ 学习计划流式响应处理完成');
+            console.log(`📊 统计: 总共处理了 ${totalChunks} 个数据块, 生成了 ${stepCount} 个步骤`);
             break;
           }
 
           const chunk = decoder.decode(value, { stream: true });
           buffer += chunk;
+          
+          console.log(`📦 第${totalChunks}个数据块:`, {
+            chunkLength: chunk.length,
+            bufferLength: buffer.length,
+            preview: chunk.substring(0, 100) + (chunk.length > 100 ? '...' : '')
+          });
 
           // 按行分割处理
           const lines = buffer.split('\n');
           // 保留最后一行（可能不完整）
           buffer = lines.pop() || '';
 
+          console.log(`🔍 处理 ${lines.length} 行数据`);
+
           for (const line of lines) {
             if (line.trim() && line.startsWith('data: ')) {
               const dataStr = line.slice(6).trim();
+              console.log(`📋 解析SSE数据:`, dataStr.substring(0, 200) + (dataStr.length > 200 ? '...' : ''));
+              
               try {
                 const data = JSON.parse(dataStr);
+                console.log('✅ JSON解析成功:', Object.keys(data));
 
                 if (data.error) {
                   console.error('❌ 计划生成错误:', data.error);
@@ -622,28 +646,45 @@ export function AIChatInterface({
                   const stepNumber = data.step_number || stepCount;
                   const total = data.total || '未知';
 
-                  console.log(
-                    `📋 生成步骤 ${stepNumber}/${total}:`,
-                    step.title
-                  );
+                  console.log('\n🎯 ========== 收到新步骤 ==========');
+                  console.log(`📋 步骤 ${stepNumber}/${total}:`, step.title);
+                  console.log('📋 步骤详情:', {
+                    step: step.step,
+                    title: step.title,
+                    description: step.description?.substring(0, 100) + '...',
+                    type: step.type,
+                    difficulty: step.difficulty,
+                    videos: step.videos?.length || 0
+                  });
+                  console.log('📋 调用onStepUpdate回调...');
+                  
                   // 不在聊天区域更新，计划内容通过SSE显示在计划区域
                   onStepUpdate?.(step, stepNumber, total);
+                  
+                  console.log('✅ onStepUpdate回调执行完成');
+                  console.log('========== 步骤处理结束 ==========\n');
                 } else if (data.done && data.done === true) {
-                  console.log('✅ 计划生成完成!');
+                  console.log('\n🎉 ========== 计划生成完成 ==========');
 
                   if (data.plan) {
                     const plan = data.plan;
-                    console.log(
-                      `📚 生成的计划包含 ${plan.plan?.length || 0} 个步骤`
-                    );
+                    console.log(`📚 完整计划包含 ${plan.plan?.length || 0} 个步骤`);
+                    console.log('📚 调用onPlanUpdate回调...');
                     onPlanUpdate?.(plan); // 调用回调通知父组件更新计划
+                    console.log('✅ onPlanUpdate回调执行完成');
                   }
+                  console.log('========== 完成处理结束 ==========\n');
                   return; // 完成后直接返回
+                } else {
+                  console.log('🤔 未知的数据格式:', Object.keys(data));
                 }
               } catch (e) {
-                console.warn('JSON解析失败:', e);
-                console.warn('原始数据:', dataStr);
+                console.warn('❌ JSON解析失败:', e);
+                console.warn('❌ 原始数据:', dataStr);
+                console.warn('❌ 数据长度:', dataStr.length);
               }
+            } else if (line.trim()) {
+              console.log('📄 非SSE格式的行:', line.substring(0, 100));
             }
           }
         }

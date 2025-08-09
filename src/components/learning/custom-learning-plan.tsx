@@ -57,6 +57,14 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   const [taskGenerationStatus, setTaskGenerationStatus] = useState<'idle' | 'generating' | 'completed' | 'error'>('idle'); // 任务生成状态
   const [showCompletionNotification, setShowCompletionNotification] = useState(false); // 新增：显示完成通知
   const [isGeneratingCourse, setIsGeneratingCourse] = useState(false); // 整体课程生成状态
+  
+  // 新增：任务缓存和生成状态管理
+  const [taskCache, setTaskCache] = useState<Record<number, any>>({});
+  const [stepTaskStatus, setStepTaskStatus] = useState<Record<number, 'pending' | 'generating' | 'completed' | 'failed'>>({});
+  const [taskGenerationQueue, setTaskGenerationQueue] = useState<number[]>([]);
+  const [activeGenerations, setActiveGenerations] = useState<Set<number>>(new Set());
+  const [stepContentHash, setStepContentHash] = useState<Record<number, string>>({});
+  
   const [sessionId] = useState(() => {
     const id = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     console.log('🆔 生成SessionId:', id);
@@ -64,6 +72,201 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   });
 
   const router = useLocaleRouter();
+
+  // 生成步骤内容的哈希值，用于检测变更
+  const generateStepHash = (step: any) => {
+    const key = `${step.title}-${step.description}-${step.type}-${step.difficulty}`;
+    try {
+      // 使用更安全的编码方式，支持中文字符
+      // 先转换为UTF-8字节，再进行base64编码
+      const encoder = new TextEncoder();
+      const data = encoder.encode(key);
+      const base64 = btoa(String.fromCharCode(...data));
+      return base64.replace(/[^a-zA-Z0-9]/g, '').substring(0, 16);
+    } catch (error) {
+      console.warn('⚠️ 生成步骤哈希失败，使用备用方案:', error);
+      // 备用方案：使用简单的字符串哈希
+      let hash = 0;
+      for (let i = 0; i < key.length; i++) {
+        const char = key.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // 转换为32位整数
+      }
+      return Math.abs(hash).toString(36).substring(0, 16);
+    }
+  };
+
+  // 检查步骤是否需要重新生成任务
+  const shouldRegenerateTask = (step: any, stepNumber: number) => {
+    const currentHash = generateStepHash(step);
+    const storedHash = stepContentHash[stepNumber];
+    return !storedHash || storedHash !== currentHash;
+  };
+
+  // 添加任务到生成队列
+  const addToTaskQueue = (stepNumber: number) => {
+    setTaskGenerationQueue(prev => {
+      if (!prev.includes(stepNumber)) {
+        console.log(`🎯 添加步骤 ${stepNumber} 到任务生成队列`);
+        return [...prev, stepNumber].sort((a, b) => a - b); // 按步骤顺序排序
+      }
+      return prev;
+    });
+    
+    setStepTaskStatus(prev => ({
+      ...prev,
+      [stepNumber]: 'pending'
+    }));
+  };
+
+  // 从队列中移除任务
+  const removeFromTaskQueue = (stepNumber: number) => {
+    setTaskGenerationQueue(prev => prev.filter(n => n !== stepNumber));
+  };
+
+  // 生成单个任务
+  const generateSingleTask = async (step: any, stepNumber: number) => {
+    try {
+      console.log(`🚀 开始生成步骤 ${stepNumber} 的任务:`, step.title);
+      
+      // 更新状态为生成中
+      setStepTaskStatus(prev => ({
+        ...prev,
+        [stepNumber]: 'generating'
+      }));
+      
+      setActiveGenerations(prev => new Set([...prev, stepNumber]));
+
+      // 构造请求数据
+      const requestData = {
+        step: stepNumber,
+        title: step.title,
+        description: step.description,
+        animation_type: step.animation_type || '无',
+        status: step.status,
+        type: step.type,
+        difficulty: step.difficulty,
+        search_keyword: step.search_keyword || step.title,
+        videos: step.videos || []
+      };
+
+      console.log(`📤 发送任务生成请求 (步骤 ${stepNumber}):`, requestData);
+
+      const response = await fetch('/api/task/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log(`✅ 步骤 ${stepNumber} 任务生成成功`);
+        
+        // 更新任务缓存
+        setTaskCache(prev => ({
+          ...prev,
+          [stepNumber]: result.task
+        }));
+        
+        // 更新状态为完成
+        setStepTaskStatus(prev => ({
+          ...prev,
+          [stepNumber]: 'completed'
+        }));
+        
+        // 更新步骤内容哈希
+        setStepContentHash(prev => ({
+          ...prev,
+          [stepNumber]: generateStepHash(step)
+        }));
+
+        console.log(`💾 步骤 ${stepNumber} 任务已缓存:`, {
+          type: result.task.type,
+          hasContent: !!result.task.ppt_slide
+        });
+
+      } else {
+        throw new Error('Task generation failed');
+      }
+
+    } catch (error) {
+      console.error(`❌ 步骤 ${stepNumber} 任务生成失败:`, error);
+      
+      setStepTaskStatus(prev => ({
+        ...prev,
+        [stepNumber]: 'failed'
+      }));
+    } finally {
+      // 从活跃生成列表中移除
+      setActiveGenerations(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(stepNumber);
+        return newSet;
+      });
+      
+      // 从队列中移除
+      removeFromTaskQueue(stepNumber);
+    }
+  };
+
+  // 处理任务生成队列（并发控制）
+  const processTaskQueue = async () => {
+    const maxConcurrency = 4; // 最多同时生成4个任务
+    const currentActive = activeGenerations.size;
+    const availableSlots = maxConcurrency - currentActive;
+    
+    if (availableSlots <= 0 || taskGenerationQueue.length === 0) {
+      return;
+    }
+
+    // 获取可以开始生成的任务
+    const tasksToStart = taskGenerationQueue
+      .filter(stepNumber => !activeGenerations.has(stepNumber))
+      .slice(0, availableSlots);
+
+    // 并发生成任务
+    const currentPlan = learningPlan || partialPlan;
+    if (currentPlan && tasksToStart.length > 0) {
+      console.log(`🎯 开始并发生成 ${tasksToStart.length} 个任务:`, tasksToStart);
+      
+      const generatePromises = tasksToStart.map(stepNumber => {
+        const step = currentPlan.plan.find(s => s.step === stepNumber);
+        if (step) {
+          return generateSingleTask(step, stepNumber);
+        }
+        return Promise.resolve();
+      });
+
+      await Promise.allSettled(generatePromises);
+    }
+  };
+
+  // 队列处理效果 - 当队列变化时处理任务生成
+  useEffect(() => {
+    if (taskGenerationQueue.length > 0) {
+      const timer = setTimeout(() => {
+        processTaskQueue();
+      }, 500); // 防抖处理
+      
+      return () => clearTimeout(timer);
+    }
+  }, [taskGenerationQueue, activeGenerations]);
+
+  // 保存任务缓存到sessionStorage
+  useEffect(() => {
+    if (Object.keys(taskCache).length > 0) {
+      sessionStorage.setItem('taskCache', JSON.stringify(taskCache));
+      sessionStorage.setItem('stepTaskStatus', JSON.stringify(stepTaskStatus));
+      console.log('💾 任务缓存已保存到sessionStorage:', Object.keys(taskCache).length, '个任务');
+    }
+  }, [taskCache, stepTaskStatus]);
 
   // 页面离开警告 - 当课程正在生成时
   useEffect(() => {
@@ -135,8 +338,37 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     console.log('步骤详细信息:', {
       stepNumber,        // API传入的步骤编号
       stepStep: step.step,  // 步骤对象的step字段
-      stepTitle: step.title
+      stepTitle: step.title,
+      stepType: step.type,
+      stepDifficulty: step.difficulty,
+      currentLocale: typeof window !== 'undefined' ? window.location.pathname.split('/')[1] : 'unknown'
     });
+
+    // 检查是否需要重新生成任务
+    const needsRegeneration = shouldRegenerateTask(step, step.step);
+    console.log(`🔄 步骤 ${step.step} 是否需要重新生成任务:`, needsRegeneration);
+    
+    if (needsRegeneration) {
+      console.log(`🔄 步骤 ${step.step} 内容已变更，需要重新生成任务`);
+      
+      // 清除旧的任务缓存
+      setTaskCache(prev => {
+        const newCache = { ...prev };
+        delete newCache[step.step];
+        console.log(`🗑️ 清除步骤 ${step.step} 的旧任务缓存`);
+        return newCache;
+      });
+      
+      // 如果正在生成，取消当前生成
+      if (stepTaskStatus[step.step] === 'generating') {
+        console.log(`⚠️ 取消步骤 ${step.step} 正在进行的任务生成`);
+        setActiveGenerations(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(step.step);
+          return newSet;
+        });
+      }
+    }
 
     // 如果这个步骤正在更新中，从更新列表中移除
     setUpdatingSteps(prev => {
@@ -166,6 +398,14 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
           console.log('🎬 清除新增动画: setNewStepIndex(null)');
           setNewStepIndex(null);
         }, 1000);
+
+        // 触发任务生成
+        setTimeout(() => {
+          console.log(`🎯 为新步骤 ${step.step} 触发任务生成 (新建计划)`);
+          console.log(`🎯 当前任务状态:`, stepTaskStatus);
+          console.log(`🎯 当前生成队列:`, taskGenerationQueue);
+          addToTaskQueue(step.step);
+        }, 100);
 
         return newPlan;
       } else {
@@ -215,6 +455,18 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             setUpdatedStepIndex(null);
           }, 1000);
 
+          // 触发任务生成（如果需要）
+          if (needsRegeneration) {
+            setTimeout(() => {
+              console.log(`🎯 为更新的步骤 ${step.step} 触发任务生成 (更新现有)`);
+              console.log(`🎯 当前任务状态:`, stepTaskStatus);
+              console.log(`🎯 当前生成队列:`, taskGenerationQueue);
+              addToTaskQueue(step.step);
+            }, 100);
+          } else {
+            console.log(`⏭️ 步骤 ${step.step} 无需重新生成任务，跳过队列添加`);
+          }
+
           console.log(`📋 ===== 步骤更新结束 (更新模式) =====\n`);
           return updatedPlan;
         } else {
@@ -234,6 +486,14 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             console.log('🎬 清除新增动画: setNewStepIndex(null)');
             setNewStepIndex(null);
           }, 1000);
+
+          // 触发任务生成
+          setTimeout(() => {
+            console.log(`🎯 为新步骤 ${step.step} 触发任务生成 (添加新步骤)`);
+            console.log(`🎯 当前任务状态:`, stepTaskStatus);
+            console.log(`🎯 当前生成队列:`, taskGenerationQueue);
+            addToTaskQueue(step.step);
+          }, 100);
 
           console.log(`📋 ===== 步骤更新结束 (新增模式) =====\n`);
           return updatedPlan;
@@ -284,13 +544,25 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     try {
       setSaveStatus('saving');
       console.log('💾 开始保存课程到sessionStorage:', coursePlan);
+      console.log('💾 当前任务缓存:', Object.keys(taskCache).length, '个任务');
+      console.log('💾 任务状态:', stepTaskStatus);
 
       // 1. 保存到sessionStorage供学习页面使用
       sessionStorage.setItem('learningPlan', JSON.stringify(coursePlan));
+      
+      // 2. 保存任务缓存和状态
+      if (Object.keys(taskCache).length > 0) {
+        sessionStorage.setItem('taskCache', JSON.stringify(taskCache));
+        sessionStorage.setItem('stepTaskStatus', JSON.stringify(stepTaskStatus));
+        console.log('💾 任务缓存和状态已保存到sessionStorage');
+      }
+      
+      // 3. 设置标记表示来自课程定制页面
+      sessionStorage.setItem('fromCustomPage', 'true');
 
       setSaveStatus('success');
 
-      // 2. 直接跳转到 custom 学习页面，使用统一的任务生成逻辑
+      // 4. 直接跳转到 custom 学习页面
       router.push('/study/custom');
 
     } catch (error) {
@@ -300,6 +572,11 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       // 即使保存失败，也允许用户继续学习
       setTimeout(() => {
         sessionStorage.setItem('learningPlan', JSON.stringify(coursePlan));
+        if (Object.keys(taskCache).length > 0) {
+          sessionStorage.setItem('taskCache', JSON.stringify(taskCache));
+          sessionStorage.setItem('stepTaskStatus', JSON.stringify(stepTaskStatus));
+        }
+        sessionStorage.setItem('fromCustomPage', 'true');
         router.push('/study/custom');
       }, 1000);
     }
@@ -334,6 +611,10 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     // 检查是否是正在更新的步骤
     const isUpdatingStep = updatingSteps.includes(step.step);
 
+    // 获取任务生成状态
+    const taskStatus = stepTaskStatus[step.step] || 'pending';
+    const hasTaskCache = !!taskCache[step.step];
+
     // 调试日志：只在有动画状态时打印
     if (isNewStep || isUpdatedStep || isUpdatingStep) {
       console.log(`🎬 渲染步骤 ${index} (step.step=${step.step}) 动画状态:`, {
@@ -345,7 +626,9 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         isUpdatingStep: isUpdatingStep,
         newStepIndex: newStepIndex,
         updatedStepIndex: updatedStepIndex,
-        updatingSteps: updatingSteps
+        updatingSteps: updatingSteps,
+        taskStatus: taskStatus,
+        hasTaskCache: hasTaskCache
       });
     }
 
@@ -468,6 +751,34 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
               ⏱️ {step.videos[0].duration}
             </span>
           )}
+
+          {/* 任务生成状态指示器 - 移动到最右侧，只显示图标 */}
+          <div className="ml-auto flex-shrink-0">
+            {taskStatus === 'pending' && (
+              <span className="text-lg transform rotate-1" title="Task Pending">
+                ⏳
+              </span>
+            )}
+            {taskStatus === 'generating' && (
+              <span className="text-lg transform -rotate-1 animate-pulse" title="Generating Task...">
+                🔄
+              </span>
+            )}
+            {taskStatus === 'completed' && (
+              <span className="text-lg transform rotate-2" title="Task Ready">
+                ✅
+              </span>
+            )}
+            {taskStatus === 'failed' && (
+              <button
+                onClick={() => addToTaskQueue(step.step)}
+                className="text-lg transform -rotate-1 transition-transform hover:scale-110 cursor-pointer"
+                title="Task Failed - Click to retry"
+              >
+                ❌
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );
