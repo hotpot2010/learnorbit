@@ -28,6 +28,7 @@ interface StudyPageProps {
 
 export default function StudyPage({ params }: StudyPageProps) {
   const [isPathCollapsed, setIsPathCollapsed] = useState(false);
+  const [externalMessage, setExternalMessage] = useState<string>('');
   const [routeParams, setRouteParams] = useState<{ locale: string; id: string } | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
@@ -43,6 +44,14 @@ export default function StudyPage({ params }: StudyPageProps) {
   const [codeOutput, setCodeOutput] = useState<string>('');
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isVideoExpanded, setIsVideoExpanded] = useState(false);
+  // 紧凑列表高度与主视频对齐
+  const videoAreaRef = useRef<HTMLDivElement | null>(null);
+  const [videoAreaHeight, setVideoAreaHeight] = useState<number>(0);
+  // 备选视频列表滚动与分页
+  const listRef = useRef<HTMLDivElement | null>(null);
+  const [listItemHeight, setListItemHeight] = useState<number>(52);
+  const [canPageUp, setCanPageUp] = useState<boolean>(false);
+  const [canPageDown, setCanPageDown] = useState<boolean>(false);
   
   // 任务缓存和并行生成相关状态
   const [taskCache, setTaskCache] = useState<Record<number, TaskContent>>({});
@@ -61,17 +70,90 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 防止React Strict Mode重复执行的标志
   const initialLoadCompleted = useRef<boolean>(false);
 
+  // 监听主视频容器高度以限制右侧列表高度
+  useEffect(() => {
+    const updateHeight = () => {
+      if (videoAreaRef.current) {
+        setVideoAreaHeight(videoAreaRef.current.clientHeight);
+      }
+    };
+    // 初始与下一帧各测量一次，避免首次渲染高度为 0
+    updateHeight();
+    const raf = requestAnimationFrame(updateHeight);
+    window.addEventListener('resize', updateHeight);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, [currentVideoIndex, isVideoExpanded, learningPlan, currentTask, currentStepIndex]);
+
+  // 测量列表项高度，并根据滚动计算分页可用性
+  useEffect(() => {
+    const measureAndUpdate = () => {
+      const container = listRef.current;
+      if (!container) return;
+      const firstItem = container.querySelector('button');
+      if (firstItem) {
+        const rect = (firstItem as HTMLButtonElement).getBoundingClientRect();
+        if (rect.height > 0) setListItemHeight(rect.height);
+      }
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      setCanPageUp(scrollTop > 2);
+      setCanPageDown(scrollTop + clientHeight < scrollHeight - 2);
+    };
+
+    // 初始两次：同步 + 下一帧，确保有高度
+    measureAndUpdate();
+    const raf = requestAnimationFrame(measureAndUpdate);
+
+    const onScroll = () => measureAndUpdate();
+    listRef.current?.addEventListener('scroll', onScroll);
+    window.addEventListener('resize', measureAndUpdate);
+    return () => {
+      cancelAnimationFrame(raf);
+      listRef.current?.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', measureAndUpdate);
+    };
+  }, [learningPlan, currentStepIndex, videoAreaHeight]);
+
+  // 切换主视频时，确保对应列表项可见
+  useEffect(() => {
+    const container = listRef.current;
+    if (!container) return;
+    const items = container.querySelectorAll('button');
+    const target = items[currentVideoIndex] as HTMLButtonElement | undefined;
+    if (target) {
+      target.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  }, [currentVideoIndex]);
+
+  const pageDown = () => {
+    const container = listRef.current;
+    if (!container) return;
+    container.scrollBy({ top: listItemHeight * 4, behavior: 'smooth' });
+  };
+
+  const pageUp = () => {
+    const container = listRef.current;
+    if (!container) return;
+    container.scrollBy({ top: -listItemHeight * 4, behavior: 'smooth' });
+  };
+
   // 文字选择浮框处理函数
   const handleWhatClick = (selectedText: string) => {
     console.log('🔍 What clicked:', selectedText);
-    // TODO: 实现What功能 - 解释选中文字的含义
-    alert(`What功能暂未实现\n选中文字: "${selectedText}"`);
+    // 向右侧聊天助手发送 "what is ..." 消息
+    const message = `what is ${selectedText}`;
+    setExternalMessage(''); // 先清空，确保可以重复发送相同消息
+    setTimeout(() => setExternalMessage(message), 10);
   };
 
   const handleWhyClick = (selectedText: string) => {
     console.log('💡 Why clicked:', selectedText);
-    // TODO: 实现Why功能 - 解释选中文字的原因或背景
-    alert(`Why功能暂未实现\n选中文字: "${selectedText}"`);
+    // 向右侧聊天助手发送 "why does ..." 消息  
+    const message = `why does ${selectedText}`;
+    setExternalMessage(''); // 先清空，确保可以重复发送相同消息
+    setTimeout(() => setExternalMessage(message), 10);
   };
 
   const handleNoteClick = (selectedText: string) => {
@@ -1132,6 +1214,24 @@ export default function StudyPage({ params }: StudyPageProps) {
     return { url: videoUrl, platform: 'unknown' };
   };
 
+  // 获取视频缩略图：优先使用 cover；YouTube 回退到官方缩略图；否则无图
+  const getVideoThumbnail = (video: any): string | null => {
+    if (!video) return null;
+    if (video.cover) return video.cover as string;
+    const videoUrl: string = video.url || '';
+    if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+      const patterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|m\.youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/,
+        /youtube\.com\/.*[?&]v=([a-zA-Z0-9_-]{11})/,
+      ];
+      for (const p of patterns) {
+        const m = videoUrl.match(p);
+        if (m) return `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg`;
+      }
+    }
+    return null;
+  };
+
   // 上传课程到数据库
   const handleUploadCourse = async () => {
     if (!learningPlan) {
@@ -1490,10 +1590,10 @@ export default function StudyPage({ params }: StudyPageProps) {
                       Recommended Videos:
                     </h4>
                     
-                    <div className="relative">
+                    <div className="flex gap-4 items-start">
                       {/* 单个视频显示 - 支持简单放大 */}
                       {getCurrentStepVideos()[currentVideoIndex] && (
-                        <div className={`${isVideoExpanded ? 'w-[768px]' : 'w-96'} relative group transition-all duration-300`}>
+                        <div ref={videoAreaRef} className={`${isVideoExpanded ? 'w-[768px]' : 'w-96'} relative group transition-all duration-300`}>
                           <div className="bg-white p-2 rounded-lg shadow-lg">
                             <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black relative transition-all duration-300">
                               {(() => {
@@ -1582,32 +1682,88 @@ export default function StudyPage({ params }: StudyPageProps) {
                         </div>
                       )}
                       
-                      {/* 视频切换按钮 */}
-                      {getCurrentStepVideos().length > 1 && (
-                        <div className="absolute bottom-4 right-4 z-10">
-                          <div className="bg-yellow-100 p-2 rounded-lg shadow-lg transform rotate-3 border-2 border-dashed border-yellow-400">
-                            <button
-                              onClick={() => {
-                                const nextIndex = (currentVideoIndex + 1) % getCurrentStepVideos().length;
-                                setCurrentVideoIndex(nextIndex);
-                                console.log(`🔄 切换到视频 ${nextIndex + 1}/${getCurrentStepVideos().length}`);
-                              }}
-                              className="bg-blue-200 hover:bg-blue-300 text-blue-800 w-10 h-10 rounded-full flex items-center justify-center transform hover:rotate-12 transition-all duration-300 shadow-md border-2 border-blue-400 font-bold text-sm"
-                              title="切换视频"
-                              style={{
-                                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                              }}
-                            >
-                              🔄
-                            </button>
-                            <p className="text-xs text-blue-700 text-center mt-1 font-bold transform -rotate-2" style={{
-                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                            }}>
-                              {currentVideoIndex + 1}/{getCurrentStepVideos().length}
-                            </p>
+                      {/* 紧凑视频列表 */}
+                      <div className="relative">
+                        {/* 顶部渐隐遮罩 */}
+                        {canPageUp && (
+                          <div className="pointer-events-none absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-white to-transparent z-10" />
+                        )}
+
+                        <div
+                          ref={listRef}
+                          className="w-72 overflow-y-auto p-1"
+                          style={{ maxHeight: videoAreaHeight ? `${videoAreaHeight}px` : undefined }}
+                          onKeyDown={(e) => {
+                            if (e.key === 'PageDown') {
+                              e.preventDefault();
+                              pageDown();
+                            } else if (e.key === 'PageUp') {
+                              e.preventDefault();
+                              pageUp();
+                            }
+                          }}
+                        >
+                          <div className="space-y-1">
+                          {getCurrentStepVideos().map((v, idx) => {
+                            const active = idx === currentVideoIndex;
+                            return (
+                              <button
+                                key={idx}
+                                onClick={() => setCurrentVideoIndex(idx)}
+                                className={`w-full flex items-start gap-2 p-2 text-left transition-colors ${
+                                  active ? 'bg-yellow-100 rotate-1' : 'hover:bg-yellow-50'
+                                }`}
+                                aria-pressed={active}
+                              >
+                                <div className="min-w-0 flex-1">
+                                  <div className="text-sm font-bold text-gray-800 truncate" style={{
+                                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                  }}>
+                                    {v.title}
+                                  </div>
+                                  {v.duration && (
+                                    <div className="text-xs text-gray-600 mt-0.5" style={{
+                                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                    }}>
+                                      {v.duration}
+                                    </div>
+                                  )}
+                                </div>
+                              </button>
+                            );
+                          })}
                           </div>
                         </div>
-                      )}
+
+                        {/* 底部渐隐遮罩 */}
+                        {canPageDown && (
+                          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white to-transparent z-10" />
+                        )}
+
+                        {/* 翻页按钮 */}
+                        <div className="absolute bottom-2 right-2 flex gap-2 z-20">
+                          {canPageUp && (
+                            <button
+                              onClick={pageUp}
+                              className="w-8 h-8 rounded-full bg-yellow-200 text-yellow-900 shadow border border-yellow-300 hover:bg-yellow-300 transition-transform transform hover:-rotate-3"
+                              title="回到上方"
+                              aria-label="Page up"
+                            >
+                              ↑
+                            </button>
+                          )}
+                          {canPageDown && (
+                            <button
+                              onClick={pageDown}
+                              className="w-8 h-8 rounded-full bg-yellow-200 text-yellow-900 shadow border border-yellow-300 hover:bg-yellow-300 transition-transform transform hover:rotate-3"
+                              title="向下查看更多"
+                              aria-label="Page down"
+                            >
+                              ↓
+                            </button>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -1833,6 +1989,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               initialMessage="I am learning Q-Learning algorithm"
               recommendations={aiRecommendations}
               useStudyAPI={true}
+              externalMessage={externalMessage}
             />
           </div>
         </div>

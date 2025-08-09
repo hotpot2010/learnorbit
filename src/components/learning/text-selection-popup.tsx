@@ -45,9 +45,9 @@ export function TextSelectionPopup({
       const range = selection.getRangeAt(0);
       const rect = range.getBoundingClientRect();
       
-      // 计算浮框位置 - 显示在选择文字的上方
+      // 计算浮框位置 - 显示在选择文字的下方
       const x = rect.left + (rect.width / 2);
-      const y = rect.top - 10; // 稍微向上偏移
+      const y = rect.bottom + 10; // 稍微向下偏移
       
       setSelectedText(text);
       setPopupPosition({
@@ -140,10 +140,11 @@ export function TextSelectionPopup({
       style={{
         left: `${popupPosition.x}px`,
         top: `${popupPosition.y}px`,
-        transform: 'translate(-50%, -100%)'
+        // 位于选中文本下方，仅水平居中
+        transform: 'translate(-50%, 0)'
       }}
     >
-      <Card className="bg-white/95 backdrop-blur-sm shadow-lg border-2 border-blue-200 rounded-lg p-2 transform -rotate-1 hover:rotate-0 transition-all duration-300">
+      <Card className="bg-white/95 backdrop-blur-sm shadow-lg border-2 border-blue-200 rounded-lg p-2">
         <div className="flex items-center space-x-2">
           {/* What 按钮 */}
           <Button
@@ -200,19 +201,6 @@ export function TextSelectionPopup({
               Video
             </span>
           </Button>
-        </div>
-
-        {/* 选择的文字预览 */}
-        <div className="mt-2 px-2 py-1 bg-gray-50 rounded text-xs text-gray-600 max-w-xs truncate border border-gray-200">
-          <span style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
-            "{selectedText.slice(0, 50)}{selectedText.length > 50 ? '...' : ''}"
-          </span>
-        </div>
-
-        {/* 小箭头指向选择的文字 */}
-        <div className="absolute top-full left-1/2 transform -translate-x-1/2">
-          <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-blue-200"></div>
-          <div className="w-0 h-0 border-l-3 border-r-3 border-t-3 border-transparent border-t-white/95 absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-px"></div>
         </div>
       </Card>
     </div>
