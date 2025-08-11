@@ -847,6 +847,21 @@ export default function StudyPage({ params }: StudyPageProps) {
                 taskKeys: Object.keys(tasks)
               });
               
+              // 加载便签
+              const savedNotes = sessionStorage.getItem('courseNotes');
+              if (savedNotes) {
+                try {
+                  const parsed = JSON.parse(savedNotes);
+                  const processed = Array.isArray(parsed) ? parsed.map((n: any) => ({
+                    ...n,
+                    timestamp: new Date(n.timestamp)
+                  })) : [];
+                  setNotes(processed);
+                } catch (e) {
+                  console.error('解析便签失败', e);
+                }
+              }
+              
               // 标记任务生成已完成，防止后续调用
               taskGenerationStarted.current = true;
               initialLoadCompleted.current = true;
@@ -854,6 +869,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               // 清除数据库标记
               sessionStorage.removeItem('fromDatabase');
               sessionStorage.removeItem('taskCache');
+              sessionStorage.removeItem('courseNotes');
             } 
             // 如果来自课程定制页面且有任务缓存，加载缓存的任务
             else if (fromCustomPage === 'true' && savedTaskCache) {
@@ -1869,10 +1885,11 @@ export default function StudyPage({ params }: StudyPageProps) {
       setIsUploading(true);
       console.log('📤 开始上传课程到数据库...');
       
-      // 构造上传数据，包含课程计划和生成的任务
+      // 构造上传数据，包含课程计划、任务和便签
       const uploadData = {
         plan: learningPlan,
-        tasks: taskCache
+        tasks: taskCache,
+        notes: notes,
       };
 
       const response = await fetch('/api/user-courses', {

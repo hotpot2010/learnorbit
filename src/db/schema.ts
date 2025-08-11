@@ -16,6 +16,7 @@ import { LearningPlan } from '@/types/learning-plan';
 export interface ExtendedCoursePlan {
   plan: LearningPlan | any[];  // 兼容旧格式和新格式
   tasks?: Record<string, any>; // 生成的任务数据
+  notes?: any[]; // 页面便签数据
 }
 
 export const userCourses = pgTable('user_courses', {

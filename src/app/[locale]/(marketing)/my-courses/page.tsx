@@ -165,6 +165,10 @@ export default function MyCoursesPage() {
     if (course.coursePlan.tasks) {
       sessionStorage.setItem('taskCache', JSON.stringify(course.coursePlan.tasks));
     }
+    // 如果有便签数据，也一并存储
+    if (course.coursePlan.notes) {
+      sessionStorage.setItem('courseNotes', JSON.stringify(course.coursePlan.notes));
+    }
     
     sessionStorage.setItem('learningPlan', JSON.stringify(learningPlan));
     sessionStorage.setItem('fromDatabase', 'true'); // 标记来源于数据库

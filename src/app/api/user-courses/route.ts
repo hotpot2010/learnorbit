@@ -22,11 +22,14 @@ export async function POST(request: NextRequest) {
     // 检查数据格式：新格式包含 plan 和 tasks，旧格式直接是 coursePlan
     const coursePlan = requestData.plan || requestData;
     const taskData = requestData.tasks || {};
+    const notesData = requestData.notes || [];
     
     console.log('📥 接收到课程数据:', {
       hasPlan: !!coursePlan,
       hasTaskData: !!requestData.tasks,
-      taskCount: Object.keys(taskData).length
+      taskCount: Object.keys(taskData).length,
+      hasNotes: Array.isArray(notesData),
+      notesCount: Array.isArray(notesData) ? notesData.length : 0
     });
 
     // 保存课程信息到数据库
@@ -37,7 +40,8 @@ export async function POST(request: NextRequest) {
         userId: userId,
         coursePlan: {
           plan: coursePlan.plan || coursePlan,
-          tasks: taskData // 存储生成的任务数据
+          tasks: taskData, // 存储生成的任务数据
+          notes: notesData, // 存储便签
         },
         currentStep: 0,
         status: 'in-progress',
