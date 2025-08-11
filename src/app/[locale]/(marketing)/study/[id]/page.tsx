@@ -71,6 +71,9 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 防止React Strict Mode重复执行的标志
   const initialLoadCompleted = useRef<boolean>(false);
 
+  // 外部API基础地址（客户端可用）
+  const EXTERNAL_API_URL = (process.env.NEXT_PUBLIC_EXTERNAL_API_URL as string) || 'https://study-platform.zeabur.app';
+
   // 笔记相关状态 - 插入式笔记
   interface Note {
     id: string;
@@ -78,10 +81,40 @@ export default function StudyPage({ params }: StudyPageProps) {
     timestamp: Date;
     stepIndex: number;
     insertAfterParagraph: number; // 插入在第几个段落之后（-1表示插入在开头）
+    type?: 'text' | 'video';
+    video?: { url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title?: string; duration?: string };
+    isLoading?: boolean;
   }
   const [notes, setNotes] = useState<Note[]>([]);
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
   const [editingText, setEditingText] = useState<string>('');
+  const [expandedNoteVideoIds, setExpandedNoteVideoIds] = useState<Record<string, boolean>>({});
+
+  const toggleNoteVideoExpanded = (noteId: string) => {
+    setExpandedNoteVideoIds(prev => ({ ...prev, [noteId]: !prev[noteId] }));
+  };
+
+  // 根据当前选区在正文中的位置，找到段落索引
+  const getSelectedParagraphIndex = (): number => {
+    if (typeof window === 'undefined') return -1;
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return -1;
+    const range = sel.getRangeAt(0);
+    let node: Node | null = range.startContainer;
+    if (!node) return -1;
+    // 查找最近的带 data-paragraph-index 的父元素
+    let el: HTMLElement | null = (node.nodeType === Node.ELEMENT_NODE
+      ? (node as HTMLElement)
+      : (node.parentElement));
+    while (el) {
+      if (el.hasAttribute && el.hasAttribute('data-paragraph-index')) {
+        const idx = Number(el.getAttribute('data-paragraph-index'));
+        return Number.isFinite(idx) ? idx : -1;
+      }
+      el = el.parentElement;
+    }
+    return -1;
+  };
 
   // 将正文内容按段落分割并插入笔记
   const renderContentWithInsertedNotes = (content: string) => {
@@ -125,7 +158,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                   
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
-                      {/* 笔记内容 - 手写字体，支持换行和编辑 */}
+                      {/* 笔记内容 - 手写字体，支持换行和编辑；支持视频嵌入 */}
                       {editingNoteId === note.id ? (
                         <div className="space-y-3">
                           <textarea
@@ -169,19 +202,67 @@ export default function StudyPage({ params }: StudyPageProps) {
                           </div>
                         </div>
                       ) : (
-                        <div 
-                          className="text-lg leading-relaxed text-yellow-800 mb-3 whitespace-pre-wrap break-words cursor-pointer hover:bg-yellow-50 rounded p-1 -m-1 transition-colors"
-                          style={{
-                            fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
-                            fontSize: '16px',
-                            lineHeight: '1.6',
-                            textShadow: '0 0.5px 1px rgba(255, 212, 59, 0.08)',
-                            wordBreak: 'break-word'
-                          }}
-                          onDoubleClick={() => handleStartEdit(note.id, note.text)}
-                          title="Double-click to edit"
-                        >
-                          {note.text}
+                        <div className="space-y-3">
+                          {note.type === 'video' && note.video ? (
+                            <div className="w-full">
+                              {note.isLoading ? (
+                                <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black/80 flex items-center justify-center">
+                                  <div className="w-8 h-8 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
+                                </div>
+                              ) : note.video ? (
+                                <>
+                                  <div className={`relative group transition-all duration-300 ${expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-full'} aspect-video rounded-lg overflow-hidden shadow-md bg-black`}>
+                                    <iframe 
+                                      src={note.video.url}
+                                      frameBorder="0"
+                                      allowFullScreen={true}
+                                      allow={note.video.platform === 'youtube' ? 
+                                        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" :
+                                        "autoplay; fullscreen"
+                                      }
+                                      className="w-full h-full"
+                                      referrerPolicy={note.video.platform === 'bilibili' ? "no-referrer" : undefined}
+                                      sandbox={note.video.platform === 'bilibili' ? 
+                                        "allow-same-origin allow-scripts allow-popups allow-presentation" : 
+                                        undefined
+                                      }
+                                    />
+                                    <button
+                                      onClick={() => toggleNoteVideoExpanded(note.id)}
+                                      className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110"
+                                      title={expandedNoteVideoIds[note.id] ? '缩小视频' : '放大视频'}
+                                    >
+                                      {expandedNoteVideoIds[note.id] ? (
+                                        <Minimize2 className="w-4 h-4" />
+                                      ) : (
+                                        <Maximize2 className="w-4 h-4" />
+                                      )}
+                                    </button>
+                                  </div>
+                                  {(note.video.title || note.video.duration) && (
+                                    <div className="text-xs text-yellow-700 mt-1">
+                                      {note.video.title || ''} {note.video.duration ? `· ${note.video.duration}` : ''}
+                                    </div>
+                                  )}
+                                </>
+                              ) : null}
+                            </div>
+                          ) : (
+                            <div 
+                              className="text-lg leading-relaxed text-yellow-800 whitespace-pre-wrap break-words cursor-pointer hover:bg-yellow-50 rounded p-1 -m-1 transition-colors"
+                              style={{
+                                fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
+                                fontSize: '16px',
+                                lineHeight: '1.6',
+                                textShadow: '0 0.5px 1px rgba(255, 212, 59, 0.08)',
+                                wordBreak: 'break-word'
+                              }}
+                              onDoubleClick={() => handleStartEdit(note.id, note.text)}
+                              title="Double-click to edit"
+                            >
+                              {note.text || '（空白便签，双击编辑）'}
+                            </div>
+                          )}
                         </div>
                       )}
                       {editingNoteId !== note.id && (
@@ -364,7 +445,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                     
                     <div className="flex items-start justify-between">
                       <div className="flex-1 min-w-0">
-                        {/* 笔记内容 - 手写字体，支持换行和编辑 */}
+                        {/* 笔记内容 - 手写字体，支持换行和编辑；支持视频嵌入 */}
                         {editingNoteId === note.id ? (
                           <div className="space-y-3">
                             <textarea
@@ -408,19 +489,67 @@ export default function StudyPage({ params }: StudyPageProps) {
                             </div>
                           </div>
                         ) : (
-                          <div 
-                            className="text-lg leading-relaxed text-yellow-800 mb-3 whitespace-pre-wrap break-words cursor-pointer hover:bg-yellow-50 rounded p-1 -m-1 transition-colors"
-                            style={{
-                              fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
-                              fontSize: '16px',
-                              lineHeight: '1.6',
-                              textShadow: '0 0.5px 1px rgba(255, 212, 59, 0.08)',
-                              wordBreak: 'break-word'
-                            }}
-                            onDoubleClick={() => handleStartEdit(note.id, note.text)}
-                            title="Double-click to edit"
-                          >
-                            {note.text}
+                          <div className="space-y-3">
+                            {note.type === 'video' && note.video ? (
+                              <div className="w-full">
+                                {note.isLoading ? (
+                                  <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black/80 flex items-center justify-center">
+                                    <div className="w-8 h-8 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
+                                  </div>
+                                ) : note.video ? (
+                                  <>
+                                    <div className={`relative group transition-all duration-300 ${expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-full'} aspect-video rounded-lg overflow-hidden shadow-md bg-black`}>
+                                      <iframe 
+                                        src={note.video.url}
+                                        frameBorder="0"
+                                        allowFullScreen={true}
+                                        allow={note.video.platform === 'youtube' ? 
+                                          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" :
+                                          "autoplay; fullscreen"
+                                        }
+                                        className="w-full h-full"
+                                        referrerPolicy={note.video.platform === 'bilibili' ? "no-referrer" : undefined}
+                                        sandbox={note.video.platform === 'bilibili' ? 
+                                          "allow-same-origin allow-scripts allow-popups allow-presentation" : 
+                                          undefined
+                                        }
+                                      />
+                                      <button
+                                        onClick={() => toggleNoteVideoExpanded(note.id)}
+                                        className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110"
+                                        title={expandedNoteVideoIds[note.id] ? '缩小视频' : '放大视频'}
+                                      >
+                                        {expandedNoteVideoIds[note.id] ? (
+                                          <Minimize2 className="w-4 h-4" />
+                                        ) : (
+                                          <Maximize2 className="w-4 h-4" />
+                                        )}
+                                      </button>
+                                    </div>
+                                    {(note.video.title || note.video.duration) && (
+                                      <div className="text-xs text-yellow-700 mt-1">
+                                        {note.video.title || ''} {note.video.duration ? `· ${note.video.duration}` : ''}
+                                      </div>
+                                    )}
+                                  </>
+                                ) : null}
+                              </div>
+                            ) : (
+                              <div 
+                                className="text-lg leading-relaxed text-yellow-800 whitespace-pre-wrap break-words cursor-pointer hover:bg-yellow-50 rounded p-1 -m-1 transition-colors"
+                                style={{
+                                  fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
+                                  fontSize: '16px',
+                                  lineHeight: '1.6',
+                                  textShadow: '0 0.5px 1px rgba(255, 212, 59, 0.08)',
+                                  wordBreak: 'break-word'
+                                }}
+                                onDoubleClick={() => handleStartEdit(note.id, note.text)}
+                                title="Double-click to edit"
+                              >
+                                {note.text || '（空白便签，双击编辑）'}
+                              </div>
+                            )}
                           </div>
                         )}
                         {editingNoteId !== note.id && (
@@ -546,15 +675,85 @@ export default function StudyPage({ params }: StudyPageProps) {
   };
 
   const handleNoteClick = (selectedText: string) => {
-    console.log('📝 Note clicked:', selectedText);
-    // TODO: 实现Note功能 - 为选中文字添加笔记
-    alert(`Note功能暂未实现\n选中文字: "${selectedText}"`);
+    // 在选中文本所在段落的下方插入一个空白便签，并进入编辑状态
+    const paragraphIndex = getSelectedParagraphIndex();
+    const contentArea = document.querySelector('.learning-content-area');
+    const paragraphCount = contentArea ? contentArea.querySelectorAll('[data-paragraph-index]').length : 0;
+    const insertAfterParagraph = paragraphIndex >= 0 ? paragraphIndex : (paragraphCount > 0 ? 0 : -1);
+
+    const newNote: Note = {
+      id: `note-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      text: '',
+      timestamp: new Date(),
+      stepIndex: currentStepIndex,
+      insertAfterParagraph,
+      type: 'text'
+    };
+
+    setNotes(prev => [...prev, newNote].sort((a, b) => a.insertAfterParagraph - b.insertAfterParagraph));
+    setEditingNoteId(newNote.id);
+    setEditingText('');
   };
 
-  const handleVideoClick = (selectedText: string) => {
-    console.log('📹 Video clicked:', selectedText);
-    // TODO: 实现Video功能 - 搜索相关视频
-    alert(`Video功能暂未实现\n选中文字: "${selectedText}"`);
+  const handleVideoClick = async (selectedText: string) => {
+    // 先确定插入位置，避免因点击按钮导致选区丢失而插入到顶部
+    const paragraphIndex = getSelectedParagraphIndex();
+    const contentArea = document.querySelector('.learning-content-area');
+    const paragraphCount = contentArea ? contentArea.querySelectorAll('[data-paragraph-index]').length : 0;
+    const insertAfterParagraph = paragraphIndex >= 0 ? paragraphIndex : (paragraphCount > 0 ? 0 : -1);
+
+    // 先插入加载中的视频便签占位
+    const tempNoteId = `note-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const loadingNote: Note = {
+      id: tempNoteId,
+      text: '',
+      timestamp: new Date(),
+      stepIndex: currentStepIndex,
+      insertAfterParagraph,
+      type: 'video',
+      isLoading: true,
+    };
+    setNotes(prev => [...prev, loadingNote].sort((a, b) => a.insertAfterParagraph - b.insertAfterParagraph));
+
+    try {
+      const lang = (routeParams?.locale || 'en').startsWith('zh') ? 'zh' : 'en';
+      const resp = await fetch(`/api/video/search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ search_keyword: selectedText, lang })
+      });
+      if (!resp.ok) {
+        const t = await resp.text();
+        throw new Error(`Video search failed: ${resp.status} ${t}`);
+      }
+      const data = await resp.json();
+      const list: any[] = Array.isArray(data?.video_res) ? data.video_res : [];
+      if (list.length === 0) {
+        // 更新为失败提示
+        setNotes(prev => prev.map(n => n.id === tempNoteId ? { ...n, isLoading: false, type: 'text', text: '未找到相关视频' } : n));
+        return;
+      }
+      const v = list[0];
+      const url: string = v.url || v.link || '';
+      if (!url) {
+        setNotes(prev => prev.map(n => n.id === tempNoteId ? { ...n, isLoading: false, type: 'text', text: '视频数据无有效链接' } : n));
+        return;
+      }
+
+      // 生成可嵌入播放器的URL
+      const processed = processVideoUrl(url);
+
+      // 更新占位便签为真实视频
+      setNotes(prev => prev.map(n => n.id === tempNoteId ? {
+        ...n,
+        isLoading: false,
+        type: 'video',
+        video: { url: processed.url, platform: (processed.platform as any) || 'unknown', title: v.title, duration: v.duration }
+      } : n));
+    } catch (e) {
+      console.error('Video search error:', e);
+      setNotes(prev => prev.map(n => n.id === tempNoteId ? { ...n, isLoading: false, type: 'text', text: '视频搜索失败，请稍后重试' } : n));
+    }
   };
 
   // 学习页面重试配置（无并发限制，但有重试）
