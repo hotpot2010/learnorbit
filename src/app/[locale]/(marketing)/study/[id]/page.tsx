@@ -14,7 +14,8 @@ import {
   Play,
   Pause,
   Maximize2,
-  Minimize2
+  Minimize2,
+  StickyNote
 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { LearningPlan, LearningStep, TaskGenerateRequest, TaskGenerateResponse, TaskContent, QuizQuestion, CodingTask } from '@/types/learning-plan';
@@ -79,6 +80,8 @@ export default function StudyPage({ params }: StudyPageProps) {
     insertAfterParagraph: number; // 插入在第几个段落之后（-1表示插入在开头）
   }
   const [notes, setNotes] = useState<Note[]>([]);
+  const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
+  const [editingText, setEditingText] = useState<string>('');
 
   // 将正文内容按段落分割并插入笔记
   const renderContentWithInsertedNotes = (content: string) => {
@@ -100,34 +103,111 @@ export default function StudyPage({ params }: StudyPageProps) {
         result.push(
           <div key={`note-${note.id}`} className="my-6">
             <div className="flex items-start space-x-3 mb-4 ml-6">
-              <div className="w-6 h-6 rounded-full bg-yellow-400 text-black text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                📝
+              {/* 便签图标 */}
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-700 text-lg font-bold flex items-center justify-center mt-1 transform rotate-1 shadow-md border border-yellow-200">
+                <StickyNote className="w-4 h-4" />
               </div>
-              <div className="flex-1">
-                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-lg">
+              <div className="flex-1 max-w-fit">
+                {/* 便签样式容器 */}
+                <div 
+                  className="relative bg-yellow-100 p-5 rounded-lg shadow-lg transform rotate-0.5 border border-yellow-200 inline-block min-w-64 max-w-2xl"
+                  style={{
+                    boxShadow: '0 3px 8px rgba(255, 212, 59, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08)'
+                  }}
+                >
+                  {/* 便签纸的折角效果 */}
+                  <div 
+                    className="absolute top-0 right-0 w-5 h-5 bg-yellow-100 transform rotate-45 translate-x-2.5 -translate-y-2.5 border border-yellow-200"
+                    style={{
+                      clipPath: 'polygon(0% 100%, 100% 100%, 100% 0%)'
+                    }}
+                  />
+                  
                   <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <p className="text-base leading-loose text-gray-800 font-bold mb-2" style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                      }}>
-                        💡 Note from Chat (at beginning):
-                      </p>
-                      <p className="text-base leading-loose text-gray-700" style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                      }}>
-                        {note.text}
-                      </p>
-                      <div className="text-xs text-gray-500 mt-2">
-                        Added at {note.timestamp.toLocaleTimeString()}
-                      </div>
+                    <div className="flex-1 min-w-0">
+                      {/* 笔记内容 - 手写字体，支持换行和编辑 */}
+                      {editingNoteId === note.id ? (
+                        <div className="space-y-3">
+                          <textarea
+                            value={editingText}
+                            onChange={(e) => setEditingText(e.target.value)}
+                            className="w-full p-3 border border-yellow-300 rounded-lg bg-yellow-50 text-yellow-800 resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                            style={{
+                              fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
+                              fontSize: '16px',
+                              lineHeight: '1.6',
+                              minHeight: '80px'
+                            }}
+                            autoFocus
+                            onKeyDown={(e) => {
+                              if (e.key === 'Escape') {
+                                handleCancelEdit();
+                              } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                                handleSaveEdit(note.id);
+                              }
+                            }}
+                          />
+                          <div className="flex items-center space-x-2">
+                            <button
+                              onClick={() => handleSaveEdit(note.id)}
+                              className="px-3 py-1 bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors text-xs font-medium"
+                              style={{
+                                fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
+                              }}
+                            >
+                              ✓ Save
+                            </button>
+                            <button
+                              onClick={handleCancelEdit}
+                              className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors text-xs font-medium"
+                              style={{
+                                fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
+                              }}
+                            >
+                              ✕ Cancel
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div 
+                          className="text-lg leading-relaxed text-yellow-800 mb-3 whitespace-pre-wrap break-words cursor-pointer hover:bg-yellow-50 rounded p-1 -m-1 transition-colors"
+                          style={{
+                            fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
+                            fontSize: '16px',
+                            lineHeight: '1.6',
+                            textShadow: '0 0.5px 1px rgba(255, 212, 59, 0.08)',
+                            wordBreak: 'break-word'
+                          }}
+                          onDoubleClick={() => handleStartEdit(note.id, note.text)}
+                          title="Double-click to edit"
+                        >
+                          {note.text}
+                        </div>
+                      )}
+                      {editingNoteId !== note.id && (
+                        <div 
+                          className="text-xs text-yellow-600 opacity-70"
+                          style={{
+                            fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
+                          }}
+                        >
+                          Added at {note.timestamp.toLocaleTimeString()}
+                        </div>
+                      )}
                     </div>
-                    <button
-                      onClick={() => setNotes(prev => prev.filter(n => n.id !== note.id))}
-                      className="text-yellow-600 hover:text-red-600 ml-3 p-1 rounded hover:bg-yellow-100 transition-colors"
-                      title="删除笔记"
-                    >
-                      ✕
-                    </button>
+                    {/* 删除按钮 */}
+                    {editingNoteId !== note.id && (
+                      <button
+                        onClick={() => handleDeleteNote(note.id)}
+                        className="text-yellow-500 hover:text-red-500 ml-3 p-1 rounded-full hover:bg-yellow-100 transition-all duration-200 transform hover:scale-110 flex-shrink-0"
+                        title="删除笔记"
+                        style={{
+                          fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
+                        }}
+                      >
+                        ✕
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -262,34 +342,111 @@ export default function StudyPage({ params }: StudyPageProps) {
           result.push(
             <div key={`note-${note.id}`} className="my-6">
               <div className="flex items-start space-x-3 mb-4 ml-6">
-                <div className="w-6 h-6 rounded-full bg-yellow-400 text-black text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                  📝
+                {/* 便签图标 */}
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-700 text-lg font-bold flex items-center justify-center mt-1 transform rotate-1 shadow-md border border-yellow-200">
+                  <StickyNote className="w-4 h-4" />
                 </div>
-                <div className="flex-1">
-                  <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-lg">
+                <div className="flex-1 max-w-fit">
+                  {/* 便签样式容器 */}
+                  <div 
+                    className="relative bg-yellow-100 p-5 rounded-lg shadow-lg transform rotate-0.5 border border-yellow-200 inline-block min-w-64 max-w-2xl"
+                    style={{
+                      boxShadow: '0 3px 8px rgba(255, 212, 59, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08)'
+                    }}
+                  >
+                    {/* 便签纸的折角效果 */}
+                    <div 
+                      className="absolute top-0 right-0 w-5 h-5 bg-yellow-100 transform rotate-45 translate-x-2.5 -translate-y-2.5 border border-yellow-200"
+                      style={{
+                        clipPath: 'polygon(0% 100%, 100% 100%, 100% 0%)'
+                      }}
+                    />
+                    
                     <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <p className="text-base leading-loose text-gray-800 font-bold mb-2" style={{
-                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                        }}>
-                          💡 Note from Chat (after paragraph {index + 1}):
-                        </p>
-                        <p className="text-base leading-loose text-gray-700" style={{
-                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                        }}>
-                          {note.text}
-                        </p>
-                        <div className="text-xs text-gray-500 mt-2">
-                          Added at {note.timestamp.toLocaleTimeString()}
-                        </div>
+                      <div className="flex-1 min-w-0">
+                        {/* 笔记内容 - 手写字体，支持换行和编辑 */}
+                        {editingNoteId === note.id ? (
+                          <div className="space-y-3">
+                            <textarea
+                              value={editingText}
+                              onChange={(e) => setEditingText(e.target.value)}
+                              className="w-full p-3 border border-yellow-300 rounded-lg bg-yellow-50 text-yellow-800 resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                              style={{
+                                fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
+                                fontSize: '16px',
+                                lineHeight: '1.6',
+                                minHeight: '80px'
+                              }}
+                              autoFocus
+                              onKeyDown={(e) => {
+                                if (e.key === 'Escape') {
+                                  handleCancelEdit();
+                                } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                                  handleSaveEdit(note.id);
+                                }
+                              }}
+                            />
+                            <div className="flex items-center space-x-2">
+                              <button
+                                onClick={() => handleSaveEdit(note.id)}
+                                className="px-3 py-1 bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors text-xs font-medium"
+                                style={{
+                                  fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
+                                }}
+                              >
+                                ✓ Save
+                              </button>
+                              <button
+                                onClick={handleCancelEdit}
+                                className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors text-xs font-medium"
+                                style={{
+                                  fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
+                                }}
+                              >
+                                ✕ Cancel
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div 
+                            className="text-lg leading-relaxed text-yellow-800 mb-3 whitespace-pre-wrap break-words cursor-pointer hover:bg-yellow-50 rounded p-1 -m-1 transition-colors"
+                            style={{
+                              fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
+                              fontSize: '16px',
+                              lineHeight: '1.6',
+                              textShadow: '0 0.5px 1px rgba(255, 212, 59, 0.08)',
+                              wordBreak: 'break-word'
+                            }}
+                            onDoubleClick={() => handleStartEdit(note.id, note.text)}
+                            title="Double-click to edit"
+                          >
+                            {note.text}
+                          </div>
+                        )}
+                        {editingNoteId !== note.id && (
+                          <div 
+                            className="text-xs text-yellow-600 opacity-70"
+                            style={{
+                              fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
+                            }}
+                          >
+                            Added at {note.timestamp.toLocaleTimeString()}
+                          </div>
+                        )}
                       </div>
-                      <button
-                        onClick={() => setNotes(prev => prev.filter(n => n.id !== note.id))}
-                        className="text-yellow-600 hover:text-red-600 ml-3 p-1 rounded hover:bg-yellow-100 transition-colors"
-                        title="删除笔记"
-                      >
-                        ✕
-                      </button>
+                      {/* 删除按钮 */}
+                      {editingNoteId !== note.id && (
+                        <button
+                          onClick={() => handleDeleteNote(note.id)}
+                          className="text-yellow-500 hover:text-red-500 ml-3 p-1 rounded-full hover:bg-yellow-100 transition-all duration-200 transform hover:scale-110 flex-shrink-0"
+                          title="删除笔记"
+                          style={{
+                            fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
+                          }}
+                        >
+                          ✕
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -553,10 +710,10 @@ export default function StudyPage({ params }: StudyPageProps) {
               
               // 启动并行任务生成（防止重复执行）
               if (!taskGenerationStarted.current) {
-                console.log('🚀 启动并行任务生成...');
+            console.log('🚀 启动并行任务生成...');
                 taskGenerationStarted.current = true;
                 initialLoadCompleted.current = true;
-                generateAllTasks(plan);
+            generateAllTasks(plan);
               } else {
                 console.log('⚠️ 任务生成已经启动，跳过重复执行');
               }
@@ -723,7 +880,7 @@ export default function StudyPage({ params }: StudyPageProps) {
             search_keyword: step.search_keyword || step.title, // 如果没有search_keyword就用title
             videos: step.videos
           };
-          
+
           console.log('📤 发送任务生成请求:', requestData);
           
           const response = await fetchWithRetryStudy('/api/task/generate', {
@@ -766,7 +923,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               length: Array.isArray(result.task.questions) ? result.task.questions.length : 'not array'
             } : { exists: false }
           });
-
+          
           if (result.success) {
             console.log(`✅ 步骤 ${step.step} 生成成功`);
             
@@ -949,14 +1106,14 @@ export default function StudyPage({ params }: StudyPageProps) {
             type: 'quiz',
             difficulty: 'beginner',
             ppt_slide: '# Task Data Missing\n\n⚠️ Task data may have issues, please re-upload the course',
-            videos: currentStep.videos
-          });
-          setIsLoadingTask(false);
-        } else {
-          console.log('⏳ 任务还未开始生成，等待');
-          setCurrentTask(null);
-          setIsLoadingTask(true);
-          startPollingForTask(currentStep.step);
+          videos: currentStep.videos
+        });
+        setIsLoadingTask(false);
+      } else {
+        console.log('⏳ 任务还未开始生成，等待');
+        setCurrentTask(null);
+        setIsLoadingTask(true);
+        startPollingForTask(currentStep.step);
         }
       }
     } else {
@@ -1556,6 +1713,38 @@ export default function StudyPage({ params }: StudyPageProps) {
     return learningPlan.plan.filter(step => taskGenerationStatus[step.step] === 'completed').length;
   };
 
+  // 便签编辑相关函数
+  const handleStartEdit = (noteId: string, currentText: string) => {
+    setEditingNoteId(noteId);
+    setEditingText(currentText);
+  };
+
+  const handleSaveEdit = (noteId: string) => {
+    if (editingText.trim()) {
+      setNotes(prev => prev.map(note => 
+        note.id === noteId 
+          ? { ...note, text: editingText.trim() }
+          : note
+      ));
+    }
+    setEditingNoteId(null);
+    setEditingText('');
+  };
+
+  const handleCancelEdit = () => {
+    setEditingNoteId(null);
+    setEditingText('');
+  };
+
+  const handleDeleteNote = (noteId: string) => {
+    setNotes(prev => prev.filter(n => n.id !== noteId));
+    // 如果正在编辑这个笔记，也要取消编辑状态
+    if (editingNoteId === noteId) {
+      setEditingNoteId(null);
+      setEditingText('');
+    }
+  };
+
   return (
     <>
     <div className="h-[calc(100vh-4rem)] flex"
@@ -1737,7 +1926,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                 {/* PPT 标题和内容 - 插入式笔记 */}
                 <div className="space-y-4">
                   {renderContentWithInsertedNotes(currentTask.ppt_slide || '')}
-                </div>
+                 </div>
 
                 {/* 推荐视频区域 */}
                 {getCurrentStepVideos().length > 0 && (
@@ -1768,34 +1957,34 @@ export default function StudyPage({ params }: StudyPageProps) {
                                 
                                 if (shouldShowVideo && (platform === 'youtube' || platform === 'bilibili')) {
                                   return (
-                                    <iframe 
+                                <iframe 
                                       src={url}
                                       frameBorder="0"
-                                      allowFullScreen={true}
+                                  allowFullScreen={true}
                                       allow={platform === 'youtube' ? 
                                         "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" :
                                         "autoplay; fullscreen"
                                       }
-                                      className="w-full h-full"
+                                  className="w-full h-full"
                                       referrerPolicy={platform === 'bilibili' ? "no-referrer" : undefined}
                                       sandbox={platform === 'bilibili' ? 
                                         "allow-same-origin allow-scripts allow-popups allow-presentation" : 
                                         undefined
                                       }
-                                      onError={(e) => {
+                                  onError={(e) => {
                                         console.error(`${platform}视频播放器加载失败:`, e);
                                       }}
                                       onLoad={() => {
                                         console.log(`${platform}视频加载成功:`, url);
-                                      }}
-                                    />
+                                  }}
+                                />
                                   );
                                 } else {
                                   // 无法识别的视频格式或语言环境不匹配
                                   return (
-                                    <div className="w-full h-full flex items-center justify-center bg-gray-800 text-white">
-                                      <div className="text-center">
-                                        <PlayCircle className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                                <div className="w-full h-full flex items-center justify-center bg-gray-800 text-white">
+                                  <div className="text-center">
+                                    <PlayCircle className="w-12 h-12 mx-auto mb-2 opacity-50" />
                                         <p className="text-sm opacity-75">Video not available</p>
                                         <p className="text-xs opacity-50 mt-1 text-yellow-300">
                                           {currentLocale === 'zh' ? 'Bilibili videos in Chinese mode' : 'YouTube videos in English mode'}
@@ -1803,8 +1992,8 @@ export default function StudyPage({ params }: StudyPageProps) {
                                         <p className="text-xs opacity-50 mt-1">
                                           Current: {platform} | Locale: {currentLocale}
                                         </p>
-                                      </div>
-                                    </div>
+                                  </div>
+                                </div>
                                   );
                                 }
                               })()}
@@ -1875,7 +2064,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                               >
                                 <div className="min-w-0 flex-1">
                                   <div className="text-sm font-bold text-gray-800 truncate" style={{
-                                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                                   }}>
                                     {v.title}
                                   </div>
@@ -1930,8 +2119,8 @@ export default function StudyPage({ params }: StudyPageProps) {
                 {currentTask?.web_res?.results && currentTask.web_res.results.length > 0 && (
                   <div className="space-y-4">
                     <h4 className="text-xl font-bold text-blue-700" style={{
-                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                    }}>
+                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            }}>
                       Recommended Resources:
                     </h4>
                     
@@ -2184,14 +2373,8 @@ export default function StudyPage({ params }: StudyPageProps) {
               
               // 如果鼠标Y位置在这个段落的范围内或之前
               if (pos.y <= paragraphRect.bottom) {
-                // 如果鼠标在段落的上半部分，插入在前一个段落后
-                // 如果在下半部分，插入在这个段落后
-                const paragraphMiddle = paragraphRect.top + paragraphRect.height / 2;
-                if (pos.y <= paragraphMiddle && i > 0) {
-                  insertAfterParagraph = i - 1;
-                } else {
-                  insertAfterParagraph = i;
-                }
+                // 总是插入在当前段落之后，确保便签在段落下方
+                insertAfterParagraph = i;
                 break;
               }
             }

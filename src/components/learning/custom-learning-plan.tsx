@@ -587,7 +587,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
 
       // 1. 保存到sessionStorage供学习页面使用
       sessionStorage.setItem('learningPlan', JSON.stringify(coursePlan));
-      
+
       // 2. 保存任务缓存和状态
       if (Object.keys(taskCache).length > 0) {
         sessionStorage.setItem('taskCache', JSON.stringify(taskCache));
@@ -606,16 +606,16 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     } catch (error) {
       console.error('🚨 保存课程失败:', error);
       setSaveStatus('error');
-      
+
       // 即使保存失败，也允许用户继续学习
       setTimeout(() => {
-        sessionStorage.setItem('learningPlan', JSON.stringify(coursePlan));
+      sessionStorage.setItem('learningPlan', JSON.stringify(coursePlan));
         if (Object.keys(taskCache).length > 0) {
           sessionStorage.setItem('taskCache', JSON.stringify(taskCache));
           sessionStorage.setItem('stepTaskStatus', JSON.stringify(stepTaskStatus));
         }
         sessionStorage.setItem('fromCustomPage', 'true');
-        router.push('/study/custom');
+      router.push('/study/custom');
       }, 1000);
     }
   };
@@ -1030,13 +1030,13 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                 disabled={saveStatus === 'saving' || isGeneratingCourse}
                 onClick={() => {
                   // 直接执行，无需登录检查
-                  // 保存当前计划（完整计划优先，否则使用部分计划）
-                  const currentPlan = learningPlan || partialPlan;
-                  if (currentPlan) {
-                    saveCourseToDatabase(currentPlan);
-                  } else {
-                    console.warn('⚠️ 没有可保存的学习计划');
-                  }
+                    // 保存当前计划（完整计划优先，否则使用部分计划）
+                    const currentPlan = learningPlan || partialPlan;
+                    if (currentPlan) {
+                      saveCourseToDatabase(currentPlan);
+                    } else {
+                      console.warn('⚠️ 没有可保存的学习计划');
+                    }
                 }}
               >
                 {saveStatus === 'saving' ? (
