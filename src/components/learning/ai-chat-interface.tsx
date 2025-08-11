@@ -5,7 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Bot, Send, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useRef, useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
+
+// 生成唯一ID的函数，避免冲突
+let messageIdCounter = 0;
+const generateUniqueId = (): string => {
+  messageIdCounter += 1;
+  return `${Date.now()}-${messageIdCounter}-${Math.random().toString(36).substr(2, 9)}`;
+};
 
 interface Message {
   id: string;
@@ -97,7 +104,7 @@ export function AIChatInterface({
       console.log('处理来自首页的用户输入:', userInputFromHome);
 
       const userMessage: Message = {
-        id: Date.now().toString(),
+        id: generateUniqueId(),
         content: userInputFromHome,
         role: 'user',
         timestamp: new Date(),
@@ -126,7 +133,7 @@ export function AIChatInterface({
       console.log('处理外部发送的消息:', externalMessage);
 
       const userMessage: Message = {
-        id: Date.now().toString(),
+        id: generateUniqueId(),
         content: externalMessage,
         role: 'user',
         timestamp: new Date(),
@@ -194,7 +201,7 @@ export function AIChatInterface({
         // 显示修改步骤信息
         const stepNumbers = analysisResult.updateSteps.join('、');
         const updateMessage: Message = {
-          id: (Date.now() + 1).toString(),
+          id: generateUniqueId(),
           content: `为你修改第${stepNumbers}步`,
           role: 'assistant',
           timestamp: new Date(),
@@ -203,7 +210,7 @@ export function AIChatInterface({
 
         // 创建并添加AI助手回复消息
         const assistantMessage: Message = {
-          id: (Date.now() + 1).toString(),
+          id: generateUniqueId(),
           content: analysisResult.response || t('aiAssistant.helpCustomize'),
           role: 'assistant',
           timestamp: new Date(),
@@ -224,7 +231,7 @@ export function AIChatInterface({
 
         // 只显示AI回复
         const assistantMessage: Message = {
-          id: (Date.now() + 1).toString(),
+          id: generateUniqueId(),
           content: analysisResult.response || t('aiAssistant.helpCustomize'),
           role: 'assistant',
           timestamp: new Date(),
@@ -235,7 +242,7 @@ export function AIChatInterface({
       console.error('❌ 两步式流程错误:', error);
 
       const errorMessage: Message = {
-        id: (Date.now() + 3).toString(),
+        id: generateUniqueId(),
         content: `抱歉，处理您的请求时出现了问题：${error instanceof Error ? error.message : '未知错误'}`,
         role: 'assistant',
         timestamp: new Date(),
@@ -405,7 +412,7 @@ export function AIChatInterface({
       }
 
       const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
+        id: generateUniqueId(),
         content: '',
         role: 'assistant',
         timestamp: new Date(),
@@ -463,7 +470,7 @@ export function AIChatInterface({
       console.error('调用AI接口失败:', error);
 
       const errorMessage: Message = {
-        id: (Date.now() + 2).toString(),
+        id: generateUniqueId(),
         content: `抱歉，AI服务暂时不可用。错误信息: ${error instanceof Error ? error.message : '未知错误'}`,
         role: 'assistant',
         timestamp: new Date(),
@@ -529,7 +536,7 @@ export function AIChatInterface({
 
       // 立即显示AI回复（不等待学习计划）
       const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
+        id: generateUniqueId(),
         content:
           chatResult.response || t('aiAssistant.helpAnalyze'),
         role: 'assistant',
@@ -546,7 +553,7 @@ export function AIChatInterface({
       console.error('❌ 第一条消息处理错误:', error);
 
       const errorMessage: Message = {
-        id: (Date.now() + 3).toString(),
+        id: generateUniqueId(),
         content: `抱歉，处理您的请求时出现了问题：${error instanceof Error ? error.message : '未知错误'}`,
         role: 'assistant',
         timestamp: new Date(),
@@ -717,7 +724,7 @@ export function AIChatInterface({
     setIsLoading(true);
 
     const userMessage: Message = {
-      id: Date.now().toString(),
+      id: generateUniqueId(),
       content: messageContent.trim(),
       role: 'user',
       timestamp: new Date(),

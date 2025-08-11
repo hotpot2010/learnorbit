@@ -3,6 +3,13 @@
 import { cn } from "@/lib/utils";
 import React, { MouseEvent, useEffect, useState } from "react";
 
+// 生成唯一key的函数，避免冲突
+let rippleCounter = 0;
+const generateRippleKey = (): number => {
+  rippleCounter += 1;
+  return Date.now() * 1000 + rippleCounter; // 乘以1000确保不同时间戳下的唯一性
+};
+
 interface RippleButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   rippleColor?: string;
@@ -40,7 +47,7 @@ export const RippleButton = React.forwardRef<
       const x = event.clientX - rect.left - size / 2;
       const y = event.clientY - rect.top - size / 2;
 
-      const newRipple = { x, y, size, key: Date.now() };
+      const newRipple = { x, y, size, key: generateRippleKey() };
       setButtonRipples((prevRipples) => [...prevRipples, newRipple]);
     };
 

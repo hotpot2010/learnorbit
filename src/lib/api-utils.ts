@@ -31,14 +31,6 @@ export async function getApiRequestContext(request: NextRequest) {
     }
   }
 
-  console.log('🌐 语言检测:', {
-    cookieName: LOCALE_COOKIE_NAME,
-    cookieString: cookies,
-    localeCookie,
-    acceptLanguage: request.headers.get('accept-language'),
-    finalLang: lang
-  });
-
   return {
     userId: session?.user?.id || null,
     lang: lang,

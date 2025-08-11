@@ -124,6 +124,42 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     setTaskGenerationQueue(prev => prev.filter(n => n !== stepNumber));
   };
 
+  // 前端重试配置
+  const FRONTEND_RETRY_CONFIG = {
+    maxRetries: 2,
+    baseDelay: 2000, // 2秒基础延迟
+    backoffMultiplier: 1.5,
+  };
+
+  // 前端重试函数
+  const fetchWithRetry = async (url: string, options: RequestInit, retryCount = 0): Promise<Response> => {
+    try {
+      console.log(`🔄 前端API调用 (第${retryCount + 1}次):`, url);
+      
+      const response = await fetch(url, options);
+      
+      // 如果是5xx错误或网络错误，进行重试
+      if (!response.ok && (response.status >= 500 || response.status === 0)) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return response;
+    } catch (error) {
+      console.error(`❌ 前端第${retryCount + 1}次请求失败:`, error);
+      
+      // 检查是否应该重试
+      if (retryCount < FRONTEND_RETRY_CONFIG.maxRetries) {
+        const delayMs = FRONTEND_RETRY_CONFIG.baseDelay * Math.pow(FRONTEND_RETRY_CONFIG.backoffMultiplier, retryCount);
+        console.log(`⏳ ${delayMs}ms后进行前端第${retryCount + 2}次重试...`);
+        
+        await new Promise(resolve => setTimeout(resolve, delayMs));
+        return fetchWithRetry(url, options, retryCount + 1);
+      }
+      
+      throw error;
+    }
+  };
+
   // 生成单个任务
   const generateSingleTask = async (step: any, stepNumber: number) => {
     try {
@@ -152,7 +188,8 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
 
       console.log(`📤 发送任务生成请求 (步骤 ${stepNumber}):`, requestData);
 
-      const response = await fetch('/api/task/generate', {
+      // 使用带重试的fetch
+      const response = await fetchWithRetry('/api/task/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -161,7 +198,8 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
 
       const result = await response.json();
@@ -193,11 +231,11 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         });
 
       } else {
-        throw new Error('Task generation failed');
+        throw new Error(`Task generation failed: ${result.error || 'Unknown error'}`);
       }
 
     } catch (error) {
-      console.error(`❌ 步骤 ${stepNumber} 任务生成失败:`, error);
+      console.error(`❌ 步骤 ${stepNumber} 任务生成失败 (所有重试已用完):`, error);
       
       setStepTaskStatus(prev => ({
         ...prev,
@@ -218,7 +256,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
 
   // 处理任务生成队列（并发控制）
   const processTaskQueue = async () => {
-    const maxConcurrency = 4; // 最多同时生成4个任务
+    const maxConcurrency = 2; // 最多同时生成2个任务
     const currentActive = activeGenerations.size;
     const availableSlots = maxConcurrency - currentActive;
     

@@ -168,6 +168,42 @@ export default function StudyPage({ params }: StudyPageProps) {
     alert(`Video功能暂未实现\n选中文字: "${selectedText}"`);
   };
 
+  // 学习页面重试配置（无并发限制，但有重试）
+  const STUDY_RETRY_CONFIG = {
+    maxRetries: 2,
+    baseDelay: 3000, // 3秒基础延迟
+    backoffMultiplier: 1.5,
+  };
+
+  // 学习页面重试函数
+  const fetchWithRetryStudy = async (url: string, options: RequestInit, retryCount = 0): Promise<Response> => {
+    try {
+      console.log(`🔄 学习页面API调用 (第${retryCount + 1}次):`, url);
+      
+      const response = await fetch(url, options);
+      
+      // 如果是5xx错误或网络错误，进行重试
+      if (!response.ok && (response.status >= 500 || response.status === 0)) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return response;
+    } catch (error) {
+      console.error(`❌ 学习页面第${retryCount + 1}次请求失败:`, error);
+      
+      // 检查是否应该重试
+      if (retryCount < STUDY_RETRY_CONFIG.maxRetries) {
+        const delayMs = STUDY_RETRY_CONFIG.baseDelay * Math.pow(STUDY_RETRY_CONFIG.backoffMultiplier, retryCount);
+        console.log(`⏳ ${delayMs}ms后进行学习页面第${retryCount + 2}次重试...`);
+        
+        await new Promise(resolve => setTimeout(resolve, delayMs));
+        return fetchWithRetryStudy(url, options, retryCount + 1);
+      }
+      
+      throw error;
+    }
+  };
+
   useEffect(() => {
     const resolveParams = async () => {
       const resolvedParams = await params;
@@ -369,7 +405,7 @@ export default function StudyPage({ params }: StudyPageProps) {
           
           console.log('📤 发送缺失任务生成请求:', requestData);
           
-          const response = await fetch('/api/task/generate', {
+          const response = await fetchWithRetryStudy('/api/task/generate', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -378,7 +414,8 @@ export default function StudyPage({ params }: StudyPageProps) {
           });
 
           if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
           }
 
           const result = await response.json();
@@ -457,7 +494,7 @@ export default function StudyPage({ params }: StudyPageProps) {
           
           console.log('📤 发送任务生成请求:', requestData);
           
-          const response = await fetch('/api/task/generate', {
+          const response = await fetchWithRetryStudy('/api/task/generate', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -466,7 +503,8 @@ export default function StudyPage({ params }: StudyPageProps) {
           });
 
           if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
           }
 
           const result = await response.json();
