@@ -29,6 +29,18 @@ export function getUrlWithLocale(url: string, locale?: Locale | null): string {
 }
 
 /**
+ * Get canonical URL for SEO purposes
+ * For default locale (en), always include the locale in the path to avoid duplicate content
+ */
+export function getCanonicalUrl(url: string, locale?: Locale | null): string {
+  // For canonical URLs, always include locale path to avoid duplicate content issues
+  if (locale && locale !== 'default') {
+    return `${baseUrl}/${locale}${url}`;
+  }
+  return `${baseUrl}${url}`;
+}
+
+/**
  * Adds locale to the callbackURL parameter in authentication URLs
  *
  * Example:

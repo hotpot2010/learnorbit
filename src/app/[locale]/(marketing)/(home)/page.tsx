@@ -2,7 +2,7 @@ import Container from '@/components/layout/container';
 import { CourseInputSection } from '@/components/learning/course-input-section';
 import { CourseRecommendationWithNavigation } from '@/components/learning/course-recommendation-with-navigation';
 import { constructMetadata } from '@/lib/metadata';
-import { getUrlWithLocale } from '@/lib/urls/urls';
+import { getCanonicalUrl } from '@/lib/urls/urls';
 import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
@@ -22,7 +22,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: t('meta.title'),
     description: t('meta.description'),
-    canonicalUrl: getUrlWithLocale('', locale),
+    canonicalUrl: getCanonicalUrl('', locale),
   });
 }
 
