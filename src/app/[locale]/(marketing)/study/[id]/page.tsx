@@ -70,6 +70,238 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 防止React Strict Mode重复执行的标志
   const initialLoadCompleted = useRef<boolean>(false);
 
+  // 笔记相关状态 - 插入式笔记
+  interface Note {
+    id: string;
+    text: string;
+    timestamp: Date;
+    stepIndex: number;
+    insertAfterParagraph: number; // 插入在第几个段落之后（-1表示插入在开头）
+  }
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  // 将正文内容按段落分割并插入笔记
+  const renderContentWithInsertedNotes = (content: string) => {
+    if (!content) return null;
+    
+    // 获取当前步骤的笔记，按插入位置排序
+    const currentStepNotes = notes
+      .filter(note => note.stepIndex === currentStepIndex)
+      .sort((a, b) => a.insertAfterParagraph - b.insertAfterParagraph);
+    
+    // 按段落分割内容
+    const paragraphs = content.split('\n\n').filter(p => p.trim());
+    const result: React.JSX.Element[] = [];
+    
+    // 添加开头的笔记（insertAfterParagraph === -1）
+    currentStepNotes
+      .filter(note => note.insertAfterParagraph === -1)
+      .forEach(note => {
+        result.push(
+          <div key={`note-${note.id}`} className="my-6">
+            <div className="flex items-start space-x-3 mb-4 ml-6">
+              <div className="w-6 h-6 rounded-full bg-yellow-400 text-black text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                📝
+              </div>
+              <div className="flex-1">
+                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-lg">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <p className="text-base leading-loose text-gray-800 font-bold mb-2" style={{
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      }}>
+                        💡 Note from Chat (at beginning):
+                      </p>
+                      <p className="text-base leading-loose text-gray-700" style={{
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      }}>
+                        {note.text}
+                      </p>
+                      <div className="text-xs text-gray-500 mt-2">
+                        Added at {note.timestamp.toLocaleTimeString()}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setNotes(prev => prev.filter(n => n.id !== note.id))}
+                      className="text-yellow-600 hover:text-red-600 ml-3 p-1 rounded hover:bg-yellow-100 transition-colors"
+                      title="删除笔记"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      });
+    
+    // 遍历每个段落，并在其后插入相应的笔记
+    paragraphs.forEach((paragraph, index) => {
+      // 添加当前段落
+      result.push(
+        <div key={`paragraph-${index}`} data-paragraph-index={index}>
+          <ReactMarkdown components={{
+            h1: ({ children, ...props }) => (
+              <h1 className="text-3xl font-bold text-center text-blue-700 relative mb-8" {...props}>
+                <span className="bg-yellow-200 px-3 py-1 rounded-lg inline-block transform -rotate-1 shadow-sm">
+                  {children}
+                </span>
+              </h1>
+            ),
+            h2: ({ children, ...props }) => (
+              <h2 className="text-xl font-bold text-blue-700 mb-6 mt-8" style={{
+                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+              }} {...props}>
+                {children}
+              </h2>
+            ),
+            h3: ({ children, ...props }) => (
+              <h3 className="text-lg font-bold text-purple-700 mb-5 mt-7" style={{
+                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+              }} {...props}>
+                {children}
+              </h3>
+            ),
+            p: ({ children, ...props }) => (
+              <div className="flex items-start space-x-3 mb-8 ml-6">
+                <div className="w-6 h-6 rounded-full bg-yellow-400 text-black text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                  📝
+                </div>
+                <div className="flex-1">
+                  <p className="text-base leading-loose text-gray-800 font-bold" style={{
+                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  }} {...props}>
+                    {children}
+                  </p>
+                </div>
+              </div>
+            ),
+            ul: ({ children, ...props }) => (
+              <div className="flex items-start space-x-3 mb-8 ml-6">
+                <div className="w-6 h-6 rounded-full bg-blue-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                  📋
+                </div>
+                <div className="flex-1">
+                  <ul className="list-disc list-inside text-gray-800 space-y-4" style={{
+                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  }} {...props}>
+                    {children}
+                  </ul>
+                </div>
+              </div>
+            ),
+            ol: ({ children, ...props }) => (
+              <div className="flex items-start space-x-3 mb-8 ml-6">
+                <div className="w-6 h-6 rounded-full bg-purple-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                  🔢
+                </div>
+                <div className="flex-1">
+                  <ol className="list-decimal list-inside text-gray-800 space-y-4" style={{
+                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  }} {...props}>
+                    {children}
+                  </ol>
+                </div>
+              </div>
+            ),
+            li: ({ children, ...props }) => (
+              <li className="text-base text-gray-800 leading-loose" style={{
+                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+              }} {...props}>
+                {children}
+              </li>
+            ),
+            strong: ({ children, ...props }) => (
+              <strong className="text-gray-900 font-bold mx-1" {...props}>{children}</strong>
+            ),
+            em: ({ children, ...props }) => (
+              <em className="text-gray-700 italic mx-1" {...props}>{children}</em>
+            ),
+            code: ({ children, ...props }) => (
+              <code className="bg-gray-200 text-gray-800 px-2 py-1 rounded font-mono text-sm" {...props}>
+                {children}
+              </code>
+            ),
+            pre: ({ children, ...props }) => (
+              <div className="flex items-start space-x-3 mb-8 ml-6">
+                <div className="w-6 h-6 rounded-full bg-green-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                  💻
+                </div>
+                <div className="flex-1">
+                  <pre className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto" {...props}>
+                    {children}
+                  </pre>
+                </div>
+              </div>
+            ),
+            blockquote: ({ children, ...props }) => (
+              <div className="flex items-start space-x-3 mb-8 ml-6">
+                <div className="w-6 h-6 rounded-full bg-orange-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                  💡
+                </div>
+                <div className="flex-1">
+                  <blockquote className="bg-orange-50 text-gray-800 p-3 rounded-lg italic border-l-4 border-orange-400" style={{
+                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  }} {...props}>
+                    {children}
+                  </blockquote>
+                </div>
+              </div>
+            ),
+          }}>
+            {paragraph}
+          </ReactMarkdown>
+        </div>
+      );
+      
+      // 添加插入在这个段落之后的笔记
+      currentStepNotes
+        .filter(note => note.insertAfterParagraph === index)
+        .forEach(note => {
+          result.push(
+            <div key={`note-${note.id}`} className="my-6">
+              <div className="flex items-start space-x-3 mb-4 ml-6">
+                <div className="w-6 h-6 rounded-full bg-yellow-400 text-black text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                  📝
+                </div>
+                <div className="flex-1">
+                  <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg shadow-lg">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <p className="text-base leading-loose text-gray-800 font-bold mb-2" style={{
+                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        }}>
+                          💡 Note from Chat (after paragraph {index + 1}):
+                        </p>
+                        <p className="text-base leading-loose text-gray-700" style={{
+                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        }}>
+                          {note.text}
+                        </p>
+                        <div className="text-xs text-gray-500 mt-2">
+                          Added at {note.timestamp.toLocaleTimeString()}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setNotes(prev => prev.filter(n => n.id !== note.id))}
+                        className="text-yellow-600 hover:text-red-600 ml-3 p-1 rounded hover:bg-yellow-100 transition-colors"
+                        title="删除笔记"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        });
+    });
+    
+    return <>{result}</>;
+  };
+
   // 监听主视频容器高度以限制右侧列表高度
   useEffect(() => {
     const updateHeight = () => {
@@ -1501,123 +1733,11 @@ export default function StudyPage({ params }: StudyPageProps) {
                 </div>
               </div>
             ) : currentTask ? (
-              <div className="space-y-12">
-                {/* PPT 标题和内容 */}
+              <div className="learning-content-area space-y-12">
+                {/* PPT 标题和内容 - 插入式笔记 */}
                 <div className="space-y-4">
-                  <ReactMarkdown 
-                    components={{
-                      h1: ({ children, ...props }) => (
-                        <h1 className="text-3xl font-bold text-center text-blue-700 relative mb-8" {...props}>
-                          <span className="bg-yellow-200 px-3 py-1 rounded-lg inline-block transform -rotate-1 shadow-sm">
-                            {children}
-                          </span>
-                        </h1>
-                      ),
-                      h2: ({ children, ...props }) => (
-                        <h2 className="text-xl font-bold text-blue-700 mb-6 mt-8" style={{
-                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                        }} {...props}>
-                          {children}
-                        </h2>
-                      ),
-                      h3: ({ children, ...props }) => (
-                        <h3 className="text-lg font-bold text-purple-700 mb-5 mt-7" style={{
-                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                        }} {...props}>
-                          {children}
-                        </h3>
-                      ),
-                      p: ({ children, ...props }) => (
-                        <div className="flex items-start space-x-3 mb-8 ml-6">
-                          <div className="w-6 h-6 rounded-full bg-yellow-400 text-black text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                            📝
-                          </div>
-                          <div className="flex-1">
-                            <p className="text-base leading-loose text-gray-800 font-bold" style={{
-                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                            }} {...props}>
-                              {children}
-                            </p>
-                          </div>
-                        </div>
-                      ),
-                      ul: ({ children, ...props }) => (
-                        <div className="flex items-start space-x-3 mb-8 ml-6">
-                          <div className="w-6 h-6 rounded-full bg-blue-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                            📋
-                          </div>
-                          <div className="flex-1">
-                            <ul className="list-disc list-inside text-gray-800 space-y-4" style={{
-                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                            }} {...props}>
-                              {children}
-                            </ul>
-                          </div>
-                        </div>
-                      ),
-                      ol: ({ children, ...props }) => (
-                        <div className="flex items-start space-x-3 mb-8 ml-6">
-                          <div className="w-6 h-6 rounded-full bg-purple-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                            🔢
-                          </div>
-                          <div className="flex-1">
-                            <ol className="list-decimal list-inside text-gray-800 space-y-4" style={{
-                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                            }} {...props}>
-                              {children}
-                            </ol>
-                          </div>
-                        </div>
-                      ),
-                      li: ({ children, ...props }) => (
-                        <li className="text-base text-gray-800 leading-loose" style={{
-                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                        }} {...props}>
-                          {children}
-                        </li>
-                      ),
-                      strong: ({ children, ...props }) => (
-                        <strong className="text-gray-900 font-bold mx-1" {...props}>{children}</strong>
-                      ),
-                      em: ({ children, ...props }) => (
-                        <em className="text-gray-700 italic mx-1" {...props}>{children}</em>
-                      ),
-                      code: ({ children, ...props }) => (
-                        <code className="bg-gray-200 text-gray-800 px-2 py-1 rounded font-mono text-sm" {...props}>
-                          {children}
-                        </code>
-                      ),
-                      pre: ({ children, ...props }) => (
-                        <div className="flex items-start space-x-3 mb-8 ml-6">
-                          <div className="w-6 h-6 rounded-full bg-green-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                            💻
-                          </div>
-                          <div className="flex-1">
-                            <pre className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto" {...props}>
-                              {children}
-                            </pre>
-                          </div>
-                        </div>
-                      ),
-                      blockquote: ({ children, ...props }) => (
-                        <div className="flex items-start space-x-3 mb-8 ml-6">
-                          <div className="w-6 h-6 rounded-full bg-orange-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                            💡
-                          </div>
-                          <div className="flex-1">
-                            <blockquote className="bg-orange-50 text-gray-800 p-3 rounded-lg italic border-l-4 border-orange-400" style={{
-                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                            }} {...props}>
-                              {children}
-                            </blockquote>
-                          </div>
-                        </div>
-                      ),
-                    }}
-                  >
-                    {currentTask.ppt_slide || ''}
-                  </ReactMarkdown>
-                 </div>
+                  {renderContentWithInsertedNotes(currentTask.ppt_slide || '')}
+                </div>
 
                 {/* 推荐视频区域 */}
                 {getCurrentStepVideos().length > 0 && (
@@ -2040,6 +2160,71 @@ export default function StudyPage({ params }: StudyPageProps) {
       onWhyClick={handleWhyClick}
       onNoteClick={handleNoteClick}
       onVideoClick={handleVideoClick}
+      onDragStart={(text) => console.log('拖拽开始:', text)}
+      onDragEnd={(text, pos) => {
+        // 检查是否拖拽到正文区域
+        const contentArea = document.querySelector('.learning-content-area');
+        if (contentArea) {
+          const rect = contentArea.getBoundingClientRect();
+          const isInContentArea = 
+            pos.x >= rect.left &&
+            pos.x <= rect.right &&
+            pos.y >= rect.top &&
+            pos.y <= rect.bottom;
+          
+          if (isInContentArea) {
+            // 使用精确的DOM元素定位
+            const allParagraphs = contentArea.querySelectorAll('[data-paragraph-index]');
+            let insertAfterParagraph = -1; // 默认插入在开头
+            
+            // 遍历所有段落，找到鼠标位置对应的段落
+            for (let i = 0; i < allParagraphs.length; i++) {
+              const paragraphElement = allParagraphs[i];
+              const paragraphRect = paragraphElement.getBoundingClientRect();
+              
+              // 如果鼠标Y位置在这个段落的范围内或之前
+              if (pos.y <= paragraphRect.bottom) {
+                // 如果鼠标在段落的上半部分，插入在前一个段落后
+                // 如果在下半部分，插入在这个段落后
+                const paragraphMiddle = paragraphRect.top + paragraphRect.height / 2;
+                if (pos.y <= paragraphMiddle && i > 0) {
+                  insertAfterParagraph = i - 1;
+                } else {
+                  insertAfterParagraph = i;
+                }
+                break;
+              }
+            }
+            
+            // 如果鼠标在所有段落之后，插入在最后一个段落后
+            if (insertAfterParagraph === -1 && allParagraphs.length > 0) {
+              insertAfterParagraph = allParagraphs.length - 1;
+            }
+            
+            // 创建新笔记
+            const newNote: Note = {
+              id: `note-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+              text: text,
+              timestamp: new Date(),
+              stepIndex: currentStepIndex,
+              insertAfterParagraph: insertAfterParagraph
+            };
+            
+            // 添加笔记
+            setNotes(prev => {
+              const newNotes = [...prev, newNote];
+              return newNotes.sort((a, b) => a.insertAfterParagraph - b.insertAfterParagraph);
+            });
+            
+            console.log('✅ 笔记已添加:', newNote);
+            console.log('📍 精确插入位置:', insertAfterParagraph === -1 ? 'beginning' : `after paragraph ${insertAfterParagraph + 1}`);
+            console.log('🎯 鼠标位置:', { x: pos.x, y: pos.y });
+          } else {
+            console.log('❌ 拖拽位置不在正文区域内');
+          }
+        }
+      }}
+      containerSelector=".ai-chat-interface"
     />
     </>
   );

@@ -776,12 +776,13 @@ export function AIChatInterface({
   };
 
   return (
-    <div className={`flex flex-col h-full ${className}`}>
+    <div className={`ai-chat-interface flex flex-col h-full ${className}`}>
       {/* 消息区域 */}
       <div
         ref={messagesContainerRef}
         className="flex-1 overflow-y-auto pr-2 scroll-smooth"
         style={{ scrollbarWidth: 'thin' }}
+        data-chat-area="true"
       >
         <div className="space-y-4 pb-4">
           {messages.map((message) => (
