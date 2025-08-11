@@ -74,12 +74,15 @@
       "tellMeWhatToLearn": "请告诉我您想学习什么，我会为您制定个性化的学习计划。"
     },
     "meta": {
-      "title": "AI学习平台 - 个性化智能学习体验",
+      "title": "AI学习平台 - 个性化智能教育",
       "description": "基于AI技术的个性化学习平台，为您创建定制化的学习路径和课程内容，提升学习效率"
     },
     "hero": {
       "title": "学什么呢？",
       "subtitle": "输入您想学习的内容，AI 将为您创建个性化的学习课程"
+    },
+    "recommendations": {
+      "title": "精选课程"
     },
     "coursesSection": {
       "subtitle": "精选课程，开启您的学习之旅"

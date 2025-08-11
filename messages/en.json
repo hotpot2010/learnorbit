@@ -138,12 +138,15 @@
       "noLearningPlan": "⚠️ No learning plan available to save"
     },
     "meta": {
-      "title": "AI Learning Platform - Personalized Intelligent Learning Experience",
+      "title": "AI Learning Platform - Personalized Education",
       "description": "AI-powered personalized learning platform that creates customized learning paths and course content to enhance your learning efficiency"
     },
     "hero": {
       "title": "What to Learn?",
       "subtitle": "Describe what you want to learn, and AI will create personalized courses for you"
+    },
+    "recommendations": {
+      "title": "Featured Courses"
     },
     "coursesSection": {
       "subtitle": "Curated courses to start your learning journey"

@@ -92,6 +92,19 @@ export default async function HomePage(props: HomePageProps) {
         {/* 课程推荐区域 */}
         <section className="relative py-8 md:py-12">
           <Container>
+            {/* 课程推荐区域标题 */}
+            <div className="text-center mb-8">
+              <h2
+                className="text-2xl md:text-3xl font-bold text-slate-800 transform -rotate-1"
+                style={{
+                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                }}
+              >
+                <span className="bg-blue-100 px-4 py-2 rounded-lg inline-block shadow-sm">
+                  {t('recommendations.title')} 🎯
+                </span>
+              </h2>
+            </div>
             <CourseRecommendationWithNavigation />
           </Container>
         </section>
