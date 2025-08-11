@@ -236,6 +236,76 @@ export function TextSelectionPopup({
     }
   }, [dragState.isDragging, dragState.dragText]);
 
+  // 计算轨迹箭头的角度和长度
+  const calculateArrowGeometry = () => {
+    const { startPosition, currentPosition } = dragState;
+    const deltaX = currentPosition.x - startPosition.x;
+    const deltaY = currentPosition.y - startPosition.y;
+    const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+    
+    return { length, angle, deltaX, deltaY };
+  };
+
+  // 生成手写风格的曲线路径
+  const generateHandDrawnPath = () => {
+    const { startPosition, currentPosition } = dragState;
+    const deltaX = currentPosition.x - startPosition.x;
+    const deltaY = currentPosition.y - startPosition.y;
+    
+    // 计算控制点来创建自然的曲线
+    const midX = startPosition.x + deltaX * 0.5;
+    const midY = startPosition.y + deltaY * 0.5;
+    
+    // 添加一些随机性和弯曲度来模拟手写效果
+    const curvature = Math.min(Math.sqrt(deltaX * deltaX + deltaY * deltaY) * 0.2, 50);
+    const controlX1 = startPosition.x + deltaX * 0.25 + (Math.random() - 0.5) * 20;
+    const controlY1 = startPosition.y + deltaY * 0.25 - curvature + (Math.random() - 0.5) * 20;
+    const controlX2 = startPosition.x + deltaX * 0.75 + (Math.random() - 0.5) * 20;
+    const controlY2 = startPosition.y + deltaY * 0.75 + curvature + (Math.random() - 0.5) * 20;
+    
+    // 创建贝塞尔曲线路径
+    const path = `M ${startPosition.x} ${startPosition.y} 
+                  C ${controlX1} ${controlY1}, 
+                    ${controlX2} ${controlY2}, 
+                    ${currentPosition.x} ${currentPosition.y}`;
+    
+    return path;
+  };
+
+  // 生成稳定的手写风格曲线路径（避免重影）
+  const generateStableHandDrawnPath = () => {
+    const { startPosition, currentPosition } = dragState;
+    const deltaX = currentPosition.x - startPosition.x;
+    const deltaY = currentPosition.y - startPosition.y;
+    
+    // 使用固定的种子值来避免随机性导致的重影
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    const curvature = Math.min(distance * 0.15, 40);
+    
+    // 使用固定的偏移而不是随机值
+    const controlX1 = startPosition.x + deltaX * 0.3;
+    const controlY1 = startPosition.y + deltaY * 0.3 - curvature;
+    const controlX2 = startPosition.x + deltaX * 0.7;
+    const controlY2 = startPosition.y + deltaY * 0.7 + curvature;
+    
+    // 创建贝塞尔曲线路径
+    const path = `M ${startPosition.x} ${startPosition.y} 
+                  C ${controlX1} ${controlY1}, 
+                    ${controlX2} ${controlY2}, 
+                    ${currentPosition.x} ${currentPosition.y}`;
+    
+    return path;
+  };
+
+  // 计算箭头头部的角度
+  const getArrowHeadAngle = () => {
+    const { startPosition, currentPosition } = dragState;
+    const deltaX = currentPosition.x - startPosition.x;
+    const deltaY = currentPosition.y - startPosition.y;
+    return Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+  };
+
   return (
     <>
       {/* 文字选择浮框 */}
@@ -252,6 +322,19 @@ export function TextSelectionPopup({
         >
           <Card className="bg-white/95 backdrop-blur-sm shadow-lg border-2 border-blue-200 rounded-lg p-2">
             <div className="flex items-center space-x-2">
+              {/* 拖拽按钮 - 放在最左侧，只有图标 */}
+              {isInChatArea() && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onMouseDown={handleDragStart}
+                  className="flex items-center justify-center p-2 h-8 w-8 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 rounded-full transform hover:scale-110 transition-all duration-200 cursor-grab active:cursor-grabbing"
+                  title={`拖拽笔记: ${selectedText.slice(0, 30)}${selectedText.length > 30 ? '...' : ''}`}
+                >
+                  <Move className="w-4 h-4" />
+                </Button>
+              )}
+
               {/* What 按钮 */}
               <Button
                 variant="ghost"
@@ -307,53 +390,299 @@ export function TextSelectionPopup({
                   Video
                 </span>
               </Button>
-
-              {/* 拖拽按钮 */}
-              {isInChatArea() && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onMouseDown={handleDragStart}
-                  className="flex items-center space-x-1 px-2 py-1 h-8 text-xs font-medium bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 rounded transform rotate-1 hover:rotate-0 transition-all duration-200 cursor-grab active:cursor-grabbing"
-                  title={`拖拽笔记: ${selectedText.slice(0, 30)}${selectedText.length > 30 ? '...' : ''}`}
-                >
-                  <Move className="w-3 h-3" />
-                  <span style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
-                    拖拽
-                  </span>
-                </Button>
-              )}
             </div>
           </Card>
         </div>
       )}
 
-      {/* 拖拽中的视觉反馈 - 独立于浮框显示 */}
-      {dragState.isDragging && (
-        <div
-          className="fixed z-[60] pointer-events-none"
-          style={{
-            left: `${dragState.currentPosition.x}px`,
-            top: `${dragState.currentPosition.y}px`,
-            transform: 'translate(-50%, -50%)'
-          }}
-        >
-          <div className="flex flex-col items-center">
-            {/* 主箭头 */}
-            <div className="relative">
-              {/* 箭头身体 */}
-              <div className="w-1 h-8 bg-red-500 mx-auto animate-pulse"></div>
-              {/* 箭头头部 */}
-              <div className="w-0 h-0 border-l-[8px] border-r-[8px] border-t-[12px] border-l-transparent border-r-transparent border-t-red-500 animate-bounce"></div>
+      {/* 拖拽中的手写风格曲线箭头 */}
+      {dragState.isDragging && (() => {
+        const { startPosition, currentPosition } = dragState;
+        const midX = (startPosition.x + currentPosition.x) / 2;
+        const midY = (startPosition.y + currentPosition.y) / 2;
+        const arrowAngle = getArrowHeadAngle();
+        
+        return (
+          <div className="fixed inset-0 z-[60] pointer-events-none">
+            {/* SVG手写风格曲线 */}
+            <svg
+              className="absolute inset-0 w-full h-full"
+              style={{
+                left: 0,
+                top: 0,
+                width: '100vw',
+                height: '100vh',
+                overflow: 'visible'
+              }}
+            >
+              <defs>
+                {/* 渐变笔触 - 起点粗终点细 */}
+                <linearGradient id="strokeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style={{ stopColor: '#dc2626', stopOpacity: 1 }} />
+                  <stop offset="100%" style={{ stopColor: '#dc2626', stopOpacity: 0.8 }} />
+                </linearGradient>
+                
+                {/* 变宽度笔触效果 */}
+                <linearGradient id="widthGradient" gradientUnits="userSpaceOnUse"
+                  x1={startPosition.x} y1={startPosition.y} 
+                  x2={currentPosition.x} y2={currentPosition.y}>
+                  <stop offset="0%" style={{ stopColor: '#dc2626', stopOpacity: 1 }} />
+                  <stop offset="70%" style={{ stopColor: '#dc2626', stopOpacity: 0.9 }} />
+                  <stop offset="100%" style={{ stopColor: '#dc2626', stopOpacity: 0.7 }} />
+                </linearGradient>
+                
+                {/* 手写画笔效果的滤镜 */}
+                <filter id="roughPaper" x="0%" y="0%" width="100%" height="100%">
+                  <feTurbulence baseFrequency="0.02" numOctaves="3" result="noise"/>
+                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.5"/>
+                </filter>
+                
+                {/* 柔和发光效果 */}
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              
+              {/* 主要的手写风格曲线 - 使用渐变宽度 */}
+              <path
+                d={generateStableHandDrawnPath()}
+                stroke="url(#widthGradient)"
+                strokeWidth="6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                filter="url(#roughPaper)"
+                style={{
+                  strokeDasharray: '8,3',
+                  strokeDashoffset: '0',
+                  animation: 'dashFlow 2s linear infinite'
+                }}
+              />
+              
+              {/* 细线条增强效果 - 起点粗终点细 */}
+              <path
+                d={generateStableHandDrawnPath()}
+                stroke="url(#widthGradient)"
+                strokeWidth="3"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity="0.7"
+                filter="url(#glow)"
+              />
+              
+              {/* 额外的细节线条 - 模拟笔尖压力变化 */}
+              <path
+                d={generateStableHandDrawnPath()}
+                stroke="#dc2626"
+                strokeWidth="1.5"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity="0.5"
+                transform="translate(0.5, 0.5)"
+              />
+            </svg>
+            
+            {/* 终点呼吸红点 */}
+            <div
+              className="absolute"
+              style={{
+                left: `${currentPosition.x}px`,
+                top: `${currentPosition.y}px`,
+                transform: 'translate(-50%, -50%)'
+              }}
+            >
+              <svg width="20" height="20" viewBox="0 0 20 20" className="overflow-visible">
+                <defs>
+                  <filter id="dotGlow">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge>
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                  
+                  {/* 红点渐变 */}
+                  <radialGradient id="dotGradient" cx="50%" cy="30%" r="70%">
+                    <stop offset="0%" style={{ stopColor: '#fecaca', stopOpacity: 1 }} />
+                    <stop offset="30%" style={{ stopColor: '#ef4444', stopOpacity: 1 }} />
+                    <stop offset="70%" style={{ stopColor: '#dc2626', stopOpacity: 1 }} />
+                    <stop offset="100%" style={{ stopColor: '#991b1b', stopOpacity: 0.8 }} />
+                  </radialGradient>
+                </defs>
+                
+                {/* 外层呼吸光环 */}
+                <circle
+                  cx="10"
+                  cy="10"
+                  r="8"
+                  fill="#dc2626"
+                  opacity="0.3"
+                  filter="url(#dotGlow)"
+                  style={{
+                    animation: 'breatheOuter 2s ease-in-out infinite'
+                  }}
+                />
+                
+                {/* 中层光环 */}
+                <circle
+                  cx="10"
+                  cy="10"
+                  r="6"
+                  fill="#ef4444"
+                  opacity="0.5"
+                  filter="url(#dotGlow)"
+                  style={{
+                    animation: 'breatheMiddle 2s ease-in-out infinite 0.3s'
+                  }}
+                />
+                
+                {/* 主红点 */}
+                <circle
+                  cx="10"
+                  cy="10"
+                  r="4"
+                  fill="url(#dotGradient)"
+                  stroke="#dc2626"
+                  strokeWidth="1"
+                  filter="url(#dotGlow)"
+                  style={{
+                    animation: 'breatheCore 2s ease-in-out infinite 0.6s'
+                  }}
+                />
+                
+                {/* 中心高光点 */}
+                <circle
+                  cx="8"
+                  cy="8"
+                  r="1.5"
+                  fill="#fecaca"
+                  opacity="0.9"
+                  style={{
+                    animation: 'breatheCore 2s ease-in-out infinite 0.6s'
+                  }}
+                />
+              </svg>
             </div>
             
-            {/* 提示文字 */}
-            <div className="text-xs text-red-600 font-bold mt-2 bg-white/90 px-2 py-1 rounded shadow-lg border border-red-200" style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
-              拖拽到正文位置
+            {/* 起点标记 - 手写风格 */}
+            <div
+              className="absolute"
+              style={{
+                left: `${startPosition.x}px`,
+                top: `${startPosition.y}px`,
+                transform: 'translate(-50%, -50%)'
+              }}
+            >
+              <svg width="10" height="10" viewBox="0 0 10 10">
+                <circle
+                  cx="5"
+                  cy="5"
+                  r="3"
+                  fill="#dc2626"
+                  stroke="#dc2626"
+                  strokeWidth="1"
+                  opacity="0.9"
+                  style={{
+                    animation: 'startPointPulse 2s ease-in-out infinite'
+                  }}
+                />
+                <circle
+                  cx="5"
+                  cy="5"
+                  r="1.5"
+                  fill="#ffffff"
+                  opacity="0.8"
+                />
+              </svg>
             </div>
+            
+            {/* 拖拽提示文字 - 手写风格 */}
+            <div
+              className="absolute text-sm text-red-600 font-bold bg-white/95 px-3 py-2 rounded-lg shadow-xl border-2 border-red-200 pointer-events-none"
+              style={{
+                left: `${midX}px`,
+                top: `${midY - 40}px`,
+                transform: 'translate(-50%, 0) rotate(-1deg)',
+                fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
+                boxShadow: '0 4px 12px rgba(220, 38, 38, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1)',
+                animation: 'textFloat 3s ease-in-out infinite'
+              }}
+            >
+              ✏️ 拖拽到正文位置
+            </div>
+
+            <style jsx>{`
+              @keyframes dashFlow {
+                from {
+                  stroke-dashoffset: 0;
+                }
+                to {
+                  stroke-dashoffset: 22;
+                }
+              }
+              
+              @keyframes breatheOuter {
+                0%, 100% {
+                  transform: scale(1);
+                  opacity: 0.2;
+                }
+                50% {
+                  transform: scale(1.4);
+                  opacity: 0.1;
+                }
+              }
+              
+              @keyframes breatheMiddle {
+                0%, 100% {
+                  transform: scale(1);
+                  opacity: 0.4;
+                }
+                50% {
+                  transform: scale(1.3);
+                  opacity: 0.2;
+                }
+              }
+              
+              @keyframes breatheCore {
+                0%, 100% {
+                  transform: scale(1);
+                  opacity: 1;
+                }
+                50% {
+                  transform: scale(1.2);
+                  opacity: 0.8;
+                }
+              }
+              
+              @keyframes startPointPulse {
+                0%, 100% {
+                  transform: scale(1);
+                  opacity: 0.9;
+                }
+                50% {
+                  transform: scale(1.2);
+                  opacity: 0.7;
+                }
+              }
+              
+              @keyframes textFloat {
+                0%, 100% {
+                  transform: translate(-50%, 0) rotate(-1deg);
+                }
+                50% {
+                  transform: translate(-50%, -3px) rotate(-0.5deg);
+                }
+              }
+            `}</style>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </>
   );
 } 
