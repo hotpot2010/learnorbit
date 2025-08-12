@@ -84,6 +84,7 @@ export default function StudyPage({ params }: StudyPageProps) {
     type?: 'text' | 'video';
     video?: { url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title?: string; duration?: string };
     isLoading?: boolean;
+    insertAfterAnchor?: number | null;
   }
   const [notes, setNotes] = useState<Note[]>([]);
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
@@ -116,473 +117,354 @@ export default function StudyPage({ params }: StudyPageProps) {
     return -1;
   };
 
+  // 获取选区所在或上方最近的 data-anchor-index（用于精确插入）
+  const getSelectedAnchorIndex = (): number | null => {
+    if (typeof window === 'undefined') return null;
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return null;
+    const range = sel.getRangeAt(0);
+    const selectionRect = range.getBoundingClientRect();
+
+    let node: Node | null = range.startContainer;
+    let el: HTMLElement | null = (node && node.nodeType === Node.ELEMENT_NODE)
+      ? (node as HTMLElement)
+      : (node as any)?.parentElement || null;
+
+    // 1) 优先找最近的祖先锚点
+    while (el) {
+      if (el.hasAttribute && el.hasAttribute('data-anchor-index')) {
+        // 忽略代码编辑器与行内标签
+        const tag = el.tagName?.toUpperCase?.() || '';
+        if (!el.closest('.monaco-editor') && !['STRONG','EM','CODE'].includes(tag)) {
+          const idx = Number(el.getAttribute('data-anchor-index'));
+          return Number.isFinite(idx) ? idx : null;
+        }
+      }
+      el = el.parentElement;
+    }
+
+    // 2) 否则在正文区域中找所有锚点中"最近的上方"
+    const contentArea = document.querySelector('.learning-content-area');
+    if (!contentArea) return null;
+    const anchors = Array.from(contentArea.querySelectorAll('[data-anchor-index]'))
+      .filter((a: Element) => {
+        const el = a as HTMLElement;
+        const tag = el.tagName?.toUpperCase?.() || '';
+        return !el.closest('.monaco-editor') && !['STRONG','EM','CODE'].includes(tag);
+      }) as HTMLElement[];
+    let chosen: HTMLElement | null = null;
+    for (const a of anchors) {
+      const r = a.getBoundingClientRect();
+      if (r.top <= selectionRect.top) {
+        if (!chosen || r.top > chosen.getBoundingClientRect().top) {
+          chosen = a;
+        }
+      }
+    }
+    if (!chosen && anchors.length > 0) chosen = anchors[0];
+    if (!chosen) return null;
+    const idx = Number(chosen.getAttribute('data-anchor-index'));
+    return Number.isFinite(idx) ? idx : null;
+  };
+
   // 将正文内容按段落分割并插入笔记
   const renderContentWithInsertedNotes = (content: string) => {
     if (!content) return null;
     
-    // 获取当前步骤的笔记，按插入位置排序
+    // 为可插入锚点生成连续索引
+    let anchorIndexCounter = 0;
+    const nextAnchorIndex = () => (anchorIndexCounter += 1);
+    
+    // 当前步骤的便签（段落回退用），按段落顺序
     const currentStepNotes = notes
-      .filter(note => note.stepIndex === currentStepIndex)
+      .filter(n => n.stepIndex === currentStepIndex)
       .sort((a, b) => a.insertAfterParagraph - b.insertAfterParagraph);
+    
+    // 统一的便签渲染组件
+    const renderNoteBlock = (note: Note) => (
+      <div key={`note-${note.id}`} className="my-6">
+        <div className="flex items-start space-x-3 mb-4 ml-6">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-700 text-lg font-bold flex items-center justify-center mt-1 transform rotate-1 shadow-md border border-yellow-200">
+            <StickyNote className="w-4 h-4" />
+          </div>
+          <div className="flex-1 max-w-fit">
+            <div
+              className="relative bg-yellow-100 p-5 rounded-lg shadow-lg transform rotate-0.5 border border-yellow-200 inline-block min-w-64 max-w-2xl"
+              style={{ boxShadow: '0 3px 8px rgba(255, 212, 59, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08)' }}
+            >
+              <div
+                className="absolute top-0 right-0 w-5 h-5 bg-yellow-100 transform rotate-45 translate-x-2.5 -translate-y-2.5 border border-yellow-200"
+                style={{ clipPath: 'polygon(0% 100%, 100% 100%, 100% 0%)' }}
+              />
+              <div className="flex items-start justify-between">
+                <div className="flex-1 min-w-0">
+                  {editingNoteId === note.id ? (
+                    <div className="space-y-3">
+                      <textarea
+                        value={editingText}
+                        onChange={(e) => setEditingText(e.target.value)}
+                        className="w-full p-3 border border-yellow-300 rounded-lg bg-yellow-50 text-yellow-800 resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        style={{
+                          fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
+                          fontSize: '16px',
+                          lineHeight: '1.6',
+                          minHeight: '80px'
+                        }}
+                        autoFocus
+                        onKeyDown={(e) => {
+                          if (e.key === 'Escape') {
+                            handleCancelEdit();
+                          } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                            handleSaveEdit(note.id);
+                          }
+                        }}
+                      />
+                      <div className="flex items-center space-x-2">
+                        <button onClick={() => handleSaveEdit(note.id)} className="px-3 py-1 bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors text-xs font-medium" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✓ Save</button>
+                        <button onClick={handleCancelEdit} className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors text-xs font-medium" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✕ Cancel</button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {note.type === 'video' && (note.isLoading || note.video) ? (
+                        <div className="w-full">
+                          {note.isLoading ? (
+                            <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black/80 flex items-center justify-center">
+                              <div className="w-8 h-8 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
+                            </div>
+                          ) : note.video ? (
+                            <>
+                              <div className={`relative group transition-all duration-300 ${expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-full'} aspect-video rounded-lg overflow-hidden shadow-md bg-black`}>
+                                <iframe src={note.video.url} frameBorder="0" allowFullScreen={true} allow={note.video.platform === 'youtube' ? "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" : "autoplay; fullscreen"} className="w-full h-full" referrerPolicy={note.video.platform === 'bilibili' ? "no-referrer" : undefined} sandbox={note.video.platform === 'bilibili' ? "allow-same-origin allow-scripts allow-popups allow-presentation" : undefined} />
+                                <button onClick={() => toggleNoteVideoExpanded(note.id)} className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110" title={expandedNoteVideoIds[note.id] ? '缩小视频' : '放大视频'}>
+                                  {expandedNoteVideoIds[note.id] ? (<Minimize2 className="w-4 h-4" />) : (<Maximize2 className="w-4 h-4" />)}
+                                </button>
+                              </div>
+                              {(note.video.title || note.video.duration) && (
+                                <div className="text-xs text-yellow-700 mt-1">{note.video.title || ''} {note.video.duration ? `· ${note.video.duration}` : ''}</div>
+                              )}
+                            </>
+                          ) : null}
+                        </div>
+                      ) : (
+                        <div className="text-lg leading-relaxed text-yellow-800 whitespace-pre-wrap break-words cursor-pointer hover:bg-yellow-50 rounded p-1 -m-1 transition-colors" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive', fontSize: '16px', lineHeight: '1.6', textShadow: '0 0.5px 1px rgba(255, 212, 59, 0.08)', wordBreak: 'break-word' }} onDoubleClick={() => handleStartEdit(note.id, note.text)} title="Double-click to edit">{note.text || '（空白便签，双击编辑）'}</div>
+                      )}
+                    </div>
+                  )}
+                  {editingNoteId !== note.id && (
+                    <div className="text-xs text-yellow-600 opacity-70" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>Added at {note.timestamp.toLocaleTimeString()}</div>
+                  )}
+                </div>
+                {editingNoteId !== note.id && (
+                  <button onClick={() => handleDeleteNote(note.id)} className="text-yellow-500 hover:text-red-500 ml-3 p-1 rounded-full hover:bg-yellow-100 transition-all duration-200 transform hover:scale-110 flex-shrink-0" title="删除笔记" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✕</button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+    
+    // 在某个锚点后渲染所有匹配的便签
+    const renderNotesAfterAnchor = (anchorIdx: number) => {
+      const anchorNotes = notes
+        .filter(n => n.stepIndex === currentStepIndex)
+        .filter(n => typeof n.insertAfterAnchor === 'number' && n.insertAfterAnchor === anchorIdx);
+      return anchorNotes.map(renderNoteBlock);
+    };
     
     // 按段落分割内容
     const paragraphs = content.split('\n\n').filter(p => p.trim());
     const result: React.JSX.Element[] = [];
     
-    // 添加开头的笔记（insertAfterParagraph === -1）
+    // 开头（段落之前）的老便签（未指定锚点）
     currentStepNotes
-      .filter(note => note.insertAfterParagraph === -1)
-      .forEach(note => {
-        result.push(
-          <div key={`note-${note.id}`} className="my-6">
-            <div className="flex items-start space-x-3 mb-4 ml-6">
-              {/* 便签图标 */}
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-700 text-lg font-bold flex items-center justify-center mt-1 transform rotate-1 shadow-md border border-yellow-200">
-                <StickyNote className="w-4 h-4" />
-              </div>
-              <div className="flex-1 max-w-fit">
-                {/* 便签样式容器 */}
-                <div 
-                  className="relative bg-yellow-100 p-5 rounded-lg shadow-lg transform rotate-0.5 border border-yellow-200 inline-block min-w-64 max-w-2xl"
-                  style={{
-                    boxShadow: '0 3px 8px rgba(255, 212, 59, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08)'
-                  }}
-                >
-                  {/* 便签纸的折角效果 */}
-                  <div 
-                    className="absolute top-0 right-0 w-5 h-5 bg-yellow-100 transform rotate-45 translate-x-2.5 -translate-y-2.5 border border-yellow-200"
-                    style={{
-                      clipPath: 'polygon(0% 100%, 100% 100%, 100% 0%)'
-                    }}
-                  />
-                  
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1 min-w-0">
-                      {/* 笔记内容 - 手写字体，支持换行和编辑；支持视频嵌入 */}
-                      {editingNoteId === note.id ? (
-                        <div className="space-y-3">
-                          <textarea
-                            value={editingText}
-                            onChange={(e) => setEditingText(e.target.value)}
-                            className="w-full p-3 border border-yellow-300 rounded-lg bg-yellow-50 text-yellow-800 resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                            style={{
-                              fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
-                              fontSize: '16px',
-                              lineHeight: '1.6',
-                              minHeight: '80px'
-                            }}
-                            autoFocus
-                            onKeyDown={(e) => {
-                              if (e.key === 'Escape') {
-                                handleCancelEdit();
-                              } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-                                handleSaveEdit(note.id);
-                              }
-                            }}
-                          />
-                          <div className="flex items-center space-x-2">
-                            <button
-                              onClick={() => handleSaveEdit(note.id)}
-                              className="px-3 py-1 bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors text-xs font-medium"
-                              style={{
-                                fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
-                              }}
-                            >
-                              ✓ Save
-                            </button>
-                            <button
-                              onClick={handleCancelEdit}
-                              className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors text-xs font-medium"
-                              style={{
-                                fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
-                              }}
-                            >
-                              ✕ Cancel
-                            </button>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="space-y-3">
-                          {note.type === 'video' && note.video ? (
-                            <div className="w-full">
-                              {note.isLoading ? (
-                                <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black/80 flex items-center justify-center">
-                                  <div className="w-8 h-8 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
-                                </div>
-                              ) : note.video ? (
-                                <>
-                                  <div className={`relative group transition-all duration-300 ${expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-full'} aspect-video rounded-lg overflow-hidden shadow-md bg-black`}>
-                                    <iframe 
-                                      src={note.video.url}
-                                      frameBorder="0"
-                                      allowFullScreen={true}
-                                      allow={note.video.platform === 'youtube' ? 
-                                        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" :
-                                        "autoplay; fullscreen"
-                                      }
-                                      className="w-full h-full"
-                                      referrerPolicy={note.video.platform === 'bilibili' ? "no-referrer" : undefined}
-                                      sandbox={note.video.platform === 'bilibili' ? 
-                                        "allow-same-origin allow-scripts allow-popups allow-presentation" : 
-                                        undefined
-                                      }
-                                    />
-                                    <button
-                                      onClick={() => toggleNoteVideoExpanded(note.id)}
-                                      className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110"
-                                      title={expandedNoteVideoIds[note.id] ? '缩小视频' : '放大视频'}
-                                    >
-                                      {expandedNoteVideoIds[note.id] ? (
-                                        <Minimize2 className="w-4 h-4" />
-                                      ) : (
-                                        <Maximize2 className="w-4 h-4" />
-                                      )}
-                                    </button>
-                                  </div>
-                                  {(note.video.title || note.video.duration) && (
-                                    <div className="text-xs text-yellow-700 mt-1">
-                                      {note.video.title || ''} {note.video.duration ? `· ${note.video.duration}` : ''}
-                                    </div>
-                                  )}
-                                </>
-                              ) : null}
-                            </div>
-                          ) : (
-                            <div 
-                              className="text-lg leading-relaxed text-yellow-800 whitespace-pre-wrap break-words cursor-pointer hover:bg-yellow-50 rounded p-1 -m-1 transition-colors"
-                              style={{
-                                fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
-                                fontSize: '16px',
-                                lineHeight: '1.6',
-                                textShadow: '0 0.5px 1px rgba(255, 212, 59, 0.08)',
-                                wordBreak: 'break-word'
-                              }}
-                              onDoubleClick={() => handleStartEdit(note.id, note.text)}
-                              title="Double-click to edit"
-                            >
-                              {note.text || '（空白便签，双击编辑）'}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      {editingNoteId !== note.id && (
-                        <div 
-                          className="text-xs text-yellow-600 opacity-70"
-                          style={{
-                            fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
-                          }}
-                        >
-                          Added at {note.timestamp.toLocaleTimeString()}
-                        </div>
-                      )}
-                    </div>
-                    {/* 删除按钮 */}
-                    {editingNoteId !== note.id && (
-                      <button
-                        onClick={() => handleDeleteNote(note.id)}
-                        className="text-yellow-500 hover:text-red-500 ml-3 p-1 rounded-full hover:bg-yellow-100 transition-all duration-200 transform hover:scale-110 flex-shrink-0"
-                        title="删除笔记"
-                        style={{
-                          fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
-                        }}
-                      >
-                        ✕
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      });
+      .filter(note => note.insertAfterAnchor == null && note.insertAfterParagraph === -1)
+      .forEach(note => { result.push(renderNoteBlock(note)); });
     
-    // 遍历每个段落，并在其后插入相应的笔记
+    // 逐段渲染内容与便签
     paragraphs.forEach((paragraph, index) => {
-      // 添加当前段落
+      // 段落主体
       result.push(
         <div key={`paragraph-${index}`} data-paragraph-index={index}>
           <ReactMarkdown components={{
-            h1: ({ children, ...props }) => (
-              <h1 className="text-3xl font-bold text-center text-blue-700 relative mb-8" {...props}>
-                <span className="bg-yellow-200 px-3 py-1 rounded-lg inline-block transform -rotate-1 shadow-sm">
+            h1: ({ children, ...props }) => {
+              const anchorIdx = nextAnchorIndex();
+              return (
+                <>
+                  <h1 data-anchor-index={anchorIdx} className="text-3xl font-bold text-center text-blue-700 relative mb-8" {...props}>
+                    <span className="bg-yellow-200 px-3 py-1 rounded-lg inline-block transform -rotate-1 shadow-sm">
+                      {children}
+                    </span>
+                  </h1>
+                  {renderNotesAfterAnchor(anchorIdx)}
+                </>
+              );
+            },
+            h2: ({ children, ...props }) => {
+              const anchorIdx = nextAnchorIndex();
+              return (
+                <>
+                  <h2 data-anchor-index={anchorIdx} className="text-xl font-bold text-blue-700 mb-6 mt-8" style={{
+                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  }} {...props}>
+                    {children}
+                  </h2>
+                  {renderNotesAfterAnchor(anchorIdx)}
+                </>
+              );
+            },
+            h3: ({ children, ...props }) => {
+              const anchorIdx = nextAnchorIndex();
+              return (
+                <>
+                  <h3 data-anchor-index={anchorIdx} className="text-lg font-bold text-purple-700 mb-5 mt-7" style={{
+                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  }} {...props}>
+                    {children}
+                  </h3>
+                  {renderNotesAfterAnchor(anchorIdx)}
+                </>
+              );
+            },
+            p: ({ children, ...props }) => {
+              const anchorIdx = nextAnchorIndex();
+              return (
+                <>
+                  <div data-anchor-index={anchorIdx} className="flex items-start space-x-3 mb-8 ml-6">
+                    <div className="w-6 h-6 rounded-full bg-yellow-400 text-black text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                      📝
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-base leading-loose text-gray-800 font-bold" style={{
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      }} {...props}>
+                        {children}
+                      </p>
+                    </div>
+                  </div>
+                  {renderNotesAfterAnchor(anchorIdx)}
+                </>
+              );
+            },
+            ul: ({ children, ...props }) => {
+              const anchorIdx = nextAnchorIndex();
+              return (
+                <>
+                  <div data-anchor-index={anchorIdx} className="flex items-start space-x-3 mb-8 ml-6">
+                    <div className="w-6 h-6 rounded-full bg-blue-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                      📋
+                    </div>
+                    <div className="flex-1">
+                      <ul className="list-disc list-inside text-gray-800 space-y-4" style={{
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      }} {...props}>
+                        {children}
+                      </ul>
+                    </div>
+                  </div>
+                  {renderNotesAfterAnchor(anchorIdx)}
+                </>
+              );
+            },
+            ol: ({ children, ...props }) => {
+              const anchorIdx = nextAnchorIndex();
+              return (
+                <>
+                  <div data-anchor-index={anchorIdx} className="flex items-start space-x-3 mb-8 ml-6">
+                    <div className="w-6 h-6 rounded-full bg-purple-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                      🔢
+                    </div>
+                    <div className="flex-1">
+                      <ol className="list-decimal list-inside text-gray-800 space-y-4" style={{
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      }} {...props}>
+                        {children}
+                      </ol>
+                    </div>
+                  </div>
+                  {renderNotesAfterAnchor(anchorIdx)}
+                </>
+              );
+            },
+            li: ({ children, ...props }) => {
+              const anchorIdx = nextAnchorIndex();
+              return (
+                <>
+                  <li data-anchor-index={anchorIdx} className="text-base text-gray-800 leading-loose" style={{
+                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  }} {...props}>
+                    {children}
+                  </li>
+                  {renderNotesAfterAnchor(anchorIdx)}
+                </>
+              );
+            },
+            strong: ({ children, ...props }) => {
+              return (
+                <strong className="text-gray-900 font-bold mx-1" {...props}>{children}</strong>
+              );
+            },
+            em: ({ children, ...props }) => {
+              return (
+                <em className="text-gray-700 italic mx-1" {...props}>{children}</em>
+              );
+            },
+            code: ({ children, ...props }) => {
+              return (
+                <code className="bg-gray-200 text-gray-800 px-2 py-1 rounded font-mono text-sm" {...props}>
                   {children}
-                </span>
-              </h1>
-            ),
-            h2: ({ children, ...props }) => (
-              <h2 className="text-xl font-bold text-blue-700 mb-6 mt-8" style={{
-                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-              }} {...props}>
-                {children}
-              </h2>
-            ),
-            h3: ({ children, ...props }) => (
-              <h3 className="text-lg font-bold text-purple-700 mb-5 mt-7" style={{
-                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-              }} {...props}>
-                {children}
-              </h3>
-            ),
-            p: ({ children, ...props }) => (
-              <div className="flex items-start space-x-3 mb-8 ml-6">
-                <div className="w-6 h-6 rounded-full bg-yellow-400 text-black text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                  📝
-                </div>
-                <div className="flex-1">
-                  <p className="text-base leading-loose text-gray-800 font-bold" style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                  }} {...props}>
-                    {children}
-                  </p>
-                </div>
-              </div>
-            ),
-            ul: ({ children, ...props }) => (
-              <div className="flex items-start space-x-3 mb-8 ml-6">
-                <div className="w-6 h-6 rounded-full bg-blue-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                  📋
-                </div>
-                <div className="flex-1">
-                  <ul className="list-disc list-inside text-gray-800 space-y-4" style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                  }} {...props}>
-                    {children}
-                  </ul>
-                </div>
-              </div>
-            ),
-            ol: ({ children, ...props }) => (
-              <div className="flex items-start space-x-3 mb-8 ml-6">
-                <div className="w-6 h-6 rounded-full bg-purple-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                  🔢
-                </div>
-                <div className="flex-1">
-                  <ol className="list-decimal list-inside text-gray-800 space-y-4" style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                  }} {...props}>
-                    {children}
-                  </ol>
-                </div>
-              </div>
-            ),
-            li: ({ children, ...props }) => (
-              <li className="text-base text-gray-800 leading-loose" style={{
-                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-              }} {...props}>
-                {children}
-              </li>
-            ),
-            strong: ({ children, ...props }) => (
-              <strong className="text-gray-900 font-bold mx-1" {...props}>{children}</strong>
-            ),
-            em: ({ children, ...props }) => (
-              <em className="text-gray-700 italic mx-1" {...props}>{children}</em>
-            ),
-            code: ({ children, ...props }) => (
-              <code className="bg-gray-200 text-gray-800 px-2 py-1 rounded font-mono text-sm" {...props}>
-                {children}
-              </code>
-            ),
-            pre: ({ children, ...props }) => (
-              <div className="flex items-start space-x-3 mb-8 ml-6">
-                <div className="w-6 h-6 rounded-full bg-green-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                  💻
-                </div>
-                <div className="flex-1">
-                  <pre className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto" {...props}>
-                    {children}
-                  </pre>
-                </div>
-              </div>
-            ),
-            blockquote: ({ children, ...props }) => (
-              <div className="flex items-start space-x-3 mb-8 ml-6">
-                <div className="w-6 h-6 rounded-full bg-orange-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
-                  💡
-                </div>
-                <div className="flex-1">
-                  <blockquote className="bg-orange-50 text-gray-800 p-3 rounded-lg italic border-l-4 border-orange-400" style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                  }} {...props}>
-                    {children}
-                  </blockquote>
-                </div>
-              </div>
-            ),
+                </code>
+              );
+            },
+            pre: ({ children, ...props }) => {
+              const anchorIdx = nextAnchorIndex();
+              return (
+                <>
+                  <div data-anchor-index={anchorIdx} className="flex items-start space-x-3 mb-8 ml-6">
+                    <div className="w-6 h-6 rounded-full bg-green-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                      💻
+                    </div>
+                    <div className="flex-1">
+                      <pre className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto" {...props}>
+                        {children}
+                      </pre>
+                    </div>
+                  </div>
+                  {renderNotesAfterAnchor(anchorIdx)}
+                </>
+              );
+            },
+            blockquote: ({ children, ...props }) => {
+              const anchorIdx = nextAnchorIndex();
+              return (
+                <>
+                  <div data-anchor-index={anchorIdx} className="flex items-start space-x-3 mb-8 ml-6">
+                    <div className="w-6 h-6 rounded-full bg-orange-400 text-white text-sm font-bold flex items-center justify-center mt-1 transform rotate-12 shadow-sm">
+                      💡
+                    </div>
+                    <div className="flex-1">
+                      <blockquote className="bg-orange-50 text-gray-800 p-3 rounded-lg italic border-l-4 border-orange-400" style={{
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      }} {...props}>
+                        {children}
+                      </blockquote>
+                    </div>
+                  </div>
+                  {renderNotesAfterAnchor(anchorIdx)}
+                </>
+              );
+            },
           }}>
             {paragraph}
           </ReactMarkdown>
         </div>
       );
       
-      // 添加插入在这个段落之后的笔记
+      // 段落后的老便签（未指定锚点）
       currentStepNotes
-        .filter(note => note.insertAfterParagraph === index)
-        .forEach(note => {
-          result.push(
-            <div key={`note-${note.id}`} className="my-6">
-              <div className="flex items-start space-x-3 mb-4 ml-6">
-                {/* 便签图标 */}
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-700 text-lg font-bold flex items-center justify-center mt-1 transform rotate-1 shadow-md border border-yellow-200">
-                  <StickyNote className="w-4 h-4" />
-                </div>
-                <div className="flex-1 max-w-fit">
-                  {/* 便签样式容器 */}
-                  <div 
-                    className="relative bg-yellow-100 p-5 rounded-lg shadow-lg transform rotate-0.5 border border-yellow-200 inline-block min-w-64 max-w-2xl"
-                    style={{
-                      boxShadow: '0 3px 8px rgba(255, 212, 59, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08)'
-                    }}
-                  >
-                    {/* 便签纸的折角效果 */}
-                    <div 
-                      className="absolute top-0 right-0 w-5 h-5 bg-yellow-100 transform rotate-45 translate-x-2.5 -translate-y-2.5 border border-yellow-200"
-                      style={{
-                        clipPath: 'polygon(0% 100%, 100% 100%, 100% 0%)'
-                      }}
-                    />
-                    
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1 min-w-0">
-                        {/* 笔记内容 - 手写字体，支持换行和编辑；支持视频嵌入 */}
-                        {editingNoteId === note.id ? (
-                          <div className="space-y-3">
-                            <textarea
-                              value={editingText}
-                              onChange={(e) => setEditingText(e.target.value)}
-                              className="w-full p-3 border border-yellow-300 rounded-lg bg-yellow-50 text-yellow-800 resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                              style={{
-                                fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
-                                fontSize: '16px',
-                                lineHeight: '1.6',
-                                minHeight: '80px'
-                              }}
-                              autoFocus
-                              onKeyDown={(e) => {
-                                if (e.key === 'Escape') {
-                                  handleCancelEdit();
-                                } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-                                  handleSaveEdit(note.id);
-                                }
-                              }}
-                            />
-                            <div className="flex items-center space-x-2">
-                              <button
-                                onClick={() => handleSaveEdit(note.id)}
-                                className="px-3 py-1 bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors text-xs font-medium"
-                                style={{
-                                  fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
-                                }}
-                              >
-                                ✓ Save
-                              </button>
-                              <button
-                                onClick={handleCancelEdit}
-                                className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors text-xs font-medium"
-                                style={{
-                                  fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
-                                }}
-                              >
-                                ✕ Cancel
-                              </button>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="space-y-3">
-                            {note.type === 'video' && note.video ? (
-                              <div className="w-full">
-                                {note.isLoading ? (
-                                  <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black/80 flex items-center justify-center">
-                                    <div className="w-8 h-8 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
-                                  </div>
-                                ) : note.video ? (
-                                  <>
-                                    <div className={`relative group transition-all duration-300 ${expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-full'} aspect-video rounded-lg overflow-hidden shadow-md bg-black`}>
-                                      <iframe 
-                                        src={note.video.url}
-                                        frameBorder="0"
-                                        allowFullScreen={true}
-                                        allow={note.video.platform === 'youtube' ? 
-                                          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" :
-                                          "autoplay; fullscreen"
-                                        }
-                                        className="w-full h-full"
-                                        referrerPolicy={note.video.platform === 'bilibili' ? "no-referrer" : undefined}
-                                        sandbox={note.video.platform === 'bilibili' ? 
-                                          "allow-same-origin allow-scripts allow-popups allow-presentation" : 
-                                          undefined
-                                        }
-                                      />
-                                      <button
-                                        onClick={() => toggleNoteVideoExpanded(note.id)}
-                                        className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110"
-                                        title={expandedNoteVideoIds[note.id] ? '缩小视频' : '放大视频'}
-                                      >
-                                        {expandedNoteVideoIds[note.id] ? (
-                                          <Minimize2 className="w-4 h-4" />
-                                        ) : (
-                                          <Maximize2 className="w-4 h-4" />
-                                        )}
-                                      </button>
-                                    </div>
-                                    {(note.video.title || note.video.duration) && (
-                                      <div className="text-xs text-yellow-700 mt-1">
-                                        {note.video.title || ''} {note.video.duration ? `· ${note.video.duration}` : ''}
-                                      </div>
-                                    )}
-                                  </>
-                                ) : null}
-                              </div>
-                            ) : (
-                              <div 
-                                className="text-lg leading-relaxed text-yellow-800 whitespace-pre-wrap break-words cursor-pointer hover:bg-yellow-50 rounded p-1 -m-1 transition-colors"
-                                style={{
-                                  fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
-                                  fontSize: '16px',
-                                  lineHeight: '1.6',
-                                  textShadow: '0 0.5px 1px rgba(255, 212, 59, 0.08)',
-                                  wordBreak: 'break-word'
-                                }}
-                                onDoubleClick={() => handleStartEdit(note.id, note.text)}
-                                title="Double-click to edit"
-                              >
-                                {note.text || '（空白便签，双击编辑）'}
-                              </div>
-                            )}
-                          </div>
-                        )}
-                        {editingNoteId !== note.id && (
-                          <div 
-                            className="text-xs text-yellow-600 opacity-70"
-                            style={{
-                              fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
-                            }}
-                          >
-                            Added at {note.timestamp.toLocaleTimeString()}
-                          </div>
-                        )}
-                      </div>
-                      {/* 删除按钮 */}
-                      {editingNoteId !== note.id && (
-                        <button
-                          onClick={() => handleDeleteNote(note.id)}
-                          className="text-yellow-500 hover:text-red-500 ml-3 p-1 rounded-full hover:bg-yellow-100 transition-all duration-200 transform hover:scale-110 flex-shrink-0"
-                          title="删除笔记"
-                          style={{
-                            fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive'
-                          }}
-                        >
-                          ✕
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        });
+        .filter(note => note.insertAfterAnchor == null && note.insertAfterParagraph === index)
+        .forEach(note => { result.push(renderNoteBlock(note)); });
     });
     
     return <>{result}</>;
@@ -675,7 +557,9 @@ export default function StudyPage({ params }: StudyPageProps) {
   };
 
   const handleNoteClick = (selectedText: string) => {
-    // 在选中文本所在段落的下方插入一个空白便签，并进入编辑状态
+    // 精确：选中位置所在或最近上方的锚点
+    const anchorIdx = getSelectedAnchorIndex();
+    // 兼容：段落索引回退
     const paragraphIndex = getSelectedParagraphIndex();
     const contentArea = document.querySelector('.learning-content-area');
     const paragraphCount = contentArea ? contentArea.querySelectorAll('[data-paragraph-index]').length : 0;
@@ -687,6 +571,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       timestamp: new Date(),
       stepIndex: currentStepIndex,
       insertAfterParagraph,
+      insertAfterAnchor: typeof anchorIdx === 'number' ? anchorIdx : null,
       type: 'text'
     };
 
@@ -696,7 +581,8 @@ export default function StudyPage({ params }: StudyPageProps) {
   };
 
   const handleVideoClick = async (selectedText: string) => {
-    // 先确定插入位置，避免因点击按钮导致选区丢失而插入到顶部
+    // 先确定插入位置（锚点优先），避免选区丢失
+    const anchorIdx = getSelectedAnchorIndex();
     const paragraphIndex = getSelectedParagraphIndex();
     const contentArea = document.querySelector('.learning-content-area');
     const paragraphCount = contentArea ? contentArea.querySelectorAll('[data-paragraph-index]').length : 0;
@@ -710,6 +596,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       timestamp: new Date(),
       stepIndex: currentStepIndex,
       insertAfterParagraph,
+      insertAfterAnchor: typeof anchorIdx === 'number' ? anchorIdx : null,
       type: 'video',
       isLoading: true,
     };
@@ -1778,12 +1665,9 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   // 处理视频URL转换
   const processVideoUrl = (videoUrl: string) => {
-    console.log('处理视频URL:', videoUrl);
-    
     // 开发环境下，在window对象上暴露测试函数
     if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
       (window as any).testVideoUrl = (testUrl: string) => {
-        console.log('测试视频URL处理:', testUrl);
         return processVideoUrl(testUrl);
       };
     }
@@ -1797,12 +1681,10 @@ export default function StudyPage({ params }: StudyPageProps) {
       if (bvMatch) {
         // BV号格式
         const playerUrl = `//player.bilibili.com/player.html?bvid=${bvMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
-        console.log('转换后的BV播放器URL:', playerUrl);
         return { url: playerUrl, platform: 'bilibili' };
       } else if (avMatch) {
         // AV号格式
         const playerUrl = `//player.bilibili.com/player.html?aid=${avMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
-        console.log('转换后的AV播放器URL:', playerUrl);
         return { url: playerUrl, platform: 'bilibili' };
       }
     }
@@ -1810,8 +1692,6 @@ export default function StudyPage({ params }: StudyPageProps) {
     // 处理YouTube视频URL
     if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
       let videoId = '';
-      
-      console.log('检测到YouTube URL，开始处理:', videoUrl);
       
       // 各种YouTube URL格式
       // 标准格式: https://www.youtube.com/watch?v=VIDEO_ID
@@ -1827,32 +1707,25 @@ export default function StudyPage({ params }: StudyPageProps) {
         const match = videoUrl.match(pattern);
         if (match) {
           videoId = match[1];
-          console.log('成功提取YouTube视频ID:', videoId);
           break;
         }
       }
       
       if (videoId) {
         const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&mute=0&controls=1&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
-        console.log('转换后的YouTube嵌入URL:', embedUrl);
         return { url: embedUrl, platform: 'youtube' };
-      } else {
-        console.warn('无法从YouTube URL中提取视频ID:', videoUrl);
       }
     }
     
     // 检查是否已经是嵌入格式的URL
     if (videoUrl.includes('player.bilibili.com')) {
-      console.log('已是B站播放器URL，直接使用:', videoUrl);
       return { url: videoUrl, platform: 'bilibili' };
     }
     
     if (videoUrl.includes('youtube.com/embed/')) {
-      console.log('已是YouTube嵌入URL，直接使用:', videoUrl);
       return { url: videoUrl, platform: 'youtube' };
     }
     
-    console.log('无法识别的视频URL格式:', videoUrl);
     return { url: videoUrl, platform: 'unknown' };
   };
 
@@ -2578,26 +2451,38 @@ export default function StudyPage({ params }: StudyPageProps) {
             pos.y <= rect.bottom;
           
           if (isInContentArea) {
-            // 使用精确的DOM元素定位
-            const allParagraphs = contentArea.querySelectorAll('[data-paragraph-index]');
-            let insertAfterParagraph = -1; // 默认插入在开头
-            
-            // 遍历所有段落，找到鼠标位置对应的段落
-            for (let i = 0; i < allParagraphs.length; i++) {
-              const paragraphElement = allParagraphs[i];
-              const paragraphRect = paragraphElement.getBoundingClientRect();
-              
-              // 如果鼠标Y位置在这个段落的范围内或之前
-              if (pos.y <= paragraphRect.bottom) {
-                // 总是插入在当前段落之后，确保便签在段落下方
-                insertAfterParagraph = i;
-                break;
+            // 使用锚点元素进行精确定位：找到最近的上方标签（带 data-anchor-index）
+            const allAnchors = Array.from(contentArea.querySelectorAll('[data-anchor-index]')) as HTMLElement[];
+            let chosenAnchor: HTMLElement | null = null;
+            for (const el of allAnchors) {
+              const r = el.getBoundingClientRect();
+              if (r.top <= pos.y) {
+                // 向下遍历，持续更新为最近的上方元素
+                if (!chosenAnchor || r.top > (chosenAnchor.getBoundingClientRect().top)) {
+                  chosenAnchor = el;
+                }
               }
             }
-            
-            // 如果鼠标在所有段落之后，插入在最后一个段落后
-            if (insertAfterParagraph === -1 && allParagraphs.length > 0) {
-              insertAfterParagraph = allParagraphs.length - 1;
+
+            // 回退：若没有上方锚点，选择第一个锚点
+            if (!chosenAnchor && allAnchors.length > 0) {
+              chosenAnchor = allAnchors[0];
+            }
+
+            // 将锚点映射到其所属的段落容器，依旧以段落为最小插入单位
+            let insertAfterParagraph = -1;
+            if (chosenAnchor) {
+              const ownerParagraph = chosenAnchor.closest('[data-paragraph-index]') as HTMLElement | null;
+              if (ownerParagraph && ownerParagraph.hasAttribute('data-paragraph-index')) {
+                const idxAttr = ownerParagraph.getAttribute('data-paragraph-index');
+                const idx = idxAttr ? parseInt(idxAttr, 10) : -1;
+                if (!Number.isNaN(idx)) insertAfterParagraph = idx;
+              }
+            }
+            // 回退：若无法解析，仍按最后一个段落处理
+            if (insertAfterParagraph === -1) {
+              const allParagraphs = contentArea.querySelectorAll('[data-paragraph-index]');
+              if (allParagraphs.length > 0) insertAfterParagraph = allParagraphs.length - 1;
             }
             
             // 创建新笔记
@@ -2606,7 +2491,8 @@ export default function StudyPage({ params }: StudyPageProps) {
               text: text,
               timestamp: new Date(),
               stepIndex: currentStepIndex,
-              insertAfterParagraph: insertAfterParagraph
+              insertAfterParagraph: insertAfterParagraph,
+              insertAfterAnchor: chosenAnchor ? parseInt(chosenAnchor.getAttribute('data-anchor-index') || '-1', 10) : null,
             };
             
             // 添加笔记
@@ -2616,7 +2502,7 @@ export default function StudyPage({ params }: StudyPageProps) {
             });
             
             console.log('✅ 笔记已添加:', newNote);
-            console.log('📍 精确插入位置:', insertAfterParagraph === -1 ? 'beginning' : `after paragraph ${insertAfterParagraph + 1}`);
+            console.log('📍 精确插入位置（锚点对应段落）:', insertAfterParagraph === -1 ? 'beginning' : `after paragraph ${insertAfterParagraph + 1}`);
             console.log('🎯 鼠标位置:', { x: pos.x, y: pos.y });
           } else {
             console.log('❌ 拖拽位置不在正文区域内');
