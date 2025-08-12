@@ -22,6 +22,7 @@ import { LearningPlan, LearningStep, TaskGenerateRequest, TaskGenerateResponse, 
 import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
 import { TextSelectionPopup } from '@/components/learning/text-selection-popup';
+import { WelcomePage } from '@/components/learning/welcome-page';
 
 interface StudyPageProps {
   params: Promise<{ locale: string; id: string }>;
@@ -83,6 +84,8 @@ export default function StudyPage({ params }: StudyPageProps) {
     insertAfterParagraph: number; // 插入在第几个段落之后（-1表示插入在开头）
     type?: 'text' | 'video';
     video?: { url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title?: string; duration?: string };
+    videos?: Array<{ url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title?: string; duration?: string }>; // 支持多个视频
+    searchKeyword?: string; // 视频搜索关键词
     isLoading?: boolean;
     insertAfterAnchor?: number | null;
     origin?: 'drag' | 'note';
@@ -91,6 +94,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
   const [editingText, setEditingText] = useState<string>('');
   const [expandedNoteVideoIds, setExpandedNoteVideoIds] = useState<Record<string, boolean>>({});
+  const [noteVideoIndices, setNoteVideoIndices] = useState<Record<string, number>>({});
   // 彩笔标记（可持久化）
   interface Mark {
     id: string;
@@ -98,6 +102,8 @@ export default function StudyPage({ params }: StudyPageProps) {
     stepIndex: number;
     anchorIndex: number | null;
     color?: string; // 预留不同颜色
+    startOffset?: number; // 在锚点内的字符起始位置
+    endOffset?: number; // 在锚点内的字符结束位置
   }
   const [marks, setMarks] = useState<Mark[]>([]);
 
@@ -250,13 +256,137 @@ export default function StudyPage({ params }: StudyPageProps) {
                       </div>
                     ) : (
                       <div className="space-y-3">
-                        {note.type === 'video' && (note.isLoading || note.video) ? (
+                        {note.type === 'video' && (note.isLoading || note.video || note.videos) ? (
                           <div className="w-full">
                             {note.isLoading ? (
                               <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black/80 flex items-center justify-center">
                                 <div className="w-8 h-8 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
                               </div>
+                            ) : note.videos && note.videos.length > 0 ? (
+                              // 新的多视频显示方式 - 主视频+列表
+                              <div className="space-y-2">
+                                {note.searchKeyword && (
+                                  <div className={`text-xs ${timestampColor} font-medium`}>
+                                    搜索结果: "{note.searchKeyword}"
+                                  </div>
+                                )}
+                                <div className="flex gap-4 items-start">
+                                  {/* 主视频播放器 */}
+                                  <div className={`${expandedNoteVideoIds[note.id] ? 'w-[480px]' : 'w-80'} relative group transition-all duration-300`}>
+                                    <div className="bg-white p-2 rounded-lg shadow-lg">
+                                      <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black relative transition-all duration-300">
+                                        {(() => {
+                                          const currentVideoIndex = noteVideoIndices[note.id] || 0;
+                                          const currentVideo = note.videos[currentVideoIndex];
+                                          if (!currentVideo) return null;
+                                          
+                                          const currentLocale = routeParams?.locale || 'en';
+                                          const shouldShowVideo = 
+                                            (currentLocale === 'zh' && currentVideo.platform === 'bilibili') ||
+                                            (currentLocale === 'en' && currentVideo.platform === 'youtube') ||
+                                            (currentVideo.platform === 'youtube' || currentVideo.platform === 'bilibili');
+                                          
+                                          if (shouldShowVideo) {
+                                            return (
+                                              <iframe 
+                                                src={currentVideo.url}
+                                                frameBorder="0"
+                                                allowFullScreen={true}
+                                                allow={currentVideo.platform === 'youtube' ? 
+                                                  "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" :
+                                                  "autoplay; fullscreen"
+                                                }
+                                                className="w-full h-full"
+                                                referrerPolicy={currentVideo.platform === 'bilibili' ? "no-referrer" : undefined}
+                                                sandbox={currentVideo.platform === 'bilibili' ? 
+                                                  "allow-same-origin allow-scripts allow-popups allow-presentation" : 
+                                                  undefined
+                                                }
+                                              />
+                                            );
+                                          } else {
+                                            return (
+                                              <div className="w-full h-full flex items-center justify-center bg-gray-800 text-white">
+                                                <div className="text-center">
+                                                  <PlayCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                                                  <p className="text-xs opacity-75">Video not available</p>
+                                                </div>
+                                              </div>
+                                            );
+                                          }
+                                        })()}
+                                        
+                                        {/* 放大/缩小按钮 */}
+                                        <button
+                                          onClick={() => toggleNoteVideoExpanded(note.id)}
+                                          className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110"
+                                          title={expandedNoteVideoIds[note.id] ? '缩小视频' : '放大视频'}
+                                        >
+                                          {expandedNoteVideoIds[note.id] ? (
+                                            <Minimize2 className="w-3 h-3" />
+                                          ) : (
+                                            <Maximize2 className="w-3 h-3" />
+                                          )}
+                                        </button>
+                                      </div>
+                                      
+                                      {/* 视频标题 */}
+                                      <div className="mt-2 px-1">
+                                        <p className={`text-xs font-medium ${timestampColor} truncate`} style={{
+                                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                        }}>
+                                          {note.videos[noteVideoIndices[note.id] || 0]?.title || '无标题'}
+                                        </p>
+                                        {note.videos[noteVideoIndices[note.id] || 0]?.duration && (
+                                          <p className={`text-xs ${timestampColor} opacity-70`}>
+                                            {note.videos[noteVideoIndices[note.id] || 0].duration}
+                                          </p>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                  {/* 视频列表 */}
+                                  {note.videos.length > 1 && (
+                                    <div className="relative w-60">
+                                      <div className="max-h-80 overflow-y-auto p-1">
+                                        <div className="space-y-1">
+                                          {note.videos.map((video, idx) => {
+                                            const active = idx === (noteVideoIndices[note.id] || 0);
+                                            return (
+                                              <button
+                                                key={idx}
+                                                onClick={() => setNoteVideoIndices(prev => ({ ...prev, [note.id]: idx }))}
+                                                className={`w-full flex items-start gap-2 p-2 text-left transition-colors rounded ${
+                                                  active ? 'bg-yellow-100 rotate-1' : 'hover:bg-yellow-50'
+                                                }`}
+                                                aria-pressed={active}
+                                              >
+                                                <div className="min-w-0 flex-1">
+                                                  <div className={`text-xs font-bold ${timestampColor} truncate`} style={{
+                                                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                                  }}>
+                                                    {video.title || '无标题'}
+                                                  </div>
+                                                  {video.duration && (
+                                                    <div className={`text-xs ${timestampColor} opacity-70 mt-0.5`} style={{
+                                                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                                    }}>
+                                                      {video.duration}
+                                                    </div>
+                                                  )}
+                                                </div>
+                                              </button>
+                                            );
+                                          })}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
                             ) : note.video ? (
+                              // 兼容旧的单视频格式
                               <>
                                 <div className={`relative group transition-all duration-300 ${expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-full'} aspect-video rounded-lg overflow-hidden shadow-md bg-black`}>
                                   <iframe src={note.video.url} frameBorder="0" allowFullScreen={true} allow={note.video.platform === 'youtube' ? "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" : "autoplay; fullscreen"} className="w-full h-full" referrerPolicy={note.video.platform === 'bilibili' ? "no-referrer" : undefined} sandbox={note.video.platform === 'bilibili' ? "allow-same-origin allow-scripts allow-popups allow-presentation" : undefined} />
@@ -653,22 +783,32 @@ export default function StudyPage({ params }: StudyPageProps) {
         setNotes(prev => prev.map(n => n.id === tempNoteId ? { ...n, isLoading: false, type: 'text', text: '未找到相关视频' } : n));
         return;
       }
-      const v = list[0];
-      const url: string = v.url || v.link || '';
-      if (!url) {
+
+      // 处理多个视频，生成视频列表
+      const processedVideos = list.slice(0, 10).map(v => {
+        const url: string = v.url || v.link || '';
+        if (!url) return null;
+        const processed = processVideoUrl(url);
+        return {
+          url: processed.url,
+          platform: (processed.platform as any) || 'unknown',
+          title: v.title || '无标题',
+          duration: v.duration || ''
+        };
+      }).filter(Boolean);
+
+      if (processedVideos.length === 0) {
         setNotes(prev => prev.map(n => n.id === tempNoteId ? { ...n, isLoading: false, type: 'text', text: '视频数据无有效链接' } : n));
         return;
       }
 
-      // 生成可嵌入播放器的URL
-      const processed = processVideoUrl(url);
-
-      // 更新占位便签为真实视频
+      // 更新占位便签为视频列表
       setNotes(prev => prev.map(n => n.id === tempNoteId ? {
         ...n,
         isLoading: false,
         type: 'video',
-        video: { url: processed.url, platform: (processed.platform as any) || 'unknown', title: v.title, duration: v.duration }
+        videos: processedVideos, // 改为复数，支持多个视频
+        searchKeyword: selectedText // 保存搜索关键词
       } : n));
     } catch (e) {
       console.error('Video search error:', e);
@@ -1131,9 +1271,9 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   // 获取当前步骤的任务（从缓存）
   const getCurrentStepTask = () => {
-    if (!learningPlan) return null;
+    if (!learningPlan || currentStepIndex === 0) return null; // welcome 页面没有任务
     
-    const currentStep = learningPlan.plan[currentStepIndex];
+    const currentStep = learningPlan.plan[currentStepIndex - 1];
     if (!currentStep) return null;
     
     const cachedTask = taskCache[currentStep.step];
@@ -1314,9 +1454,9 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   // 监听任务缓存变化，实时更新当前步骤的任务
   useEffect(() => {
-    if (!learningPlan || !learningPlan.plan[currentStepIndex]) return;
+    if (!learningPlan || currentStepIndex === 0 || !learningPlan.plan[currentStepIndex - 1]) return;
     
-    const currentStep = learningPlan.plan[currentStepIndex];
+    const currentStep = learningPlan.plan[currentStepIndex - 1];
     const cachedTask = taskCache[currentStep.step];
     
     if (cachedTask && (!currentTask || isLoadingTask)) {
@@ -1337,6 +1477,28 @@ export default function StudyPage({ params }: StudyPageProps) {
       }
     }
   }, [taskCache, currentStepIndex, learningPlan, currentTask, isLoadingTask, pollingInterval]);
+
+  // 处理步骤切换，清理状态
+  useEffect(() => {
+    if (currentStepIndex === 0) {
+      // 切换到 welcome 页面时清理任务状态
+      setCurrentTask(null);
+      setIsLoadingTask(false);
+    } else if (learningPlan && learningPlan.plan[currentStepIndex - 1]) {
+      // 切换到学习步骤时检查是否需要加载任务
+      const currentStep = learningPlan.plan[currentStepIndex - 1];
+      const cachedTask = taskCache[currentStep.step];
+      
+      if (cachedTask) {
+        setCurrentTask(cachedTask);
+        setIsLoadingTask(false);
+      } else {
+        setCurrentTask(null);
+        setIsLoadingTask(true);
+        startPollingForTask(currentStep.step);
+      }
+    }
+  }, [currentStepIndex]);
 
   // 处理答案选择
   const handleAnswerSelect = (questionIndex: number, answer: string) => {
@@ -1663,18 +1825,34 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   // 获取当前使用的步骤数据
   const getStepsData = () => {
+    const welcomeStep = {
+      id: 'step-0',
+      title: 'Welcome',
+      description: '了解学习平台的功能和使用方法',
+      status: currentStepIndex > 0 ? 'completed' : 'current' as const,
+      estimatedTime: '5分钟',
+      type: 'intro' as const
+    };
+
     if (routeParams?.id === 'custom' && learningPlan) {
-      return learningPlan.plan.map((step, index) => ({
+      const planSteps = learningPlan.plan.map((step, index) => ({
         id: `step-${step.step}`,
         title: step.title,
         description: step.description,
-        status: index < currentStepIndex ? 'completed' : 
-                index === currentStepIndex ? 'current' : 'pending',
+        status: index + 1 < currentStepIndex ? 'completed' : 
+                index + 1 === currentStepIndex ? 'current' : 'pending',
         estimatedTime: step.videos[0]?.duration || '估算中',
         type: step.type === 'coding' ? 'practice' : 'theory'
       }));
+      return [welcomeStep, ...planSteps];
     }
-    return defaultLearningSteps;
+    
+    const adjustedDefaultSteps = defaultLearningSteps.map((step, index) => ({
+      ...step,
+      status: index + 1 < currentStepIndex ? 'completed' : 
+              index + 1 === currentStepIndex ? 'current' : 'pending'
+    }));
+    return [welcomeStep, ...adjustedDefaultSteps];
   };
 
   const learningSteps = getStepsData();
@@ -1701,8 +1879,9 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   // 获取当前步骤的所有视频
   const getCurrentStepVideos = () => {
-    if (routeParams?.id === 'custom' && learningPlan && learningPlan.plan[currentStepIndex]) {
-      const step = learningPlan.plan[currentStepIndex];
+    if (currentStepIndex === 0) return []; // welcome 页面没有视频
+    if (routeParams?.id === 'custom' && learningPlan && learningPlan.plan[currentStepIndex - 1]) {
+      const step = learningPlan.plan[currentStepIndex - 1];
       return step.videos || [];
     }
     return [];
@@ -1884,6 +2063,8 @@ export default function StudyPage({ params }: StudyPageProps) {
   const renderNodeWithHighlights = (node: any, anchorIdx: number) => {
     const list = marks.filter(m => m.stepIndex === currentStepIndex && m.anchorIndex === anchorIdx);
     if (list.length === 0) return node;
+    
+    // 获取所有需要高亮的文本模式
     const patterns = list.map(m => m.text).filter(Boolean);
     if (patterns.length === 0) return node;
 
@@ -1930,14 +2111,67 @@ export default function StudyPage({ params }: StudyPageProps) {
 
     // 记录锚点（块级），渲染时在该块内对匹配文本做高亮
     const anchorIdx = getSelectedAnchorIndex();
-    const newMark: Mark = {
-      id: `mark-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-      text,
-      stepIndex: currentStepIndex,
-      anchorIndex: typeof anchorIdx === 'number' ? anchorIdx : null,
-      color: 'pink'
-    };
-    setMarks(prev => [...prev, newMark]);
+    
+    // 尝试计算精确位置（用于去重判断）
+    let startOffset: number | undefined;
+    let endOffset: number | undefined;
+    
+    try {
+      const range = sel.getRangeAt(0);
+      const anchorElement = document.querySelector(`[data-anchor-index="${anchorIdx}"]`);
+      
+      if (anchorElement) {
+        // 获取锚点元素的纯文本内容
+        const anchorText = anchorElement.textContent || '';
+        
+        // 创建一个临时的 range 来计算位置
+        const tempRange = document.createRange();
+        tempRange.selectNodeContents(anchorElement);
+        tempRange.setEnd(range.startContainer, range.startOffset);
+        
+        // 计算从锚点开始到选择位置的文本偏移
+        const calculatedStart = tempRange.toString().length;
+        const calculatedEnd = calculatedStart + text.length;
+        
+        // 验证计算的位置是否正确
+        const expectedText = anchorText.slice(calculatedStart, calculatedEnd);
+        if (expectedText === text) {
+          startOffset = calculatedStart;
+          endOffset = calculatedEnd;
+        }
+      }
+    } catch (e) {
+      // 位置计算失败，不影响基本功能
+    }
+    
+    // 检查是否已经存在相同的标记
+    const existingMarkIndex = marks.findIndex(m => 
+      m.text === text && 
+      m.stepIndex === currentStepIndex && 
+      m.anchorIndex === anchorIdx &&
+      // 如果有精确位置，必须位置也匹配；否则只匹配文本
+      (startOffset !== undefined && m.startOffset !== undefined ? 
+        m.startOffset === startOffset : 
+        true)
+    );
+    
+    if (existingMarkIndex !== -1) {
+      // 如果已存在，则删除该标记
+      setMarks(prev => prev.filter((_, index) => index !== existingMarkIndex));
+    } else {
+      // 如果不存在，则添加新标记
+      const newMark: Mark = {
+        id: `mark-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        text,
+        stepIndex: currentStepIndex,
+        anchorIndex: typeof anchorIdx === 'number' ? anchorIdx : null,
+        color: 'pink',
+        startOffset,
+        endOffset
+      };
+      setMarks(prev => [...prev, newMark]);
+    }
+    
     sel.removeAllRanges();
   };
 
@@ -1971,7 +2205,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                             ? 'bg-blue-400 text-white border-blue-400 -rotate-12' 
                             : 'bg-gray-200 text-gray-600 border-gray-300 rotate-6'
                         }`}>
-                          {index + 1}
+                          {index === 0 ? '👋' : index}
               </div>
             </div>
                       <div className="flex-1 min-w-0">
@@ -2076,7 +2310,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                   }`}
                   title={step.title}
                 >
-                  {index + 1}
+                  {index === 0 ? '👋' : index}
                 </div>
               ))}
             </div>
@@ -2101,7 +2335,9 @@ export default function StudyPage({ params }: StudyPageProps) {
         <div className="h-full flex flex-col">
           {/* 合并的内容区域 */}
           <div className="h-full p-6 overflow-y-auto">
-            {isLoadingTask ? (
+            {currentStepIndex === 0 ? (
+              <WelcomePage onStartLearning={() => setCurrentStepIndex(1)} />
+            ) : isLoadingTask ? (
               <div className="h-full flex items-center justify-center">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
@@ -2110,9 +2346,9 @@ export default function StudyPage({ params }: StudyPageProps) {
                   {/* 调试信息 - 仅在开发环境显示 */}
                   {process.env.NODE_ENV === 'development' && learningPlan && (
                     <div className="mt-4 text-sm text-gray-500">
-                      <p>Current Step: {learningPlan.plan[currentStepIndex]?.step}</p>
-                      <p>Status: {taskGenerationStatus[learningPlan.plan[currentStepIndex]?.step]}</p>
-                      <p>Cached: {taskCache[learningPlan.plan[currentStepIndex]?.step] ? 'Yes' : 'No'}</p>
+                      <p>Current Step: {learningPlan.plan[currentStepIndex - 1]?.step}</p>
+                      <p>Status: {taskGenerationStatus[learningPlan.plan[currentStepIndex - 1]?.step]}</p>
+                      <p>Cached: {taskCache[learningPlan.plan[currentStepIndex - 1]?.step] ? 'Yes' : 'No'}</p>
                     </div>
                   )}
                 </div>

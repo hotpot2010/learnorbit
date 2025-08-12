@@ -89,6 +89,36 @@
     },
     "courseTime": {
       "hours": "小时"
+    },
+    "welcome": {
+      "title": "Welcome to AITutorly!",
+      "subtitle": "嘿！欢迎来到智能学习的魔法世界 ✨ 准备好和枯燥的学习说拜拜了吗？这里有超多酷炫功能等你发现呢！",
+      "contentTitle": "丰富的学习内容",
+      "contentNote": "手把手教学笔记",
+      "contentNoteDesc": "从小白到大神，每个知识点都给你讲得明明白白！",
+      "contentVideo": "AI智选视频库",
+      "contentVideoDesc": "主播放器 + 精选列表，YouTube 和 B站好内容一网打尽！",
+      "aiAssistantTitle": "AI学习助手",
+      "aiAssistantDesc": "你的贴心学习小伙伴，24小时不打烊哦！有问题就找它～",
+      "aiAssistantArrow": "在这里聊天哦！",
+      "interactionTitle": "智能交互功能",
+      "interactionDesc": "随便选个文字试试看，惊喜浮框马上蹦出来！",
+      "dragDesc": "试试拖动右边聊天框里的文字到左边，神奇的便签就出现啦！",
+      "dragArrow": "拖过来就变便签！",
+      "chatBubble": {
+        "line1": "哇！这段重点知识超级重要呢～",
+        "line2": "不如拖拽过去做个笔记吧！",
+        "line3": "这样就不会忘记啦 ✨",
+        "highlight": "重点知识"
+      },
+      "stickyNote": {
+        "line1": "哇！这就是传说中的智能便签啦～ 🎊",
+        "line2": "只要拖拖拽拽，重点知识就被我抓住了！",
+        "line3": "再也不怕忘记学过的内容啦 💪"
+      },
+      "quizTitle": "智能答题挑战",
+      "quizDesc": "学完知识点还不够？来挑战一下智能题目吧！AI会根据你的学习内容生成专属练习题，既有选择题也有编程题哦～答对了才能解锁下一关！💪",
+      "startButton": "开启学习冒险 🚀"
     }
   },
   "PricingPage": {

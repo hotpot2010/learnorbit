@@ -153,6 +153,36 @@
     },
     "courseTime": {
       "hours": "hours"
+    },
+    "welcome": {
+      "title": "Welcome to AITutorly!",
+      "subtitle": "Hey! Welcome to the magical world of smart learning ✨ Ready to say goodbye to boring studying? There are tons of cool features waiting for you to discover!",
+      "contentTitle": "Rich Learning Content",
+      "contentNote": "Step-by-step Teaching Notes",
+      "contentNoteDesc": "From beginner to expert, every concept explained crystal clear!",
+      "contentVideo": "AI-curated Video Library",
+      "contentVideoDesc": "Main player + curated playlists, best content from YouTube and Bilibili!",
+      "aiAssistantTitle": "AI Learning Assistant",
+      "aiAssistantDesc": "Your caring study buddy, available 24/7! Ask me anything~",
+      "aiAssistantArrow": "Chat here!",
+      "interactionTitle": "Smart Interactive Features",
+      "interactionDesc": "Just select any text and watch the magic popup appear!",
+      "dragDesc": "Try dragging text from the chat box on the right to the left, and magical notes will appear!",
+      "dragArrow": "Drag to create notes!",
+      "chatBubble": {
+        "line1": "Wow! This key knowledge is super important~",
+        "line2": "How about dragging it over to make a note!",
+        "line3": "That way you won't forget it ✨",
+        "highlight": "key knowledge"
+      },
+      "stickyNote": {
+        "line1": "Wow! This is the legendary smart sticky note~ 🎊",
+        "line2": "Just drag and drop, and I've captured the key knowledge!",
+        "line3": "Never worry about forgetting what you've learned 💪"
+      },
+      "quizTitle": "Smart Quiz Challenge",
+      "quizDesc": "Learning the content isn't enough? Come challenge some smart questions! AI will generate exclusive practice problems based on your learning content, including both multiple choice and coding questions~ You can only unlock the next level by getting them right! 💪",
+      "startButton": "Start Learning Adventure 🚀"
     }
   },
   "PricingPage": {
