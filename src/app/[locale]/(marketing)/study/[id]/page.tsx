@@ -17,7 +17,7 @@ import {
   Minimize2,
   StickyNote
 } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { LearningPlan, LearningStep, TaskGenerateRequest, TaskGenerateResponse, TaskContent, QuizQuestion, CodingTask } from '@/types/learning-plan';
 import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
@@ -85,11 +85,21 @@ export default function StudyPage({ params }: StudyPageProps) {
     video?: { url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title?: string; duration?: string };
     isLoading?: boolean;
     insertAfterAnchor?: number | null;
+    origin?: 'drag' | 'note';
   }
   const [notes, setNotes] = useState<Note[]>([]);
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
   const [editingText, setEditingText] = useState<string>('');
   const [expandedNoteVideoIds, setExpandedNoteVideoIds] = useState<Record<string, boolean>>({});
+  // 彩笔标记（可持久化）
+  interface Mark {
+    id: string;
+    text: string;
+    stepIndex: number;
+    anchorIndex: number | null;
+    color?: string; // 预留不同颜色
+  }
+  const [marks, setMarks] = useState<Mark[]>([]);
 
   const toggleNoteVideoExpanded = (noteId: string) => {
     setExpandedNoteVideoIds(prev => ({ ...prev, [noteId]: !prev[noteId] }));
@@ -181,89 +191,104 @@ export default function StudyPage({ params }: StudyPageProps) {
       .sort((a, b) => a.insertAfterParagraph - b.insertAfterParagraph);
     
     // 统一的便签渲染组件
-    const renderNoteBlock = (note: Note) => (
-      <div key={`note-${note.id}`} className="my-6">
-        <div className="flex items-start space-x-3 mb-4 ml-6">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-700 text-lg font-bold flex items-center justify-center mt-1 transform rotate-1 shadow-md border border-yellow-200">
-            <StickyNote className="w-4 h-4" />
-          </div>
-          <div className="flex-1 max-w-fit">
-            <div
-              className="relative bg-yellow-100 p-5 rounded-lg shadow-lg transform rotate-0.5 border border-yellow-200 inline-block min-w-64 max-w-2xl"
-              style={{ boxShadow: '0 3px 8px rgba(255, 212, 59, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08)' }}
-            >
+    const renderNoteBlock = (note: Note) => {
+      const isVideo = note.type === 'video';
+      const isDrag = note.type !== 'video' && note.origin === 'drag';
+      const iconClass = isVideo
+        ? 'bg-gradient-to-br from-purple-100 to-purple-200 text-purple-700 border-purple-200'
+        : isDrag
+        ? 'bg-gradient-to-br from-sky-100 to-sky-200 text-sky-700 border-sky-200'
+        : 'bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-700 border-yellow-200';
+      const paperBg = isVideo ? 'bg-purple-50 border-purple-200' : isDrag ? 'bg-sky-50 border-sky-200' : 'bg-yellow-100 border-yellow-200';
+      const paperFold = isVideo ? 'bg-purple-50 border-purple-200' : isDrag ? 'bg-sky-50 border-sky-200' : 'bg-yellow-100 border-yellow-200';
+      const timestampColor = isVideo ? 'text-purple-700' : isDrag ? 'text-sky-700' : 'text-yellow-600';
+      const deleteHover = isVideo ? 'hover:bg-purple-100 text-purple-500' : isDrag ? 'hover:bg-sky-100 text-sky-500' : 'hover:bg-yellow-100 text-yellow-500';
+      const alignWrap = isVideo ? 'flex items-start justify-end mb-4 mr-6 space-x-3' : 'flex items-start mb-4 ml-6 space-x-3';
+
+      return (
+        <div key={`note-${note.id}`} className="my-6">
+          <div className={alignWrap}>
+            <div className={`w-8 h-8 rounded-lg ${iconClass} text-lg font-bold flex items-center justify-center mt-1 transform rotate-1 shadow-md`}>
+              <StickyNote className="w-4 h-4" />
+            </div>
+            <div className={`${isVideo ? 'max-w-full' : 'flex-1 max-w-fit'}`}>
               <div
-                className="absolute top-0 right-0 w-5 h-5 bg-yellow-100 transform rotate-45 translate-x-2.5 -translate-y-2.5 border border-yellow-200"
-                style={{ clipPath: 'polygon(0% 100%, 100% 100%, 100% 0%)' }}
-              />
-              <div className="flex items-start justify-between">
-                <div className="flex-1 min-w-0">
-                  {editingNoteId === note.id ? (
-                    <div className="space-y-3">
-                      <textarea
-                        value={editingText}
-                        onChange={(e) => setEditingText(e.target.value)}
-                        className="w-full p-3 border border-yellow-300 rounded-lg bg-yellow-50 text-yellow-800 resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                        style={{
-                          fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
-                          fontSize: '16px',
-                          lineHeight: '1.6',
-                          minHeight: '80px'
-                        }}
-                        autoFocus
-                        onKeyDown={(e) => {
-                          if (e.key === 'Escape') {
-                            handleCancelEdit();
-                          } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-                            handleSaveEdit(note.id);
-                          }
-                        }}
-                      />
-                      <div className="flex items-center space-x-2">
-                        <button onClick={() => handleSaveEdit(note.id)} className="px-3 py-1 bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors text-xs font-medium" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✓ Save</button>
-                        <button onClick={handleCancelEdit} className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors text-xs font-medium" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✕ Cancel</button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      {note.type === 'video' && (note.isLoading || note.video) ? (
-                        <div className="w-full">
-                          {note.isLoading ? (
-                            <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black/80 flex items-center justify-center">
-                              <div className="w-8 h-8 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
-                            </div>
-                          ) : note.video ? (
-                            <>
-                              <div className={`relative group transition-all duration-300 ${expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-full'} aspect-video rounded-lg overflow-hidden shadow-md bg-black`}>
-                                <iframe src={note.video.url} frameBorder="0" allowFullScreen={true} allow={note.video.platform === 'youtube' ? "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" : "autoplay; fullscreen"} className="w-full h-full" referrerPolicy={note.video.platform === 'bilibili' ? "no-referrer" : undefined} sandbox={note.video.platform === 'bilibili' ? "allow-same-origin allow-scripts allow-popups allow-presentation" : undefined} />
-                                <button onClick={() => toggleNoteVideoExpanded(note.id)} className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110" title={expandedNoteVideoIds[note.id] ? '缩小视频' : '放大视频'}>
-                                  {expandedNoteVideoIds[note.id] ? (<Minimize2 className="w-4 h-4" />) : (<Maximize2 className="w-4 h-4" />)}
-                                </button>
-                              </div>
-                              {(note.video.title || note.video.duration) && (
-                                <div className="text-xs text-yellow-700 mt-1">{note.video.title || ''} {note.video.duration ? `· ${note.video.duration}` : ''}</div>
-                              )}
-                            </>
-                          ) : null}
+                className={`relative ${paperBg} p-5 rounded-lg shadow-lg transform rotate-0.5 inline-block min-w-64 max-w-2xl border`}
+                style={{ boxShadow: isVideo ? '0 3px 8px rgba(147, 51, 234, 0.10), 0 1px 3px rgba(0, 0, 0, 0.08)' : isDrag ? '0 3px 8px rgba(56, 189, 248, 0.10), 0 1px 3px rgba(0,0,0,0.08)' : '0 3px 8px rgba(255, 212, 59, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08)' }}
+              >
+                <div
+                  className={`absolute top-0 right-0 w-5 h-5 ${paperFold} transform rotate-45 translate-x-2.5 -translate-y-2.5 border`}
+                  style={{ clipPath: 'polygon(0% 100%, 100% 100%, 100% 0%)' }}
+                />
+                <div className="flex items-start justify-between">
+                  <div className="flex-1 min-w-0">
+                    {editingNoteId === note.id ? (
+                      <div className="space-y-3">
+                        <textarea
+                          value={editingText}
+                          onChange={(e) => setEditingText(e.target.value)}
+                          className={`w-full p-3 border rounded-lg ${isVideo ? 'border-purple-300 bg-purple-50 text-purple-800 focus:ring-purple-400' : isDrag ? 'border-sky-300 bg-sky-50 text-sky-800 focus:ring-sky-400' : 'border-yellow-300 bg-yellow-50 text-yellow-800 focus:ring-yellow-400'} resize-none focus:outline-none focus:ring-2`}
+                          style={{
+                            fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
+                            fontSize: '16px',
+                            lineHeight: '1.6',
+                            minHeight: '80px'
+                          }}
+                          autoFocus
+                          onKeyDown={(e) => {
+                            if (e.key === 'Escape') {
+                              handleCancelEdit();
+                            } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                              handleSaveEdit(note.id);
+                            }
+                          }}
+                        />
+                        <div className="flex items-center space-x-2">
+                          <button onClick={() => handleSaveEdit(note.id)} className={`px-3 py-1 rounded-md transition-colors text-xs font-medium ${isVideo ? 'bg-purple-100 text-purple-700 hover:bg-purple-200' : isDrag ? 'bg-sky-100 text-sky-700 hover:bg-sky-200' : 'bg-green-100 text-green-700 hover:bg-green-200'}`} style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✓ Save</button>
+                          <button onClick={handleCancelEdit} className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors text-xs font-medium" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✕ Cancel</button>
                         </div>
-                      ) : (
-                        <div className="text-lg leading-relaxed text-yellow-800 whitespace-pre-wrap break-words cursor-pointer hover:bg-yellow-50 rounded p-1 -m-1 transition-colors" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive', fontSize: '16px', lineHeight: '1.6', textShadow: '0 0.5px 1px rgba(255, 212, 59, 0.08)', wordBreak: 'break-word' }} onDoubleClick={() => handleStartEdit(note.id, note.text)} title="Double-click to edit">{note.text || '（空白便签，双击编辑）'}</div>
-                      )}
-                    </div>
-                  )}
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        {note.type === 'video' && (note.isLoading || note.video) ? (
+                          <div className="w-full">
+                            {note.isLoading ? (
+                              <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black/80 flex items-center justify-center">
+                                <div className="w-8 h-8 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
+                              </div>
+                            ) : note.video ? (
+                              <>
+                                <div className={`relative group transition-all duration-300 ${expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-full'} aspect-video rounded-lg overflow-hidden shadow-md bg-black`}>
+                                  <iframe src={note.video.url} frameBorder="0" allowFullScreen={true} allow={note.video.platform === 'youtube' ? "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" : "autoplay; fullscreen"} className="w-full h-full" referrerPolicy={note.video.platform === 'bilibili' ? "no-referrer" : undefined} sandbox={note.video.platform === 'bilibili' ? "allow-same-origin allow-scripts allow-popups allow-presentation" : undefined} />
+                                  <button onClick={() => toggleNoteVideoExpanded(note.id)} className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110" title={expandedNoteVideoIds[note.id] ? '缩小视频' : '放大视频'}>
+                                    {expandedNoteVideoIds[note.id] ? (<Minimize2 className="w-4 h-4" />) : (<Maximize2 className="w-4 h-4" />)}
+                                  </button>
+                                </div>
+                                {(note.video.title || note.video.duration) && (
+                                  <div className={`text-xs mt-1 ${timestampColor}`}>{note.video.title || ''} {note.video.duration ? `· ${note.video.duration}` : ''}</div>
+                                )}
+                              </>
+                            ) : null}
+                          </div>
+                        ) : (
+                          <div className={`text-lg leading-relaxed whitespace-pre-wrap break-words cursor-pointer rounded p-1 -m-1 transition-colors ${isVideo ? 'text-purple-800 hover:bg-purple-50' : isDrag ? 'text-sky-800 hover:bg-sky-50' : 'text-yellow-800 hover:bg-yellow-50'}`} style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive', fontSize: '16px', lineHeight: '1.6', textShadow: '0 0.5px 1px rgba(0, 0, 0, 0.06)', wordBreak: 'break-word' }} onDoubleClick={() => handleStartEdit(note.id, note.text)} title="Double-click to edit">{note.text || '（空白便签，双击编辑）'}</div>
+                        )}
+                      </div>
+                    )}
+                    {editingNoteId !== note.id && (
+                      <div className={`text-xs opacity-70 ${timestampColor}`} style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>Added at {note.timestamp.toLocaleTimeString()}</div>
+                    )}
+                  </div>
                   {editingNoteId !== note.id && (
-                    <div className="text-xs text-yellow-600 opacity-70" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>Added at {note.timestamp.toLocaleTimeString()}</div>
+                    <button onClick={() => handleDeleteNote(note.id)} className={`ml-3 p-1 rounded-full transition-all duration-200 transform hover:scale-110 flex-shrink-0 ${deleteHover}`} title="删除笔记" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✕</button>
                   )}
                 </div>
-                {editingNoteId !== note.id && (
-                  <button onClick={() => handleDeleteNote(note.id)} className="text-yellow-500 hover:text-red-500 ml-3 p-1 rounded-full hover:bg-yellow-100 transition-all duration-200 transform hover:scale-110 flex-shrink-0" title="删除笔记" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✕</button>
-                )}
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    };
     
     // 在某个锚点后渲染所有匹配的便签
     const renderNotesAfterAnchor = (anchorIdx: number) => {
@@ -294,7 +319,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                 <>
                   <h1 data-anchor-index={anchorIdx} className="text-3xl font-bold text-center text-blue-700 relative mb-8" {...props}>
                     <span className="bg-yellow-200 px-3 py-1 rounded-lg inline-block transform -rotate-1 shadow-sm">
-                      {children}
+                      {renderNodeWithHighlights(children, anchorIdx)}
                     </span>
                   </h1>
                   {renderNotesAfterAnchor(anchorIdx)}
@@ -308,7 +333,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                   <h2 data-anchor-index={anchorIdx} className="text-xl font-bold text-blue-700 mb-6 mt-8" style={{
                     fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                   }} {...props}>
-                    {children}
+                    {renderNodeWithHighlights(children, anchorIdx)}
                   </h2>
                   {renderNotesAfterAnchor(anchorIdx)}
                 </>
@@ -321,7 +346,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                   <h3 data-anchor-index={anchorIdx} className="text-lg font-bold text-purple-700 mb-5 mt-7" style={{
                     fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                   }} {...props}>
-                    {children}
+                    {renderNodeWithHighlights(children, anchorIdx)}
                   </h3>
                   {renderNotesAfterAnchor(anchorIdx)}
                 </>
@@ -339,7 +364,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                       <p className="text-base leading-loose text-gray-800 font-bold" style={{
                         fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                       }} {...props}>
-                        {children}
+                        {renderNodeWithHighlights(children, anchorIdx)}
                       </p>
                     </div>
                   </div>
@@ -359,7 +384,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                       <ul className="list-disc list-inside text-gray-800 space-y-4" style={{
                         fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                       }} {...props}>
-                        {children}
+                        {renderNodeWithHighlights(children, anchorIdx)}
                       </ul>
                     </div>
                   </div>
@@ -379,7 +404,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                       <ol className="list-decimal list-inside text-gray-800 space-y-4" style={{
                         fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                       }} {...props}>
-                        {children}
+                        {renderNodeWithHighlights(children, anchorIdx)}
                       </ol>
                     </div>
                   </div>
@@ -394,7 +419,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                   <li data-anchor-index={anchorIdx} className="text-base text-gray-800 leading-loose" style={{
                     fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                   }} {...props}>
-                    {children}
+                    {renderNodeWithHighlights(children, anchorIdx)}
                   </li>
                   {renderNotesAfterAnchor(anchorIdx)}
                 </>
@@ -427,7 +452,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                     </div>
                     <div className="flex-1">
                       <pre className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto" {...props}>
-                        {children}
+                        {renderNodeWithHighlights(children, anchorIdx)}
                       </pre>
                     </div>
                   </div>
@@ -447,7 +472,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                       <blockquote className="bg-orange-50 text-gray-800 p-3 rounded-lg italic border-l-4 border-orange-400" style={{
                         fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                       }} {...props}>
-                        {children}
+                        {renderNodeWithHighlights(children, anchorIdx)}
                       </blockquote>
                     </div>
                   </div>
@@ -556,6 +581,13 @@ export default function StudyPage({ params }: StudyPageProps) {
     setTimeout(() => setExternalMessage(message), 10);
   };
 
+  const handleHowClick = (selectedText: string) => {
+    // 向右侧聊天助手发送 "how to use ..." 消息
+    const message = `how to use ${selectedText}`;
+    setExternalMessage('');
+    setTimeout(() => setExternalMessage(message), 10);
+  };
+
   const handleNoteClick = (selectedText: string) => {
     // 精确：选中位置所在或最近上方的锚点
     const anchorIdx = getSelectedAnchorIndex();
@@ -572,7 +604,8 @@ export default function StudyPage({ params }: StudyPageProps) {
       stepIndex: currentStepIndex,
       insertAfterParagraph,
       insertAfterAnchor: typeof anchorIdx === 'number' ? anchorIdx : null,
-      type: 'text'
+      type: 'text',
+      origin: 'note'
     };
 
     setNotes(prev => [...prev, newNote].sort((a, b) => a.insertAfterParagraph - b.insertAfterParagraph));
@@ -748,6 +781,17 @@ export default function StudyPage({ params }: StudyPageProps) {
                   console.error('解析便签失败', e);
                 }
               }
+              // 加载彩笔标记
+              const savedMarks = sessionStorage.getItem('courseMarks');
+              if (savedMarks) {
+                try {
+                  const parsed = JSON.parse(savedMarks);
+                  const processed = Array.isArray(parsed) ? parsed : [];
+                  setMarks(processed);
+                } catch (e) {
+                  console.error('解析彩笔标记失败', e);
+                }
+              }
               
               // 标记任务生成已完成，防止后续调用
               taskGenerationStarted.current = true;
@@ -757,6 +801,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               sessionStorage.removeItem('fromDatabase');
               sessionStorage.removeItem('taskCache');
               sessionStorage.removeItem('courseNotes');
+              sessionStorage.removeItem('courseMarks');
             } 
             // 如果来自课程定制页面且有任务缓存，加载缓存的任务
             else if (fromCustomPage === 'true' && savedTaskCache) {
@@ -1763,6 +1808,7 @@ export default function StudyPage({ params }: StudyPageProps) {
         plan: learningPlan,
         tasks: taskCache,
         notes: notes,
+        marks: marks,
       };
 
       const response = await fetch('/api/user-courses', {
@@ -1832,6 +1878,67 @@ export default function StudyPage({ params }: StudyPageProps) {
       setEditingNoteId(null);
       setEditingText('');
     }
+  };
+
+  // 文本高亮渲染工具：将指定锚点内的字符串高亮为"彩笔笔刷"效果
+  const renderNodeWithHighlights = (node: any, anchorIdx: number) => {
+    const list = marks.filter(m => m.stepIndex === currentStepIndex && m.anchorIndex === anchorIdx);
+    if (list.length === 0) return node;
+    const patterns = list.map(m => m.text).filter(Boolean);
+    if (patterns.length === 0) return node;
+
+    const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp('(' + patterns.map(escapeRegExp).join('|') + ')', 'g');
+
+    const highlightSpan = (text: string) => {
+      if (!text) return text as any;
+      const parts = text.split(regex);
+      if (parts.length === 1) return text as any;
+      return parts.map((part, i) => {
+        if (part && regex.test(part)) {
+          return (
+            <span key={`mk-${i}`} className="inline-mark" style={{
+              background: 'linear-gradient(transparent 60%, rgba(236, 72, 153, 0.35) 60%)',
+              borderRadius: '2px',
+              padding: '0 2px'
+            }}>{part}</span>
+          );
+        }
+        return <React.Fragment key={`txt-${i}`}>{part}</React.Fragment>;
+      });
+    };
+
+    if (typeof node === 'string') {
+      return highlightSpan(node);
+    }
+    if (Array.isArray(node)) {
+      return node.map((child, idx) => <React.Fragment key={idx}>{renderNodeWithHighlights(child, anchorIdx)}</React.Fragment>);
+    }
+    if (React.isValidElement(node)) {
+      const children = (node as any).props?.children;
+      return React.cloneElement(node, { ...(node as any).props, children: renderNodeWithHighlights(children, anchorIdx) });
+    }
+    return node;
+  };
+
+  const handleMarkClick = (selectedText: string) => {
+    if (typeof window === 'undefined') return;
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return;
+    const text = (selectedText || '').trim();
+    if (!text) return;
+
+    // 记录锚点（块级），渲染时在该块内对匹配文本做高亮
+    const anchorIdx = getSelectedAnchorIndex();
+    const newMark: Mark = {
+      id: `mark-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      text,
+      stepIndex: currentStepIndex,
+      anchorIndex: typeof anchorIdx === 'number' ? anchorIdx : null,
+      color: 'pink'
+    };
+    setMarks(prev => [...prev, newMark]);
+    sel.removeAllRanges();
   };
 
   return (
@@ -2436,6 +2543,8 @@ export default function StudyPage({ params }: StudyPageProps) {
     <TextSelectionPopup
       onWhatClick={handleWhatClick}
       onWhyClick={handleWhyClick}
+      onHowClick={handleHowClick}
+      onMarkClick={handleMarkClick}
       onNoteClick={handleNoteClick}
       onVideoClick={handleVideoClick}
       onDragStart={(text) => console.log('拖拽开始:', text)}
@@ -2493,6 +2602,8 @@ export default function StudyPage({ params }: StudyPageProps) {
               stepIndex: currentStepIndex,
               insertAfterParagraph: insertAfterParagraph,
               insertAfterAnchor: chosenAnchor ? parseInt(chosenAnchor.getAttribute('data-anchor-index') || '-1', 10) : null,
+              type: 'text',
+              origin: 'drag'
             };
             
             // 添加笔记

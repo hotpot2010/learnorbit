@@ -8,6 +8,8 @@ import { HelpCircle, Lightbulb, StickyNote, Play, Move } from 'lucide-react';
 interface TextSelectionPopupProps {
   onWhatClick?: (selectedText: string) => void;
   onWhyClick?: (selectedText: string) => void;
+  onHowClick?: (selectedText: string) => void;
+  onMarkClick?: (selectedText: string) => void;
   onNoteClick?: (selectedText: string) => void;
   onVideoClick?: (selectedText: string) => void;
   onDragStart?: (selectedText: string) => void; // 新增：拖拽开始回调
@@ -31,6 +33,8 @@ interface DragState {
 export function TextSelectionPopup({
   onWhatClick,
   onWhyClick,
+  onHowClick,
+  onMarkClick,
   onNoteClick,
   onVideoClick,
   onDragStart,
@@ -150,10 +154,12 @@ export function TextSelectionPopup({
   }, []);
 
   // 处理按钮点击
-  const handleButtonClick = (action: 'what' | 'why' | 'note' | 'video') => {
+  const handleButtonClick = (action: 'what' | 'why' | 'how' | 'mark' | 'note' | 'video') => {
     const callbacks = {
       what: onWhatClick,
       why: onWhyClick,
+      how: onHowClick,
+      mark: onMarkClick,
       note: onNoteClick,
       video: onVideoClick
     };
@@ -363,6 +369,20 @@ export function TextSelectionPopup({
                 </span>
               </Button>
 
+              {/* How 按钮 */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleButtonClick('how')}
+                className="flex items-center space-x-1 px-2 py-1 h-8 text-xs font-medium bg-teal-50 hover:bg-teal-100 text-teal-700 border border-teal-200 rounded transform rotate-1 hover:rotate-0 transition-all duration-200"
+                title={`How: ${selectedText.slice(0, 30)}${selectedText.length > 30 ? '...' : ''}`}
+              >
+                <HelpCircle className="w-3 h-3" />
+                <span style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
+                  How
+                </span>
+              </Button>
+
               {/* Note 按钮 */}
               <Button
                 variant="ghost"
@@ -389,6 +409,17 @@ export function TextSelectionPopup({
                 <span style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
                   Video
                 </span>
+              </Button>
+
+              {/* 标记 按钮（圆点） - 放到最右侧 */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleButtonClick('mark')}
+                className="flex items-center justify-center p-2 h-8 w-8 border border-pink-200 rounded-full transform hover:scale-110 transition-all duration-200"
+                title={`标记: ${selectedText.slice(0, 30)}${selectedText.length > 30 ? '...' : ''}`}
+              >
+                <span className="block w-2.5 h-2.5 rounded-full bg-pink-500" />
               </Button>
             </div>
           </Card>
@@ -685,4 +716,4 @@ export function TextSelectionPopup({
       })()}
     </>
   );
-} 
+}

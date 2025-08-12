@@ -169,6 +169,10 @@ export default function MyCoursesPage() {
     if (course.coursePlan.notes) {
       sessionStorage.setItem('courseNotes', JSON.stringify(course.coursePlan.notes));
     }
+    // 如果有彩笔标记数据，也一并存储
+    if (course.coursePlan.marks) {
+      sessionStorage.setItem('courseMarks', JSON.stringify(course.coursePlan.marks));
+    }
     
     sessionStorage.setItem('learningPlan', JSON.stringify(learningPlan));
     sessionStorage.setItem('fromDatabase', 'true'); // 标记来源于数据库

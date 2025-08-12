@@ -23,13 +23,16 @@ export async function POST(request: NextRequest) {
     const coursePlan = requestData.plan || requestData;
     const taskData = requestData.tasks || {};
     const notesData = requestData.notes || [];
+    const marksData = requestData.marks || [];
     
     console.log('📥 接收到课程数据:', {
       hasPlan: !!coursePlan,
       hasTaskData: !!requestData.tasks,
       taskCount: Object.keys(taskData).length,
       hasNotes: Array.isArray(notesData),
-      notesCount: Array.isArray(notesData) ? notesData.length : 0
+      notesCount: Array.isArray(notesData) ? notesData.length : 0,
+      hasMarks: Array.isArray(marksData),
+      marksCount: Array.isArray(marksData) ? marksData.length : 0
     });
 
     // 保存课程信息到数据库
@@ -42,6 +45,7 @@ export async function POST(request: NextRequest) {
           plan: coursePlan.plan || coursePlan,
           tasks: taskData, // 存储生成的任务数据
           notes: notesData, // 存储便签
+          marks: marksData, // 存储彩笔标记
         },
         currentStep: 0,
         status: 'in-progress',
