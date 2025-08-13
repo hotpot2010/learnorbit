@@ -267,7 +267,7 @@ export function AIChatInterface({
         id: requestData.id,
         messages: requestData.messages,
         advise: JSON.stringify({
-          should_update: analysisResult.updateSteps,
+          updateSteps: analysisResult.updateSteps,
           reason: analysisResult.reason || '用户需求分析',
         }),
       };
@@ -296,6 +296,7 @@ export function AIChatInterface({
         const decoder = new TextDecoder();
         let stepCount = 0;
         let buffer = ''; // 用于缓存不完整的数据
+        let sawNoUpdateMessage = false;
 
         while (true) {
           const { done, value } = await reader.read();
@@ -326,6 +327,10 @@ export function AIChatInterface({
                   console.warn('⚠️ 计划生成警告:', data.warning);
                 } else if (data.message) {
                   console.log('📨 计划生成消息:', data.message);
+                  const msg = String(data.message);
+                  if (msg.includes('无需更新计划') || msg.toLowerCase().includes('no update')) {
+                    sawNoUpdateMessage = true;
+                  }
                 } else if (data.step) {
                   stepCount += 1;
                   const step = data.step;
@@ -347,6 +352,11 @@ export function AIChatInterface({
                       `📚 生成的计划包含 ${plan.plan?.length || 0} 个步骤`
                     );
                     onPlanUpdate?.(plan); // 调用回调通知父组件更新计划
+                  } else {
+                    // 没有返回plan，通知父组件结束“更新中”（表示无变更）
+                    if (typeof onPlanUpdate === 'function') {
+                      onPlanUpdate(undefined as any);
+                    }
                   }
                   return; // 完成后直接返回
                 }
@@ -366,6 +376,10 @@ export function AIChatInterface({
             if (data.done && data.done === true && data.plan) {
               console.log('✅ 从缓冲区处理完成的计划');
               onPlanUpdate?.(data.plan);
+            } else if (data.done && data.done === true && !data.plan) {
+              if (typeof onPlanUpdate === 'function') {
+                onPlanUpdate(undefined as any);
+              }
             }
           } catch (e) {
             console.warn('缓冲区JSON解析失败:', e);

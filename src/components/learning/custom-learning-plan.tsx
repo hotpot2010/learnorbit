@@ -6,6 +6,7 @@ import { CourseRecommendationGrid } from './course-recommendation-grid';
 import { LearningPlan, LearningStep } from '@/types/learning-plan';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import { useCurrentUser } from '@/hooks/use-current-user';
 
 // 生成随机评分
 const generateRating = (courseId: string) => {
@@ -44,6 +45,7 @@ interface CustomLearningPlanProps {
 
 export function CustomLearningPlan({ recommendedCourses, onSendMessage }: CustomLearningPlanProps) {
   const t = useTranslations('LearningPlatform');
+  const currentUser = useCurrentUser();
   const [showLearningPlan, setShowLearningPlan] = useState(false);
   const [learningInput, setLearningInput] = useState<string>('');
   const [learningPlan, setLearningPlan] = useState<LearningPlan | null>(null);
@@ -173,8 +175,17 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       
       setActiveGenerations(prev => new Set([...prev, stepNumber]));
 
-      // 构造请求数据
+      // 构造请求数据（补全后端所需字段）
+      const userId = (currentUser as any)?.id || 'anonymous';
+      const lang = typeof document !== 'undefined'
+        ? (document.documentElement.lang || 'en')
+        : 'en';
+      const courseContent = (learningPlan?.plan || partialPlan?.plan || []);
+      const previousStepsContext = (learningPlan?.plan || partialPlan?.plan || [])
+        .filter((s: any) => (typeof s.step === 'number' ? s.step : -1) < stepNumber);
+
       const requestData = {
+        // 必填/已有字段
         step: stepNumber,
         title: step.title,
         description: step.description,
@@ -183,8 +194,16 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         type: step.type,
         difficulty: step.difficulty,
         search_keyword: step.search_keyword || step.title,
-        videos: step.videos || []
-      };
+        videos: step.videos || [],
+        // 新增字段（尽量从 plan 派生）
+        id: userId, // 用户ID
+        use_mock: false,
+        course_content: courseContent,
+        current_step_context: step,
+        previous_steps_context: previousStepsContext,
+        force_regenerate: true,
+        lang,
+      } as const;
 
       console.log(`📤 发送任务生成请求 (步骤 ${stepNumber}):`, requestData);
 
@@ -542,12 +561,17 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
 
   // 新增：直接更新计划的回调
   const handlePlanUpdate = (plan: any) => {
-    console.log('📚 收到完整计划更新:', plan);
-    setLearningPlan(plan);
+    console.log('📚 收到计划更新回调:', plan);
+    if (plan) {
+      setLearningPlan(plan);
+    } else {
+      // 无变更，仅结束更新状态
+      console.log('ℹ️ 本次计划无变更，结束更新态');
+    }
 
     // 🔧 修复：只有在非更新状态时才清除部分计划
     // 如果正在更新中，保留partialPlan以供后续步骤更新使用
-    if (planUpdateStatus !== 'updating') {
+    if (plan && planUpdateStatus !== 'updating') {
       setPartialPlan(null);
       console.log('🧹 清除部分计划（非更新状态）');
     } else {
@@ -558,8 +582,10 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     setPlanUpdateStatus('completed');
 
     // 保存学习计划到sessionStorage，供学习页面使用
-    sessionStorage.setItem('learningPlan', JSON.stringify(plan));
-    console.log('💾 学习计划已保存到sessionStorage');
+    if (plan) {
+      sessionStorage.setItem('learningPlan', JSON.stringify(plan));
+      console.log('💾 学习计划已保存到sessionStorage');
+    }
 
     // 3秒后恢复idle状态并清除部分计划
     setTimeout(() => {

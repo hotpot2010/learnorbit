@@ -2082,7 +2082,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       if (parts.length === 1) return text as any;
       return parts.map((part, i) => {
         if (part && regex.test(part)) {
-          return (
+  return (
             <span key={`mk-${i}`} className="inline-mark" style={{
               background: 'linear-gradient(transparent 60%, rgba(236, 72, 153, 0.35) 60%)',
               borderRadius: '2px',
