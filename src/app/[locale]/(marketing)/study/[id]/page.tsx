@@ -217,9 +217,9 @@ export default function StudyPage({ params }: StudyPageProps) {
             <div className={`w-8 h-8 rounded-lg ${iconClass} text-lg font-bold flex items-center justify-center mt-1 transform rotate-1 shadow-md`}>
               <StickyNote className="w-4 h-4" />
             </div>
-            <div className={`${isVideo ? 'max-w-full' : 'flex-1 max-w-fit'}`}>
+            <div className={`max-w-full`}>
               <div
-                className={`relative ${paperBg} p-5 rounded-lg shadow-lg transform rotate-0.5 inline-block min-w-64 max-w-2xl border`}
+                className={`relative ${paperBg} p-5 rounded-lg shadow-lg transform rotate-0.5 inline-block ${isVideo ? (note.videos && note.videos.length > 0 ? (expandedNoteVideoIds[note.id] ? 'w-[1024px]' : 'w-[640px]') : (expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-96')) : 'min-w-64 max-w-2xl'} border`}
                 style={{ boxShadow: isVideo ? '0 3px 8px rgba(147, 51, 234, 0.10), 0 1px 3px rgba(0, 0, 0, 0.08)' : isDrag ? '0 3px 8px rgba(56, 189, 248, 0.10), 0 1px 3px rgba(0,0,0,0.08)' : '0 3px 8px rgba(255, 212, 59, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08)' }}
               >
                 <div
@@ -272,7 +272,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                 )}
                                 <div className="flex gap-4 items-start">
                                   {/* 主视频播放器 */}
-                                  <div className={`${expandedNoteVideoIds[note.id] ? 'w-[480px]' : 'w-80'} relative group transition-all duration-300`}>
+                                  <div className={`${expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-96'} relative group transition-all duration-300`}>
                                     <div className="bg-white p-2 rounded-lg shadow-lg">
                                       <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black relative transition-all duration-300">
                                         {(() => {
@@ -351,7 +351,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                     <div className="relative w-60">
                                       <div className="max-h-80 overflow-y-auto p-1">
                                         <div className="space-y-1">
-                                          {note.videos.map((video, idx) => {
+                                          {note.videos.slice(0, 4).map((video, idx) => {
                                             const active = idx === (noteVideoIndices[note.id] || 0);
                                             return (
                                               <button
@@ -388,7 +388,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                             ) : note.video ? (
                               // 兼容旧的单视频格式
                               <>
-                                <div className={`relative group transition-all duration-300 ${expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-full'} aspect-video rounded-lg overflow-hidden shadow-md bg-black`}>
+                                <div className={`relative group transition-all duration-300 ${expandedNoteVideoIds[note.id] ? 'w-[1024px]' : 'w-96'} aspect-video rounded-lg overflow-hidden shadow-md bg-black`}>
                                   <iframe src={note.video.url} frameBorder="0" allowFullScreen={true} allow={note.video.platform === 'youtube' ? "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" : "autoplay; fullscreen"} className="w-full h-full" referrerPolicy={note.video.platform === 'bilibili' ? "no-referrer" : undefined} sandbox={note.video.platform === 'bilibili' ? "allow-same-origin allow-scripts allow-popups allow-presentation" : undefined} />
                                   <button onClick={() => toggleNoteVideoExpanded(note.id)} className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110" title={expandedNoteVideoIds[note.id] ? '缩小视频' : '放大视频'}>
                                     {expandedNoteVideoIds[note.id] ? (<Minimize2 className="w-4 h-4" />) : (<Maximize2 className="w-4 h-4" />)}
