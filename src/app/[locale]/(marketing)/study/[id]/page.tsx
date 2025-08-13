@@ -86,6 +86,7 @@ export default function StudyPage({ params }: StudyPageProps) {
     video?: { url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title?: string; duration?: string };
     videos?: { url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title?: string; duration?: string }[];
     searchKeyword?: string;
+    selectedVideoIndex?: number; // 记录多视频便签的当前选择
     isLoading?: boolean;
     insertAfterAnchor?: number | null;
     origin?: 'drag' | 'note';
@@ -276,7 +277,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                     <div className="bg-white p-2 rounded-lg shadow-lg">
                                       <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black relative transition-all duration-300">
                                         {(() => {
-                                          const currentVideoIndex = noteVideoIndices[note.id] || 0;
+                                          const currentVideoIndex = (note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0);
                                           const currentVideo = note.videos[currentVideoIndex];
                                           if (!currentVideo) return null;
                                           
@@ -335,11 +336,11 @@ export default function StudyPage({ params }: StudyPageProps) {
                                         <p className={`text-xs font-medium ${timestampColor} truncate`} style={{
                                           fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                                         }}>
-                                          {note.videos[noteVideoIndices[note.id] || 0]?.title || '无标题'}
+                                          {note.videos[(note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0)]?.title || '无标题'}
                                         </p>
-                                        {note.videos[noteVideoIndices[note.id] || 0]?.duration && (
+                                        {note.videos[(note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0)]?.duration && (
                                           <p className={`text-xs ${timestampColor} opacity-70`}>
-                                            {note.videos[noteVideoIndices[note.id] || 0].duration}
+                                            {note.videos[(note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0)].duration}
                                           </p>
                                         )}
                                       </div>
@@ -352,11 +353,14 @@ export default function StudyPage({ params }: StudyPageProps) {
                                       <div className="max-h-80 overflow-y-auto p-1">
                                         <div className="space-y-1">
                                           {note.videos.slice(0, 4).map((video, idx) => {
-                                            const active = idx === (noteVideoIndices[note.id] || 0);
+                                            const active = idx === (note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0);
                                             return (
                                               <button
                                                 key={idx}
-                                                onClick={() => setNoteVideoIndices(prev => ({ ...prev, [note.id]: idx }))}
+                                                onClick={() => {
+                                                  setNoteVideoIndices(prev => ({ ...prev, [note.id]: idx }));
+                                                  setNotes(prev => prev.map(n => n.id === note.id ? { ...n, selectedVideoIndex: idx } : n));
+                                                }}
                                                 className={`w-full flex items-start gap-2 p-2 text-left transition-colors rounded ${
                                                   active ? 'bg-yellow-100 rotate-1' : 'hover:bg-yellow-50'
                                                 }`}
@@ -2233,10 +2237,12 @@ export default function StudyPage({ params }: StudyPageProps) {
                           </span>
                           
                           {/* 任务生成状态指示器 */}
-                          {routeParams?.id === 'custom' && learningPlan && (
+                          {routeParams?.id === 'custom' && learningPlan && index > 0 && (
                             <div className="ml-2">
                               {(() => {
-                                const stepNumber = learningPlan.plan[index]?.step;
+                                const planIdx = index - 1; // 跳过 welcome
+                                const stepNumber = learningPlan.plan[planIdx]?.step;
+                                if (stepNumber == null) return null;
                                 const status = taskGenerationStatus[stepNumber];
                                 const hasTask = !!taskCache[stepNumber];
                                 

@@ -563,7 +563,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   const handlePlanUpdate = (plan: any) => {
     console.log('📚 收到计划更新回调:', plan);
     if (plan) {
-      setLearningPlan(plan);
+    setLearningPlan(plan);
     } else {
       // 无变更，仅结束更新状态
       console.log('ℹ️ 本次计划无变更，结束更新态');
@@ -583,8 +583,8 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
 
     // 保存学习计划到sessionStorage，供学习页面使用
     if (plan) {
-      sessionStorage.setItem('learningPlan', JSON.stringify(plan));
-      console.log('💾 学习计划已保存到sessionStorage');
+    sessionStorage.setItem('learningPlan', JSON.stringify(plan));
+    console.log('💾 学习计划已保存到sessionStorage');
     }
 
     // 3秒后恢复idle状态并清除部分计划
