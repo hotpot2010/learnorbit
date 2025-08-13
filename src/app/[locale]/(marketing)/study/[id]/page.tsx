@@ -84,8 +84,8 @@ export default function StudyPage({ params }: StudyPageProps) {
     insertAfterParagraph: number; // 插入在第几个段落之后（-1表示插入在开头）
     type?: 'text' | 'video';
     video?: { url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title?: string; duration?: string };
-    videos?: Array<{ url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title?: string; duration?: string }>; // 支持多个视频
-    searchKeyword?: string; // 视频搜索关键词
+    videos?: { url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title?: string; duration?: string }[];
+    searchKeyword?: string;
     isLoading?: boolean;
     insertAfterAnchor?: number | null;
     origin?: 'drag' | 'note';
@@ -785,17 +785,22 @@ export default function StudyPage({ params }: StudyPageProps) {
       }
 
       // 处理多个视频，生成视频列表
-      const processedVideos = list.slice(0, 10).map(v => {
+      const processedVideos: { url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title: string; duration: string }[] = [];
+      for (const v of list.slice(0, 10)) {
         const url: string = v.url || v.link || '';
-        if (!url) return null;
+        if (!url) continue;
         const processed = processVideoUrl(url);
-        return {
+        const platform: 'youtube' | 'bilibili' | 'unknown' =
+          processed.platform === 'youtube' || processed.platform === 'bilibili'
+            ? processed.platform
+            : 'unknown';
+        processedVideos.push({
           url: processed.url,
-          platform: (processed.platform as any) || 'unknown',
-          title: v.title || '无标题',
-          duration: v.duration || ''
-        };
-      }).filter(Boolean);
+          platform,
+          title: typeof v.title === 'string' ? v.title : '无标题',
+          duration: typeof v.duration === 'string' ? v.duration : ''
+        });
+      }
 
       if (processedVideos.length === 0) {
         setNotes(prev => prev.map(n => n.id === tempNoteId ? { ...n, isLoading: false, type: 'text', text: '视频数据无有效链接' } : n));
