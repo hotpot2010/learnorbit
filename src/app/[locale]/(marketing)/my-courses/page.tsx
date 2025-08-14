@@ -653,20 +653,18 @@ export default function MyCoursesPage() {
                     📚 In Progress ({inProgressCourses.length})
                   </span>
                 </h2>
-                <div className="overflow-x-auto">
-                  <div className="flex space-x-6 pb-4">
-                    {inProgressCourses.map((course, index) => (
-                      <CourseCard
-                        key={course.id}
-                        course={course}
-                        index={index}
-                      />
-                    ))}
-                  </div>
+                <div className="flex flex-wrap gap-6 pb-4">
+                  {inProgressCourses.map((course, index) => (
+                    <CourseCard
+                      key={course.id}
+                      course={course}
+                      index={index}
+                    />
+                  ))}
                 </div>
               </section>
             )}
-
+            
             {/* 已完成的课程 */}
             {completedCourses.length > 0 && (
               <section>
@@ -681,20 +679,18 @@ export default function MyCoursesPage() {
                     ✅ Completed ({completedCourses.length})
                   </span>
                 </h2>
-                <div className="overflow-x-auto">
-                  <div className="flex space-x-6 pb-4">
-                    {completedCourses.map((course, index) => (
-                      <CourseCard
-                        key={course.id}
-                        course={course}
-                        index={index}
-                      />
-                    ))}
-                  </div>
+                <div className="flex flex-wrap gap-6 pb-4">
+                  {completedCourses.map((course, index) => (
+                    <CourseCard
+                      key={course.id}
+                      course={course}
+                      index={index}
+                    />
+                  ))}
                 </div>
               </section>
             )}
-
+            
             {/* 发布的课程（如果将来需要的话） */}
             {publishedCourses.length > 0 && (
               <section>
@@ -709,16 +705,14 @@ export default function MyCoursesPage() {
                     🚀 Published ({publishedCourses.length})
                   </span>
                 </h2>
-                <div className="overflow-x-auto">
-                  <div className="flex space-x-6 pb-4">
-                    {publishedCourses.map((course, index) => (
-                      <CourseCard
-                        key={course.id}
-                        course={course}
-                        index={index}
-                      />
-                    ))}
-                  </div>
+                <div className="flex flex-wrap gap-6 pb-4">
+                  {publishedCourses.map((course, index) => (
+                    <CourseCard
+                      key={course.id}
+                      course={course}
+                      index={index}
+                    />
+                  ))}
                 </div>
               </section>
             )}

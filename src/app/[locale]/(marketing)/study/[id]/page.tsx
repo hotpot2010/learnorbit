@@ -51,6 +51,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   const [videoAreaHeight, setVideoAreaHeight] = useState<number>(0);
   // 备选视频列表滚动与分页
   const listRef = useRef<HTMLDivElement | null>(null);
+  const contentScrollRef = useRef<HTMLDivElement | null>(null);
   const [listItemHeight, setListItemHeight] = useState<number>(52);
   const [canPageUp, setCanPageUp] = useState<boolean>(false);
   const [canPageDown, setCanPageDown] = useState<boolean>(false);
@@ -496,7 +497,8 @@ export default function StudyPage({ params }: StudyPageProps) {
                     </div>
                     <div className="flex-1">
                       <p className="text-base leading-loose text-gray-800 font-bold" style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                        fontSize: '1.2rem'
                       }} {...props}>
                         {renderNodeWithHighlights(children, anchorIdx)}
                       </p>
@@ -551,7 +553,8 @@ export default function StudyPage({ params }: StudyPageProps) {
               return (
                 <>
                   <li data-anchor-index={anchorIdx} className="text-base text-gray-800 leading-loose" style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                    fontSize: '1.2rem'
                   }} {...props}>
                     {renderNodeWithHighlights(children, anchorIdx)}
                   </li>
@@ -604,7 +607,8 @@ export default function StudyPage({ params }: StudyPageProps) {
                     </div>
                     <div className="flex-1">
                       <blockquote className="bg-orange-50 text-gray-800 p-3 rounded-lg italic border-l-4 border-orange-400" style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                        fontSize: '1.2rem'
                       }} {...props}>
                         {renderNodeWithHighlights(children, anchorIdx)}
                       </blockquote>
@@ -1424,6 +1428,15 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   // 当切换步骤时生成任务
   useEffect(() => {
+    // 滚动到内容顶部
+    try {
+      const el = document.querySelector('.study-content-scroll');
+      if (el) {
+        (el as HTMLElement).scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } catch {}
     console.log('\n=== 🔄 步骤切换 ===');
     console.log('routeParams?.id:', routeParams?.id);
     console.log('learningPlan存在:', !!learningPlan);
@@ -1954,6 +1967,11 @@ export default function StudyPage({ params }: StudyPageProps) {
       return [welcomeStep, ...planSteps];
     }
     
+    // slug 页面在计划未加载前，不显示默认示例步骤（强化学习）
+    if (routeParams && routeParams.id !== 'custom') {
+      return [welcomeStep];
+    }
+    
     const adjustedDefaultSteps = defaultLearningSteps.map((step, index) => ({
       ...step,
       status: index + 1 < currentStepIndex ? 'completed' : 
@@ -2441,7 +2459,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       <div className={`${isPathCollapsed ? 'w-3/4' : 'w-7/12'} transition-all duration-300`}>
         <div className="h-full flex flex-col">
           {/* 合并的内容区域 */}
-          <div className="h-full p-6 overflow-y-auto">
+          <div className="h-full p-6 overflow-y-auto study-content-scroll">
             {currentStepIndex === 0 ? (
               <WelcomePage onStartLearning={() => setCurrentStepIndex(1)} />
             ) : isLoadingTask ? (
@@ -2461,7 +2479,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                 </div>
               </div>
             ) : currentTask ? (
-              <div className="learning-content-area space-y-12">
+              <div className="learning-content-area space-y-12" style={{ fontSize: '1.2em' }}>
                 {/* PPT 标题和内容 - 插入式笔记 */}
                 <div className="space-y-4">
                   {renderContentWithInsertedNotes(currentTask.ppt_slide || '')}

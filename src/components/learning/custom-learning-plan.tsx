@@ -943,32 +943,8 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                 style={{
                   fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                 }}>
-              <span className={`px-3 py-1 rounded-lg inline-block shadow-sm transition-all duration-500 ${
-                planUpdateStatus === 'updating' ? 'bg-orange-200 animate-pulse' :
-                planUpdateStatus === 'completed' ? 'bg-green-200' :
-                planUpdateStatus === 'error' ? 'bg-red-200' :
-                'bg-yellow-200'
-              }`}>
-                {planUpdateStatus === 'updating' ? (
-                  <>
-                    <span className="inline-block animate-spin mr-2">🔄</span>
-                    Plan Updating...
-                  </>
-                ) : planUpdateStatus === 'completed' ? (
-                  <>
-                    <span className="mr-2">✅</span>
-                    Plan Updated!
-                  </>
-                ) : planUpdateStatus === 'error' ? (
-                  <>
-                    <span className="mr-2">❌</span>
-                    Generation Failed
-                  </>
-                ) : (
-                  <>
-                    Personalized Learning Plan 📚
-                  </>
-                )}
+              <span className="px-3 py-1 rounded-lg inline-block shadow-sm bg-yellow-200">
+                Personalized Learning Plan 📚
               </span>
             </h2>
           </div>
