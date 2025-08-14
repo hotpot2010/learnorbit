@@ -872,8 +872,8 @@ export default function StudyPage({ params }: StudyPageProps) {
         return;
       }
       
-      // 如果是custom课程，从sessionStorage加载学习计划
-      if (resolvedParams.id === 'custom') {
+      // custom 或 slug（公开链接）均从 sessionStorage 读取（My Courses 进入时已写入）
+      if (resolvedParams.id === 'custom' || (typeof window !== 'undefined' && sessionStorage.getItem('learningPlan'))) {
         const savedPlan = sessionStorage.getItem('learningPlan');
         const fromDatabase = sessionStorage.getItem('fromDatabase');
         const savedTaskCache = sessionStorage.getItem('taskCache');
@@ -1018,6 +1018,32 @@ export default function StudyPage({ params }: StudyPageProps) {
           } catch (error) {
             console.error('解析学习计划失败:', error);
           }
+        }
+      } else if (typeof window !== 'undefined') {
+        // 尝试按 slug 拉取公共课程
+        try {
+          console.log('🔎 尝试按 slug 拉取公共课程');
+          const resp = await fetch(`/api/public-courses/${encodeURIComponent(resolvedParams.id)}`);
+          if (resp.ok) {
+            const data = await resp.json();
+            const course = data.course;
+            if (course?.coursePlan) {
+              // 写入 sessionStorage 以复用 custom 流程
+              sessionStorage.setItem('learningPlan', JSON.stringify({ plan: course.coursePlan.plan || [] }));
+              if (course.coursePlan.tasks) sessionStorage.setItem('taskCache', JSON.stringify(course.coursePlan.tasks));
+              if (course.coursePlan.notes) sessionStorage.setItem('courseNotes', JSON.stringify(course.coursePlan.notes));
+              if (course.coursePlan.marks) sessionStorage.setItem('courseMarks', JSON.stringify(course.coursePlan.marks));
+              sessionStorage.setItem('fromDatabase', 'true');
+              // 重新进入 custom/slug 统一分支
+              initialLoadCompleted.current = false;
+              setTimeout(() => resolveParams(), 0);
+              return;
+            }
+          } else {
+            console.warn('按 slug 拉取公共课程失败', resp.status);
+          }
+        } catch (e) {
+          console.error('拉取公共课程异常', e);
         }
       }
     };
@@ -1873,23 +1899,21 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   // 获取当前视频URL
   const getCurrentVideoUrl = () => {
-    if (routeParams?.id === 'custom' && learningPlan && learningPlan.plan[currentStepIndex]) {
-      const step = learningPlan.plan[currentStepIndex];
-      const videoUrl = step.videos[0]?.url || '';
-      
-      console.log('原始视频URL:', videoUrl);
-      
-      // 使用统一的视频URL处理函数
-      const processedVideo = processVideoUrl(videoUrl);
-      return processedVideo.url;
-    }
-    return '';
+    if (!learningPlan) return '';
+    // welcome 页无视频
+    if (currentStepIndex === 0) return '';
+    const idx = currentStepIndex - 1;
+    if (!learningPlan.plan[idx]) return '';
+    const step = learningPlan.plan[idx];
+    const videoUrl = step.videos?.[0]?.url || '';
+    const processedVideo = processVideoUrl(videoUrl);
+    return processedVideo.url || '';
   };
 
   // 获取当前步骤的所有视频
   const getCurrentStepVideos = () => {
-    if (currentStepIndex === 0) return []; // welcome 页面没有视频
-    if (routeParams?.id === 'custom' && learningPlan && learningPlan.plan[currentStepIndex - 1]) {
+    if (currentStepIndex === 0) return [];
+    if (learningPlan && learningPlan.plan[currentStepIndex - 1]) {
       const step = learningPlan.plan[currentStepIndex - 1];
       return step.videos || [];
     }
@@ -2267,42 +2291,42 @@ export default function StudyPage({ params }: StudyPageProps) {
         </div>
       </div>
               
-              {/* 上传课程按钮 */}
-              {routeParams?.id === 'custom' && learningPlan && (
-                <div className="p-4">
-                  <Button
-                    onClick={handleUploadCourse}
-                    disabled={!areAllTasksGenerated() || isUploading}
-                    className={`w-full font-bold transform shadow-lg ${
-                      areAllTasksGenerated() && !isUploading 
-                        ? 'bg-primary hover:bg-primary/90 rotate-1 hover:rotate-0' 
-                        : 'bg-gray-400 hover:bg-gray-400 cursor-not-allowed rotate-0'
-                    }`}
-                    style={{
-                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                    }}
-                  >
-                    <div className="flex items-center justify-center space-x-2">
-                      {isUploading ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          <span>Uploading Course...</span>
-                        </>
-                      ) : areAllTasksGenerated() ? (
-                        <>
-                          <span className="text-lg">📤</span>
-                          <span>Upload Course!</span>
-                        </>
-                      ) : (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          <span>Generating Tasks... ({getGeneratedTasksCount()}/{learningPlan.plan.length})</span>
-                        </>
-                      )}
-                    </div>
-                  </Button>
-                </div>
-              )}
+              {/* 上传课程按钮（slug 与 custom 均可展示） */}
+              {learningPlan && (
+                 <div className="p-4">
+                   <Button
+                     onClick={handleUploadCourse}
+                     disabled={!areAllTasksGenerated() || isUploading}
+                     className={`w-full font-bold transform shadow-lg ${
+                       areAllTasksGenerated() && !isUploading 
+                         ? 'bg-primary hover:bg-primary/90 rotate-1 hover:rotate-0' 
+                         : 'bg-gray-400 hover:bg-gray-400 cursor-not-allowed rotate-0'
+                     }`}
+                     style={{
+                       fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                     }}
+                   >
+                     <div className="flex items-center justify-center space-x-2">
+                       {isUploading ? (
+                         <>
+                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                           <span>Uploading Course...</span>
+                         </>
+                       ) : areAllTasksGenerated() ? (
+                         <>
+                           <span className="text-lg">📤</span>
+                           <span>Upload Course!</span>
+                         </>
+                       ) : (
+                         <>
+                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                           <span>Generating Tasks... ({getGeneratedTasksCount()}/{learningPlan.plan.length})</span>
+                         </>
+                       )}
+                     </div>
+                   </Button>
+                 </div>
+               )}
             </>
           )}
           

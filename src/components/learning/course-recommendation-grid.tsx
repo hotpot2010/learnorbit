@@ -20,79 +20,8 @@ interface CourseRecommendationGridProps {
   onCourseClick?: (course: Course) => void; // 新增：点击课程时的回调
 }
 
-// 默认推荐课程数据
-const defaultCourses: Course[] = [
-  {
-    id: 'reinforcement-learning',
-    title: 'Reinforcement Learning & Q-Learning',
-    description:
-      'Learn Q-Learning algorithms and agent training to build AI systems that can learn autonomously in environments',
-    coverImage: '/images/blog/post-1.png',
-    estimatedTime: '6 hours',
-    difficulty: 'intermediate',
-  },
-  {
-    id: 'web-development',
-    title: 'Frontend Web Development',
-    description: 'Complete learning path from HTML, CSS basics to modern frontend frameworks like React and Vue',
-    coverImage: '/images/blog/post-2.png',
-    estimatedTime: '12 hours',
-    difficulty: 'beginner',
-  },
-  {
-    id: 'data-analysis',
-    title: 'Python Data Analysis',
-    description:
-      'Master core data science libraries like pandas and numpy, learn data cleaning, analysis and visualization',
-    coverImage: '/images/blog/post-3.png',
-    estimatedTime: '8 hours',
-    difficulty: 'intermediate',
-  },
-  {
-    id: 'mobile-development',
-    title: 'React Native Mobile Development',
-    description:
-      'Build cross-platform mobile apps with React Native, one codebase for both iOS and Android',
-    coverImage: '/images/blog/post-4.png',
-    estimatedTime: '10 hours',
-    difficulty: 'intermediate',
-  },
-  {
-    id: 'machine-learning',
-    title: 'Machine Learning Fundamentals',
-    description: 'From supervised to unsupervised learning, master core machine learning algorithms and practical applications',
-    coverImage: '/images/blog/post-5.png',
-    estimatedTime: '15 hours',
-    difficulty: 'advanced',
-  },
-  {
-    id: 'blockchain-development',
-    title: 'Blockchain Technology & Smart Contracts',
-    description: 'Learn Ethereum blockchain development and master Solidity smart contract programming',
-    coverImage: '/images/blog/post-6.png',
-    estimatedTime: '12 hours',
-    difficulty: 'advanced',
-  },
-  {
-    id: 'cloud-computing',
-    title: 'AWS Cloud Computing',
-    description: 'Master AWS cloud services, learn cloud architecture design and deployment best practices',
-    coverImage: '/images/blog/post-7.png',
-    estimatedTime: '14 hours',
-    difficulty: 'intermediate',
-  },
-  {
-    id: 'cybersecurity',
-    title: 'Cybersecurity & Penetration Testing',
-    description: 'Learn network security protection strategies and master common vulnerability detection and protection techniques',
-    coverImage: '/images/blog/post-8.png',
-    estimatedTime: '16 hours',
-    difficulty: 'advanced',
-  },
-];
-
 export function CourseRecommendationGrid({
-  courses = defaultCourses,
+  courses = [],
   showProgress = false,
   className = '',
   onCourseClick,
@@ -107,6 +36,11 @@ export function CourseRecommendationGrid({
       router.push(`/learning/course/${course.id}`);
     }
   };
+
+  // 没有已发布课程时不展示卡片
+  if (!courses || courses.length === 0) {
+    return null;
+  }
 
   return (
     <div className={`${className} -mt-4`}>

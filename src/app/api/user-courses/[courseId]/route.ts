@@ -210,3 +210,50 @@ export async function DELETE(
     );
   }
 }
+
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ courseId: string }> }) {
+	try {
+		const session = await auth.api.getSession({ headers: request.headers });
+		if (!session?.user) {
+			return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+		}
+		const userId = session.user.id;
+		const resolvedParams = await params;
+		const courseId = resolvedParams.courseId;
+		const body = await request.json();
+		const hasIsPublic = Object.prototype.hasOwnProperty.call(body || {}, 'isPublic');
+		const isPublic = hasIsPublic ? !!body.isPublic : undefined;
+		const newTitle = typeof body?.title === 'string' ? body.title : undefined;
+		const newDescription = typeof body?.description === 'string' ? body.description : undefined;
+
+		const db = await getDb();
+		const rows = await db.select().from(userCourses).where(eq(userCourses.id, courseId));
+		if (!rows.length) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+		const course = rows[0];
+		if (course.userId !== userId) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+
+		// 更新 JSONB: 复制 coursePlan 并应用变更
+		const updatedPlan: any = { ...(course.coursePlan as any) };
+		if (hasIsPublic) {
+			updatedPlan.isPublic = isPublic;
+		}
+		if (newTitle || newDescription) {
+			if (Array.isArray(updatedPlan.plan) && updatedPlan.plan.length > 0) {
+				updatedPlan.plan = updatedPlan.plan.map((s: any, idx: number) => {
+					if (idx !== 0) return s;
+					return {
+						...s,
+						...(newTitle ? { title: newTitle } : {}),
+						...(newDescription ? { description: newDescription } : {}),
+					};
+				});
+			}
+		}
+
+		await db.update(userCourses).set({ coursePlan: updatedPlan }).where(eq(userCourses.id, courseId));
+
+		return NextResponse.json({ success: true, isPublic: updatedPlan.isPublic, title: newTitle, description: newDescription });
+	} catch (e) {
+		return NextResponse.json({ error: 'Failed to update course visibility' }, { status: 500 });
+	}
+}
