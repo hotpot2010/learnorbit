@@ -183,6 +183,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       const courseContent = (learningPlan?.plan || partialPlan?.plan || []);
       const previousStepsContext = (learningPlan?.plan || partialPlan?.plan || [])
         .filter((s: any) => (typeof s.step === 'number' ? s.step : -1) < stepNumber);
+      const previousStepsMapped = previousStepsContext.map((s: any) => ({ title: s?.title, description: s?.description }));
 
       const requestData = {
         // 必填/已有字段
@@ -195,13 +196,9 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         difficulty: step.difficulty,
         search_keyword: step.search_keyword || step.title,
         videos: step.videos || [],
-        // 新增字段（尽量从 plan 派生）
-        id: userId, // 用户ID
-        use_mock: false,
-        course_content: courseContent,
-        current_step_context: step,
-        previous_steps_context: previousStepsContext,
-        force_regenerate: true,
+        // 追加字段（仅三项）
+        id: userId,
+        previous_steps_context: previousStepsMapped,
         lang,
       } as const;
 

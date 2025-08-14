@@ -23,12 +23,14 @@ import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
 import { TextSelectionPopup } from '@/components/learning/text-selection-popup';
 import { WelcomePage } from '@/components/learning/welcome-page';
+import { useCurrentUser } from '@/hooks/use-current-user';
 
 interface StudyPageProps {
   params: Promise<{ locale: string; id: string }>;
 }
 
 export default function StudyPage({ params }: StudyPageProps) {
+  const currentUser = useCurrentUser();
   const [isPathCollapsed, setIsPathCollapsed] = useState(false);
   const [externalMessage, setExternalMessage] = useState<string>('');
   const [routeParams, setRouteParams] = useState<{ locale: string; id: string } | null>(null);
@@ -1161,8 +1163,12 @@ export default function StudyPage({ params }: StudyPageProps) {
             status: step.status,
             type: step.type,
             difficulty: step.difficulty,
-            search_keyword: step.search_keyword || step.title,
-            videos: step.videos
+            search_keyword: step.search_keyword || step.title, // 如果没有search_keyword就用title
+            videos: step.videos,
+            // 追加字段（统一三项）
+            id: (currentUser as any)?.id || 'anonymous',
+            previous_steps_context: plan.plan.filter((s: any) => (typeof s.step === 'number' ? s.step : -1) < step.step).map((s: any) => ({ title: s?.title, description: s?.description })),
+            lang: (routeParams?.locale || 'en').startsWith('zh') ? 'zh' : 'en'
           };
           
           console.log('📤 发送缺失任务生成请求:', requestData);
@@ -1234,6 +1240,7 @@ export default function StudyPage({ params }: StudyPageProps) {
     
     // 使用带延时的循环来按顺序触发，但请求本身是并行执行的
     for (const step of plan.plan) {
+      const planVar = plan; // 确保作用域内可用
       console.log(`📤 触发步骤 ${step.step} 的任务生成: ${step.title}`);
       
       // 立即执行异步任务，不等待它完成
@@ -1251,7 +1258,11 @@ export default function StudyPage({ params }: StudyPageProps) {
             type: step.type,
             difficulty: step.difficulty,
             search_keyword: step.search_keyword || step.title, // 如果没有search_keyword就用title
-            videos: step.videos
+            videos: step.videos,
+            // 追加字段（统一三项）
+            id: (currentUser as any)?.id || 'anonymous',
+            previous_steps_context: planVar.plan.filter((s: any) => (typeof s.step === 'number' ? s.step : -1) < step.step).map((s: any) => ({ title: s?.title, description: s?.description })),
+            lang: (routeParams?.locale || 'en').startsWith('zh') ? 'zh' : 'en'
           };
 
           console.log('📤 发送任务生成请求:', requestData);
