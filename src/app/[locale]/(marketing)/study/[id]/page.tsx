@@ -872,8 +872,8 @@ export default function StudyPage({ params }: StudyPageProps) {
         return;
       }
       
-      // custom 或 slug（公开链接）均从 sessionStorage 读取（My Courses 进入时已写入）
-      if (resolvedParams.id === 'custom' || (typeof window !== 'undefined' && sessionStorage.getItem('learningPlan'))) {
+      // custom：允许从通用 sessionStorage 读取
+      if (resolvedParams.id === 'custom') {
         const savedPlan = sessionStorage.getItem('learningPlan');
         const fromDatabase = sessionStorage.getItem('fromDatabase');
         const savedTaskCache = sessionStorage.getItem('taskCache');
@@ -1004,14 +1004,14 @@ export default function StudyPage({ params }: StudyPageProps) {
                 taskGenerationStarted: taskGenerationStarted.current
               });
               
-              // 启动并行任务生成（防止重复执行）
-              if (!taskGenerationStarted.current) {
+              // 仅在 custom 课程中启动任务生成（slug 页面不生成）
+              if (resolvedParams.id === 'custom' && !taskGenerationStarted.current) {
             console.log('🚀 启动并行任务生成...');
                 taskGenerationStarted.current = true;
                 initialLoadCompleted.current = true;
             generateAllTasks(plan);
               } else {
-                console.log('⚠️ 任务生成已经启动，跳过重复执行');
+                console.log('⚠️ 非 custom 课程或已启动，跳过任务生成');
               }
             }
             
@@ -1020,23 +1020,70 @@ export default function StudyPage({ params }: StudyPageProps) {
           }
         }
       } else if (typeof window !== 'undefined') {
-        // 尝试按 slug 拉取公共课程
+        // slug：优先使用基于 slug 的本地缓存，其次再请求 API
+        const slug = resolvedParams.id;
+        const baseKey = `publicCourse:${slug}`;
+        const planKey = `${baseKey}:plan`;
+        const tasksKey = `${baseKey}:tasks`;
+        const notesKey = `${baseKey}:notes`;
+        const marksKey = `${baseKey}:marks`;
+
         try {
-          console.log('🔎 尝试按 slug 拉取公共课程');
-          const resp = await fetch(`/api/public-courses/${encodeURIComponent(resolvedParams.id)}`);
+          const cachedPlan = sessionStorage.getItem(planKey);
+          if (cachedPlan) {
+            console.log('📦 从本地缓存加载公开课程:', slug);
+            const plan: LearningPlan = JSON.parse(cachedPlan);
+            const tasks = JSON.parse(sessionStorage.getItem(tasksKey) || '{}');
+            const notesRaw = JSON.parse(sessionStorage.getItem(notesKey) || '[]');
+            const marksRaw = JSON.parse(sessionStorage.getItem(marksKey) || '[]');
+
+            // 注入状态（先任务后计划）
+            setTaskCache(tasks);
+            const completedStatus: Record<number, 'completed'> = {};
+            Object.keys(tasks).forEach(k => { const n = parseInt(k, 10); if (!isNaN(n)) completedStatus[n] = 'completed'; });
+            setTaskGenerationStatus(completedStatus);
+            setLearningPlan(plan);
+            setIsFromDatabase(true);
+            setNotes(Array.isArray(notesRaw) ? notesRaw.map((n: any) => ({ ...n, timestamp: new Date(n.timestamp) })) : []);
+            setMarks(Array.isArray(marksRaw) ? marksRaw : []);
+            taskGenerationStarted.current = true;
+            initialLoadCompleted.current = true;
+            return;
+          }
+        } catch (e) {
+          console.warn('读取 slug 本地缓存失败，继续请求 API', e);
+        }
+
+        // 本地无缓存，按 slug 拉取
+        try {
+          console.log('🔎 按 slug 拉取公共课程:', slug);
+          const resp = await fetch(`/api/public-courses/${encodeURIComponent(slug)}`);
           if (resp.ok) {
             const data = await resp.json();
             const course = data.course;
             if (course?.coursePlan) {
-              // 写入 sessionStorage 以复用 custom 流程
-              sessionStorage.setItem('learningPlan', JSON.stringify({ plan: course.coursePlan.plan || [] }));
-              if (course.coursePlan.tasks) sessionStorage.setItem('taskCache', JSON.stringify(course.coursePlan.tasks));
-              if (course.coursePlan.notes) sessionStorage.setItem('courseNotes', JSON.stringify(course.coursePlan.notes));
-              if (course.coursePlan.marks) sessionStorage.setItem('courseMarks', JSON.stringify(course.coursePlan.marks));
-              sessionStorage.setItem('fromDatabase', 'true');
-              // 重新进入 custom/slug 统一分支
-              initialLoadCompleted.current = false;
-              setTimeout(() => resolveParams(), 0);
+              const plan: LearningPlan = { plan: course.coursePlan.plan || [] };
+              const tasks = course.coursePlan.tasks || {};
+              const notesArr = Array.isArray(course.coursePlan.notes) ? course.coursePlan.notes : [];
+              const marksArr = Array.isArray(course.coursePlan.marks) ? course.coursePlan.marks : [];
+
+              // 写入本地缓存（基于 slug 的 key）
+              sessionStorage.setItem(planKey, JSON.stringify(plan));
+              sessionStorage.setItem(tasksKey, JSON.stringify(tasks));
+              sessionStorage.setItem(notesKey, JSON.stringify(notesArr));
+              sessionStorage.setItem(marksKey, JSON.stringify(marksArr));
+
+              // 注入状态（先任务后计划）
+              setTaskCache(tasks);
+              const completedStatus: Record<number, 'completed'> = {};
+              Object.keys(tasks).forEach(k => { const n = parseInt(k, 10); if (!isNaN(n)) completedStatus[n] = 'completed'; });
+              setTaskGenerationStatus(completedStatus);
+              setLearningPlan(plan);
+              setIsFromDatabase(true);
+              setNotes(notesArr.map((n: any) => ({ ...n, timestamp: new Date(n.timestamp) })));
+              setMarks(marksArr);
+              taskGenerationStarted.current = true;
+              initialLoadCompleted.current = true;
               return;
             }
           } else {
@@ -1381,7 +1428,7 @@ export default function StudyPage({ params }: StudyPageProps) {
     console.log('routeParams?.id:', routeParams?.id);
     console.log('learningPlan存在:', !!learningPlan);
     console.log('currentStepIndex:', currentStepIndex);
-    console.log('当前步骤存在:', !!learningPlan?.plan[currentStepIndex]);
+    console.log('当前步骤存在:', currentStepIndex > 0 ? !!learningPlan?.plan[currentStepIndex - 1] : false);
     
     // 清除之前的轮询
     if (pollingInterval) {
@@ -1389,8 +1436,8 @@ export default function StudyPage({ params }: StudyPageProps) {
       setPollingInterval(null);
     }
     
-    if (routeParams?.id === 'custom' && learningPlan && learningPlan.plan[currentStepIndex]) {
-      const currentStep = learningPlan.plan[currentStepIndex];
+    if (routeParams?.id === 'custom' && learningPlan && currentStepIndex > 0 && learningPlan.plan[currentStepIndex - 1]) {
+      const currentStep = learningPlan.plan[currentStepIndex - 1];
       console.log(`🎯 切换到步骤 ${currentStep.step}: ${currentStep.title}`);
       
       // 尝试从缓存获取任务
@@ -1438,6 +1485,30 @@ export default function StudyPage({ params }: StudyPageProps) {
         startPollingForTask(currentStep.step);
         }
       }
+    } else if (learningPlan && currentStepIndex > 0 && learningPlan.plan[currentStepIndex - 1]) {
+      // 非 custom（slug）页面：只显示缓存，绝不进入 loading/polling
+      const currentStep = learningPlan.plan[currentStepIndex - 1];
+      const cachedTask = taskCache[currentStep.step];
+      if (cachedTask) {
+        setCurrentTask(cachedTask);
+        setIsLoadingTask(false);
+        if (cachedTask.type === 'coding' && cachedTask.task) {
+          setCodeValue(cachedTask.task.starter_code || '');
+        }
+      } else {
+        // 若任务缓存尚未注入（例如刚从数据库加载的瞬间），不要立刻显示缺失
+        if (Object.keys(taskCache || {}).length === 0) {
+          setIsLoadingTask(false);
+        } else {
+          setCurrentTask({
+            type: 'quiz',
+            difficulty: 'beginner',
+            ppt_slide: '# Task Data Missing\n\n⚠️ Task data may have issues, please re-upload the course',
+            videos: currentStep.videos
+          });
+          setIsLoadingTask(false);
+        }
+      }
     } else {
       console.log('❌ 条件不满足，跳过任务获取');
       if (routeParams?.id !== 'custom') {
@@ -1446,7 +1517,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       if (!learningPlan) {
         console.log('- 学习计划未加载');
       }
-      if (!learningPlan?.plan[currentStepIndex]) {
+      if (!(currentStepIndex > 0 && learningPlan?.plan[currentStepIndex - 1])) {
         console.log('- 当前步骤不存在');
       }
     }
@@ -1868,8 +1939,9 @@ export default function StudyPage({ params }: StudyPageProps) {
       estimatedTime: '5分钟',
       type: 'intro' as const
     };
-
-    if (routeParams?.id === 'custom' && learningPlan) {
+ 
+    // 只要有学习计划（无论是 custom 还是 slug 加载），都使用计划中的步骤
+    if (learningPlan) {
       const planSteps = learningPlan.plan.map((step, index) => ({
         id: `step-${step.step}`,
         title: step.title,
@@ -1928,20 +2000,20 @@ export default function StudyPage({ params }: StudyPageProps) {
         return processVideoUrl(testUrl);
       };
     }
-    
-    // 处理B站视频URL
-    if (videoUrl.includes('bilibili.com/video/')) {
-      // 从URL中提取视频ID，支持不同格式
-      const bvMatch = videoUrl.match(/\/video\/(BV\w+)/);
-      const avMatch = videoUrl.match(/\/video\/av(\d+)/);
       
-      if (bvMatch) {
-        // BV号格式
-        const playerUrl = `//player.bilibili.com/player.html?bvid=${bvMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
+      // 处理B站视频URL
+      if (videoUrl.includes('bilibili.com/video/')) {
+        // 从URL中提取视频ID，支持不同格式
+        const bvMatch = videoUrl.match(/\/video\/(BV\w+)/);
+        const avMatch = videoUrl.match(/\/video\/av(\d+)/);
+        
+        if (bvMatch) {
+          // BV号格式
+          const playerUrl = `//player.bilibili.com/player.html?bvid=${bvMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
         return { url: playerUrl, platform: 'bilibili' };
-      } else if (avMatch) {
+        } else if (avMatch) {
         // AV号格式
-        const playerUrl = `//player.bilibili.com/player.html?aid=${avMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
+          const playerUrl = `//player.bilibili.com/player.html?aid=${avMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
         return { url: playerUrl, platform: 'bilibili' };
       }
     }
@@ -1975,7 +2047,7 @@ export default function StudyPage({ params }: StudyPageProps) {
     }
     
     // 检查是否已经是嵌入格式的URL
-    if (videoUrl.includes('player.bilibili.com')) {
+      if (videoUrl.includes('player.bilibili.com')) {
       return { url: videoUrl, platform: 'bilibili' };
     }
     

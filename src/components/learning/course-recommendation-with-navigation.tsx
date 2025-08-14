@@ -13,6 +13,7 @@ interface Course {
   coverImage: string;
   estimatedTime: string;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
+  ownerId: string;
 }
 
 interface CourseRecommendationWithNavigationProps {
@@ -28,32 +29,64 @@ export function CourseRecommendationWithNavigation({
 }: CourseRecommendationWithNavigationProps) {
   const router = useLocaleRouter();
   const t = useTranslations();
-  const [publicCourses, setPublicCourses] = useState<Course[] | null>(null);
+  const [publicCourses, setPublicCourses] = useState<Course[] | null>(courses ?? null);
 
   useEffect(() => {
-    if (!courses) {
-      fetch('/api/public-courses')
-        .then(r => r.ok ? r.json() : Promise.reject(r))
-        .then(data => setPublicCourses(data.courses || []))
-        .catch(() => setPublicCourses([]));
+    if (courses && courses.length > 0) {
+      // 当服务端已预加载，写入本地缓存
+      try {
+        localStorage.setItem('publicCoursesCache', JSON.stringify({ ts: Date.now(), data: courses }));
+      } catch {}
+      return;
     }
+
+    // 客户端预取 + 本地缓存（5分钟 TTL）
+    try {
+      const cached = localStorage.getItem('publicCoursesCache');
+      if (cached) {
+        const parsed = JSON.parse(cached) as { ts: number; data: Course[] };
+        const ttlMs = 5 * 60 * 1000;
+        if (Array.isArray(parsed.data) && Date.now() - parsed.ts < ttlMs) {
+          setPublicCourses(parsed.data);
+          return;
+        }
+      }
+    } catch {}
+
+    fetch('/api/public-courses')
+      .then(r => r.ok ? r.json() : Promise.reject(r))
+      .then(data => {
+        const list = (data.courses || []) as Course[];
+        setPublicCourses(list);
+        try {
+          localStorage.setItem('publicCoursesCache', JSON.stringify({ ts: Date.now(), data: list }));
+        } catch {}
+      })
+      .catch(() => setPublicCourses([]));
   }, [courses]);
 
   const handleCourseClick = (course: Course) => {
-    // 将课程信息保存到sessionStorage，与首页输入框行为保持一致
-    if (typeof window !== 'undefined') {
-      const message = `我要学习${course.title}`;
-      sessionStorage.setItem('learningInput', message); // 使用 'learningInput' 作为 key
-      sessionStorage.removeItem('aiResponse'); // 清除旧的AI响应
-    }
+    // 直接跳转到 slug 学习页：[title]-[ownerId]
+    const raw = `${course.title}`
+      .toString()
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9\u4e00-\u9fa5\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+    const slug = `${raw}-${course.ownerId}`;
 
-    // 导航到课程定制页面，并指定/en/前缀
-    router.push('/en/custom');
+    const base = (process.env.NEXT_PUBLIC_BASE_URL as string) || '';
+    if (base) {
+      window.location.href = `${base}/study/${slug}`;
+    } else {
+      router.push(`/study/${slug}`);
+    }
   };
 
   return (
     <CourseRecommendationGrid
-      courses={courses || publicCourses || undefined}
+      courses={publicCourses || undefined}
       showProgress={showProgress}
       className={className}
       onCourseClick={handleCourseClick}

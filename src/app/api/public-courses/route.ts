@@ -31,7 +31,10 @@ export async function GET() {
 			};
 		});
 
-		return NextResponse.json({ courses: normalized }, { status: 200 });
+		const res = NextResponse.json({ courses: normalized }, { status: 200 });
+		// CDN/SWR 缓存：5分钟内命中缓存，后台 10 分钟内可复用旧数据
+		res.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
+		return res;
 	} catch (e) {
 		return NextResponse.json({ error: 'Failed to fetch public courses' }, { status: 500 });
 	}

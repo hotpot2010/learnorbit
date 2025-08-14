@@ -38,3 +38,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Video search proxy failed', detail: String(err?.message || err) }, { status: 500 });
   }
 } 
+ 
+ 
+ 

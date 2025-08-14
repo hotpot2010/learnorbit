@@ -7,6 +7,37 @@ import type { Metadata } from 'next';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { headers } from 'next/headers';
+import { unstable_cache } from 'next/cache';
+import { getDb } from '@/db';
+import { userCourses } from '@/db/schema';
+
+type PublicCourseCard = {
+  id: string;
+  title: string;
+  description: string;
+  coverImage: string;
+  estimatedTime: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  ownerId: string;
+  createdAt?: string;
+};
+
+const getPublicCoursesCached = unstable_cache(async (): Promise<PublicCourseCard[]> => {
+  const db = await getDb();
+  const rows = await db.select().from(userCourses);
+  const publicCourses = rows.filter((r: any) => r.coursePlan && (r.coursePlan as any).isPublic === true);
+  return publicCourses.map((c: any) => {
+    const plan = c.coursePlan?.plan || [];
+    const title = plan[0]?.title || 'Untitled Course';
+    const description = plan[0]?.description || 'No description';
+    const firstVideo = plan[0]?.videos?.[0];
+    const coverImage = firstVideo?.cover || '/images/blog/post-1.png';
+    const estimatedTime = firstVideo?.duration || 'Unknown';
+    const type = plan[0]?.type || 'theory';
+    const difficulty = (type === 'coding' ? 'intermediate' : 'beginner') as 'beginner'|'intermediate'|'advanced';
+    return { id: c.id, title, description, coverImage, estimatedTime, difficulty, ownerId: c.userId, createdAt: c.createdAt };
+  });
+}, ['public-courses'], { revalidate: 300, tags: ['public-courses'] });
 
 /**
  * https://next-intl.dev/docs/environments/actions-metadata-route-handlers#metadata-api
@@ -34,6 +65,7 @@ export default async function HomePage(props: HomePageProps) {
   const params = await props.params;
   const { locale } = params;
   const t = await getTranslations({ locale, namespace: 'LearningPlatform' });
+  const preloadedCourses = await getPublicCoursesCached();
 
   return (
     <div
@@ -92,7 +124,7 @@ export default async function HomePage(props: HomePageProps) {
         {/* 课程推荐区域 */}
         <section className="relative py-8 md:py-12">
           <Container>
-            <CourseRecommendationWithNavigation />
+            <CourseRecommendationWithNavigation courses={preloadedCourses} />
           </Container>
         </section>
       </div>
