@@ -1,7 +1,3 @@
-'use client';
-
-import Error from 'next/error';
-
 /**
  * Catching non-localized requests
  *
@@ -13,10 +9,19 @@ import Error from 'next/error';
  */
 export default function GlobalNotFound() {
   return (
-    <html lang="en">
-      <body>
-        <Error statusCode={404} />
-      </body>
-    </html>
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      minHeight: '100vh',
+      fontFamily: 'system-ui, sans-serif'
+    }}>
+      <h1 style={{ fontSize: '4rem', margin: '0' }}>404</h1>
+      <h2 style={{ fontSize: '1.5rem', margin: '1rem 0' }}>Page Not Found</h2>
+      <p style={{ fontSize: '1rem', color: '#666' }}>
+        The page you are looking for does not exist.
+      </p>
+    </div>
   );
 }

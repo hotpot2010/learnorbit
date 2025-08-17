@@ -42,6 +42,10 @@ export enum Routes {
   AIVideo = '/ai/video',
   AIAudio = '/ai/audio',
 
+  // learning routes
+  MyCourses = '/my-courses',
+  CourseMarketplace = '/course-marketplace',
+
   // block routes
   MagicuiBlocks = '/magicui',
   HeroBlocks = '/blocks/hero-section',

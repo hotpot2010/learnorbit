@@ -37,9 +37,10 @@ export function Navbar({ scroll }: NavBarProps) {
 
   // 简化的菜单项
   const menuItems = [
-    { title: 'Home', href: '/' },
-    { title: 'My Courses', href: '/my-courses' },
-    { title: 'Contact', href: '/contact' },
+    { title: t('LearningPlatform.home'), href: '/' },
+    { title: t('LearningPlatform.myCourses'), href: '/my-courses' },
+    { title: t('LearningPlatform.courseMarketplace.title'), href: '/course-marketplace' },
+    { title: t('Common.contact'), href: '/contact' },
   ];
 
   return (

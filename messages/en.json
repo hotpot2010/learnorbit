@@ -28,6 +28,7 @@
     "save": "Save",
     "loading": "Loading...",
     "cancel": "Cancel",
+    "contact": "Contact",
     "loginRequired": "Login required",
     "logoutFailed": "Failed to log out",
     "logoutSuccess": "Logged out successfully"
@@ -40,7 +41,31 @@
     "generatePlan": "Generate Learning Plan",
     "confirmInput": "Confirm",
     "recommendedCourses": "Recommended Courses",
+    "home": "Home",
     "myCourses": "My Courses",
+    "courseMarketplace": {
+      "title": "Course Marketplace",
+      "subtitle": "Discover amazing learning adventures shared by our community!",
+      "searchPlaceholder": "Search courses by title or description...",
+      "foundCourses": "Found {count} amazing courses for you! 🎉",
+      "noCourses": "No public courses yet",
+      "noCoursesSubtitle": "Be the first to share a course with the community!",
+      "noSearchResults": "No courses found",
+      "noSearchResultsSubtitle": "Try different keywords or browse all courses",
+      "clearSearch": "Clear Search",
+      "tryAgain": "Try Again",
+      "signInPrompt": "Want to start learning? Join our community!",
+      "signInButton": "Sign In to Get Started",
+      "difficulty": {
+        "beginner": "Beginner",
+        "intermediate": "Intermediate", 
+        "advanced": "Advanced"
+      },
+      "labels": {
+        "public": "Public",
+        "rating": "Rating"
+      }
+    },
     "aiTutor": "AI Tutor",
     "learningPath": "Learning Path",
     "practiceArea": "Practice Area",

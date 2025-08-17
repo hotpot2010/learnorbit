@@ -89,40 +89,7 @@ export async function POST(request: NextRequest) {
     // 添加用户ID和语言字段
     const requestData = enhanceApiRequest(body, context);
 
-    // 记录原始入参（避免打印过大内容，做裁剪）
-    try {
-      const safeLog = {
-        step: (body as any)?.step,
-        title: (body as any)?.title,
-        descriptionPreview: typeof (body as any)?.description === 'string' ? ((body as any).description as string).slice(0, 120) + '...' : undefined,
-        animation_type: (body as any)?.animation_type,
-        status: (body as any)?.status,
-        type: (body as any)?.type,
-        difficulty: (body as any)?.difficulty,
-        search_keyword: (body as any)?.search_keyword,
-        videosCount: Array.isArray((body as any)?.videos) ? (body as any).videos.length : 0,
-        id: (body as any)?.id,
-        use_mock: (body as any)?.use_mock,
-        lang: (body as any)?.lang,
-        prevCtxLen: Array.isArray((body as any)?.previous_steps_context) ? (body as any).previous_steps_context.length : 0,
-      };
-      console.log('📝 /api/task/generate 入参(原始):', safeLog);
 
-      // 打印 previous_steps_context（全部）
-      if (Array.isArray((body as any)?.previous_steps_context)) {
-        console.log('↩️ previous_steps_context:', (body as any).previous_steps_context);
-      }
-    } catch {}
-
-    // 确认最终有效载荷中的关键字段
-    try {
-      const finalLog = {
-        id: (requestData as any)?.id ?? null,
-        lang: (requestData as any)?.lang ?? null,
-        prevCtxLen: Array.isArray((requestData as any)?.previous_steps_context) ? (requestData as any).previous_steps_context.length : 0,
-      };
-      console.log('✅ 最终发送载荷关键字段:', finalLog);
-    } catch {}
 
     console.log('📤 任务生成请求:', {
       step: body.step,

@@ -28,6 +28,7 @@
     "saving": "保存中...",
     "loading": "加载中...",
     "cancel": "取消",
+    "contact": "联系我们",
     "loginRequired": "需要登录",
     "logoutFailed": "退出失败",
     "logoutSuccess": "退出成功"
@@ -40,7 +41,31 @@
     "generatePlan": "生成学习计划",
     "confirmInput": "确认",
     "recommendedCourses": "推荐课程",
+    "home": "首页",
     "myCourses": "我的课程",
+    "courseMarketplace": {
+      "title": "课程广场",
+      "subtitle": "发现我们社区分享的精彩学习冒险！",
+      "searchPlaceholder": "通过标题或描述搜索课程...",
+      "foundCourses": "为您找到 {count} 门精彩课程！🎉",
+      "noCourses": "暂无公共课程",
+      "noCoursesSubtitle": "成为第一个与社区分享课程的人！",
+      "noSearchResults": "未找到相关课程",
+      "noSearchResultsSubtitle": "尝试其他关键词或浏览所有课程",
+      "clearSearch": "清除搜索",
+      "tryAgain": "重试",
+      "signInPrompt": "想要开始学习？加入我们的社区！",
+      "signInButton": "登录开始学习",
+      "difficulty": {
+        "beginner": "入门",
+        "intermediate": "中级",
+        "advanced": "高级"
+      },
+      "labels": {
+        "public": "公开",
+        "rating": "评分"
+      }
+    },
     "aiTutor": "AI导师",
     "learningPath": "学习路径",
     "practiceArea": "练习区域",

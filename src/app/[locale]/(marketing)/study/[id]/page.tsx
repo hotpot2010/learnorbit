@@ -17,7 +17,7 @@ import {
   Minimize2,
   StickyNote
 } from 'lucide-react';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { LearningPlan, LearningStep, TaskGenerateRequest, TaskGenerateResponse, TaskContent, QuizQuestion, CodingTask } from '@/types/learning-plan';
 import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
@@ -31,6 +31,10 @@ interface StudyPageProps {
 
 export default function StudyPage({ params }: StudyPageProps) {
   const currentUser = useCurrentUser();
+  
+  // 🔍 组件渲染日志
+  console.log('🔄 StudyPage 组件重新渲染:', new Date().toLocaleTimeString());
+  
   const [isPathCollapsed, setIsPathCollapsed] = useState(false);
   const [externalMessage, setExternalMessage] = useState<string>('');
   const [routeParams, setRouteParams] = useState<{ locale: string; id: string } | null>(null);
@@ -96,9 +100,11 @@ export default function StudyPage({ params }: StudyPageProps) {
   }
   const [notes, setNotes] = useState<Note[]>([]);
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
-  const [editingText, setEditingText] = useState<string>('');
   const [expandedNoteVideoIds, setExpandedNoteVideoIds] = useState<Record<string, boolean>>({});
   const [noteVideoIndices, setNoteVideoIndices] = useState<Record<string, number>>({});
+  
+  // 便签编辑 - 简化的非受控组件 ref
+  const editingTextareaRef = useRef<HTMLTextAreaElement>(null);
   // 彩笔标记（可持久化）
   interface Mark {
     id: string;
@@ -114,6 +120,10 @@ export default function StudyPage({ params }: StudyPageProps) {
   const toggleNoteVideoExpanded = (noteId: string) => {
     setExpandedNoteVideoIds(prev => ({ ...prev, [noteId]: !prev[noteId] }));
   };
+
+  // 🎯 非受控组件方案 - 无需复杂的状态管理和光标恢复
+  // 移除了 handleTextChange, handleCompositionStart, handleCompositionEnd
+  // textarea 将自己管理输入状态，消除重新渲染问题
 
   // 根据当前选区在正文中的位置，找到段落索引
   const getSelectedParagraphIndex = (): number => {
@@ -191,6 +201,49 @@ export default function StudyPage({ params }: StudyPageProps) {
   const renderContentWithInsertedNotes = (content: string) => {
     if (!content) return null;
     
+    // 🔍 调试日志 - 便签渲染
+    const renderState = {
+      timestamp: new Date().toLocaleTimeString(),
+      editingNoteId,
+      editingTextLength: editingTextareaRef.current?.value?.length || 0,
+      notesCount: notes.length,
+      currentStepIndex,
+      taskGenerationStatusKeys: Object.keys(taskGenerationStatus),
+      taskCacheKeys: Object.keys(taskCache),
+      currentVideoIndex,
+      isLoadingTask,
+      isVideoExpanded,
+      videoAreaHeight,
+      canPageUp,
+      canPageDown,
+      expandedNoteVideoIdsKeys: Object.keys(expandedNoteVideoIds),
+      noteVideoIndicesKeys: Object.keys(noteVideoIndices),
+      pollingInterval: !!pollingInterval,
+      externalMessage: externalMessage.length > 0 ? externalMessage.substring(0, 20) + '...' : '',
+      hasSubmitted,
+      wrongAnswersSize: wrongAnswers.size
+    };
+    
+    // 检测状态变化
+    if (window.lastRenderState) {
+      const changes = {};
+      Object.keys(renderState).forEach(key => {
+        if (JSON.stringify(renderState[key]) !== JSON.stringify(window.lastRenderState[key])) {
+          changes[key] = {
+            old: window.lastRenderState[key],
+            new: renderState[key]
+          };
+        }
+      });
+      
+      if (Object.keys(changes).length > 0) {
+        console.log('📝 便签重新渲染 - 状态变化:', changes);
+      }
+    }
+    
+    window.lastRenderState = renderState;
+    console.log('📝 便签组件重新渲染:', renderState);
+    
     // 为可插入锚点生成连续索引
     let anchorIndexCounter = 0;
     const nextAnchorIndex = () => (anchorIndexCounter += 1);
@@ -235,8 +288,9 @@ export default function StudyPage({ params }: StudyPageProps) {
                     {editingNoteId === note.id ? (
                       <div className="space-y-3">
                         <textarea
-                          value={editingText}
-                          onChange={(e) => setEditingText(e.target.value)}
+                          ref={editingTextareaRef}
+                          key={`textarea-${note.id}-${editingNoteId}`}
+                          defaultValue={note.text || ''}
                           className={`w-full p-3 border rounded-lg ${isVideo ? 'border-purple-300 bg-purple-50 text-purple-800 focus:ring-purple-400' : isDrag ? 'border-sky-300 bg-sky-50 text-sky-800 focus:ring-sky-400' : 'border-yellow-300 bg-yellow-50 text-yellow-800 focus:ring-yellow-400'} resize-none focus:outline-none focus:ring-2`}
                           style={{
                             fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
@@ -750,7 +804,7 @@ export default function StudyPage({ params }: StudyPageProps) {
 
     setNotes(prev => [...prev, newNote].sort((a, b) => a.insertAfterParagraph - b.insertAfterParagraph));
     setEditingNoteId(newNote.id);
-    setEditingText('');
+    // 🎯 无需清理 editingText 状态（已移除）
   };
 
   const handleVideoClick = async (selectedText: string) => {
@@ -2162,26 +2216,37 @@ export default function StudyPage({ params }: StudyPageProps) {
   };
 
   // 便签编辑相关函数
+  // 📝 简化的便签编辑函数 - 非受控组件方案
   const handleStartEdit = (noteId: string, currentText: string) => {
     setEditingNoteId(noteId);
-    setEditingText(currentText);
+    
+    // 🎯 非受控组件：光标自然位于末尾，无需手动管理
+    setTimeout(() => {
+      if (editingTextareaRef.current) {
+        editingTextareaRef.current.focus();
+        // 光标会自动定位到文本末尾，无需 setSelectionRange
+      }
+    }, 0);
   };
 
   const handleSaveEdit = (noteId: string) => {
-    if (editingText.trim()) {
+    // 🎯 非受控组件：直接从 DOM 获取当前值
+    const currentValue = editingTextareaRef.current?.value || '';
+    
+    if (currentValue.trim()) {
       setNotes(prev => prev.map(note => 
         note.id === noteId 
-          ? { ...note, text: editingText.trim() }
+          ? { ...note, text: currentValue.trim() }
           : note
       ));
     }
     setEditingNoteId(null);
-    setEditingText('');
+    // 🎯 无需清理 editingText 状态（已移除）
   };
 
   const handleCancelEdit = () => {
     setEditingNoteId(null);
-    setEditingText('');
+    // 🎯 无需清理 editingText 状态（已移除）
   };
 
   const handleDeleteNote = (noteId: string) => {
@@ -2189,7 +2254,7 @@ export default function StudyPage({ params }: StudyPageProps) {
     // 如果正在编辑这个笔记，也要取消编辑状态
     if (editingNoteId === noteId) {
       setEditingNoteId(null);
-      setEditingText('');
+      // 🎯 无需清理 editingText 状态（已移除）
     }
   };
 

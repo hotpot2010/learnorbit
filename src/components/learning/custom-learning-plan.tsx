@@ -431,6 +431,44 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       return filtered;
     });
 
+    // 🔧 修复：立即更新learningPlan，确保UI实时显示变化
+    if (learningPlan) {
+      setLearningPlan(prevPlan => {
+        if (!prevPlan) return prevPlan;
+        
+        const existingStepIndex = prevPlan.plan.findIndex(s => s.step === step.step);
+        
+        if (existingStepIndex !== -1) {
+          console.log(`🎯 立即更新learningPlan中的步骤 ${step.step}: ${step.title}`);
+          
+          // 立即更新learningPlan中的对应步骤
+          const updatedPlan: LearningPlan = {
+            plan: prevPlan.plan.map((s, index) => 
+              index === existingStepIndex ? step : s
+            )
+          };
+          
+          // 设置更新动画效果
+          setUpdatedStepIndex(existingStepIndex);
+          setTimeout(() => {
+            setUpdatedStepIndex(null);
+          }, 1000);
+          
+          // 触发任务生成（如果需要）
+          if (needsRegeneration) {
+            setTimeout(() => {
+              console.log(`🎯 为立即更新的步骤 ${step.step} 触发任务生成`);
+              addToTaskQueue(step.step);
+            }, 100);
+          }
+          
+          return updatedPlan;
+        }
+        
+        return prevPlan;
+      });
+    }
+
     setPartialPlan(prevPlan => {
       console.log('当前partialPlan状态:', prevPlan);
 
@@ -560,7 +598,18 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   const handlePlanUpdate = (plan: any) => {
     console.log('📚 收到计划更新回调:', plan);
     if (plan) {
-    setLearningPlan(plan);
+      // 🔧 修复：不直接覆盖learningPlan，而是合并更新
+      // 因为我们在handleStepUpdate中已经实时更新了learningPlan
+      console.log('📚 最终计划更新 - 保持现有的实时更新状态');
+      setLearningPlan(prevPlan => {
+        // 如果已经有更新过的计划，保持现有状态
+        if (prevPlan && prevPlan.plan.length > 0) {
+          console.log('✅ 保持现有的实时更新计划');
+          return prevPlan;
+        }
+        // 否则使用新计划
+        return plan;
+      });
     } else {
       // 无变更，仅结束更新状态
       console.log('ℹ️ 本次计划无变更，结束更新态');
