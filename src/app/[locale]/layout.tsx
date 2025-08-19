@@ -1,31 +1,15 @@
 import { Analytics } from '@/analytics/analytics';
-import {
-  fontBricolageGrotesque,
-  fontNotoSans,
-  fontNotoSansMono,
-  fontNotoSerif,
-} from '@/assets/fonts';
-import AffonsoScript from '@/components/affiliate/affonso';
-import PromotekitScript from '@/components/affiliate/promotekit';
-import { DefaultOrganizationData, DefaultWebsiteData } from '@/components/seo/structured-data';
-
 import { routing } from '@/i18n/routing';
-import { cn } from '@/lib/utils';
 import { type Locale, NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { Toaster } from 'sonner';
 import { Providers } from './providers';
 
-import '@/styles/globals.css';
-import { defaultSEO } from '@/lib/seo';
-
 interface LocaleLayoutProps {
   children: ReactNode;
   params: Promise<{ locale: Locale }>;
 }
-
-export const metadata = defaultSEO;
 
 /**
  * 1. Locale Layout
@@ -46,32 +30,13 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html suppressHydrationWarning lang={locale}>
-      <head>
-        <AffonsoScript />
-        <PromotekitScript />
-        <DefaultOrganizationData />
-        <DefaultWebsiteData />
-      </head>
-      <body
-        suppressHydrationWarning
-        className={cn(
-          'size-full antialiased',
-          fontNotoSans.className,
-          fontNotoSerif.variable,
-          fontNotoSansMono.variable,
-          fontBricolageGrotesque.variable
-        )}
-      >
-        <NextIntlClientProvider>
-          <Providers locale={locale}>
-            {children}
+    <NextIntlClientProvider>
+      <Providers locale={locale}>
+        {children}
 
-            <Toaster richColors position="top-right" offset={64} />
-            <Analytics />
-          </Providers>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+        <Toaster richColors position="top-right" offset={64} />
+        <Analytics />
+      </Providers>
+    </NextIntlClientProvider>
   );
 }
