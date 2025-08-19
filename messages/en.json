@@ -58,7 +58,7 @@
       "signInButton": "Sign In to Get Started",
       "difficulty": {
         "beginner": "Beginner",
-        "intermediate": "Intermediate", 
+        "intermediate": "Intermediate",
         "advanced": "Advanced"
       },
       "labels": {
@@ -574,7 +574,7 @@
       }
     },
     "footer": {
-      "tagline": "Make AI SaaS in days, simply and effortlessly",
+      "tagline": "Personalized AI-powered learning platform for everyone",
       "product": {
         "title": "Product",
         "items": {
@@ -606,6 +606,12 @@
           "cookiePolicy": "Cookie Policy",
           "privacyPolicy": "Privacy Policy",
           "termsOfService": "Terms of Service"
+        }
+      },
+      "quicklinks": {
+        "title": "Quick Links",
+        "items": {
+          "mossai": "MossAI Tools Directory"
         }
       }
     },

@@ -511,7 +511,7 @@
       }
     },
     "footer": {
-      "tagline": "使用 MkSaaS 在几天内轻松构建您的 AI SaaS",
+      "tagline": "为每个人打造的个性化AI智能学习平台",
       "product": {
         "title": "产品",
         "items": {
@@ -543,6 +543,12 @@
           "cookiePolicy": "Cookie政策",
           "privacyPolicy": "隐私政策",
           "termsOfService": "服务条款"
+        }
+      },
+      "quicklinks": {
+        "title": "快速链接",
+        "items": {
+          "mossai": "MossAI工具目录"
         }
       }
     },
