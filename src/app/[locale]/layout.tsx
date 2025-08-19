@@ -7,6 +7,7 @@ import {
 } from '@/assets/fonts';
 import AffonsoScript from '@/components/affiliate/affonso';
 import PromotekitScript from '@/components/affiliate/promotekit';
+import { DefaultOrganizationData, DefaultWebsiteData } from '@/components/seo/structured-data';
 
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
@@ -49,6 +50,8 @@ export default async function LocaleLayout({
       <head>
         <AffonsoScript />
         <PromotekitScript />
+        <DefaultOrganizationData />
+        <DefaultWebsiteData />
       </head>
       <body
         suppressHydrationWarning

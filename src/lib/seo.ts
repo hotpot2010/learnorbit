@@ -8,6 +8,10 @@ interface SEOConfig {
   ogImage?: string;
   noIndex?: boolean;
   canonical?: string;
+  type?: 'website' | 'article' | 'product';
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
 }
 
 export function generateSEOMetadata({
@@ -17,6 +21,10 @@ export function generateSEOMetadata({
   ogImage,
   noIndex = false,
   canonical,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author,
 }: SEOConfig = {}): Metadata {
   const baseUrl = getBaseUrl();
   const siteName = 'Aitutorly';
@@ -32,7 +40,7 @@ export function generateSEOMetadata({
     openGraph: {
       title: fullTitle,
       description,
-      url: baseUrl,
+      url: canonical ? `${baseUrl}${canonical}` : baseUrl,
       siteName,
       images: [
         {
@@ -43,7 +51,10 @@ export function generateSEOMetadata({
         },
       ],
       locale: 'zh_CN',
-      type: 'website',
+      type: type as 'website',
+      ...(publishedTime && { publishedTime }),
+      ...(modifiedTime && { modifiedTime }),
+      ...(author && type === 'article' && { authors: [author] }),
     },
     twitter: {
       card: 'summary_large_image',
@@ -61,7 +72,10 @@ export function generateSEOMetadata({
     },
     other: {
       'google-site-verification': process.env.GOOGLE_SITE_VERIFICATION || '',
+      'baidu-site-verification': process.env.BAIDU_SITE_VERIFICATION || '',
+      'msvalidate.01': process.env.BING_SITE_VERIFICATION || '',
     },
+    category: type === 'article' ? 'technology' : undefined,
   };
 }
 

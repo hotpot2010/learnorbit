@@ -16,7 +16,6 @@ import { useTranslations } from 'next-intl';
  */
 export function getFooterLinks(): NestedMenuItem[] {
   const t = useTranslations('Marketing.footer');
-
   return [
     {
       title: t('product.title'),
