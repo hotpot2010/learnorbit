@@ -153,10 +153,10 @@ export function BlogPostStructuredData({ data }: { data: BlogPostData }) {
 /**
  * 生成FAQ结构化数据
  */
-export function FAQStructuredData({ 
-  faqs 
-}: { 
-  faqs: Array<{ question: string; answer: string }> 
+export function FAQStructuredData({
+  faqs
+}: {
+  faqs: Array<{ question: string; answer: string }>
 }) {
   const structuredData = {
     '@context': 'https://schema.org',
@@ -189,7 +189,9 @@ export function DefaultOrganizationData() {
     url: baseUrl,
     logo: `${baseUrl}/logo.png`,
     description: 'AI驱动的个性化学习平台，为每位学习者提供智能化的学习体验',
-    sameAs: Object.values(websiteConfig.metadata.social).filter(Boolean) as string[],
+    sameAs: websiteConfig.metadata.social 
+      ? Object.values(websiteConfig.metadata.social).filter(Boolean) as string[]
+      : [],
   };
 
   return <OrganizationStructuredData data={organizationData} />;
