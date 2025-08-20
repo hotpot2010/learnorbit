@@ -30,7 +30,7 @@ export function generateCourseMetadata({
     category,
     difficulty,
     ...tags,
-  ].filter(Boolean);
+  ].filter(Boolean) as string[];
 
   return generateSEOMetadata({
     title,
@@ -69,7 +69,7 @@ export function generateBlogMetadata({
     '人工智能',
     category,
     ...tags,
-  ].filter(Boolean);
+  ].filter(Boolean) as string[];
 
   return generateSEOMetadata({
     title,
