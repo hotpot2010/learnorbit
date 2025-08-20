@@ -1,8 +1,8 @@
 {
   "Metadata": {
-    "name": "Aitutorly",
-    "title": "Aitutorly - AI Learning Platform",
-    "description": "AI-powered personalized learning platform that creates customized learning paths and course content"
+    "name": "AITutorly",
+    "title": "AITutorly | AI Learning Platform for Personalized Courses & Study Plans",
+    "description": "AITutorly is an AI-powered learning platform that builds personalized study plans, curates video lessons, and provides quizzes to boost your learning efficiency."
   },
   "Common": {
     "login": "Log in",
@@ -163,8 +163,8 @@
       "noLearningPlan": "⚠️ No learning plan available to save"
     },
     "meta": {
-      "title": "AI Learning Platform - Personalized Education",
-      "description": "AI-powered personalized learning platform that creates customized learning paths and course content to enhance your learning efficiency"
+      "title": "AITutorly | AI Learning Platform for Personalized Courses & Study Plans",
+      "description": "AITutorly is an AI-powered learning platform that builds personalized study plans, curates video lessons, and provides quizzes to boost your learning efficiency."
     },
     "hero": {
       "title": "What to Learn?",
@@ -574,7 +574,7 @@
       }
     },
     "footer": {
-      "tagline": "Personalized AI-powered learning platform for everyone",
+      "tagline": "AI-powered learning platform that builds personalized study plans, curates video lessons, and provides quizzes to boost your learning efficiency",
       "product": {
         "title": "Product",
         "items": {
