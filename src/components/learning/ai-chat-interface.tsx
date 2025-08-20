@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Bot, Send, User } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useState, useRef, useEffect, useCallback } from 'react';
 
 // 生成唯一ID的函数，避免冲突
@@ -35,6 +35,7 @@ interface AIChatInterfaceProps {
   onPlanGeneration?: (updateSteps: number[], reason: string) => void;
   onPlanUpdate?: (plan: any) => void; // 新增：直接更新计划的回调
   onStepUpdate?: (step: any, stepNumber: number, total: number) => void; // 新增：逐步更新步骤的回调
+  onIntroductionUpdate?: (introduction: any) => void; // 新增：课程介绍更新回调
 }
 
 export function AIChatInterface({
@@ -51,12 +52,14 @@ export function AIChatInterface({
   onPlanGeneration,
   onPlanUpdate,
   onStepUpdate,
+  onIntroductionUpdate,
 }: AIChatInterfaceProps) {
   const t = useTranslations('LearningPlatform');
+  const locale = useLocale();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isFirstMessage, setIsFirstMessage] = useState(true); // 新增：跟踪是否是第一条消息
+  // 移除 isFirstMessage 状态，改用实时计算消息数量
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   // 初始化欢迎消息
@@ -116,8 +119,9 @@ export function AIChatInterface({
       if (useStudyAPI) {
         callStudyAPI(userMessage, messages);
       } else {
-        // 来自首页的输入，直接生成学习计划
-        handleFirstMessagePlanGeneration(userMessage, messages);
+        // 来自首页的输入，也遵循新的两轮消息规则
+        // 第一轮：仅聊天回复，不生成计划
+        handleFirstMessageChatOnly(userMessage, messages);
       }
     }
   }, [userInputFromHome, messages]);
@@ -150,6 +154,156 @@ export function AIChatInterface({
       }
     }
   }, [externalMessage, messages]);
+
+  // 第二条消息并行处理函数
+  const handleSecondMessageParallel = async (
+    userMessage: Message,
+    currentMessages: Message[]
+  ) => {
+    try {
+      console.log('\n=== 🔄 第二条消息并行处理 ===');
+      
+      // 立即添加计划生成开始的提示消息
+      const planStartMessage: Message = {
+        id: generateUniqueId(),
+        content: locale === 'zh' ? '现在开始为您生成计划~' : 'Now generating your personalized plan~',
+        role: 'assistant',
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, planStartMessage]);
+      
+      const requestData = {
+        id: sessionId || 'user123',
+        messages: currentMessages
+          .map((msg) => ({
+            role: msg.role,
+            content: msg.content,
+          }))
+          .concat([
+            {
+              role: 'user',
+              content: userMessage.content,
+            },
+          ]),
+      };
+
+      // 并行调用两个接口
+      const [chatResponse, planResponse] = await Promise.all([
+        // 聊天接口
+        fetch('/api/chat1/stream', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestData),
+        }),
+        // 计划生成接口
+        fetch('/api/learning/plan/stream_generate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestData),
+        })
+      ]);
+
+      // 处理聊天响应
+      if (chatResponse.ok) {
+        const chatResult = await chatResponse.json();
+        console.log('📥 聊天API响应:', chatResult);
+        
+        // 添加聊天回复到消息列表
+        const assistantMessage: Message = {
+          id: generateUniqueId(),
+          content: chatResult.response || '开始为您生成个性化学习计划...',
+          role: 'assistant',
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, assistantMessage]);
+      }
+
+      // 处理计划生成响应（流式）
+      if (planResponse.ok) {
+        console.log('✅ 计划生成API调用成功，开始处理流式响应');
+        
+        // 通知父组件开始计划生成
+        onPlanGeneration?.([1], '第二轮消息触发初次计划生成');
+        
+        // 处理流式响应
+        if (planResponse.body) {
+          const reader = planResponse.body.getReader();
+          const decoder = new TextDecoder();
+          let stepCount = 0;
+          let buffer = '';
+
+          while (true) {
+            const { done, value } = await reader.read();
+
+            if (done) {
+              console.log('✅ 学习计划流式响应处理完成');
+              break;
+            }
+
+            const chunk = decoder.decode(value, { stream: true });
+            buffer += chunk;
+
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+
+            for (const line of lines) {
+              if (line.trim() && line.startsWith('data: ')) {
+                const dataStr = line.slice(6).trim();
+                try {
+                  const data = JSON.parse(dataStr);
+
+                  if (data.error) {
+                    console.error('❌ 计划生成错误:', data.error);
+                    throw new Error(data.error);
+                  } else if (data.introduction) {
+                    // 调用回调通知父组件显示课程介绍
+                    onIntroductionUpdate?.(data.introduction);
+                  } else if (data.step) {
+                    stepCount += 1;
+                    const step = data.step;
+                    const stepNumber = data.step_number || stepCount;
+                    const total = data.total || '未知';
+
+                    console.log(`📋 生成步骤 ${stepNumber}/${total}:`, step.title);
+                    onStepUpdate?.(step, stepNumber, total);
+                  } else if (data.done && data.done === true) {
+                    console.log('✅ 计划生成完成!');
+
+                    if (data.plan) {
+                      const plan = data.plan;
+                      console.log(`📚 生成的计划包含 ${plan.plan?.length || 0} 个步骤`);
+                      onPlanUpdate?.(plan);
+                    }
+                    break;
+                  }
+                } catch (e) {
+                  console.warn('❌ JSON解析失败:', e);
+                }
+              }
+            }
+          }
+        }
+      }
+
+    } catch (error) {
+      console.error('❌ 第二条消息并行处理失败:', error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: generateUniqueId(),
+          content: '抱歉，生成学习计划时出现了错误，请稍后重试。',
+          role: 'assistant',
+          timestamp: new Date(),
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // 两步式流程处理函数
   const handleTwoStepFlow = async (
@@ -194,19 +348,41 @@ export function AIChatInterface({
       console.log('📥 第一步响应:', analysisResult);
 
       // 第二步：检查是否需要生成学习计划
-      if (analysisResult.updateSteps && analysisResult.updateSteps.length > 0) {
+      // 计算当前用户消息数量（排除AI消息）
+      const userMessageCount = currentMessages.filter(msg => msg.role === 'user').length + 1; // +1 是当前这条消息
+      const isSecondUserMessage = userMessageCount === 2;
+      const isThirdOrLaterMessage = userMessageCount >= 3;
+      
+      // 第二条消息：并行调用两个接口，不需要分析结果判断
+      // 第三条及以后：串行调用，根据分析结果判断是否更新计划
+      const shouldGeneratePlan = isSecondUserMessage || (isThirdOrLaterMessage && analysisResult.updateSteps && analysisResult.updateSteps.length > 0);
+      
+      if (shouldGeneratePlan) {
         console.log('📋 需要更新步骤:', analysisResult.updateSteps);
         console.log('📝 更新原因:', analysisResult.reason);
+        console.log('🔢 当前是第', userMessageCount, '条用户消息');
 
-        // 显示修改步骤信息
-        const stepNumbers = analysisResult.updateSteps.join('、');
-        const updateMessage: Message = {
-          id: generateUniqueId(),
-          content: `为你修改第${stepNumbers}步`,
-          role: 'assistant',
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, updateMessage]);
+        // 根据情况显示不同的提示信息
+        if (isSecondUserMessage && (!analysisResult.updateSteps || analysisResult.updateSteps.length === 0)) {
+          // 第二条消息的初次计划生成
+          const generateMessage: Message = {
+            id: generateUniqueId(),
+            content: '开始为您生成个性化学习计划...',
+            role: 'assistant',
+            timestamp: new Date(),
+          };
+          setMessages((prev) => [...prev, generateMessage]);
+        } else if (analysisResult.updateSteps && analysisResult.updateSteps.length > 0) {
+          // 计划更新
+          const stepNumbers = analysisResult.updateSteps.join('、');
+          const updateMessage: Message = {
+            id: generateUniqueId(),
+            content: t('aiAssistant.modifyingSteps', { steps: stepNumbers }),
+            role: 'assistant',
+            timestamp: new Date(),
+          };
+          setMessages((prev) => [...prev, updateMessage]);
+        }
 
         // 创建并添加AI助手回复消息
         const assistantMessage: Message = {
@@ -219,10 +395,14 @@ export function AIChatInterface({
         setMessages((prev) => [...prev, assistantMessage]);
 
         // 通知父组件开始计划生成（这里会设置updating状态）
-        onPlanGeneration?.(
-          analysisResult.updateSteps,
-          analysisResult.reason || ''
-        );
+        const updateSteps = isSecondUserMessage && (!analysisResult.updateSteps || analysisResult.updateSteps.length === 0) 
+          ? [1] // 初次生成时使用 [1] 作为标识
+          : analysisResult.updateSteps;
+        const reason = isSecondUserMessage && (!analysisResult.updateSteps || analysisResult.updateSteps.length === 0)
+          ? '第二轮消息触发初次计划生成'
+          : (analysisResult.reason || '');
+        
+        onPlanGeneration?.(updateSteps, reason);
 
         // 调用流式计划生成API
         await generateLearningPlan(requestData, analysisResult);
@@ -331,6 +511,9 @@ export function AIChatInterface({
                   if (msg.includes('无需更新计划') || msg.toLowerCase().includes('no update')) {
                     sawNoUpdateMessage = true;
                   }
+                } else if (data.introduction) {
+                  // 调用回调通知父组件显示课程介绍
+                  onIntroductionUpdate?.(data.introduction);
                 } else if (data.step) {
                   stepCount += 1;
                   const step = data.step;
@@ -496,7 +679,76 @@ export function AIChatInterface({
     }
   };
 
-  // 新增：处理第一条消息的学习计划生成
+  // 新增：处理第一轮消息，仅聊天回复，不生成计划
+  const handleFirstMessageChatOnly = async (
+    userMessage: Message,
+    currentMessages: Message[]
+  ) => {
+    try {
+      console.log('\n=== 💬 第一轮消息：仅聊天回复，不生成计划 ===');
+
+      // 构造请求数据
+      const requestData = {
+        id: sessionId || 'user123',
+        messages: currentMessages
+          .map((msg) => ({
+            role: msg.role,
+            content: msg.content,
+          }))
+          .concat([
+            {
+              role: 'user',
+              content: userMessage.content,
+            },
+          ]),
+      };
+
+      console.log('📤 发送聊天请求:', requestData);
+
+      // 只调用聊天API，不生成学习计划
+      const chatResponse = await fetch('/api/chat1/stream', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (!chatResponse.ok) {
+        throw new Error(`聊天API错误: ${chatResponse.status}`);
+      }
+
+      const chatResult = await chatResponse.json();
+      console.log('📥 聊天API响应:', chatResult);
+
+      // 显示AI回复
+      const assistantMessage: Message = {
+        id: generateUniqueId(),
+        content: chatResult.response || t('aiAssistant.helpAnalyze'),
+        role: 'assistant',
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+
+      console.log('✅ 第一轮消息处理完成，下轮消息将可以触发计划生成');
+
+    } catch (error) {
+      console.error('❌ 第一轮消息处理错误:', error);
+
+      const errorMessage: Message = {
+        id: generateUniqueId(),
+        content: '抱歉，AI暂时无法回复，请稍后再试。',
+        role: 'assistant',
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 原有：处理第一条消息的学习计划生成（现在改为第二轮使用）
   const handleFirstMessagePlanGeneration = async (
     userMessage: Message,
     currentMessages: Message[]
@@ -559,8 +811,7 @@ export function AIChatInterface({
 
       setMessages((prev) => [...prev, assistantMessage]);
 
-      // 标记已经不是第一条消息了
-      setIsFirstMessage(false);
+      // 已移除 isFirstMessage 状态管理
       
       console.log('✅ 聊天回复已显示，学习计划仍在后台生成');
     } catch (error) {
@@ -652,7 +903,6 @@ export function AIChatInterface({
               
               try {
                 const data = JSON.parse(dataStr);
-                console.log('✅ JSON解析成功:', Object.keys(data));
 
                 if (data.error) {
                   console.error('❌ 计划生成错误:', data.error);
@@ -661,6 +911,9 @@ export function AIChatInterface({
                   console.warn('⚠️ 计划生成警告:', data.warning);
                 } else if (data.message) {
                   console.log('📨 计划生成消息:', data.message);
+                } else if (data.introduction) {
+                  // 调用回调通知父组件显示课程介绍
+                  onIntroductionUpdate?.(data.introduction);
                 } else if (data.step) {
                   stepCount += 1;
                   const step = data.step;
@@ -750,12 +1003,18 @@ export function AIChatInterface({
     if (useStudyAPI) {
       await callStudyAPI(userMessage, messages);
     } else {
-      // 课程定制页面：判断是否是第一条消息
-      if (isFirstMessage) {
-        // 第一条消息：直接生成学习计划
-        await handleFirstMessagePlanGeneration(userMessage, messages);
+      // 课程定制页面：根据消息轮次判断处理方式
+      // 计算用户消息数量（包括当前这条）
+      const userMessageCount = messages.filter(msg => msg.role === 'user').length + 1;
+      
+      if (userMessageCount === 1) {
+        // 第一轮消息：仅聊天回复，不生成计划
+        await handleFirstMessageChatOnly(userMessage, messages);
+      } else if (userMessageCount === 2) {
+        // 第二轮消息：并行调用聊天和计划生成接口
+        await handleSecondMessageParallel(userMessage, messages);
       } else {
-        // 后续消息：使用两步式流程
+        // 第三轮及后续消息：串行调用，先分析再决定是否生成计划
         await handleTwoStepFlow(userMessage, messages);
       }
     }

@@ -7,6 +7,8 @@ import { LearningPlan, LearningStep } from '@/types/learning-plan';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useCurrentUser } from '@/hooks/use-current-user';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 // 生成随机评分
 const generateRating = (courseId: string) => {
@@ -31,6 +33,86 @@ const StarRating = ({ rating }: { rating: number }) => {
   );
 };
 
+// 清理描述内容，移除tasktype相关信息
+const cleanDescription = (description: string): string => {
+  if (!description) return '';
+  
+  // 移除可能包含tasktype的模式
+  return description
+    // 移除类似 "tasktype: quiz" 或 "taskType: coding" 的行
+    .replace(/^.*task[tT]ype?\s*[:：]\s*\w+.*$/gm, '')
+    // 移除类似 "Type: quiz" 或 "类型: 编程" 的行
+    .replace(/^.*[类型Type]\s*[:：]\s*\w+.*$/gm, '')
+    // 移除多余的空行
+    .replace(/\n\s*\n\s*\n/g, '\n\n')
+    // 移除开头和结尾的空白
+    .trim();
+};
+
+// 描述展示组件
+const DescriptionSection = ({ 
+  description, 
+  stepNumber
+}: { 
+  description: string; 
+  stepNumber: number;
+}) => {
+  if (!description || description.trim() === '') return null;
+  
+  // 清理描述内容
+  const cleanedDescription = cleanDescription(description);
+  
+  return (
+    <div className="mt-3 ml-12 mr-4">
+      {/* 描述内容 */}
+      <div className="flex items-start space-x-2">
+        {/* 图标指示 */}
+        <span className="text-lg transform rotate-12 flex-shrink-0 mt-1">📝</span>
+        
+        {/* 描述文本 */}
+        <div className="flex-1">
+          <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed"
+               style={{
+                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+               }}>
+            <ReactMarkdown
+              components={{
+                p: ({ children, ...props }) => (
+                  <p className="mb-2 last:mb-0" {...props}>
+                    {children}
+                  </p>
+                ),
+                ul: ({ children, ...props }) => (
+                  <ul className="list-disc list-inside space-y-1 ml-2" {...props}>
+                    {children}
+                  </ul>
+                ),
+                li: ({ children, ...props }) => (
+                  <li className="text-sm" {...props}>
+                    {children}
+                  </li>
+                ),
+                strong: ({ children, ...props }) => (
+                  <strong className="font-bold text-gray-800" {...props}>
+                    {children}
+                  </strong>
+                ),
+                code: ({ children, ...props }) => (
+                  <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono" {...props}>
+                    {children}
+                  </code>
+                ),
+              }}
+            >
+              {cleanedDescription}
+            </ReactMarkdown>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 interface CustomLearningPlanProps {
   recommendedCourses: Array<{
     id: string;
@@ -50,6 +132,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   const [learningInput, setLearningInput] = useState<string>('');
   const [learningPlan, setLearningPlan] = useState<LearningPlan | null>(null);
   const [partialPlan, setPartialPlan] = useState<LearningPlan | null>(null); // 新增：用于逐步构建的计划
+  const [courseIntroduction, setCourseIntroduction] = useState<any>(null); // 新增：课程介绍状态
   const [planUpdateStatus, setPlanUpdateStatus] = useState<'idle' | 'updating' | 'completed' | 'error'>('idle');
   const [externalMessage, setExternalMessage] = useState<string>(''); // 新增：外部消息状态
   const [newStepIndex, setNewStepIndex] = useState<number | null>(null); // 新增：用于动画效果的新步骤索引
@@ -66,6 +149,10 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   const [taskGenerationQueue, setTaskGenerationQueue] = useState<number[]>([]);
   const [activeGenerations, setActiveGenerations] = useState<Set<number>>(new Set());
   const [stepContentHash, setStepContentHash] = useState<Record<number, string>>({});
+  
+
+
+
   
   const [sessionId] = useState(() => {
     const id = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -359,8 +446,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       if (savedInput) {
         setLearningInput(savedInput);
         console.log('课程定制页面读取到用户输入:', savedInput);
-        setShowLearningPlan(true);
-        setPlanUpdateStatus('updating'); // 首页输入也设置为更新状态
+        // 不立即显示学习计划，等实际开始生成时再显示
       }
     }
   }, [sessionId]);
@@ -373,20 +459,37 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   // 新增：处理计划生成的回调
   const handlePlanGeneration = (updateSteps: number[], reason: string) => {
     console.log('🚀 开始计划生成:', { updateSteps, reason });
-    setShowLearningPlan(true);
-    // 只有当需要更新步骤时才设置为updating状态
+    // 不立即显示学习计划区域，等收到数据时再显示
+    // 只准备相关状态
     if (updateSteps.length > 0) {
-      setPlanUpdateStatus('updating');
       setPartialPlan(null); // 重置部分计划
       // 只有在非初次生成时才设置更新步骤（初次生成的标识是reason包含"初次"）
       if (!reason.includes('初次')) {
         setUpdatingSteps(updateSteps); // 设置正在更新的步骤
       }
     }
+    
+    // 如果是初次生成，清理之前的课程介绍
+    if (reason.includes('初次')) {
+      setCourseIntroduction(null);
+    }
+  };
+
+  // 新增：处理课程介绍的回调
+  const handleIntroductionUpdate = (introduction: any) => {
+    setShowLearningPlan(true); // 收到课程介绍时显示学习计划区域
+    setCourseIntroduction(introduction);
   };
 
   // 新增：逐步更新步骤的回调
   const handleStepUpdate = (step: any, stepNumber: number, total: number) => {
+    // 收到第一个步骤时设置状态
+    if (planUpdateStatus === 'idle') {
+      console.log('🔄 收到第一个步骤，设置为updating状态');
+      setShowLearningPlan(true); // 显示学习计划区域
+      setPlanUpdateStatus('updating');
+    }
+    
     console.log(`\n📋 ===== 步骤更新开始 =====`);
     console.log(`收到步骤更新 ${stepNumber}/${total}:`, step.title);
     console.log('步骤详细信息:', {
@@ -637,6 +740,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     setTimeout(() => {
       setPlanUpdateStatus('idle');
       setPartialPlan(null);
+      // 注意：不清除课程介绍，因为它在整个会话中应该保持显示
       console.log('🧹 延迟清除部分计划');
     }, 3000);
   };
@@ -697,6 +801,46 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     if (!videos || videos.length === 0) return '估算中...';
     // 简单估算：取第一个视频时长作为参考
     return videos[0]?.duration || '估算中...';
+  };
+
+  // 渲染课程介绍
+  const renderCourseIntroduction = (introduction: any) => {
+    if (!introduction) {
+      return null;
+    }
+    
+    // 只显示 background、overview、prerequisites
+    const displayFields = ['background', 'overview', 'prerequisites'];
+    const filteredIntroduction = Object.entries(introduction)
+      .filter(([key]) => displayFields.includes(key));
+    
+    if (filteredIntroduction.length === 0) {
+      return null;
+    }
+    
+    return (
+      <div className="mb-6">
+        <div className="bg-yellow-50 p-5 rounded-lg border border-yellow-200 shadow-sm"
+             style={{ 
+               fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+             }}>
+          <div className="space-y-4">
+            {filteredIntroduction.map(([key, value]) => (
+              <div key={key} className="text-gray-800">
+                <h4 className="font-bold text-gray-700 mb-2 text-base">
+                  {key === 'background' ? '🌟 课程背景' :
+                   key === 'overview' ? '🗺️ 课程大纲' :
+                   '⚡ 前置要求'}
+                </h4>
+                <div className="text-gray-600 text-base leading-relaxed pl-3 border-l-2 border-yellow-300">
+                  {String(value)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   };
 
   // 渲染学习步骤
@@ -821,15 +965,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             </div>
           )}
 
-          {/* Animation Type */}
-          {step.animation_type && step.animation_type !== '无' && (
-            <span className="px-2 py-1 rounded text-xs transform rotate-3 bg-purple-100 text-purple-800"
-                  style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                  }}>
-              Animation: {step.animation_type}
-            </span>
-          )}
+
 
           {/* Task Type */}
           <span className={`px-2 py-1 rounded text-xs transform rotate-1 ${
@@ -890,6 +1026,12 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             )}
           </div>
         </div>
+
+        {/* 描述区域 - 全部显示 */}
+        <DescriptionSection 
+          description={step.description} 
+          stepNumber={step.step}
+        />
       </div>
     );
   };
@@ -965,7 +1107,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
              backgroundSize: '20px 20px'
            }}>
       {/* AI聊天区域 */}
-      <div className="w-1/4 p-4">
+      <div className="w-1/3 p-4">
         <div className="h-full rounded-lg border border-gray-200 shadow-sm bg-white/80 backdrop-blur-sm p-4">
           <AIChatInterface
             className="h-full"
@@ -977,12 +1119,13 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             onPlanGeneration={handlePlanGeneration}
             onPlanUpdate={handlePlanUpdate}
             onStepUpdate={handleStepUpdate}
+            onIntroductionUpdate={handleIntroductionUpdate}
           />
         </div>
       </div>
 
-      {/* 中间学习计划区域 */}
-      <div className="w-7/12 p-4">
+      {/* 学习计划区域 */}
+      <div className="w-2/3 p-4">
         <div className="h-full flex flex-col relative">
           <div className="mb-4">
             <h2 className="text-lg font-bold text-center text-blue-700 transform rotate-1"
@@ -1041,6 +1184,9 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
               </div>
             ) : (
               <div className="space-y-4 pb-20">
+                {/* 显示课程介绍 */}
+                {courseIntroduction && renderCourseIntroduction(courseIntroduction)}
+                
                 {/* 显示部分计划或完整计划 */}
                 {(learningPlan || partialPlan)?.plan.map((step, index) => renderLearningStep(step, index))}
 
@@ -1116,67 +1262,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         </div>
       </div>
 
-      {/* 推荐课程区域 */}
-      <div className="w-1/6 p-4">
-        <div className="h-full flex flex-col">
-          <div className="flex-1 overflow-y-auto space-y-4">
-            {recommendedCourses.map((course, index) => (
-              <div
-                key={course.id}
-                className={`group relative bg-white p-3 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 border-2 border-gray-200 ${
-                  index % 2 === 0 ? 'rotate-1 hover:rotate-0' : '-rotate-1 hover:rotate-0'
-                }`}
-              >
-                <div className="space-y-2">
-                  <h3 className="font-bold text-sm text-gray-800"
-                      style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                      }}>
-                    {course.title}
-                  </h3>
-                  <p className="text-xs text-gray-600 line-clamp-2"
-                     style={{
-                       fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                     }}>
-                    {course.description}
-                  </p>
 
-                  <StarRating rating={generateRating(course.id)} />
-
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="bg-yellow-100 px-2 py-1 rounded transform -rotate-3 text-blue-600 font-medium"
-                          style={{
-                            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                          }}>
-                      {course.estimatedTime}
-                    </span>
-                    <span className="capitalize px-2 py-1 bg-blue-100 rounded transform rotate-3 text-blue-700"
-                          style={{
-                            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                          }}>
-                      {course.difficulty}
-                    </span>
-                  </div>
-
-                  <button
-                    onClick={() => handleRecommendedCourseClick(course)}
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-xs transform hover:rotate-1 shadow-md"
-                    style={{
-                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                    }}>
-                    Start Learning 🚀
-                  </button>
-                </div>
-
-                {/* 图钉装饰 */}
-                <div className={`absolute -top-2 -right-2 w-3 h-3 rounded-full shadow-md transform rotate-45 opacity-80 ${
-                  index % 3 === 0 ? 'bg-red-400' : index % 3 === 1 ? 'bg-blue-400' : 'bg-green-400'
-                }`}></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
     </div>
 
     {/* 课程生成完成通知 */}

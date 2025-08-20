@@ -96,7 +96,8 @@
       "welcomeCustomize": "I'm here to help you customize courses",
       "helpAnalyze": "I'll help you analyze your learning needs and generate a personalized course plan.",
       "helpCustomize": "I'll help you analyze your learning needs.",
-      "tellMeWhatToLearn": "Please tell me what you want to learn, and I'll create a personalized learning plan for you."
+      "tellMeWhatToLearn": "Please tell me what you want to learn, and I'll create a personalized learning plan for you.",
+      "modifyingSteps": "Modifying steps {steps} for you"
     },
     "course": {
       "wantToLearn": "I want to learn",

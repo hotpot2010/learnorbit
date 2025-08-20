@@ -11,10 +11,11 @@ import json
 import sys
 import time
 import uuid
-
-# DEFAULT_SERVER = "http://172.30.106.167:5001"
+import os
+output_dir="sampleoutput"
+DEFAULT_SERVER = "http://172.30.116.44:5001"
 # DEFAULT_SERVER="https://study-platform.zeabur.app"
-DEFAULT_SERVER="https://studyplatform-tokyo.zeabur.app"
+# DEFAULT_SERVER="https://studyplatform-tokyo.zeabur.app"
 async def call_task_generate_api(server_url, input_data):
     url = f"{server_url}/api/task/generate"
     try:
@@ -89,7 +90,7 @@ async def call_stream_generate(server_url, messages, session_id, is_update=False
     }
     
     if is_update and advise:
-        data["advise"] = json.dumps(advise)
+        data["advise"] = json.dumps(advise,ensure_ascii=False)
     
     mode = "更新" if is_update else "创建"
     print(f"正在{mode}学习计划...")
@@ -106,6 +107,7 @@ async def call_stream_generate(server_url, messages, session_id, is_update=False
                 
                 print("开始接收流式响应...")
                 step_count = 0
+                introduction = None
                 
                 async for line in response.content:
                     if line.startswith(b'data: '):
@@ -119,6 +121,11 @@ async def call_stream_generate(server_url, messages, session_id, is_update=False
                                 print(f"\n警告: {data_obj['warning']}")
                             elif "message" in data_obj:
                                 print(f"\n消息: {data_obj['message']}")
+                            elif "introduction" in data_obj:
+                                print("\n课程介绍:")
+                                intro = data_obj["introduction"]
+                                introduction = intro
+                                print(json.dumps(intro, ensure_ascii=False, indent=2))
                             elif "step" in data_obj:
                                 step_count += 1
                                 step = data_obj["step"]
@@ -137,6 +144,8 @@ async def call_stream_generate(server_url, messages, session_id, is_update=False
                                 print(f"\n计划生成完成! 耗时: {duration:.2f}秒")
                                 if "plan" in data_obj:
                                     plan = data_obj["plan"]
+                                    if introduction:
+                                        plan["introduction"] = introduction
                                     print(f"计划包含 {len(plan.get('plan', []))} 个步骤")
                                     return plan
                         except json.JSONDecodeError as e:
@@ -243,19 +252,37 @@ async def interactive_test(server_url):
             )
             
             if last_plan and 'plan' in last_plan:
-                for i,step in enumerate(last_plan['plan']):
-                    step["id"]=session_id
-                    task_data = await call_task_generate_api(server_url, step)
-                    print(f"step {step['step']}:")
+                # 准备并发请求的任务列表
+                task_requests = []
+                for i, step in enumerate(last_plan['plan']):
+                    step["id"] = session_id
+                    task_requests.append((i, step))
+                
+                print("\n开始并发生成任务...")
+                
+                # 定义辅助函数来处理单个任务请求
+                async def process_task(index, step_data):
+                    task_data = await call_task_generate_api(server_url, step_data)
+                    print(f"step {step_data['step']}:")
                     print(task_data)
                     print("*"*100)
+                    return index, task_data
+                
+                # 并发执行所有任务请求
+                tasks = [process_task(idx, step) for idx, step in task_requests]
+                task_results = await asyncio.gather(*tasks)
+                
+                # 将结果映射回原始计划
+                for idx, task_data in task_results:
                     if task_data:
-                        last_plan['plan'][i]['task'] = task_data
+                        last_plan['plan'][idx]['task'] = task_data
 
                 print("\n学习计划生成成功!")
                 if output_json:
+                    if not os.path.exists(output_dir):
+                        os.makedirs(output_dir)
                     filename = f"plan_and_tasks_{session_id}.json"
-                    with open(filename, 'w', encoding='utf-8') as f:
+                    with open(os.path.join(output_dir, filename), 'w', encoding='utf-8') as f:
                         json.dump(last_plan, f, ensure_ascii=False, indent=4)
                     print(f"\n计划和任务已保存到 {filename}")
             else:

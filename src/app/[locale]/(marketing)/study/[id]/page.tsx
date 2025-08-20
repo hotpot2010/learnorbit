@@ -15,7 +15,13 @@ import {
   Pause,
   Maximize2,
   Minimize2,
-  StickyNote
+  StickyNote,
+  ImagePlus,
+  X,
+  Upload,
+  Image as ImageIcon,
+  ZoomIn,
+  ZoomOut
 } from 'lucide-react';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { LearningPlan, LearningStep, TaskGenerateRequest, TaskGenerateResponse, TaskContent, QuizQuestion, CodingTask } from '@/types/learning-plan';
@@ -89,9 +95,10 @@ export default function StudyPage({ params }: StudyPageProps) {
     timestamp: Date;
     stepIndex: number;
     insertAfterParagraph: number; // 插入在第几个段落之后（-1表示插入在开头）
-    type?: 'text' | 'video';
+    type?: 'text' | 'video' | 'image';
     video?: { url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title?: string; duration?: string };
     videos?: { url: string; platform: 'youtube' | 'bilibili' | 'unknown'; title?: string; duration?: string }[];
+    images?: { url: string; name?: string; size?: number; type?: string }[]; // 新增：图片数组
     searchKeyword?: string;
     selectedVideoIndex?: number; // 记录多视频便签的当前选择
     isLoading?: boolean;
@@ -105,6 +112,11 @@ export default function StudyPage({ params }: StudyPageProps) {
   
   // 便签编辑 - 简化的非受控组件 ref
   const editingTextareaRef = useRef<HTMLTextAreaElement>(null);
+  
+  // 图片上传相关
+  const imageUploadRef = useRef<HTMLInputElement>(null);
+  const [uploadingImages, setUploadingImages] = useState<Record<string, boolean>>({});
+  const [imageDisplaySizes, setImageDisplaySizes] = useState<Record<string, 'small' | 'medium' | 'large'>>({});
   // 彩笔标记（可持久化）
   interface Mark {
     id: string;
@@ -256,28 +268,48 @@ export default function StudyPage({ params }: StudyPageProps) {
     // 统一的便签渲染组件
     const renderNoteBlock = (note: Note) => {
       const isVideo = note.type === 'video';
-      const isDrag = note.type !== 'video' && note.origin === 'drag';
+      const isImage = note.type === 'image' || (note.images && note.images.length > 0);
+      const isDrag = note.type !== 'video' && note.type !== 'image' && note.origin === 'drag';
       const iconClass = isVideo
         ? 'bg-gradient-to-br from-purple-100 to-purple-200 text-purple-700 border-purple-200'
+        : isImage
+        ? 'bg-gradient-to-br from-pink-100 to-pink-200 text-pink-700 border-pink-200'
         : isDrag
         ? 'bg-gradient-to-br from-sky-100 to-sky-200 text-sky-700 border-sky-200'
         : 'bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-700 border-yellow-200';
-      const paperBg = isVideo ? 'bg-purple-50 border-purple-200' : isDrag ? 'bg-sky-50 border-sky-200' : 'bg-yellow-100 border-yellow-200';
-      const paperFold = isVideo ? 'bg-purple-50 border-purple-200' : isDrag ? 'bg-sky-50 border-sky-200' : 'bg-yellow-100 border-yellow-200';
-      const timestampColor = isVideo ? 'text-purple-700' : isDrag ? 'text-sky-700' : 'text-yellow-600';
-      const deleteHover = isVideo ? 'hover:bg-purple-100 text-purple-500' : isDrag ? 'hover:bg-sky-100 text-sky-500' : 'hover:bg-yellow-100 text-yellow-500';
-      const alignWrap = isVideo ? 'flex items-start justify-end mb-4 mr-6 space-x-3' : 'flex items-start mb-4 ml-6 space-x-3';
+      const paperBg = isVideo ? 'bg-purple-50 border-purple-200' : isImage ? 'bg-pink-50 border-pink-200' : isDrag ? 'bg-sky-50 border-sky-200' : 'bg-yellow-100 border-yellow-200';
+      const paperFold = isVideo ? 'bg-purple-50 border-purple-200' : isImage ? 'bg-pink-50 border-pink-200' : isDrag ? 'bg-sky-50 border-sky-200' : 'bg-yellow-100 border-yellow-200';
+      const timestampColor = isVideo ? 'text-purple-700' : isImage ? 'text-pink-700' : isDrag ? 'text-sky-700' : 'text-yellow-600';
+      const deleteHover = isVideo ? 'hover:bg-purple-100 text-purple-500' : isImage ? 'hover:bg-pink-100 text-pink-500' : isDrag ? 'hover:bg-sky-100 text-sky-500' : 'hover:bg-yellow-100 text-yellow-500';
+      const alignWrap = isVideo ? 'flex items-start justify-end mb-4 mr-6 space-x-3' : isImage ? 'flex items-start justify-start mb-4 ml-6 space-x-3' : 'flex items-start mb-4 ml-6 space-x-3';
 
       return (
         <div key={`note-${note.id}`} className="my-6">
           <div className={alignWrap}>
             <div className={`w-8 h-8 rounded-lg ${iconClass} text-lg font-bold flex items-center justify-center mt-1 transform rotate-1 shadow-md`}>
+              {isImage ? (
+                <ImageIcon className="w-4 h-4" />
+              ) : (
               <StickyNote className="w-4 h-4" />
+              )}
             </div>
             <div className={`max-w-full`}>
               <div
-                className={`relative ${paperBg} p-5 rounded-lg shadow-lg transform rotate-0.5 inline-block ${isVideo ? (note.videos && note.videos.length > 0 ? (expandedNoteVideoIds[note.id] ? 'w-[1024px]' : 'w-[640px]') : (expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-96')) : 'min-w-64 max-w-2xl'} border`}
-                style={{ boxShadow: isVideo ? '0 3px 8px rgba(147, 51, 234, 0.10), 0 1px 3px rgba(0, 0, 0, 0.08)' : isDrag ? '0 3px 8px rgba(56, 189, 248, 0.10), 0 1px 3px rgba(0,0,0,0.08)' : '0 3px 8px rgba(255, 212, 59, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08)' }}
+                className={`relative ${paperBg} p-5 rounded-lg shadow-lg transform rotate-0.5 inline-block ${
+                  isVideo 
+                    ? (note.videos && note.videos.length > 0 
+                        ? (expandedNoteVideoIds[note.id] ? 'w-[1024px]' : 'w-[640px]') 
+                        : (expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-96')) 
+                    : isImage 
+                      ? (() => {
+                          const size = imageDisplaySizes[note.id] || 'medium';
+                          return size === 'small' ? 'min-w-80 max-w-2xl' : 
+                                 size === 'large' ? 'min-w-96 max-w-none' : 
+                                 'min-w-80 max-w-4xl';
+                        })()
+                      : 'min-w-64 max-w-2xl'
+                } border`}
+                style={{ boxShadow: isVideo ? '0 3px 8px rgba(147, 51, 234, 0.10), 0 1px 3px rgba(0, 0, 0, 0.08)' : isImage ? '0 3px 8px rgba(236, 72, 153, 0.10), 0 1px 3px rgba(0, 0, 0, 0.08)' : isDrag ? '0 3px 8px rgba(56, 189, 248, 0.10), 0 1px 3px rgba(0,0,0,0.08)' : '0 3px 8px rgba(255, 212, 59, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08)' }}
               >
                 <div
                   className={`absolute top-0 right-0 w-5 h-5 ${paperFold} transform rotate-45 translate-x-2.5 -translate-y-2.5 border`}
@@ -291,7 +323,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                           ref={editingTextareaRef}
                           key={`textarea-${note.id}-${editingNoteId}`}
                           defaultValue={note.text || ''}
-                          className={`w-full p-3 border rounded-lg ${isVideo ? 'border-purple-300 bg-purple-50 text-purple-800 focus:ring-purple-400' : isDrag ? 'border-sky-300 bg-sky-50 text-sky-800 focus:ring-sky-400' : 'border-yellow-300 bg-yellow-50 text-yellow-800 focus:ring-yellow-400'} resize-none focus:outline-none focus:ring-2`}
+                          className={`w-full p-3 border rounded-lg ${isVideo ? 'border-purple-300 bg-purple-50 text-purple-800 focus:ring-purple-400' : isImage ? 'border-pink-300 bg-pink-50 text-pink-800 focus:ring-pink-400' : isDrag ? 'border-sky-300 bg-sky-50 text-sky-800 focus:ring-sky-400' : 'border-yellow-300 bg-yellow-50 text-yellow-800 focus:ring-yellow-400'} resize-none focus:outline-none focus:ring-2`}
                           style={{
                             fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
                             fontSize: '16px',
@@ -307,9 +339,53 @@ export default function StudyPage({ params }: StudyPageProps) {
                             }
                           }}
                         />
+                        
+                        {/* 编辑时的图片预览 */}
+                        {note.images && note.images.length > 0 && (
+                          <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-xs font-medium text-gray-600">
+                                Added Images ({note.images.length})
+                              </span>
+                            </div>
+                            <div className="grid grid-cols-3 gap-2">
+                              {note.images.map((image, index) => (
+                                <div key={index} className="relative group">
+                                  <img
+                                    src={image.url}
+                                    alt={image.name || `Image ${index + 1}`}
+                                    className="w-full h-16 object-cover rounded border"
+                                  />
+                                  <button
+                                    onClick={() => handleRemoveImage(note.id, index)}
+                                    className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-xs"
+                                    title="删除图片"
+                                  >
+                                    <X className="w-2 h-2" />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        
                         <div className="flex items-center space-x-2">
-                          <button onClick={() => handleSaveEdit(note.id)} className={`px-3 py-1 rounded-md transition-colors text-xs font-medium ${isVideo ? 'bg-purple-100 text-purple-700 hover:bg-purple-200' : isDrag ? 'bg-sky-100 text-sky-700 hover:bg-sky-200' : 'bg-green-100 text-green-700 hover:bg-green-200'}`} style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✓ Save</button>
+                          <button onClick={() => handleSaveEdit(note.id)} className={`px-3 py-1 rounded-md transition-colors text-xs font-medium ${isVideo ? 'bg-purple-100 text-purple-700 hover:bg-purple-200' : isImage ? 'bg-pink-100 text-pink-700 hover:bg-pink-200' : isDrag ? 'bg-sky-100 text-sky-700 hover:bg-sky-200' : 'bg-green-100 text-green-700 hover:bg-green-200'}`} style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✓ Save</button>
                           <button onClick={handleCancelEdit} className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors text-xs font-medium" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✕ Cancel</button>
+                          <button 
+                            onClick={() => triggerImageUpload(note.id)} 
+                            disabled={uploadingImages[note.id]}
+                            className={`px-3 py-1 rounded-md transition-colors text-xs font-medium flex items-center space-x-1 ${isVideo ? 'bg-purple-100 text-purple-700 hover:bg-purple-200' : isImage ? 'bg-pink-100 text-pink-700 hover:bg-pink-200' : isDrag ? 'bg-sky-100 text-sky-700 hover:bg-sky-200' : 'bg-blue-100 text-blue-700 hover:bg-blue-200'} disabled:opacity-50`} 
+                            style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}
+                            title="上传图片/GIF"
+                          >
+                            {uploadingImages[note.id] ? (
+                              <Upload className="w-3 h-3 animate-spin" />
+                            ) : (
+                              <ImagePlus className="w-3 h-3" />
+                            )}
+                            <span>Image</span>
+                          </button>
                         </div>
                       </div>
                     ) : (
@@ -462,7 +538,123 @@ export default function StudyPage({ params }: StudyPageProps) {
                             ) : null}
                           </div>
                         ) : (
-                          <div className={`text-lg leading-relaxed whitespace-pre-wrap break-words cursor-pointer rounded p-1 -m-1 transition-colors ${isVideo ? 'text-purple-800 hover:bg-purple-50' : isDrag ? 'text-sky-800 hover:bg-sky-50' : 'text-yellow-800 hover:bg-yellow-50'}`} style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive', fontSize: '16px', lineHeight: '1.6', textShadow: '0 0.5px 1px rgba(0, 0, 0, 0.06)', wordBreak: 'break-word' }} onDoubleClick={() => handleStartEdit(note.id, note.text)} title="Double-click to edit">{note.text || '（空白便签，双击编辑）'}</div>
+                          <div className="space-y-3">
+                            {/* 文本内容 */}
+                            <div className={`text-lg leading-relaxed whitespace-pre-wrap break-words cursor-pointer rounded p-1 -m-1 transition-colors ${isVideo ? 'text-purple-800 hover:bg-purple-50' : isImage ? 'text-pink-800 hover:bg-pink-50' : isDrag ? 'text-sky-800 hover:bg-sky-50' : 'text-yellow-800 hover:bg-yellow-50'}`} style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive', fontSize: '16px', lineHeight: '1.6', textShadow: '0 0.5px 1px rgba(0, 0, 0, 0.06)', wordBreak: 'break-word' }} onDoubleClick={() => handleStartEdit(note.id, note.text)} title="Double-click to edit">{note.text || '（空白便签，双击编辑）'}</div>
+                            
+                            {/* 图片展示区域 */}
+                            {note.images && note.images.length > 0 && (
+                              <div className="space-y-3">
+                                {/* 图片尺寸控制按钮 */}
+                                <div className="flex items-center justify-between">
+                                  <span className={`text-xs font-medium ${isImage ? 'text-pink-700' : 'text-gray-600'}`}>
+                                    Images ({note.images.length})
+                                  </span>
+                                  <button
+                                    onClick={() => toggleImageSize(note.id)}
+                                    className={`flex items-center space-x-1 px-2 py-1 rounded-md text-xs transition-colors ${
+                                      isImage 
+                                        ? 'bg-pink-100 text-pink-700 hover:bg-pink-200' 
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    }`}
+                                    title="切换图片尺寸"
+                                  >
+                                    {(() => {
+                                      const size = imageDisplaySizes[note.id] || 'medium';
+                                      return size === 'small' ? (
+                                        <>
+                                          <ZoomIn className="w-3 h-3" />
+                                          <span>Small</span>
+                                        </>
+                                      ) : size === 'large' ? (
+                                        <>
+                                          <ZoomOut className="w-3 h-3" />
+                                          <span>Large</span>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <ZoomIn className="w-3 h-3" />
+                                          <span>Medium</span>
+                                        </>
+                                      );
+                                    })()}
+                                  </button>
+                                </div>
+                                
+                                {/* 图片网格 */}
+                                <div className={`grid gap-3 ${getImageSizeStyles(note.id).containerClass}`}>
+                                  {note.images.map((image, index) => {
+                                    const sizeStyles = getImageSizeStyles(note.id);
+                                    const size = imageDisplaySizes[note.id] || 'medium';
+                                    return (
+                                      <div key={index} className="relative group">
+                                        <div 
+                                          className="flex items-center justify-center bg-gray-50 rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300"
+                                          style={{ 
+                                            maxWidth: sizeStyles.maxWidth,
+                                            maxHeight: sizeStyles.maxHeight,
+                                            minWidth: '60px',
+                                            minHeight: '60px'
+                                          }}
+                                        >
+                                          <img
+                                            src={image.url}
+                                            alt={image.name || `Image ${index + 1}`}
+                                            className={`${sizeStyles.imageClass} rounded-lg cursor-pointer transition-transform duration-300 hover:scale-105`}
+                                            style={{ 
+                                              maxWidth: sizeStyles.maxWidth,
+                                              maxHeight: sizeStyles.maxHeight,
+                                              width: 'auto',
+                                              height: 'auto'
+                                            }}
+                                            onLoad={() => {
+                                              console.log(`图片 ${index + 1} 加载成功`);
+                                            }}
+                                            onError={(e) => {
+                                              console.error(`图片 ${index + 1} 加载失败`);
+                                              e.currentTarget.style.display = 'none';
+                                            }}
+                                            onClick={() => {
+                                              // 点击图片可以放大查看
+                                              window.open(image.url, '_blank');
+                                            }}
+                                          />
+                                        </div>
+                                        
+                                        {editingNoteId !== note.id && (
+                                          <button
+                                            onClick={() => handleRemoveImage(note.id, index)}
+                                            className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center shadow-lg"
+                                            title="删除图片"
+                                          >
+                                            <X className="w-3 h-3" />
+                                          </button>
+                                        )}
+                                        
+                                        {image.name && (
+                                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent text-white text-xs p-2 rounded-b-lg">
+                                            <div className="truncate">{image.name}</div>
+                                            {image.size && (
+                                              <div className="text-xs opacity-75">
+                                                {(image.size / 1024 / 1024).toFixed(1)} MB
+                                              </div>
+                                            )}
+                                          </div>
+                                        )}
+                                        
+                                        {/* 图片类型标识 */}
+                                        {image.type?.includes('gif') && (
+                                          <div className="absolute top-2 left-2 bg-purple-500 text-white text-xs px-2 py-1 rounded-full">
+                                            GIF
+                                          </div>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            )}
+                          </div>
                         )}
                       </div>
                     )}
@@ -2258,6 +2450,129 @@ export default function StudyPage({ params }: StudyPageProps) {
     }
   };
 
+  // 图片上传处理函数
+  const handleImageUpload = async (noteId: string, files: FileList) => {
+    if (!files || files.length === 0) return;
+    
+    setUploadingImages(prev => ({ ...prev, [noteId]: true }));
+    
+    try {
+      const uploadedImages: { url: string; name?: string; size?: number; type?: string }[] = [];
+      
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        // 检查文件类型
+        if (!file.type.startsWith('image/')) {
+          alert(`文件 ${file.name} 不是有效的图片格式`);
+          continue;
+        }
+        
+        // 检查文件大小 (限制10MB)
+        if (file.size > 10 * 1024 * 1024) {
+          alert(`文件 ${file.name} 太大，请选择小于10MB的图片`);
+          continue;
+        }
+        
+        // 创建预览URL (使用 URL.createObjectURL)
+        const imageUrl = URL.createObjectURL(file);
+        
+        uploadedImages.push({
+          url: imageUrl,
+          name: file.name,
+          size: file.size,
+          type: file.type
+        });
+      }
+      
+      if (uploadedImages.length > 0) {
+        // 更新便签，添加图片
+        setNotes(prev => prev.map(note => 
+          note.id === noteId 
+            ? { 
+                ...note, 
+                type: note.images ? 'image' : note.type,
+                images: [...(note.images || []), ...uploadedImages] 
+              }
+            : note
+        ));
+      }
+      
+    } catch (error) {
+      console.error('图片上传失败:', error);
+      alert('图片上传失败，请重试');
+    } finally {
+      setUploadingImages(prev => ({ ...prev, [noteId]: false }));
+    }
+  };
+
+  // 删除图片
+  const handleRemoveImage = (noteId: string, imageIndex: number) => {
+    setNotes(prev => prev.map(note => {
+      if (note.id === noteId && note.images) {
+        const newImages = note.images.filter((_, index) => index !== imageIndex);
+        // 释放 URL.createObjectURL 创建的URL
+        const removedImage = note.images[imageIndex];
+        if (removedImage?.url.startsWith('blob:')) {
+          URL.revokeObjectURL(removedImage.url);
+        }
+        
+        return {
+          ...note,
+          images: newImages,
+          type: newImages.length === 0 && !note.text ? 'text' : note.type
+        };
+      }
+      return note;
+    }));
+  };
+
+  // 触发图片上传
+  const triggerImageUpload = (noteId: string) => {
+    if (imageUploadRef.current) {
+      imageUploadRef.current.dataset.noteId = noteId;
+      imageUploadRef.current.click();
+    }
+  };
+
+  // 切换图片显示尺寸
+  const toggleImageSize = (noteId: string) => {
+    setImageDisplaySizes(prev => {
+      const currentSize = prev[noteId] || 'medium';
+      const nextSize = currentSize === 'small' ? 'medium' : 
+                      currentSize === 'medium' ? 'large' : 'small';
+      return { ...prev, [noteId]: nextSize };
+    });
+  };
+
+  // 获取图片尺寸样式
+  const getImageSizeStyles = (noteId: string) => {
+    const size = imageDisplaySizes[noteId] || 'medium';
+    switch (size) {
+      case 'small':
+        return { 
+          containerClass: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4', 
+          imageClass: 'object-contain',
+          maxWidth: '120px',
+          maxHeight: '120px'
+        };
+      case 'large':
+        return { 
+          containerClass: 'grid-cols-1', 
+          imageClass: 'object-contain',
+          maxWidth: '400px',
+          maxHeight: '400px'
+        };
+      default: // medium
+        return { 
+          containerClass: 'grid-cols-1 sm:grid-cols-2', 
+          imageClass: 'object-contain',
+          maxWidth: '240px',
+          maxHeight: '240px'
+        };
+    }
+  };
+
   // 文本高亮渲染工具：将指定锚点内的字符串高亮为"彩笔笔刷"效果
   const renderNodeWithHighlights = (node: any, anchorIdx: number) => {
     const list = marks.filter(m => m.stepIndex === currentStepIndex && m.anchorIndex === anchorIdx);
@@ -3058,6 +3373,24 @@ export default function StudyPage({ params }: StudyPageProps) {
         }
       }}
       containerSelector=".ai-chat-interface"
+    />
+    
+    {/* 隐藏的图片上传输入 */}
+    <input
+      ref={imageUploadRef}
+      type="file"
+      accept="image/*,.gif"
+      multiple
+      className="hidden"
+      onChange={(e) => {
+        const files = e.target.files;
+        const noteId = e.target.dataset.noteId;
+        if (files && noteId) {
+          handleImageUpload(noteId, files);
+        }
+        // 清空input值，允许重复选择同一文件
+        e.target.value = '';
+      }}
     />
     </>
   );

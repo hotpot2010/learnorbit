@@ -175,30 +175,13 @@ export default function CourseMarketplacePage() {
 
         {/* 课程列表 */}
         {!loading && filteredCourses.length > 0 && (
-          <div className="relative">
-            {/* 横向滚动提示（移动端） */}
-            <div className="text-center mb-4 md:hidden">
-              <p 
-                className="text-sm text-gray-500 transform -rotate-1"
-                style={{
-                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
-                }}
-              >
-                👈 Swipe to see more courses 👉
-              </p>
+          <div className="px-4">
+            {/* 自动换行网格布局 */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+              {filteredCourses.map((course, index) => (
+                <CourseCard key={course.id} course={course} index={index} />
+              ))}
             </div>
-            
-            <div className="overflow-x-auto pb-4 scrollbar-hide">
-              <div className="flex space-x-6 px-4" style={{ minWidth: 'max-content' }}>
-                {filteredCourses.map((course, index) => (
-                  <CourseCard key={course.id} course={course} index={index} />
-                ))}
-              </div>
-            </div>
-            
-            {/* 左右渐变遮罩（桌面端） */}
-            <div className="hidden md:block absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-white/50 to-transparent pointer-events-none z-10" />
-            <div className="hidden md:block absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-white/50 to-transparent pointer-events-none z-10" />
           </div>
         )}
 
@@ -272,7 +255,7 @@ const CourseCard = ({ course, index }: { course: PublicCourse; index: number }) 
 
   return (
     <LocaleLink href={`/study/${slug}`}>
-      <div className="w-64 flex-shrink-0 group cursor-pointer transform hover:rotate-1 hover:scale-105 transition-all duration-300 relative">
+      <div className="w-full group cursor-pointer transform hover:rotate-1 hover:scale-105 transition-all duration-300 relative">
         {/* 照片外框 - 白色边框模拟相片但不显示图片 */}
         <div className={`bg-white p-4 rounded-lg shadow-lg transform transition-all duration-300 ${
           index % 2 === 0 ? 'rotate-2' : '-rotate-1'

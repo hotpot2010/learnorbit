@@ -1,0 +1,1620 @@
+{
+    "plan": [
+        {
+            "step": 1,
+            "title": "了解大模型基本概念",
+            "description": "学习大模型定义、特点及常见应用场景。",
+            "animation_type": "无",
+            "status": "当前进行",
+            "type": "quiz",
+            "difficulty": "beginner",
+            "search_keyword": "大模型基本概念",
+            "previous_steps_context": [],
+            "videos": [
+                {
+                    "title": "【大模型基础】一个视频带你快速认识什么是大模型~",
+                    "url": "http://www.bilibili.com/video/av114817008406382",
+                    "cover": "//i2.hdslb.com/bfs/archive/964085205ed924ff00b2308032135df3b3837bbd.jpg",
+                    "duration": "19:48"
+                },
+                {
+                    "title": "大模型基础概念分享",
+                    "url": "http://www.bilibili.com/video/av280691647",
+                    "cover": "//i0.hdslb.com/bfs/archive/9b7382325186c8190f7fb36ce13b7c77aba17629.jpg",
+                    "duration": "22:35"
+                },
+                {
+                    "title": "大模型训练：手把手带你从零开始训练自己的大模型，从理论到训练实操全流程~大模型|LLM",
+                    "url": "http://www.bilibili.com/video/av115031404514336",
+                    "cover": "//i0.hdslb.com/bfs/archive/67ec0ac2e65d33d937d6b9f8ba4d1354a8b1feff.jpg",
+                    "duration": "26:27"
+                },
+                {
+                    "title": "【AI大模型】十分钟彻底搞懂AI大模型底层原理！带你从0构建对大模型的认知！小白也能看懂！",
+                    "url": "http://www.bilibili.com/video/av113677265081065",
+                    "cover": "//i2.hdslb.com/bfs/archive/19abee31e45cbf994f8f9ad05dd39b376403cfed.jpg",
+                    "duration": "43:59"
+                }
+            ],
+            "lang": "zh",
+            "id": "3f1ac136-c1e7-45da-a235-0d1d2b55c77b",
+            "task": {
+                "success": true,
+                "task": {
+                    "type": "quiz",
+                    "difficulty": "beginner",
+                    "ppt_slide": "# 大模型定义、特点及常见应用场景\n\n## 大模型定义\n大模型是指具有大量参数的人工智能模型，通常基于深度学习架构，如神经网络。这些模型通过在大规模数据集上进行训练，学习数据中的模式和规律，以实现各种智能任务。例如，GPT系列模型就是典型的大语言模型，拥有数以百亿甚至万亿计的参数。\n\n## 大模型特点\n- **强大的学习能力**：能够处理复杂的语言、图像等数据，学习到更丰富的特征。比如在图像识别中，可以精准识别各种物体。\n- **泛化能力强**：可以将在训练数据中学到的知识应用到新的数据上，解决不同场景下的问题。\n- **涌现能力**：当模型参数达到一定规模时，会出现一些意想不到的能力，如语言理解和生成的流畅性大幅提升。\n\n## 常见应用场景\n- **智能客服**：可以快速准确地回答用户的问题，提高服务效率。\n- **内容创作**：帮助撰写文章、诗歌、故事等，为创作者提供灵感。\n- **机器翻译**：实现不同语言之间的高质量翻译。",
+                    "questions": [
+                        {
+                            "question": "大模型通常基于以下哪种架构？",
+                            "type": "choice",
+                            "options": [
+                                "传统机器学习算法",
+                                "深度学习架构",
+                                "决策树架构"
+                            ],
+                            "answer": "深度学习架构"
+                        },
+                        {
+                            "question": "大模型的特点不包括以下哪一项？",
+                            "type": "choice",
+                            "options": [
+                                "学习能力弱",
+                                "泛化能力强",
+                                "涌现能力"
+                            ],
+                            "answer": "学习能力弱"
+                        },
+                        {
+                            "question": "以下哪个是大模型在常见应用场景中的例子？",
+                            "type": "choice",
+                            "options": [
+                                "手动客服",
+                                "内容创作",
+                                "手工翻译"
+                            ],
+                            "answer": "内容创作"
+                        }
+                    ],
+                    "task": {},
+                    "videos": [
+                        {
+                            "title": "【大模型基础】一个视频带你快速认识什么是大模型~",
+                            "url": "http://www.bilibili.com/video/av114817008406382",
+                            "cover": "//i2.hdslb.com/bfs/archive/964085205ed924ff00b2308032135df3b3837bbd.jpg",
+                            "duration": "19:48"
+                        },
+                        {
+                            "title": "大模型基础概念分享",
+                            "url": "http://www.bilibili.com/video/av280691647",
+                            "cover": "//i0.hdslb.com/bfs/archive/9b7382325186c8190f7fb36ce13b7c77aba17629.jpg",
+                            "duration": "22:35"
+                        },
+                        {
+                            "title": "大模型训练：手把手带你从零开始训练自己的大模型，从理论到训练实操全流程~大模型|LLM",
+                            "url": "http://www.bilibili.com/video/av115031404514336",
+                            "cover": "//i0.hdslb.com/bfs/archive/67ec0ac2e65d33d937d6b9f8ba4d1354a8b1feff.jpg",
+                            "duration": "26:27"
+                        },
+                        {
+                            "title": "【AI大模型】十分钟彻底搞懂AI大模型底层原理！带你从0构建对大模型的认知！小白也能看懂！",
+                            "url": "http://www.bilibili.com/video/av113677265081065",
+                            "cover": "//i2.hdslb.com/bfs/archive/19abee31e45cbf994f8f9ad05dd39b376403cfed.jpg",
+                            "duration": "43:59"
+                        }
+                    ],
+                    "web_res": {
+                        "query": "大模型基本概念",
+                        "follow_up_questions": null,
+                        "answer": "大模型是指具有大规模参数和复杂计算结构的机器学习模型。 本文从大模型的基本概念出发，对大模型领域容易混淆的相关概念进行区分，并就大模型的发展历程、 ...",
+                        "images": [],
+                        "results": [
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/675906726",
+                                "title": "什么是大模型？一文读懂大模型的基本概念 - 知乎专栏",
+                                "content": "大模型是指具有大规模参数和复杂计算结构的机器学习模型。 本文从大模型的基本概念出发，对大模型领域容易混淆的相关概念进行区分，并就大模型的发展历程、 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/646221976",
+                                "title": "大模型涉及概念 - 知乎专栏",
+                                "content": "1.什么是大模型大模型全称是大型语言模型（LLM，Large Language Model），这个“大”主要指模型结构容量大，结构中的参数多，用于预训练大模型的数据量大。 一个大模型可以分三个 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.aigc.cn/large-models",
+                                "title": "什么是大模型（LLMs）？一文读懂什么是大模型 - AIGC工具导航",
+                                "content": "大模型是指具有大规模参数和复杂计算结构的机器学习模型。这些模型通常由深度神经网络构建而成，拥有数十亿甚至数千亿个参数。大模型的设计目的是为了提高 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/qq_56997043/article/details/144526577",
+                                "title": "什么是大模型？一文读懂大模型的基本概念原创 - CSDN博客",
+                                "content": "大模型（Large Model）通常指的是参数量非常庞大的人工智能（AI）模型，主要是深度学习技术发展的产物。随着数据规模的增长、计算能力的提升和算法的不断优化， ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://cloud.tencent.com/developer/article/2362076",
+                                "title": "原创| 大模型扫盲系列——初识大模型-腾讯云开发者社区",
+                                "content": "大模型是指具有数千万甚至数亿参数的深度学习模型。近年来，随着计算机技术和大数据的快速发展，深度学习在各个领域取得了显著的成果，如自然语言处理， ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.cnblogs.com/Naylor/p/18959690",
+                                "title": "大模型基本概念介绍- Naylor - 博客园",
+                                "content": "大模型通常指LLM（Large Language Model ） 大语言模型，是一种基于深度学习构建的人工智能模型。具备强大的理解、分析、生成能力。训练一个大模型往往需要 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/m0_59614665/article/details/140778693",
+                                "title": "AI大模型概念总结（一）：38个大模型基本概念原创 - CSDN博客",
+                                "content": "大模型是一种基于深度学习技术的人工智能模型，特点在于拥有海量参数、强大的学习能力和泛化能力，能够处理和生成多种类型的数据。其“大”的特点主要体现在 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.cnblogs.com/51kata/p/18572099",
+                                "title": "AI大模型的基本概念和国内各种大模型介绍- 51kata - 博客园",
+                                "content": "大模型（Large Model） 是指使用大规模数据和深层神经网络训练出来的人工智能模型。 这些模型有数十亿甚至数千亿个参数（类似大脑神经元），通过处理海量数据， ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://imgtec.eetrend.com/blog/2024/100583415.html",
+                                "title": "什么是大模型？快速了解大模型基本概念",
+                                "content": "1. 语言大模型（NLP）：它们专门处理文本数据，理解自然语言。比如，GPT系列模型可以生成文章或回答问题。 · 2. 视觉大模型（CV）：它们处理图像数据，进行图像识别 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://developer.aliyun.com/article/1361737",
+                                "title": "这篇科普让你Get所有大模型的基础核心知识点",
+                                "content": "大模型是具有大量参数和复杂结构的深度学习模型，通过处理大量数据实现高效任务解决。其特点包括参数规模庞大、深层网络结构、预训练与微调、多任务学习和 ...",
+                                "score": null,
+                                "raw_content": null
+                            }
+                        ],
+                        "response_time": 1.7756148190092063
+                    }
+                }
+            }
+        },
+        {
+            "step": 2,
+            "title": "探究大模型发展历程",
+            "description": "梳理大模型从起源到现今的重要发展节点。",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "quiz",
+            "difficulty": "beginner",
+            "search_keyword": "大模型发展历程",
+            "previous_steps_context": [
+                {
+                    "title": "了解大模型基本概念",
+                    "description": "学习大模型定义、特点及常见应用场景。"
+                }
+            ],
+            "videos": [
+                {
+                    "title": "30分钟带你了解大模型发展史【大模型发展史｜仿生之旅】",
+                    "url": "http://www.bilibili.com/video/av113643257601142",
+                    "cover": "//i1.hdslb.com/bfs/archive/2f856625058cbcd72af59eda945dad94845682d8.jpg",
+                    "duration": "29:41"
+                },
+                {
+                    "title": "从Sora展开，全面解读AI视频大模型发展史【深度】",
+                    "url": "http://www.bilibili.com/video/av1201777895",
+                    "cover": "//i2.hdslb.com/bfs/archive/579e1fb419f582c1565e1ea05e191c219f1481a3.jpg",
+                    "duration": "35:0"
+                },
+                {
+                    "title": "【AI大模型】十分钟彻底搞懂AI大模型底层原理！带你从0构建对大模型的认知！小白也能看懂！",
+                    "url": "http://www.bilibili.com/video/av113677265081065",
+                    "cover": "//i2.hdslb.com/bfs/archive/19abee31e45cbf994f8f9ad05dd39b376403cfed.jpg",
+                    "duration": "43:59"
+                },
+                {
+                    "title": "【中国科学院】大模型研讨课第1讲（共10讲）：1、系统介绍课程内容；2、大模型的发展历程（Why LLMs?）；3、大模型的基本结构原理讲解",
+                    "url": "http://www.bilibili.com/video/av113486139167784",
+                    "cover": "//i0.hdslb.com/bfs/archive/a4257e8f098b0f30a8ef51de682de81480df68c0.jpg",
+                    "duration": "113:56"
+                }
+            ],
+            "lang": "zh",
+            "id": "3f1ac136-c1e7-45da-a235-0d1d2b55c77b",
+            "task": {
+                "success": true,
+                "task": {
+                    "type": "quiz",
+                    "difficulty": "beginner",
+                    "ppt_slide": "# 大模型从起源到现今的重要发展节点\n\n## 起源阶段（20世纪50 - 80年代）\n- 人工智能概念诞生，早期大模型研究处于探索期，主要基于符号推理。如专家系统，通过知识规则解决特定领域问题，但缺乏自主学习能力。\n\n## 发展前期（20世纪90年代 - 21世纪初）\n- 机器学习兴起，统计学习方法被广泛应用。神经网络逐渐发展，出现了如多层感知机等模型，但受限于计算能力和数据量，规模较小。\n\n## 快速发展期（2010 - 2017年）\n- 深度学习崛起，卷积神经网络（CNN）在图像领域、循环神经网络（RNN）在自然语言处理领域取得重大突破。2017年Transformer架构提出，为大模型发展奠定基础。\n\n## 现今阶段（2018年至今）\n- 预训练大模型不断涌现，如GPT系列、BERT等。它们在大规模数据上预训练，能在多种下游任务中取得优异表现，推动人工智能广泛应用。",
+                    "questions": [
+                        {
+                            "question": "大模型起源阶段主要基于什么方法进行研究？",
+                            "type": "choice",
+                            "options": [
+                                "符号推理",
+                                "统计学习",
+                                "深度学习"
+                            ],
+                            "answer": "符号推理"
+                        },
+                        {
+                            "question": "哪个架构的提出为大模型发展奠定了基础？",
+                            "type": "choice",
+                            "options": [
+                                "CNN",
+                                "RNN",
+                                "Transformer"
+                            ],
+                            "answer": "Transformer"
+                        },
+                        {
+                            "question": "以下哪个属于现今阶段涌现的预训练大模型？",
+                            "type": "choice",
+                            "options": [
+                                "专家系统",
+                                "多层感知机",
+                                "GPT系列"
+                            ],
+                            "answer": "GPT系列"
+                        }
+                    ],
+                    "task": {},
+                    "videos": [
+                        {
+                            "title": "30分钟带你了解大模型发展史【大模型发展史｜仿生之旅】",
+                            "url": "http://www.bilibili.com/video/av113643257601142",
+                            "cover": "//i1.hdslb.com/bfs/archive/2f856625058cbcd72af59eda945dad94845682d8.jpg",
+                            "duration": "29:41"
+                        },
+                        {
+                            "title": "从Sora展开，全面解读AI视频大模型发展史【深度】",
+                            "url": "http://www.bilibili.com/video/av1201777895",
+                            "cover": "//i2.hdslb.com/bfs/archive/579e1fb419f582c1565e1ea05e191c219f1481a3.jpg",
+                            "duration": "35:0"
+                        },
+                        {
+                            "title": "【AI大模型】十分钟彻底搞懂AI大模型底层原理！带你从0构建对大模型的认知！小白也能看懂！",
+                            "url": "http://www.bilibili.com/video/av113677265081065",
+                            "cover": "//i2.hdslb.com/bfs/archive/19abee31e45cbf994f8f9ad05dd39b376403cfed.jpg",
+                            "duration": "43:59"
+                        },
+                        {
+                            "title": "【中国科学院】大模型研讨课第1讲（共10讲）：1、系统介绍课程内容；2、大模型的发展历程（Why LLMs?）；3、大模型的基本结构原理讲解",
+                            "url": "http://www.bilibili.com/video/av113486139167784",
+                            "cover": "//i0.hdslb.com/bfs/archive/a4257e8f098b0f30a8ef51de682de81480df68c0.jpg",
+                            "duration": "113:56"
+                        }
+                    ],
+                    "web_res": {
+                        "query": "大模型发展历程",
+                        "follow_up_questions": null,
+                        "answer": "本文将回顾大语言模型的发展历程，从2017年具有革命性的Transformer架构开始，它通过自注意力机制重新定义了自然语言处理（NLP）。我们见证了像BERT和 ...",
+                        "images": [],
+                        "results": [
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/23720060587",
+                                "title": "大模型进化史：从Transformer到DeepSeek-R1的AI变革之路 - 知乎专栏",
+                                "content": "本文将回顾大语言模型的发展历程，从2017年具有革命性的Transformer架构开始，它通过自注意力机制重新定义了自然语言处理（NLP）。我们见证了像BERT和 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.cnblogs.com/jiujuan/p/18752957",
+                                "title": "LLM 大模型发展简史- 九卷技术 - 博客园",
+                                "content": "LLM 大模型发展简史 · 一、技术奠基期（2017年之前） # · 二、预训练模型兴起（2017-2018年） # · 三、参数规模跃升（2018-2020年） # · 四、多模态与通用智能 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.impcia.net/artificial/details_79.html",
+                                "title": "一文读懂AI大模型发展历程- 人工智能",
+                                "content": "AI大模型发展阶段. AI大模型发展历经三个阶段，分别是萌芽期、沉淀期和爆发期。 ▻萌芽期（1950-2005）：以CNN为代表的传统神经网络模型阶段。1956年，从计算机 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://cloud.tencent.com/developer/article/2529154",
+                                "title": "大模型发展历程：技术演进与趋势洞察 - 腾讯云",
+                                "content": "大模型发展历程展现了人工智能技术的快速演进轨迹。 从2017年Transformer的革命性突破，到2025年多模态智能体的蓬勃发展，技术进步的速度超越了多数预期。 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/653169604",
+                                "title": "迎接大模型时代：大模型发展简史及攻略 - 知乎专栏",
+                                "content": "2.3 迅猛发展期（2020年-至今）：以GPT为代表的预训练大模型阶段 2020年，OpenAI公司推出了GPT-3，模型参数规模达到了1750亿，成为当时最大的语言模型，并且在零 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/designer_manager/article/details/139563006",
+                                "title": "大模型的发展历程原创 - CSDN博客",
+                                "content": "AI大模型的发展历程展示了人工智能领域的巨大进步，尤其是深度学习技术的演进。这一历程始于早期的人工神经网络和机器学习算法，随着计算能力的提升，深度 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://medium.com/@lmpo/%E5%A4%A7%E5%9E%8B%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%AE%80%E5%8F%B2-%E4%BB%8Etransformer-2017-%E5%88%B0deepseek-r1-2025-cc54d658fb43",
+                                "title": "大型语言模型简史：从Transformer（2017）到DeepSeek-R1（2025）",
+                                "content": "从2017年Transformer架构的提出到2025年DeepSeek-R1的发展，大型语言模型（LLM）的演进标志着AI领域进入了一个革命性的新阶段。这一历程由四个里程碑式的成就 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/u012856866/article/details/140373796",
+                                "title": "【NLP】大语言模型的发展历程(2) - CSDN博客",
+                                "content": "大语言模型发展历程的总结：大语言模型的发展历程经历了从N-gram 模型到预训练模型的演变，技术不断向前发展，语言处理能力不断提高，未来大语言模型将继续向 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://c.biancheng.net/view/0lfa9ob.html",
+                                "title": "一文读懂大模型发展历程（新手必看）",
+                                "content": "大模型的发展是人工智能领域不断突破的缩影，从基于规则的方法到神经网络的兴起，再到Transformer 和预训练模型的统治地位，技术演进的每一步都推动了人工智能边界的不断扩展 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "http://ai.ruc.edu.cn/research/science/20240426001.html",
+                                "title": "大模型综述出书了 - 高瓴人工智能学院",
+                                "content": "第一章引言（大模型发展历程、重要技术概览）. 第二章基础介绍（Scaling Law、GPT系列模型发展历程）. 第三章大模型资源（开源模型、数据、代码库）. 二 ...",
+                                "score": null,
+                                "raw_content": null
+                            }
+                        ],
+                        "response_time": 3.7333932210021885
+                    }
+                }
+            }
+        },
+        {
+            "step": 3,
+            "title": "学习大模型架构原理",
+            "description": "掌握大模型的主要架构组成和工作机制。",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "quiz",
+            "difficulty": "intermediate",
+            "search_keyword": "大模型架构原理",
+            "previous_steps_context": [
+                {
+                    "title": "了解大模型基本概念",
+                    "description": "学习大模型定义、特点及常见应用场景。"
+                },
+                {
+                    "title": "探究大模型发展历程",
+                    "description": "梳理大模型从起源到现今的重要发展节点。"
+                }
+            ],
+            "videos": [
+                {
+                    "title": "【大模型微调教程】15分钟7个问题彻底搞懂大模型LoRA微调，从原理到调参超详细讲解，不信你还学不会！大模型|LLM|大模型微调",
+                    "url": "http://www.bilibili.com/video/av115014677564405",
+                    "cover": "//i1.hdslb.com/bfs/archive/eab0b15e2e3f7090cddf625aaed8b1f814bad4e7.jpg",
+                    "duration": "17:7"
+                },
+                {
+                    "title": "ZJUNICE Tutorial: 大模型架构创新与底层细节",
+                    "url": "http://www.bilibili.com/video/av115047426691821",
+                    "cover": "//i1.hdslb.com/bfs/archive/49ef2472d44e709bfce9b40cdb927cef836a4989.jpg",
+                    "duration": "27:54"
+                },
+                {
+                    "title": "为什么大模型都用Transformer结构？ #AIInfra #大模型 #Transformer",
+                    "url": "http://www.bilibili.com/video/av1801208097",
+                    "cover": "//i2.hdslb.com/bfs/archive/60c82a97d44628a8bcfc6103dbe8af3906153480.jpg",
+                    "duration": "25:48"
+                },
+                {
+                    "title": "一小时从函数到Transformer！一路大白话彻底理解AI原理",
+                    "url": "http://www.bilibili.com/video/av114890442280099",
+                    "cover": "//i2.hdslb.com/bfs/archive/64dad0d281eb34c7d870e1e5e51cb01b0e93a6e8.jpg",
+                    "duration": "69:17"
+                }
+            ],
+            "lang": "zh",
+            "id": "3f1ac136-c1e7-45da-a235-0d1d2b55c77b",
+            "task": {
+                "success": true,
+                "task": {
+                    "type": "quiz",
+                    "difficulty": "intermediate",
+                    "ppt_slide": "# 大模型的主要架构组成和工作机制\n\n## 架构组成\n大模型主要由输入层、隐藏层和输出层构成。输入层负责接收原始数据，如文本、图像等。隐藏层包含多个神经元，是模型进行特征提取和转换的关键部分，层数越多，模型的学习能力越强。输出层则根据任务需求输出结果，如分类标签、生成的文本等。\n\n## 工作机制\n其工作机制基于深度学习算法，通过大量数据进行训练。在训练过程中，模型不断调整神经元之间的权重，以最小化预测结果与真实结果之间的误差。常见的训练算法有随机梯度下降等。推理阶段，模型使用训练好的权重对新数据进行预测。\n\n## 注意力机制\n注意力机制是大模型的重要组成部分，它能让模型在处理长序列数据时，聚焦于关键部分。例如在机器翻译中，注意力机制可以使模型关注源语言中与目标翻译相关的词汇，提高翻译质量。",
+                    "questions": [
+                        {
+                            "question": "大模型中负责接收原始数据的是哪个层？",
+                            "type": "choice",
+                            "options": [
+                                "输入层",
+                                "隐藏层",
+                                "输出层"
+                            ],
+                            "answer": "输入层"
+                        },
+                        {
+                            "question": "大模型训练过程中主要调整的是什么？",
+                            "type": "choice",
+                            "options": [
+                                "神经元的数量",
+                                "神经元之间的权重",
+                                "输入数据的格式"
+                            ],
+                            "answer": "神经元之间的权重"
+                        },
+                        {
+                            "question": "注意力机制在大模型中的主要作用是什么？",
+                            "type": "choice",
+                            "options": [
+                                "增加模型的层数",
+                                "让模型聚焦于长序列数据的关键部分",
+                                "提高模型的训练速度"
+                            ],
+                            "answer": "让模型聚焦于长序列数据的关键部分"
+                        }
+                    ],
+                    "task": null,
+                    "videos": [
+                        {
+                            "title": "【大模型微调教程】15分钟7个问题彻底搞懂大模型LoRA微调，从原理到调参超详细讲解，不信你还学不会！大模型|LLM|大模型微调",
+                            "url": "http://www.bilibili.com/video/av115014677564405",
+                            "cover": "//i1.hdslb.com/bfs/archive/eab0b15e2e3f7090cddf625aaed8b1f814bad4e7.jpg",
+                            "duration": "17:7"
+                        },
+                        {
+                            "title": "ZJUNICE Tutorial: 大模型架构创新与底层细节",
+                            "url": "http://www.bilibili.com/video/av115047426691821",
+                            "cover": "//i1.hdslb.com/bfs/archive/49ef2472d44e709bfce9b40cdb927cef836a4989.jpg",
+                            "duration": "27:54"
+                        },
+                        {
+                            "title": "为什么大模型都用Transformer结构？ #AIInfra #大模型 #Transformer",
+                            "url": "http://www.bilibili.com/video/av1801208097",
+                            "cover": "//i2.hdslb.com/bfs/archive/60c82a97d44628a8bcfc6103dbe8af3906153480.jpg",
+                            "duration": "25:48"
+                        },
+                        {
+                            "title": "一小时从函数到Transformer！一路大白话彻底理解AI原理",
+                            "url": "http://www.bilibili.com/video/av114890442280099",
+                            "cover": "//i2.hdslb.com/bfs/archive/64dad0d281eb34c7d870e1e5e51cb01b0e93a6e8.jpg",
+                            "duration": "69:17"
+                        }
+                    ],
+                    "web_res": {
+                        "query": "大模型架构原理",
+                        "follow_up_questions": null,
+                        "answer": "二、大模型的核心原理 大模型普遍采用Transformer架构，其核心是自注意力机制（Self-Attention），能够动态衡量输入序列中每个词的重要性，捕捉长距离依赖关系。 例如，“猫吃鱼” ...",
+                        "images": [],
+                        "results": [
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/25166574399",
+                                "title": "什么是大模型？一文读懂大模型的基本概念/原理以及如何入门（含 ...",
+                                "content": "二、大模型的核心原理 大模型普遍采用Transformer架构，其核心是自注意力机制（Self-Attention），能够动态衡量输入序列中每个词的重要性，捕捉长距离依赖关系。 例如，“猫吃鱼” ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/704408423",
+                                "title": "大模型推理原理&流程详解 - 知乎专栏",
+                                "content": "Decoder架构：适合生成任务，大模型llm的主流结构，典型模型有GPT，LLAMA等。 Encoder-Decoder：理论上结合了GPT和Bert的优点，典型模型是T5，训练成本很高，Google ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://github.com/datawhalechina/happy-llm",
+                                "title": "datawhalechina/happy-llm: 从零开始的大语言模型原理与实践教程",
+                                "content": "从零开始的大语言模型原理 ... 本项目是一个系统性的LLM 学习教程，将从NLP 的基本研究方法出发，根据LLM 的思路及原理逐层深入，依次为读者剖析LLM 的架构基础和训练过程。",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/Peter_Changyb/article/details/137537844",
+                                "title": "AI大模型系列之一：大模型原理科普（深度好文） 原创 - CSDN博客",
+                                "content": "深度学习模型由多个层次（称为神经网络的层）组成，每一层都会对输入数据进行变换和表示。这些网络层通过一系列的非线性转换将输入数据映射到输出结果。深度 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.cnblogs.com/chattech/p/17457451.html",
+                                "title": "大模型核心技术原理: Transformer架构详解- 正在输入代码…… - 博客园",
+                                "content": "在大模型发展历程中，有两个比较重要点：第一，Transformer 架构。它是模型的底座，但Transformer 不等于大模型，但大模型的架构可以基于Transformer；第 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/qq_42074210/article/details/139509340",
+                                "title": "大模型相关：ChatGPT的原理与架构原创 - CSDN博客",
+                                "content": "总结来说，ChatGPT是通过深度学习和大规模数据训练，运用Transformer架构，实现自然语言理解与生成的人工智能模型。它通过预训练和微调的过程，掌握了语言的 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.cnblogs.com/Jcloud/p/18266984",
+                                "title": "无任何数学公式理解大模型基本原理 - 博客园",
+                                "content": "简单来说，大模型的工作原理就是依靠这些压缩数据的神经网络对所给序列中的下一个单词进行预测。 比如我们问将“中华人民 ”输入进去后,请大模型补充完整， ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.nvidia.cn/glossary/large-language-models/",
+                                "title": "什么是大语言模型？ - NVIDIA.cn",
+                                "content": "大语言模型在很大程度上代表了一类名为转换器网络的深度学习架构。转换器模型是一种神经网络，通过追踪序列数据(如本句中的单词) 中的关系学习上下文及其含义。",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.woshipm.com/share/6099217.html",
+                                "title": "【AI大模型】非技术背景，一文读懂大模型（长文）",
+                                "content": "二、大模型的整体架构 · 1. 基础层：为大模型提供硬件支撑，数据支持等 · 2. 数据层 · 3. 模型层：LLm或多模态模型 · 4. 平台层：模型与应用间的平台部分 · 5. 表现层：也就是应用层， ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://github.com/datawhalechina/so-large-lm",
+                                "title": "datawhalechina/so-large-lm: 大模型基础 - GitHub",
+                                "content": "本项目旨在作为一个大规模预训练语言模型的教程，从数据准备、模型构建、训练策略到模型评估与改进，以及模型在安全、隐私、环境和法律道德方面的方面来提供开源知识。 项目 ...",
+                                "score": null,
+                                "raw_content": null
+                            }
+                        ],
+                        "response_time": 1.4646075110067613
+                    }
+                }
+            }
+        },
+        {
+            "step": 4,
+            "title": "研究大模型训练方法",
+            "description": "了解大模型训练的流程、算法和关键技术。",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "quiz",
+            "difficulty": "intermediate",
+            "search_keyword": "大模型训练方法",
+            "previous_steps_context": [
+                {
+                    "title": "了解大模型基本概念",
+                    "description": "学习大模型定义、特点及常见应用场景。"
+                },
+                {
+                    "title": "探究大模型发展历程",
+                    "description": "梳理大模型从起源到现今的重要发展节点。"
+                },
+                {
+                    "title": "学习大模型架构原理",
+                    "description": "掌握大模型的主要架构组成和工作机制。"
+                }
+            ],
+            "videos": [
+                {
+                    "title": "原来大模型还可以这么训练？干得漂亮！",
+                    "url": "http://www.bilibili.com/video/av1356182736",
+                    "cover": "//i0.hdslb.com/bfs/archive/a0d8f0c2a9aadcc56101c9afe8c4ebb5dfbfd782.jpg",
+                    "duration": "7:25"
+                },
+                {
+                    "title": "【大模型微调教程】15分钟7个问题彻底搞懂大模型LoRA微调，从原理到调参超详细讲解，不信你还学不会！大模型|LLM|大模型微调",
+                    "url": "http://www.bilibili.com/video/av115014677564405",
+                    "cover": "//i1.hdslb.com/bfs/archive/eab0b15e2e3f7090cddf625aaed8b1f814bad4e7.jpg",
+                    "duration": "17:7"
+                },
+                {
+                    "title": "硬核教程：微调DeepSeek-R1-8b模型，免费训练你的行业大模型！环境配置+模型微调+模型部署+效果展示详细教程！草履虫都能学会！大模型|LLM",
+                    "url": "http://www.bilibili.com/video/av115048315883322",
+                    "cover": "//i0.hdslb.com/bfs/archive/5e99583241de882d9570f047405e8c8962cb688a.jpg",
+                    "duration": "16:16"
+                },
+                {
+                    "title": "大模型训练：手把手带你从零开始训练自己的大模型，从理论到训练实操全流程~大模型|LLM",
+                    "url": "http://www.bilibili.com/video/av115031404514336",
+                    "cover": "//i0.hdslb.com/bfs/archive/67ec0ac2e65d33d937d6b9f8ba4d1354a8b1feff.jpg",
+                    "duration": "26:27"
+                }
+            ],
+            "lang": "zh",
+            "id": "3f1ac136-c1e7-45da-a235-0d1d2b55c77b",
+            "task": {
+                "success": true,
+                "task": {
+                    "type": "quiz",
+                    "difficulty": "intermediate",
+                    "ppt_slide": "# 大模型训练的流程、算法和关键技术\n## 训练流程\n大模型训练流程主要包括数据准备、模型构建、模型训练和模型评估。数据准备阶段要收集、清洗和标注大量数据，为训练提供高质量的输入。模型构建则依据需求选择合适的架构，如Transformer等。训练过程中，通过优化算法不断调整模型参数。最后，使用评估指标如准确率、召回率等评估模型性能。\n## 关键算法\n常见的优化算法有随机梯度下降（SGD）及其变种，如Adagrad、Adadelta和Adam等。这些算法能有效更新模型参数，提高训练效率。例如，Adam结合了Adagrad和RMSProp的优点，在处理稀疏数据时表现出色。\n## 关键技术\n模型并行和数据并行是大模型训练的重要技术。模型并行将模型拆分成多个部分，分布在不同设备上进行计算；数据并行则将数据分割，在多个设备上同时训练相同的模型。此外，混合精度训练通过使用半精度浮点数减少内存占用和计算量，加速训练过程。",
+                    "questions": [
+                        {
+                            "question": "大模型训练流程中，哪个阶段负责收集、清洗和标注数据？",
+                            "type": "choice",
+                            "options": [
+                                "模型构建",
+                                "数据准备",
+                                "模型评估"
+                            ],
+                            "answer": "数据准备"
+                        },
+                        {
+                            "question": "以下哪种优化算法结合了Adagrad和RMSProp的优点，在处理稀疏数据时表现出色？",
+                            "type": "choice",
+                            "options": [
+                                "随机梯度下降（SGD）",
+                                "Adagrad",
+                                "Adam"
+                            ],
+                            "answer": "Adam"
+                        },
+                        {
+                            "question": "将数据分割，在多个设备上同时训练相同的模型的技术是？",
+                            "type": "choice",
+                            "options": [
+                                "模型并行",
+                                "数据并行",
+                                "混合精度训练"
+                            ],
+                            "answer": "数据并行"
+                        }
+                    ],
+                    "task": {},
+                    "videos": [
+                        {
+                            "title": "原来大模型还可以这么训练？干得漂亮！",
+                            "url": "http://www.bilibili.com/video/av1356182736",
+                            "cover": "//i0.hdslb.com/bfs/archive/a0d8f0c2a9aadcc56101c9afe8c4ebb5dfbfd782.jpg",
+                            "duration": "7:25"
+                        },
+                        {
+                            "title": "【大模型微调教程】15分钟7个问题彻底搞懂大模型LoRA微调，从原理到调参超详细讲解，不信你还学不会！大模型|LLM|大模型微调",
+                            "url": "http://www.bilibili.com/video/av115014677564405",
+                            "cover": "//i1.hdslb.com/bfs/archive/eab0b15e2e3f7090cddf625aaed8b1f814bad4e7.jpg",
+                            "duration": "17:7"
+                        },
+                        {
+                            "title": "硬核教程：微调DeepSeek-R1-8b模型，免费训练你的行业大模型！环境配置+模型微调+模型部署+效果展示详细教程！草履虫都能学会！大模型|LLM",
+                            "url": "http://www.bilibili.com/video/av115048315883322",
+                            "cover": "//i0.hdslb.com/bfs/archive/5e99583241de882d9570f047405e8c8962cb688a.jpg",
+                            "duration": "16:16"
+                        },
+                        {
+                            "title": "大模型训练：手把手带你从零开始训练自己的大模型，从理论到训练实操全流程~大模型|LLM",
+                            "url": "http://www.bilibili.com/video/av115031404514336",
+                            "cover": "//i0.hdslb.com/bfs/archive/67ec0ac2e65d33d937d6b9f8ba4d1354a8b1feff.jpg",
+                            "duration": "26:27"
+                        }
+                    ],
+                    "web_res": {
+                        "query": "大模型训练方法",
+                        "follow_up_questions": null,
+                        "answer": "在这篇文章中，我们将尽可能详细地梳理一个完整的LLM 训练流程。包括模型预训练（Pretrain）、Tokenizer 训练、指令微调（Instruction Tuning）、奖励模型（Reward Model）和 ...",
+                        "images": [],
+                        "results": [
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/636270877",
+                                "title": "【LLM】从零开始训练大模型 - 知乎专栏",
+                                "content": "在这篇文章中，我们将尽可能详细地梳理一个完整的LLM 训练流程。包括模型预训练（Pretrain）、Tokenizer 训练、指令微调（Instruction Tuning）、奖励模型（Reward Model）和 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/645649292",
+                                "title": "一文读懂：大模型训练过程 - 知乎专栏",
+                                "content": "其训练过程分为两个主要阶段：预训练和微调。 以下是关于大模型GPT训练过程的详细描述：. 预训练：在预训练阶段，模型通过学习大量无标签文本 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/2301_78285120/article/details/135026968",
+                                "title": "通用大模型训练过程必须经历的四个阶段！ 原创 - CSDN博客",
+                                "content": "通用大模型训练过程必须经历的四个阶段！ 原创 · 预训练阶段 · 指令微调阶段 · 奖励模型训练阶段 · 增强学习微调阶段 · 总结 · 技术交流.",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/acelit/article/details/137566723",
+                                "title": "解析大语言模型训练三阶段 - CSDN博客",
+                                "content": "大语言模型的训练过程一般包括3个阶段：预训练（Pre-training）、SFT（有监督的微调，Supervised-Finetuning）以及RLHF（基于人类反馈的强化学习，Reinforcement ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.53ai.com/news/finetuning/2025022007842.html",
+                                "title": "一文详解大模型训练全过程 - 53AI",
+                                "content": "大模型的预训练通常分为两大类方法：自监督学习（Self - supervised Learning） 和无监督学习（Unsupervised Learning） 。其中，最常见的是自监督学习，通过对 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://transformers.run/c4/c15_pretrain_llms/",
+                                "title": "第十五章：预训练大语言模型 - Transformers快速入门",
+                                "content": "目前常用方法包括轻量级模型（如FastText）、可微调的预训练模型（如BERT）以及闭源大语言模型API（如GPT-4）。 轻量级模型效率较高，但是分类的准确率和精度受限于模型能力；预训 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://techdiylife.github.io/big-model-training/deepspeed/LLM-state-of-GPT.html",
+                                "title": "LLM大模型训练与使用技巧 - AI开发者de频道",
+                                "content": "如上图所示，模型训练分为四个阶段：预训练（Pretraining）、监督微调（Supervised Finetuning）、奖励建模（Reward Modeling）、以及强化学习（Reinforcement Learning）。 上图主要 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.zte.com.cn/content/dam/zte-site/res-www-zte-com-cn/mediares/magazine/publication/com_cn/article/202402/4.pdf",
+                                "title": "[PDF] 大模型训练技术综述 - ZTE",
+                                "content": "大模型训练需要大量数据、资源和时间，它涉及服务器 中所有资源的综合利用，如图1所示。 数据加载是指，从存 储器中读取数据，根据不同的模型训练要求，对读取 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://github.com/datawhalechina/happy-llm",
+                                "title": "datawhalechina/happy-llm: 从零开始的大语言模型原理与实践教程",
+                                "content": "第五章动手搭建大模型, 实现LLaMA2、训练Tokenizer、预训练小型LLM, ✓ ; 第六章大模型训练实践, 预训练、有监督微调、LoRA/QLoRA 高效微调, ; 第七章大模型应用, 模型评测 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://llamafactory.readthedocs.io/zh-cn/latest/advanced/trainers.html",
+                                "title": "训练方法 - LLaMA Factory",
+                                "content": "训练方法¶. Pre-training¶. 大语言模型通过在一个大型的通用数据集上通过无监督学习的方式进行预训练来学习语言的表征/初始化模型权重/学习概率分布。",
+                                "score": null,
+                                "raw_content": null
+                            }
+                        ],
+                        "response_time": 1.6716900589963188
+                    }
+                }
+            }
+        },
+        {
+            "step": 5,
+            "title": "搭建简单大模型环境",
+            "description": "使用工具和框架搭建大模型运行的基础环境。",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "coding",
+            "difficulty": "intermediate",
+            "search_keyword": "大模型环境搭建",
+            "previous_steps_context": [
+                {
+                    "title": "了解大模型基本概念",
+                    "description": "学习大模型定义、特点及常见应用场景。"
+                },
+                {
+                    "title": "探究大模型发展历程",
+                    "description": "梳理大模型从起源到现今的重要发展节点。"
+                },
+                {
+                    "title": "学习大模型架构原理",
+                    "description": "掌握大模型的主要架构组成和工作机制。"
+                },
+                {
+                    "title": "研究大模型训练方法",
+                    "description": "了解大模型训练的流程、算法和关键技术。"
+                }
+            ],
+            "videos": [
+                {
+                    "title": "大模型应用环境配置for初学者",
+                    "url": "http://www.bilibili.com/video/av113530716227055",
+                    "cover": "//i1.hdslb.com/bfs/archive/bee726147dc781051b7db17fda6bac0dfa13d684.jpg",
+                    "duration": "25:11"
+                },
+                {
+                    "title": "硬核教程：微调DeepSeek-R1-8b模型，免费训练你的行业大模型！环境配置+模型微调+模型部署+效果展示详细教程！草履虫都能学会！大模型|LLM",
+                    "url": "http://www.bilibili.com/video/av115048315883322",
+                    "cover": "//i0.hdslb.com/bfs/archive/5e99583241de882d9570f047405e8c8962cb688a.jpg",
+                    "duration": "16:16"
+                },
+                {
+                    "title": "【AI大模型入门第一步|奶奶都会的开发环境搭建教程】——00.视频导读",
+                    "url": "http://www.bilibili.com/video/av115043333114809",
+                    "cover": "//i1.hdslb.com/bfs/archive/80760a0d1a8a995effb72c4517fbc1548085c4d2.jpg",
+                    "duration": "6:50"
+                },
+                {
+                    "title": "原书作者亲自带读《从零开始构建大模型》，只要有一台普通笔记本，就能从零开始训练LLM",
+                    "url": "http://www.bilibili.com/video/av114715053266559",
+                    "cover": "//i1.hdslb.com/bfs/archive/924e95a2b2d99a8c258b0ad932385ef3fd0e37e0.jpg",
+                    "duration": "749:10"
+                }
+            ],
+            "lang": "zh",
+            "id": "3f1ac136-c1e7-45da-a235-0d1d2b55c77b",
+            "task": {
+                "success": true,
+                "task": {
+                    "type": "coding",
+                    "difficulty": "intermediate",
+                    "ppt_slide": "# 使用工具和框架搭建大模型运行的基础环境\n\n## 选择工具和框架\n- 常用的深度学习框架有TensorFlow、PyTorch等。TensorFlow适合大规模工业应用，PyTorch则更受科研人员青睐，选择时要根据具体需求。例如，若要进行快速模型实验，PyTorch是不错的选择。\n\n## 安装依赖库\n- 安装框架前，需要安装Python环境，建议使用Python 3.7及以上版本。安装完成后，使用pip命令安装框架及其依赖库。如安装PyTorch，可根据自己的CUDA版本选择合适的安装命令。\n\n## 配置环境\n- 配置GPU支持能显著提升大模型的运行速度。要确保GPU驱动和CUDA版本与框架兼容。可以通过编写简单的代码来验证GPU是否可用。例如在PyTorch中，可以使用`torch.cuda.is_available()`来检查。\n\n## 常见误区\n- 安装时版本不匹配会导致各种问题，如框架与CUDA版本不兼容。安装完成后，要及时更新依赖库，以获得更好的性能和安全性。",
+                    "questions": [
+                        {
+                            "question": "以下哪个深度学习框架更适合科研人员进行快速模型实验？",
+                            "type": "choice",
+                            "options": [
+                                "TensorFlow",
+                                "PyTorch",
+                                "Caffe"
+                            ],
+                            "answer": "PyTorch"
+                        },
+                        {
+                            "question": "安装深度学习框架前，建议使用的Python版本是？",
+                            "type": "choice",
+                            "options": [
+                                "Python 2.7",
+                                "Python 3.6",
+                                "Python 3.7及以上"
+                            ],
+                            "answer": "Python 3.7及以上"
+                        },
+                        {
+                            "question": "在PyTorch中，使用什么代码可以检查GPU是否可用？",
+                            "type": "choice",
+                            "options": [
+                                "torch.cpu.is_available()",
+                                "torch.cuda.is_available()",
+                                "torch.gpu.is_available()"
+                            ],
+                            "answer": "torch.cuda.is_available()"
+                        }
+                    ],
+                    "task": {
+                        "title": "搭建大模型运行的基础环境",
+                        "description": "使用PyTorch框架搭建大模型运行的基础环境，要求配置好Python环境，安装PyTorch及其依赖库，并验证GPU是否可用。编写代码打印出GPU是否可用的结果。",
+                        "starter_code": "```python\nimport torch\n\n# 在此处编写验证GPU是否可用的代码\n\n```",
+                        "answer": "```python\nimport torch\n\nif torch.cuda.is_available():\n    print('GPU is available')\nelse:\n    print('GPU is not available')\n```"
+                    },
+                    "videos": [
+                        {
+                            "title": "大模型应用环境配置for初学者",
+                            "url": "http://www.bilibili.com/video/av113530716227055",
+                            "cover": "//i1.hdslb.com/bfs/archive/bee726147dc781051b7db17fda6bac0dfa13d684.jpg",
+                            "duration": "25:11"
+                        },
+                        {
+                            "title": "硬核教程：微调DeepSeek-R1-8b模型，免费训练你的行业大模型！环境配置+模型微调+模型部署+效果展示详细教程！草履虫都能学会！大模型|LLM",
+                            "url": "http://www.bilibili.com/video/av115048315883322",
+                            "cover": "//i0.hdslb.com/bfs/archive/5e99583241de882d9570f047405e8c8962cb688a.jpg",
+                            "duration": "16:16"
+                        },
+                        {
+                            "title": "【AI大模型入门第一步|奶奶都会的开发环境搭建教程】——00.视频导读",
+                            "url": "http://www.bilibili.com/video/av115043333114809",
+                            "cover": "//i1.hdslb.com/bfs/archive/80760a0d1a8a995effb72c4517fbc1548085c4d2.jpg",
+                            "duration": "6:50"
+                        },
+                        {
+                            "title": "原书作者亲自带读《从零开始构建大模型》，只要有一台普通笔记本，就能从零开始训练LLM",
+                            "url": "http://www.bilibili.com/video/av114715053266559",
+                            "cover": "//i1.hdslb.com/bfs/archive/924e95a2b2d99a8c258b0ad932385ef3fd0e37e0.jpg",
+                            "duration": "749:10"
+                        }
+                    ],
+                    "web_res": {
+                        "query": "大模型环境搭建",
+                        "follow_up_questions": null,
+                        "answer": "通过这个指南，你应该能够顺利搭建本地大模型的训练环境。确保你的硬件、驱动、CUDA和PyTorch都是最新版本，以获得最佳性能。在训练模型时，注意监控 ...",
+                        "images": [],
+                        "results": [
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/679563588",
+                                "title": "从零开始搭建本地AI大模型：GPU、CUDA、PyTorch全面指南- 知乎",
+                                "content": "通过这个指南，你应该能够顺利搭建本地大模型的训练环境。确保你的硬件、驱动、CUDA和PyTorch都是最新版本，以获得最佳性能。在训练模型时，注意监控 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/qq_42778289/article/details/134022611",
+                                "title": "AI大模型基础环境搭建 - CSDN博客",
+                                "content": "内容概要：本文详细介绍了AI大模型基础环境的搭建过程，涵盖了所需的软件包（如PyTorch、torchvision、torchaudio、CUDA、bitsandbytes等）、服务器配置要求 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.cnblogs.com/whuanle/p/18391714",
+                                "title": "新手入门| 搭建AI 模型开发环境- 痴者工良 - 博客园",
+                                "content": "学习模型开发时，搭建环境可能会碰到很多曲折，这里提供一些通用的环境搭建安装方法，以便读者能够快速搭建出一套AI 模型开发调试环境。",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/qq_45179513/article/details/134154181",
+                                "title": "从零搭建出属于自己的大模型原创 - CSDN博客",
+                                "content": "这是一个从零开始搭建本地大模型的教程（从建文件夹开始，真正的从零开始），如果你也对大模型感兴趣，那就让我带领你搭建出一个属于自己的“小助理”吧！ 一、 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://github.com/datawhalechina/self-llm",
+                                "title": "datawhalechina/self-llm: 《开源大模型食用指南》针对中国 ... - GitHub",
+                                "content": "学习建议：本项目的学习建议是，先学习环境配置，然后再学习模型的部署使用，最后再学习微调。因为环境配置是基础，模型的部署使用是基础，微调是进阶。初学者可以选择Qwen1.5， ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.imooc.com/article/349048",
+                                "title": "大模型环境搭建教程：从零基础到精通的完整指南 - 慕课网",
+                                "content": "大模型环境搭建教程：从零基础到精通的完整指南 · 一、初识大模型 · 二、选择合适的基座模型 · 三、环境配置与模型加载 · 四、模型部署策略 · 五、个性化 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.hiascend.com/solutions/Foundation-Model",
+                                "title": "昇腾大模型解决方案-文档课程资源",
+                                "content": "为用户分阶提供大模型文档和课程资源 ; 初级 · 昇腾大模型训练环境搭建. 昇腾大模型推理环境搭建. 大模型训练方案介绍 ; 中级 · 大模型训练调试调优. ⼤模型训练精度调试. ⼤模型 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/733499216",
+                                "title": "从0开始搭建属于自己的本地AI大模型 - 知乎专栏",
+                                "content": "1.配置要求&模型选择; 2.系统选择&安装; 3.模型下载; 4.从Hugging Face下载模型; 5.显卡驱动安装（Linux） ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://help.aliyun.com/zh/ecs/use-cases/from-0-fleetly-personal-edition-dialogue-model",
+                                "title": "在阿里云GPU云服务器上基于Alpaca大模型搭建个人版“对话大模型”",
+                                "content": "执行以下命令，安装Git和Git LFS软件。 依次执行以下命令，安装模型所需要的Python包。 从GitHub上下载Transformers库，由于网络原因偶尔可能会不成功，建议 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://xie.infoq.cn/article/3658cc832d57ac35ed2c31b25",
+                                "title": "用纯CPU环境搭建大模型环境_大模型 - InfoQ 写作社区",
+                                "content": "可以使用git 直接从Hugging Face 直接下载模型，这里需要注意的是，git 需要支持lfs，才能将大模型完整下载下来。各软件仓库应该都有git-lfs 包，安装过程这里 ...",
+                                "score": null,
+                                "raw_content": null
+                            }
+                        ],
+                        "response_time": 1.4448863369907485
+                    }
+                }
+            }
+        },
+        {
+            "step": 6,
+            "title": "实现大模型简单应用",
+            "description": "编写代码实现大模型在特定场景的应用。",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "coding",
+            "difficulty": "intermediate",
+            "search_keyword": "大模型简单应用",
+            "previous_steps_context": [
+                {
+                    "title": "了解大模型基本概念",
+                    "description": "学习大模型定义、特点及常见应用场景。"
+                },
+                {
+                    "title": "探究大模型发展历程",
+                    "description": "梳理大模型从起源到现今的重要发展节点。"
+                },
+                {
+                    "title": "学习大模型架构原理",
+                    "description": "掌握大模型的主要架构组成和工作机制。"
+                },
+                {
+                    "title": "研究大模型训练方法",
+                    "description": "了解大模型训练的流程、算法和关键技术。"
+                },
+                {
+                    "title": "搭建简单大模型环境",
+                    "description": "使用工具和框架搭建大模型运行的基础环境。"
+                }
+            ],
+            "videos": [
+                {
+                    "title": "【Qwen微调】25分钟学会Qwen大模型本地部署+微调法律大模型，无需GPU，只需5G内存！微调模型+本地部署+效果展示，零基础带你训练自己的垂直领域大模型！",
+                    "url": "http://www.bilibili.com/video/av115037242923189",
+                    "cover": "//i0.hdslb.com/bfs/archive/0e28689303fe27fc8b45cfb0397b179b230b8a51.jpg",
+                    "duration": "26:0"
+                },
+                {
+                    "title": "大模型训练：手把手带你从零开始训练自己的大模型，从理论到训练实操全流程~大模型|LLM",
+                    "url": "http://www.bilibili.com/video/av115031404514336",
+                    "cover": "//i0.hdslb.com/bfs/archive/67ec0ac2e65d33d937d6b9f8ba4d1354a8b1feff.jpg",
+                    "duration": "26:27"
+                },
+                {
+                    "title": "新手如何做一个大模型项目？今天从零手搓大模型项目实战！保姆级教程+完整项目源码！",
+                    "url": "http://www.bilibili.com/video/av114991608896308",
+                    "cover": "//i2.hdslb.com/bfs/archive/46fb2e737db61caf6eddc96776ac504e904207f5.jpg",
+                    "duration": "71:4"
+                },
+                {
+                    "title": "【AI大模型 • 教程】使用 Pydantic 进行 LLM工作流程丨Pydantic for LLM Workflows（附教程）",
+                    "url": "http://www.bilibili.com/video/av115047158254298",
+                    "cover": "//i0.hdslb.com/bfs/archive/bc0503deca0e1d1da48301a8101ebd834cef285c.jpg",
+                    "duration": "73:44"
+                }
+            ],
+            "lang": "zh",
+            "id": "3f1ac136-c1e7-45da-a235-0d1d2b55c77b",
+            "task": {
+                "success": true,
+                "task": {
+                    "type": "coding",
+                    "difficulty": "intermediate",
+                    "ppt_slide": "# 编写代码实现大模型在特定场景的应用\n\n## 特定场景选择\n为大模型选择合适的特定场景，如文本生成、智能客服等。不同场景对大模型的功能需求不同，例如文本生成场景注重语言的连贯性和逻辑性，智能客服场景则更关注问题的解答准确性。\n\n## 代码实现思路\n使用已搭建好的大模型环境，通过调用模型的API或接口，将输入数据传递给大模型进行处理。例如在Python中，可以使用相关的库和函数来完成这一操作。\n\n## 关键代码示例\n以下是一个简单的示例代码，假设使用某个大模型API进行文本生成：\n```python\nimport requests\nurl = \"大模型API地址\"\ninput_text = \"输入的文本\"\nresponse = requests.post(url, json={\"input\": input_text})\noutput = response.json()['output']\nprint(output)\n```\n\n## 常见误区\n在实现过程中，要注意输入数据的格式和要求，避免因数据格式错误导致模型无法正常处理。同时，要关注API的调用频率和限制，防止因超量调用而被封禁。",
+                    "questions": [
+                        {
+                            "question": "在使用大模型API进行文本生成时，以下哪个是关键步骤？",
+                            "type": "choice",
+                            "options": [
+                                "选择合适的字体",
+                                "将输入数据传递给大模型",
+                                "对输出结果进行排版"
+                            ],
+                            "answer": "将输入数据传递给大模型"
+                        },
+                        {
+                            "question": "在实现大模型在特定场景应用时，常见的误区不包括以下哪一项？",
+                            "type": "choice",
+                            "options": [
+                                "忽略输入数据的格式要求",
+                                "关注API的调用频率和限制",
+                                "因数据格式错误导致模型无法处理"
+                            ],
+                            "answer": "关注API的调用频率和限制"
+                        },
+                        {
+                            "question": "不同的特定场景对大模型的功能需求有什么特点？",
+                            "type": "choice",
+                            "options": [
+                                "所有场景需求都一样",
+                                "不同场景需求不同",
+                                "场景与功能需求无关"
+                            ],
+                            "answer": "不同场景需求不同"
+                        }
+                    ],
+                    "task": {
+                        "title": "实现大模型在文本分类场景的应用",
+                        "description": "使用已搭建好的大模型环境，编写代码实现对给定文本进行分类的功能。具体要求是将输入的文本传递给大模型，大模型根据自身的能力对文本进行分类，并输出分类结果。预期结果是能够正确输出文本的分类标签。",
+                        "starter_code": "```python\nimport requests\n\n# 大模型API地址\nurl = \"\"\n\n# 输入的文本\ninput_text = \"这是一段需要分类的文本\"\n\n# 发送请求\nresponse = requests.post(url, json={\"input\": input_text})\n\n# 处理响应\noutput = response.json()\n\n# 输出分类结果\nprint(output)\n```",
+                        "answer": "```python\nimport requests\n\n# 大模型API地址\nurl = \"假设的大模型API地址\"\n\n# 输入的文本\ninput_text = \"这是一段需要分类的文本\"\n\n# 发送请求\nresponse = requests.post(url, json={\"input\": input_text})\n\n# 处理响应\noutput = response.json()\n\n# 提取分类结果\ncategory = output['category']\n\n# 输出分类结果\nprint(\"文本的分类结果是：\", category)\n```"
+                    },
+                    "videos": [
+                        {
+                            "title": "【Qwen微调】25分钟学会Qwen大模型本地部署+微调法律大模型，无需GPU，只需5G内存！微调模型+本地部署+效果展示，零基础带你训练自己的垂直领域大模型！",
+                            "url": "http://www.bilibili.com/video/av115037242923189",
+                            "cover": "//i0.hdslb.com/bfs/archive/0e28689303fe27fc8b45cfb0397b179b230b8a51.jpg",
+                            "duration": "26:0"
+                        },
+                        {
+                            "title": "大模型训练：手把手带你从零开始训练自己的大模型，从理论到训练实操全流程~大模型|LLM",
+                            "url": "http://www.bilibili.com/video/av115031404514336",
+                            "cover": "//i0.hdslb.com/bfs/archive/67ec0ac2e65d33d937d6b9f8ba4d1354a8b1feff.jpg",
+                            "duration": "26:27"
+                        },
+                        {
+                            "title": "新手如何做一个大模型项目？今天从零手搓大模型项目实战！保姆级教程+完整项目源码！",
+                            "url": "http://www.bilibili.com/video/av114991608896308",
+                            "cover": "//i2.hdslb.com/bfs/archive/46fb2e737db61caf6eddc96776ac504e904207f5.jpg",
+                            "duration": "71:4"
+                        },
+                        {
+                            "title": "【AI大模型 • 教程】使用 Pydantic 进行 LLM工作流程丨Pydantic for LLM Workflows（附教程）",
+                            "url": "http://www.bilibili.com/video/av115047158254298",
+                            "cover": "//i0.hdslb.com/bfs/archive/bc0503deca0e1d1da48301a8101ebd834cef285c.jpg",
+                            "duration": "73:44"
+                        }
+                    ],
+                    "web_res": {
+                        "query": "大模型简单应用",
+                        "follow_up_questions": null,
+                        "answer": "同时，大模型也具有在各种自然语言处理任务中表现出色的能力，例如文本分类、情感分析、摘要生成、翻译等。大模型可以用于自动写作、聊天机器人、虚拟助手、 ...",
+                        "images": [],
+                        "results": [
+                            {
+                                "url": "https://blog.csdn.net/2301_76161259/article/details/142740795",
+                                "title": "大模型简单入门及特定环境下的应用原创 - CSDN博客",
+                                "content": "同时，大模型也具有在各种自然语言处理任务中表现出色的能力，例如文本分类、情感分析、摘要生成、翻译等。大模型可以用于自动写作、聊天机器人、虚拟助手、 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/29200401469",
+                                "title": "不需要AI和数学知识背景，这篇文章带你学会大模型应用开发",
+                                "content": "目前绝大多数对大模型的应用，都是在尝试“教会”大模型特定领域知识，再基于大模型的泛化推理能力，去解决一些实际问题。",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://github.com/datawhalechina/llm-universe",
+                                "title": "LLM Universe | 动手学大模型应用开发 - GitHub",
+                                "content": "本项目是一个面向小白开发者的大模型应用开发教程，旨在基于阿里云服务器，结合个人知识库助手项目，通过一个课程完成大模型开发的重点入门，主要内容包括：. 大模型简介，何 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://pdf.dfcfw.com/pdf/H3_AP202501091641873256_1.pdf",
+                                "title": "[PDF] 大模型应用落地白皮书",
+                                "content": "基于大 规模数据集的预训练，让模型具备了高效处理复杂语言结构、视觉模式以及多模 态信息的能力，促使人工智能在认知理解与决策支持方面迈向更高的阶段。",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/Z987421/article/details/139610397",
+                                "title": "史上最简单的大模型应用_python 大模型 - CSDN博客",
+                                "content": "本篇文章是零基础学习大模型系列文章第3篇，在我们知道了大模型是什么、如何体系化学习大模型后，接下来我们将会从API调用的层面体验一下大模型的魅力。",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.zte.com.cn/content/dam/zte-site/res-www-zte-com-cn/mediares/magazine/publication/com_cn/article/202402/12.pdf",
+                                "title": "[PDF] 大模型关键技术与应用 - ZTE",
+                                "content": "大模型应用平台有超1 000个大模型. 应用，每日活跃用户万人 ... CodeInterpreter 使得数据分析变得更加简单，通过与用. 户的对话就可以处理庞大的数据。",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.alibabacloud.com/help/zh/model-studio/application-introduction",
+                                "title": "阿里云百炼应用简介- 大模型服务平台百炼",
+                                "content": "为此，阿里云百炼推出了三种大模型应用：智能体、工作流与智能体编排，增加了知识库检索、工作流设计及智能体协作等功能，显著扩展了大模型的应用范围。 重要.",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://xinghuo.xfyun.cn/",
+                                "title": "讯飞星火大模型-AI大语言模型-星火大模型-科大讯飞",
+                                "content": "讯飞星火大模型，是由科大讯飞推出的新一代认知智能大模型，拥有跨领域的知识和语言理解能力，能够基于自然对话方式理解与执行任务，提供语言理解、知识问答、逻辑推理、 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/668082024",
+                                "title": "一文搞懂大模型RAG应用（附实践案例） - 知乎专栏",
+                                "content": "RAG的架构如图中所示，简单来讲，RAG就是通过检索获取相关的知识并将其融入Prompt，让大模型能够参考相应的知识从而给出合理回答。因此，可以将RAG的核心理解 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://developer.jdcloud.com/article/3854",
+                                "title": "大模型应用之路：从提示词到通用人工智能（AGI） - 京东云-开发者社区",
+                                "content": "大模型在人工智能领域的应用正迅速扩展，从最初的提示词（Prompt）工程到追求通用人工智能（AGI）的宏伟目标，这一旅程充满了挑战与创新。本文将探索大模型 ...",
+                                "score": null,
+                                "raw_content": null
+                            }
+                        ],
+                        "response_time": 2.5854944349994184
+                    }
+                }
+            }
+        },
+        {
+            "step": 7,
+            "title": "学习大模型优化策略",
+            "description": "掌握提升大模型性能和效率的优化方法。",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "quiz",
+            "difficulty": "advanced",
+            "search_keyword": "大模型优化策略",
+            "previous_steps_context": [
+                {
+                    "title": "了解大模型基本概念",
+                    "description": "学习大模型定义、特点及常见应用场景。"
+                },
+                {
+                    "title": "探究大模型发展历程",
+                    "description": "梳理大模型从起源到现今的重要发展节点。"
+                },
+                {
+                    "title": "学习大模型架构原理",
+                    "description": "掌握大模型的主要架构组成和工作机制。"
+                },
+                {
+                    "title": "研究大模型训练方法",
+                    "description": "了解大模型训练的流程、算法和关键技术。"
+                },
+                {
+                    "title": "搭建简单大模型环境",
+                    "description": "使用工具和框架搭建大模型运行的基础环境。"
+                },
+                {
+                    "title": "实现大模型简单应用",
+                    "description": "编写代码实现大模型在特定场景的应用。"
+                }
+            ],
+            "videos": [
+                {
+                    "title": "大模型优化的三种方式：RAG、提示词、微调哪个会让大模型表现更好？",
+                    "url": "http://www.bilibili.com/video/av113701105439837",
+                    "cover": "//i1.hdslb.com/bfs/archive/22e18bd903b8d21ab27d43bf39d83483e4340788.jpg",
+                    "duration": "22:46"
+                },
+                {
+                    "title": "【LLM大模型】如何整理训练数据以及微调优化建议",
+                    "url": "http://www.bilibili.com/video/av113688505751023",
+                    "cover": "//i0.hdslb.com/bfs/archive/4d5966e34605803e42c2e103e732122abef0e958.jpg",
+                    "duration": "20:14"
+                },
+                {
+                    "title": "大模型推理优化策略（一）显存优化",
+                    "url": "http://www.bilibili.com/video/av877821575",
+                    "cover": "//i0.hdslb.com/bfs/archive/8e435f8f227b91aa21d49042c98900bfd420f02d.jpg",
+                    "duration": "56:37"
+                },
+                {
+                    "title": "吴恩达同步最新AI课，第79讲：强化微调大模型与群体相对策略优化，Reinforcement Fine-Tuning LLMs with GRPO",
+                    "url": "http://www.bilibili.com/video/av114546744233551",
+                    "cover": "//i1.hdslb.com/bfs/archive/5b6fbb580ebedd4ab0cdaad6b8c36b6c93f9fc40.png",
+                    "duration": "83:42"
+                }
+            ],
+            "lang": "zh",
+            "id": "3f1ac136-c1e7-45da-a235-0d1d2b55c77b",
+            "task": {
+                "success": true,
+                "task": {
+                    "type": "quiz",
+                    "difficulty": "advanced",
+                    "ppt_slide": "# 提升大模型性能和效率的优化方法\n## 优化的重要性\n大模型训练和推理成本高，优化性能和效率能降低计算资源消耗，加快响应速度，使模型在更多场景应用。例如，在实时对话系统中，高效模型能及时回复用户。\n## 优化方法\n### 模型量化\n将模型参数从高精度数据类型转换为低精度，如从FP32到FP16或INT8。这能减少内存占用和计算量，同时不显著损失模型性能。比如TensorFlow提供了量化工具。\n### 剪枝\n去除模型中对输出影响较小的连接或神经元，简化模型结构。可以在训练过程中或训练后进行，降低计算复杂度。\n### 知识蒸馏\n用大模型（教师模型）的输出指导小模型（学生模型）训练，让小模型学习大模型的知识，在保持性能的同时减小模型规模。",
+                    "questions": [
+                        {
+                            "question": "以下哪种方法可以将模型参数从高精度数据类型转换为低精度以优化大模型？",
+                            "type": "choice",
+                            "options": [
+                                "模型量化",
+                                "剪枝",
+                                "知识蒸馏"
+                            ],
+                            "answer": "模型量化"
+                        },
+                        {
+                            "question": "去除模型中对输出影响较小的连接或神经元的优化方法是？",
+                            "type": "choice",
+                            "options": [
+                                "模型量化",
+                                "剪枝",
+                                "知识蒸馏"
+                            ],
+                            "answer": "剪枝"
+                        },
+                        {
+                            "question": "通过让小模型学习大模型知识来减小模型规模的优化方法是？",
+                            "type": "choice",
+                            "options": [
+                                "模型量化",
+                                "剪枝",
+                                "知识蒸馏"
+                            ],
+                            "answer": "知识蒸馏"
+                        }
+                    ],
+                    "task": null,
+                    "videos": [
+                        {
+                            "title": "大模型优化的三种方式：RAG、提示词、微调哪个会让大模型表现更好？",
+                            "url": "http://www.bilibili.com/video/av113701105439837",
+                            "cover": "//i1.hdslb.com/bfs/archive/22e18bd903b8d21ab27d43bf39d83483e4340788.jpg",
+                            "duration": "22:46"
+                        },
+                        {
+                            "title": "【LLM大模型】如何整理训练数据以及微调优化建议",
+                            "url": "http://www.bilibili.com/video/av113688505751023",
+                            "cover": "//i0.hdslb.com/bfs/archive/4d5966e34605803e42c2e103e732122abef0e958.jpg",
+                            "duration": "20:14"
+                        },
+                        {
+                            "title": "大模型推理优化策略（一）显存优化",
+                            "url": "http://www.bilibili.com/video/av877821575",
+                            "cover": "//i0.hdslb.com/bfs/archive/8e435f8f227b91aa21d49042c98900bfd420f02d.jpg",
+                            "duration": "56:37"
+                        },
+                        {
+                            "title": "吴恩达同步最新AI课，第79讲：强化微调大模型与群体相对策略优化，Reinforcement Fine-Tuning LLMs with GRPO",
+                            "url": "http://www.bilibili.com/video/av114546744233551",
+                            "cover": "//i1.hdslb.com/bfs/archive/5b6fbb580ebedd4ab0cdaad6b8c36b6c93f9fc40.png",
+                            "duration": "83:42"
+                        }
+                    ],
+                    "web_res": {
+                        "query": "大模型优化策略",
+                        "follow_up_questions": null,
+                        "answer": "DeepSpeed是由微软开源的分布式训练加速框架，其使用了一种称为零冗余（ZeRO）的显存优化技术。本质上，它是一种数据并行的分布式训练策略，重点优化了数据并行 ...",
+                        "images": [],
+                        "results": [
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/678884007",
+                                "title": "太通透了！大模型训练和推理优化技术最全汇总！ - 知乎专栏",
+                                "content": "DeepSpeed是由微软开源的分布式训练加速框架，其使用了一种称为零冗余（ZeRO）的显存优化技术。本质上，它是一种数据并行的分布式训练策略，重点优化了数据并行 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.fractal-technology.com/fxbk/5024.html",
+                                "title": "大模型开发：大模型训练与优化的3大策略 - 北京分形科技",
+                                "content": "常用的优化算法包括梯度下降（SGD）、Adam和RMSProp等。针对大模型的特殊需求，开发者通常会调整学习率、批量大小和正则化参数等超参数，以确保训练过程中的 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://developer.aliyun.com/article/1606343",
+                                "title": "一文讲懂大模型调优技术 - 阿里云开发者社区",
+                                "content": "然而，大模型的调优过程复杂且资源消耗巨大，对开发者构成严峻挑战。本文旨在全面解析大模型调优的关键技术，涵盖数据预处理、模型架构调整、超参数优化、 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.dtstack.com/bbs/article/66323",
+                                "title": "大模型训练优化策略与实现技术详解 - 袋鼠云",
+                                "content": "优化算法是大模型训练过程中的核心组件，直接影响训练速度和模型性能。常用的优化算法包括随机梯度下降（SGD）、Adam、Adagrad等。Adam优化算法因其自适应 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/717010380",
+                                "title": "大模型优化利器：RLHF之PPO、DPO - 知乎专栏",
+                                "content": "近端策略优化（Proximal Policy Optimization, PPO）是对强化学习中策略梯度方法的改进，可以解决传统的策略梯度方法中存在的高方差、低数据效率、易发散等问题，从而提高了强 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.iminho.me/wiki/blog-51.html",
+                                "title": "大模型推理性能遇瓶颈？这些优化技巧助你强势突破 - MinDoc",
+                                "content": "大模型优化方法丰富多样，涵盖剪枝、量化、算子融合等。然而，并不存在一种适用于所有情况的“通用最优解”。在挑选优化策略时，必须综合考量业务需求 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.zte.com.cn/content/dam/zte-site/res-www-zte-com-cn/mediares/magazine/publication/com_cn/article/202402/4.pdf",
+                                "title": "[PDF] 大模型训练技术综述 - ZTE",
+                                "content": "这里我们介绍几种常见的并行策略，即数据并行、张量 并行和流水线并行。 在大模型训练的过程中，通常会将上述 并行策略进行组合使用，即混合并行。 数据并行 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/Baichuan_AI/article/details/144059287",
+                                "title": "深度学习大模型推理性能优化策略原创 - CSDN博客",
+                                "content": "量化作为大模型最重要的性能优化手段，能有效降低显存占用，降低访存量，更充分地利用计算资源。大模型的计算流程如下图所示，会经过attention 和MLP 两个阶段 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.hiascend.com/developer/techArticles/20231020-2",
+                                "title": "昇腾CANN 7.0 黑科技：大模型训练性能优化之道-技术干货",
+                                "content": "昇腾CANN借助根技术创新对大模型训练过程进行了系统级的优化加速，通过合理的分布式切分策略和内存优化策略，使大模型放得下；通过计算层、调度层和通信域的 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://developer.nvidia.com/zh-cn/blog/advanced-optimization-strategies-for-llm-training-on-nvidia-grace-hopper/",
+                                "title": "在NVIDIA Grace Hopper 上训练大型语言模型的高级优化策略",
+                                "content": "在处理大型模型时，有效管理GPU 内存至关重要。解决内存限制的一种策略是CPU 卸载的激活函数。此技术涉及在模型训练或推理期间临时将中间激活张量从 ...",
+                                "score": null,
+                                "raw_content": null
+                            }
+                        ],
+                        "response_time": 1.4682403259939747
+                    }
+                }
+            }
+        },
+        {
+            "step": 8,
+            "title": "探索大模型前沿研究",
+            "description": "了解大模型领域的最新研究成果和发展趋势。",
+            "animation_type": "无",
+            "status": "待完成",
+            "type": "quiz",
+            "difficulty": "advanced",
+            "search_keyword": "大模型前沿研究",
+            "previous_steps_context": [
+                {
+                    "title": "了解大模型基本概念",
+                    "description": "学习大模型定义、特点及常见应用场景。"
+                },
+                {
+                    "title": "探究大模型发展历程",
+                    "description": "梳理大模型从起源到现今的重要发展节点。"
+                },
+                {
+                    "title": "学习大模型架构原理",
+                    "description": "掌握大模型的主要架构组成和工作机制。"
+                },
+                {
+                    "title": "研究大模型训练方法",
+                    "description": "了解大模型训练的流程、算法和关键技术。"
+                },
+                {
+                    "title": "搭建简单大模型环境",
+                    "description": "使用工具和框架搭建大模型运行的基础环境。"
+                },
+                {
+                    "title": "实现大模型简单应用",
+                    "description": "编写代码实现大模型在特定场景的应用。"
+                },
+                {
+                    "title": "学习大模型优化策略",
+                    "description": "掌握提升大模型性能和效率的优化方法。"
+                }
+            ],
+            "videos": [
+                {
+                    "title": "大模型时代，普通人的科研上限在哪里？",
+                    "url": "http://www.bilibili.com/video/av115029173084140",
+                    "cover": "//i0.hdslb.com/bfs/archive/82f2f9e9a5ef80f409ade7f87d745ff4d3f42a0a.jpg",
+                    "duration": "11:38"
+                },
+                {
+                    "title": "Anthropic: 大模型可解释性最新研究",
+                    "url": "http://www.bilibili.com/video/av115036957708187",
+                    "cover": "//i0.hdslb.com/bfs/archive/ca03a337284a0a924feece100aa24bc1057d09b0.jpg",
+                    "duration": "59:3"
+                },
+                {
+                    "title": "ZJUNICE Tutorial: 大模型架构创新与底层细节",
+                    "url": "http://www.bilibili.com/video/av115047426691821",
+                    "cover": "//i1.hdslb.com/bfs/archive/49ef2472d44e709bfce9b40cdb927cef836a4989.jpg",
+                    "duration": "27:54"
+                },
+                {
+                    "title": "【中国科学院】大模型研讨课第1讲（共10讲）：1、系统介绍课程内容；2、大模型的发展历程（Why LLMs?）；3、大模型的基本结构原理讲解",
+                    "url": "http://www.bilibili.com/video/av113486139167784",
+                    "cover": "//i0.hdslb.com/bfs/archive/a4257e8f098b0f30a8ef51de682de81480df68c0.jpg",
+                    "duration": "113:56"
+                }
+            ],
+            "lang": "zh",
+            "id": "3f1ac136-c1e7-45da-a235-0d1d2b55c77b",
+            "task": {
+                "success": true,
+                "task": {
+                    "type": "quiz",
+                    "difficulty": "advanced",
+                    "ppt_slide": "# 大模型领域的最新研究成果和发展趋势\n\n## 最新研究成果\n- 多模态融合：大模型不再局限于单一模态，如文本、图像、语音等，而是实现了多模态信息的融合处理，提升了模型的理解和生成能力。例如，能够根据文本描述生成对应的图像。\n- 高效训练技术：为了减少训练成本和时间，新的训练技术不断涌现，如稀疏化训练、模型量化等，使得大模型的训练更加高效。\n- 可解释性增强：提高大模型的可解释性一直是研究的热点，目前有一些方法可以解释模型的决策过程，增强了用户对模型的信任。\n\n## 发展趋势\n- 个性化定制：未来大模型将能够根据用户的个性化需求进行定制化服务，提供更贴合用户的解决方案。\n- 边缘计算融合：大模型与边缘计算结合，在本地设备上实现高效推理，减少数据传输延迟，提高应用的实时性。\n- 跨领域应用拓展：大模型将在更多领域得到应用，如医疗、金融、教育等，推动各行业的智能化发展。",
+                    "questions": [
+                        {
+                            "question": "以下哪种属于大模型最新研究成果中的训练技术？",
+                            "type": "choice",
+                            "options": [
+                                "多模态融合",
+                                "稀疏化训练",
+                                "个性化定制"
+                            ],
+                            "answer": "稀疏化训练"
+                        },
+                        {
+                            "question": "大模型未来的发展趋势不包括以下哪一项？",
+                            "type": "choice",
+                            "options": [
+                                "可解释性增强",
+                                "边缘计算融合",
+                                "减少训练成本"
+                            ],
+                            "answer": "减少训练成本"
+                        },
+                        {
+                            "question": "大模型实现多模态融合后可以实现以下哪种应用？",
+                            "type": "choice",
+                            "options": [
+                                "根据文本描述生成图像",
+                                "在本地设备上高效推理",
+                                "解释模型的决策过程"
+                            ],
+                            "answer": "根据文本描述生成图像"
+                        }
+                    ],
+                    "task": {},
+                    "videos": [
+                        {
+                            "title": "大模型时代，普通人的科研上限在哪里？",
+                            "url": "http://www.bilibili.com/video/av115029173084140",
+                            "cover": "//i0.hdslb.com/bfs/archive/82f2f9e9a5ef80f409ade7f87d745ff4d3f42a0a.jpg",
+                            "duration": "11:38"
+                        },
+                        {
+                            "title": "Anthropic: 大模型可解释性最新研究",
+                            "url": "http://www.bilibili.com/video/av115036957708187",
+                            "cover": "//i0.hdslb.com/bfs/archive/ca03a337284a0a924feece100aa24bc1057d09b0.jpg",
+                            "duration": "59:3"
+                        },
+                        {
+                            "title": "ZJUNICE Tutorial: 大模型架构创新与底层细节",
+                            "url": "http://www.bilibili.com/video/av115047426691821",
+                            "cover": "//i1.hdslb.com/bfs/archive/49ef2472d44e709bfce9b40cdb927cef836a4989.jpg",
+                            "duration": "27:54"
+                        },
+                        {
+                            "title": "【中国科学院】大模型研讨课第1讲（共10讲）：1、系统介绍课程内容；2、大模型的发展历程（Why LLMs?）；3、大模型的基本结构原理讲解",
+                            "url": "http://www.bilibili.com/video/av113486139167784",
+                            "cover": "//i0.hdslb.com/bfs/archive/a4257e8f098b0f30a8ef51de682de81480df68c0.jpg",
+                            "duration": "113:56"
+                        }
+                    ],
+                    "web_res": {
+                        "query": "大模型前沿研究",
+                        "follow_up_questions": null,
+                        "answer": "随着大模型技术的持续发展，推荐系统将朝着更智能、更个性化、更高效的方向迈进，为用户提供更精准的服务体验，OpenDILab 也将开始逐步探索RL + LLM4REC 的 ...",
+                        "images": [],
+                        "results": [
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/1898074890508173352",
+                                "title": "最前沿——基础模型与多模态交互（12）：大模型时代的推荐系统- 知乎",
+                                "content": "随着大模型技术的持续发展，推荐系统将朝着更智能、更个性化、更高效的方向迈进，为用户提供更精准的服务体验，OpenDILab 也将开始逐步探索RL + LLM4REC 的 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://ccf.org.cn/ncca2024/speaker_d_3153",
+                                "title": "大模型前沿技术与实践应用 - 中国计算机学会",
+                                "content": "研究方向为人工智能、机器学习、自然语言处理。主导了阿里巴巴首款智能硬件设备天猫精灵的知识问答引擎建设，满帮集团的AI 平台建设。欧盟第七框架国际合作项目XLIKE ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "http://cips-cl.org/?p=88340",
+                                "title": "大模型前沿技术报告① | 迈向推理时代：长思维链机理及应用",
+                                "content": "大模型前沿技术报告系列直播课是由中国中文信息学会计算语言学专业委员会主办，并行科技承办的系列公益直播课，旨在分享大模型技术前沿学术成果和普及大模型 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://ccf.org.cn/web/html16/JBdetail.html?channelId=ca84456a9dfc4e5cb4ac8210909a0df6&CmsId=4590143bdb464cf8b23951178f26d2c6&globalId=m1197493502162898944170554629926",
+                                "title": "大模型前沿技术与实践应用 - 中国计算机学会",
+                                "content": "本报告将从内容安全的本质以及背后风险出发，介绍在内容安全场景中实践大模型技术的挑战与解决方案。 讲者介绍：黄龙涛，阿里安全资深算法专家，负责阿里巴巴内容安全业务，研究 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://blog.csdn.net/Aifuyao/article/details/147892022",
+                                "title": "2025年，大模型LLM还有哪些可研究的方向？ 原创 - CSDN博客",
+                                "content": "为了帮助大家及时把握LLM 技术前沿动态，同时为学术论文创作提供创新思路，我给大家AI+大模型学习路线！内容覆盖检索增强生成（RAG）、大语言模型推理等热门 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://ele.pku.edu.cn/info/1012/3606.htm",
+                                "title": "大模型/基座模型和通信网络的美妙碰撞——前沿探索者沙龙首期成功 ...",
+                                "content": "程翔教授以\"大模型/基座模型赋能的无线通信传输研究\"为题，详细介绍了\"机器联觉\"创新概念。该概念基于任务驱动的AI原生思想，实现了通信与多模态感知的智能 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://zhuanlan.zhihu.com/p/692500797",
+                                "title": "一周总结！大模型前沿进展：涉及推理、应用、多模态等热点话题！",
+                                "content": "谷歌DeepMind 的研究者提出了Gecko，这是一种从LLM 中蒸馏出来的多功能文本嵌入模型，其在LLM 生成的合成数据集FRet 上进行训练，并由LLM 提供支持。通过将 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.tsinghua.edu.cn/info/1175/118793.htm",
+                                "title": "逻辑学研究中心联合发表大模型逻辑推理能力最新综述 - 清华大学",
+                                "content": "清华新闻网5月13日电当前，大模型研究正逐步从依赖扩展定律（Scaling Law）的预训练转向聚焦推理能力的后训练。鉴于符号逻辑推理的有效性与普遍性，提升大 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "https://www.scholat.com/orgPost.html?id=1487",
+                                "title": "【转载】“大模型前沿研究与典型应用”专题征文通知 - 学者网",
+                                "content": "大模型的基本原理与架构设计：主要包括大模型的定义、基本原理、可解释性、计算架构、模型训练与优化等。 · 大模型的性能评价：主要包括大模型评测数据集构建 ...",
+                                "score": null,
+                                "raw_content": null
+                            },
+                            {
+                                "url": "http://se-office.ruc.edu.cn/xwdt/e045f14b6a8945a5a6525cdc41f97aa1.htm",
+                                "title": "高瓴人工智能学院召开“大模型：前沿技术与未来应用”研讨会",
+                                "content": "他表示，大模型是人工智能当下非常火爆的研究技术，学院非常重视大模型相关研究，目前高瓴人工智能学院也有多位教师在大模型领域进行科研探索，且陆续产出了 ...",
+                                "score": null,
+                                "raw_content": null
+                            }
+                        ],
+                        "response_time": 2.010866195996641
+                    }
+                }
+            }
+        }
+    ],
+    "introduction": {
+        "title": "大模型学习计划",
+        "course_info": "本课程聚焦大模型的学习，核心内容涵盖大模型的基础概念、架构原理、训练方法及实际应用。通过系统学习，你将深入理解大模型的工作机制，掌握其在不同场景下的使用技巧，预期收获是能够独立运用大模型解决实际问题，提升在人工智能领域的专业能力。",
+        "background": "大模型作为人工智能领域的重要技术，近年来取得了飞速发展。从早期的简单神经网络到如今的大规模预训练模型，技术演进令人瞩目。其在自然语言处理、图像识别、智能推荐等众多领域都有广泛应用，具有极高的商业价值和社会意义。未来，大模型有望在更多领域发挥重要作用，推动各行业的智能化转型。",
+        "overview": "本课程分为四个阶段。第1 - 2步为基础阶段，主要学习大模型的基本概念和发展历程，让你对大模型有初步认识；第3 - 4步是核心知识阶段，深入了解大模型的架构和训练原理；第5 - 6步为实践操作阶段，通过编写代码和实际案例，掌握大模型的应用技巧；第7 - 8步是拓展提升阶段，学习大模型的优化和前沿研究，拓宽你的知识面。",
+        "prerequisites": "学习本课程需要具备一定的数学基础，如线性代数、概率论等，熟悉Python编程语言，了解基本的机器学习和深度学习概念。建议对这些知识有较为扎实的掌握，以便更好地理解课程内容。"
+    }
+}

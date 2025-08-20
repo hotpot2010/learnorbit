@@ -96,7 +96,8 @@
       "welcomeCustomize": "我来帮你定制课程",
       "helpAnalyze": "我来帮您分析学习需求并生成个性化课程计划。",
       "helpCustomize": "我来帮您分析学习需求。",
-      "tellMeWhatToLearn": "请告诉我您想学习什么，我会为您制定个性化的学习计划。"
+      "tellMeWhatToLearn": "请告诉我您想学习什么，我会为您制定个性化的学习计划。",
+      "modifyingSteps": "为你修改第{steps}步"
     },
     "meta": {
       "title": "AI学习平台 - 个性化智能教育",
