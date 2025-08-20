@@ -76,6 +76,8 @@ export function CourseRecommendationWithNavigation({
       .replace(/-+/g, '-');
     const slug = `${raw}-${course.ownerId}`;
 
+    console.log('🔗 主页课程点击:', { courseTitle: course.title, ownerId: course.ownerId, slug: slug });
+
     const base = (process.env.NEXT_PUBLIC_BASE_URL as string) || '';
     if (base) {
       window.location.href = `${base}/study/${slug}`;

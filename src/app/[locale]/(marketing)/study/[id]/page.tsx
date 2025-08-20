@@ -40,6 +40,61 @@ export default function StudyPage({ params }: StudyPageProps) {
   
   // 🔍 组件渲染日志
   console.log('🔄 StudyPage 组件重新渲染:', new Date().toLocaleTimeString());
+
+  // 兼容性辅助函数：安全获取学习计划的步骤数组
+  const getLearningSteps = (plan: LearningPlan | null): any[] => {
+    if (!plan) return [];
+    
+    console.log('🔍 检查学习计划格式:', {
+      planType: typeof plan,
+      hasPlanProperty: 'plan' in plan,
+      planPropertyType: plan.plan ? typeof plan.plan : 'undefined',
+      isArrayPlan: Array.isArray(plan.plan),
+      isArraySelf: Array.isArray(plan),
+      planStructure: plan
+    });
+    
+    if (Array.isArray(plan.plan)) {
+      // 新格式或标准格式：plan.plan 是数组
+      console.log('✅ 识别为标准格式，plan.plan 是数组，长度:', plan.plan.length);
+      return plan.plan;
+    } else if (plan.plan && typeof plan.plan === 'object' && (plan.plan as any).plan && Array.isArray((plan.plan as any).plan)) {
+      // 嵌套格式：plan.plan.plan 是数组（可能的双重嵌套）
+      console.log('✅ 识别为嵌套格式，plan.plan.plan 是数组，长度:', (plan.plan as any).plan.length);
+      return (plan.plan as any).plan;
+    } else if (Array.isArray(plan)) {
+      // 极旧格式：plan 本身就是数组
+      console.log('✅ 识别为极旧格式，plan 本身是数组，长度:', plan.length);
+      return plan as any;
+    }
+    
+    console.warn('⚠️ 无法识别的学习计划格式:', plan);
+    return [];
+  };
+
+  // 辅助函数：安全获取课程标题和描述
+  const getCourseInfo = (plan: LearningPlan | null) => {
+    if (!plan) return { title: undefined, description: undefined };
+    
+    // 直接从顶层获取
+    if (plan.title || plan.description) {
+      return {
+        title: plan.title,
+        description: plan.description
+      };
+    }
+    
+    // 从嵌套的 plan 对象获取
+    if (plan.plan && typeof plan.plan === 'object' && !Array.isArray(plan.plan)) {
+      const nestedPlan = plan.plan as any;
+      return {
+        title: nestedPlan.title,
+        description: nestedPlan.description
+      };
+    }
+    
+    return { title: undefined, description: undefined };
+  };
   
   const [isPathCollapsed, setIsPathCollapsed] = useState(false);
   const [externalMessage, setExternalMessage] = useState<string>('');
@@ -1147,6 +1202,14 @@ export default function StudyPage({ params }: StudyPageProps) {
             const plan: LearningPlan = JSON.parse(savedPlan);
             setLearningPlan(plan);
             console.log('✅ 加载自定义学习计划:', plan);
+            console.log('📋 计划详情:', { 
+              hasTitle: !!plan.title, 
+              hasDescription: !!plan.description, 
+              hasIntroduction: !!plan.introduction,
+              hasSteps: !!plan.plan,
+              stepsLength: plan.plan ? plan.plan.length : 0,
+              planStructure: typeof plan.plan
+            });
             
             // 如果来自数据库且有任务缓存，直接加载任务
             if (fromDatabase === 'true' && savedTaskCache) {
@@ -1314,10 +1377,38 @@ export default function StudyPage({ params }: StudyPageProps) {
             const data = await resp.json();
             const course = data.course;
             if (course?.coursePlan) {
-              const plan: LearningPlan = { plan: course.coursePlan.plan || [] };
+              // 处理新格式数据：course.coursePlan.plan 可能是完整的LearningPlan对象
+              const rawPlan = course.coursePlan.plan;
+              let plan: LearningPlan;
+              
+              if (rawPlan && typeof rawPlan === 'object' && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
+                // 新格式：rawPlan 本身就是 LearningPlan
+                plan = rawPlan as LearningPlan;
+                console.log('📚 检测到新格式课程数据，包含instruction信息:', { 
+                  hasTitle: !!plan.title, 
+                  hasDescription: !!plan.description, 
+                  hasIntroduction: !!plan.introduction 
+                });
+              } else {
+                // 旧格式：rawPlan 是步骤数组
+                plan = { plan: Array.isArray(rawPlan) ? rawPlan : [] };
+                console.log('📚 检测到旧格式课程数据');
+              }
+              
               const tasks = course.coursePlan.tasks || {};
               const notesArr = Array.isArray(course.coursePlan.notes) ? course.coursePlan.notes : [];
               const marksArr = Array.isArray(course.coursePlan.marks) ? course.coursePlan.marks : [];
+
+              console.log('📋 从数据库解析的计划详情:', { 
+                hasTitle: !!plan.title, 
+                hasDescription: !!plan.description, 
+                hasIntroduction: !!plan.introduction,
+                hasSteps: !!plan.plan,
+                stepsLength: plan.plan ? plan.plan.length : 0,
+                planStructure: typeof plan.plan,
+                titleValue: plan.title,
+                descriptionValue: plan.description
+              });
 
               // 写入本地缓存（基于 slug 的 key）
               sessionStorage.setItem(planKey, JSON.stringify(plan));
@@ -1616,7 +1707,8 @@ export default function StudyPage({ params }: StudyPageProps) {
   const getCurrentStepTask = () => {
     if (!learningPlan || currentStepIndex === 0) return null; // welcome 页面没有任务
     
-    const currentStep = learningPlan.plan[currentStepIndex - 1];
+    const steps = getLearningSteps(learningPlan);
+    const currentStep = steps[currentStepIndex - 1];
     if (!currentStep) return null;
     
     const cachedTask = taskCache[currentStep.step];
@@ -1706,8 +1798,9 @@ export default function StudyPage({ params }: StudyPageProps) {
       setPollingInterval(null);
     }
     
-    if (routeParams?.id === 'custom' && learningPlan && currentStepIndex > 0 && learningPlan.plan[currentStepIndex - 1]) {
-      const currentStep = learningPlan.plan[currentStepIndex - 1];
+    const steps = getLearningSteps(learningPlan);
+    if (routeParams?.id === 'custom' && learningPlan && currentStepIndex > 0 && steps[currentStepIndex - 1]) {
+      const currentStep = steps[currentStepIndex - 1];
       console.log(`🎯 切换到步骤 ${currentStep.step}: ${currentStep.title}`);
       
       // 尝试从缓存获取任务
@@ -1755,9 +1848,9 @@ export default function StudyPage({ params }: StudyPageProps) {
         startPollingForTask(currentStep.step);
         }
       }
-    } else if (learningPlan && currentStepIndex > 0 && learningPlan.plan[currentStepIndex - 1]) {
+    } else if (learningPlan && currentStepIndex > 0 && steps[currentStepIndex - 1]) {
       // 非 custom（slug）页面：只显示缓存，绝不进入 loading/polling
-      const currentStep = learningPlan.plan[currentStepIndex - 1];
+      const currentStep = steps[currentStepIndex - 1];
       const cachedTask = taskCache[currentStep.step];
       if (cachedTask) {
         setCurrentTask(cachedTask);
@@ -1830,9 +1923,10 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   // 监听任务缓存变化，实时更新当前步骤的任务
   useEffect(() => {
-    if (!learningPlan || currentStepIndex === 0 || !learningPlan.plan[currentStepIndex - 1]) return;
+    const steps = getLearningSteps(learningPlan);
+    if (!learningPlan || currentStepIndex === 0 || !steps[currentStepIndex - 1]) return;
     
-    const currentStep = learningPlan.plan[currentStepIndex - 1];
+    const currentStep = steps[currentStepIndex - 1];
     const cachedTask = taskCache[currentStep.step];
     
     if (cachedTask && (!currentTask || isLoadingTask)) {
@@ -1860,9 +1954,9 @@ export default function StudyPage({ params }: StudyPageProps) {
       // 切换到 welcome 页面时清理任务状态
       setCurrentTask(null);
       setIsLoadingTask(false);
-    } else if (learningPlan && learningPlan.plan[currentStepIndex - 1]) {
+    } else if (learningPlan && getLearningSteps(learningPlan)[currentStepIndex - 1]) {
       // 切换到学习步骤时检查是否需要加载任务
-      const currentStep = learningPlan.plan[currentStepIndex - 1];
+      const currentStep = getLearningSteps(learningPlan)[currentStepIndex - 1];
       const cachedTask = taskCache[currentStep.step];
       
       if (cachedTask) {
@@ -2212,7 +2306,12 @@ export default function StudyPage({ params }: StudyPageProps) {
  
     // 只要有学习计划（无论是 custom 还是 slug 加载），都使用计划中的步骤
     if (learningPlan) {
-      const planSteps = learningPlan.plan.map((step, index) => ({
+      const steps = getLearningSteps(learningPlan);
+      if (steps.length === 0) {
+        return [welcomeStep];
+      }
+      
+      const planSteps = steps.map((step, index) => ({
         id: `step-${step.step}`,
         title: step.title,
         description: step.description,
@@ -2250,8 +2349,9 @@ export default function StudyPage({ params }: StudyPageProps) {
     // welcome 页无视频
     if (currentStepIndex === 0) return '';
     const idx = currentStepIndex - 1;
-    if (!learningPlan.plan[idx]) return '';
-    const step = learningPlan.plan[idx];
+    const steps = getLearningSteps(learningPlan);
+    if (!steps[idx]) return '';
+    const step = steps[idx];
     const videoUrl = step.videos?.[0]?.url || '';
     const processedVideo = processVideoUrl(videoUrl);
     return processedVideo.url || '';
@@ -2260,9 +2360,12 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 获取当前步骤的所有视频
   const getCurrentStepVideos = () => {
     if (currentStepIndex === 0) return [];
-    if (learningPlan && learningPlan.plan[currentStepIndex - 1]) {
-      const step = learningPlan.plan[currentStepIndex - 1];
-      return step.videos || [];
+    if (learningPlan) {
+      const steps = getLearningSteps(learningPlan);
+      const step = steps[currentStepIndex - 1];
+      if (step) {
+        return step.videos || [];
+      }
     }
     return [];
   };
@@ -2398,13 +2501,15 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 检查所有任务是否已生成
   const areAllTasksGenerated = () => {
     if (!learningPlan) return false;
-    return learningPlan.plan.every(step => taskGenerationStatus[step.step] === 'completed');
+    const steps = getLearningSteps(learningPlan);
+    return steps.every(step => taskGenerationStatus[step.step] === 'completed');
   };
 
   // 获取已生成的任务数量
   const getGeneratedTasksCount = () => {
     if (!learningPlan) return 0;
-    return learningPlan.plan.filter(step => taskGenerationStatus[step.step] === 'completed').length;
+    const steps = getLearningSteps(learningPlan);
+    return steps.filter(step => taskGenerationStatus[step.step] === 'completed').length;
   };
 
   // 便签编辑相关函数
@@ -2746,7 +2851,8 @@ export default function StudyPage({ params }: StudyPageProps) {
                             <div className="ml-2">
                               {(() => {
                                 const planIdx = index - 1; // 跳过 welcome
-                                const stepNumber = learningPlan.plan[planIdx]?.step;
+                                const steps = getLearningSteps(learningPlan);
+                                const stepNumber = steps[planIdx]?.step;
                                 if (stepNumber == null) return null;
                                 const status = taskGenerationStatus[stepNumber];
                                 const hasTask = !!taskCache[stepNumber];
@@ -2801,7 +2907,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                        ) : (
                          <>
                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                           <span>Generating Tasks... ({getGeneratedTasksCount()}/{learningPlan.plan.length})</span>
+                           <span>Generating Tasks... ({getGeneratedTasksCount()}/{getLearningSteps(learningPlan).length})</span>
                          </>
                        )}
                      </div>
@@ -2852,7 +2958,16 @@ export default function StudyPage({ params }: StudyPageProps) {
           {/* 合并的内容区域 */}
           <div className="h-full p-6 overflow-y-auto study-content-scroll">
             {currentStepIndex === 0 ? (
-              <WelcomePage onStartLearning={() => setCurrentStepIndex(1)} />
+              (() => {
+                const courseInfo = getCourseInfo(learningPlan);
+                return (
+                  <WelcomePage 
+                    onStartLearning={() => setCurrentStepIndex(1)}
+                    courseTitle={courseInfo.title}
+                    courseDescription={courseInfo.description}
+                  />
+                );
+              })()
             ) : isLoadingTask ? (
               <div className="h-full flex items-center justify-center">
                 <div className="text-center">
@@ -2862,9 +2977,17 @@ export default function StudyPage({ params }: StudyPageProps) {
                   {/* 调试信息 - 仅在开发环境显示 */}
                   {process.env.NODE_ENV === 'development' && learningPlan && (
                     <div className="mt-4 text-sm text-gray-500">
-                      <p>Current Step: {learningPlan.plan[currentStepIndex - 1]?.step}</p>
-                      <p>Status: {taskGenerationStatus[learningPlan.plan[currentStepIndex - 1]?.step]}</p>
-                      <p>Cached: {taskCache[learningPlan.plan[currentStepIndex - 1]?.step] ? 'Yes' : 'No'}</p>
+                      {(() => {
+                        const steps = getLearningSteps(learningPlan);
+                        const currentStep = steps[currentStepIndex - 1];
+                        return (
+                          <>
+                            <p>Current Step: {currentStep?.step}</p>
+                            <p>Status: {taskGenerationStatus[currentStep?.step]}</p>
+                            <p>Cached: {taskCache[currentStep?.step] ? 'Yes' : 'No'}</p>
+                          </>
+                        );
+                      })()}
                     </div>
                   )}
                 </div>

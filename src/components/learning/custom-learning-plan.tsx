@@ -708,10 +708,23 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         // 如果已经有更新过的计划，保持现有状态
         if (prevPlan && prevPlan.plan.length > 0) {
           console.log('✅ 保持现有的实时更新计划');
-          return prevPlan;
+          // 合并课程介绍信息
+          const enhancedPlan = {
+            ...prevPlan,
+            introduction: courseIntroduction,
+            title: courseIntroduction?.title || prevPlan.title,
+            description: courseIntroduction?.course_info || prevPlan.description
+          };
+          return enhancedPlan;
         }
-        // 否则使用新计划
-        return plan;
+        // 否则使用新计划，并合并课程介绍信息
+        const enhancedPlan = {
+          ...plan,
+          introduction: courseIntroduction,
+          title: courseIntroduction?.title || plan.title,
+          description: courseIntroduction?.course_info || plan.description
+        };
+        return enhancedPlan;
       });
     } else {
       // 无变更，仅结束更新状态
@@ -730,10 +743,16 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     setUpdatingSteps([]); // 清除正在更新的步骤
     setPlanUpdateStatus('completed');
 
-    // 保存学习计划到sessionStorage，供学习页面使用
+    // 保存增强后的学习计划到sessionStorage，供学习页面使用
     if (plan) {
-    sessionStorage.setItem('learningPlan', JSON.stringify(plan));
-    console.log('💾 学习计划已保存到sessionStorage');
+      const enhancedPlan = {
+        ...plan,
+        introduction: courseIntroduction,
+        title: courseIntroduction?.title || plan.title,
+        description: courseIntroduction?.course_info || plan.description
+      };
+      sessionStorage.setItem('learningPlan', JSON.stringify(enhancedPlan));
+      console.log('💾 增强后的学习计划已保存到sessionStorage');
     }
 
     // 3秒后恢复idle状态并清除部分计划
@@ -761,8 +780,16 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       console.log('💾 当前任务缓存:', Object.keys(taskCache).length, '个任务');
       console.log('💾 任务状态:', stepTaskStatus);
 
-      // 1. 保存到sessionStorage供学习页面使用
-      sessionStorage.setItem('learningPlan', JSON.stringify(coursePlan));
+      // 确保课程计划包含课程介绍信息
+      const enhancedCoursePlan = {
+        ...coursePlan,
+        introduction: courseIntroduction,
+        title: courseIntroduction?.title || coursePlan.title,
+        description: courseIntroduction?.course_info || coursePlan.description
+      };
+
+      // 1. 保存增强后的课程计划到sessionStorage供学习页面使用
+      sessionStorage.setItem('learningPlan', JSON.stringify(enhancedCoursePlan));
 
       // 2. 保存任务缓存和状态
       if (Object.keys(taskCache).length > 0) {
@@ -785,13 +812,19 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
 
       // 即使保存失败，也允许用户继续学习
       setTimeout(() => {
-      sessionStorage.setItem('learningPlan', JSON.stringify(coursePlan));
+        const enhancedCoursePlan = {
+          ...coursePlan,
+          introduction: courseIntroduction,
+          title: courseIntroduction?.title || coursePlan.title,
+          description: courseIntroduction?.course_info || coursePlan.description
+        };
+        sessionStorage.setItem('learningPlan', JSON.stringify(enhancedCoursePlan));
         if (Object.keys(taskCache).length > 0) {
           sessionStorage.setItem('taskCache', JSON.stringify(taskCache));
           sessionStorage.setItem('stepTaskStatus', JSON.stringify(stepTaskStatus));
         }
         sessionStorage.setItem('fromCustomPage', 'true');
-      router.push('/study/custom');
+        router.push('/study/custom');
       }, 1000);
     }
   };

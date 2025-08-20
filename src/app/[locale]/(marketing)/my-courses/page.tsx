@@ -49,7 +49,7 @@ const extractCourseInfo = (coursePlan: any) => {
   // 处理新格式（包含plan和tasks）和旧格式
   const planData = coursePlan?.plan || coursePlan;
   
-  if (!planData || !Array.isArray(planData)) {
+  if (!planData) {
     return {
       title: 'Unknown Course',
       description: 'Course description not available',
@@ -58,8 +58,29 @@ const extractCourseInfo = (coursePlan: any) => {
     };
   }
 
-  const plan = planData;
-  const title = plan.length > 0 ? plan[0].title : 'Unknown Course';
+  // 检查是否是新格式（包含title、description字段）
+  const isNewFormat = planData.title || planData.description || planData.plan;
+  let plan: any[];
+  let courseTitle: string;
+  let courseDescription: string;
+
+  if (isNewFormat) {
+    // 新格式：planData 本身就是 LearningPlan，包含 title、description、plan
+    plan = planData.plan || [];
+    courseTitle = planData.title || (plan.length > 0 ? plan[0].title : 'Unknown Course');
+    courseDescription = planData.description || 
+      (plan[0]?.description && String(plan[0].description).trim() 
+        ? String(plan[0].description)
+        : (plan.length > 1 ? `${plan.length} step learning path` : 'Single step course'));
+  } else {
+    // 旧格式：planData 直接是步骤数组
+    plan = Array.isArray(planData) ? planData : [];
+    courseTitle = plan.length > 0 ? plan[0].title : 'Unknown Course';
+    courseDescription = (plan[0]?.description && String(plan[0].description).trim())
+      ? String(plan[0].description)
+      : (plan.length > 1 ? `${plan.length} step learning path` : 'Single step course');
+  }
+
   const totalTime = plan.reduce((acc: number, step: any) => {
     const time = Number.parseInt(step.estimatedTime || '0');
     return acc + time;
@@ -80,12 +101,8 @@ const extractCourseInfo = (coursePlan: any) => {
   }
 
   return {
-    title: title || 'Unknown Course',
-    // 优先展示第一个步骤的描述，若无则回退到原有的步数摘要
-    description:
-      (plan[0]?.description && String(plan[0].description).trim())
-        ? String(plan[0].description)
-        : (plan.length > 1 ? `${plan.length} step learning path` : 'Single step course'),
+    title: courseTitle || 'Unknown Course',
+    description: courseDescription,
     difficulty,
     estimatedTime: totalTime > 0 ? `${totalTime} hours` : 'Unknown',
   };
@@ -498,7 +515,33 @@ export default function MyCoursesPage() {
                             body: JSON.stringify({ title: titleDraft, description: descDraft })
                           });
                           if (!resp.ok) throw new Error(await resp.text());
-                          setCourses(prev => prev.map(c => c.id === course.id ? { ...c, coursePlan: { ...c.coursePlan, plan: [{ ...(c.coursePlan?.plan?.[0] || {}), title: titleDraft, description: descDraft }, ...(c.coursePlan?.plan?.slice(1) || [])] } } : c));
+                          setCourses(prev => prev.map(c => {
+                            if (c.id === course.id) {
+                              const rawPlan = c.coursePlan?.plan;
+                              let updatedPlan;
+                              
+                              // 兼容新旧格式更新
+                              if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && 
+                                  (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
+                                // 新格式：更新 instruction 级别的 title 和 description
+                                updatedPlan = {
+                                  ...rawPlan,
+                                  title: titleDraft,
+                                  description: descDraft
+                                };
+                              } else {
+                                // 旧格式：更新第一步的 title 和 description
+                                const planSteps = Array.isArray(rawPlan) ? rawPlan : [];
+                                updatedPlan = [
+                                  { ...(planSteps[0] || {}), title: titleDraft, description: descDraft },
+                                  ...planSteps.slice(1)
+                                ];
+                              }
+                              
+                              return { ...c, coursePlan: { ...c.coursePlan, plan: updatedPlan } };
+                            }
+                            return c;
+                          }));
                           setEditing(false);
                         } catch (err) {
                           console.error('保存失败', err);

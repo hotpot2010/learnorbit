@@ -27,13 +27,29 @@ const getPublicCoursesCached = unstable_cache(async (): Promise<PublicCourseCard
   const rows = await db.select().from(userCourses);
   const publicCourses = rows.filter((r: any) => r.coursePlan && (r.coursePlan as any).isPublic === true);
   return publicCourses.map((c: any) => {
-    const plan = c.coursePlan?.plan || [];
-    const title = plan[0]?.title || 'Untitled Course';
-    const description = plan[0]?.description || 'No description';
-    const firstVideo = plan[0]?.videos?.[0];
+    const rawPlan = c.coursePlan?.plan;
+    let coursePlan: any;
+    let planSteps: any[];
+    
+    // 兼容新旧格式
+    if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
+      // 新格式：rawPlan 是包含 title、description、plan 的对象
+      coursePlan = rawPlan;
+      planSteps = rawPlan.plan || [];
+    } else {
+      // 旧格式：rawPlan 直接是步骤数组
+      coursePlan = {};
+      planSteps = Array.isArray(rawPlan) ? rawPlan : [];
+    }
+    
+    // 优先使用 instruction 中的标题和描述，回退到第一步的信息
+    const title = coursePlan.title || planSteps[0]?.title || 'Untitled Course';
+    const description = coursePlan.description || planSteps[0]?.description || 'No description';
+    
+    const firstVideo = planSteps[0]?.videos?.[0];
     const coverImage = firstVideo?.cover || '/images/blog/post-1.png';
     const estimatedTime = firstVideo?.duration || 'Unknown';
-    const type = plan[0]?.type || 'theory';
+    const type = planSteps[0]?.type || 'theory';
     const difficulty = (type === 'coding' ? 'intermediate' : 'beginner') as 'beginner'|'intermediate'|'advanced';
     return { id: c.id, title, description, coverImage, estimatedTime, difficulty, ownerId: c.userId, createdAt: c.createdAt };
   });

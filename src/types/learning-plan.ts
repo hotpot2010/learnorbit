@@ -21,6 +21,9 @@ export interface LearningStep {
 
 export interface LearningPlan {
   plan: LearningStep[];
+  title?: string; // 课程标题，来自 introduction.title
+  description?: string; // 课程描述，来自 introduction.course_info
+  introduction?: any; // 完整的课程介绍信息
 }
 
 export interface PlanUpdateCallback {

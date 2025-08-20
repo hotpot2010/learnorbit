@@ -238,8 +238,20 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 			updatedPlan.isPublic = isPublic;
 		}
 		if (newTitle || newDescription) {
-			if (Array.isArray(updatedPlan.plan) && updatedPlan.plan.length > 0) {
-				updatedPlan.plan = updatedPlan.plan.map((s: any, idx: number) => {
+			const rawPlan = updatedPlan.plan;
+			
+			// 兼容新旧格式更新
+			if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && 
+			    (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
+				// 新格式：更新 instruction 级别的 title 和 description
+				updatedPlan.plan = {
+					...rawPlan,
+					...(newTitle ? { title: newTitle } : {}),
+					...(newDescription ? { description: newDescription } : {}),
+				};
+			} else if (Array.isArray(rawPlan) && rawPlan.length > 0) {
+				// 旧格式：更新第一步的 title 和 description
+				updatedPlan.plan = rawPlan.map((s: any, idx: number) => {
 					if (idx !== 0) return s;
 					return {
 						...s,

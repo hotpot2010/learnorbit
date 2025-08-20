@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       .values({
         userId: userId,
         coursePlan: {
-          plan: coursePlan.plan || coursePlan,
+          plan: coursePlan, // 直接使用完整的coursePlan，包含title、description、introduction
           tasks: taskData, // 存储生成的任务数据
           notes: notesData, // 存储便签
           marks: marksData, // 存储彩笔标记

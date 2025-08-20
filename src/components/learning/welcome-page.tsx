@@ -11,18 +11,45 @@ import {
   Move
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface WelcomePageProps {
   onStartLearning: () => void;
+  courseTitle?: string;
+  courseDescription?: string;
 }
 
-export function WelcomePage({ onStartLearning }: WelcomePageProps) {
+export function WelcomePage({ onStartLearning, courseTitle, courseDescription }: WelcomePageProps) {
   const t = useTranslations('LearningPlatform.welcome');
+  const locale = useLocale();
 
-  const welcomeContent = `# ${t('title')} 🎉
+  // 调试日志（开发环境）
+  if (process.env.NODE_ENV === 'development') {
+    console.log('🎉 WelcomePage received props:', { 
+      courseTitle, 
+      courseDescription,
+      hasCourseTitle: !!courseTitle,
+      hasCourseDescription: !!courseDescription
+    });
+  }
 
-${t('subtitle')}
+  // 判断是否有课程信息（instruction）
+  const hasInstructionInfo = courseTitle || courseDescription;
+  
+  let welcomeContent: string;
+  
+  if (hasInstructionInfo) {
+    // 有 instruction 信息时的内容
+    const welcomePrefix = locale === 'zh' ? '欢迎来到' : 'Welcome to';
+    const instructionTitle = courseTitle ? `${welcomePrefix} ${courseTitle}` : t('title');
+    const instructionDescription = courseDescription || '';
+    const guidanceText = t('subtitle'); // 使用原来的引导文案
+    
+    welcomeContent = `# ${instructionTitle} 🎉
+
+${instructionDescription}
+
+${guidanceText}
 
 ## 📚 ${t('contentTitle')}
 
@@ -37,6 +64,29 @@ ${t('aiAssistantDesc')}
 ## ✨ ${t('interactionTitle')}
 
 ${t('interactionDesc')}`;
+  } else {
+    // 没有 instruction 信息时使用默认内容
+    const title = t('title');
+    const subtitle = t('subtitle');
+    
+    welcomeContent = `# ${title} 🎉
+
+${subtitle}
+
+## 📚 ${t('contentTitle')}
+
+**${t('contentNote')}** - ${t('contentNoteDesc')}
+
+**${t('contentVideo')}** - ${t('contentVideoDesc')}
+
+## 🤖 ${t('aiAssistantTitle')}
+
+${t('aiAssistantDesc')}
+
+## ✨ ${t('interactionTitle')}
+
+${t('interactionDesc')}`;
+  }
   return (
     <div className="learning-content-area space-y-12">
       {/* 主要内容 - 使用与其他步骤相同的 markdown 渲染 */}
