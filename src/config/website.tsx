@@ -20,7 +20,7 @@ export const websiteConfig: WebsiteConfig = {
     },
     social: {
       github: 'https://github.com/MkSaaSHQ',
-      twitter: 'https://mksaas.link/twitter',
+      twitter: 'https://x.com/aitutorly',
       blueSky: 'https://mksaas.link/bsky',
       discord: 'https://mksaas.link/discord',
       mastodon: 'https://mksaas.link/mastodon',
