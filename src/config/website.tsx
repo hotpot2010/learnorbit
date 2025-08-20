@@ -14,7 +14,7 @@ export const websiteConfig: WebsiteConfig = {
       enableSwitch: false, // 禁用主题切换
     },
     images: {
-      ogImage: '/og.png',
+      ogImage: '/android-chrome-512x512.png',
       logoLight: '/logo.png',
       logoDark: '/logo-dark.png',
     },

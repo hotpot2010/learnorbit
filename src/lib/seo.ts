@@ -29,7 +29,7 @@ export function generateSEOMetadata({
   const baseUrl = getBaseUrl();
   const siteName = 'AITutorly';
   const fullTitle = title ? `${title} | ${siteName}` : siteName;
-  const defaultOgImage = `${baseUrl}/images/og-image.png`;
+  const defaultOgImage = `${baseUrl}/android-chrome-512x512.png`;
 
   return {
     title: fullTitle,
@@ -84,7 +84,7 @@ export const defaultSEO: Metadata = generateSEOMetadata({
   description: 'AITutorly is an AI-powered learning platform that builds personalized study plans, curates video lessons, and provides quizzes to boost your learning efficiency.',
   keywords: [
     'AI learning platform',
-    'personalized learning', 
+    'personalized learning',
     'adaptive learning',
     'AI study plan',
     'online courses',
