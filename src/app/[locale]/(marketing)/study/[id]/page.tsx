@@ -156,6 +156,7 @@ export default function StudyPage({ params }: StudyPageProps) {
     images?: { url: string; name?: string; size?: number; type?: string }[]; // 新增：图片数组
     searchKeyword?: string;
     selectedVideoIndex?: number; // 记录多视频便签的当前选择
+    selectedImageIndex?: number; // 记录多图片便签的当前选择
     isLoading?: boolean;
     insertAfterAnchor?: number | null;
     origin?: 'drag' | 'note';
@@ -164,6 +165,8 @@ export default function StudyPage({ params }: StudyPageProps) {
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
   const [expandedNoteVideoIds, setExpandedNoteVideoIds] = useState<Record<string, boolean>>({});
   const [noteVideoIndices, setNoteVideoIndices] = useState<Record<string, number>>({});
+  const [expandedNoteImageIds, setExpandedNoteImageIds] = useState<Record<string, boolean>>({});
+  const [noteImageIndices, setNoteImageIndices] = useState<Record<string, number>>({});
   
   // 便签编辑 - 简化的非受控组件 ref
   const editingTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -172,6 +175,9 @@ export default function StudyPage({ params }: StudyPageProps) {
   const imageUploadRef = useRef<HTMLInputElement>(null);
   const [uploadingImages, setUploadingImages] = useState<Record<string, boolean>>({});
   const [imageDisplaySizes, setImageDisplaySizes] = useState<Record<string, 'small' | 'medium' | 'large'>>({});
+  
+  // 图片搜索相关（已简化为直接插入便签模式）
+  
   // 彩笔标记（可持久化）
   interface Mark {
     id: string;
@@ -186,6 +192,10 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   const toggleNoteVideoExpanded = (noteId: string) => {
     setExpandedNoteVideoIds(prev => ({ ...prev, [noteId]: !prev[noteId] }));
+  };
+
+  const toggleNoteImageExpanded = (noteId: string) => {
+    setExpandedNoteImageIds(prev => ({ ...prev, [noteId]: !prev[noteId] }));
   };
 
   // 🎯 非受控组件方案 - 无需复杂的状态管理和光标恢复
@@ -352,7 +362,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               <div
                 className={`relative ${paperBg} p-5 rounded-lg shadow-lg transform rotate-0.5 inline-block ${
                   isVideo 
-                    ? (note.videos && note.videos.length > 0 
+                    ? (note.videos && note.videos?.length || 0 > 0 
                         ? (expandedNoteVideoIds[note.id] ? 'w-[1024px]' : 'w-[640px]') 
                         : (expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-96')) 
                     : isImage 
@@ -451,7 +461,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                               <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black/80 flex items-center justify-center">
                                 <div className="w-8 h-8 border-2 border-white/70 border-t-transparent rounded-full animate-spin" />
                               </div>
-                            ) : note.videos && note.videos.length > 0 ? (
+                            ) : note.videos && note.videos?.length || 0 > 0 ? (
                               // 新的多视频显示方式 - 主视频+列表
                               <div className="space-y-2">
                                 {note.searchKeyword && (
@@ -466,7 +476,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                       <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-black relative transition-all duration-300">
                                         {(() => {
                                           const currentVideoIndex = (note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0);
-                                          const currentVideo = note.videos[currentVideoIndex];
+                                          const currentVideo = note.videos?.[currentVideoIndex];
                                           if (!currentVideo) return null;
                                           
                                           const currentLocale = routeParams?.locale || 'en';
@@ -524,11 +534,11 @@ export default function StudyPage({ params }: StudyPageProps) {
                                         <p className={`text-xs font-medium ${timestampColor} truncate`} style={{
                                           fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                                         }}>
-                                          {note.videos[(note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0)]?.title || '无标题'}
+                                          {note.videos?.[(note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0)]?.title || '无标题'}
                                         </p>
-                                        {note.videos[(note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0)]?.duration && (
+                                        {note.videos?.[(note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0)]?.duration && (
                                           <p className={`text-xs ${timestampColor} opacity-70`}>
-                                            {note.videos[(note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0)].duration}
+                                            {note.videos?.[(note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0)].duration}
                                           </p>
                                         )}
                                       </div>
@@ -536,18 +546,20 @@ export default function StudyPage({ params }: StudyPageProps) {
                                   </div>
                                   
                                   {/* 视频列表 */}
-                                  {note.videos.length > 1 && (
+                                  {(note.videos?.length || 0) > 1 && (
                                     <div className="relative w-60">
-                                      <div className="max-h-80 overflow-y-auto p-1">
+                                      <div className="max-h-[220px] overflow-y-auto p-1">
                                         <div className="space-y-1">
-                                          {note.videos.slice(0, 4).map((video, idx) => {
+                                          {(note.videos || []).map((video, idx) => {
                                             const active = idx === (note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0);
                                             return (
                                               <button
                                                 key={idx}
                                                 onClick={() => {
                                                   setNoteVideoIndices(prev => ({ ...prev, [note.id]: idx }));
-                                                  setNotes(prev => prev.map(n => n.id === note.id ? { ...n, selectedVideoIndex: idx } : n));
+                                                  setNotes(prevNotes => prevNotes.map(n => 
+                                                    n.id === note.id ? { ...n, selectedVideoIndex: idx } : n
+                                                  ));
                                                 }}
                                                 className={`w-full flex items-start gap-2 p-2 text-left transition-colors rounded ${
                                                   active ? 'bg-yellow-100 rotate-1' : 'hover:bg-yellow-50'
@@ -577,19 +589,123 @@ export default function StudyPage({ params }: StudyPageProps) {
                                   )}
                                 </div>
                               </div>
-                            ) : note.video ? (
+
+                            ) : note.video && (note.video as any).url ? (
                               // 兼容旧的单视频格式
                               <>
                                 <div className={`relative group transition-all duration-300 ${expandedNoteVideoIds[note.id] ? 'w-[1024px]' : 'w-96'} aspect-video rounded-lg overflow-hidden shadow-md bg-black`}>
-                                  <iframe src={note.video.url} frameBorder="0" allowFullScreen={true} allow={note.video.platform === 'youtube' ? "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" : "autoplay; fullscreen"} className="w-full h-full" referrerPolicy={note.video.platform === 'bilibili' ? "no-referrer" : undefined} sandbox={note.video.platform === 'bilibili' ? "allow-same-origin allow-scripts allow-popups allow-presentation" : undefined} />
+                                  <iframe src={(note.video as any).url} frameBorder="0" allowFullScreen={true} allow={(note.video as any).platform === 'youtube' ? "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" : "autoplay; fullscreen"} className="w-full h-full" referrerPolicy={(note.video as any).platform === 'bilibili' ? "no-referrer" : undefined} sandbox={(note.video as any).platform === 'bilibili' ? "allow-same-origin allow-scripts allow-popups allow-presentation" : undefined} />
                                   <button onClick={() => toggleNoteVideoExpanded(note.id)} className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110" title={expandedNoteVideoIds[note.id] ? '缩小视频' : '放大视频'}>
                                     {expandedNoteVideoIds[note.id] ? (<Minimize2 className="w-4 h-4" />) : (<Maximize2 className="w-4 h-4" />)}
                                   </button>
                                 </div>
-                                {(note.video.title || note.video.duration) && (
-                                  <div className={`text-xs mt-1 ${timestampColor}`}>{note.video.title || ''} {note.video.duration ? `· ${note.video.duration}` : ''}</div>
+                                {((note.video as any).title || (note.video as any).duration) && (
+                                  <div className={`text-xs mt-1 ${timestampColor}`}>{(note.video as any).title || ''} {(note.video as any).duration ? `· ${(note.video as any).duration}` : ''}</div>
                                 )}
                               </>
+                            ) : null}
+                          </div>
+                        ) : note.type === 'image' && (note.isLoading || note.images) ? (
+                          <div className="w-full">
+                            {note.isLoading ? (
+                              <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-gray-100 flex items-center justify-center">
+                                <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+                              </div>
+                            ) : note.images && note.images.length > 0 ? (
+                              // 新的多图片显示方式 - 主图片+列表
+                              <div className="space-y-2">
+                                {note.searchKeyword && (
+                                  <div className={`text-xs ${timestampColor} font-medium`}>
+                                    搜索结果: "{note.searchKeyword}"
+                                  </div>
+                                )}
+                                <div className="flex gap-4 items-start">
+                                  {/* 主图片显示器 */}
+                                  <div className={`${expandedNoteImageIds[note.id] ? 'w-[768px]' : 'w-96'} relative group transition-all duration-300`}>
+                                    <div className="bg-white p-2 rounded-lg shadow-lg">
+                                      <div className="w-full aspect-video rounded-lg overflow-hidden shadow-md bg-gray-50 relative transition-all duration-300">
+                                        {(() => {
+                                          const currentImageIndex = (note.selectedImageIndex ?? noteImageIndices[note.id] ?? 0);
+                                          const currentImage = note.images[currentImageIndex];
+                                          if (!currentImage) return null;
+                                          
+                                          return (
+                                            <img
+                                              src={currentImage.url}
+                                              alt={currentImage.name || '图片'}
+                                              className="w-full h-full object-contain cursor-pointer"
+                                              onClick={() => window.open(currentImage.url, '_blank')}
+                                              onError={(e) => {
+                                                const target = e.target as HTMLImageElement;
+                                                target.src = '/images/blog/post-1.png';
+                                              }}
+                                            />
+                                          );
+                                        })()}
+                                        
+                                        {/* 放大/缩小按钮 */}
+                                        <button
+                                          onClick={() => toggleNoteImageExpanded(note.id)}
+                                          className="absolute top-2 right-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white p-2 rounded-lg transition-all duration-300 hover:scale-110"
+                                          title={expandedNoteImageIds[note.id] ? '缩小图片' : '放大图片'}
+                                        >
+                                          {expandedNoteImageIds[note.id] ? (
+                                            <Minimize2 className="w-3 h-3" />
+                                          ) : (
+                                            <Maximize2 className="w-3 h-3" />
+                                          )}
+                                        </button>
+                                      </div>
+                                      
+                                      {/* 图片标题 */}
+                                      <div className="mt-2 px-1">
+                                        <p className={`text-xs font-medium ${timestampColor} truncate`} style={{
+                                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                        }}>
+                                          {note.images[(note.selectedImageIndex ?? noteImageIndices[note.id] ?? 0)]?.name || '无标题'}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                                  {/* 图片列表 */}
+                                  {note.images.length > 1 && (
+                                    <div className="relative w-60">
+                                      <div className="max-h-[220px] overflow-y-auto p-1">
+                                        <div className="space-y-1">
+                                          {note.images.map((image, idx) => {
+                                            const active = idx === (note.selectedImageIndex ?? noteImageIndices[note.id] ?? 0);
+                                            return (
+                                              <button
+                                                key={idx}
+                                                onClick={() => {
+                                                  setNoteImageIndices(prev => ({ ...prev, [note.id]: idx }));
+                                                  setNotes(prevNotes => prevNotes.map(n => 
+                                                    n.id === note.id ? { ...n, selectedImageIndex: idx } : n
+                                                  ));
+                                                }}
+                                                className={`w-full flex items-start gap-2 p-2 text-left transition-colors rounded ${
+                                                  active ? 'bg-yellow-100 rotate-1' : 'hover:bg-yellow-50'
+                                                }`}
+                                                aria-pressed={active}
+                                              >
+                                                <div className="min-w-0 flex-1">
+                                                  <div className={`text-xs font-bold ${timestampColor} truncate`} style={{
+                                                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                                  }}>
+                                                    {image.name || '无标题'}
+                                                  </div>
+                                                </div>
+                                              </button>
+                                            );
+                                          })}
+                                        </div>
+                                      </div>
+
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
                             ) : null}
                           </div>
                         ) : (
@@ -597,8 +713,8 @@ export default function StudyPage({ params }: StudyPageProps) {
                             {/* 文本内容 */}
                             <div className={`text-lg leading-relaxed whitespace-pre-wrap break-words cursor-pointer rounded p-1 -m-1 transition-colors ${isVideo ? 'text-purple-800 hover:bg-purple-50' : isImage ? 'text-pink-800 hover:bg-pink-50' : isDrag ? 'text-sky-800 hover:bg-sky-50' : 'text-yellow-800 hover:bg-yellow-50'}`} style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive', fontSize: '16px', lineHeight: '1.6', textShadow: '0 0.5px 1px rgba(0, 0, 0, 0.06)', wordBreak: 'break-word' }} onDoubleClick={() => handleStartEdit(note.id, note.text)} title="Double-click to edit">{note.text || '（空白便签，双击编辑）'}</div>
                             
-                            {/* 图片展示区域 */}
-                            {note.images && note.images.length > 0 && (
+                            {/* 普通便签中的图片展示区域 */}
+                            {note.type !== 'image' && note.images && note.images.length > 0 && (
                               <div className="space-y-3">
                                 {/* 图片尺寸控制按钮 */}
                                 <div className="flex items-center justify-between">
@@ -663,10 +779,10 @@ export default function StudyPage({ params }: StudyPageProps) {
                                               height: 'auto'
                                             }}
                                             onLoad={() => {
-                                              console.log(`图片 ${index + 1} 加载成功`);
+                                              // 图片加载成功，无需处理
                                             }}
                                             onError={(e) => {
-                                              console.error(`图片 ${index + 1} 加载失败`);
+                                              // 静默处理图片加载失败
                                               e.currentTarget.style.display = 'none';
                                             }}
                                             onClick={() => {
@@ -1131,6 +1247,84 @@ export default function StudyPage({ params }: StudyPageProps) {
       setNotes(prev => prev.map(n => n.id === tempNoteId ? { ...n, isLoading: false, type: 'text', text: '视频搜索失败，请稍后重试' } : n));
     }
   };
+
+  const handleImageClick = async (selectedText: string) => {
+    // 先确定插入位置（锚点优先），避免选区丢失
+    const anchorIdx = getSelectedAnchorIndex();
+    const paragraphIndex = getSelectedParagraphIndex();
+    const contentArea = document.querySelector('.learning-content-area');
+    const paragraphCount = contentArea ? contentArea.querySelectorAll('[data-paragraph-index]').length : 0;
+    const insertAfterParagraph = paragraphIndex >= 0 ? paragraphIndex : (paragraphCount > 0 ? 0 : -1);
+
+    // 先插入加载中的图片便签占位
+    const tempNoteId = `note-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const loadingNote: Note = {
+      id: tempNoteId,
+      text: '',
+      timestamp: new Date(),
+      stepIndex: currentStepIndex,
+      insertAfterParagraph,
+      insertAfterAnchor: typeof anchorIdx === 'number' ? anchorIdx : null,
+      type: 'image',
+      isLoading: true,
+    };
+    setNotes(prev => [...prev, loadingNote].sort((a, b) => a.insertAfterParagraph - b.insertAfterParagraph));
+
+    try {
+      const lang = (routeParams?.locale || 'en').startsWith('zh') ? 'zh' : 'en';
+      const resp = await fetch(`/api/image/search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ search_keyword: selectedText, lang })
+      });
+      if (!resp.ok) {
+        const t = await resp.text();
+        throw new Error(`Image search failed: ${resp.status} ${t}`);
+      }
+      const data = await resp.json();
+      const list: any[] = Array.isArray(data?.image_res) ? data.image_res : [];
+      if (list.length === 0) {
+        // 更新为失败提示
+        setNotes(prev => prev.map(n => n.id === tempNoteId ? { ...n, isLoading: false, type: 'text', text: '未找到相关图片' } : n));
+        return;
+      }
+
+      // 处理多个图片，生成图片列表 (取前6个)
+      const processedImages: { url: string; name?: string; size?: number; type?: string }[] = [];
+      for (const img of list.slice(0, 6)) {
+        const imageUrl = img.image || img.url || img.src || '';
+        if (!imageUrl) continue;
+        
+        processedImages.push({
+          url: imageUrl,
+          name: img.title || selectedText,
+          size: 0,
+          type: 'image/jpeg'
+        });
+      }
+
+      if (processedImages.length === 0) {
+        setNotes(prev => prev.map(n => n.id === tempNoteId ? { ...n, isLoading: false, type: 'text', text: '图片数据无有效链接' } : n));
+        return;
+      }
+
+      // 更新占位便签为图片列表
+      setNotes(prev => prev.map(n => n.id === tempNoteId ? {
+        ...n,
+        isLoading: false,
+        type: 'image',
+        text: selectedText,
+        images: processedImages,
+        searchKeyword: selectedText
+      } : n));
+      
+    } catch (e) {
+      console.error('Image search error:', e);
+      setNotes(prev => prev.map(n => n.id === tempNoteId ? { ...n, isLoading: false, type: 'text', text: '图片搜索失败，请稍后重试' } : n));
+    }
+  };
+
+
 
   // 学习页面重试配置（无并发限制，但有重试）
   const STUDY_RETRY_CONFIG = {
@@ -2364,7 +2558,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       const steps = getLearningSteps(learningPlan);
       const step = steps[currentStepIndex - 1];
       if (step) {
-        return step.videos || [];
+      return step.videos || [];
       }
     }
     return [];
@@ -3422,6 +3616,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       onMarkClick={handleMarkClick}
       onNoteClick={handleNoteClick}
       onVideoClick={handleVideoClick}
+      onImageClick={handleImageClick}
       onDragStart={(text) => console.log('拖拽开始:', text)}
       onDragEnd={(text, pos) => {
         // 检查是否拖拽到正文区域
@@ -3515,6 +3710,8 @@ export default function StudyPage({ params }: StudyPageProps) {
         e.target.value = '';
       }}
     />
+
+
     </>
   );
 } 

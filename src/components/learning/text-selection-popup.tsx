@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { HelpCircle, Lightbulb, StickyNote, Play, Move } from 'lucide-react';
+import { HelpCircle, Lightbulb, StickyNote, Play, Move, Image } from 'lucide-react';
 
 interface TextSelectionPopupProps {
   onWhatClick?: (selectedText: string) => void;
@@ -12,6 +12,7 @@ interface TextSelectionPopupProps {
   onMarkClick?: (selectedText: string) => void;
   onNoteClick?: (selectedText: string) => void;
   onVideoClick?: (selectedText: string) => void;
+  onImageClick?: (selectedText: string) => void; // 新增：图片搜索回调
   onDragStart?: (selectedText: string) => void; // 新增：拖拽开始回调
   onDragEnd?: (selectedText: string, targetPosition: { x: number; y: number }) => void; // 新增：拖拽结束回调
   containerSelector?: string; // 新增：限制工作的容器选择器
@@ -37,6 +38,7 @@ export function TextSelectionPopup({
   onMarkClick,
   onNoteClick,
   onVideoClick,
+  onImageClick,
   onDragStart,
   onDragEnd,
   containerSelector = '' // 默认为空，表示全局工作
@@ -154,14 +156,15 @@ export function TextSelectionPopup({
   }, []);
 
   // 处理按钮点击
-  const handleButtonClick = (action: 'what' | 'why' | 'how' | 'mark' | 'note' | 'video') => {
+  const handleButtonClick = (action: 'what' | 'why' | 'how' | 'mark' | 'note' | 'video' | 'image') => {
     const callbacks = {
       what: onWhatClick,
       why: onWhyClick,
       how: onHowClick,
       mark: onMarkClick,
       note: onNoteClick,
-      video: onVideoClick
+      video: onVideoClick,
+      image: onImageClick
     };
 
     const callback = callbacks[action];
@@ -408,6 +411,20 @@ export function TextSelectionPopup({
                 <Play className="w-3 h-3" />
                 <span style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
                   Video
+                </span>
+              </Button>
+
+              {/* Image 按钮 */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleButtonClick('image')}
+                className="flex items-center space-x-1 px-2 py-1 h-8 text-xs font-medium bg-orange-50 hover:bg-orange-100 text-orange-700 border border-orange-200 rounded transform rotate-0.3 hover:rotate-0 transition-all duration-200"
+                title={`Image: ${selectedText.slice(0, 30)}${selectedText.length > 30 ? '...' : ''}`}
+              >
+                <Image className="w-3 h-3" />
+                <span style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
+                  Image
                 </span>
               </Button>
 
