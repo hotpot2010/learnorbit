@@ -17,6 +17,7 @@ export interface LearningStep {
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   search_keyword?: string; // 添加可选的搜索关键词
   videos: Video[];
+  stage?: string; // 新增：步骤所属的阶段
 }
 
 export interface LearningPlan {
