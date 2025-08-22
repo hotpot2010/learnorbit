@@ -4,7 +4,7 @@ import { ImageResponse } from 'next/og';
 export const runtime = 'edge';
 
 // Image metadata
-export const alt = 'Aitutorly - AI驱动的个性化学习平台';
+export const alt = 'AITutorly | AI Learning Platform for Personalized Courses & Study Plans';
 export const size = {
   width: 1200,
   height: 630,
@@ -50,7 +50,7 @@ export default async function Image() {
               textAlign: 'center',
             }}
           >
-            Aitutorly
+            AITutorly
           </h1>
           <p
             style={{
@@ -62,7 +62,7 @@ export default async function Image() {
               lineHeight: '1.4',
             }}
           >
-            AI驱动的个性化学习平台
+            AI Learning Platform for Personalized Courses & Study Plans
           </p>
           <p
             style={{
@@ -72,7 +72,7 @@ export default async function Image() {
               textAlign: 'center',
             }}
           >
-            智能定制 • 高效学习 • 个性化体验
+            Personalized Study Plans • Video Lessons • Smart Quizzes
           </p>
         </div>
       </div>

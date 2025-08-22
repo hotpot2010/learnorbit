@@ -3,7 +3,7 @@
 import Container from '@/components/layout/container';
 import { Logo } from '@/components/layout/logo';
 import { ModeSwitcherHorizontal } from '@/components/layout/mode-switcher-horizontal';
-import BuiltWithButton from '@/components/shared/built-with-button';
+
 import { getFooterLinks } from '@/config/footer-config';
 import { getSocialLinks } from '@/config/social-config';
 import { LocaleLink } from '@/i18n/navigation';
@@ -46,7 +46,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
                       target="_blank"
                       rel="noreferrer"
                       aria-label={link.title}
-                      className="border border-border inline-flex h-8 w-8 items-center 
+                      className="border border-border inline-flex h-8 w-8 items-center
                           justify-center rounded-full hover:bg-accent hover:text-accent-foreground"
                     >
                       <span className="sr-only">{link.title}</span>
@@ -56,8 +56,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
                 </div>
               </div>
 
-              {/* built with button */}
-              <BuiltWithButton />
+
             </div>
           </div>
 

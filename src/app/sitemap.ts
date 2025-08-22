@@ -16,6 +16,8 @@ const staticRoutes = [
   '/register',
   '/my-courses',
   '/custom',
+  '/course-marketplace',
+  '/pricing',
 ];
 
 /**

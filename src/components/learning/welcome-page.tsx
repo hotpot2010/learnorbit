@@ -389,7 +389,7 @@ ${t('interactionDesc')}`;
             </div>
             <div className="flex-1 max-w-fit">
               <div className="bg-yellow-100 border-yellow-200 border-2 rounded-lg p-4 relative shadow-md transform rotate-1">
-                <div className="absolute top-1 right-1 w-3 h-3 bg-yellow-100 border-yellow-200 border-t border-r transform rotate-45 translate-x-1 -translate-y-1"></div>
+                <div className="absolute top-1 right-1 w-3 h-3 bg-yellow-100 border-yellow-200 border-t border-r transform rotate-45 translate-x-1 -translate-y-1" />
                 <div className="space-y-3">
                   <div className="text-lg leading-relaxed whitespace-pre-wrap break-words" style={{ 
                     fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive', 
@@ -412,7 +412,7 @@ ${t('interactionDesc')}`;
             </div>
           </div>
         </div>
-            </div>
+      </div>
 
       {/* 答题功能介绍 */}
       <div className="space-y-6">
@@ -433,8 +433,6 @@ ${t('interactionDesc')}`;
             </p>
           </div>
         </div>
-
-
       </div>
 
       {/* 开始学习按钮 - 与其他步骤提交按钮位置和样式保持一致 */}
@@ -445,9 +443,9 @@ ${t('interactionDesc')}`;
           style={{
             fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
           }}
-                  >
-            {t('startButton')}
-          </Button>
+        >
+          {t('startButton')}
+        </Button>
       </div>
     </div>
   );

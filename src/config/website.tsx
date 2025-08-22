@@ -14,13 +14,13 @@ export const websiteConfig: WebsiteConfig = {
       enableSwitch: false, // 禁用主题切换
     },
     images: {
-      ogImage: '/og.png',
+      ogImage: '/android-chrome-512x512.png',
       logoLight: '/logo.png',
       logoDark: '/logo-dark.png',
     },
     social: {
       github: 'https://github.com/MkSaaSHQ',
-      twitter: 'https://mksaas.link/twitter',
+      twitter: 'https://x.com/aitutorly',
       blueSky: 'https://mksaas.link/bsky',
       discord: 'https://mksaas.link/discord',
       mastodon: 'https://mksaas.link/mastodon',

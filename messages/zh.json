@@ -1,8 +1,8 @@
 {
   "Metadata": {
-    "name": "Aitutorly",
-    "title": "Aitutorly - AI学习平台",
-    "description": "基于AI技术的个性化学习平台，为您创建定制化的学习路径和课程内容"
+    "name": "AITutorly",
+    "title": "AITutorly | AI学习平台 - 个性化课程与学习计划",
+    "description": "AITutorly是一个AI驱动的学习平台，为您制定个性化学习计划，精选视频课程，提供智能测验，提升学习效率。"
   },
   "Common": {
     "login": "登录",
@@ -517,7 +517,7 @@
       }
     },
     "footer": {
-      "tagline": "使用 MkSaaS 在几天内轻松构建您的 AI SaaS",
+      "tagline": "为每个人打造的个性化AI智能学习平台",
       "product": {
         "title": "产品",
         "items": {
@@ -549,6 +549,12 @@
           "cookiePolicy": "Cookie政策",
           "privacyPolicy": "隐私政策",
           "termsOfService": "服务条款"
+        }
+      },
+      "quicklinks": {
+        "title": "快速链接",
+        "items": {
+          "mossai": "MossAI工具目录"
         }
       }
     },

@@ -16,91 +16,26 @@ import { useTranslations } from 'next-intl';
  */
 export function getFooterLinks(): NestedMenuItem[] {
   const t = useTranslations('Marketing.footer');
-
   return [
-    {
-      title: t('product.title'),
-      items: [
-        {
-          title: t('product.items.features'),
-          href: Routes.Features,
-          external: false,
-        },
-        // Pricing链接已隐藏
-        // {
-        //   title: t('product.items.pricing'),
-        //   href: '/pricing',
-        //   external: false,
-        // },
-        {
-          title: t('product.items.faq'),
-          href: Routes.FAQ,
-          external: false,
-        },
-      ],
-    },
-    {
-      title: t('resources.title'),
-      items: [
-        {
-          title: t('resources.items.blog'),
-          href: Routes.Blog,
-          external: false,
-        },
-        {
-          title: t('resources.items.docs'),
-          href: Routes.Docs,
-          external: false,
-        },
-        {
-          title: t('resources.items.changelog'),
-          href: Routes.Changelog,
-          external: false,
-        },
-        {
-          title: t('resources.items.roadmap'),
-          href: Routes.Roadmap,
-          external: true,
-        },
-      ],
-    },
+    // 只保留Company中的contact
     {
       title: t('company.title'),
       items: [
-        {
-          title: t('company.items.about'),
-          href: Routes.About,
-          external: false,
-        },
         {
           title: t('company.items.contact'),
           href: Routes.Contact,
           external: false,
         },
-        {
-          title: t('company.items.waitlist'),
-          href: Routes.Waitlist,
-          external: false,
-        },
       ],
     },
+    // 新增Quick Links区域
     {
-      title: t('legal.title'),
+      title: t('quicklinks.title'),
       items: [
         {
-          title: t('legal.items.cookiePolicy'),
-          href: Routes.CookiePolicy,
-          external: false,
-        },
-        {
-          title: t('legal.items.privacyPolicy'),
-          href: Routes.PrivacyPolicy,
-          external: false,
-        },
-        {
-          title: t('legal.items.termsOfService'),
-          href: Routes.TermsOfService,
-          external: false,
+          title: t('quicklinks.items.mossai'),
+          href: 'https://mossai.org',
+          external: true,
         },
       ],
     },

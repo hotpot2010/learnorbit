@@ -178,7 +178,7 @@ export default function MyCoursesPage() {
     const learningPlan = {
       plan: course.coursePlan.plan || course.coursePlan
     };
-    
+
     // 如果有任务数据，也一并存储
     if (course.coursePlan.tasks) {
       sessionStorage.setItem('taskCache', JSON.stringify(course.coursePlan.tasks));
@@ -191,12 +191,12 @@ export default function MyCoursesPage() {
     if (course.coursePlan.marks) {
       sessionStorage.setItem('courseMarks', JSON.stringify(course.coursePlan.marks));
     }
-    
+
     sessionStorage.setItem('learningPlan', JSON.stringify(learningPlan));
     sessionStorage.setItem('fromDatabase', 'true'); // 标记来源于数据库
-    
+
     console.log('📖 加载数据库课程:', course);
-    
+
     // 跳转到学习页面
     router.push('/study/custom');
   };
@@ -297,17 +297,17 @@ export default function MyCoursesPage() {
             )}
           </button>
 
-          {/* 进度条 */}
+        {/* 进度条 */}
           {progress > 0 && course.status === 'in-progress' && (
-            <div className="mb-3">
-              <div className="w-full bg-gray-200 rounded-full h-2 transform -rotate-1">
-                <div
-                  className={`h-2 rounded-full ${
+          <div className="mb-3">
+            <div className="w-full bg-gray-200 rounded-full h-2 transform -rotate-1">
+              <div
+                className={`h-2 rounded-full ${
                     progress === 100 ? 'bg-green-400' : 'bg-blue-400'
-                  }`}
+                }`}
                   style={{ width: `${progress}%` }}
                 />
-              </div>
+            </div>
               <span
                 className="text-xs text-gray-600 mt-1 inline-block transform rotate-1"
                 style={{
@@ -316,9 +316,9 @@ export default function MyCoursesPage() {
                 }}
               >
                 {progress}% Complete
-              </span>
-            </div>
-          )}
+            </span>
+          </div>
+        )}
 
           {/* 任务生成状态 */}
           {/* 移除任务生成状态显示
@@ -340,7 +340,7 @@ export default function MyCoursesPage() {
 
           {/* 完成状态标识 */}
           {course.status === 'completed' && (
-            <div className="mb-3">
+          <div className="mb-3">
               <span
                 className="text-xs text-green-600 font-bold inline-block transform -rotate-1 bg-green-100 px-2 py-1 rounded"
                 style={{
@@ -349,12 +349,12 @@ export default function MyCoursesPage() {
                 }}
               >
                 ✅ Completed
-              </span>
-            </div>
-          )}
+            </span>
+          </div>
+        )}
 
           {/* 课程内容 */}
-          <div className="space-y-3">
+        <div className="space-y-3">
             {isPublic && editing ? (
               <input
                 value={titleDraft}
@@ -364,12 +364,12 @@ export default function MyCoursesPage() {
             ) : (
               <h3
                 className="font-bold text-base text-gray-800 transform -rotate-1"
-                style={{
+              style={{
                   fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                 }}
               >
                 {titleDraft}
-              </h3>
+          </h3>
             )}
 
             {isPublic && editing ? (
@@ -382,7 +382,7 @@ export default function MyCoursesPage() {
             ) : (
               <p
                 className="text-sm text-gray-600 line-clamp-3 transform rotate-0.5"
-                style={{
+             style={{
                   fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                 }}
               >
@@ -390,9 +390,9 @@ export default function MyCoursesPage() {
               </p>
             )}
 
-            <StarRating rating={generateRating(course.id)} />
+          <StarRating rating={generateRating(course.id)} />
 
-            <div className="flex items-center justify-between mt-3">
+          <div className="flex items-center justify-between mt-3">
               <span
                 className={`px-2 py-1 rounded text-xs transform -rotate-3 ${
                   courseInfo.difficulty === 'beginner'
@@ -400,30 +400,30 @@ export default function MyCoursesPage() {
                     : courseInfo.difficulty === 'intermediate'
                       ? 'bg-yellow-100 text-yellow-800'
                       : 'bg-red-100 text-red-800'
-                }`}
-                style={{
+            }`}
+                  style={{
                   fontFamily:
                     '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                 }}
               >
                 {courseInfo.difficulty.charAt(0).toUpperCase() +
                   courseInfo.difficulty.slice(1)}
-              </span>
+            </span>
               <div
                 className="flex items-center text-xs text-gray-500 bg-yellow-100 px-2 py-1 rounded transform rotate-2"
-                style={{
+                 style={{
                   fontFamily:
                     '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                 }}
               >
                 {courseInfo.estimatedTime}
               </div>
-            </div>
+          </div>
 
             <button
               type="button"
-              onClick={(e) => { 
-                e.stopPropagation(); 
+              onClick={(e) => {
+                e.stopPropagation();
                 const isPublic = course.coursePlan?.isPublic === true;
                 if (isPublic) {
                   // 构造公开课程 slug: [title]-[userId]
@@ -449,7 +449,7 @@ export default function MyCoursesPage() {
                 }
               }}
               className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm transform rotate-1 hover:rotate-0 shadow-md"
-              style={{
+                    style={{
                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
               }}
             >
@@ -626,15 +626,15 @@ export default function MyCoursesPage() {
             Try Again
           </button>
         </div>
-      </div>
-    );
+    </div>
+  );
   }
 
   return (
     <div
       className="min-h-screen pb-0"
-      style={{
-        backgroundImage: `
+         style={{
+           backgroundImage: `
              linear-gradient(to right, #f0f0f0 1px, transparent 1px),
              linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)
            `,
@@ -649,7 +649,7 @@ export default function MyCoursesPage() {
               <div className="bg-white/80 p-8 rounded-lg shadow-lg transform -rotate-1 border-2 border-dashed border-blue-300">
                 <p
                   className="text-lg text-gray-700 mb-4"
-                  style={{
+                   style={{
                     fontFamily:
                       '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                   }}
@@ -658,7 +658,7 @@ export default function MyCoursesPage() {
                 </p>
                 <p
                   className="text-sm text-gray-500 mb-6"
-                  style={{
+                   style={{
                     fontFamily:
                       '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                   }}
@@ -669,7 +669,7 @@ export default function MyCoursesPage() {
                 <LocaleLink href="/">
                   <div
                     className="text-blue-600 hover:text-blue-800 font-semibold cursor-pointer flex items-center text-lg"
-                    style={{
+                       style={{
                       fontFamily:
                         '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                     }}
@@ -687,7 +687,7 @@ export default function MyCoursesPage() {
               <section>
                 <h2
                   className="text-2xl font-bold mb-6 text-blue-700 transform -rotate-1"
-                  style={{
+                    style={{
                     fontFamily:
                       '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                   }}
@@ -697,7 +697,7 @@ export default function MyCoursesPage() {
                   </span>
                 </h2>
                 <div className="flex flex-wrap gap-6 pb-4">
-                  {inProgressCourses.map((course, index) => (
+                    {inProgressCourses.map((course, index) => (
                     <CourseCard
                       key={course.id}
                       course={course}
@@ -707,13 +707,13 @@ export default function MyCoursesPage() {
                 </div>
               </section>
             )}
-            
+
             {/* 已完成的课程 */}
             {completedCourses.length > 0 && (
               <section>
                 <h2
                   className="text-2xl font-bold mb-6 text-green-700 transform rotate-1"
-                  style={{
+                    style={{
                     fontFamily:
                       '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                   }}
@@ -723,7 +723,7 @@ export default function MyCoursesPage() {
                   </span>
                 </h2>
                 <div className="flex flex-wrap gap-6 pb-4">
-                  {completedCourses.map((course, index) => (
+                    {completedCourses.map((course, index) => (
                     <CourseCard
                       key={course.id}
                       course={course}
@@ -733,13 +733,13 @@ export default function MyCoursesPage() {
                 </div>
               </section>
             )}
-            
+
             {/* 发布的课程（如果将来需要的话） */}
             {publishedCourses.length > 0 && (
               <section>
                 <h2
                   className="text-2xl font-bold mb-6 text-purple-700 transform -rotate-0.5"
-                  style={{
+                    style={{
                     fontFamily:
                       '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                   }}
@@ -749,7 +749,7 @@ export default function MyCoursesPage() {
                   </span>
                 </h2>
                 <div className="flex flex-wrap gap-6 pb-4">
-                  {publishedCourses.map((course, index) => (
+                    {publishedCourses.map((course, index) => (
                     <CourseCard
                       key={course.id}
                       course={course}
