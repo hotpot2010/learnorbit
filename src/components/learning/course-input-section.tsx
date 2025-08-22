@@ -2,10 +2,12 @@
 
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { LoginRequiredDialog } from '@/components/auth/login-required-dialog';
 import { Loader2, Send } from 'lucide-react';
 import { useState } from 'react';
 import { useLocaleRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import { useCurrentUser } from '@/hooks/use-current-user';
 
 interface CourseInputSectionProps {
   className?: string;
@@ -14,13 +16,20 @@ interface CourseInputSectionProps {
 export function CourseInputSection({ className }: CourseInputSectionProps) {
   const t = useTranslations('LearningPlatform');
   const router = useLocaleRouter();
+  const currentUser = useCurrentUser();
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
 
   const handleSubmit = async () => {
     if (!input.trim()) return;
 
-    // 直接执行，无需登录检查
+    // 检查用户登录状态
+    if (!currentUser) {
+      setShowLoginDialog(true);
+      return;
+    }
+
     setIsLoading(true);
 
     // 保存用户输入并立即跳转
@@ -73,6 +82,12 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
           </Button>
         </div>
       </div>
+      
+      {/* 登录验证弹窗 */}
+      <LoginRequiredDialog
+        open={showLoginDialog}
+        onOpenChange={setShowLoginDialog}
+      />
     </div>
   );
 }

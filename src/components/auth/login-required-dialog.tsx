@@ -11,6 +11,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { SocialLoginButton } from '@/components/auth/social-login-button';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -25,20 +26,18 @@ interface LoginRequiredDialogProps {
 export function LoginRequiredDialog({
   open,
   onOpenChange,
-  title = '需要登录',
-  description = '请先登录以使用此功能',
+  title,
+  description,
 }: LoginRequiredDialogProps) {
   const router = useRouter();
-  // const t = useTranslations('Auth');
+  const t = useTranslations('Auth');
 
-  const handleLogin = () => {
-    onOpenChange(false);
-    router.push('/login');
-  };
+  // 获取当前页面URL作为回调地址
+  const currentUrl = typeof window !== 'undefined' ? window.location.pathname : '/';
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="transform -rotate-1">
+      <AlertDialogContent className="transform -rotate-1 max-w-md">
         <AlertDialogHeader>
           <AlertDialogTitle
             className="text-lg font-bold text-gray-800 flex items-center gap-2"
@@ -46,7 +45,7 @@ export function LoginRequiredDialog({
               fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
             }}
           >
-            🔐 {title}
+            🔐 {title || t('loginRequired')}
           </AlertDialogTitle>
           <AlertDialogDescription
             className="text-gray-600"
@@ -54,13 +53,25 @@ export function LoginRequiredDialog({
               fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
             }}
           >
-            {description}
+            {description || t('loginRequiredDescription')}
             <br />
             <span className="text-blue-600">
-              登录后即可开始您的学习之旅！✨
+              {t('loginPrompt')} ✨
             </span>
           </AlertDialogDescription>
         </AlertDialogHeader>
+        
+        {/* 登录按钮区域 */}
+        <div className="py-4">
+          <div className="text-center text-sm text-muted-foreground mb-4"
+               style={{
+                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+               }}>
+            {t('useGoogleLogin')}
+          </div>
+          <SocialLoginButton callbackUrl={currentUrl} />
+        </div>
+
         <AlertDialogFooter className="gap-2">
           <AlertDialogCancel
             className="transform rotate-1"
@@ -68,17 +79,8 @@ export function LoginRequiredDialog({
               fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
             }}
           >
-            取消
+            {t('cancel')}
           </AlertDialogCancel>
-          <AlertDialogAction
-            onClick={handleLogin}
-            className="bg-blue-500 hover:bg-blue-600 transform -rotate-1"
-            style={{
-              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
-            }}
-          >
-            前往登录 🚀
-          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

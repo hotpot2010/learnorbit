@@ -216,6 +216,13 @@
       "prerequisites": "Prerequisites"
     }
   },
+  "Auth": {
+    "loginRequired": "Login Required",
+    "loginRequiredDescription": "Please login to use this feature",
+    "loginPrompt": "Start your learning journey after login!",
+    "useGoogleLogin": "Login with Google Account",
+    "cancel": "Cancel"
+  },
   "PricingPage": {
     "title": "Pricing",
     "description": "Choose the plan that works best for you",

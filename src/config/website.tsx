@@ -37,7 +37,7 @@ export const websiteConfig: WebsiteConfig = {
     enableTurnstileCaptcha: false,
   },
   routes: {
-    defaultLoginRedirect: '/my-courses', // 修改为现有的课程页面
+    defaultLoginRedirect: '/', // 登录后返回首页
   },
   analytics: {
     enableVercelAnalytics: false,

@@ -19,7 +19,7 @@ export const LoginForm = ({
   const t = useTranslations('AuthPage.login');
   const searchParams = useSearchParams();
   const paramCallbackUrl = searchParams?.get('callbackUrl');
-  const callbackUrl = propCallbackUrl || paramCallbackUrl || '/my-courses';
+  const callbackUrl = propCallbackUrl || paramCallbackUrl || '/';
 
   // 只显示Google登录，不显示邮箱密码登录表单
   return (
