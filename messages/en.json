@@ -209,6 +209,11 @@
       "quizTitle": "Smart Quiz Challenge",
       "quizDesc": "Learning the content isn't enough? Come challenge some smart questions! AI will generate exclusive practice problems based on your learning content, including both multiple choice and coding questions~ You can only unlock the next level by getting them right! 💪",
       "startButton": "Start Learning Adventure 🚀"
+    },
+    "courseIntroduction": {
+      "background": "Course Background",
+      "overview": "Course Overview",
+      "prerequisites": "Prerequisites"
     }
   },
   "PricingPage": {

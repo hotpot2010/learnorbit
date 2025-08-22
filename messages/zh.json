@@ -145,6 +145,11 @@
       "quizTitle": "智能答题挑战",
       "quizDesc": "学完知识点还不够？来挑战一下智能题目吧！AI会根据你的学习内容生成专属练习题，既有选择题也有编程题哦～答对了才能解锁下一关！💪",
       "startButton": "开启学习冒险 🚀"
+    },
+    "courseIntroduction": {
+      "background": "课程背景",
+      "overview": "课程大纲",
+      "prerequisites": "前置要求"
     }
   },
   "PricingPage": {

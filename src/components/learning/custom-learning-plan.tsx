@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { AIChatInterface } from './ai-chat-interface';
 import { CourseRecommendationGrid } from './course-recommendation-grid';
+import { FlowDiagram } from './flow-diagram';
 import { LearningPlan, LearningStep } from '@/types/learning-plan';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
@@ -861,9 +862,9 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             {filteredIntroduction.map(([key, value]) => (
               <div key={key} className="text-gray-800">
                 <h4 className="font-bold text-gray-700 mb-2 text-base">
-                  {key === 'background' ? '🌟 课程背景' :
-                   key === 'overview' ? '🗺️ 课程大纲' :
-                   '⚡ 前置要求'}
+                  {key === 'background' ? `🌟 ${t('courseIntroduction.background')}` :
+                   key === 'overview' ? `🗺️ ${t('courseIntroduction.overview')}` :
+                   `⚡ ${t('courseIntroduction.prerequisites')}`}
                 </h4>
                 <div className="text-gray-600 text-base leading-relaxed pl-3 border-l-2 border-yellow-300">
                   {String(value)}
@@ -1098,6 +1099,20 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
           60% { transform: scale(0.98); }
           100% { transform: scale(1); }
         }
+        @keyframes slideInFromRight {
+          0% {
+            transform: translateX(100%) rotate(5deg);
+            opacity: 0;
+          }
+          50% {
+            transform: translateX(-10px) rotate(-2deg);
+            opacity: 0.8;
+          }
+          100% {
+            transform: translateX(0) rotate(0deg);
+            opacity: 1;
+          }
+        }
       `}</style>
 
       {/* 整体加载状态覆盖层 */}
@@ -1221,7 +1236,14 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                 {courseIntroduction && renderCourseIntroduction(courseIntroduction)}
                 
                 {/* 显示部分计划或完整计划 */}
-                {(learningPlan || partialPlan)?.plan.map((step, index) => renderLearningStep(step, index))}
+                <FlowDiagram
+                  steps={(learningPlan || partialPlan)?.plan || []}
+                  newStepIndex={newStepIndex}
+                  updatedStepIndex={updatedStepIndex}
+                  updatingSteps={updatingSteps}
+                  stepTaskStatus={stepTaskStatus}
+                  taskCache={taskCache}
+                />
 
                 {/* 如果正在更新且只有部分计划，显示生成中的提示 */}
                 {partialPlan && planUpdateStatus === 'updating' && (
