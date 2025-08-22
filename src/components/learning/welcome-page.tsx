@@ -157,7 +157,22 @@ ${t('interactionDesc')}`;
               const isSubtitle = typeof children === 'string' && children.includes(t('subtitle').split(' ')[0]);
               if (isSubtitle) {
                 return (
-                  <p className="text-gray-800 leading-loose mb-4 text-center" style={{
+                  <p className="text-xl text-gray-800 leading-loose mb-6 text-center" style={{
+                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  }} {...props}>
+                    {children}
+                  </p>
+                );
+              }
+              // 检查是否是课程描述内容（包含instruction描述）
+              const isDescription = typeof children === 'string' && (
+                children.length > 50 || // 长文本通常是描述
+                children.includes('课程') || children.includes('学习') || 
+                children.includes('Course') || children.includes('Learning')
+              );
+              if (isDescription) {
+                return (
+                  <p className="text-xl text-gray-700 leading-relaxed mb-6 text-center px-4" style={{
                     fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                   }} {...props}>
                     {children}

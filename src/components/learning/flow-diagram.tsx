@@ -1,4 +1,5 @@
 import { LearningStep } from '@/types/learning-plan';
+import { useEffect, useRef } from 'react';
 
 interface FlowDiagramProps {
   steps: LearningStep[];
@@ -17,6 +18,43 @@ export function FlowDiagram({
   stepTaskStatus,
   taskCache
 }: FlowDiagramProps) {
+  const newStepRef = useRef<HTMLDivElement>(null);
+
+  // 当有新步骤添加时，自动滚动到新步骤
+  useEffect(() => {
+    if (newStepIndex !== null && newStepIndex !== undefined && newStepRef.current) {
+      // 使用 setTimeout 确保 DOM 已经更新
+      setTimeout(() => {
+        // 查找最近的滚动容器
+        const scrollContainer = newStepRef.current?.closest('.overflow-y-auto');
+        
+        if (scrollContainer && newStepRef.current) {
+          // 计算新步骤相对于滚动容器的位置
+          const containerRect = scrollContainer.getBoundingClientRect();
+          const elementRect = newStepRef.current.getBoundingClientRect();
+          
+          // 计算需要滚动的距离，使新步骤出现在容器中央
+          const scrollTop = scrollContainer.scrollTop;
+          const containerHeight = containerRect.height;
+          const elementTop = elementRect.top - containerRect.top + scrollTop;
+          const targetScrollTop = elementTop - containerHeight / 2 + elementRect.height / 2;
+          
+          // 平滑滚动到目标位置
+          scrollContainer.scrollTo({
+            top: Math.max(0, targetScrollTop),
+            behavior: 'smooth'
+          });
+        } else {
+          // 如果没有找到滚动容器，使用默认的 scrollIntoView
+          newStepRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'nearest'
+          });
+        }
+      }, 300); // 增加延迟以确保动画效果完成
+    }
+  }, [newStepIndex]);
   // 根据step.stage对步骤进行分组
   const groupedSteps = steps.reduce((acc, step) => {
     const stage = step.stage || 'default';
@@ -125,7 +163,11 @@ export function FlowDiagram({
             const hasTaskCache = !!taskCache[step.step];
 
             return (
-              <div key={step.step} className="relative flex items-center">
+              <div 
+                key={step.step} 
+                className="relative flex items-center"
+                ref={isNewStep ? newStepRef : null}
+              >
                 {/* Step节点 - 在垂直线上 */}
                 <div 
                   className="absolute"
