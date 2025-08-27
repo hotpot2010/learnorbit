@@ -12,37 +12,14 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { StarRating } from '@/components/ui/star-rating';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { Routes } from '@/routes';
 import { Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-// 生成随机评分
-const generateRating = (courseId: string) => {
-  const ratings = [4.2, 4.5, 4.7, 4.8, 4.9, 4.3, 4.6, 4.4, 4.1];
-  return ratings[
-    Math.abs(courseId.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) %
-      ratings.length
-  ];
-};
 
-// 星星组件
-const StarRating = ({ rating }: { rating: number }) => {
-  const fullStars = Math.floor(rating);
-  const hasHalfStar = rating % 1 !== 0;
-
-  return (
-    <div className="flex items-center space-x-1">
-      {[...Array(5)].map((_, i) => (
-        <span key={i} className="text-yellow-400 text-xs">
-          {i < fullStars ? '★' : i === fullStars && hasHalfStar ? '☆' : '☆'}
-        </span>
-      ))}
-      <span className="text-xs text-slate-500 ml-1">{rating}</span>
-    </div>
-  );
-};
 
 // 从LearningPlan提取课程信息的辅助函数
 const extractCourseInfo = (coursePlan: any) => {
@@ -54,7 +31,7 @@ const extractCourseInfo = (coursePlan: any) => {
       title: 'Unknown Course',
       description: 'Course description not available',
       difficulty: 'beginner' as const,
-      estimatedTime: 'Unknown',
+      rating: 4,
     };
   }
 
@@ -81,11 +58,6 @@ const extractCourseInfo = (coursePlan: any) => {
       : (plan.length > 1 ? `${plan.length} step learning path` : 'Single step course');
   }
 
-  const totalTime = plan.reduce((acc: number, step: any) => {
-    const time = Number.parseInt(step.estimatedTime || '0');
-    return acc + time;
-  }, 0);
-
   // 基于步骤复杂度判断难度
   const difficulties = plan.map((step: any) => step.difficulty).filter(Boolean);
   const hasAdvanced = difficulties.includes('advanced');
@@ -104,7 +76,7 @@ const extractCourseInfo = (coursePlan: any) => {
     title: courseTitle || 'Unknown Course',
     description: courseDescription,
     difficulty,
-    estimatedTime: totalTime > 0 ? `${totalTime} hours` : 'Unknown',
+    rating: 4, // 默认4星评级
   };
 };
 
@@ -390,7 +362,7 @@ export default function MyCoursesPage() {
               </p>
             )}
 
-          <StarRating rating={generateRating(course.id)} />
+
 
           <div className="flex items-center justify-between mt-3">
               <span
@@ -409,14 +381,14 @@ export default function MyCoursesPage() {
                 {courseInfo.difficulty.charAt(0).toUpperCase() +
                   courseInfo.difficulty.slice(1)}
             </span>
-              <div
-                className="flex items-center text-xs text-gray-500 bg-yellow-100 px-2 py-1 rounded transform rotate-2"
-                 style={{
-                  fontFamily:
-                    '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
-                }}
-              >
-                {courseInfo.estimatedTime}
+                            <div className="flex items-center bg-yellow-100 px-2 py-1 rounded transform rotate-2">
+                <StarRating rating={courseInfo.rating} size="sm" />
+                <span className="ml-1 text-xs text-gray-600"
+                      style={{
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      }}>
+                  {courseInfo.rating}/5
+                </span>
               </div>
           </div>
 

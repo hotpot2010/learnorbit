@@ -6,16 +6,20 @@
 """
 
 import asyncio
+import hashlib
 import aiohttp
 import json
 import sys
 import time
 import uuid
 import os
+
+import requests
 output_dir="sampleoutput"
 DEFAULT_SERVER = "http://172.30.116.44:5001"
 # DEFAULT_SERVER="https://study-platform.zeabur.app"
 # DEFAULT_SERVER="https://studyplatform-tokyo.zeabur.app"
+
 async def call_task_generate_api(server_url, input_data):
     url = f"{server_url}/api/task/generate"
     try:
@@ -42,10 +46,7 @@ async def call_chat_api(server_url, messages, session_id=None,lang="zh"):
     
     返回:
     - 会话ID和响应内容
-    """
-    if session_id is None:
-        session_id = str(uuid.uuid4())
-    
+    """    
     url = f"{server_url}/api/chat1/stream"
     data = {
         "id": session_id,
@@ -86,7 +87,8 @@ async def call_stream_generate(server_url, messages, session_id, is_update=False
     data = {
         "id": session_id,
         "messages": messages,
-        "lang": lang
+        "lang": lang,
+        "retrive_enabled": True
     }
     
     if is_update and advise:
@@ -156,6 +158,43 @@ async def call_stream_generate(server_url, messages, session_id, is_update=False
         print(f"调用Stream Generate API时出错: {e}")
     
     return None
+async def upload_document(server_url, file_path, session_id):
+    """Upload a document to the server
+    
+    Parameters:
+    - server_url: Server URL
+    - file_path: Path to the document file
+    - session_id: Chat ID to associate the document with
+    
+    Returns:
+    - True if upload was successful, False otherwise
+    """
+    url = f"{server_url}/api/documents/upload"
+    
+    if not os.path.exists(file_path):
+        print(f"File not found: {file_path}")
+        return False
+        
+    try:
+        with open(file_path, 'rb') as f:
+            files = {'file': f}
+            data = {'chat_id': session_id}
+            
+            print(f"Uploading document: {os.path.basename(file_path)}...")
+            upload_response = requests.post(url, files=files, data=data)
+            
+            if upload_response.status_code == 200:
+                upload_result = upload_response.json()
+                print("Upload successful:")
+                print(json.dumps(upload_result, indent=2))
+                return True
+            else:
+                print(f"Upload failed with status code {upload_response.status_code}:")
+                print(upload_response.text)
+                return False
+    except Exception as e:
+        print(f"Error uploading document: {str(e)}")
+        return False
 
 async def interactive_test(server_url):
     """
@@ -171,9 +210,22 @@ async def interactive_test(server_url):
     
     print("===== 交互式API测试工具 =====")
     print("(输入'q'退出)")
-    lang=input("请输入语言(zh/en): ")
+    lang = input("请输入语言(zh/en): ")
     output_json_input = input("是否将Plan和Task输出到json文件中？ (y/n): ").lower()
     output_json = output_json_input == 'y'
+    session_id = str(hashlib.md5(str(uuid.uuid4()).encode()).hexdigest())
+    print(f"会话ID: {session_id}")
+    
+    # 文档上传
+    upload_doc_input = input("是否需要上传文档？ (y/n): ").lower()
+    if upload_doc_input == 'y':
+        file_path = input("请输入文档路径: ")
+        if file_path:
+            upload_success = await upload_document(server_url, file_path, session_id)
+            if not upload_success:
+                print("文档上传失败，继续进行对话测试...")
+        else:
+            print("未提供文件路径，跳过文档上传")
     
     while True:
         round_count += 1
@@ -189,7 +241,7 @@ async def interactive_test(server_url):
         messages.append({"role": "user", "content": user_input})
         
         # 调用Chat API
-        session_id, chat_response = await call_chat_api(server_url, messages, session_id,lang=lang)
+        session_id, chat_response = await call_chat_api(server_url, messages, session_id, lang=lang)
         if chat_response:
             print("\nChat API 响应:")
             print(chat_response)
@@ -256,6 +308,7 @@ async def interactive_test(server_url):
                 task_requests = []
                 for i, step in enumerate(last_plan['plan']):
                     step["id"] = session_id
+                    step["retrive_enabled"] = True
                     task_requests.append((i, step))
                 
                 print("\n开始并发生成任务...")

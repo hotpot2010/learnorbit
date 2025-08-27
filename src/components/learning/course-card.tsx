@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { StarRating } from '@/components/ui/star-rating';
 import { Play, Clock, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -12,7 +13,7 @@ interface CourseCardProps {
   title: string;
   description: string;
   coverImage?: string;
-  estimatedTime: string;
+  rating?: number;
   difficulty?: 'beginner' | 'intermediate' | 'advanced';
   progress?: number;
   onClick?: () => void;
@@ -24,7 +25,7 @@ export function CourseCard({
   title,
   description,
   coverImage,
-  estimatedTime,
+  rating = 4,
   difficulty = 'beginner',
   progress,
   onClick,
@@ -94,12 +95,14 @@ export function CourseCard({
             {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
           </span>
 
-          <div className="flex items-center text-xs text-gray-500 bg-yellow-100 px-2 py-1 rounded transform rotate-2"
-               style={{
-                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-               }}>
-            <Clock className="w-3 h-3 mr-1" />
-            {estimatedTime}
+          <div className="flex items-center bg-yellow-100 px-2 py-1 rounded transform rotate-2">
+            <StarRating rating={rating} size="sm" />
+            <span className="ml-1 text-xs text-gray-600"
+                  style={{
+                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  }}>
+              {rating}/5
+            </span>
           </div>
         </div>
 

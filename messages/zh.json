@@ -152,7 +152,33 @@
     "background": "课程背景",
     "overview": "课程大纲",
     "prerequisites": "前置要求"
-  }
+  },
+    "taskUpdate": {
+      "suggestion": {
+        "title": "任务更新建议",
+        "description": "确认更新后，当前PPT内容和练习将会被替换",
+        "confirmButton": "确认更新",
+        "cancelButton": "取消"
+      },
+      "updating": {
+        "message": "正在更新任务..."
+      },
+      "complete": {
+        "title": "任务更新完成",
+        "message": "任务已更新并预览！请查看新内容后选择是否保存：",
+        "description": "页面已显示新内容供您预览，请确认是否保存此更新",
+        "saveButton": "保存更新",
+        "rollbackButton": "回滚内容"
+      },
+      "success": {
+        "saved": "已保存更新！新的任务内容已永久生效。",
+        "rollback": "已回滚更新，恢复到原有任务内容。如有其他问题，请继续提问。",
+        "cancelled": "已取消任务更新。如有其他问题，请继续提问。"
+      },
+      "error": {
+        "failed": "任务更新失败，请稍后重试。"
+      }
+    }
 },
 "Auth": {
   "loginRequired": "需要登录",

@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
+import { StarRating } from '@/components/ui/star-rating';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { LocaleLink } from '@/i18n/navigation';
 import { Routes } from '@/routes';
@@ -28,7 +29,7 @@ interface PublicCourse {
   title: string;
   description: string;
   coverImage: string;
-  estimatedTime: string;
+  rating: number;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   ownerId: string;
   createdAt: string;
@@ -302,13 +303,14 @@ const CourseCard = ({ course, index }: { course: PublicCourse; index: number }) 
               >
                 {t(`difficulty.${course.difficulty}`)}
               </span>
-              <div
-                className="flex items-center text-xs text-gray-500 bg-yellow-100 px-2 py-1 rounded transform rotate-2"
-                style={{
-                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
-                }}
-              >
-                {course.estimatedTime}
+              <div className="flex items-center bg-yellow-100 px-2 py-1 rounded transform rotate-2">
+                <StarRating rating={course.rating} size="sm" />
+                <span className="ml-1 text-xs text-gray-600"
+                      style={{
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      }}>
+                  {course.rating}/5
+                </span>
               </div>
             </div>
 

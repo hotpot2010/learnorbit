@@ -216,6 +216,32 @@
       "background": "Course Background",
       "overview": "Course Overview",
       "prerequisites": "Prerequisites"
+    },
+    "taskUpdate": {
+      "suggestion": {
+        "title": "Task Update Suggestion",
+        "description": "After confirmation, current PPT content and exercises will be replaced",
+        "confirmButton": "Confirm Update",
+        "cancelButton": "Cancel"
+      },
+      "updating": {
+        "message": "Updating task..."
+      },
+      "complete": {
+        "title": "Task Update Complete",
+        "message": "Task updated and preview ready! Please review the new content and choose whether to save:",
+        "description": "The page now shows new content for preview, please confirm whether to save this update",
+        "saveButton": "Save Update",
+        "rollbackButton": "Rollback Content"
+      },
+      "success": {
+        "saved": "Update saved! New task content is now permanently effective.",
+        "rollback": "Update rolled back, restored to original task content. Feel free to ask if you have other questions.",
+        "cancelled": "Task update cancelled. Feel free to ask if you have other questions."
+      },
+      "error": {
+        "failed": "Task update failed, please try again later."
+      }
     }
   },
   "Auth": {

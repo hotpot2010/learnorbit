@@ -16,7 +16,7 @@ type PublicCourseCard = {
   title: string;
   description: string;
   coverImage: string;
-  estimatedTime: string;
+  rating: number;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   ownerId: string;
   createdAt?: string;
@@ -48,10 +48,10 @@ const getPublicCoursesCached = unstable_cache(async (): Promise<PublicCourseCard
     
     const firstVideo = planSteps[0]?.videos?.[0];
     const coverImage = firstVideo?.cover || '/images/blog/post-1.png';
-    const estimatedTime = firstVideo?.duration || 'Unknown';
+    const rating = 4; // 默认4星评级
     const type = planSteps[0]?.type || 'theory';
     const difficulty = (type === 'coding' ? 'intermediate' : 'beginner') as 'beginner'|'intermediate'|'advanced';
-    return { id: c.id, title, description, coverImage, estimatedTime, difficulty, ownerId: c.userId, createdAt: c.createdAt };
+    return { id: c.id, title, description, coverImage, rating, difficulty, ownerId: c.userId, createdAt: c.createdAt };
   });
 }, ['public-courses'], { revalidate: 300, tags: ['public-courses'] });
 

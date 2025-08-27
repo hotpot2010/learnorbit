@@ -143,6 +143,47 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 外部API基础地址（客户端可用）
   const EXTERNAL_API_URL = (process.env.NEXT_PUBLIC_EXTERNAL_API_URL as string) || 'https://study-platform.zeabur.app';
 
+  // 任务更新完成处理函数（预览模式）
+  const handleTaskUpdateComplete = (newTaskData: any) => {
+    console.log('📝 收到任务更新数据（预览）:', newTaskData);
+    
+    // 直接更新当前任务状态
+    setCurrentTask(newTaskData);
+    
+    // 清空当前编程代码和输出
+    setCodeValue(newTaskData.task?.starter_code || '');
+    setCodeOutput('');
+    
+    // 重置答题状态
+    setSelectedAnswers({});
+    setWrongAnswers(new Set());
+    setHasSubmitted(false);
+    
+    console.log('✅ 任务数据更新完成（预览模式），新任务:', newTaskData);
+  };
+
+  // 任务更新保存处理函数（持久化）
+  const handleTaskUpdateSave = (newTaskData: any) => {
+    console.log('💾 用户确认保存任务更新:', newTaskData);
+    
+    // 获取当前步骤
+    const steps = getLearningSteps(learningPlan);
+    const currentStep = steps[currentStepIndex - 1]; // currentStepIndex 从1开始，所以减1
+    
+    if (currentStep) {
+      // 更新任务缓存，这样切换步骤时新数据会被保留
+      setTaskCache(prevCache => ({
+        ...prevCache,
+        [currentStep.step]: newTaskData
+      }));
+      
+      console.log(`💾 已保存步骤 ${currentStep.step} 的任务数据到缓存`);
+      
+      // 这里可以添加保存到后端的逻辑
+      // await saveTaskToDatabase(currentStep.step, newTaskData);
+    }
+  };
+
   // 笔记相关状态 - 插入式笔记
   interface Note {
     id: string;
@@ -3602,6 +3643,16 @@ export default function StudyPage({ params }: StudyPageProps) {
               recommendations={aiRecommendations}
               useStudyAPI={true}
               externalMessage={externalMessage}
+              currentTaskData={(() => {
+                console.log('📋 传递给聊天的任务数据:', {
+                  currentStepIndex,
+                  hasCurrentTask: !!currentTask,
+                  currentTaskData: currentTask
+                });
+                return currentTask;
+              })()}
+              onTaskUpdateComplete={handleTaskUpdateComplete}
+              onTaskUpdateSave={handleTaskUpdateSave}
             />
           </div>
         </div>

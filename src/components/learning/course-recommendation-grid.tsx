@@ -3,13 +3,14 @@
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { CourseCard } from './course-card';
+import { StarRating } from '@/components/ui/star-rating';
 
 interface Course {
   id: string;
   title: string;
   description: string;
   coverImage: string;
-  estimatedTime: string;
+  rating: number;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
 }
 
@@ -116,14 +117,14 @@ export function CourseRecommendationGrid({
                       {course.difficulty.charAt(0).toUpperCase() +
                         course.difficulty.slice(1)}
                     </span>
-                    <div
-                      className="flex items-center text-xs text-gray-500 bg-yellow-100 px-2 py-1 rounded transform rotate-2"
-                      style={{
-                        fontFamily:
-                          '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
-                      }}
-                    >
-                      {course.estimatedTime}
+                    <div className="flex items-center bg-yellow-100 px-2 py-1 rounded transform rotate-2">
+                      <StarRating rating={course.rating} size="sm" />
+                      <span className="ml-1 text-xs text-gray-600"
+                            style={{
+                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            }}>
+                        {course.rating}/5
+                      </span>
                     </div>
                   </div>
 
@@ -196,14 +197,14 @@ export function CourseRecommendationGrid({
                       {course.difficulty.charAt(0).toUpperCase() +
                         course.difficulty.slice(1)}
                     </span>
-                    <div
-                      className="flex items-center text-xs text-gray-500 bg-yellow-100 px-2 py-1 rounded transform rotate-2"
-                      style={{
-                        fontFamily:
-                          '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
-                      }}
-                    >
-                      {course.estimatedTime}
+                    <div className="flex items-center bg-yellow-100 px-2 py-1 rounded transform rotate-2">
+                      <StarRating rating={course.rating} size="sm" />
+                      <span className="ml-1 text-xs text-gray-600"
+                            style={{
+                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            }}>
+                        {course.rating}/5
+                      </span>
                     </div>
                   </div>
 

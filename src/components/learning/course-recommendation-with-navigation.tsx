@@ -11,7 +11,7 @@ interface Course {
   title: string;
   description: string;
   coverImage: string;
-  estimatedTime: string;
+  rating: number;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   ownerId: string;
 }

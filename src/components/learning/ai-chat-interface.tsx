@@ -19,6 +19,16 @@ interface Message {
   content: string;
   role: 'user' | 'assistant';
   timestamp: Date;
+  type?: 'normal' | 'task-update-suggestion' | 'task-updating' | 'task-updated' | 'task-update-confirm';
+  metadata?: {
+    suggestion?: string;
+    taskUpdateData?: any;
+    isProcessing?: boolean;
+    showConfirmButtons?: boolean;
+    newTaskData?: any;
+    originalTaskData?: any;
+    showAcceptButtons?: boolean;
+  };
 }
 
 interface AIChatInterfaceProps {
@@ -36,6 +46,9 @@ interface AIChatInterfaceProps {
   onPlanUpdate?: (plan: any) => void; // 新增：直接更新计划的回调
   onStepUpdate?: (step: any, stepNumber: number, total: number) => void; // 新增：逐步更新步骤的回调
   onIntroductionUpdate?: (introduction: any) => void; // 新增：课程介绍更新回调
+  currentTaskData?: any; // 新增：当前任务数据
+  onTaskUpdateComplete?: (newTaskData: any) => void; // 新增：任务更新完成回调
+  onTaskUpdateSave?: (newTaskData: any) => void; // 新增：任务更新保存回调
 }
 
 export function AIChatInterface({
@@ -53,6 +66,9 @@ export function AIChatInterface({
   onPlanUpdate,
   onStepUpdate,
   onIntroductionUpdate,
+  currentTaskData,
+  onTaskUpdateComplete,
+  onTaskUpdateSave,
 }: AIChatInterfaceProps) {
   const t = useTranslations('LearningPlatform');
   const locale = useLocale();
@@ -61,6 +77,45 @@ export function AIChatInterface({
   const [isLoading, setIsLoading] = useState(false);
   // 移除 isFirstMessage 状态，改用实时计算消息数量
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+
+  // 任务更新API调用函数
+  const callDetectAPI = async (userMessage: string, sessionId: string, taskData: any) => {
+    const response = await fetch('/api/task/update/detect', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        task_data: taskData,
+        user_message: userMessage,
+        lang: 'zh',
+        chat_id: sessionId
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Detect API failed: ${response.status}`);
+    }
+    
+    return await response.json();
+  };
+
+  const callExecuteAPI = async (suggestion: string, sessionId: string, taskData: any) => {
+    const response = await fetch('/api/task/update/execute', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        task_data: taskData,
+        suggestion: suggestion,
+        lang: 'zh',
+        chat_id: sessionId
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Execute API failed: ${response.status}`);
+    }
+    
+    return await response.json();
+  };
 
   // 初始化欢迎消息
   useEffect(() => {
@@ -984,6 +1039,173 @@ export function AIChatInterface({
     }
   };
 
+  // 任务更新处理函数
+  const handleConfirmTaskUpdate = async (messageId: string) => {
+    const targetMessage = messages.find(msg => msg.id === messageId);
+    if (!targetMessage?.metadata?.suggestion) return;
+    
+    // 显示处理状态
+    setMessages(prev => prev.map(msg => 
+      msg.id === messageId 
+        ? { 
+            ...msg, 
+            metadata: { 
+              ...msg.metadata, 
+              showConfirmButtons: false,
+              isProcessing: true 
+            } 
+          }
+        : msg
+    ));
+    
+    try {
+      const executeResult = await callExecuteAPI(
+        targetMessage.metadata.suggestion,
+        sessionId || 'user123',
+        currentTaskData
+      );
+      
+      // 移除处理状态
+      setMessages(prev => prev.map(msg => 
+        msg.id === messageId 
+          ? { 
+              ...msg, 
+              metadata: { 
+                ...msg.metadata, 
+                isProcessing: false 
+              } 
+            }
+          : msg
+      ));
+      
+      // 先立即预览新任务内容，让用户看到效果
+      onTaskUpdateComplete?.(executeResult.result.task);
+
+      // 添加确认消息，让用户选择是否保存此更新
+      const confirmMessage: Message = {
+        id: generateUniqueId(),
+        content: `✅ ${t('taskUpdate.complete.message')}`,
+        role: 'assistant',
+        timestamp: new Date(),
+        type: 'task-update-confirm',
+        metadata: {
+          newTaskData: executeResult.result.task,
+          originalTaskData: currentTaskData,
+          showAcceptButtons: true
+        }
+      };
+      
+      setMessages(prev => [...prev, confirmMessage]);
+      
+    } catch (error) {
+      console.error('Execute API 调用失败:', error);
+      
+      // 恢复确认按钮，显示错误
+      setMessages(prev => prev.map(msg => 
+        msg.id === messageId 
+          ? { 
+              ...msg, 
+              metadata: { 
+                ...msg.metadata, 
+                showConfirmButtons: true,
+                isProcessing: false 
+              } 
+            }
+          : msg
+      ));
+      
+      const errorMessage: Message = {
+        id: generateUniqueId(),
+        content: `❌ ${t('taskUpdate.error.failed')}`,
+        role: 'assistant',
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+    }
+  };
+
+  const handleCancelTaskUpdate = async (messageId: string) => {
+    // 隐藏确认按钮
+    setMessages(prev => prev.map(msg => 
+      msg.id === messageId 
+        ? { 
+            ...msg, 
+            metadata: { 
+              ...msg.metadata, 
+              showConfirmButtons: false 
+            } 
+          }
+        : msg
+    ));
+    
+    // 添加取消消息
+    const cancelMessage: Message = {
+      id: generateUniqueId(),
+      content: t('taskUpdate.success.cancelled'),
+      role: 'assistant',
+      timestamp: new Date()
+    };
+    
+    setMessages(prev => [...prev, cancelMessage]);
+  };
+
+  // 处理接受任务更新（保存当前预览的内容）
+  const handleAcceptTaskUpdate = async (messageId: string) => {
+    const targetMessage = messages.find(msg => msg.id === messageId);
+    if (!targetMessage?.metadata?.newTaskData) return;
+
+    // 隐藏接受按钮
+    setMessages(prev => prev.map(msg => 
+      msg.id === messageId 
+        ? { 
+            ...msg, 
+            metadata: { 
+              ...msg.metadata, 
+              showAcceptButtons: false 
+            } 
+          }
+        : msg
+    ));
+
+    // 调用保存回调，持久化任务数据
+    onTaskUpdateSave?.(targetMessage.metadata.newTaskData);
+    console.log('📚 用户确认保存任务更新');
+  };
+
+  // 处理拒绝任务更新（恢复到原有内容）
+  const handleRejectTaskUpdate = async (messageId: string) => {
+    const targetMessage = messages.find(msg => msg.id === messageId);
+    if (!targetMessage?.metadata?.originalTaskData) return;
+
+    // 隐藏接受按钮
+    setMessages(prev => prev.map(msg => 
+      msg.id === messageId 
+        ? { 
+            ...msg, 
+            metadata: { 
+              ...msg.metadata, 
+              showAcceptButtons: false 
+            } 
+          }
+        : msg
+    ));
+
+    // 添加拒绝消息
+    const rejectMessage: Message = {
+      id: generateUniqueId(),
+      content: `❌ ${t('taskUpdate.success.rollback')}`,
+      role: 'assistant',
+      timestamp: new Date()
+    };
+    
+    setMessages(prev => [...prev, rejectMessage]);
+
+    // 恢复原有任务数据
+    onTaskUpdateComplete?.(targetMessage.metadata.originalTaskData);
+    console.log('🔄 用户选择回滚，恢复原有任务内容');
+  };
+
   // 发送消息
   const sendMessage = async (messageContent: string) => {
     if (!messageContent.trim()) return;
@@ -1001,6 +1223,44 @@ export function AIChatInterface({
     setInput('');
 
     if (useStudyAPI) {
+      // 学习页面：先检查是否需要任务更新
+      console.log('🔍 学习页面聊天检查:', {
+        useStudyAPI,
+        hasCurrentTaskData: !!currentTaskData,
+        currentTaskData,
+        messageContent
+      });
+      
+      if (currentTaskData) {
+        try {
+          console.log('📞 开始调用 Detect API...');
+          const detectResult = await callDetectAPI(messageContent, sessionId || 'user123', currentTaskData);
+          console.log('📋 Detect API 结果:', detectResult);
+          
+          if (detectResult.result?.needUpdate) {
+            // 创建带 suggestion 内容的 AI 回复消息
+            const suggestionMessage: Message = {
+              id: generateUniqueId(),
+              content: detectResult.result.suggestion,
+              role: 'assistant',
+              timestamp: new Date(),
+              type: 'task-update-suggestion',
+              metadata: {
+                suggestion: detectResult.result.suggestion,
+                showConfirmButtons: true
+              }
+            };
+            
+            setMessages(prev => [...prev, suggestionMessage]);
+            setIsLoading(false);
+            return; // 不继续普通聊天流程
+          }
+        } catch (error) {
+          console.error('Detect API 调用失败:', error);
+          // 降级到普通聊天
+        }
+      }
+      
       await callStudyAPI(userMessage, messages);
     } else {
       // 课程定制页面：根据消息轮次判断处理方式
@@ -1058,41 +1318,151 @@ export function AIChatInterface({
         data-chat-area="true"
       >
         <div className="space-y-4 pb-4">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex items-start gap-3 ${
-                message.role === 'user' ? 'flex-row-reverse' : 'flex-row'
-              }`}
-            >
-              <Avatar className="w-8 h-8 flex-shrink-0">
-                <AvatarFallback>
-                  {message.role === 'user' ? (
-                    <User className="w-4 h-4" />
-                  ) : (
-                    <Bot className="w-4 h-4" />
-                  )}
-                </AvatarFallback>
-              </Avatar>
+          {messages.map((message) => {
+            // 任务更新确认消息的特殊渲染
+            if (message.type === 'task-update-suggestion') {
+              return (
+                <div key={message.id} className="flex items-start gap-3">
+                  <Avatar className="w-8 h-8 flex-shrink-0">
+                    <AvatarFallback>
+                      <Bot className="w-4 h-4" />
+                    </AvatarFallback>
+                  </Avatar>
+                  
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg px-4 py-3 max-w-[85%]">
+                    <div className="text-sm text-gray-800 mb-3">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-lg">🔄</span>
+                        <span className="font-medium text-yellow-800">{t('taskUpdate.suggestion.title')}</span>
+                      </div>
+                      <p className="whitespace-pre-wrap">{message.content}</p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        {t('taskUpdate.suggestion.description')}
+                      </p>
+                    </div>
+                    
+                    {message.metadata?.showConfirmButtons && !message.metadata?.isProcessing && (
+                      <div className="flex space-x-2">
+                        <Button 
+                          size="sm" 
+                          onClick={() => handleConfirmTaskUpdate(message.id)}
+                          className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1"
+                        >
+                          ✅ {t('taskUpdate.suggestion.confirmButton')}
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          onClick={() => handleCancelTaskUpdate(message.id)}
+                          className="border-gray-300 text-xs px-3 py-1"
+                        >
+                          ❌ {t('taskUpdate.suggestion.cancelButton')}
+                        </Button>
+                      </div>
+                    )}
+                    
+                    {message.metadata?.isProcessing && (
+                      <div className="flex items-center space-x-2 text-sm text-blue-600">
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                        <span>{t('taskUpdate.updating.message')}</span>
+                      </div>
+                    )}
+                    
+                    <span className="text-xs opacity-70 mt-2 block">
+                      {message.timestamp.toLocaleTimeString()}
+                    </span>
+                  </div>
+                </div>
+              );
+            }
 
+            // 任务更新完成确认消息的特殊渲染
+            if (message.type === 'task-update-confirm') {
+              return (
+                <div key={message.id} className="flex items-start gap-3">
+                  <Avatar className="w-8 h-8 flex-shrink-0">
+                    <AvatarFallback>
+                      <Bot className="w-4 h-4" />
+                    </AvatarFallback>
+                  </Avatar>
+                  
+                  <div className="bg-green-50 border border-green-200 rounded-lg px-4 py-3 max-w-[85%]">
+                    <div className="text-sm text-gray-800 mb-3">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-lg">✅</span>
+                        <span className="font-medium text-green-800">{t('taskUpdate.complete.title')}</span>
+                      </div>
+                      <p className="whitespace-pre-wrap">{message.content}</p>
+                      <p className="text-xs text-gray-500 mt-2">
+                        📋 {t('taskUpdate.complete.description')}
+                      </p>
+                    </div>
+                    
+                    {message.metadata?.showAcceptButtons && (
+                      <div className="flex space-x-2">
+                        <Button 
+                          size="sm" 
+                          onClick={() => handleAcceptTaskUpdate(message.id)}
+                          className="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1"
+                        >
+                          ✅ {t('taskUpdate.complete.saveButton')}
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          onClick={() => handleRejectTaskUpdate(message.id)}
+                          className="border-gray-300 text-xs px-3 py-1"
+                        >
+                          ❌ {t('taskUpdate.complete.rollbackButton')}
+                        </Button>
+                      </div>
+                    )}
+                    
+                    <span className="text-xs opacity-70 mt-2 block">
+                      {message.timestamp.toLocaleTimeString()}
+                    </span>
+                  </div>
+                </div>
+              );
+            }
+            
+            // 普通消息渲染
+            return (
               <div
-                className={`rounded-lg px-4 py-2 max-w-[80%] ${
-                  message.role === 'user'
-                    ? 'bg-blue-500 text-white ml-auto'
-                    : 'bg-gray-100 text-gray-800'
+                key={message.id}
+                className={`flex items-start gap-3 ${
+                  message.role === 'user' ? 'flex-row-reverse' : 'flex-row'
                 }`}
-                style={{
-                  fontFamily:
-                    '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
-                }}
               >
-                <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                <span className="text-xs opacity-70 mt-1 block">
-                  {message.timestamp.toLocaleTimeString()}
-                </span>
+                <Avatar className="w-8 h-8 flex-shrink-0">
+                  <AvatarFallback>
+                    {message.role === 'user' ? (
+                      <User className="w-4 h-4" />
+                    ) : (
+                      <Bot className="w-4 h-4" />
+                    )}
+                  </AvatarFallback>
+                </Avatar>
+
+                <div
+                  className={`rounded-lg px-4 py-2 max-w-[80%] ${
+                    message.role === 'user'
+                      ? 'bg-blue-500 text-white ml-auto'
+                      : 'bg-gray-100 text-gray-800'
+                  }`}
+                  style={{
+                    fontFamily:
+                      '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                  }}
+                >
+                  <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                  <span className="text-xs opacity-70 mt-1 block">
+                    {message.timestamp.toLocaleTimeString()}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           {isLoading && (
             <div className="flex items-start gap-3">

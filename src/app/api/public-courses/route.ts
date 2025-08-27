@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
 			
 			const firstVideo = planSteps[0]?.videos?.[0];
 			const coverImage = firstVideo?.cover || '/images/blog/post-1.png';
-			const estimatedTime = firstVideo?.duration || 'Unknown';
+			const rating = 4; // 默认4星评级
 			const type = planSteps[0]?.type || 'theory';
 			const difficulty = (type === 'coding' ? 'intermediate' : 'beginner') as 'beginner'|'intermediate'|'advanced';
 			return {
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
 				title,
 				description,
 				coverImage,
-				estimatedTime,
+				rating,
 				difficulty,
 				ownerId: c.userId,
 				createdAt: c.createdAt,
