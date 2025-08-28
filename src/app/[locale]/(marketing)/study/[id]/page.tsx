@@ -27,6 +27,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { LearningPlan, LearningStep, TaskGenerateRequest, TaskGenerateResponse, TaskContent, QuizQuestion, CodingTask } from '@/types/learning-plan';
 import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
+import { mathMarkdownPlugins, mathStyles, preprocessMathContent } from '@/lib/math-renderer';
 import { TextSelectionPopup } from '@/components/learning/text-selection-popup';
 import { WelcomePage } from '@/components/learning/welcome-page';
 import { useCurrentUser } from '@/hooks/use-current-user';
@@ -37,6 +38,23 @@ interface StudyPageProps {
 
 export default function StudyPage({ params }: StudyPageProps) {
   const currentUser = useCurrentUser();
+  
+  // 生成sessionId，与定制页面保持一致的逻辑
+  const [sessionId] = useState(() => {
+    // 优先使用上传文件时的sessionId，确保文档关联正确
+    if (typeof window !== 'undefined') {
+      const uploadSessionId = sessionStorage.getItem('uploadSessionId');
+      if (uploadSessionId) {
+        console.log('🆔 学习页面使用上传文件的SessionId:', uploadSessionId);
+        return uploadSessionId;
+      }
+    }
+    
+    // 如果没有上传文件，生成新的sessionId（格式与上传保持一致）
+    const id = crypto.randomUUID().replace(/-/g, '_');
+    console.log('🆔 学习页面生成新的SessionId:', id);
+    return id;
+  });
   
   // 🔍 组件渲染日志
   console.log('🔄 StudyPage 组件重新渲染:', new Date().toLocaleTimeString());
@@ -893,8 +911,11 @@ export default function StudyPage({ params }: StudyPageProps) {
       return anchorNotes.map(renderNoteBlock);
     };
     
+    // 预处理内容，确保数学公式正确格式化
+    const processedContent = preprocessMathContent(content);
+    
     // 按段落分割内容
-    const paragraphs = content.split('\n\n').filter(p => p.trim());
+    const paragraphs = processedContent.split('\n\n').filter(p => p.trim());
     const result: React.JSX.Element[] = [];
     
     // 开头（段落之前）的老便签（未指定锚点）
@@ -907,7 +928,9 @@ export default function StudyPage({ params }: StudyPageProps) {
       // 段落主体
       result.push(
         <div key={`paragraph-${index}`} data-paragraph-index={index}>
-          <ReactMarkdown components={{
+          <ReactMarkdown 
+            {...mathMarkdownPlugins}
+            components={{
             h1: ({ children, ...props }) => {
               const anchorIdx = nextAnchorIndex();
               return (
@@ -1077,6 +1100,40 @@ export default function StudyPage({ params }: StudyPageProps) {
                   {renderNotesAfterAnchor(anchorIdx)}
                 </>
               );
+            },
+            // 数学公式支持
+            div: ({ children, className, ...props }) => {
+              // 处理块级数学公式
+              if (className === 'math math-display') {
+                const anchorIdx = nextAnchorIndex();
+                return (
+                  <>
+                    <div data-anchor-index={anchorIdx} className="flex items-start space-x-3 mb-8 ml-6">
+                      <div className={mathStyles.mathIcon}>
+                        ∑
+                      </div>
+                      <div className="flex-1">
+                        <div className={mathStyles.blockMath} {...props}>
+                          {children}
+                        </div>
+                      </div>
+                    </div>
+                    {renderNotesAfterAnchor(anchorIdx)}
+                  </>
+                );
+              }
+              return <div className={className} {...props}>{children}</div>;
+            },
+            span: ({ children, className, ...props }) => {
+              // 处理行内数学公式
+              if (className === 'math math-inline') {
+                return (
+                  <span className={mathStyles.inlineMath} {...props}>
+                    {children}
+                  </span>
+                );
+              }
+              return <span className={className} {...props}>{children}</span>;
             },
           }}>
             {paragraph}
@@ -3646,12 +3703,14 @@ export default function StudyPage({ params }: StudyPageProps) {
               initialMessage="I am learning Q-Learning algorithm"
               recommendations={aiRecommendations}
               useStudyAPI={true}
+              sessionId={sessionId}
               externalMessage={externalMessage}
               currentTaskData={(() => {
                 console.log('📋 传递给聊天的任务数据:', {
                   currentStepIndex,
                   hasCurrentTask: !!currentTask,
-                  currentTaskData: currentTask
+                  currentTaskData: currentTask,
+                  sessionId: sessionId
                 });
                 return currentTask;
               })()}
