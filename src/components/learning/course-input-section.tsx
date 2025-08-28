@@ -3,11 +3,12 @@
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { LoginRequiredDialog } from '@/components/auth/login-required-dialog';
-import { Loader2, Send } from 'lucide-react';
-import { useState } from 'react';
+import { Loader2, Send, Upload, X, File as FileIcon, Paperclip } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
 import { useLocaleRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useCurrentUser } from '@/hooks/use-current-user';
+import { authClient } from '@/lib/auth-client';
 
 interface CourseInputSectionProps {
   className?: string;
@@ -17,9 +18,101 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
   const t = useTranslations('LearningPlatform');
   const router = useLocaleRouter();
   const currentUser = useCurrentUser();
+  const { isPending: authPending } = authClient.useSession();
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // 页面加载时恢复文件上传状态
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const fileName = sessionStorage.getItem('uploadedFileName');
+      if (fileName) {
+        // 创建一个虚拟的File对象用于显示
+        const virtualFile = new File([''], fileName, { type: 'application/octet-stream' });
+        setUploadedFile(virtualFile);
+      }
+    }
+  }, []);
+
+  // 文件上传处理
+  const handleFileUpload = async (file: File) => {
+    // 如果认证状态还在加载中，等待加载完成
+    if (authPending) {
+      console.log('🔄 认证状态加载中，请稍候...');
+      return;
+    }
+    
+    // 如果用户未登录，显示登录对话框
+    if (!currentUser) {
+      console.log('🔐 用户未登录，显示登录对话框');
+      setShowLoginDialog(true);
+      return;
+    }
+    
+    console.log('✅ 用户已登录，开始上传文件:', currentUser.id);
+
+    setIsUploading(true);
+    
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      // 生成会话ID用于关联文档（将连字符替换为下划线以符合Milvus要求）
+      const sessionId = crypto.randomUUID().replace(/-/g, '_');
+      formData.append('chat_id', sessionId);
+      
+      const response = await fetch('/api/documents/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        console.log('文件上传成功:', result);
+        setUploadedFile(file);
+        
+        // 保存会话ID和文件上传状态到sessionStorage
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('uploadSessionId', sessionId);
+          sessionStorage.setItem('hasUploadedFile', 'true');
+          sessionStorage.setItem('uploadedFileName', file.name);
+        }
+      } else {
+        console.error('文件上传失败:', response.statusText);
+        alert('文件上传失败，请重试');
+      }
+    } catch (error) {
+      console.error('文件上传出错:', error);
+      alert('文件上传出错，请重试');
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  // 处理文件选择
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleFileUpload(file);
+    }
+  };
+
+  // 移除上传的文件
+  const handleRemoveFile = () => {
+    setUploadedFile(null);
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('uploadSessionId');
+      sessionStorage.removeItem('hasUploadedFile');
+      sessionStorage.removeItem('uploadedFileName');
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   const handleSubmit = async () => {
     if (!input.trim()) return;
@@ -64,6 +157,41 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
           disabled={isLoading}
         />
 
+        {/* 文件上传按钮 - 左下角 */}
+        <div className="absolute bottom-3 left-3 flex items-center gap-2">
+          <Button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isLoading || isUploading || authPending}
+            size="sm"
+            variant="ghost"
+            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100/50 rounded-lg transition-colors"
+            title={authPending ? "加载中..." : "上传文件"}
+          >
+            {isUploading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : authPending ? (
+              <Loader2 className="w-4 h-4 animate-spin opacity-50" />
+            ) : (
+              <Paperclip className="w-4 h-4" />
+            )}
+          </Button>
+
+          {/* 已上传文件标签 - 紧挨按钮右侧 */}
+          {uploadedFile && (
+            <div className="flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-600 rounded-md text-xs">
+              <FileIcon className="w-3 h-3" />
+              <span className="max-w-20 truncate">{uploadedFile.name}</span>
+              <button
+                onClick={handleRemoveFile}
+                className="ml-1 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* 发送按钮 - 右下角 */}
         <div className="absolute bottom-3 right-3">
           <Button
             onClick={handleSubmit}
@@ -81,6 +209,15 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
             )}
           </Button>
         </div>
+
+        {/* 隐藏的文件输入 */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          onChange={handleFileChange}
+          className="hidden"
+          accept=".pdf,.doc,.docx,.txt,.md"
+        />
       </div>
       
       {/* 登录验证弹窗 */}

@@ -156,8 +156,18 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
 
   
   const [sessionId] = useState(() => {
-    const id = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    console.log('🆔 生成SessionId:', id);
+    // 优先使用上传文件时的sessionId，确保文档关联正确
+    if (typeof window !== 'undefined') {
+      const uploadSessionId = sessionStorage.getItem('uploadSessionId');
+      if (uploadSessionId) {
+        console.log('🆔 使用上传文件的SessionId:', uploadSessionId);
+        return uploadSessionId;
+      }
+    }
+    
+    // 如果没有上传文件，生成新的sessionId（格式与上传保持一致）
+    const id = crypto.randomUUID().replace(/-/g, '_');
+    console.log('🆔 生成新的SessionId:', id);
     return id;
   });
 
@@ -273,6 +283,11 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         .filter((s: any) => (typeof s.step === 'number' ? s.step : -1) < stepNumber);
       const previousStepsMapped = previousStepsContext.map((s: any) => ({ title: s?.title, description: s?.description }));
 
+      // 检查是否有上传的文件
+      const hasUploadedFile = typeof window !== 'undefined' 
+        ? sessionStorage.getItem('hasUploadedFile') === 'true'
+        : false;
+
       const requestData = {
         // 必填/已有字段
         step: stepNumber,
@@ -288,6 +303,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         id: userId,
         previous_steps_context: previousStepsMapped,
         lang,
+        ...(hasUploadedFile && { retrive_enabled: true }),
       } as const;
 
       console.log(`📤 发送任务生成请求 (步骤 ${stepNumber}):`, requestData);

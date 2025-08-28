@@ -6,7 +6,7 @@ import { getApiRequestContext, enhanceApiRequest } from '@/lib/api-utils';
 export async function POST(request: NextRequest) {
   try {
     const body: LearningPlanGenerateRequest = await request.json();
-    const { id, messages, advise } = body;
+    const { id, messages, advise, retrive_enabled } = body;
 
     // 获取用户信息和语言设置
     const context = await getApiRequestContext(request);
@@ -15,6 +15,7 @@ export async function POST(request: NextRequest) {
     console.log('SessionId:', id);
     console.log('消息数量:', messages?.length || 0);
     console.log('建议信息:', advise);
+    console.log('文档检索功能:', retrive_enabled ? '已启用' : '未启用');
     console.log('用户ID:', context.userId || 'anonymous');
     console.log('语言:', context.lang);
 
@@ -27,6 +28,7 @@ export async function POST(request: NextRequest) {
       id,
       messages,
       ...(advise && { advise }),
+      ...(retrive_enabled && { retrive_enabled }),
       userId: context.userId || null,
       lang: context.lang,
     };

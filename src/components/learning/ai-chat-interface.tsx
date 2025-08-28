@@ -227,6 +227,11 @@ export function AIChatInterface({
       };
       setMessages((prev) => [...prev, planStartMessage]);
       
+      // 检查是否有上传的文件
+      const hasUploadedFile = typeof window !== 'undefined' 
+        ? sessionStorage.getItem('hasUploadedFile') === 'true'
+        : false;
+
       const requestData = {
         id: sessionId || 'user123',
         messages: currentMessages
@@ -240,6 +245,7 @@ export function AIChatInterface({
               content: userMessage.content,
             },
           ]),
+        ...(hasUploadedFile && { retrive_enabled: true }),
       };
 
       // 并行调用两个接口
@@ -497,6 +503,11 @@ export function AIChatInterface({
     try {
       console.log('\n📚 第二步：开始流式生成学习计划');
 
+      // 检查是否有上传的文件
+      const hasUploadedFile = typeof window !== 'undefined' 
+        ? sessionStorage.getItem('hasUploadedFile') === 'true'
+        : false;
+
       // 构造学习计划生成请求
       const planRequestData = {
         id: requestData.id,
@@ -505,6 +516,7 @@ export function AIChatInterface({
           updateSteps: analysisResult.updateSteps,
           reason: analysisResult.reason || '用户需求分析',
         }),
+        ...(hasUploadedFile && { retrive_enabled: true }),
       };
 
       console.log('📤 发送计划生成请求:', planRequestData);
@@ -889,7 +901,19 @@ export function AIChatInterface({
   const generateLearningPlanDirect = async (requestData: any) => {
     try {
       console.log('\n📚 ============ 直接流式生成学习计划 ============');
-      console.log('📤 发送计划生成请求:', requestData);
+      
+      // 检查是否有上传的文件
+      const hasUploadedFile = typeof window !== 'undefined' 
+        ? sessionStorage.getItem('hasUploadedFile') === 'true'
+        : false;
+
+      // 添加retrive_enabled参数
+      const enhancedRequestData = {
+        ...requestData,
+        ...(hasUploadedFile && { retrive_enabled: true }),
+      };
+
+      console.log('📤 发送计划生成请求:', enhancedRequestData);
       console.log('🌐 当前语言环境:', {
         locale: document.documentElement.lang,
         pathname: window.location.pathname,
@@ -901,7 +925,7 @@ export function AIChatInterface({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(requestData),
+        body: JSON.stringify(enhancedRequestData),
       });
 
       console.log('📡 API响应状态:', planResponse.status, planResponse.statusText);

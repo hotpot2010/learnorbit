@@ -1740,7 +1740,9 @@ export default function StudyPage({ params }: StudyPageProps) {
             // 追加字段（统一三项）
             id: (currentUser as any)?.id || 'anonymous',
             previous_steps_context: plan.plan.filter((s: any) => (typeof s.step === 'number' ? s.step : -1) < step.step).map((s: any) => ({ title: s?.title, description: s?.description })),
-            lang: (routeParams?.locale || 'en').startsWith('zh') ? 'zh' : 'en'
+            lang: (routeParams?.locale || 'en').startsWith('zh') ? 'zh' : 'en',
+            // 检查是否有上传的文件
+            ...(typeof window !== 'undefined' && sessionStorage.getItem('hasUploadedFile') === 'true' && { retrive_enabled: true }),
           };
           
           console.log('📤 发送缺失任务生成请求:', requestData);
@@ -1834,7 +1836,9 @@ export default function StudyPage({ params }: StudyPageProps) {
             // 追加字段（统一三项）
             id: (currentUser as any)?.id || 'anonymous',
             previous_steps_context: planVar.plan.filter((s: any) => (typeof s.step === 'number' ? s.step : -1) < step.step).map((s: any) => ({ title: s?.title, description: s?.description })),
-            lang: (routeParams?.locale || 'en').startsWith('zh') ? 'zh' : 'en'
+            lang: (routeParams?.locale || 'en').startsWith('zh') ? 'zh' : 'en',
+            // 检查是否有上传的文件
+            ...(typeof window !== 'undefined' && sessionStorage.getItem('hasUploadedFile') === 'true' && { retrive_enabled: true }),
           };
 
           console.log('📤 发送任务生成请求:', requestData);

@@ -86,8 +86,11 @@ export async function POST(request: NextRequest) {
 
     body.animation_type = '无';
 
-    // 添加用户ID和语言字段
-    const requestData = enhanceApiRequest(body, context);
+    // 添加用户ID和语言字段，保留retrive_enabled参数
+    const requestData = {
+      ...enhanceApiRequest(body, context),
+      ...(body.retrive_enabled && { retrive_enabled: body.retrive_enabled }),
+    };
 
 
 
@@ -96,6 +99,7 @@ export async function POST(request: NextRequest) {
       title: body.title,
       type: body.type,
       difficulty: body.difficulty,
+      retrive_enabled: body.retrive_enabled ? '已启用' : '未启用',
       userId: context.userId || 'anonymous',
       lang: context.lang,
       externalUrl: `${EXTERNAL_API_URL}/api/task/generate`,

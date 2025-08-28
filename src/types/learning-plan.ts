@@ -42,6 +42,7 @@ export interface TaskGenerateRequest {
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   search_keyword?: string; // 添加可选的搜索关键词
   videos: Video[];
+  retrive_enabled?: boolean; // 是否启用文档检索功能
   id?: string | null; // 用户ID
   lang?: string; // 语言设置: en/zh
 }
@@ -129,6 +130,7 @@ export interface LearningPlanGenerateRequest {
   id: string;
   messages: any[];
   advise?: any;
+  retrive_enabled?: boolean; // 是否启用文档检索功能
   userId?: string | null; // 用户ID
   lang?: string; // 语言设置: en/zh
 }
