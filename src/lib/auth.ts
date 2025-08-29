@@ -55,9 +55,11 @@ export const auth = betterAuth({
       path: "/",
     },
   },
-  // 禁用邮箱密码登录
+  // 启用邮箱密码登录
   emailAndPassword: {
-    enabled: false,
+    enabled: true,
+    requireEmailVerification: false, // 暂时禁用邮箱验证
+    autoSignIn: true, // 注册后自动登录
   },
   // 禁用邮箱验证
   emailVerification: {

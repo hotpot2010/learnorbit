@@ -400,30 +400,41 @@
       "email": "Email",
       "password": "Password",
       "signIn": "Sign In",
-      "signUpHint": "Don't have an account? Sign up",
+      "signingIn": "Signing in...",
+      "noAccount": "Don't have an account? Sign up",
       "forgotPassword": "Forgot Password?",
+      "emailPlaceholder": "Enter your email",
+      "passwordPlaceholder": "Enter your password",
+      "orContinueWith": "Or continue with",
       "signInWithGoogle": "Sign In with Google",
       "signInWithGitHub": "Sign In with GitHub",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "or": "Or continue with",
-      "emailRequired": "Please enter your email",
-      "passwordRequired": "Please enter your password"
+      "errors": {
+        "required": "Please fill in all required fields",
+        "invalidEmail": "Please enter a valid email address",
+        "loginFailed": "Login failed. Please check your email and password"
+      }
     },
     "register": {
       "title": "Register",
       "createAccount": "Create an account",
+      "creatingAccount": "Creating account...",
       "name": "Name",
       "email": "Email",
       "password": "Password",
-      "signUp": "Sign Up",
-      "signInHint": "Already have an account? Sign in",
-      "checkEmail": "Please check your email inbox",
-      "showPassword": "Show password",
-      "hidePassword": "Hide password",
-      "nameRequired": "Please enter your name",
-      "emailRequired": "Please enter your email",
-      "passwordRequired": "Please enter your password"
+      "confirmPassword": "Confirm Password",
+      "alreadyHaveAccount": "Already have an account? Sign in",
+      "namePlaceholder": "Enter your name",
+      "emailPlaceholder": "Enter your email",
+      "passwordPlaceholder": "Enter your password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "orContinueWith": "Or continue with",
+      "errors": {
+        "required": "Please fill in all required fields",
+        "invalidEmail": "Please enter a valid email address",
+        "passwordTooShort": "Password must be at least 6 characters",
+        "passwordMismatch": "Passwords do not match",
+        "registrationFailed": "Registration failed. Please try again"
+      }
     },
     "forgotPassword": {
       "title": "Forgot Password",

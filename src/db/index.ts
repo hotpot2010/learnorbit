@@ -7,6 +7,24 @@ import postgres from 'postgres';
 import * as schema from './schema';
 
 let db: ReturnType<typeof drizzle> | null = null;
+let client: ReturnType<typeof postgres> | null = null;
+
+// 全局连接清理函数
+export function closeDb() {
+  if (client) {
+    console.log('🔄 Closing database connections');
+    client.end();
+    client = null;
+    db = null;
+  }
+}
+
+// 在进程退出时清理连接
+if (typeof process !== 'undefined') {
+  process.on('beforeExit', closeDb);
+  process.on('SIGINT', closeDb);
+  process.on('SIGTERM', closeDb);
+}
 
 export async function getDb() {
   if (db) return db;
@@ -23,14 +41,14 @@ export async function getDb() {
     console.log('🔄 Using direct connection instead of pooler');
   }
 
-  // 配置postgres客户端
-  const client = postgres(connectionString, {
+  // 配置postgres客户端 - 修复连接泄漏
+  client = postgres(connectionString, {
     prepare: false,
-    // 连接配置 - 更保守的设置
-    max: 10, // 减少最大连接数
-    idle_timeout: 20, // 20秒空闲超时
-    connect_timeout: 15, // 15秒连接超时
-    max_lifetime: 60 * 30, // 30分钟连接生命周期
+    // 连接配置 - 更严格的限制防止连接泄漏
+    max: 5, // 严格限制最大连接数
+    idle_timeout: 10, // 10秒空闲超时，快速释放
+    connect_timeout: 10, // 10秒连接超时
+    max_lifetime: 60 * 10, // 10分钟连接生命周期，频繁刷新
     // SSL配置
     ssl: { rejectUnauthorized: false },
     // 错误处理
@@ -38,7 +56,13 @@ export async function getDb() {
     debug: false, // 关闭调试日志避免干扰
     transform: {
       undefined: null
-    }
+    },
+    // 开发环境特殊配置
+    ...(process.env.NODE_ENV === 'development' && {
+      max: 3, // 开发环境更严格限制
+      idle_timeout: 5, // 更快释放
+      max_lifetime: 60 * 5, // 5分钟生命周期
+    })
   });
 
   try {
@@ -56,11 +80,18 @@ export async function getDb() {
       console.log('🔄 Fallback to pooler connection');
       const poolerConnectionString = connectionString.replace(':5432', ':6543');
 
-      const fallbackClient = postgres(poolerConnectionString, {
+      // 先清理之前的客户端
+      if (client) {
+        client.end();
+        client = null;
+      }
+
+      client = postgres(poolerConnectionString, {
         prepare: false,
-        max: 5,
-        idle_timeout: 10,
+        max: 3, // pooler连接更严格限制
+        idle_timeout: 5,
         connect_timeout: 10,
+        max_lifetime: 60 * 5,
         ssl: { rejectUnauthorized: false },
         onnotice: () => {},
         debug: false,
@@ -70,8 +101,8 @@ export async function getDb() {
       });
 
       try {
-        db = drizzle(fallbackClient, { schema });
-        await fallbackClient`SELECT 1`;
+        db = drizzle(client, { schema });
+        await client`SELECT 1`;
         console.log('✅ Fallback database connection established');
         return db;
       } catch (fallbackError) {
