@@ -70,31 +70,31 @@ ${t('interactionDesc')}`;
                           </filter>
                         </defs>
                         {/* 更长的弯曲箭头主体 */}
-                        <path 
-                          d="M20,50 Q70,30 120,45 Q170,60 200,40" 
-                          stroke="#e74c3c" 
-                          strokeWidth="3" 
-                          fill="none" 
+                        <path
+                          d="M20,50 Q70,30 120,45 Q170,60 200,40"
+                          stroke="#e74c3c"
+                          strokeWidth="3"
+                          fill="none"
                           strokeLinecap="round"
                           filter="url(#rough-filter)"
                           className="transform rotate-1"
                         />
                         {/* 箭头头部 */}
-                        <path 
-                          d="M185,35 L200,40 L190,50" 
-                          stroke="#e74c3c" 
-                          strokeWidth="3" 
-                          fill="none" 
+                        <path
+                          d="M185,35 L200,40 L190,50"
+                          stroke="#e74c3c"
+                          strokeWidth="3"
+                          fill="none"
                           strokeLinecap="round"
                           filter="url(#rough-filter)"
                         />
                         {/* 更大的手写文字 */}
-                        <text 
-                          x="110" 
-                          y="85" 
-                          fill="#e74c3c" 
-                          fontFamily="Comic Sans MS, Marker Felt, Kalam, cursive" 
-                          fontSize="18" 
+                        <text
+                          x="110"
+                          y="85"
+                          fill="#e74c3c"
+                          fontFamily="Comic Sans MS, Marker Felt, Kalam, cursive"
+                          fontSize="18"
                           fontWeight="bold"
                           textAnchor="middle"
                           className="transform -rotate-2"
@@ -263,7 +263,7 @@ ${t('interactionDesc')}`;
             </p>
           </div>
         </div>
-        
+
         {/* 便签示例 */}
         <div className="my-6 relative">
           {/* 模拟聊天框消息 - 位于右侧 */}
@@ -299,31 +299,31 @@ ${t('interactionDesc')}`;
                 </filter>
               </defs>
               {/* 弯曲的箭头主体 - 从右指向左 */}
-              <path 
-                d="M200,40 Q170,60 120,45 Q70,30 20,50" 
-                stroke="#e74c3c" 
-                strokeWidth="3" 
-                fill="none" 
+              <path
+                d="M200,40 Q170,60 120,45 Q70,30 20,50"
+                stroke="#e74c3c"
+                strokeWidth="3"
+                fill="none"
                 strokeLinecap="round"
                 filter="url(#rough-filter)"
                 className="transform rotate-1"
               />
               {/* 箭头头部 - 指向左侧便签 */}
-              <path 
-                d="M35,45 L20,50 L30,60" 
-                stroke="#e74c3c" 
-                strokeWidth="3" 
-                fill="none" 
+              <path
+                d="M35,45 L20,50 L30,60"
+                stroke="#e74c3c"
+                strokeWidth="3"
+                fill="none"
                 strokeLinecap="round"
                 filter="url(#rough-filter)"
               />
               {/* 手写文字 */}
-              <text 
-                x="110" 
-                y="85" 
-                fill="#e74c3c" 
-                fontFamily="Comic Sans MS, Marker Felt, Kalam, cursive" 
-                fontSize="18" 
+              <text
+                x="110"
+                y="85"
+                fill="#e74c3c"
+                fontFamily="Comic Sans MS, Marker Felt, Kalam, cursive"
+                fontSize="18"
                 fontWeight="bold"
                 textAnchor="middle"
                 className="transform -rotate-2"
@@ -341,12 +341,12 @@ ${t('interactionDesc')}`;
               <div className="bg-yellow-100 border-yellow-200 border-2 rounded-lg p-4 relative shadow-md transform rotate-1">
                 <div className="absolute top-1 right-1 w-3 h-3 bg-yellow-100 border-yellow-200 border-t border-r transform rotate-45 translate-x-1 -translate-y-1" />
                 <div className="space-y-3">
-                  <div className="text-lg leading-relaxed whitespace-pre-wrap break-words" style={{ 
-                    fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive', 
-                    fontSize: '16px', 
-                    lineHeight: '1.6', 
-                    textShadow: '0 0.5px 1px rgba(0, 0, 0, 0.06)', 
-                    wordBreak: 'break-word' 
+                  <div className="text-lg leading-relaxed whitespace-pre-wrap break-words" style={{
+                    fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
+                    fontSize: '16px',
+                    lineHeight: '1.6',
+                    textShadow: '0 0.5px 1px rgba(0, 0, 0, 0.06)',
+                    wordBreak: 'break-word'
                   }}>
                     <span className="text-yellow-800">
                       {t('stickyNote.line1')}

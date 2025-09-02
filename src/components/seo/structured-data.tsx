@@ -189,7 +189,7 @@ export function DefaultOrganizationData() {
     url: baseUrl,
     logo: `${baseUrl}/logo.png`,
     description: 'AI驱动的个性化学习平台，为每位学习者提供智能化的学习体验',
-    sameAs: websiteConfig.metadata.social 
+    sameAs: websiteConfig.metadata.social
       ? Object.values(websiteConfig.metadata.social).filter(Boolean) as string[]
       : [],
   };
