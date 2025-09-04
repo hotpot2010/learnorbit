@@ -14,7 +14,7 @@ async function fixDatabaseSchema() {
         WHERE table_name = 'user' AND column_name = 'is_creator'
       `);
 
-      if (userColumns.rows.length === 0) {
+      if ((userColumns as any).length === 0) {
         console.log('➕ Adding is_creator column to user table...');
         await db.execute('ALTER TABLE "user" ADD COLUMN "is_creator" boolean DEFAULT false NOT NULL');
         console.log('✅ Added is_creator column');
@@ -33,7 +33,7 @@ async function fixDatabaseSchema() {
         WHERE table_name = 'creator_courses'
       `);
 
-      if (tables.rows.length === 0) {
+      if ((tables as any).length === 0) {
         console.log('➕ Creating creator_courses table...');
         await db.execute(`
           CREATE TABLE "creator_courses" (
@@ -80,7 +80,7 @@ async function fixDatabaseSchema() {
             WHERE tablename = 'creator_courses' AND indexname = 'creator_courses_slug_unique'
           `);
 
-          if (indexes.rows.length === 0) {
+          if ((indexes as any).length === 0) {
             console.log('➕ Adding missing unique index...');
             await db.execute('CREATE UNIQUE INDEX "creator_courses_slug_unique" ON "creator_courses" ("slug")');
             console.log('✅ Added unique index');
