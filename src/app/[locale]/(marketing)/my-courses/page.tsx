@@ -19,6 +19,7 @@ import { Routes } from '@/routes';
 import { trackKeyActionSafely } from '@/lib/key-actions-analytics';
 import { Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { isCreatorEmail, generateCourseSlug } from '@/lib/creator-utils';
 
 
 
@@ -36,7 +37,7 @@ const calculateDaysSince = (lastAccessed: string | null) => {
 const extractCourseInfo = (coursePlan: any) => {
   // 处理新格式（包含plan和tasks）和旧格式
   const planData = coursePlan?.plan || coursePlan;
-  
+
   if (!planData) {
     return {
       title: 'Unknown Course',
@@ -56,8 +57,8 @@ const extractCourseInfo = (coursePlan: any) => {
     // 新格式：planData 本身就是 LearningPlan，包含 title、description、plan
     plan = planData.plan || [];
     courseTitle = planData.title || (plan.length > 0 ? plan[0].title : 'Unknown Course');
-    courseDescription = planData.description || 
-      (plan[0]?.description && String(plan[0].description).trim() 
+    courseDescription = planData.description ||
+      (plan[0]?.description && String(plan[0].description).trim()
         ? String(plan[0].description)
         : (plan.length > 1 ? `${plan.length} step learning path` : 'Single step course'));
   } else {
@@ -429,16 +430,13 @@ export default function MyCoursesPage() {
                 
                 const isPublic = course.coursePlan?.isPublic === true;
                 if (isPublic) {
-                  // 构造公开课程 slug: [title]-[userId]
+                  // 检查是否为创作者账号
+                  const isCreator = currentUser?.email && isCreatorEmail(currentUser.email);
+                  
+                  // 使用 generateCourseSlug 函数生成正确的 slug
                   const title = extractCourseInfo(course.coursePlan).title || 'course';
-                  const slug = `${title}`
-                    .toString()
-                    .trim()
-                    .toLowerCase()
-                    .replace(/[^a-z0-9\u4e00-\u9fa5\s-]/g, '')
-                    .replace(/\s+/g, '-')
-                    .replace(/-+/g, '-')
-                    + `-${course.userId}`;
+                  const slug = generateCourseSlug(title, course.userId, isCreator || false);
+                  
                   const base = (process.env.NEXT_PUBLIC_BASE_URL as string) || '';
                   // 继续沿用现有 sessionStorage 传递计划与缓存，学习页已支持载入
                   handleCourseClick(course); // 写入 sessionStorage
@@ -478,6 +476,36 @@ export default function MyCoursesPage() {
                       body: JSON.stringify({ isPublic: nextPublic })
                     });
                     if (!resp.ok) throw new Error(await resp.text());
+
+                    // 如果是发布操作且用户是创作者，创建简洁URL映射
+                    if (nextPublic && currentUser?.email) {
+                      const isCreator = isCreatorEmail(currentUser.email);
+
+                      if (isCreator) {
+                        try {
+                          const courseInfo = extractCourseInfo(course.coursePlan);
+                          const createMappingResp = await fetch('/api/creator-courses', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              courseId: course.id,
+                              title: courseInfo.title,
+                              description: courseInfo.description
+                            })
+                          });
+
+                          if (createMappingResp.ok) {
+                            const mappingData = await createMappingResp.json();
+                            console.log('✅ Created creator course mapping:', mappingData.url);
+                          } else {
+                            console.warn('⚠️ Failed to create creator course mapping, but course was published');
+                          }
+                        } catch (mappingErr) {
+                          console.warn('⚠️ Error creating creator course mapping:', mappingErr);
+                        }
+                      }
+                    }
+
                     setCourses(prev => prev.map((c) => c.id === course.id ? { ...c, coursePlan: { ...c.coursePlan, isPublic: nextPublic } } : c));
                   } catch (err) {
                     console.error('发布失败', err);
@@ -521,10 +549,10 @@ export default function MyCoursesPage() {
                           setCourses(prev => prev.map(c => {
                             if (c.id === course.id) {
                               const rawPlan = c.coursePlan?.plan;
-                              let updatedPlan;
-                              
+                              let updatedPlan: any;
+
                               // 兼容新旧格式更新
-                              if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && 
+                              if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) &&
                                   (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
                                 // 新格式：更新 instruction 级别的 title 和 description
                                 updatedPlan = {
@@ -540,7 +568,7 @@ export default function MyCoursesPage() {
                                   ...planSteps.slice(1)
                                 ];
                               }
-                              
+
                               return { ...c, coursePlan: { ...c.coursePlan, plan: updatedPlan } };
                             }
                             return c;

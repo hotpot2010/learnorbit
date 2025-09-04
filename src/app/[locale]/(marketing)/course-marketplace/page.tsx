@@ -13,16 +13,7 @@ import { useEffect, useState, useMemo } from 'react';
 
 
 
-// 生成课程 slug
-const generateSlug = (title: string, ownerId: string) => {
-  const cleanTitle = title
-    .toLowerCase()
-    .replace(/[^a-z0-9\u4e00-\u9fff\s-]/g, '') // 保留中文、英文、数字、空格、连字符
-    .replace(/\s+/g, '-') // 空格替换为连字符
-    .replace(/-+/g, '-') // 多个连字符合并为一个
-    .trim();
-  return `${cleanTitle}-${ownerId}`;
-};
+import { generateCourseSlug } from '@/lib/creator-utils';
 
 interface PublicCourse {
   id: string;
@@ -33,6 +24,8 @@ interface PublicCourse {
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   ownerId: string;
   createdAt: string;
+  isCreator?: boolean; // 新增：标识是否为创作者
+  ownerName?: string; // 新增：创作者名称
 }
 
 export default function CourseMarketplacePage() {
@@ -74,9 +67,9 @@ export default function CourseMarketplacePage() {
   // 搜索过滤
   const filteredCourses = useMemo(() => {
     if (!searchQuery.trim()) return courses;
-    
+
     const query = searchQuery.toLowerCase();
-    return courses.filter(course => 
+    return courses.filter(course =>
       course.title.toLowerCase().includes(query) ||
       course.description.toLowerCase().includes(query)
     );
@@ -98,7 +91,7 @@ export default function CourseMarketplacePage() {
       <div className="container mx-auto px-4 py-8">
         {/* 页面标题 */}
         <div className="text-center mb-12">
-          <h1 
+          <h1
             className="text-4xl font-bold text-gray-800 mb-4 transform -rotate-1"
             style={{
               fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -106,7 +99,7 @@ export default function CourseMarketplacePage() {
           >
             📚 {t('title')}
           </h1>
-          <p 
+          <p
             className="text-lg text-gray-600 transform rotate-1"
             style={{
               fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -136,7 +129,7 @@ export default function CourseMarketplacePage() {
         {/* 课程统计 */}
         {!loading && filteredCourses.length > 0 && (
           <div className="text-center mb-8">
-            <p 
+            <p
               className="text-gray-600 transform rotate-1"
               style={{
                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -191,7 +184,7 @@ export default function CourseMarketplacePage() {
           <div className="text-center py-16">
             <div className="transform -rotate-2">
               <BookOpen className="w-24 h-24 text-gray-300 mx-auto mb-4" />
-              <h3 
+              <h3
                 className="text-xl font-bold text-gray-600 mb-2"
                 style={{
                   fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -199,13 +192,13 @@ export default function CourseMarketplacePage() {
               >
                 {searchQuery ? t('noSearchResults') : t('noCourses')}
               </h3>
-              <p 
+              <p
                 className="text-gray-500"
                 style={{
                   fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                 }}
               >
-                {searchQuery 
+                {searchQuery
                   ? t('noSearchResultsSubtitle')
                   : t('noCoursesSubtitle')
                 }
@@ -227,7 +220,7 @@ export default function CourseMarketplacePage() {
         {!loading && !currentUser && filteredCourses.length > 0 && (
           <div className="mt-16 text-center">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 transform rotate-1">
-              <p 
+              <p
                 className="text-blue-800 font-medium mb-4"
                 style={{
                   fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -252,7 +245,7 @@ export default function CourseMarketplacePage() {
 // 课程卡片组件 - 与首页样式保持一致
 const CourseCard = ({ course, index }: { course: PublicCourse; index: number }) => {
   const t = useTranslations('LearningPlatform.courseMarketplace');
-  const slug = generateSlug(course.title, course.ownerId);
+  const slug = generateCourseSlug(course.title, course.ownerId, course.isCreator || false);
 
   return (
     <LocaleLink href={`/study/${slug}`}>
@@ -326,6 +319,7 @@ const CourseCard = ({ course, index }: { course: PublicCourse; index: number }) 
 
             {/* 开始学习按钮 */}
             <button
+              type="button"
               className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm transform rotate-1 hover:rotate-0 shadow-md"
               style={{
                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -337,7 +331,7 @@ const CourseCard = ({ course, index }: { course: PublicCourse; index: number }) 
         </div>
 
         {/* 图钉装饰 */}
-        <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full shadow-md transform rotate-45 opacity-80"></div>
+        <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full shadow-md transform rotate-45 opacity-80" />
       </div>
     </LocaleLink>
   );
