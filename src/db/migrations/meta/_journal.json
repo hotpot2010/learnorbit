@@ -29,6 +29,27 @@
       "when": 1754396007321,
       "tag": "0003_right_onslaught",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1756719581497,
+      "tag": "0004_material_stingray",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1756890385649,
+      "tag": "0005_natural_vector",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1756955562293,
+      "tag": "0006_glossy_mariko_yashida",
+      "breakpoints": true
     }
   ]
 }

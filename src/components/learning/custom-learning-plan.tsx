@@ -9,6 +9,7 @@ import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { trackKeyActionSafely } from '@/lib/key-actions-analytics';
 import ReactMarkdown from 'react-markdown';
 
 // 生成随机评分
@@ -143,6 +144,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   const [taskGenerationStatus, setTaskGenerationStatus] = useState<'idle' | 'generating' | 'completed' | 'error'>('idle'); // 任务生成状态
   const [showCompletionNotification, setShowCompletionNotification] = useState(false); // 新增：显示完成通知
   const [isGeneratingCourse, setIsGeneratingCourse] = useState(false); // 整体课程生成状态
+  const [planStartTime, setPlanStartTime] = useState<number | null>(null); // 计划生成开始时间
   
   // 新增：任务缓存和生成状态管理
   const [taskCache, setTaskCache] = useState<Record<number, any>>({});
@@ -476,6 +478,12 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   // 新增：处理计划生成的回调
   const handlePlanGeneration = (updateSteps: number[], reason: string) => {
     console.log('🚀 开始计划生成:', { updateSteps, reason });
+    
+    // 记录计划生成开始时间（用于打点统计）
+    if (reason.includes('初次') || !planStartTime) {
+      setPlanStartTime(Date.now());
+    }
+    
     // 不立即显示学习计划区域，等收到数据时再显示
     // 只准备相关状态
     if (updateSteps.length > 0) {
@@ -1294,14 +1302,24 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                 }}
                 disabled={saveStatus === 'saving' || isGeneratingCourse}
                 onClick={() => {
-                  // 直接执行，无需登录检查
-                    // 保存当前计划（完整计划优先，否则使用部分计划）
-                    const currentPlan = learningPlan || partialPlan;
-                    if (currentPlan) {
-                      saveCourseToDatabase(currentPlan);
-                    } else {
-                      console.warn('⚠️ 没有可保存的学习计划');
-                    }
+                  // 保存当前计划（完整计划优先，否则使用部分计划）
+                  const currentPlan = learningPlan || partialPlan;
+                  if (currentPlan) {
+                    // 🎯 关键行为打点：开始学习
+                    trackKeyActionSafely('start_learning', {
+                      plan_id: `plan_${Date.now()}`, // 生成一个临时ID
+                      plan_type: learningPlan ? 'complete' : 'partial',
+                      total_steps: currentPlan.plan?.length || 0,
+                      estimated_duration: 'unknown', // LearningPlan中没有estimatedDuration字段
+                      course_title: currentPlan.title || 'unknown',
+                      has_custom_modifications: false, // 暂时设为false，后续可以根据用户修改情况调整
+                      plan_generation_time: Date.now() - (planStartTime || Date.now()), // 计划生成耗时
+                    }, currentUser);
+                    
+                    saveCourseToDatabase(currentPlan);
+                  } else {
+                    console.warn('⚠️ 没有可保存的学习计划');
+                  }
                 }}
               >
                 {saveStatus === 'saving' ? (

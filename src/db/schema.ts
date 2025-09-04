@@ -9,6 +9,8 @@ import {
   text,
   timestamp,
   uniqueIndex,
+  varchar,
+  bigint,
 } from 'drizzle-orm/pg-core';
 import { LearningPlan } from '@/types/learning-plan';
 
@@ -163,5 +165,31 @@ export const courseChatHistoryRelations = relations(courseChatHistory, ({ one })
   course: one(userCourses, {
     fields: [courseChatHistory.courseId],
     references: [userCourses.id],
+  }),
+}));
+
+
+// 关键用户行为表（专门用于核心转化行为追踪）
+export const keyActions = pgTable('key_actions', {
+  id: text('id').primaryKey().$defaultFn(() => `key_action_${crypto.randomUUID()}`),
+  eventName: varchar('event_name', { length: 50 }).notNull(), // 'generate_course' | 'start_learning' | 'continue_learning'
+  timestamp: bigint('timestamp', { mode: 'number' }).notNull(),
+  serverTimestamp: timestamp('server_timestamp').defaultNow().notNull(),
+  sessionId: varchar('session_id', { length: 200 }).notNull(),
+  userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }), // 必填且级联删除
+  locale: varchar('locale', { length: 10 }).notNull(),
+  deviceType: varchar('device_type', { length: 20 }).notNull(),
+  userAgent: varchar('user_agent', { length: 1000 }),
+  pagePath: varchar('page_path', { length: 500 }).notNull(),
+  pageTitle: varchar('page_title', { length: 200 }),
+  actionData: jsonb('action_data').notNull(), // 业务相关的行为数据
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// 创建索引以优化查询性能
+export const keyActionsRelations = relations(keyActions, ({ one }) => ({
+  user: one(user, {
+    fields: [keyActions.userId],
+    references: [user.id],
   }),
 }));

@@ -9,6 +9,7 @@ import { useLocaleRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { authClient } from '@/lib/auth-client';
+import { trackKeyActionSafely } from '@/lib/key-actions-analytics';
 
 interface CourseInputSectionProps {
   className?: string;
@@ -55,7 +56,10 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
     
     console.log('✅ 用户已登录，开始上传文件:', currentUser.id);
 
+    // 移除文件上传事件跟踪，只在页面切换时上报
+
     setIsUploading(true);
+    const uploadStartTime = Date.now();
     
     try {
       const formData = new FormData();
@@ -81,12 +85,20 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
           sessionStorage.setItem('hasUploadedFile', 'true');
           sessionStorage.setItem('uploadedFileName', file.name);
         }
+
+        // 移除文件上传成功事件跟踪
       } else {
         console.error('文件上传失败:', response.statusText);
+        
+        // 移除文件上传失败事件跟踪
+        
         alert('文件上传失败，请重试');
       }
     } catch (error) {
       console.error('文件上传出错:', error);
+      
+      // 移除文件上传异常事件跟踪
+      
       alert('文件上传出错，请重试');
     } finally {
       setIsUploading(false);
@@ -117,6 +129,8 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
   const handleSubmit = async () => {
     if (!input.trim()) return;
 
+    // 不再跟踪学习计划开始事件，只在页面切换时上报
+
     // 检查用户登录状态
     if (!currentUser) {
       setShowLoginDialog(true);
@@ -124,6 +138,16 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
     }
 
     setIsLoading(true);
+
+    // 🎯 关键行为打点：生成课程
+    trackKeyActionSafely('generate_course', {
+      input_text: input.trim(),
+      input_length: input.trim().length,
+      has_uploaded_file: !!uploadedFile,
+      uploaded_file_name: uploadedFile?.name || null,
+      generation_type: uploadedFile ? 'with_file' : 'text_only',
+      is_authenticated: true, // 已通过登录检查
+    }, currentUser);
 
     // 保存用户输入并立即跳转
     if (typeof window !== 'undefined') {

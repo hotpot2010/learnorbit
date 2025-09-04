@@ -16,10 +16,21 @@ import { StarRating } from '@/components/ui/star-rating';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { Routes } from '@/routes';
+import { trackKeyActionSafely } from '@/lib/key-actions-analytics';
 import { Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 
+
+// 计算距离上次访问的天数
+const calculateDaysSince = (lastAccessed: string | null) => {
+  if (!lastAccessed) return 0;
+  const lastDate = new Date(lastAccessed);
+  const now = new Date();
+  const diffTime = Math.abs(now.getTime() - lastDate.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+};
 
 // 从LearningPlan提取课程信息的辅助函数
 const extractCourseInfo = (coursePlan: any) => {
@@ -396,6 +407,26 @@ export default function MyCoursesPage() {
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
+                
+                // 🎯 关键行为打点：继续学习
+                const courseInfo = extractCourseInfo(course.coursePlan);
+                const planData = course.coursePlan?.plan || course.coursePlan;
+                const totalSteps = Array.isArray(planData) ? planData.length : (planData?.plan?.length || 0);
+                const buttonText = course.status === 'completed' ? 'Review Course 📚' : 'Continue Learning ⚡';
+                
+                trackKeyActionSafely('continue_learning', {
+                  course_id: course.id,
+                  course_title: courseInfo.title,
+                  course_status: course.status,
+                  progress_percentage: course.progress || 0,
+                  current_step: course.currentStep || 1,
+                  total_steps: totalSteps,
+                  last_accessed: course.updatedAt || course.createdAt,
+                  days_since_last_access: calculateDaysSince(course.updatedAt || course.createdAt),
+                  button_text: buttonText,
+                  is_public_course: course.coursePlan?.isPublic === true,
+                }, currentUser);
+                
                 const isPublic = course.coursePlan?.isPublic === true;
                 if (isPublic) {
                   // 构造公开课程 slug: [title]-[userId]

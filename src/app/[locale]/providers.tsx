@@ -3,6 +3,7 @@
 import { ActiveThemeProvider } from '@/components/layout/active-theme-provider';
 import { PaymentProvider } from '@/components/layout/payment-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { KeyActionsProvider } from '@/components/analytics/key-actions-provider';
 import { websiteConfig } from '@/config/website';
 import type { Translations } from 'fumadocs-ui/i18n';
 import { RootProvider } from 'fumadocs-ui/provider';
@@ -62,7 +63,11 @@ export function Providers({ children, locale }: ProvidersProps) {
       <ActiveThemeProvider>
         <RootProvider theme={theme} i18n={{ locale, locales, translations }}>
           <TooltipProvider>
-            <PaymentProvider>{children}</PaymentProvider>
+            <PaymentProvider>
+              <KeyActionsProvider>
+                {children}
+              </KeyActionsProvider>
+            </PaymentProvider>
           </TooltipProvider>
         </RootProvider>
       </ActiveThemeProvider>
