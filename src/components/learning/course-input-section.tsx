@@ -177,18 +177,21 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="w-full min-h-[80px] resize-none text-sm px-4 py-3 bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl shadow-sm focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
+          className="w-full min-h-[50px] lg:min-h-[80px] resize-none text-base lg:text-sm px-4 py-3 lg:py-3 pr-24 lg:pr-4 bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl shadow-sm focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
           disabled={isLoading}
+          style={{ fontSize: '16px' }} // 防止iOS缩放
+          rows={1}
         />
 
-        {/* 文件上传按钮 - 左下角 */}
-        <div className="absolute bottom-3 left-3 flex items-center gap-2">
+        {/* 移动端按钮组 - 右侧内嵌 */}
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 lg:hidden">
+          {/* 文件上传按钮 */}
           <Button
             onClick={() => fileInputRef.current?.click()}
             disabled={isLoading || isUploading || authPending}
             size="sm"
             variant="ghost"
-            className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100/50 rounded-lg transition-colors"
+            className="p-2 min-h-[40px] min-w-[40px] text-gray-400 hover:text-gray-600 hover:bg-gray-100/50 rounded-lg transition-colors"
             title={authPending ? "加载中..." : "上传文件"}
           >
             {isUploading ? (
@@ -200,11 +203,69 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
             )}
           </Button>
 
-          {/* 已上传文件标签 - 紧挨按钮右侧 */}
-          {uploadedFile && (
-            <div className="flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-600 rounded-md text-xs">
+          {/* 发送按钮 */}
+          <Button
+            onClick={handleSubmit}
+            disabled={!input.trim() || isLoading}
+            size="sm"
+            className="p-2 min-h-[40px] min-w-[40px] bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm transition-colors"
+          >
+            {isLoading ? (
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              <Send className="w-4 h-4" />
+            )}
+          </Button>
+        </div>
+
+        {/* 桌面端按钮布局 - 保持原样 */}
+        <div className="hidden lg:block">
+          {/* 文件上传按钮 - 左下角 */}
+          <div className="absolute bottom-3 left-3 flex items-center gap-2">
+            <Button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isLoading || isUploading || authPending}
+              size="sm"
+              variant="ghost"
+              className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100/50 rounded-lg transition-colors"
+              title={authPending ? "加载中..." : "上传文件"}
+            >
+              {isUploading ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : authPending ? (
+                <Loader2 className="w-4 h-4 animate-spin opacity-50" />
+              ) : (
+                <Paperclip className="w-4 h-4" />
+              )}
+            </Button>
+          </div>
+
+          {/* 发送按钮 - 右下角 */}
+          <div className="absolute bottom-3 right-3">
+            <Button
+              onClick={handleSubmit}
+              disabled={!input.trim() || isLoading}
+              size="sm"
+              className="px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm transition-colors"
+            >
+              {isLoading ? (
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  <Send className="w-3.5 h-3.5 mr-1" />
+                  {t('generatePlan')}
+                </>
+              )}
+            </Button>
+          </div>
+        </div>
+
+        {/* 已上传文件标签 - 移动端显示在输入框下方 */}
+        {uploadedFile && (
+          <div className="mt-2 lg:hidden">
+            <div className="flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-600 rounded-md text-xs w-fit">
               <FileIcon className="w-3 h-3" />
-              <span className="max-w-20 truncate">{uploadedFile.name}</span>
+              <span className="max-w-32 truncate">{uploadedFile.name}</span>
               <button
                 onClick={handleRemoveFile}
                 className="ml-1 text-gray-400 hover:text-gray-600 transition-colors"
@@ -212,27 +273,22 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
                 <X className="w-3 h-3" />
               </button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
-        {/* 发送按钮 - 右下角 */}
-        <div className="absolute bottom-3 right-3">
-          <Button
-            onClick={handleSubmit}
-            disabled={!input.trim() || isLoading}
-            size="sm"
-            className="px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm transition-colors"
-          >
-            {isLoading ? (
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            ) : (
-              <>
-                <Send className="w-3.5 h-3.5 mr-1" />
-                {t('generatePlan')}
-              </>
-            )}
-          </Button>
-        </div>
+        {/* 桌面端文件标签 - 保持原位置 */}
+        {uploadedFile && (
+          <div className="absolute bottom-3 left-16 hidden lg:flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-600 rounded-md text-xs">
+            <FileIcon className="w-3 h-3" />
+            <span className="max-w-20 truncate">{uploadedFile.name}</span>
+            <button
+              onClick={handleRemoveFile}
+              className="ml-1 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <X className="w-3 h-3" />
+            </button>
+          </div>
+        )}
 
         {/* 隐藏的文件输入 */}
         <input

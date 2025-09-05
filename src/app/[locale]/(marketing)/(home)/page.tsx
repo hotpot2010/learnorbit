@@ -94,17 +94,17 @@ export default async function HomePage(props: HomePageProps) {
         backgroundSize: '20px 20px',
       }}
     >
-      {/* 主要内容区域 - 放大10% */}
-      <div className="transform scale-110 origin-top">
+      {/* 主要内容区域 - 桌面端放大10%，移动端正常 */}
+      <div className="transform scale-100 lg:scale-110 origin-top">
         {/* 头部区域 - 手写笔记风格 */}
-        <section className="relative py-16 md:py-24">
+        <section className="relative py-8 md:py-16 lg:py-24 lg:min-h-0 min-h-[calc(100vh-4rem)] flex items-center">
           {/* 头部内容 */}
-          <Container className="relative z-10">
-            <div className="text-center space-y-6 w-full max-w-4xl mx-auto">
+          <Container className="relative z-10 w-full">
+            <div className="text-center space-y-6 w-full max-w-4xl mx-auto px-4 lg:px-0">
               {/* 手写标题 */}
               <div className="space-y-4">
                 <h1
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 leading-tight transform -rotate-1"
+                  className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-slate-800 leading-tight transform -rotate-1"
                   style={{
                     fontFamily:
                       '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -117,7 +117,7 @@ export default async function HomePage(props: HomePageProps) {
 
                 {/* 手写副标题 */}
                 <p
-                  className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto transform rotate-0.5"
+                  className="text-lg md:text-xl lg:text-xl text-gray-600 max-w-2xl mx-auto transform rotate-0.5"
                   style={{
                     fontFamily:
                       '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -137,8 +137,8 @@ export default async function HomePage(props: HomePageProps) {
           </Container>
         </section>
 
-        {/* 课程推荐区域 */}
-        <section className="relative py-8 md:py-12">
+        {/* 课程推荐区域 - 移动端隐藏 */}
+        <section className="relative py-8 md:py-12 hidden lg:block">
           <Container>
             <CourseRecommendationWithNavigation courses={preloadedCourses} />
           </Container>

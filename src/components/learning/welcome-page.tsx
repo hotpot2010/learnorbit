@@ -76,7 +76,7 @@ ${t('aiAssistantDesc')}
 
 ${t('interactionDesc')}`;
   return (
-    <div className="learning-content-area space-y-8">
+    <div className="learning-content-area space-y-8 pt-4 lg:pt-0">
       {/* 标题和课程信息部分 - 始终显示 */}
       <div className="space-y-4">
         <div className="relative">
@@ -568,8 +568,8 @@ ${t('interactionDesc')}`;
         </div>
       )}
 
-      {/* 开始学习按钮 - 与其他步骤提交按钮位置和样式保持一致 */}
-      <div className="flex justify-end pt-12">
+      {/* 开始学习按钮 - 移动端居中，桌面端右对齐 */}
+      <div className="flex justify-center lg:justify-end pt-12">
         <Button
           onClick={onStartLearning}
           className="bg-primary hover:bg-primary/90 transform rotate-1 shadow-lg font-bold"

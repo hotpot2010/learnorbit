@@ -8,9 +8,11 @@ import { LearningPlan, LearningStep } from '@/types/learning-plan';
 import { LocaleLink, useLocaleRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useCurrentUser } from '@/hooks/use-current-user';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Send } from 'lucide-react';
 import { trackKeyActionSafely } from '@/lib/key-actions-analytics';
 import ReactMarkdown from 'react-markdown';
+import { useMobileLayout } from '@/hooks/use-mobile-layout';
+import { MobileFlowDiagram } from '@/components/mobile/mobile-flow-diagram';
 
 // 生成随机评分
 const generateRating = (courseId: string) => {
@@ -130,7 +132,15 @@ interface CustomLearningPlanProps {
 export function CustomLearningPlan({ recommendedCourses, onSendMessage }: CustomLearningPlanProps) {
   const t = useTranslations('LearningPlatform');
   const currentUser = useCurrentUser();
+  const { isMobile } = useMobileLayout();
   const [showLearningPlan, setShowLearningPlan] = useState(false);
+  
+  // 移动端专用状态
+  const [mobileChatExpanded, setMobileChatExpanded] = useState(false);
+  const [showMobilePlan, setShowMobilePlan] = useState(false);
+  
+  // 聊天状态管理 - 避免重复初始化
+  const [chatInitialized, setChatInitialized] = useState(false);
   const [learningInput, setLearningInput] = useState<string>('');
   const [learningPlan, setLearningPlan] = useState<LearningPlan | null>(null);
   const [partialPlan, setPartialPlan] = useState<LearningPlan | null>(null); // 新增：用于逐步构建的计划
@@ -473,6 +483,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   const handleChatMessage = () => {
     setShowLearningPlan(true);
     setPlanUpdateStatus('updating');
+    setChatInitialized(true); // 标记聊天已初始化
   };
 
   // 新增：处理计划生成的回调
@@ -482,6 +493,12 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
     // 记录计划生成开始时间（用于打点统计）
     if (reason.includes('初次') || !planStartTime) {
       setPlanStartTime(Date.now());
+    }
+    
+    // 移动端：在开始生成计划时切换到计划展示模式
+    if (isMobile && reason.includes('初次')) {
+      setShowMobilePlan(true);
+      setMobileChatExpanded(false);
     }
     
     // 不立即显示学习计划区域，等收到数据时再显示
@@ -1097,6 +1114,12 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   return (
     <>
       {/* 动画样式定义 */}
+      <style jsx global>{`
+        /* 移动端聊天顶部padding */
+        .mobile-chat-padding [data-chat-area="true"] > div {
+          padding-top: 1rem !important;
+        }
+      `}</style>
       <style jsx>{`
         @keyframes slideInFromRight {
           0% {
@@ -1170,7 +1193,8 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         </div>
       )}
 
-      <div className="h-[calc(100vh-4rem)] flex"
+      {/* 桌面端布局 */}
+      <div className={`h-[calc(100vh-4rem)] ${isMobile ? 'hidden' : 'flex'}`}
            style={{
              backgroundImage: `
                linear-gradient(to right, #f0f0f0 1px, transparent 1px),
@@ -1178,26 +1202,26 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
              `,
              backgroundSize: '20px 20px'
            }}>
-      {/* AI聊天区域 */}
-      <div className="w-1/3 p-4">
-        <div className="h-full rounded-lg border border-gray-200 shadow-sm bg-white/80 backdrop-blur-sm p-4">
-          <AIChatInterface
-            className="h-full"
-            onMessageSent={handleChatMessage}
-            userInputFromHome={learningInput}
-            initialMessage={t('aiAssistant.welcomeCustomize')}
-            sessionId={sessionId}
-            externalMessage={externalMessage}
-            onPlanGeneration={handlePlanGeneration}
-            onPlanUpdate={handlePlanUpdate}
-            onStepUpdate={handleStepUpdate}
-            onIntroductionUpdate={handleIntroductionUpdate}
-          />
+        {/* AI聊天区域 */}
+        <div className="w-1/3 p-4">
+          <div className="h-full rounded-lg border border-gray-200 shadow-sm bg-white/80 backdrop-blur-sm p-4">
+            <AIChatInterface
+              className="h-full"
+              onMessageSent={handleChatMessage}
+              userInputFromHome={learningInput}
+              initialMessage={t('aiAssistant.welcomeCustomize')}
+              sessionId={sessionId}
+              externalMessage={externalMessage}
+              onPlanGeneration={handlePlanGeneration}
+              onPlanUpdate={handlePlanUpdate}
+              onStepUpdate={handleStepUpdate}
+              onIntroductionUpdate={handleIntroductionUpdate}
+            />
+          </div>
         </div>
-      </div>
 
-      {/* 学习计划区域 */}
-      <div className="w-2/3 p-4">
+        {/* 学习计划区域 */}
+        <div className="w-2/3 p-4">
         <div className="h-full flex flex-col relative">
           <div className="mb-4">
             <h2 className="text-lg font-bold text-center text-blue-700 transform rotate-1"
@@ -1352,6 +1376,174 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       </div>
 
 
+    </div>
+
+    {/* 移动端布局 */}
+    <div className={`${isMobile ? 'block' : 'hidden'} h-screen flex flex-col`}
+         style={{
+           backgroundImage: `
+             linear-gradient(to right, #f0f0f0 1px, transparent 1px),
+             linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)
+           `,
+           backgroundSize: '20px 20px'
+         }}>
+      
+      {/* 计划展示区域 - 当有计划时显示，否则隐藏 */}
+      {showMobilePlan && (
+        <div className={`flex-1 overflow-y-auto p-4 pb-20 ${mobileChatExpanded ? 'hidden' : 'block'}`}>
+          {!learningPlan && !partialPlan ? (
+            <div className="h-full flex items-center justify-center">
+              <div className="text-center text-gray-500 py-8">
+                <div className="text-4xl mb-4">🤖</div>
+                <p className="font-medium">AI正在为您生成个性化学习计划...</p>
+                <p className="text-sm mt-2">请稍候，这可能需要几分钟时间</p>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {/* 显示课程介绍 */}
+              {courseIntroduction && renderCourseIntroduction(courseIntroduction)}
+              
+              {/* 显示部分计划或完整计划 - 移动端使用3行布局 */}
+              <MobileFlowDiagram
+                steps={(learningPlan || partialPlan)?.plan || []}
+                newStepIndex={newStepIndex}
+                updatedStepIndex={updatedStepIndex}
+                updatingSteps={updatingSteps}
+                stepTaskStatus={stepTaskStatus}
+                taskCache={taskCache}
+              />
+
+              {/* 如果正在更新且只有部分计划，显示生成中的提示 */}
+              {partialPlan && planUpdateStatus === 'updating' && (
+                <div className="flex items-center justify-center py-8">
+                  <div className="bg-blue-50 p-4 rounded-lg border-2 border-dashed border-blue-300">
+                    <div className="flex items-center space-x-2">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
+                      <span className="text-blue-700 font-medium" style={{
+                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      }}>
+                        Generating more learning steps... ✨
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 开始学习按钮 - 与桌面端样式一致 */}
+              {(learningPlan || partialPlan) && (
+                <div className="flex justify-center pt-8 pb-6">
+                  <button
+                    className={`text-white px-6 py-2 rounded-lg font-medium text-base transform rotate-1 hover:rotate-0 transition-all duration-300 shadow-lg ${
+                      saveStatus === 'saving' || taskGenerationStatus === 'generating'
+                        ? 'bg-gray-500 cursor-not-allowed'
+                        : 'bg-blue-500 hover:bg-blue-600'
+                    }`}
+                    style={{
+                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    }}
+                    disabled={saveStatus === 'saving' || taskGenerationStatus === 'generating'}
+                    onClick={() => {
+                      const currentPlan = learningPlan || partialPlan;
+                      if (currentPlan) {
+                        // 🎯 关键行为打点：开始学习
+                        trackKeyActionSafely('start_learning', {
+                          plan_id: `plan_${Date.now()}`, // 生成一个临时ID
+                          plan_type: learningPlan ? 'complete' : 'partial',
+                          total_steps: currentPlan.plan?.length || 0,
+                          estimated_duration: 'unknown', // LearningPlan中没有estimatedDuration字段
+                          course_title: currentPlan.title || 'unknown',
+                          has_custom_modifications: false, // 暂时设为false，后续可以根据用户修改情况调整
+                          plan_generation_time: Date.now() - (planStartTime || Date.now()), // 计划生成耗时
+                        }, currentUser);
+                        
+                        saveCourseToDatabase(currentPlan);
+                      } else {
+                        console.warn('⚠️ 没有可保存的学习计划');
+                      }
+                    }}
+                  >
+                    {saveStatus === 'saving' ? (
+                      <>
+                        <span className="inline-block animate-spin mr-2">⏳</span>
+                        Saving Course...
+                      </>
+                    ) : taskGenerationStatus === 'generating' ? (
+                      <>
+                        <span className="inline-block animate-spin mr-2">🚀</span>
+                        Generating Content...
+                      </>
+                    ) : (
+                      'Start Learning Journey! 🚀'
+                    )}
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* 统一的聊天界面 - 根据状态显示不同样式 */}
+      <div className={`${
+        !showMobilePlan || mobileChatExpanded 
+          ? 'h-[calc(100vh-4rem)] flex flex-col' 
+          : 'hidden'
+      }`}>
+        
+        {/* 折叠按钮 - 只在展开状态且有计划时显示 */}
+        {showMobilePlan && mobileChatExpanded && (
+          <div className="flex justify-end p-2 border-b bg-white">
+            <button 
+              onClick={() => setMobileChatExpanded(false)}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="折叠聊天"
+            >
+              <ChevronDown className="w-5 h-5 text-gray-600" />
+            </button>
+          </div>
+        )}
+        
+        {/* 聊天界面主体 - 同一个组件实例，调整高度计算 */}
+        <div className={`flex-1 ${showMobilePlan && mobileChatExpanded ? 'h-[calc(100%-3rem)]' : ''}`}>
+          <AIChatInterface
+            className="h-full mobile-chat-padding"
+            onMessageSent={handleChatMessage}
+            userInputFromHome={!chatInitialized ? learningInput : undefined}
+            initialMessage={t('aiAssistant.welcomeCustomize')}
+            sessionId={sessionId}
+            externalMessage={externalMessage}
+            onPlanGeneration={handlePlanGeneration}
+            onPlanUpdate={handlePlanUpdate}
+            onStepUpdate={handleStepUpdate}
+            onIntroductionUpdate={handleIntroductionUpdate}
+            skipDefaultWelcome={chatInitialized}
+          />
+        </div>
+      </div>
+
+      {/* 底部聊天入口 - 只在有计划且聊天未展开时显示 */}
+      {showMobilePlan && !mobileChatExpanded && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t border-gray-200 z-40">
+          <div className="p-4">
+            <div 
+              onClick={() => setMobileChatExpanded(true)}
+              className="flex gap-2 cursor-pointer"
+            >
+              <div className="flex-1 border-gray-300 rounded-lg px-3 py-2 bg-white border text-gray-500 transition-colors hover:border-blue-300"
+                   style={{
+                     fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                     fontSize: '16px'
+                   }}>
+                Type your message...
+              </div>
+              <div className="bg-blue-500 hover:bg-blue-600 rounded-lg shadow-md p-2 flex items-center justify-center min-w-[40px] transition-colors">
+                <Send className="w-4 h-4 text-white" />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
 
     {/* 课程生成完成通知 */}

@@ -49,8 +49,8 @@ export function Navbar({ scroll }: NavBarProps) {
         'sticky inset-x-0 top-0 z-40 py-2 transition-all duration-300',
         scroll
           ? scrolled
-            ? 'bg-background/80 backdrop-blur-md border-b supports-backdrop-filter:bg-background/60'
-            : 'bg-transparent'
+            ? 'bg-background/80 backdrop-blur-md border-b supports-backdrop-filter:bg-background/60 lg:bg-background/80 lg:supports-backdrop-filter:bg-background/60 bg-background'
+            : 'bg-transparent lg:bg-transparent bg-background'
           : 'border-b bg-background'
       )}
     >
