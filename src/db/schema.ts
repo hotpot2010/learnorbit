@@ -20,6 +20,7 @@ export interface ExtendedCoursePlan {
   tasks?: Record<string, any>; // 生成的任务数据
   notes?: any[]; // 页面便签数据
   marks?: any[]; // 文本彩笔标记数据
+  isPublic?: boolean; // 是否公开课程
 }
 
 export const userCourses = pgTable('user_courses', {
@@ -91,6 +92,7 @@ export const user = pgTable("user", {
 	banReason: text('ban_reason'),
 	banExpires: timestamp('ban_expires'),
 	customerId: text('customer_id'),
+	isCreator: boolean('is_creator').default(false), // 新增：标记是否为创作者
 });
 
 export const session = pgTable("session", {
@@ -148,6 +150,28 @@ export const payment = pgTable("payment", {
 	updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
 
+// 创作者课程表（用于创建简洁的公开课程链接）
+export const creatorCourses = pgTable('creator_courses', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => `creator_course_${crypto.randomUUID()}`),
+  slug: varchar('slug', { length: 200 }).notNull().unique(), // 简洁的URL标识符
+  courseId: text('course_id')
+    .notNull()
+    .references(() => userCourses.id, { onDelete: 'cascade' }),
+  creatorId: text('creator_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  title: varchar('title', { length: 200 }).notNull(), // 公开显示的标题
+  description: text('description').default(''), // 公开显示的描述
+  isActive: boolean('is_active').default(true).notNull(), // 是否激活
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .notNull()
+    .$onUpdate(() => new Date()),
+});
+
 // 定义关系
 export const userCoursesRelations = relations(userCourses, ({ many }) => ({
   tasks: many(courseTasks),
@@ -190,6 +214,17 @@ export const keyActions = pgTable('key_actions', {
 export const keyActionsRelations = relations(keyActions, ({ one }) => ({
   user: one(user, {
     fields: [keyActions.userId],
+    references: [user.id],
+  }),
+}));
+
+export const creatorCoursesRelations = relations(creatorCourses, ({ one }) => ({
+  course: one(userCourses, {
+    fields: [creatorCourses.courseId],
+    references: [userCourses.id],
+  }),
+  creator: one(user, {
+    fields: [creatorCourses.creatorId],
     references: [user.id],
   }),
 }));
