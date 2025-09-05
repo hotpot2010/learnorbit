@@ -8,6 +8,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useLocaleRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useCurrentUser } from '@/hooks/use-current-user';
+import { useMobileLayout } from '@/hooks/use-mobile-layout';
 import { authClient } from '@/lib/auth-client';
 import { trackKeyActionSafely } from '@/lib/key-actions-analytics';
 
@@ -19,6 +20,7 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
   const t = useTranslations('LearningPlatform');
   const router = useLocaleRouter();
   const currentUser = useCurrentUser();
+  const { isMobile } = useMobileLayout();
   const { isPending: authPending } = authClient.useSession();
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -173,7 +175,7 @@ export function CourseInputSection({ className }: CourseInputSectionProps) {
     <div className={`w-full max-w-2xl mx-auto ${className}`}>
       <div className="relative">
         <Textarea
-          placeholder={t('inputPlaceholder')}
+          placeholder={isMobile ? '' : t('inputPlaceholder')}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}

@@ -20,7 +20,6 @@ export interface ExtendedCoursePlan {
   tasks?: Record<string, any>; // 生成的任务数据
   notes?: any[]; // 页面便签数据
   marks?: any[]; // 文本彩笔标记数据
-  isPublic?: boolean; // 是否公开
 }
 
 export const userCourses = pgTable('user_courses', {
@@ -79,30 +78,6 @@ export const courseChatHistory = pgTable('course_chat_history', {
     .$onUpdate(() => new Date()),
 });
 
-// 新增：创作者课程简洁URL映射表
-export const creatorCourses = pgTable('creator_courses', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => `creator_course_${crypto.randomUUID()}`),
-  slug: text('slug').notNull().unique(), // 简洁的URL slug，如：can-i-learn-ai-without-coding
-  courseId: text('course_id')
-    .notNull()
-    .references(() => userCourses.id, { onDelete: 'cascade' }),
-  creatorId: text('creator_id')
-    .notNull()
-    .references(() => user.id, { onDelete: 'cascade' }),
-  title: text('title').notNull(), // 冗余存储标题，便于SEO和sitemap生成
-  description: text('description'), // 冗余存储描述
-  isActive: boolean('is_active').default(true).notNull(), // 是否激活
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at')
-    .defaultNow()
-    .notNull()
-    .$onUpdate(() => new Date()),
-}, (table) => ({
-  slugUnique: uniqueIndex('creator_courses_slug_unique').on(table.slug),
-}));
-
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
 	name: text('name').notNull(),
@@ -116,7 +91,6 @@ export const user = pgTable("user", {
 	banReason: text('ban_reason'),
 	banExpires: timestamp('ban_expires'),
 	customerId: text('customer_id'),
-	isCreator: boolean('is_creator').default(false).notNull(), // 标识创作者账号
 });
 
 export const session = pgTable("session", {
@@ -194,6 +168,7 @@ export const courseChatHistoryRelations = relations(courseChatHistory, ({ one })
   }),
 }));
 
+
 // 关键用户行为表（专门用于核心转化行为追踪）
 export const keyActions = pgTable('key_actions', {
   id: text('id').primaryKey().$defaultFn(() => `key_action_${crypto.randomUUID()}`),
@@ -217,19 +192,4 @@ export const keyActionsRelations = relations(keyActions, ({ one }) => ({
     fields: [keyActions.userId],
     references: [user.id],
   }),
-}));
-
-export const creatorCoursesRelations = relations(creatorCourses, ({ one }) => ({
-  course: one(userCourses, {
-    fields: [creatorCourses.courseId],
-    references: [userCourses.id],
-  }),
-  creator: one(user, {
-    fields: [creatorCourses.creatorId],
-    references: [user.id],
-  }),
-}));
-
-export const userRelations = relations(user, ({ many }) => ({
-  creatorCourses: many(creatorCourses),
 }));
