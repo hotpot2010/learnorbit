@@ -44,6 +44,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   
   // 移动端专用状态
   const [mobileChatExpanded, setMobileChatExpanded] = useState(false);
+  const [mobileStepNavCollapsed, setMobileStepNavCollapsed] = useState(false);
   
   // 生成sessionId，与定制页面保持一致的逻辑
   const [sessionId] = useState(() => {
@@ -3023,6 +3024,17 @@ export default function StudyPage({ params }: StudyPageProps) {
     return node;
   };
 
+  // 移动端下一步按钮处理函数
+  const handleMobileNextStep = () => {
+    if (currentStepIndex < (learningPlan?.plan.length || getStepsData().length) - 1) {
+      setCurrentStepIndex(currentStepIndex + 1);
+      // 重置答题状态
+      setSelectedAnswers({});
+      setWrongAnswers(new Set());
+      setHasSubmitted(false);
+    }
+  };
+
   const handleMarkClick = (selectedText: string) => {
     if (typeof window === 'undefined') return;
     const sel = window.getSelection();
@@ -3754,59 +3766,89 @@ export default function StudyPage({ params }: StudyPageProps) {
         </div>
       ) : (
         <div className="flex flex-col h-full">
-          {/* 步骤导航区域 */}
-          <div className="bg-white border-b px-4 py-3">
-            <div className="flex justify-center items-center space-x-2 flex-wrap gap-y-2">
-              {getStepsData().slice(1).map((navStep, navIndex) => {
-                const navStepIndex = navIndex + 1;
-                const isCurrentNavStep = navStepIndex === currentStepIndex;
-                
-                // 与定制页面一致的颜色配置
-                const colors = [
-                  { bg: 'bg-blue-400', text: 'text-white', border: 'border-blue-400' },
-                  { bg: 'bg-green-400', text: 'text-white', border: 'border-green-400' },
-                  { bg: 'bg-yellow-400', text: 'text-white', border: 'border-yellow-400' },
-                  { bg: 'bg-purple-400', text: 'text-white', border: 'border-purple-400' },
-                  { bg: 'bg-pink-400', text: 'text-white', border: 'border-pink-400' },
-                  { bg: 'bg-indigo-400', text: 'text-white', border: 'border-indigo-400' },
-                  { bg: 'bg-red-400', text: 'text-white', border: 'border-red-400' },
-                  { bg: 'bg-orange-400', text: 'text-white', border: 'border-orange-400' }
-                ];
-                const colorScheme = colors[navIndex % colors.length];
-                
-                return (
-                  <button
-                    key={navStepIndex}
-                    onClick={() => {
-                      console.log(`📱 移动端点击步骤 ${navStepIndex}`, {
-                        from: currentStepIndex,
-                        to: navStepIndex,
-                        hasLearningPlan: !!learningPlan,
-                        routeParamsId: routeParams?.id
-                      });
-                      setCurrentStepIndex(navStepIndex);
-                      
-                      // 重置答题状态
-                      setSelectedAnswers({});
-                      setWrongAnswers(new Set());
-                      setHasSubmitted(false);
-                    }}
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transform transition-all duration-200 hover:scale-110 min-h-[40px] min-w-[40px] ${
-                      isCurrentNavStep 
-                        ? `${colorScheme.bg} ${colorScheme.text} ${colorScheme.border} scale-110 shadow-lg animate-pulse`
-                        : `bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200`
-                    } ${
-                      navIndex % 3 === 0 ? 'rotate-12' : navIndex % 3 === 1 ? '-rotate-12' : 'rotate-6'
-                    }`}
-                    style={{
-                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                    }}
-                    title={`步骤 ${navStepIndex}: ${navStep.title}`}
-                  >
-                    {navStepIndex}
-                  </button>
-                );
-              })}
+          {/* 步骤导航区域 - 支持折叠 */}
+          <div className="bg-white border-b">
+            {/* 折叠控制条 */}
+            <div 
+              className="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-50"
+              onClick={() => setMobileStepNavCollapsed(!mobileStepNavCollapsed)}
+            >
+              <span className="text-sm text-gray-600 font-medium" style={{
+                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+              }}>
+                {routeParams?.locale === 'en' ? 'Step' : '步骤'} {currentStepIndex}/{getStepsData().length - 1}
+              </span>
+              <div className="flex items-center space-x-2">
+                <div className="text-xs text-gray-500">
+                  {mobileStepNavCollapsed 
+                    ? (routeParams?.locale === 'en' ? 'Expand' : '展开')
+                    : (routeParams?.locale === 'en' ? 'Collapse' : '折叠')
+                  }
+                </div>
+                <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                  mobileStepNavCollapsed ? 'rotate-180' : ''
+                }`} />
+              </div>
+            </div>
+            
+            {/* 步骤按钮区域 - 可折叠 */}
+            <div className={`overflow-hidden transition-all duration-300 ${
+              mobileStepNavCollapsed ? 'max-h-0' : 'max-h-20'
+            }`}>
+              <div className="px-2 pb-3">
+                <div className="flex justify-start items-center gap-1 overflow-x-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                  {getStepsData().slice(1).map((navStep, navIndex) => {
+                    const navStepIndex = navIndex + 1;
+                    const isCurrentNavStep = navStepIndex === currentStepIndex;
+                    
+                    // 与定制页面一致的颜色配置
+                    const colors = [
+                      { bg: 'bg-blue-400', text: 'text-white', border: 'border-blue-400' },
+                      { bg: 'bg-green-400', text: 'text-white', border: 'border-green-400' },
+                      { bg: 'bg-yellow-400', text: 'text-white', border: 'border-yellow-400' },
+                      { bg: 'bg-purple-400', text: 'text-white', border: 'border-purple-400' },
+                      { bg: 'bg-pink-400', text: 'text-white', border: 'border-pink-400' },
+                      { bg: 'bg-indigo-400', text: 'text-white', border: 'border-indigo-400' },
+                      { bg: 'bg-red-400', text: 'text-white', border: 'border-red-400' },
+                      { bg: 'bg-orange-400', text: 'text-white', border: 'border-orange-400' }
+                    ];
+                    const colorScheme = colors[navIndex % colors.length];
+                    
+                    return (
+                      <button
+                        key={navStepIndex}
+                        onClick={() => {
+                          console.log(`📱 移动端点击步骤 ${navStepIndex}`, {
+                            from: currentStepIndex,
+                            to: navStepIndex,
+                            hasLearningPlan: !!learningPlan,
+                            routeParamsId: routeParams?.id
+                          });
+                          setCurrentStepIndex(navStepIndex);
+                          
+                          // 重置答题状态
+                          setSelectedAnswers({});
+                          setWrongAnswers(new Set());
+                          setHasSubmitted(false);
+                        }}
+                        className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 transform transition-all duration-200 hover:scale-110 ${
+                          isCurrentNavStep 
+                            ? `${colorScheme.bg} ${colorScheme.text} ${colorScheme.border} scale-110 shadow-lg animate-pulse`
+                            : `bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200`
+                        } ${
+                          navIndex % 3 === 0 ? 'rotate-12' : navIndex % 3 === 1 ? '-rotate-12' : 'rotate-6'
+                        }`}
+                        style={{
+                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        }}
+                        title={`步骤 ${navStepIndex}: ${navStep.title}`}
+                      >
+                        {navStepIndex}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -3901,10 +3943,10 @@ export default function StudyPage({ params }: StudyPageProps) {
                       {/* 推荐视频区域 - 移动端优化 */}
                       {getCurrentStepVideos().length > 0 && (
                         <div className="space-y-6 px-4">
-                          <h4 className="text-lg font-bold text-blue-700 text-center" style={{
+                          <h4 className="text-lg font-bold text-blue-700 text-left" style={{
                             fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                           }}>
-                            📺 推荐视频
+                            📺 {routeParams?.locale === 'en' ? 'Recommended Videos' : '推荐视频'}
                           </h4>
                           
                           <div className="space-y-4">
@@ -4000,13 +4042,13 @@ export default function StudyPage({ params }: StudyPageProps) {
                             {/* 视频列表 - 显示在视频下方 */}
                             {getCurrentStepVideos().length > 1 && (
                               <div className="w-full max-w-2xl mx-auto">
-                                <h5 className="text-sm font-bold text-gray-600 mb-3 text-center" style={{
+                                <h5 className="text-sm font-bold text-gray-600 mb-3 text-left" style={{
                                   fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                                 }}>
-                                  更多视频 ({getCurrentStepVideos().length})
+                                  {routeParams?.locale === 'en' ? 'More Videos' : '更多视频'} ({getCurrentStepVideos().length})
                                 </h5>
                                 <div className="grid grid-cols-1 gap-2">
-                                  {getCurrentStepVideos().map((video, index) => {
+                                  {getCurrentStepVideos().slice(0, 4).map((video, index) => {
                                     const active = index === currentVideoIndex;
                                     return (
                                       <button
@@ -4051,122 +4093,30 @@ export default function StudyPage({ params }: StudyPageProps) {
                         </div>
                       )}
 
-                      {/* Quiz 练习 - 移动端优化 */}
-                      {currentTask && currentTask.type === 'quiz' && currentTask.questions && (
-                        <div className="space-y-6 px-4">
-                          <div className="text-center">
-                            <h3 className="text-lg font-bold text-green-700 mb-4" style={{
-                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                            }}>
-                              🎯 课堂练习
-                            </h3>
-                          </div>
+                      {/* Quiz 练习 - 移动端已隐藏 */}
 
-                          <div className="space-y-6">
-                            {currentTask.questions.map((question, qIndex) => (
-                              <div key={qIndex} className="bg-white rounded-lg border-2 border-gray-200 shadow-sm p-4 transform rotate-0.5 hover:rotate-0 transition-all duration-200">
-                                <h4 className={`text-base font-bold mb-4 leading-relaxed break-words ${
-                                  wrongAnswers.has(qIndex) ? 'text-red-700' : 'text-gray-800'
-                                }`} style={{
-                                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                                }}>
-                                  <span className="mr-2">Q{qIndex + 1}:</span>
-                                  {question.question}
-                                </h4>
-                                
-                                <div className="space-y-3">
-                                  {question.options.map((option, index) => {
-                                    const isSelected = selectedAnswers[qIndex] === option;
-                                    const isWrongAnswer = hasSubmitted && isSelected && option !== question.answer;
-                                    const isCorrectAnswer = hasSubmitted && option === question.answer;
-                                    
-                                    return (
-                                      <label
-                                        key={index}
-                                        className={`flex items-start space-x-3 p-4 border-2 rounded-lg cursor-pointer transition-all min-h-[60px] ${
-                                          isWrongAnswer 
-                                            ? 'bg-red-100 border-red-400 text-red-800'
-                                            : isCorrectAnswer && hasSubmitted
-                                            ? 'bg-green-100 border-green-400 text-green-800'
-                                            : isSelected
-                                            ? 'bg-blue-100 border-blue-400 text-blue-800'
-                                            : 'bg-gray-50 border-gray-200 hover:border-gray-300 active:bg-gray-100'
-                                        }`}
-                                      >
-                                        <input
-                                          type="radio"
-                                          name={`question-${qIndex}`}
-                                          value={option}
-                                          checked={isSelected}
-                                          onChange={(e) => handleAnswerSelect(qIndex, e.target.value)}
-                                          className="text-blue-500 mt-1 flex-shrink-0"
-                                        />
-                                        <span className="text-sm font-medium flex-1 leading-relaxed break-words" style={{
-                                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                                        }}>
-                                          {String.fromCharCode(65 + index)}. {option}
-                                        </span>
-                                        <div className="flex-shrink-0">
-                                          {isWrongAnswer && (
-                                            <span className="text-red-600 font-bold text-lg">✗</span>
-                                          )}
-                                          {isCorrectAnswer && hasSubmitted && (
-                                            <span className="text-green-600 font-bold text-lg">✓</span>
-                                          )}
-                                        </div>
-                                      </label>
-                                    );
-                                  })}
-                                </div>
-                              </div>
-                            ))}
-
-                            {/* 提交按钮 */}
-                            <div className="flex justify-center pt-6">
-                              {!hasSubmitted ? (
-                                <Button
-                                  onClick={handleSubmitAnswers}
-                                  disabled={Object.keys(selectedAnswers).length !== currentTask.questions?.length}
-                                  className="bg-green-500 hover:bg-green-600 text-white font-bold transform rotate-1 shadow-lg px-6 py-3 min-h-[48px]"
-                                  style={{
-                                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                                  }}
-                                >
-                                  提交答案 ({Object.keys(selectedAnswers).length}/{currentTask.questions?.length || 0})
-                                </Button>
-                              ) : wrongAnswers.size === 0 ? (
-                                <div className="text-center">
-                                  <p className="text-green-600 font-bold text-lg mb-2 leading-relaxed" style={{
-                                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                                  }}>
-                                    🎉 全部正确！做得很棒！
-                                  </p>
-                                </div>
-                              ) : (
-                                <Button
-                                  onClick={handleSubmitAnswers}
-                                  className="bg-orange-500 hover:bg-orange-600 text-white font-bold transform rotate-1 shadow-lg px-6 py-3 min-h-[48px]"
-                                  style={{
-                                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                                  }}
-                                >
-                                  重新提交 (有 {wrongAnswers.size} 题需要修正)
-                                </Button>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                                          {/* 步骤导航提示 */}
-                    <div className="flex justify-center pt-12 pb-6">
+                                          {/* 步骤导航提示和下一步按钮 */}
+                    <div className="flex flex-col items-center pt-12 pb-6 space-y-4">
                       <div className="flex items-center space-x-4 text-sm text-gray-500" style={{
                         fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                       }}>
                         <span className="text-blue-600 font-bold">
-                          步骤 {currentStepIndex}/{getStepsData().length - 1}
+                          {routeParams?.locale === 'en' ? 'Step' : '步骤'} {currentStepIndex}/{getStepsData().length - 1}
                         </span>
                       </div>
+                      
+                      {/* 下一步按钮 - 移动端 */}
+                      {currentStepIndex < getStepsData().length - 1 && (
+                        <Button
+                          onClick={handleMobileNextStep}
+                          className="bg-blue-500 hover:bg-blue-600 text-white font-bold transform rotate-1 shadow-lg px-8 py-3 min-h-[48px]"
+                          style={{
+                            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                          }}
+                        >
+                          {routeParams?.locale === 'en' ? 'Next Step' : '下一步'} →
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -4184,7 +4134,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               >
                 <div className="flex items-center space-x-3 px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
                   <div className="flex-1 text-gray-500 text-sm" style={{ fontSize: '16px' }}>
-                    与AI助手对话...
+                    {routeParams?.locale === 'en' ? 'Chat with AI Assistant...' : '与AI助手对话...'}
                   </div>
                   <div className="text-gray-400">
                     💬
