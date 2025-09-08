@@ -18,7 +18,6 @@
     "setup-creators": "tsx scripts/setup-creators.ts",
     "test-creator": "tsx scripts/test-creator-feature.ts",
     "fix-db": "tsx scripts/fix-database-schema.ts",
-    "test-sitemap": "tsx scripts/test-sitemap.ts",
     "list-contacts": "tsx scripts/list-contacts.ts",
     "content": "fumadocs-mdx",
     "email": "email dev --dir src/mail/templates --port 3333",
