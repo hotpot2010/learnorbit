@@ -6,14 +6,13 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
+        allow: ['/', '/study/*'],
         disallow: [
           '/api/*',
           '/_next/*',
           '/admin/*',
           '/dashboard/*',
           '/auth/*',
-          '/study/*',
           '/my-courses/*',
           '/.well-known/*',
           '/tmp/*',
@@ -29,14 +28,13 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: 'Googlebot',
-        allow: '/',
+        allow: ['/', '/study/*'],
         disallow: [
           '/api/*',
           '/_next/*',
           '/admin/*',
           '/dashboard/*',
           '/auth/*',
-          '/study/*',
           '/my-courses/*',
           '/.well-known/*',
           '/tmp/*',
