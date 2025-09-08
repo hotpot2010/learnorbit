@@ -5,6 +5,7 @@
     "description": "AITutorly是一个AI驱动的学习平台，为您制定个性化学习计划，精选视频课程，提供智能测验，提升学习效率。"
   },
   "Common": {
+    "siteName": "AITutorly",
     "login": "登录",
     "logout": "退出",
     "signUp": "注册",
@@ -187,6 +188,20 @@
       },
       "error": {
         "failed": "任务更新失败，请稍后重试。"
+      }
+    },
+    "study": {
+      "generatingTasks": "正在生成学习任务...",
+      "noLearningPlan": "暂无学习计划",
+      "taskDataMissing": "# 任务数据缺失\n\n⚠️ 任务数据可能存在问题，请重新上传课程",
+      "recommendedVideos": "推荐视频",
+      "referenceImages": "参考图片",
+      "recommendedMaterials": "推荐资料",
+      "defaultTitle": "AI学习课程",
+      "defaultDescription": "个性化AI驱动的学习课程，旨在帮助您高效掌握新技能。",
+      "notFound": {
+        "title": "课程未找到",
+        "description": "无法找到请求的课程。"
       }
     }
 },

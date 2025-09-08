@@ -5,6 +5,7 @@
     "description": "AITutorly is an AI-powered learning platform that builds personalized study plans, curates video lessons, and provides quizzes to boost your learning efficiency."
   },
   "Common": {
+    "siteName": "AITutorly",
     "login": "Log in",
     "logout": "Log out",
     "signUp": "Sign up",
@@ -140,7 +141,13 @@
       "taskDataMissing": "# Task Data Missing\n\n⚠️ Task data may have issues, please re-upload the course",
       "recommendedVideos": "Recommended Videos",
       "referenceImages": "Reference Images",
-      "recommendedMaterials": "Recommended Materials"
+      "recommendedMaterials": "Recommended Materials",
+      "defaultTitle": "AI Learning Course",
+      "defaultDescription": "Personalized AI-powered learning course designed to help you master new skills efficiently.",
+      "notFound": {
+        "title": "Course Not Found",
+        "description": "The requested course could not be found."
+      }
     },
     "confirmDialog": {
       "deleteCourse": "Confirm Delete Course? 🗑️",
