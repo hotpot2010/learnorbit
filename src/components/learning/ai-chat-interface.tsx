@@ -48,6 +48,7 @@ interface AIChatInterfaceProps {
   onIntroductionUpdate?: (introduction: any) => void; // 新增：课程介绍更新回调
   currentTaskData?: any; // 新增：当前任务数据
   onTaskUpdateComplete?: (newTaskData: any) => void; // 新增：任务更新完成回调
+  isMobile?: boolean; // 新增：移动端标识
   onTaskUpdateSave?: (newTaskData: any) => void; // 新增：任务更新保存回调
 }
 
@@ -69,12 +70,24 @@ export function AIChatInterface({
   currentTaskData,
   onTaskUpdateComplete,
   onTaskUpdateSave,
+  isMobile = false,
 }: AIChatInterfaceProps) {
   const t = useTranslations('LearningPlatform');
   const locale = useLocale();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // 获取字体样式函数
+  const getFontFamily = () => {
+    if (isMobile) {
+      // 移动端使用更正常的字体
+      return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
+    } else {
+      // 桌面端保持原有的卡通字体
+      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+    }
+  };
   // 移除 isFirstMessage 状态，改用实时计算消息数量
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
@@ -1533,28 +1546,56 @@ export function AIChatInterface({
       )}
 
       {/* 输入框区域 */}
-      <div className="flex-shrink-0 pt-4 border-t border-gray-200 bg-white/90 backdrop-blur-sm">
-        <div className="flex gap-2">
-          <Input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Type your message..."
-            disabled={isLoading}
-            className="flex-1 border-gray-300 rounded-lg"
-            style={{
-              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
-            }}
-          />
-          <Button
-            onClick={handleSend}
-            disabled={!input.trim() || isLoading}
-            size="icon"
-            className="bg-blue-500 hover:bg-blue-600 rounded-lg shadow-md"
-          >
-            <Send className="w-4 h-4" />
-          </Button>
-        </div>
+      <div className={`flex-shrink-0 border-t border-gray-200 bg-white/90 backdrop-blur-sm ${isMobile ? 'p-4' : 'pt-4'}`}>
+        {isMobile ? (
+          // 移动端：与折叠状态完全一致的样式
+          <div className="flex items-center space-x-3 px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 transition-colors">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
+                }
+              }}
+              placeholder="Chat with AI Assistant..."
+              disabled={isLoading}
+              className="flex-1 text-gray-900 text-sm bg-transparent border-none outline-none placeholder-gray-500"
+              style={{ fontSize: '16px', fontFamily: getFontFamily() }}
+            />
+            <button
+              onClick={handleSend}
+              disabled={!input.trim() || isLoading}
+              className="text-gray-400 hover:text-blue-500 transition-colors disabled:opacity-50"
+            >
+              💬
+            </button>
+          </div>
+        ) : (
+          // 桌面端：保持原有样式
+          <div className="flex gap-2">
+            <Input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Type your message..."
+              disabled={isLoading}
+              className="flex-1 border-gray-300 rounded-lg"
+              style={{
+                fontFamily: getFontFamily(),
+              }}
+            />
+            <Button
+              onClick={handleSend}
+              disabled={!input.trim() || isLoading}
+              size="icon"
+              className="bg-blue-500 hover:bg-blue-600 rounded-lg shadow-md"
+            >
+              <Send className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -134,6 +134,17 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
   const currentUser = useCurrentUser();
   const { isMobile } = useMobileLayout();
   const [showLearningPlan, setShowLearningPlan] = useState(false);
+
+  // 获取字体样式函数
+  const getFontFamily = () => {
+    if (isMobile) {
+      // 移动端使用更正常的字体
+      return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
+    } else {
+      // 桌面端保持原有的卡通字体
+      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+    }
+  };
   
   // 移动端专用状态
   const [mobileChatExpanded, setMobileChatExpanded] = useState(false);
@@ -1210,6 +1221,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
               onMessageSent={handleChatMessage}
               userInputFromHome={learningInput}
               initialMessage={t('aiAssistant.welcomeCustomize')}
+              isMobile={false}
               sessionId={sessionId}
               externalMessage={externalMessage}
               onPlanGeneration={handlePlanGeneration}
@@ -1511,6 +1523,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             onMessageSent={handleChatMessage}
             userInputFromHome={!chatInitialized ? learningInput : undefined}
             initialMessage={t('aiAssistant.welcomeCustomize')}
+            isMobile={isMobile}
             sessionId={sessionId}
             externalMessage={externalMessage}
             onPlanGeneration={handlePlanGeneration}
@@ -1528,17 +1541,15 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
           <div className="p-4">
             <div 
               onClick={() => setMobileChatExpanded(true)}
-              className="flex gap-2 cursor-pointer"
+              className="cursor-pointer"
             >
-              <div className="flex-1 border-gray-300 rounded-lg px-3 py-2 bg-white border text-gray-500 transition-colors hover:border-blue-300"
-                   style={{
-                     fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
-                     fontSize: '16px'
-                   }}>
-                Type your message...
-              </div>
-              <div className="bg-blue-500 hover:bg-blue-600 rounded-lg shadow-md p-2 flex items-center justify-center min-w-[40px] transition-colors">
-                <Send className="w-4 h-4 text-white" />
+              <div className="flex items-center space-x-3 px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+                <div className="flex-1 text-gray-500 text-sm" style={{ fontSize: '16px', fontFamily: getFontFamily() }}>
+                  Chat with AI Assistant...
+                </div>
+                <div className="text-gray-400">
+                  💬
+                </div>
               </div>
             </div>
           </div>
