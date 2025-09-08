@@ -3024,6 +3024,29 @@ export default function StudyPage({ params }: StudyPageProps) {
     return node;
   };
 
+  // 通用滚动到顶部函数
+  const scrollToTop = () => {
+    setTimeout(() => {
+      if (isMobile) {
+        // 移动端：使用ID选择器定位滚动容器
+        const mobileScrollContainer = document.getElementById('mobile-content-scroll');
+        
+        if (mobileScrollContainer) {
+          // 直接设置scrollTop确保立即滚动
+          mobileScrollContainer.scrollTop = 0;
+          // 同时使用scrollTo提供平滑动画
+          mobileScrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          // 备用方案：页面级别滚动
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } else {
+        // 桌面端：页面级别滚动
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 150);
+  };
+
   // 移动端下一步按钮处理函数
   const handleMobileNextStep = () => {
     if (currentStepIndex < (learningPlan?.plan.length || getStepsData().length) - 1) {
@@ -3032,6 +3055,8 @@ export default function StudyPage({ params }: StudyPageProps) {
       setSelectedAnswers({});
       setWrongAnswers(new Set());
       setHasSubmitted(false);
+      // 自动滚动到页面顶部
+      scrollToTop();
     }
   };
 
@@ -3277,7 +3302,11 @@ export default function StudyPage({ params }: StudyPageProps) {
                 const courseInfo = getCourseInfo(learningPlan);
                 return (
                   <WelcomePage 
-                    onStartLearning={() => setCurrentStepIndex(1)}
+                    onStartLearning={() => {
+                      setCurrentStepIndex(1);
+                      // 自动滚动到页面顶部
+                      scrollToTop();
+                    }}
                     courseTitle={courseInfo.title}
                     courseDescription={courseInfo.description}
                   />
@@ -3757,7 +3786,11 @@ export default function StudyPage({ params }: StudyPageProps) {
             const courseInfo = getCourseInfo(learningPlan);
             return (
               <WelcomePage 
-                onStartLearning={() => setCurrentStepIndex(1)}
+                onStartLearning={() => {
+                  setCurrentStepIndex(1);
+                  // 自动滚动到页面顶部
+                  scrollToTop();
+                }}
                 courseTitle={courseInfo.title}
                 courseDescription={courseInfo.description}
               />
@@ -3830,6 +3863,9 @@ export default function StudyPage({ params }: StudyPageProps) {
                           setSelectedAnswers({});
                           setWrongAnswers(new Set());
                           setHasSubmitted(false);
+                          
+                          // 自动滚动到页面顶部
+                          scrollToTop();
                         }}
                         className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 transform transition-all duration-200 hover:scale-110 ${
                           isCurrentNavStep 
@@ -3853,7 +3889,7 @@ export default function StudyPage({ params }: StudyPageProps) {
           </div>
 
           {/* 主内容区域 - 可上下滑动 */}
-          <div className="flex-1 overflow-y-auto">
+          <div id="mobile-content-scroll" className="flex-1 overflow-y-auto">
             {(() => {
               const stepsData = getStepsData().slice(1);
               const targetIndex = currentStepIndex - 1;

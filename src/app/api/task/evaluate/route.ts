@@ -4,7 +4,7 @@ import { type TaskEvaluateRequest } from '@/types/learning-plan';
 import { getApiRequestContext, enhanceApiRequest } from '@/lib/api-utils';
 
 const EXTERNAL_API_URL =
-  process.env.EXTERNAL_API_URL || 'http://172.30.106.167:5000';
+  process.env.NEXT_PUBLIC_EXTERNAL_API_URL || 'http://172.30.106.167:5000';
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     const enhancedRequestData = enhanceApiRequest(requestData, context);
 
     console.log('🔧 环境变量调试信息 (evaluate):', {
-      'process.env.EXTERNAL_API_URL': process.env.EXTERNAL_API_URL,
+      'process.env.NEXT_PUBLIC_EXTERNAL_API_URL': process.env.NEXT_PUBLIC_EXTERNAL_API_URL,
       EXTERNAL_API_URL常量: EXTERNAL_API_URL,
       最终请求URL: `${EXTERNAL_API_URL}/api/task/evaluate`,
     });

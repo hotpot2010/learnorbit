@@ -7,7 +7,7 @@ import { auth } from '@/lib/auth';
 import { getApiRequestContext, enhanceApiRequest } from '@/lib/api-utils';
 
 const EXTERNAL_API_URL =
-  process.env.EXTERNAL_API_URL || 'http://172.30.106.167:5000';
+  process.env.NEXT_PUBLIC_EXTERNAL_API_URL || 'http://172.30.106.167:5000';
 
 // 重试配置
 const RETRY_CONFIG = {

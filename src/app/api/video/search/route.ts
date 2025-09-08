@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
     }
 
     const externalBase =
-      process.env.EXTERNAL_API_URL ||
       process.env.NEXT_PUBLIC_EXTERNAL_API_URL ||
       'https://study-platform.zeabur.app';
 
