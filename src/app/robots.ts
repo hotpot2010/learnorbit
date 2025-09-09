@@ -2,11 +2,13 @@ import type { MetadataRoute } from 'next';
 import { getBaseUrl } from '../lib/urls/urls';
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = process.env.NODE_ENV === 'production' ? 'https://aitutorly.ai' : getBaseUrl();
+  
   return {
     rules: [
       {
         userAgent: '*',
-        allow: ['/', '/study/*'],
+        allow: ['/', '/study/*', '/course-marketplace', '/pricing', '/contact'],
         disallow: [
           '/api/*',
           '/_next/*',
@@ -28,7 +30,7 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: 'Googlebot',
-        allow: ['/', '/study/*'],
+        allow: ['/', '/study/*', '/course-marketplace', '/pricing', '/contact'],
         disallow: [
           '/api/*',
           '/_next/*',
@@ -46,9 +48,10 @@ export default function robots(): MetadataRoute.Robots {
           '/privacy-policy',
           '/cookie-policy',
         ],
+        crawlDelay: 1,
       },
     ],
-    sitemap: `${getBaseUrl()}/sitemap.xml`,
-    host: getBaseUrl(),
+    sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
   };
 }
