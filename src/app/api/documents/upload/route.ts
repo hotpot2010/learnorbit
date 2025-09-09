@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     // 获取外部API的URL
-    const externalApiUrl = process.env.EXTERNAL_API_URL;
+    const externalApiUrl = process.env.NEXT_PUBLIC_EXTERNAL_API_URL;
     if (!externalApiUrl) {
       return NextResponse.json(
         { error: 'External API URL not configured' },

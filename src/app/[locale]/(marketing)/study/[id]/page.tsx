@@ -456,7 +456,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                           defaultValue={note.text || ''}
                           className={`w-full p-3 border rounded-lg ${isVideo ? 'border-purple-300 bg-purple-50 text-purple-800 focus:ring-purple-400' : isImage ? 'border-pink-300 bg-pink-50 text-pink-800 focus:ring-pink-400' : isDrag ? 'border-sky-300 bg-sky-50 text-sky-800 focus:ring-sky-400' : 'border-yellow-300 bg-yellow-50 text-yellow-800 focus:ring-yellow-400'} resize-none focus:outline-none focus:ring-2`}
                           style={{
-                            fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive',
+                            fontFamily: getFontFamily(),
                             fontSize: '16px',
                             lineHeight: '1.6',
                             minHeight: '80px'
@@ -501,13 +501,13 @@ export default function StudyPage({ params }: StudyPageProps) {
                         )}
                         
                         <div className="flex items-center space-x-2">
-                          <button onClick={() => handleSaveEdit(note.id)} className={`px-3 py-1 rounded-md transition-colors text-xs font-medium ${isVideo ? 'bg-purple-100 text-purple-700 hover:bg-purple-200' : isImage ? 'bg-pink-100 text-pink-700 hover:bg-pink-200' : isDrag ? 'bg-sky-100 text-sky-700 hover:bg-sky-200' : 'bg-green-100 text-green-700 hover:bg-green-200'}`} style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✓ Save</button>
-                          <button onClick={handleCancelEdit} className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors text-xs font-medium" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✕ Cancel</button>
+                          <button onClick={() => handleSaveEdit(note.id)} className={`px-3 py-1 rounded-md transition-colors text-xs font-medium ${isVideo ? 'bg-purple-100 text-purple-700 hover:bg-purple-200' : isImage ? 'bg-pink-100 text-pink-700 hover:bg-pink-200' : isDrag ? 'bg-sky-100 text-sky-700 hover:bg-sky-200' : 'bg-green-100 text-green-700 hover:bg-green-200'}`} style={{ fontFamily: getFontFamily() }}>✓ Save</button>
+                          <button onClick={handleCancelEdit} className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors text-xs font-medium" style={{ fontFamily: getFontFamily() }}>✕ Cancel</button>
                           <button 
                             onClick={() => triggerImageUpload(note.id)} 
                             disabled={uploadingImages[note.id]}
                             className={`px-3 py-1 rounded-md transition-colors text-xs font-medium flex items-center space-x-1 ${isVideo ? 'bg-purple-100 text-purple-700 hover:bg-purple-200' : isImage ? 'bg-pink-100 text-pink-700 hover:bg-pink-200' : isDrag ? 'bg-sky-100 text-sky-700 hover:bg-sky-200' : 'bg-blue-100 text-blue-700 hover:bg-blue-200'} disabled:opacity-50`} 
-                            style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}
+                            style={{ fontFamily: getFontFamily() }}
                             title="上传图片/GIF"
                           >
                             {uploadingImages[note.id] ? (
@@ -598,7 +598,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                       {/* 视频标题 */}
                                       <div className="mt-2 px-1">
                                         <p className={`text-xs font-medium ${timestampColor} truncate`} style={{
-                                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                          fontFamily: getFontFamily()
                                         }}>
                                           {note.videos?.[(note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0)]?.title || '无标题'}
                                         </p>
@@ -634,13 +634,13 @@ export default function StudyPage({ params }: StudyPageProps) {
                                               >
                                                 <div className="min-w-0 flex-1">
                                                   <div className={`text-xs font-bold ${timestampColor} truncate`} style={{
-                                                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                                    fontFamily: getFontFamily()
                                                   }}>
                                                     {video.title || '无标题'}
                                                   </div>
                                                   {video.duration && (
                                                     <div className={`text-xs ${timestampColor} opacity-70 mt-0.5`} style={{
-                                                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                                      fontFamily: getFontFamily()
                                                     }}>
                                                       {video.duration}
                                                     </div>
@@ -726,7 +726,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                       {/* 图片标题 */}
                                       <div className="mt-2 px-1">
                                         <p className={`text-xs font-medium ${timestampColor} truncate`} style={{
-                                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                          fontFamily: getFontFamily()
                                         }}>
                                           {note.images[(note.selectedImageIndex ?? noteImageIndices[note.id] ?? 0)]?.name || '无标题'}
                                         </p>
@@ -757,7 +757,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                               >
                                                 <div className="min-w-0 flex-1">
                                                   <div className={`text-xs font-bold ${timestampColor} truncate`} style={{
-                                                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                                    fontFamily: getFontFamily()
                                                   }}>
                                                     {image.name || '无标题'}
                                                   </div>
@@ -777,7 +777,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                         ) : (
                           <div className="space-y-3">
                             {/* 文本内容 */}
-                            <div className={`text-lg leading-relaxed whitespace-pre-wrap break-words cursor-pointer rounded p-1 -m-1 transition-colors ${isVideo ? 'text-purple-800 hover:bg-purple-50' : isImage ? 'text-pink-800 hover:bg-pink-50' : isDrag ? 'text-sky-800 hover:bg-sky-50' : 'text-yellow-800 hover:bg-yellow-50'}`} style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive', fontSize: '16px', lineHeight: '1.6', textShadow: '0 0.5px 1px rgba(0, 0, 0, 0.06)', wordBreak: 'break-word' }} onDoubleClick={() => handleStartEdit(note.id, note.text)} title="Double-click to edit">{note.text || '（空白便签，双击编辑）'}</div>
+                            <div className={`text-lg leading-relaxed whitespace-pre-wrap break-words cursor-pointer rounded p-1 -m-1 transition-colors ${isVideo ? 'text-purple-800 hover:bg-purple-50' : isImage ? 'text-pink-800 hover:bg-pink-50' : isDrag ? 'text-sky-800 hover:bg-sky-50' : 'text-yellow-800 hover:bg-yellow-50'}`} style={{ fontFamily: getFontFamily(), fontSize: '16px', lineHeight: '1.6', textShadow: '0 0.5px 1px rgba(0, 0, 0, 0.06)', wordBreak: 'break-word' }} onDoubleClick={() => handleStartEdit(note.id, note.text)} title="Double-click to edit">{note.text || '（空白便签，双击编辑）'}</div>
                             
                             {/* 普通便签中的图片展示区域 */}
                             {note.type !== 'image' && note.images && note.images.length > 0 && (
@@ -896,11 +896,11 @@ export default function StudyPage({ params }: StudyPageProps) {
                       </div>
                     )}
                     {editingNoteId !== note.id && (
-                      <div className={`text-xs opacity-70 ${timestampColor}`} style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>Added at {note.timestamp.toLocaleTimeString()}</div>
+                      <div className={`text-xs opacity-70 ${timestampColor}`} style={{ fontFamily: getFontFamily() }}>Added at {note.timestamp.toLocaleTimeString()}</div>
                     )}
                   </div>
                   {editingNoteId !== note.id && (
-                    <button onClick={() => handleDeleteNote(note.id)} className={`ml-3 p-1 rounded-full transition-all duration-200 transform hover:scale-110 flex-shrink-0 ${deleteHover}`} title="删除笔记" style={{ fontFamily: '"Kalam", "Comic Sans MS", "Marker Felt", cursive' }}>✕</button>
+                    <button onClick={() => handleDeleteNote(note.id)} className={`ml-3 p-1 rounded-full transition-all duration-200 transform hover:scale-110 flex-shrink-0 ${deleteHover}`} title="删除笔记" style={{ fontFamily: getFontFamily() }}>✕</button>
                   )}
                 </div>
               </div>
@@ -956,7 +956,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               return (
                 <>
                   <h2 data-anchor-index={anchorIdx} className="text-xl font-bold text-blue-700 mb-6 mt-8" style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    fontFamily: getFontFamily()
                   }} {...props}>
                     {renderNodeWithHighlights(children, anchorIdx)}
                   </h2>
@@ -969,7 +969,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               return (
                 <>
                   <h3 data-anchor-index={anchorIdx} className="text-lg font-bold text-purple-700 mb-5 mt-7" style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    fontFamily: getFontFamily()
                   }} {...props}>
                     {renderNodeWithHighlights(children, anchorIdx)}
                   </h3>
@@ -987,7 +987,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                     </div>
                     <div className="flex-1">
                       <p className="text-base leading-loose text-gray-800 font-bold" style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                        fontFamily: getFontFamily(),
                         fontSize: '1.2rem'
                       }} {...props}>
                         {renderNodeWithHighlights(children, anchorIdx)}
@@ -1008,7 +1008,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                     </div>
                     <div className="flex-1">
                       <ul className="list-disc list-inside text-gray-800 space-y-4" style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        fontFamily: getFontFamily()
                       }} {...props}>
                         {renderNodeWithHighlights(children, anchorIdx)}
                       </ul>
@@ -1028,7 +1028,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                     </div>
                     <div className="flex-1">
                       <ol className="list-decimal list-inside text-gray-800 space-y-4" style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        fontFamily: getFontFamily()
                       }} {...props}>
                         {renderNodeWithHighlights(children, anchorIdx)}
                       </ol>
@@ -1043,7 +1043,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               return (
                 <>
                   <li data-anchor-index={anchorIdx} className="text-base text-gray-800 leading-loose" style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                    fontFamily: getFontFamily(),
                     fontSize: '1.2rem'
                   }} {...props}>
                     {renderNodeWithHighlights(children, anchorIdx)}
@@ -1097,7 +1097,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                     </div>
                     <div className="flex-1">
                       <blockquote className="bg-orange-50 text-gray-800 p-3 rounded-lg italic border-l-4 border-orange-400" style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                        fontFamily: getFontFamily(),
                         fontSize: '1.2rem'
                       }} {...props}>
                         {renderNodeWithHighlights(children, anchorIdx)}
@@ -3024,6 +3024,43 @@ export default function StudyPage({ params }: StudyPageProps) {
     return node;
   };
 
+  // 获取字体样式函数
+  const getFontFamily = () => {
+    if (isMobile && routeParams?.locale === 'en') {
+      // 移动端英文模式使用正常字体
+      return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
+    } else if (isMobile) {
+      // 移动端中文模式保持卡通字体
+      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+    } else {
+      // 桌面端保持原有的卡通字体
+      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+    }
+  };
+
+  // 通用滚动到顶部函数
+  const scrollToTop = () => {
+    setTimeout(() => {
+      if (isMobile) {
+        // 移动端：使用ID选择器定位滚动容器
+        const mobileScrollContainer = document.getElementById('mobile-content-scroll');
+        
+        if (mobileScrollContainer) {
+          // 直接设置scrollTop确保立即滚动
+          mobileScrollContainer.scrollTop = 0;
+          // 同时使用scrollTo提供平滑动画
+          mobileScrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          // 备用方案：页面级别滚动
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } else {
+        // 桌面端：页面级别滚动
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 150);
+  };
+
   // 移动端下一步按钮处理函数
   const handleMobileNextStep = () => {
     if (currentStepIndex < (learningPlan?.plan.length || getStepsData().length) - 1) {
@@ -3032,6 +3069,8 @@ export default function StudyPage({ params }: StudyPageProps) {
       setSelectedAnswers({});
       setWrongAnswers(new Set());
       setHasSubmitted(false);
+      // 自动滚动到页面顶部
+      scrollToTop();
     }
   };
 
@@ -3149,14 +3188,14 @@ export default function StudyPage({ params }: StudyPageProps) {
                             index < currentStepIndex ? 'text-green-700' :
                             'text-gray-700'
                           }`} style={{
-                            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            fontFamily: getFontFamily()
                           }}>
                             {step.title}
                           </h4>
                           <span className={`px-2 py-1 rounded text-xs transform rotate-3 ${
                             step.type === 'theory' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
                           }`} style={{
-                            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            fontFamily: getFontFamily()
                           }}>
                             {step.type === 'theory' ? 'Theory' : 'Practice'}
                           </span>
@@ -3205,7 +3244,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                          : 'bg-gray-400 hover:bg-gray-400 cursor-not-allowed rotate-0'
                      }`}
                      style={{
-                       fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                       fontFamily: getFontFamily()
                      }}
                    >
                      <div className="flex items-center justify-center space-x-2">
@@ -3277,7 +3316,11 @@ export default function StudyPage({ params }: StudyPageProps) {
                 const courseInfo = getCourseInfo(learningPlan);
                 return (
                   <WelcomePage 
-                    onStartLearning={() => setCurrentStepIndex(1)}
+                    onStartLearning={() => {
+                      setCurrentStepIndex(1);
+                      // 自动滚动到页面顶部
+                      scrollToTop();
+                    }}
                     courseTitle={courseInfo.title}
                     courseDescription={courseInfo.description}
                   />
@@ -3318,7 +3361,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                 {getCurrentStepVideos().length > 0 && (
                   <div className="space-y-4">
                     <h4 className="text-xl font-bold text-blue-700" style={{
-                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      fontFamily: getFontFamily()
                     }}>
                       Recommended Videos:
                     </h4>
@@ -3401,7 +3444,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                             {/* 视频标题 */}
                             <div className="mt-2 px-1">
                               <p className="text-sm font-medium text-gray-700 truncate" style={{
-                                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                fontFamily: getFontFamily()
                               }}>
                                 {getCurrentStepVideos()[currentVideoIndex].title}
                               </p>
@@ -3450,13 +3493,13 @@ export default function StudyPage({ params }: StudyPageProps) {
                               >
                                 <div className="min-w-0 flex-1">
                                   <div className="text-sm font-bold text-gray-800 truncate" style={{
-                                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                fontFamily: getFontFamily()
                                   }}>
                                     {v.title}
                                   </div>
                                   {v.duration && (
                                     <div className="text-xs text-gray-600 mt-0.5" style={{
-                                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                      fontFamily: getFontFamily()
                                     }}>
                                       {v.duration}
                                     </div>
@@ -3505,7 +3548,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                 {currentTask?.web_res?.results && currentTask.web_res.results.length > 0 && (
                   <div className="space-y-4">
                     <h4 className="text-xl font-bold text-blue-700" style={{
-                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                              fontFamily: getFontFamily()
                             }}>
                       Recommended Resources:
                     </h4>
@@ -3527,7 +3570,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                             </span>
                             
                             <h5 className="text-base font-bold text-gray-800 hover:text-blue-600 transition-colors flex-1" style={{
-                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                              fontFamily: getFontFamily()
                             }}>
                               {result.title}
                             </h5>
@@ -3552,7 +3595,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                         <>
                           {/* 题目描述 - 使用quiz同款样式 */}
                           <h4 className={`font-bold text-base text-gray-800 border-b-2 border-dashed border-blue-400 pb-2 mb-3`} style={{
-                            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            fontFamily: getFontFamily()
                           }}>
                             <span className="mr-2 text-blue-700">
                               Task:
@@ -3618,7 +3661,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                           <h4 className={`font-bold text-base text-gray-800 border-b-2 border-dashed pb-2 mb-3 ${
                             wrongAnswers.has(qIndex) ? 'border-red-400 text-red-700' : 'border-blue-400'
                           }`} style={{
-                            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            fontFamily: getFontFamily()
                           }}>
                             <span className={`mr-2 ${wrongAnswers.has(qIndex) ? 'text-red-700' : 'text-blue-700'}`}>
                               Question {qIndex + 1}:
@@ -3655,7 +3698,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                     className="text-primary scale-75" 
                                   />
                                   <span className="text-xs leading-tight font-medium" style={{
-                                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                    fontFamily: getFontFamily()
                                   }}>
                                     {String.fromCharCode(65 + index)}. {option}
                                   </span>
@@ -3680,14 +3723,14 @@ export default function StudyPage({ params }: StudyPageProps) {
                       disabled={currentTask?.type === 'quiz' && Object.keys(selectedAnswers).length !== (currentTask?.questions?.length || 0)}
                       className="bg-primary hover:bg-primary/90 transform rotate-1 shadow-lg font-bold"
                       style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        fontFamily: getFontFamily()
                       }}
                     >
                       Submit Answer 🚀
                     </Button>
                   ) : wrongAnswers.size === 0 ? (
                     <div className="text-green-600 font-bold transform rotate-1" style={{
-                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      fontFamily: getFontFamily()
                     }}>
                       Correct! Switching to the next step... ✨
                     </div>
@@ -3697,7 +3740,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                       disabled={currentTask?.type === 'quiz' && Object.keys(selectedAnswers).length !== (currentTask?.questions?.length || 0)}
                       className="bg-primary hover:bg-primary/90 transform rotate-1 shadow-lg font-bold"
                       style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        fontFamily: getFontFamily()
                       }}
                     >
                       Re-submit 🔄
@@ -3722,6 +3765,9 @@ export default function StudyPage({ params }: StudyPageProps) {
               initialMessage="I am learning Q-Learning algorithm"
               recommendations={aiRecommendations}
               useStudyAPI={true}
+
+
+              isMobile={false}
               sessionId={sessionId}
               externalMessage={externalMessage}
               currentTaskData={(() => {
@@ -3757,7 +3803,11 @@ export default function StudyPage({ params }: StudyPageProps) {
             const courseInfo = getCourseInfo(learningPlan);
             return (
               <WelcomePage 
-                onStartLearning={() => setCurrentStepIndex(1)}
+                onStartLearning={() => {
+                  setCurrentStepIndex(1);
+                  // 自动滚动到页面顶部
+                  scrollToTop();
+                }}
                 courseTitle={courseInfo.title}
                 courseDescription={courseInfo.description}
               />
@@ -3774,7 +3824,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               onClick={() => setMobileStepNavCollapsed(!mobileStepNavCollapsed)}
             >
               <span className="text-sm text-gray-600 font-medium" style={{
-                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                fontFamily: getFontFamily()
               }}>
                 {routeParams?.locale === 'en' ? 'Step' : '步骤'} {currentStepIndex}/{getStepsData().length - 1}
               </span>
@@ -3830,6 +3880,9 @@ export default function StudyPage({ params }: StudyPageProps) {
                           setSelectedAnswers({});
                           setWrongAnswers(new Set());
                           setHasSubmitted(false);
+                          
+                          // 自动滚动到页面顶部
+                          scrollToTop();
                         }}
                         className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 transform transition-all duration-200 hover:scale-110 ${
                           isCurrentNavStep 
@@ -3839,7 +3892,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                           navIndex % 3 === 0 ? 'rotate-12' : navIndex % 3 === 1 ? '-rotate-12' : 'rotate-6'
                         }`}
                         style={{
-                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                          fontFamily: getFontFamily()
                         }}
                         title={`步骤 ${navStepIndex}: ${navStep.title}`}
                       >
@@ -3853,7 +3906,7 @@ export default function StudyPage({ params }: StudyPageProps) {
           </div>
 
           {/* 主内容区域 - 可上下滑动 */}
-          <div className="flex-1 overflow-y-auto">
+          <div id="mobile-content-scroll" className="flex-1 overflow-y-auto">
             {(() => {
               const stepsData = getStepsData().slice(1);
               const targetIndex = currentStepIndex - 1;
@@ -3888,21 +3941,21 @@ export default function StudyPage({ params }: StudyPageProps) {
                             components={{
                               h1: ({ children, ...props }) => (
                                 <h1 className="text-2xl font-bold text-blue-700 mb-6 mt-8" style={{
-                                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                  fontFamily: getFontFamily()
                                 }} {...props}>
                                   {children}
                                 </h1>
                               ),
                               h2: ({ children, ...props }) => (
                                 <h2 className="text-xl font-bold text-blue-700 mb-6 mt-8" style={{
-                                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                  fontFamily: getFontFamily()
                                 }} {...props}>
                                   {children}
                                 </h2>
                               ),
                               h3: ({ children, ...props }) => (
                                 <h3 className="text-lg font-bold text-purple-700 mb-5 mt-7" style={{
-                                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                  fontFamily: getFontFamily()
                                 }} {...props}>
                                   {children}
                                 </h3>
@@ -3914,7 +3967,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                   </div>
                                   <div className="flex-1">
                                     <p className="text-base leading-loose text-gray-800 font-bold" style={{
-                                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                      fontFamily: getFontFamily()
                                     }} {...props}>
                                       {children}
                                     </p>
@@ -3923,7 +3976,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                               ),
                               ul: ({ children, ...props }) => (
                                 <ul className="list-disc list-inside space-y-2 ml-4 text-gray-700" style={{
-                                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                  fontFamily: getFontFamily()
                                 }} {...props}>
                                   {children}
                                 </ul>
@@ -3944,7 +3997,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                       {getCurrentStepVideos().length > 0 && (
                         <div className="space-y-6 px-4">
                           <h4 className="text-lg font-bold text-blue-700 text-left" style={{
-                            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            fontFamily: getFontFamily()
                           }}>
                             📺 {routeParams?.locale === 'en' ? 'Recommended Videos' : '推荐视频'}
                           </h4>
@@ -4025,7 +4078,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                   {/* 视频标题 */}
                                   <div className="mt-3 px-2 text-center">
                                     <p className="text-sm font-medium text-gray-700 leading-relaxed" style={{
-                                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                      fontFamily: getFontFamily()
                                     }}>
                                       {getCurrentStepVideos()[currentVideoIndex].title}
                                     </p>
@@ -4043,7 +4096,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                             {getCurrentStepVideos().length > 1 && (
                               <div className="w-full max-w-2xl mx-auto">
                                 <h5 className="text-sm font-bold text-gray-600 mb-3 text-left" style={{
-                                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                  fontFamily: getFontFamily()
                                 }}>
                                   {routeParams?.locale === 'en' ? 'More Videos' : '更多视频'} ({getCurrentStepVideos().length})
                                 </h5>
@@ -4067,13 +4120,13 @@ export default function StudyPage({ params }: StudyPageProps) {
                                           </div>
                                           <div className="flex-1 min-w-0">
                                             <div className="text-sm font-bold text-gray-800 leading-relaxed break-words" style={{
-                                              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                              fontFamily: getFontFamily()
                                             }}>
                                               {video.title || `Video ${index + 1}`}
                                             </div>
                                             {video.duration && (
                                               <div className="text-xs text-gray-600 mt-0.5" style={{
-                                                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                                                fontFamily: getFontFamily()
                                               }}>
                                                 {video.duration}
                                               </div>
@@ -4098,7 +4151,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                           {/* 步骤导航提示和下一步按钮 */}
                     <div className="flex flex-col items-center pt-12 pb-6 space-y-4">
                       <div className="flex items-center space-x-4 text-sm text-gray-500" style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        fontFamily: getFontFamily()
                       }}>
                         <span className="text-blue-600 font-bold">
                           {routeParams?.locale === 'en' ? 'Step' : '步骤'} {currentStepIndex}/{getStepsData().length - 1}
@@ -4111,7 +4164,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                           onClick={handleMobileNextStep}
                           className="bg-blue-500 hover:bg-blue-600 text-white font-bold transform rotate-1 shadow-lg px-8 py-3 min-h-[48px]"
                           style={{
-                            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                            fontFamily: getFontFamily()
                           }}
                         >
                           {routeParams?.locale === 'en' ? 'Next Step' : '下一步'} →
@@ -4129,11 +4182,16 @@ export default function StudyPage({ params }: StudyPageProps) {
             {/* 折叠状态的聊天输入框 */}
             {!mobileChatExpanded && (
               <div 
-                className="border-t bg-white p-4 cursor-pointer"
+                className="border-t bg-white cursor-pointer mobile-chat-input-safe"
+                style={{
+                  paddingTop: '1rem',
+                  paddingLeft: '1rem',
+                  paddingRight: '1rem'
+                }}
                 onClick={() => setMobileChatExpanded(true)}
               >
                 <div className="flex items-center space-x-3 px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
-                  <div className="flex-1 text-gray-500 text-sm" style={{ fontSize: '16px' }}>
+                  <div className="flex-1 text-gray-500 text-sm" style={{ fontSize: '16px', fontFamily: getFontFamily() }}>
                     {routeParams?.locale === 'en' ? 'Chat with AI Assistant...' : '与AI助手对话...'}
                   </div>
                   <div className="text-gray-400">
@@ -4146,9 +4204,9 @@ export default function StudyPage({ params }: StudyPageProps) {
             {/* 展开状态的完整聊天界面 */}
             {mobileChatExpanded && (
               <div 
-                className="absolute bottom-0 left-0 right-0 bg-white border-t shadow-lg transform transition-transform duration-300"
+                className="absolute bottom-0 left-0 right-0 bg-white border-t shadow-lg transform transition-transform duration-300 mobile-chat-container-safe"
                 style={{
-                  height: 'calc(100vh - 4rem)',
+                  height: 'calc(100dvh - 4rem)',
                   transform: mobileChatExpanded ? 'translateY(0)' : 'translateY(100%)',
                   zIndex: 50
                 }}
@@ -4168,6 +4226,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                   <AIChatInterface
                     sessionId={sessionId}
                     useStudyAPI={true}
+                    isMobile={isMobile}
                     currentTaskData={{
                       currentStepIndex,
                       totalSteps: getStepsData().length - 1,

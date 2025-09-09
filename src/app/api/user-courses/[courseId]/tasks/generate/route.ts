@@ -7,7 +7,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 const EXTERNAL_API_URL =
-  process.env.EXTERNAL_API_URL || 'http://172.30.106.167:5000';
+  process.env.NEXT_PUBLIC_EXTERNAL_API_URL || 'http://172.30.106.167:5000';
 
 // 批量生成课程的所有任务
 export async function POST(
