@@ -3,7 +3,7 @@ import { getBaseUrl } from '../lib/urls/urls';
 
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = process.env.NODE_ENV === 'production' ? 'https://aitutorly.ai' : getBaseUrl();
-  
+
   return {
     rules: [
       {

@@ -15,10 +15,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const resolvedParams = await params;
   const { locale, id } = resolvedParams;
   const baseUrl = process.env.NODE_ENV === 'production' ? 'https://aitutorly.ai' : getBaseUrl();
-  
+
   try {
     const db = await getDb();
-    
+
     // 1. 首先尝试从创作者课程表中查找
     const creatorCourse = await db
       .select({
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     if (creatorCourse.length > 0) {
       const course = creatorCourse[0];
       const courseUrl = `${baseUrl}/${locale}/study/${course.slug}`;
-      
+
       return {
         title: `${course.title} - AI智能学习助手 | AiTutorly`,
         description: course.description || `通过AI智能助手学习${course.title}，个性化学习路径，互动式学习体验。`,
@@ -115,7 +115,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
       const rawPlan = coursePlan.plan;
       let title = '';
-      
+
       // 兼容新旧格式
       if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && rawPlan.title) {
         title = rawPlan.title;
@@ -125,13 +125,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         title = 'Untitled Course';
       }
 
-      const isCreatorAccount = course.isCreator || (course.userEmail && isCreatorEmail(course.userEmail));
+      const isCreatorAccount = Boolean(course.isCreator || (course.userEmail && isCreatorEmail(course.userEmail)));
       const courseSlug = generateCourseSlug(title, course.userId, isCreatorAccount);
-      
+
       if (courseSlug === id) {
         const courseUrl = `${baseUrl}/${locale}/study/${courseSlug}`;
         const description = rawPlan?.description || rawPlan?.introduction || `通过AI智能助手学习${title}，个性化学习路径，互动式学习体验。`;
-        
+
         return {
           title: `${title} - AI智能学习助手 | AiTutorly`,
           description,
@@ -196,7 +196,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     notFound();
   } catch (error) {
     console.error('❌ Error generating metadata for course:', error);
-    
+
     // 发生错误时返回基本元数据
     return {
       title: 'AI智能学习助手 | AiTutorly',
