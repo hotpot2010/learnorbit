@@ -56,10 +56,12 @@ const cleanDescription = (description: string): string => {
 // 描述展示组件
 const DescriptionSection = ({ 
   description, 
-  stepNumber
+  stepNumber,
+  fontFamily = '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
 }: { 
   description: string; 
   stepNumber: number;
+  fontFamily?: string;
 }) => {
   if (!description || description.trim() === '') return null;
   
@@ -77,7 +79,7 @@ const DescriptionSection = ({
         <div className="flex-1">
           <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed"
                style={{
-                 fontFamily: getFontFamily()
+                 fontFamily: fontFamily
                }}>
             <ReactMarkdown
               components={{
@@ -1121,6 +1123,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         <DescriptionSection 
           description={step.description} 
           stepNumber={step.step}
+          fontFamily={getFontFamily()}
         />
       </div>
     );
