@@ -1491,8 +1491,7 @@ export function AIChatInterface({
                       : 'bg-gray-100 text-gray-800'
                   }`}
                   style={{
-                    fontFamily:
-                      '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                    fontFamily: getFontFamily(),
                   }}
                 >
                   <p className="text-sm whitespace-pre-wrap">{message.content}</p>
@@ -1538,7 +1537,7 @@ export function AIChatInterface({
               onClick={() => handleRecommendationClick(question)}
               className="w-full text-left p-2 bg-red-100 hover:bg-red-200 border border-red-300 rounded-lg text-xs transition-colors transform hover:rotate-0.5"
               style={{
-                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                fontFamily: getFontFamily(),
               }}
             >
               <span className="text-red-700 font-medium">Q{index + 1}:</span>{' '}

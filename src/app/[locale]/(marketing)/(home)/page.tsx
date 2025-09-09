@@ -82,10 +82,18 @@ export default async function HomePage(props: HomePageProps) {
   const { locale } = params;
   const t = await getTranslations({ locale, namespace: 'LearningPlatform' });
   const preloadedCourses = await getPublicCoursesCached();
+  
+  // 移动端英文模式使用正常字体，其他情况使用卡通字体
+  const getFontFamily = (isEnglish: boolean) => {
+    return isEnglish 
+      ? 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif'
+      : '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+  };
 
   return (
     <div
       className="relative min-h-screen"
+      data-locale={locale}
       style={{
         backgroundImage: `
              linear-gradient(to right, #f0f0f0 1px, transparent 1px),
@@ -104,10 +112,9 @@ export default async function HomePage(props: HomePageProps) {
               {/* 手写标题 */}
               <div className="space-y-4">
                 <h1
-                  className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-slate-800 leading-tight transform -rotate-1"
+                  className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-slate-800 leading-tight transform -rotate-1 homepage-title"
                   style={{
-                    fontFamily:
-                      '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                    fontFamily: getFontFamily(locale === 'en'),
                   }}
                 >
                   <span className="bg-yellow-200 px-4 py-2 rounded-lg inline-block shadow-sm">
@@ -117,10 +124,9 @@ export default async function HomePage(props: HomePageProps) {
 
                 {/* 手写副标题 */}
                 <p
-                  className="text-lg md:text-xl lg:text-xl text-gray-600 max-w-2xl mx-auto transform rotate-0.5"
+                  className="text-lg md:text-xl lg:text-xl text-gray-600 max-w-2xl mx-auto transform rotate-0.5 homepage-subtitle"
                   style={{
-                    fontFamily:
-                      '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
+                    fontFamily: getFontFamily(locale === 'en'),
                   }}
                 >
                   {t('hero.subtitle')} 📚

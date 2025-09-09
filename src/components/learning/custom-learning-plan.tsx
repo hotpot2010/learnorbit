@@ -77,7 +77,7 @@ const DescriptionSection = ({
         <div className="flex-1">
           <div className="prose prose-sm max-w-none text-gray-700 leading-relaxed"
                style={{
-                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                 fontFamily: getFontFamily()
                }}>
             <ReactMarkdown
               components={{
@@ -912,7 +912,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       <div className="mb-6">
         <div className="bg-yellow-50 p-5 rounded-lg border border-yellow-200 shadow-sm"
              style={{ 
-               fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+               fontFamily: getFontFamily()
              }}>
           <div className="space-y-4">
             {filteredIntroduction.map(([key, value]) => (
@@ -1016,7 +1016,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             isUpdatingStep ? 'text-orange-700 animate-pulse' : ''
           }`}
               style={{
-                fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                fontFamily: getFontFamily()
               }}>
             {step.title}
             {isNewStep && <span className="ml-2 text-sm">✨ New!</span>}
@@ -1061,7 +1061,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
           <span className={`px-2 py-1 rounded text-xs transform rotate-1 ${
             step.type === 'quiz' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
           }`} style={{
-            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+            fontFamily: getFontFamily()
           }}>
             {step.type === 'quiz' ? '📝 Quiz' : '💻 Coding'}
           </span>
@@ -1072,7 +1072,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             step.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800' :
             'bg-red-100 text-red-800'
           }`} style={{
-            fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+            fontFamily: getFontFamily()
           }}>
             {step.difficulty === 'beginner' ? '🌱 Beginner' :
              step.difficulty === 'intermediate' ? '🌿 Intermediate' : '🌳 Advanced'}
@@ -1082,7 +1082,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
           {step.videos && step.videos.length > 0 && step.videos[0].duration && (
             <span className="px-2 py-1 rounded text-xs transform rotate-0.5 bg-gray-100 text-gray-700"
                   style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    fontFamily: getFontFamily()
                   }}>
               ⏱️ {step.videos[0].duration}
             </span>
@@ -1187,12 +1187,12 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
             </div>
             <div className="space-y-3">
               <h2 className="text-3xl font-bold text-gray-800 transform -rotate-1"
-                  style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
+                  style={{ fontFamily: getFontFamily() }}>
                 ✨ Generating complete course...
               </h2>
               <div className="space-y-2">
                 <p className="text-gray-600 transform rotate-0.5"
-                   style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
+                   style={{ fontFamily: getFontFamily() }}>
                   {saveStatus === 'saving' && '💾 Saving course plan...'}
                   {saveStatus === 'success' && taskGenerationStatus === 'generating' && '🚀 Generating course content...'}
                   {taskGenerationStatus === 'completed' && '🎉 Course generation completed!'}
@@ -1242,7 +1242,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
           <div className="mb-4">
             <h2 className="text-lg font-bold text-center text-blue-700 transform rotate-1"
                 style={{
-                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  fontFamily: getFontFamily()
                 }}>
               <span className="px-3 py-1 rounded-lg inline-block shadow-sm bg-yellow-200">
                 Personalized Learning Plan 📚
@@ -1260,7 +1260,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                         <div className="text-4xl mb-4">🤖</div>
                         <p className="text-lg text-gray-700 mb-4"
                            style={{
-                             fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                             fontFamily: getFontFamily()
                            }}>
                           AI is generating your personalized learning plan...
                         </p>
@@ -1272,13 +1272,13 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                       <>
                         <p className="text-lg text-gray-700 mb-4"
                            style={{
-                             fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                             fontFamily: getFontFamily()
                            }}>
                           Your personalized learning plan will appear here ✨
                         </p>
                         <p className="text-sm text-gray-500"
                            style={{
-                             fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                             fontFamily: getFontFamily()
                            }}>
                           Start chatting with AI assistant to generate your custom learning path 💡
                         </p>
@@ -1316,7 +1316,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                       <div className="flex items-center space-x-2">
                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
                         <span className="text-blue-700 font-medium" style={{
-                          fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                          fontFamily: getFontFamily()
                         }}>
                           Generating more learning steps... ✨
                         </span>
@@ -1338,7 +1338,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                     : 'bg-blue-500 hover:bg-blue-600'
                 }`}
                 style={{
-                  fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                  fontFamily: getFontFamily()
                 }}
                 disabled={saveStatus === 'saving' || isGeneratingCourse}
                 onClick={() => {
@@ -1380,7 +1380,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
               {saveStatus === 'error' && (
                 <div className="mt-2 text-center">
                   <p className="text-red-500 text-sm" style={{
-                    fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                    fontFamily: getFontFamily()
                   }}>
                     ⚠️ 保存失败，但您仍可以继续学习
                   </p>
@@ -1437,7 +1437,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                     <div className="flex items-center space-x-2">
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
                       <span className="text-blue-700 font-medium" style={{
-                        fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                        fontFamily: getFontFamily()
                       }}>
                         Generating more learning steps... ✨
                       </span>
@@ -1456,7 +1456,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                         : 'bg-blue-500 hover:bg-blue-600'
                     }`}
                     style={{
-                      fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                      fontFamily: getFontFamily()
                     }}
                     disabled={saveStatus === 'saving' || taskGenerationStatus === 'generating'}
                     onClick={() => {
@@ -1503,9 +1503,13 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
       {/* 统一的聊天界面 - 根据状态显示不同样式 */}
       <div className={`${
         !showMobilePlan || mobileChatExpanded 
-          ? 'h-[calc(100vh-4rem)] flex flex-col' 
+          ? 'flex flex-col' 
           : 'hidden'
-      }`}>
+      }`}
+      style={!showMobilePlan || mobileChatExpanded ? {
+        height: 'calc(100dvh - 4rem)',
+        paddingBottom: 'env(safe-area-inset-bottom, 0px)'
+      } : {}}>
         
         {/* 折叠按钮 - 只在展开状态且有计划时显示 */}
         {showMobilePlan && mobileChatExpanded && (
@@ -1570,11 +1574,11 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
           <div className="text-center space-y-4">
             <div className="text-6xl">🎉</div>
             <h3 className="text-2xl font-bold text-green-600 transform -rotate-1"
-                style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
+                style={{ fontFamily: getFontFamily() }}>
               Course Saved!
             </h3>
             <p className="text-gray-600"
-               style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}>
+               style={{ fontFamily: getFontFamily() }}>
               您的个性化课程已经保存到数据库！<br/>
               现在可以在 My Courses 页面查看和管理您的课程。
             </p>
@@ -1582,7 +1586,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
               <button
                 onClick={() => setShowCompletionNotification(false)}
                 className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-medium transition-colors transform hover:rotate-1"
-                style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}
+                style={{ fontFamily: getFontFamily() }}
               >
                 Got it
               </button>
@@ -1590,7 +1594,7 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
                 <button
                   onClick={() => setShowCompletionNotification(false)}
                   className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors transform hover:rotate-1"
-                  style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}
+                  style={{ fontFamily: getFontFamily() }}
                 >
                   View My Courses 📚
                 </button>

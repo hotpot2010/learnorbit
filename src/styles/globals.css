@@ -437,3 +437,11 @@ div[class*="border-t"][class*="bg-fd-secondary"]:not(:has(*)):not(
 .mobile-chat-padding .space-y-4 > *:first-child {
   padding-top: 1rem;
 }
+
+/* 移动端首页英文字体优化 */
+@media (max-width: 1023px) {
+  [data-locale="en"] .homepage-title,
+  [data-locale="en"] .homepage-subtitle {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !important;
+  }
+}
