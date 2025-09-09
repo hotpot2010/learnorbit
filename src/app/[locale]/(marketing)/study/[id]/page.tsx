@@ -3026,9 +3026,12 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   // 获取字体样式函数
   const getFontFamily = () => {
-    if (isMobile) {
-      // 移动端使用更正常的字体
+    if (isMobile && routeParams?.locale === 'en') {
+      // 移动端英文模式使用正常字体
       return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
+    } else if (isMobile) {
+      // 移动端中文模式保持卡通字体
+      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
     } else {
       // 桌面端保持原有的卡通字体
       return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
@@ -4179,7 +4182,12 @@ export default function StudyPage({ params }: StudyPageProps) {
             {/* 折叠状态的聊天输入框 */}
             {!mobileChatExpanded && (
               <div 
-                className="border-t bg-white p-4 cursor-pointer"
+                className="border-t bg-white cursor-pointer mobile-chat-input-safe"
+                style={{
+                  paddingTop: '1rem',
+                  paddingLeft: '1rem',
+                  paddingRight: '1rem'
+                }}
                 onClick={() => setMobileChatExpanded(true)}
               >
                 <div className="flex items-center space-x-3 px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
@@ -4196,9 +4204,9 @@ export default function StudyPage({ params }: StudyPageProps) {
             {/* 展开状态的完整聊天界面 */}
             {mobileChatExpanded && (
               <div 
-                className="absolute bottom-0 left-0 right-0 bg-white border-t shadow-lg transform transition-transform duration-300"
+                className="absolute bottom-0 left-0 right-0 bg-white border-t shadow-lg transform transition-transform duration-300 mobile-chat-container-safe"
                 style={{
-                  height: 'calc(100vh - 4rem)',
+                  height: 'calc(100dvh - 4rem)',
                   transform: mobileChatExpanded ? 'translateY(0)' : 'translateY(100%)',
                   zIndex: 50
                 }}

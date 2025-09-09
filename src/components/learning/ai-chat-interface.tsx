@@ -80,9 +80,12 @@ export function AIChatInterface({
 
   // 获取字体样式函数
   const getFontFamily = () => {
-    if (isMobile) {
-      // 移动端使用更正常的字体
+    if (isMobile && locale === 'en') {
+      // 移动端英文模式使用正常字体
       return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
+    } else if (isMobile) {
+      // 移动端中文模式保持卡通字体
+      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
     } else {
       // 桌面端保持原有的卡通字体
       return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
@@ -1546,7 +1549,14 @@ export function AIChatInterface({
       )}
 
       {/* 输入框区域 */}
-      <div className={`flex-shrink-0 border-t border-gray-200 bg-white/90 backdrop-blur-sm ${isMobile ? 'p-4' : 'pt-4'}`}>
+      <div 
+        className={`flex-shrink-0 border-t border-gray-200 bg-white/90 backdrop-blur-sm ${isMobile ? 'mobile-chat-input-safe' : 'pt-4'}`}
+        style={isMobile ? {
+          paddingTop: '1rem',
+          paddingLeft: '1rem', 
+          paddingRight: '1rem'
+        } : {}}
+      >
         {isMobile ? (
           // 移动端：与折叠状态完全一致的样式
           <div className="flex items-center space-x-3 px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 transition-colors">

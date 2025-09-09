@@ -413,3 +413,27 @@ div[class*="border-t"][class*="bg-fd-secondary"]:not(:has(*)):not(
 [class*="fd-secondary"]:empty:not([data-banner-content]) {
   display: none !important;
 }
+
+/* 移动端视口和安全区域支持 */
+/* 确保页面在移动端浏览器中正确显示，避免被底部导航栏遮挡 */
+@supports (height: 100dvh) {
+  .mobile-safe-area {
+    height: 100dvh;
+  }
+}
+
+/* iOS Safari 安全区域支持 */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .mobile-chat-input-safe {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
+  
+  .mobile-chat-container-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+/* 移动端聊天消息顶部间距 */
+.mobile-chat-padding .space-y-4 > *:first-child {
+  padding-top: 1rem;
+}
