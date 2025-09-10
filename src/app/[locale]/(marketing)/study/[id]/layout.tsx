@@ -18,6 +18,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
   try {
     const db = await getDb();
+    
+    console.log('🔍 Generating metadata for course ID:', id);
 
     // 1. 首先尝试从创作者课程表中查找
     const creatorCourse = await db
@@ -31,9 +33,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       .where(eq(creatorCourses.slug, id))
       .limit(1);
 
+    console.log('🔍 Creator course search result:', creatorCourse.length);
+
     if (creatorCourse.length > 0) {
       const course = creatorCourse[0];
       const courseUrl = `${baseUrl}/${locale}/study/${course.slug}`;
+      
+      console.log('✅ Found creator course:', course.title);
 
       return {
         title: `${course.title} - AI智能学习助手 | AiTutorly`,
@@ -108,6 +114,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       .from(userCourses)
       .innerJoin(user, eq(userCourses.userId, user.id));
 
+    console.log('🔍 Searching in public courses, total:', publicCourses.length);
+
     // 查找匹配的课程
     for (const course of publicCourses) {
       const coursePlan = course.coursePlan as any;
@@ -131,6 +139,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       if (courseSlug === id) {
         const courseUrl = `${baseUrl}/${locale}/study/${courseSlug}`;
         const description = rawPlan?.description || rawPlan?.introduction || `通过AI智能助手学习${title}，个性化学习路径，互动式学习体验。`;
+        
+        console.log('✅ Found matching public course:', title);
 
         return {
           title: `${title} - AI智能学习助手 | AiTutorly`,
@@ -196,14 +206,15 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     notFound();
   } catch (error) {
     console.error('❌ Error generating metadata for course:', error);
+    console.error('❌ Course ID:', id);
 
-    // 发生错误时返回基本元数据
+    // 发生错误时返回基本元数据，但仍允许索引
     return {
       title: 'AI智能学习助手 | AiTutorly',
       description: '通过AI智能助手进行个性化学习，打造专属学习路径。',
       robots: {
-        index: false,
-        follow: false,
+        index: true,
+        follow: true,
       },
     };
   }
