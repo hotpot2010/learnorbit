@@ -46,3 +46,6 @@ next-env.d.ts
 # OpenNext build output
 .open-next
 .specstory/
+
+# Backend for local development only
+/backend/
