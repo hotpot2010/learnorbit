@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
   try {
     const db = await getDb();
-    
+
     console.log('🔍 Generating metadata for course ID:', id);
 
     // 1. 首先尝试从创作者课程表中查找
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     if (creatorCourse.length > 0) {
       const course = creatorCourse[0];
       const courseUrl = `${baseUrl}/${locale}/study/${course.slug}`;
-      
+
       console.log('✅ Found creator course:', course.title);
 
       return {
@@ -139,7 +139,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       if (courseSlug === id) {
         const courseUrl = `${baseUrl}/${locale}/study/${courseSlug}`;
         const description = rawPlan?.description || rawPlan?.introduction || `通过AI智能助手学习${title}，个性化学习路径，互动式学习体验。`;
-        
+
         console.log('✅ Found matching public course:', title);
 
         return {

@@ -3,10 +3,10 @@
 import { AIChatInterface } from '@/components/learning/ai-chat-interface';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
-  CheckCircle, 
-  Circle, 
-  Clock, 
+import {
+  CheckCircle,
+  Circle,
+  Clock,
   PlayCircle,
   FileText,
   ChevronLeft,
@@ -41,11 +41,11 @@ interface StudyPageProps {
 export default function StudyPage({ params }: StudyPageProps) {
   const currentUser = useCurrentUser();
   const { isMobile } = useMobileLayout();
-  
+
   // 移动端专用状态
   const [mobileChatExpanded, setMobileChatExpanded] = useState(false);
   const [mobileStepNavCollapsed, setMobileStepNavCollapsed] = useState(false);
-  
+
   // 生成sessionId，与定制页面保持一致的逻辑
   const [sessionId] = useState(() => {
     // 优先使用上传文件时的sessionId，确保文档关联正确
@@ -56,20 +56,20 @@ export default function StudyPage({ params }: StudyPageProps) {
         return uploadSessionId;
       }
     }
-    
+
     // 如果没有上传文件，生成新的sessionId（格式与上传保持一致）
     const id = crypto.randomUUID().replace(/-/g, '_');
     console.log('🆔 学习页面生成新的SessionId:', id);
     return id;
   });
-  
+
   // 🔍 组件渲染日志
   console.log('🔄 StudyPage 组件重新渲染:', new Date().toLocaleTimeString());
 
   // 兼容性辅助函数：安全获取学习计划的步骤数组
   const getLearningSteps = (plan: LearningPlan | null): any[] => {
     if (!plan) return [];
-    
+
     console.log('🔍 检查学习计划格式:', {
       planType: typeof plan,
       hasPlanProperty: 'plan' in plan,
@@ -78,7 +78,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       isArraySelf: Array.isArray(plan),
       planStructure: plan
     });
-    
+
     if (Array.isArray(plan.plan)) {
       // 新格式或标准格式：plan.plan 是数组
       console.log('✅ 识别为标准格式，plan.plan 是数组，长度:', plan.plan.length);
@@ -92,7 +92,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       console.log('✅ 识别为极旧格式，plan 本身是数组，长度:', plan.length);
       return plan as any;
     }
-    
+
     console.warn('⚠️ 无法识别的学习计划格式:', plan);
     return [];
   };
@@ -100,7 +100,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 辅助函数：安全获取课程标题和描述
   const getCourseInfo = (plan: LearningPlan | null) => {
     if (!plan) return { title: undefined, description: undefined };
-    
+
     // 直接从顶层获取
     if (plan.title || plan.description) {
       return {
@@ -108,7 +108,7 @@ export default function StudyPage({ params }: StudyPageProps) {
         description: plan.description
       };
     }
-    
+
     // 从嵌套的 plan 对象获取
     if (plan.plan && typeof plan.plan === 'object' && !Array.isArray(plan.plan)) {
       const nestedPlan = plan.plan as any;
@@ -117,10 +117,10 @@ export default function StudyPage({ params }: StudyPageProps) {
         description: nestedPlan.description
       };
     }
-    
+
     return { title: undefined, description: undefined };
   };
-  
+
   const [isPathCollapsed, setIsPathCollapsed] = useState(false);
   const [externalMessage, setExternalMessage] = useState<string>('');
   const [routeParams, setRouteParams] = useState<{ locale: string; id: string } | null>(null);
@@ -129,7 +129,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   const [wrongAnswers, setWrongAnswers] = useState<Set<number>>(new Set());
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [aiRecommendations, setAiRecommendations] = useState<string[]>([]);
-  
+
   // 新增状态
   const [learningPlan, setLearningPlan] = useState<LearningPlan | null>(null);
   const [currentTask, setCurrentTask] = useState<TaskContent | null>(null);
@@ -147,12 +147,12 @@ export default function StudyPage({ params }: StudyPageProps) {
   const [listItemHeight, setListItemHeight] = useState<number>(52);
   const [canPageUp, setCanPageUp] = useState<boolean>(false);
   const [canPageDown, setCanPageDown] = useState<boolean>(false);
-  
+
   // 任务缓存和并行生成相关状态
   const [taskCache, setTaskCache] = useState<Record<number, TaskContent>>({});
   const [taskGenerationStatus, setTaskGenerationStatus] = useState<Record<number, 'pending' | 'loading' | 'completed' | 'failed'>>({});
   const [pollingInterval, setPollingInterval] = useState<NodeJS.Timeout | null>(null);
-  
+
   // 防止重复生成任务的标志
   const taskGenerationStarted = useRef<boolean>(false);
 
@@ -171,39 +171,39 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 任务更新完成处理函数（预览模式）
   const handleTaskUpdateComplete = (newTaskData: any) => {
     console.log('📝 收到任务更新数据（预览）:', newTaskData);
-    
+
     // 直接更新当前任务状态
     setCurrentTask(newTaskData);
-    
+
     // 清空当前编程代码和输出
     setCodeValue(newTaskData.task?.starter_code || '');
     setCodeOutput('');
-    
+
     // 重置答题状态
     setSelectedAnswers({});
     setWrongAnswers(new Set());
     setHasSubmitted(false);
-    
+
     console.log('✅ 任务数据更新完成（预览模式），新任务:', newTaskData);
   };
 
   // 任务更新保存处理函数（持久化）
   const handleTaskUpdateSave = (newTaskData: any) => {
     console.log('💾 用户确认保存任务更新:', newTaskData);
-    
+
     // 获取当前步骤
     const steps = getLearningSteps(learningPlan);
     const currentStep = steps[currentStepIndex - 1]; // currentStepIndex 从1开始，所以减1
-    
+
     if (currentStep) {
       // 更新任务缓存，这样切换步骤时新数据会被保留
       setTaskCache(prevCache => ({
         ...prevCache,
         [currentStep.step]: newTaskData
       }));
-      
+
       console.log(`💾 已保存步骤 ${currentStep.step} 的任务数据到缓存`);
-      
+
       // 这里可以添加保存到后端的逻辑
       // await saveTaskToDatabase(currentStep.step, newTaskData);
     }
@@ -233,17 +233,17 @@ export default function StudyPage({ params }: StudyPageProps) {
   const [noteVideoIndices, setNoteVideoIndices] = useState<Record<string, number>>({});
   const [expandedNoteImageIds, setExpandedNoteImageIds] = useState<Record<string, boolean>>({});
   const [noteImageIndices, setNoteImageIndices] = useState<Record<string, number>>({});
-  
+
   // 便签编辑 - 简化的非受控组件 ref
   const editingTextareaRef = useRef<HTMLTextAreaElement>(null);
-  
+
   // 图片上传相关
   const imageUploadRef = useRef<HTMLInputElement>(null);
   const [uploadingImages, setUploadingImages] = useState<Record<string, boolean>>({});
   const [imageDisplaySizes, setImageDisplaySizes] = useState<Record<string, 'small' | 'medium' | 'large'>>({});
-  
+
   // 图片搜索相关（已简化为直接插入便签模式）
-  
+
   // 彩笔标记（可持久化）
   interface Mark {
     id: string;
@@ -343,7 +343,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 将正文内容按段落分割并插入笔记
   const renderContentWithInsertedNotes = (content: string) => {
     if (!content) return null;
-    
+
     // 🔍 调试日志 - 便签渲染
     const renderState = {
       timestamp: new Date().toLocaleTimeString(),
@@ -366,7 +366,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       hasSubmitted,
       wrongAnswersSize: wrongAnswers.size
     };
-    
+
     // 检测状态变化
     if (window.lastRenderState) {
       const changes = {};
@@ -378,24 +378,24 @@ export default function StudyPage({ params }: StudyPageProps) {
           };
         }
       });
-      
+
       if (Object.keys(changes).length > 0) {
         console.log('📝 便签重新渲染 - 状态变化:', changes);
       }
     }
-    
+
     window.lastRenderState = renderState;
     console.log('📝 便签组件重新渲染:', renderState);
-    
+
     // 为可插入锚点生成连续索引
     let anchorIndexCounter = 0;
     const nextAnchorIndex = () => (anchorIndexCounter += 1);
-    
+
     // 当前步骤的便签（段落回退用），按段落顺序
     const currentStepNotes = notes
       .filter(n => n.stepIndex === currentStepIndex)
       .sort((a, b) => a.insertAfterParagraph - b.insertAfterParagraph);
-    
+
     // 统一的便签渲染组件
     const renderNoteBlock = (note: Note) => {
       const isVideo = note.type === 'video';
@@ -427,15 +427,15 @@ export default function StudyPage({ params }: StudyPageProps) {
             <div className={`max-w-full`}>
               <div
                 className={`relative ${paperBg} p-5 rounded-lg shadow-lg transform rotate-0.5 inline-block ${
-                  isVideo 
-                    ? (note.videos && note.videos?.length || 0 > 0 
-                        ? (expandedNoteVideoIds[note.id] ? 'w-[1024px]' : 'w-[640px]') 
-                        : (expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-96')) 
-                    : isImage 
+                  isVideo
+                    ? (note.videos && note.videos?.length || 0 > 0
+                        ? (expandedNoteVideoIds[note.id] ? 'w-[1024px]' : 'w-[640px]')
+                        : (expandedNoteVideoIds[note.id] ? 'w-[768px]' : 'w-96'))
+                    : isImage
                       ? (() => {
                           const size = imageDisplaySizes[note.id] || 'medium';
-                          return size === 'small' ? 'min-w-80 max-w-2xl' : 
-                                 size === 'large' ? 'min-w-96 max-w-none' : 
+                          return size === 'small' ? 'min-w-80 max-w-2xl' :
+                                 size === 'large' ? 'min-w-96 max-w-none' :
                                  'min-w-80 max-w-4xl';
                         })()
                       : 'min-w-64 max-w-2xl'
@@ -470,7 +470,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                             }
                           }}
                         />
-                        
+
                         {/* 编辑时的图片预览 */}
                         {note.images && note.images.length > 0 && (
                           <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
@@ -499,14 +499,14 @@ export default function StudyPage({ params }: StudyPageProps) {
                             </div>
                           </div>
                         )}
-                        
+
                         <div className="flex items-center space-x-2">
                           <button onClick={() => handleSaveEdit(note.id)} className={`px-3 py-1 rounded-md transition-colors text-xs font-medium ${isVideo ? 'bg-purple-100 text-purple-700 hover:bg-purple-200' : isImage ? 'bg-pink-100 text-pink-700 hover:bg-pink-200' : isDrag ? 'bg-sky-100 text-sky-700 hover:bg-sky-200' : 'bg-green-100 text-green-700 hover:bg-green-200'}`} style={{ fontFamily: getFontFamily() }}>✓ Save</button>
                           <button onClick={handleCancelEdit} className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors text-xs font-medium" style={{ fontFamily: getFontFamily() }}>✕ Cancel</button>
-                          <button 
-                            onClick={() => triggerImageUpload(note.id)} 
+                          <button
+                            onClick={() => triggerImageUpload(note.id)}
                             disabled={uploadingImages[note.id]}
-                            className={`px-3 py-1 rounded-md transition-colors text-xs font-medium flex items-center space-x-1 ${isVideo ? 'bg-purple-100 text-purple-700 hover:bg-purple-200' : isImage ? 'bg-pink-100 text-pink-700 hover:bg-pink-200' : isDrag ? 'bg-sky-100 text-sky-700 hover:bg-sky-200' : 'bg-blue-100 text-blue-700 hover:bg-blue-200'} disabled:opacity-50`} 
+                            className={`px-3 py-1 rounded-md transition-colors text-xs font-medium flex items-center space-x-1 ${isVideo ? 'bg-purple-100 text-purple-700 hover:bg-purple-200' : isImage ? 'bg-pink-100 text-pink-700 hover:bg-pink-200' : isDrag ? 'bg-sky-100 text-sky-700 hover:bg-sky-200' : 'bg-blue-100 text-blue-700 hover:bg-blue-200'} disabled:opacity-50`}
                             style={{ fontFamily: getFontFamily() }}
                             title="上传图片/GIF"
                           >
@@ -544,27 +544,27 @@ export default function StudyPage({ params }: StudyPageProps) {
                                           const currentVideoIndex = (note.selectedVideoIndex ?? noteVideoIndices[note.id] ?? 0);
                                           const currentVideo = note.videos?.[currentVideoIndex];
                                           if (!currentVideo) return null;
-                                          
+
                                           const currentLocale = routeParams?.locale || 'en';
-                                          const shouldShowVideo = 
+                                          const shouldShowVideo =
                                             (currentLocale === 'zh' && currentVideo.platform === 'bilibili') ||
                                             (currentLocale === 'en' && currentVideo.platform === 'youtube') ||
                                             (currentVideo.platform === 'youtube' || currentVideo.platform === 'bilibili');
-                                          
+
                                           if (shouldShowVideo) {
                                             return (
-                                              <iframe 
+                                              <iframe
                                                 src={currentVideo.url}
                                                 frameBorder="0"
                                                 allowFullScreen={true}
-                                                allow={currentVideo.platform === 'youtube' ? 
+                                                allow={currentVideo.platform === 'youtube' ?
                                                   "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" :
                                                   "autoplay; fullscreen"
                                                 }
                                                 className="w-full h-full"
                                                 referrerPolicy={currentVideo.platform === 'bilibili' ? "no-referrer" : undefined}
-                                                sandbox={currentVideo.platform === 'bilibili' ? 
-                                                  "allow-same-origin allow-scripts allow-popups allow-presentation" : 
+                                                sandbox={currentVideo.platform === 'bilibili' ?
+                                                  "allow-same-origin allow-scripts allow-popups allow-presentation" :
                                                   undefined
                                                 }
                                               />
@@ -580,7 +580,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                             );
                                           }
                                         })()}
-                                        
+
                                         {/* 放大/缩小按钮 */}
                                         <button
                                           onClick={() => toggleNoteVideoExpanded(note.id)}
@@ -594,7 +594,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                           )}
                                         </button>
                                       </div>
-                                      
+
                                       {/* 视频标题 */}
                                       <div className="mt-2 px-1">
                                         <p className={`text-xs font-medium ${timestampColor} truncate`} style={{
@@ -610,7 +610,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                       </div>
                                     </div>
                                   </div>
-                                  
+
                                   {/* 视频列表 */}
                                   {(note.videos?.length || 0) > 1 && (
                                     <div className="relative w-60">
@@ -623,7 +623,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                                 key={idx}
                                                 onClick={() => {
                                                   setNoteVideoIndices(prev => ({ ...prev, [note.id]: idx }));
-                                                  setNotes(prevNotes => prevNotes.map(n => 
+                                                  setNotes(prevNotes => prevNotes.map(n =>
                                                     n.id === note.id ? { ...n, selectedVideoIndex: idx } : n
                                                   ));
                                                 }}
@@ -694,7 +694,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                           const currentImageIndex = (note.selectedImageIndex ?? noteImageIndices[note.id] ?? 0);
                                           const currentImage = note.images[currentImageIndex];
                                           if (!currentImage) return null;
-                                          
+
                                           return (
                                             <img
                                               src={currentImage.url}
@@ -708,7 +708,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                             />
                                           );
                                         })()}
-                                        
+
                                         {/* 放大/缩小按钮 */}
                                         <button
                                           onClick={() => toggleNoteImageExpanded(note.id)}
@@ -722,7 +722,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                           )}
                                         </button>
                                       </div>
-                                      
+
                                       {/* 图片标题 */}
                                       <div className="mt-2 px-1">
                                         <p className={`text-xs font-medium ${timestampColor} truncate`} style={{
@@ -733,7 +733,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                       </div>
                                     </div>
                                   </div>
-                                  
+
                                   {/* 图片列表 */}
                                   {note.images.length > 1 && (
                                     <div className="relative w-60">
@@ -746,7 +746,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                                 key={idx}
                                                 onClick={() => {
                                                   setNoteImageIndices(prev => ({ ...prev, [note.id]: idx }));
-                                                  setNotes(prevNotes => prevNotes.map(n => 
+                                                  setNotes(prevNotes => prevNotes.map(n =>
                                                     n.id === note.id ? { ...n, selectedImageIndex: idx } : n
                                                   ));
                                                 }}
@@ -778,7 +778,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                           <div className="space-y-3">
                             {/* 文本内容 */}
                             <div className={`text-lg leading-relaxed whitespace-pre-wrap break-words cursor-pointer rounded p-1 -m-1 transition-colors ${isVideo ? 'text-purple-800 hover:bg-purple-50' : isImage ? 'text-pink-800 hover:bg-pink-50' : isDrag ? 'text-sky-800 hover:bg-sky-50' : 'text-yellow-800 hover:bg-yellow-50'}`} style={{ fontFamily: getFontFamily(), fontSize: '16px', lineHeight: '1.6', textShadow: '0 0.5px 1px rgba(0, 0, 0, 0.06)', wordBreak: 'break-word' }} onDoubleClick={() => handleStartEdit(note.id, note.text)} title="Double-click to edit">{note.text || '（空白便签，双击编辑）'}</div>
-                            
+
                             {/* 普通便签中的图片展示区域 */}
                             {note.type !== 'image' && note.images && note.images.length > 0 && (
                               <div className="space-y-3">
@@ -790,8 +790,8 @@ export default function StudyPage({ params }: StudyPageProps) {
                                   <button
                                     onClick={() => toggleImageSize(note.id)}
                                     className={`flex items-center space-x-1 px-2 py-1 rounded-md text-xs transition-colors ${
-                                      isImage 
-                                        ? 'bg-pink-100 text-pink-700 hover:bg-pink-200' 
+                                      isImage
+                                        ? 'bg-pink-100 text-pink-700 hover:bg-pink-200'
                                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                     }`}
                                     title="切换图片尺寸"
@@ -817,7 +817,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                     })()}
                                   </button>
                                 </div>
-                                
+
                                 {/* 图片网格 */}
                                 <div className={`grid gap-3 ${getImageSizeStyles(note.id).containerClass}`}>
                                   {note.images.map((image, index) => {
@@ -825,9 +825,9 @@ export default function StudyPage({ params }: StudyPageProps) {
                                     const size = imageDisplaySizes[note.id] || 'medium';
                                     return (
                                       <div key={index} className="relative group">
-                                        <div 
+                                        <div
                                           className="flex items-center justify-center bg-gray-50 rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300"
-                                          style={{ 
+                                          style={{
                                             maxWidth: sizeStyles.maxWidth,
                                             maxHeight: sizeStyles.maxHeight,
                                             minWidth: '60px',
@@ -838,7 +838,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                             src={image.url}
                                             alt={image.name || `Image ${index + 1}`}
                                             className={`${sizeStyles.imageClass} rounded-lg cursor-pointer transition-transform duration-300 hover:scale-105`}
-                                            style={{ 
+                                            style={{
                                               maxWidth: sizeStyles.maxWidth,
                                               maxHeight: sizeStyles.maxHeight,
                                               width: 'auto',
@@ -857,7 +857,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                             }}
                                           />
                                         </div>
-                                        
+
                                         {editingNoteId !== note.id && (
                                           <button
                                             onClick={() => handleRemoveImage(note.id, index)}
@@ -867,7 +867,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                             <X className="w-3 h-3" />
                                           </button>
                                         )}
-                                        
+
                                         {image.name && (
                                           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent text-white text-xs p-2 rounded-b-lg">
                                             <div className="truncate">{image.name}</div>
@@ -878,7 +878,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                             )}
                                           </div>
                                         )}
-                                        
+
                                         {/* 图片类型标识 */}
                                         {image.type?.includes('gif') && (
                                           <div className="absolute top-2 left-2 bg-purple-500 text-white text-xs px-2 py-1 rounded-full">
@@ -909,7 +909,7 @@ export default function StudyPage({ params }: StudyPageProps) {
         </div>
       );
     };
-    
+
     // 在某个锚点后渲染所有匹配的便签
     const renderNotesAfterAnchor = (anchorIdx: number) => {
       const anchorNotes = notes
@@ -917,25 +917,25 @@ export default function StudyPage({ params }: StudyPageProps) {
         .filter(n => typeof n.insertAfterAnchor === 'number' && n.insertAfterAnchor === anchorIdx);
       return anchorNotes.map(renderNoteBlock);
     };
-    
+
     // 预处理内容，确保数学公式正确格式化
     const processedContent = preprocessMathContent(content);
-    
+
     // 按段落分割内容
     const paragraphs = processedContent.split('\n\n').filter(p => p.trim());
     const result: React.JSX.Element[] = [];
-    
+
     // 开头（段落之前）的老便签（未指定锚点）
     currentStepNotes
       .filter(note => note.insertAfterAnchor == null && note.insertAfterParagraph === -1)
       .forEach(note => { result.push(renderNoteBlock(note)); });
-    
+
     // 逐段渲染内容与便签
     paragraphs.forEach((paragraph, index) => {
       // 段落主体
       result.push(
         <div key={`paragraph-${index}`} data-paragraph-index={index}>
-          <ReactMarkdown 
+          <ReactMarkdown
             {...mathMarkdownPlugins}
             components={{
             h1: ({ children, ...props }) => {
@@ -1147,13 +1147,13 @@ export default function StudyPage({ params }: StudyPageProps) {
           </ReactMarkdown>
         </div>
       );
-      
+
       // 段落后的老便签（未指定锚点）
       currentStepNotes
         .filter(note => note.insertAfterAnchor == null && note.insertAfterParagraph === index)
         .forEach(note => { result.push(renderNoteBlock(note)); });
     });
-    
+
     return <>{result}</>;
   };
 
@@ -1237,7 +1237,7 @@ export default function StudyPage({ params }: StudyPageProps) {
 
   const handleWhyClick = (selectedText: string) => {
     console.log('💡 Why clicked:', selectedText);
-    // 向右侧聊天助手发送 "why does ..." 消息  
+    // 向右侧聊天助手发送 "why does ..." 消息
     const message = `why does ${selectedText}`;
     setExternalMessage(''); // 先清空，确保可以重复发送相同消息
     setTimeout(() => setExternalMessage(message), 10);
@@ -1399,7 +1399,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       for (const img of list.slice(0, 6)) {
         const imageUrl = img.image || img.url || img.src || '';
         if (!imageUrl) continue;
-        
+
         processedImages.push({
           url: imageUrl,
           name: img.title || selectedText,
@@ -1422,7 +1422,7 @@ export default function StudyPage({ params }: StudyPageProps) {
         images: processedImages,
         searchKeyword: selectedText
       } : n));
-      
+
     } catch (e) {
       console.error('Image search error:', e);
       setNotes(prev => prev.map(n => n.id === tempNoteId ? { ...n, isLoading: false, type: 'text', text: '图片搜索失败，请稍后重试' } : n));
@@ -1442,27 +1442,27 @@ export default function StudyPage({ params }: StudyPageProps) {
   const fetchWithRetryStudy = async (url: string, options: RequestInit, retryCount = 0): Promise<Response> => {
     try {
       console.log(`🔄 学习页面API调用 (第${retryCount + 1}次):`, url);
-      
+
       const response = await fetch(url, options);
-      
+
       // 如果是5xx错误或网络错误，进行重试
       if (!response.ok && (response.status >= 500 || response.status === 0)) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       return response;
     } catch (error) {
       console.error(`❌ 学习页面第${retryCount + 1}次请求失败:`, error);
-      
+
       // 检查是否应该重试
       if (retryCount < STUDY_RETRY_CONFIG.maxRetries) {
         const delayMs = STUDY_RETRY_CONFIG.baseDelay * Math.pow(STUDY_RETRY_CONFIG.backoffMultiplier, retryCount);
         console.log(`⏳ ${delayMs}ms后进行学习页面第${retryCount + 2}次重试...`);
-        
+
         await new Promise(resolve => setTimeout(resolve, delayMs));
         return fetchWithRetryStudy(url, options, retryCount + 1);
       }
-      
+
       throw error;
     }
   };
@@ -1471,13 +1471,13 @@ export default function StudyPage({ params }: StudyPageProps) {
     const resolveParams = async () => {
       const resolvedParams = await params;
       setRouteParams(resolvedParams);
-      
+
       // 防止React Strict Mode重复执行
       if (initialLoadCompleted.current) {
         console.log('⚠️ 初始加载已完成，跳过重复执行');
         return;
       }
-      
+
       // custom：允许从通用 sessionStorage 读取
       if (resolvedParams.id === 'custom') {
         const savedPlan = sessionStorage.getItem('learningPlan');
@@ -1485,7 +1485,7 @@ export default function StudyPage({ params }: StudyPageProps) {
         const savedTaskCache = sessionStorage.getItem('taskCache');
         const fromCustomPage = sessionStorage.getItem('fromCustomPage');
         const savedTaskStatus = sessionStorage.getItem('stepTaskStatus');
-        
+
         console.log('🔍 检查sessionStorage状态:', {
           hasSavedPlan: !!savedPlan,
           fromDatabase: fromDatabase,
@@ -1495,41 +1495,41 @@ export default function StudyPage({ params }: StudyPageProps) {
           taskGenerationStarted: taskGenerationStarted.current,
           initialLoadCompleted: initialLoadCompleted.current
         });
-        
+
         if (savedPlan) {
           try {
             const plan: LearningPlan = JSON.parse(savedPlan);
             setLearningPlan(plan);
             console.log('✅ 加载自定义学习计划:', plan);
-            console.log('📋 计划详情:', { 
-              hasTitle: !!plan.title, 
-              hasDescription: !!plan.description, 
+            console.log('📋 计划详情:', {
+              hasTitle: !!plan.title,
+              hasDescription: !!plan.description,
               hasIntroduction: !!plan.introduction,
               hasSteps: !!plan.plan,
               stepsLength: plan.plan ? plan.plan.length : 0,
               planStructure: typeof plan.plan
             });
-            
+
             // 如果来自数据库且有任务缓存，直接加载任务
             if (fromDatabase === 'true' && savedTaskCache) {
               console.log('📁 检测到数据库课程，准备加载任务缓存...');
-              
+
               const tasks = JSON.parse(savedTaskCache);
               setTaskCache(tasks);
               setIsFromDatabase(true); // 设置数据库标识
-              
+
               // 设置所有任务状态为已完成
               const completedStatus: Record<number, 'completed'> = {};
               Object.keys(tasks).forEach(stepNum => {
                 completedStatus[parseInt(stepNum)] = 'completed';
               });
               setTaskGenerationStatus(completedStatus);
-              
+
               console.log('✅ 从数据库加载任务缓存，跳过任务生成:', {
                 taskCount: Object.keys(tasks).length,
                 taskKeys: Object.keys(tasks)
               });
-              
+
               // 加载便签
               const savedNotes = sessionStorage.getItem('courseNotes');
               if (savedNotes) {
@@ -1555,47 +1555,47 @@ export default function StudyPage({ params }: StudyPageProps) {
                   console.error('解析彩笔标记失败', e);
                 }
               }
-              
+
               // 标记任务生成已完成，防止后续调用
               taskGenerationStarted.current = true;
               initialLoadCompleted.current = true;
-              
+
               // 清除数据库标记
               sessionStorage.removeItem('fromDatabase');
               sessionStorage.removeItem('taskCache');
               sessionStorage.removeItem('courseNotes');
               sessionStorage.removeItem('courseMarks');
-            } 
+            }
             // 如果来自课程定制页面且有任务缓存，加载缓存的任务
             else if (fromCustomPage === 'true' && savedTaskCache) {
               console.log('🎨 检测到来自课程定制页面，加载任务缓存...');
-              
+
               const tasks = JSON.parse(savedTaskCache);
               const taskStatus = savedTaskStatus ? JSON.parse(savedTaskStatus) : {};
-              
+
               setTaskCache(tasks);
               setTaskGenerationStatus(taskStatus);
-              
+
               console.log('✅ 从课程定制页面加载任务缓存:', {
                 taskCount: Object.keys(tasks).length,
                 taskKeys: Object.keys(tasks),
                 completedTasks: Object.keys(taskStatus).filter(key => taskStatus[key] === 'completed').length,
                 taskStatus: taskStatus
               });
-              
+
               // 检查是否还有未完成的任务需要继续生成
-              const pendingTasks = plan.plan.filter(step => 
+              const pendingTasks = plan.plan.filter(step =>
                 !tasks[step.step] || taskStatus[step.step] !== 'completed'
               );
-              
+
               if (pendingTasks.length > 0) {
-                console.log('📋 还有', pendingTasks.length, '个任务需要继续生成:', 
+                console.log('📋 还有', pendingTasks.length, '个任务需要继续生成:',
                   pendingTasks.map(s => `步骤${s.step}: ${s.title}`));
-                
+
                 // 标记这些任务为需要生成
                 taskGenerationStarted.current = true;
                 initialLoadCompleted.current = true;
-                
+
                 // 对未完成的任务启动生成
                 setTimeout(() => {
                   generateTasksForMissingSteps(plan, tasks, taskStatus);
@@ -1605,11 +1605,11 @@ export default function StudyPage({ params }: StudyPageProps) {
                 taskGenerationStarted.current = true;
                 initialLoadCompleted.current = true;
               }
-              
+
               // 清除课程定制页面标记
               sessionStorage.removeItem('fromCustomPage');
               sessionStorage.removeItem('stepTaskStatus');
-            } 
+            }
             else {
               console.log('🆕 检测到新课程，需要生成任务:', {
                 fromDatabase: fromDatabase,
@@ -1617,7 +1617,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                 hasSavedTaskCache: !!savedTaskCache,
                 taskGenerationStarted: taskGenerationStarted.current
               });
-              
+
               // 仅在 custom 课程中启动任务生成（slug 页面不生成）
               if (resolvedParams.id === 'custom' && !taskGenerationStarted.current) {
             console.log('🚀 启动并行任务生成...');
@@ -1628,7 +1628,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                 console.log('⚠️ 非 custom 课程或已启动，跳过任务生成');
               }
             }
-            
+
           } catch (error) {
             console.error('解析学习计划失败:', error);
           }
@@ -1671,7 +1671,14 @@ export default function StudyPage({ params }: StudyPageProps) {
         // 本地无缓存，按 slug 拉取
         try {
           console.log('🔎 按 slug 拉取公共课程:', slug);
-          const resp = await fetch(`/api/public-courses/${encodeURIComponent(slug)}`);
+          let resp = await fetch(`/api/public-courses/${encodeURIComponent(slug)}`);
+
+          // 如果公共课程API失败，尝试创作者课程API
+          if (!resp.ok) {
+            console.log('🎨 尝试创作者课程API:', slug);
+            resp = await fetch(`/api/creator-courses/${encodeURIComponent(slug)}`);
+          }
+
           if (resp.ok) {
             const data = await resp.json();
             const course = data.course;
@@ -1679,28 +1686,28 @@ export default function StudyPage({ params }: StudyPageProps) {
               // 处理新格式数据：course.coursePlan.plan 可能是完整的LearningPlan对象
               const rawPlan = course.coursePlan.plan;
               let plan: LearningPlan;
-              
+
               if (rawPlan && typeof rawPlan === 'object' && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
                 // 新格式：rawPlan 本身就是 LearningPlan
                 plan = rawPlan as LearningPlan;
-                console.log('📚 检测到新格式课程数据，包含instruction信息:', { 
-                  hasTitle: !!plan.title, 
-                  hasDescription: !!plan.description, 
-                  hasIntroduction: !!plan.introduction 
+                console.log('📚 检测到新格式课程数据，包含instruction信息:', {
+                  hasTitle: !!plan.title,
+                  hasDescription: !!plan.description,
+                  hasIntroduction: !!plan.introduction
                 });
               } else {
                 // 旧格式：rawPlan 是步骤数组
                 plan = { plan: Array.isArray(rawPlan) ? rawPlan : [] };
                 console.log('📚 检测到旧格式课程数据');
               }
-              
+
               const tasks = course.coursePlan.tasks || {};
               const notesArr = Array.isArray(course.coursePlan.notes) ? course.coursePlan.notes : [];
               const marksArr = Array.isArray(course.coursePlan.marks) ? course.coursePlan.marks : [];
 
-              console.log('📋 从数据库解析的计划详情:', { 
-                hasTitle: !!plan.title, 
-                hasDescription: !!plan.description, 
+              console.log('📋 从数据库解析的计划详情:', {
+                hasTitle: !!plan.title,
+                hasDescription: !!plan.description,
                 hasIntroduction: !!plan.introduction,
                 hasSteps: !!plan.plan,
                 stepsLength: plan.plan ? plan.plan.length : 0,
@@ -1729,7 +1736,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               return;
             }
           } else {
-            console.warn('按 slug 拉取公共课程失败', resp.status);
+            console.warn('按 slug 拉取课程失败，尝试了公共课程和创作者课程API', resp.status);
           }
         } catch (e) {
           console.error('拉取公共课程异常', e);
@@ -1742,22 +1749,22 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 为缺失的步骤生成任务
   const generateTasksForMissingSteps = async (plan: LearningPlan, existingTasks: Record<number, any>, taskStatus: Record<number, string>) => {
     console.log('\n=== 🔄 开始为缺失步骤生成任务 ===');
-    
+
     // 找出需要生成任务的步骤
-    const stepsToGenerate = plan.plan.filter(step => 
+    const stepsToGenerate = plan.plan.filter(step =>
       !existingTasks[step.step] || taskStatus[step.step] !== 'completed'
     );
-    
+
     console.log('需要生成任务的步骤:', stepsToGenerate.map(s => `${s.step}: ${s.title}`));
-    
+
     if (stepsToGenerate.length === 0) {
       console.log('✅ 所有任务都已完成');
       return;
     }
-    
+
     // 设置初始状态 - 创建新的状态对象
     const updatedStatus: Record<number, 'pending' | 'loading' | 'completed' | 'failed'> = {};
-    
+
     // 复制现有状态，确保类型正确
     Object.keys(taskStatus).forEach(key => {
       const stepNum = parseInt(key);
@@ -1766,30 +1773,30 @@ export default function StudyPage({ params }: StudyPageProps) {
         updatedStatus[stepNum] = status;
       }
     });
-    
+
     // 更新需要生成的步骤状态
     stepsToGenerate.forEach(step => {
       if (!updatedStatus[step.step] || updatedStatus[step.step] === 'failed') {
         updatedStatus[step.step] = 'loading';
       }
     });
-    
+
     setTaskGenerationStatus(updatedStatus);
-    
+
     // 使用与原来相同的生成逻辑，但只处理缺失的步骤
     for (const step of stepsToGenerate) {
       console.log(`📤 触发缺失步骤 ${step.step} 的任务生成: ${step.title}`);
-      
+
       // 如果已经有任务但状态不是completed，跳过
       if (existingTasks[step.step] && taskStatus[step.step] === 'completed') {
         continue;
       }
-      
+
       // 立即执行异步任务，不等待它完成
       (async () => {
         try {
           console.log(`🔄 开始生成缺失步骤 ${step.step}: ${step.title}`);
-          
+
           // 构造正确的请求数据格式
           const requestData = {
             step: step.step,
@@ -1808,9 +1815,9 @@ export default function StudyPage({ params }: StudyPageProps) {
             // 检查是否有上传的文件
             ...(typeof window !== 'undefined' && sessionStorage.getItem('hasUploadedFile') === 'true' && { retrive_enabled: true }),
           };
-          
+
           console.log('📤 发送缺失任务生成请求:', requestData);
-          
+
           const response = await fetchWithRetryStudy('/api/task/generate', {
             method: 'POST',
             headers: {
@@ -1828,27 +1835,27 @@ export default function StudyPage({ params }: StudyPageProps) {
 
           if (result.success) {
             console.log(`✅ 缺失步骤 ${step.step} 生成成功`);
-            
+
             // 更新缓存
             setTaskCache(prev => ({
               ...prev,
               [step.step]: result.task
             }));
-            
+
             // 更新状态
             setTaskGenerationStatus(prev => ({
               ...prev,
               [step.step]: 'completed'
             }));
-            
+
             console.log(`💾 缺失步骤 ${step.step} 已缓存`);
-            
+
           } else {
             throw new Error('Task generation failed');
           }
         } catch (error) {
           console.error(`❌ 缺失步骤 ${step.step} 生成失败:`, error);
-          
+
           // 更新失败状态
           setTaskGenerationStatus(prev => ({
             ...prev,
@@ -1856,11 +1863,11 @@ export default function StudyPage({ params }: StudyPageProps) {
           }));
         }
       })();
-      
+
       // 等待1秒再触发下一个
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
-    
+
     console.log('🎯 所有缺失任务生成请求已触发 ===\n');
   };
 
@@ -1868,24 +1875,24 @@ export default function StudyPage({ params }: StudyPageProps) {
   const generateAllTasks = async (plan: LearningPlan) => {
     console.log('\n=== 🚀 开始顺序触发并行任务生成 ===');
     console.log('总步骤数:', plan.plan.length);
-    
+
     // 初始化状态
     const initialStatus: Record<number, 'pending' | 'loading' | 'completed' | 'failed'> = {};
     plan.plan.forEach(step => {
       initialStatus[step.step] = 'loading';
     });
     setTaskGenerationStatus(initialStatus);
-    
+
     // 使用带延时的循环来按顺序触发，但请求本身是并行执行的
     for (const step of plan.plan) {
       const planVar = plan; // 确保作用域内可用
       console.log(`📤 触发步骤 ${step.step} 的任务生成: ${step.title}`);
-      
+
       // 立即执行异步任务，不等待它完成
       (async () => {
         try {
           console.log(`🔄 开始生成步骤 ${step.step}: ${step.title}`);
-          
+
           // 构造正确的请求数据格式
           const requestData = {
             step: step.step,
@@ -1906,7 +1913,7 @@ export default function StudyPage({ params }: StudyPageProps) {
           };
 
           console.log('📤 发送任务生成请求:', requestData);
-          
+
           const response = await fetchWithRetryStudy('/api/task/generate', {
             method: 'POST',
             headers: {
@@ -1921,7 +1928,7 @@ export default function StudyPage({ params }: StudyPageProps) {
           }
 
           const result = await response.json();
-          
+
           // 详细的调试信息
           console.log(`🔍 步骤 ${step.step} API 返回结果:`, {
             success: result.success,
@@ -1931,7 +1938,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               type: typeof result.task?.ppt_slide,
               isString: typeof result.task?.ppt_slide === 'string',
               length: result.task?.ppt_slide?.length || 0,
-              preview: typeof result.task?.ppt_slide === 'string' 
+              preview: typeof result.task?.ppt_slide === 'string'
                 ? result.task.ppt_slide.substring(0, 100) + '...'
                 : result.task?.ppt_slide,
               fullContent: result.task?.ppt_slide
@@ -1947,36 +1954,36 @@ export default function StudyPage({ params }: StudyPageProps) {
               length: Array.isArray(result.task.questions) ? result.task.questions.length : 'not array'
             } : { exists: false }
           });
-          
+
           if (result.success) {
             console.log(`✅ 步骤 ${step.step} 生成成功`);
-            
+
             // 更新缓存
             setTaskCache(prev => ({
               ...prev,
               [step.step]: result.task
             }));
-            
+
             // 更新状态
             setTaskGenerationStatus(prev => ({
               ...prev,
               [step.step]: 'completed'
             }));
-            
+
             console.log(`💾 步骤 ${step.step} 已缓存:`, {
               type: result.task.type,
               hasMarkdownContent: !!result.task.ppt_slide,
               hasQuestions: !!result.task.questions,
               hasTask: !!result.task.task
             });
-            
+
             // 立即检查是否需要更新当前步骤的显示
             setTimeout(() => {
               if (learningPlan?.plan[currentStepIndex]?.step === step.step) {
                 console.log(`🎯 任务生成完成，立即更新当前步骤 ${step.step} 的显示`);
                 setCurrentTask(result.task);
                 setIsLoadingTask(false);
-                
+
                 // 如果是编程题，设置初始代码
                 if (result.task?.type === 'coding' && result.task.task) {
                   setCodeValue(result.task.task.starter_code || '');
@@ -1984,13 +1991,13 @@ export default function StudyPage({ params }: StudyPageProps) {
                 }
               }
             }, 100);
-            
+
           } else {
             throw new Error('Task generation failed');
           }
         } catch (error) {
           console.error(`❌ 步骤 ${step.step} 生成失败:`, error);
-          
+
           // 更新失败状态
           setTaskGenerationStatus(prev => ({
             ...prev,
@@ -1998,59 +2005,59 @@ export default function StudyPage({ params }: StudyPageProps) {
           }));
         }
       })();
-      
+
       // 等待2秒再触发下一个
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
-    
+
     console.log('�� 所有任务生成请求已按顺序触发 ===\n');
   };
 
   // 获取当前步骤的任务（从缓存）
   const getCurrentStepTask = () => {
     if (!learningPlan || currentStepIndex === 0) return null; // welcome 页面没有任务
-    
+
     const steps = getLearningSteps(learningPlan);
     const currentStep = steps[currentStepIndex - 1];
     if (!currentStep) return null;
-    
+
     const cachedTask = taskCache[currentStep.step];
     const status = taskGenerationStatus[currentStep.step];
-    
-    console.log(`📋 检查步骤 ${currentStep.step} 任务:`, { 
-      hasCached: !!cachedTask, 
-      status 
+
+    console.log(`📋 检查步骤 ${currentStep.step} 任务:`, {
+      hasCached: !!cachedTask,
+      status
     });
-    
+
     return cachedTask || null;
   };
 
   // 开始轮询指定步骤的任务
   const startPollingForTask = (stepNumber: number) => {
     console.log(`🔄 开始轮询步骤 ${stepNumber} 的任务`);
-    
+
     // 清除之前的轮询
     if (pollingInterval) {
       clearInterval(pollingInterval);
     }
-    
+
     const interval = setInterval(() => {
       const cachedTask = taskCache[stepNumber];
       const status = taskGenerationStatus[stepNumber];
-      
+
       console.log(`⏰ 轮询检查步骤 ${stepNumber}:`, { hasCached: !!cachedTask, status });
-      
+
       if (cachedTask && status === 'completed') {
         console.log(`✅ 步骤 ${stepNumber} 任务已准备就绪`);
         clearInterval(interval);
         setPollingInterval(null);
-        
+
         // 如果是当前步骤，更新显示
         if (learningPlan?.plan[currentStepIndex]?.step === stepNumber) {
           console.log(`🎯 更新当前步骤 ${stepNumber} 的显示`);
           setCurrentTask(cachedTask);
           setIsLoadingTask(false);
-          
+
           // 如果是编程题，设置初始代码
           if (cachedTask?.type === 'coding' && cachedTask.task) {
             setCodeValue(cachedTask.task.starter_code || '');
@@ -2062,7 +2069,7 @@ export default function StudyPage({ params }: StudyPageProps) {
         clearInterval(interval);
         setPollingInterval(null);
         setIsLoadingTask(false);
-        
+
         // 设置错误状态
         if (learningPlan?.plan[currentStepIndex]?.step === stepNumber) {
           setCurrentTask({
@@ -2074,7 +2081,7 @@ export default function StudyPage({ params }: StudyPageProps) {
         }
       }
     }, 1000); // 每秒检查一次
-    
+
     setPollingInterval(interval);
   };
 
@@ -2094,27 +2101,27 @@ export default function StudyPage({ params }: StudyPageProps) {
     console.log('learningPlan存在:', !!learningPlan);
     console.log('currentStepIndex:', currentStepIndex);
     console.log('当前步骤存在:', currentStepIndex > 0 ? !!learningPlan?.plan[currentStepIndex - 1] : false);
-    
+
     // 清除之前的轮询
     if (pollingInterval) {
       clearInterval(pollingInterval);
       setPollingInterval(null);
     }
-    
+
     const steps = getLearningSteps(learningPlan);
     if (routeParams?.id === 'custom' && learningPlan && currentStepIndex > 0 && steps[currentStepIndex - 1]) {
       const currentStep = steps[currentStepIndex - 1];
       console.log(`🎯 切换到步骤 ${currentStep.step}: ${currentStep.title}`);
-      
+
       // 尝试从缓存获取任务
       const cachedTask = getCurrentStepTask();
       const status = taskGenerationStatus[currentStep.step];
-      
+
       if (cachedTask) {
         console.log('✅ 从缓存加载任务');
         setCurrentTask(cachedTask);
         setIsLoadingTask(false);
-        
+
         // 如果是编程题，设置初始代码
         if (cachedTask.type === 'coding' && cachedTask.task) {
           setCodeValue(cachedTask.task.starter_code || '');
@@ -2187,7 +2194,7 @@ export default function StudyPage({ params }: StudyPageProps) {
         console.log('- 当前步骤不存在');
       }
     }
-    
+
     // 重置答题状态
     setSelectedAnswers({});
     setWrongAnswers(new Set());
@@ -2228,21 +2235,21 @@ export default function StudyPage({ params }: StudyPageProps) {
   useEffect(() => {
     const steps = getLearningSteps(learningPlan);
     if (!learningPlan || currentStepIndex === 0 || !steps[currentStepIndex - 1]) return;
-    
+
     const currentStep = steps[currentStepIndex - 1];
     const cachedTask = taskCache[currentStep.step];
-    
+
     if (cachedTask && (!currentTask || isLoadingTask)) {
       console.log(`🎯 缓存更新，立即显示步骤 ${currentStep.step} 的任务`);
       setCurrentTask(cachedTask);
       setIsLoadingTask(false);
-      
+
       // 如果是编程题，设置初始代码
       if (cachedTask.type === 'coding' && cachedTask.task) {
         setCodeValue(cachedTask.task.starter_code || '');
         console.log('💻 从缓存设置编程任务初始代码');
       }
-      
+
       // 清除轮询
       if (pollingInterval) {
         clearInterval(pollingInterval);
@@ -2261,7 +2268,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       // 切换到学习步骤时检查是否需要加载任务
       const currentStep = getLearningSteps(learningPlan)[currentStepIndex - 1];
       const cachedTask = taskCache[currentStep.step];
-      
+
       if (cachedTask) {
         setCurrentTask(cachedTask);
         setIsLoadingTask(false);
@@ -2284,13 +2291,13 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 处理提交答案
   const handleSubmitAnswers = async () => {
     if (!currentTask) return;
-    
+
     try {
       let evaluationResponse;
-      
+
       if (currentTask.type === 'quiz') {
         if (!currentTask.questions) return;
-        
+
         // 准备评估请求数据
         const evaluationData = {
           task_type: 'quiz',
@@ -2302,9 +2309,9 @@ export default function StudyPage({ params }: StudyPageProps) {
             }))
           }
         };
-        
+
         console.log('📤 提交quiz评估请求:', evaluationData);
-        
+
         // 调用评估API
         const response = await fetch('/api/task/evaluate', {
           method: 'POST',
@@ -2313,27 +2320,27 @@ export default function StudyPage({ params }: StudyPageProps) {
           },
           body: JSON.stringify(evaluationData)
         });
-        
+
         if (!response.ok) {
           throw new Error(`评估API请求失败: ${response.status}`);
         }
-        
+
         evaluationResponse = await response.json();
         console.log('📥 收到quiz评估结果:', evaluationResponse);
-        
+
         // 处理评估结果
         const newWrongAnswers = new Set<number>();
         let allCorrect = evaluationResponse.is_correct;
-        
+
         if (!allCorrect && evaluationResponse.incorrect_indices) {
           evaluationResponse.incorrect_indices.forEach((index: number) => {
             newWrongAnswers.add(index);
           });
         }
-        
+
         setWrongAnswers(newWrongAnswers);
         setHasSubmitted(true);
-        
+
         if (allCorrect) {
           // 答对了，切换到下一个步骤
           setTimeout(() => {
@@ -2350,9 +2357,9 @@ export default function StudyPage({ params }: StudyPageProps) {
               user_submission: currentTask.questions.map((_, index) => selectedAnswers[index] || '').join(', '),
               error_reason: evaluationResponse.error_reason || '部分答案错误'
             };
-            
+
             console.log('📤 请求问题推荐:', suggestData);
-            
+
             const suggestResponse = await fetch('/api/ai/suggest_questions', {
               method: 'POST',
               headers: {
@@ -2360,11 +2367,11 @@ export default function StudyPage({ params }: StudyPageProps) {
               },
               body: JSON.stringify(suggestData)
             });
-            
+
             if (suggestResponse.ok) {
               const suggestResult = await suggestResponse.json();
               console.log('📥 收到问题推荐:', suggestResult);
-              
+
               if (suggestResult.questions && Array.isArray(suggestResult.questions)) {
                 setAiRecommendations(suggestResult.questions.slice(0, 3)); // 最多3个问题
               } else {
@@ -2387,14 +2394,14 @@ export default function StudyPage({ params }: StudyPageProps) {
               "强化学习与监督学习的主要区别是什么？"
             ]);
           }
-          
+
           // 重置提交状态，允许重新选择和提交
           setTimeout(() => {
             setHasSubmitted(false);
             setWrongAnswers(new Set());
           }, 2000);
         }
-        
+
       } else if (currentTask.type === 'coding') {
         // 编程题评估
         const evaluationData = {
@@ -2404,9 +2411,9 @@ export default function StudyPage({ params }: StudyPageProps) {
             task: currentTask.task
           }
         };
-        
+
         console.log('📤 提交coding评估请求:', evaluationData);
-        
+
         // 调用评估API
         const response = await fetch('/api/task/evaluate', {
           method: 'POST',
@@ -2415,16 +2422,16 @@ export default function StudyPage({ params }: StudyPageProps) {
           },
           body: JSON.stringify(evaluationData)
         });
-        
+
         if (!response.ok) {
           throw new Error(`评估API请求失败: ${response.status}`);
         }
-        
+
         evaluationResponse = await response.json();
         console.log('📥 收到coding评估结果:', evaluationResponse);
-        
+
         setHasSubmitted(true);
-        
+
         if (evaluationResponse.is_correct) {
           // 代码正确，切换到下一个步骤
           setTimeout(() => {
@@ -2435,7 +2442,7 @@ export default function StudyPage({ params }: StudyPageProps) {
         } else {
           // 代码错误，显示反馈
           setCodeOutput(evaluationResponse.feedback || '代码存在问题，请检查');
-          
+
           // 调用问题推荐API
           try {
             const suggestData = {
@@ -2444,9 +2451,9 @@ export default function StudyPage({ params }: StudyPageProps) {
               user_submission: codeValue,
               error_reason: evaluationResponse.feedback || '代码实现错误'
             };
-            
+
             console.log('📤 请求编程题问题推荐:', suggestData);
-            
+
             const suggestResponse = await fetch('/api/ai/suggest_questions', {
               method: 'POST',
               headers: {
@@ -2454,18 +2461,18 @@ export default function StudyPage({ params }: StudyPageProps) {
               },
               body: JSON.stringify(suggestData)
             });
-            
+
             if (suggestResponse.ok) {
               const suggestResult = await suggestResponse.json();
               console.log('📥 收到编程题问题推荐:', suggestResult);
-              
+
               if (suggestResult.questions && Array.isArray(suggestResult.questions)) {
                 setAiRecommendations(suggestResult.questions.slice(0, 3)); // 最多3个问题
               } else {
                 // 使用默认推荐
                 setAiRecommendations([
                   "编程语法有什么问题吗？",
-                  "逻辑实现是否正确？", 
+                  "逻辑实现是否正确？",
                   "有什么更好的解决方案？"
                 ]);
               }
@@ -2477,18 +2484,18 @@ export default function StudyPage({ params }: StudyPageProps) {
             // 使用默认推荐
             setAiRecommendations([
               "编程语法有什么问题吗？",
-              "逻辑实现是否正确？", 
+              "逻辑实现是否正确？",
               "有什么更好的解决方案？"
             ]);
           }
-          
+
           // 重置提交状态，允许重新提交
           setTimeout(() => {
             setHasSubmitted(false);
           }, 2000);
         }
       }
-      
+
     } catch (error) {
       console.error('🚨 评估API调用失败:', error);
       // 降级到原来的本地逻辑
@@ -2500,7 +2507,7 @@ export default function StudyPage({ params }: StudyPageProps) {
         questions.forEach((question, index) => {
           const selectedAnswer = selectedAnswers[index];
           const correctAnswer = question.answer;
-          
+
           if (selectedAnswer !== correctAnswer) {
             newWrongAnswers.add(index);
             allCorrect = false;
@@ -2606,34 +2613,34 @@ export default function StudyPage({ params }: StudyPageProps) {
       estimatedTime: '5分钟',
       type: 'intro' as const
     };
- 
+
     // 只要有学习计划（无论是 custom 还是 slug 加载），都使用计划中的步骤
     if (learningPlan) {
       const steps = getLearningSteps(learningPlan);
       if (steps.length === 0) {
         return [welcomeStep];
       }
-      
+
       const planSteps = steps.map((step, index) => ({
         id: `step-${step.step}`,
         title: step.title,
         description: step.description,
-        status: index + 1 < currentStepIndex ? 'completed' : 
+        status: index + 1 < currentStepIndex ? 'completed' :
                 index + 1 === currentStepIndex ? 'current' : 'pending',
         estimatedTime: step.videos[0]?.duration || '估算中',
         type: step.type === 'coding' ? 'practice' : 'theory'
       }));
       return [welcomeStep, ...planSteps];
     }
-    
+
     // slug 页面在计划未加载前，不显示默认示例步骤（强化学习）
     if (routeParams && routeParams.id !== 'custom') {
       return [welcomeStep];
     }
-    
+
     const adjustedDefaultSteps = defaultLearningSteps.map((step, index) => ({
       ...step,
-      status: index + 1 < currentStepIndex ? 'completed' : 
+      status: index + 1 < currentStepIndex ? 'completed' :
               index + 1 === currentStepIndex ? 'current' : 'pending'
     }));
     return [welcomeStep, ...adjustedDefaultSteps];
@@ -2681,13 +2688,13 @@ export default function StudyPage({ params }: StudyPageProps) {
         return processVideoUrl(testUrl);
       };
     }
-      
+
       // 处理B站视频URL
       if (videoUrl.includes('bilibili.com/video/')) {
         // 从URL中提取视频ID，支持不同格式
         const bvMatch = videoUrl.match(/\/video\/(BV\w+)/);
         const avMatch = videoUrl.match(/\/video\/av(\d+)/);
-        
+
         if (bvMatch) {
           // BV号格式
           const playerUrl = `//player.bilibili.com/player.html?bvid=${bvMatch[1]}&page=1&as_wide=1&high_quality=1&danmaku=0&autoplay=0`;
@@ -2698,11 +2705,11 @@ export default function StudyPage({ params }: StudyPageProps) {
         return { url: playerUrl, platform: 'bilibili' };
       }
     }
-    
+
     // 处理YouTube视频URL
     if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
       let videoId = '';
-      
+
       // 各种YouTube URL格式
       // 标准格式: https://www.youtube.com/watch?v=VIDEO_ID
       // 短链接: https://youtu.be/VIDEO_ID
@@ -2712,7 +2719,7 @@ export default function StudyPage({ params }: StudyPageProps) {
         /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|m\.youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/,
         /youtube\.com\/.*[?&]v=([a-zA-Z0-9_-]{11})/
       ];
-      
+
       for (const pattern of youtubePatterns) {
         const match = videoUrl.match(pattern);
         if (match) {
@@ -2720,22 +2727,22 @@ export default function StudyPage({ params }: StudyPageProps) {
           break;
         }
       }
-      
+
       if (videoId) {
         const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&mute=0&controls=1&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
         return { url: embedUrl, platform: 'youtube' };
       }
     }
-    
+
     // 检查是否已经是嵌入格式的URL
       if (videoUrl.includes('player.bilibili.com')) {
       return { url: videoUrl, platform: 'bilibili' };
     }
-    
+
     if (videoUrl.includes('youtube.com/embed/')) {
       return { url: videoUrl, platform: 'youtube' };
     }
-    
+
     return { url: videoUrl, platform: 'unknown' };
   };
 
@@ -2767,7 +2774,7 @@ export default function StudyPage({ params }: StudyPageProps) {
     try {
       setIsUploading(true);
       console.log('📤 开始上传课程到数据库...');
-      
+
       // 构造上传数据，包含课程计划、任务和便签
       const uploadData = {
         plan: learningPlan,
@@ -2790,9 +2797,9 @@ export default function StudyPage({ params }: StudyPageProps) {
 
       const result = await response.json();
       console.log('✅ 课程上传成功:', result);
-      
+
       alert('🎉 课程已成功上传到【我的课程】！');
-      
+
     } catch (error) {
       console.error('❌ 课程上传失败:', error);
       alert('❌ 课程上传失败，请稍后重试。');
@@ -2819,7 +2826,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 📝 简化的便签编辑函数 - 非受控组件方案
   const handleStartEdit = (noteId: string, currentText: string) => {
     setEditingNoteId(noteId);
-    
+
     // 🎯 非受控组件：光标自然位于末尾，无需手动管理
     setTimeout(() => {
       if (editingTextareaRef.current) {
@@ -2832,10 +2839,10 @@ export default function StudyPage({ params }: StudyPageProps) {
   const handleSaveEdit = (noteId: string) => {
     // 🎯 非受控组件：直接从 DOM 获取当前值
     const currentValue = editingTextareaRef.current?.value || '';
-    
+
     if (currentValue.trim()) {
-      setNotes(prev => prev.map(note => 
-        note.id === noteId 
+      setNotes(prev => prev.map(note =>
+        note.id === noteId
           ? { ...note, text: currentValue.trim() }
           : note
       ));
@@ -2861,30 +2868,30 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 图片上传处理函数
   const handleImageUpload = async (noteId: string, files: FileList) => {
     if (!files || files.length === 0) return;
-    
+
     setUploadingImages(prev => ({ ...prev, [noteId]: true }));
-    
+
     try {
       const uploadedImages: { url: string; name?: string; size?: number; type?: string }[] = [];
-      
+
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        
+
         // 检查文件类型
         if (!file.type.startsWith('image/')) {
           alert(`文件 ${file.name} 不是有效的图片格式`);
           continue;
         }
-        
+
         // 检查文件大小 (限制10MB)
         if (file.size > 10 * 1024 * 1024) {
           alert(`文件 ${file.name} 太大，请选择小于10MB的图片`);
           continue;
         }
-        
+
         // 创建预览URL (使用 URL.createObjectURL)
         const imageUrl = URL.createObjectURL(file);
-        
+
         uploadedImages.push({
           url: imageUrl,
           name: file.name,
@@ -2892,20 +2899,20 @@ export default function StudyPage({ params }: StudyPageProps) {
           type: file.type
         });
       }
-      
+
       if (uploadedImages.length > 0) {
         // 更新便签，添加图片
-        setNotes(prev => prev.map(note => 
-          note.id === noteId 
-            ? { 
-                ...note, 
+        setNotes(prev => prev.map(note =>
+          note.id === noteId
+            ? {
+                ...note,
                 type: note.images ? 'image' : note.type,
-                images: [...(note.images || []), ...uploadedImages] 
+                images: [...(note.images || []), ...uploadedImages]
               }
             : note
         ));
       }
-      
+
     } catch (error) {
       console.error('图片上传失败:', error);
       alert('图片上传失败，请重试');
@@ -2924,7 +2931,7 @@ export default function StudyPage({ params }: StudyPageProps) {
         if (removedImage?.url.startsWith('blob:')) {
           URL.revokeObjectURL(removedImage.url);
         }
-        
+
         return {
           ...note,
           images: newImages,
@@ -2947,7 +2954,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   const toggleImageSize = (noteId: string) => {
     setImageDisplaySizes(prev => {
       const currentSize = prev[noteId] || 'medium';
-      const nextSize = currentSize === 'small' ? 'medium' : 
+      const nextSize = currentSize === 'small' ? 'medium' :
                       currentSize === 'medium' ? 'large' : 'small';
       return { ...prev, [noteId]: nextSize };
     });
@@ -2958,22 +2965,22 @@ export default function StudyPage({ params }: StudyPageProps) {
     const size = imageDisplaySizes[noteId] || 'medium';
     switch (size) {
       case 'small':
-        return { 
-          containerClass: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4', 
+        return {
+          containerClass: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
           imageClass: 'object-contain',
           maxWidth: '120px',
           maxHeight: '120px'
         };
       case 'large':
-        return { 
-          containerClass: 'grid-cols-1', 
+        return {
+          containerClass: 'grid-cols-1',
           imageClass: 'object-contain',
           maxWidth: '400px',
           maxHeight: '400px'
         };
       default: // medium
-        return { 
-          containerClass: 'grid-cols-1 sm:grid-cols-2', 
+        return {
+          containerClass: 'grid-cols-1 sm:grid-cols-2',
           imageClass: 'object-contain',
           maxWidth: '240px',
           maxHeight: '240px'
@@ -2985,7 +2992,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   const renderNodeWithHighlights = (node: any, anchorIdx: number) => {
     const list = marks.filter(m => m.stepIndex === currentStepIndex && m.anchorIndex === anchorIdx);
     if (list.length === 0) return node;
-    
+
     // 获取所有需要高亮的文本模式
     const patterns = list.map(m => m.text).filter(Boolean);
     if (patterns.length === 0) return node;
@@ -3044,7 +3051,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       if (isMobile) {
         // 移动端：使用ID选择器定位滚动容器
         const mobileScrollContainer = document.getElementById('mobile-content-scroll');
-        
+
         if (mobileScrollContainer) {
           // 直接设置scrollTop确保立即滚动
           mobileScrollContainer.scrollTop = 0;
@@ -3083,28 +3090,28 @@ export default function StudyPage({ params }: StudyPageProps) {
 
     // 记录锚点（块级），渲染时在该块内对匹配文本做高亮
     const anchorIdx = getSelectedAnchorIndex();
-    
+
     // 尝试计算精确位置（用于去重判断）
     let startOffset: number | undefined;
     let endOffset: number | undefined;
-    
+
     try {
       const range = sel.getRangeAt(0);
       const anchorElement = document.querySelector(`[data-anchor-index="${anchorIdx}"]`);
-      
+
       if (anchorElement) {
         // 获取锚点元素的纯文本内容
         const anchorText = anchorElement.textContent || '';
-        
+
         // 创建一个临时的 range 来计算位置
         const tempRange = document.createRange();
         tempRange.selectNodeContents(anchorElement);
         tempRange.setEnd(range.startContainer, range.startOffset);
-        
+
         // 计算从锚点开始到选择位置的文本偏移
         const calculatedStart = tempRange.toString().length;
         const calculatedEnd = calculatedStart + text.length;
-        
+
         // 验证计算的位置是否正确
         const expectedText = anchorText.slice(calculatedStart, calculatedEnd);
         if (expectedText === text) {
@@ -3115,18 +3122,18 @@ export default function StudyPage({ params }: StudyPageProps) {
     } catch (e) {
       // 位置计算失败，不影响基本功能
     }
-    
+
     // 检查是否已经存在相同的标记
-    const existingMarkIndex = marks.findIndex(m => 
-      m.text === text && 
-      m.stepIndex === currentStepIndex && 
+    const existingMarkIndex = marks.findIndex(m =>
+      m.text === text &&
+      m.stepIndex === currentStepIndex &&
       m.anchorIndex === anchorIdx &&
       // 如果有精确位置，必须位置也匹配；否则只匹配文本
-      (startOffset !== undefined && m.startOffset !== undefined ? 
-        m.startOffset === startOffset : 
+      (startOffset !== undefined && m.startOffset !== undefined ?
+        m.startOffset === startOffset :
         true)
     );
-    
+
     if (existingMarkIndex !== -1) {
       // 如果已存在，则删除该标记
       setMarks(prev => prev.filter((_, index) => index !== existingMarkIndex));
@@ -3143,7 +3150,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       };
       setMarks(prev => [...prev, newMark]);
     }
-    
+
     sel.removeAllRanges();
   };
 
@@ -3172,10 +3179,10 @@ export default function StudyPage({ params }: StudyPageProps) {
                     >
                       <div className="flex-shrink-0 mt-1">
                         <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border-2 transform ${
-                          index < currentStepIndex 
-                            ? 'bg-green-400 text-white border-green-400 rotate-12' 
-                            : index === currentStepIndex 
-                            ? 'bg-blue-400 text-white border-blue-400 -rotate-12' 
+                          index < currentStepIndex
+                            ? 'bg-green-400 text-white border-green-400 rotate-12'
+                            : index === currentStepIndex
+                            ? 'bg-blue-400 text-white border-blue-400 -rotate-12'
                             : 'bg-gray-200 text-gray-600 border-gray-300 rotate-6'
                         }`}>
                           {index === 0 ? '👋' : index}
@@ -3184,7 +3191,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center space-x-2 mb-1">
                           <h4 className={`text-base font-bold ${
-                            index === currentStepIndex ? 'text-blue-700' : 
+                            index === currentStepIndex ? 'text-blue-700' :
                             index < currentStepIndex ? 'text-green-700' :
                             'text-gray-700'
                           }`} style={{
@@ -3199,7 +3206,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                           }}>
                             {step.type === 'theory' ? 'Theory' : 'Practice'}
                           </span>
-                          
+
                           {/* 任务生成状态指示器 */}
                           {routeParams?.id === 'custom' && learningPlan && index > 0 && (
                             <div className="ml-2">
@@ -3210,7 +3217,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                 if (stepNumber == null) return null;
                                 const status = taskGenerationStatus[stepNumber];
                                 const hasTask = !!taskCache[stepNumber];
-                                
+
                                 if (hasTask || status === 'completed') {
                                   return <span className="text-green-500 text-xs">✅</span>;
                                 } else if (status === 'loading') {
@@ -3231,7 +3238,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                   ))}
         </div>
       </div>
-              
+
               {/* 上传课程按钮（slug 与 custom 均可展示） */}
               {learningPlan && (
                  <div className="p-4">
@@ -3239,8 +3246,8 @@ export default function StudyPage({ params }: StudyPageProps) {
                      onClick={handleUploadCourse}
                      disabled={!areAllTasksGenerated() || isUploading}
                      className={`w-full font-bold transform shadow-lg ${
-                       areAllTasksGenerated() && !isUploading 
-                         ? 'bg-primary hover:bg-primary/90 rotate-1 hover:rotate-0' 
+                       areAllTasksGenerated() && !isUploading
+                         ? 'bg-primary hover:bg-primary/90 rotate-1 hover:rotate-0'
                          : 'bg-gray-400 hover:bg-gray-400 cursor-not-allowed rotate-0'
                      }`}
                      style={{
@@ -3270,7 +3277,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                )}
             </>
           )}
-          
+
           {isPathCollapsed && (
             <div className="flex flex-col items-center space-y-2 p-2">
                 {learningSteps.map((step, index) => (
@@ -3292,9 +3299,9 @@ export default function StudyPage({ params }: StudyPageProps) {
             </div>
                       )}
                     </div>
-        
+
         <div className="absolute right-0 top-0 h-full w-px border-r-2 border-dashed border-blue-200"></div>
-        
+
         <button
           onClick={() => setIsPathCollapsed(!isPathCollapsed)}
           className="absolute -right-2 top-1/2 transform -translate-y-1/2 w-4 h-8 bg-gray-200 hover:bg-gray-300 border rounded-r-md flex items-center justify-center transition-colors z-10"
@@ -3315,7 +3322,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               (() => {
                 const courseInfo = getCourseInfo(learningPlan);
                 return (
-                  <WelcomePage 
+                  <WelcomePage
                     onStartLearning={() => {
                       setCurrentStepIndex(1);
                       // 自动滚动到页面顶部
@@ -3331,7 +3338,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
                   <p className="text-lg text-gray-700">Generating learning tasks...</p>
-                  
+
                   {/* 调试信息 - 仅在开发环境显示 */}
                   {process.env.NODE_ENV === 'development' && learningPlan && (
                     <div className="mt-4 text-sm text-gray-500">
@@ -3365,7 +3372,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                     }}>
                       Recommended Videos:
                     </h4>
-                    
+
                     <div className="flex gap-4 items-start">
                       {/* 单个视频显示 - 支持简单放大 */}
                       {getCurrentStepVideos()[currentVideoIndex] && (
@@ -3376,28 +3383,28 @@ export default function StudyPage({ params }: StudyPageProps) {
                                 const processedVideo = processVideoUrl(getCurrentStepVideos()[currentVideoIndex].url);
                                 const { url, platform } = processedVideo;
                                 const currentLocale = routeParams?.locale || 'en';
-                                
+
                                 // 根据语言环境和平台决定显示方式
                                 // 中文环境优先显示B站视频，英文环境优先显示YouTube视频
-                                const shouldShowVideo = 
+                                const shouldShowVideo =
                                   (currentLocale === 'zh' && platform === 'bilibili') ||
                                   (currentLocale === 'en' && platform === 'youtube') ||
                                   (platform === 'youtube' || platform === 'bilibili'); // 兜底：任何平台都可以显示
-                                
+
                                 if (shouldShowVideo && (platform === 'youtube' || platform === 'bilibili')) {
                                   return (
-                                <iframe 
+                                <iframe
                                       src={url}
                                       frameBorder="0"
                                   allowFullScreen={true}
-                                      allow={platform === 'youtube' ? 
+                                      allow={platform === 'youtube' ?
                                         "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" :
                                         "autoplay; fullscreen"
                                       }
                                   className="w-full h-full"
                                       referrerPolicy={platform === 'bilibili' ? "no-referrer" : undefined}
-                                      sandbox={platform === 'bilibili' ? 
-                                        "allow-same-origin allow-scripts allow-popups allow-presentation" : 
+                                      sandbox={platform === 'bilibili' ?
+                                        "allow-same-origin allow-scripts allow-popups allow-presentation" :
                                         undefined
                                       }
                                   onError={(e) => {
@@ -3426,7 +3433,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                   );
                                 }
                               })()}
-                              
+
                               {/* 放大/缩小按钮 */}
                               <button
                                 onClick={() => setIsVideoExpanded(!isVideoExpanded)}
@@ -3440,7 +3447,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                 )}
                               </button>
                             </div>
-                            
+
                             {/* 视频标题 */}
                             <div className="mt-2 px-1">
                               <p className="text-sm font-medium text-gray-700 truncate" style={{
@@ -3457,7 +3464,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                           </div>
                         </div>
                       )}
-                      
+
                       {/* 紧凑视频列表 */}
                       <div className="relative">
                         {/* 顶部渐隐遮罩 */}
@@ -3552,29 +3559,29 @@ export default function StudyPage({ params }: StudyPageProps) {
                             }}>
                       Recommended Resources:
                     </h4>
-                    
+
                     <div className="space-y-1">
                       {currentTask.web_res.results.slice(0, 8).map((result, index) => (
-                        <div 
-                          key={index} 
+                        <div
+                          key={index}
                           className="group cursor-pointer hover:text-blue-600 transition-colors duration-200"
                           onClick={() => window.open(result.url, '_blank')}
                         >
                           <div className="flex items-center space-x-2">
                             <span className={`text-base font-bold ${
-                              index % 3 === 0 ? 'text-blue-500' : 
-                              index % 3 === 1 ? 'text-green-500' : 
+                              index % 3 === 0 ? 'text-blue-500' :
+                              index % 3 === 1 ? 'text-green-500' :
                               'text-purple-500'
                             }`}>
                               {index + 1}.
                             </span>
-                            
+
                             <h5 className="text-base font-bold text-gray-800 hover:text-blue-600 transition-colors flex-1" style={{
                               fontFamily: getFontFamily()
                             }}>
                               {result.title}
                             </h5>
-                            
+
                             <span className="text-sm">
                               {result.score > 0.9 ? '🔥' :
                                result.score > 0.8 ? '👍' : '📖'}
@@ -3602,7 +3609,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                             </span>
                             {currentTask.task.description}
                           </h4>
-                          
+
                           <div className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
                             <Editor
                               height="280px"
@@ -3641,7 +3648,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                               }}
                             />
                           </div>
-                          
+
                           {codeOutput && (
                             <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm border border-gray-700">
                               <div className="flex items-center mb-2">
@@ -3672,7 +3679,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                             {question.options.map((option: string, index: number) => {
                               const stickyStyles = [
                                 'bg-sky-50 border-sky-200 transform rotate-1 hover:rotate-0',
-                                'bg-slate-50 border-slate-200 transform -rotate-1 hover:rotate-0', 
+                                'bg-slate-50 border-slate-200 transform -rotate-1 hover:rotate-0',
                                 'bg-sky-50 border-sky-200 transform rotate-0.5 hover:rotate-0'
                               ];
                               const shadowStyles = [
@@ -3680,22 +3687,22 @@ export default function StudyPage({ params }: StudyPageProps) {
                                 'shadow-slate-100/50',
                                 'shadow-sky-100/50'
                               ];
-                              
+
                               const isSelected = selectedAnswers[qIndex] === option;
                               const isWrongAnswer = hasSubmitted && isSelected && option !== question.answer;
-                              
+
                               return (
                                 <label key={index} className={`flex items-center space-x-2 p-3 border-2 rounded-lg cursor-pointer text-sm transition-all duration-300 hover:scale-105 shadow-lg ${
                                   isWrongAnswer ? 'bg-red-200 border-red-400 text-red-800' :
                                   isSelected ? 'ring-2 ring-blue-400' : stickyStyles[index % 3]
                                 } ${!isWrongAnswer ? shadowStyles[index % 3] : ''}`}>
-                                  <input 
-                                    type="radio" 
+                                  <input
+                                    type="radio"
                                     name={`question-${qIndex}`}
                                     value={option}
                                     checked={isSelected}
                                     onChange={(e) => handleAnswerSelect(qIndex, e.target.value)}
-                                    className="text-primary scale-75" 
+                                    className="text-primary scale-75"
                                   />
                                   <span className="text-xs leading-tight font-medium" style={{
                                     fontFamily: getFontFamily()
@@ -3718,7 +3725,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                 {/* 提交按钮 */}
                 <div className="flex justify-end pt-4">
                   {!hasSubmitted ? (
-                    <Button 
+                    <Button
                       onClick={handleSubmitAnswers}
                       disabled={currentTask?.type === 'quiz' && Object.keys(selectedAnswers).length !== (currentTask?.questions?.length || 0)}
                       className="bg-primary hover:bg-primary/90 transform rotate-1 shadow-lg font-bold"
@@ -3735,7 +3742,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                       Correct! Switching to the next step... ✨
                     </div>
                   ) : (
-                    <Button 
+                    <Button
                       onClick={handleSubmitAnswers}
                       disabled={currentTask?.type === 'quiz' && Object.keys(selectedAnswers).length !== (currentTask?.questions?.length || 0)}
                       className="bg-primary hover:bg-primary/90 transform rotate-1 shadow-lg font-bold"
@@ -3760,7 +3767,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       <div className="w-1/4 transition-all duration-300">
         <div className="h-full p-4">
           <div className="h-full rounded-lg border border-gray-200 shadow-sm bg-white/80 backdrop-blur-sm p-4">
-            <AIChatInterface 
+            <AIChatInterface
               className="h-full"
               initialMessage="I am learning Q-Learning algorithm"
               recommendations={aiRecommendations}
@@ -3802,7 +3809,7 @@ export default function StudyPage({ params }: StudyPageProps) {
           {(() => {
             const courseInfo = getCourseInfo(learningPlan);
             return (
-              <WelcomePage 
+              <WelcomePage
                 onStartLearning={() => {
                   setCurrentStepIndex(1);
                   // 自动滚动到页面顶部
@@ -3819,7 +3826,7 @@ export default function StudyPage({ params }: StudyPageProps) {
           {/* 步骤导航区域 - 支持折叠 */}
           <div className="bg-white border-b">
             {/* 折叠控制条 */}
-            <div 
+            <div
               className="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-50"
               onClick={() => setMobileStepNavCollapsed(!mobileStepNavCollapsed)}
             >
@@ -3830,7 +3837,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               </span>
               <div className="flex items-center space-x-2">
                 <div className="text-xs text-gray-500">
-                  {mobileStepNavCollapsed 
+                  {mobileStepNavCollapsed
                     ? (routeParams?.locale === 'en' ? 'Expand' : '展开')
                     : (routeParams?.locale === 'en' ? 'Collapse' : '折叠')
                   }
@@ -3840,7 +3847,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                 }`} />
               </div>
             </div>
-            
+
             {/* 步骤按钮区域 - 可折叠 */}
             <div className={`overflow-hidden transition-all duration-300 ${
               mobileStepNavCollapsed ? 'max-h-0' : 'max-h-20'
@@ -3850,7 +3857,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                   {getStepsData().slice(1).map((navStep, navIndex) => {
                     const navStepIndex = navIndex + 1;
                     const isCurrentNavStep = navStepIndex === currentStepIndex;
-                    
+
                     // 与定制页面一致的颜色配置
                     const colors = [
                       { bg: 'bg-blue-400', text: 'text-white', border: 'border-blue-400' },
@@ -3863,7 +3870,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                       { bg: 'bg-orange-400', text: 'text-white', border: 'border-orange-400' }
                     ];
                     const colorScheme = colors[navIndex % colors.length];
-                    
+
                     return (
                       <button
                         key={navStepIndex}
@@ -3875,17 +3882,17 @@ export default function StudyPage({ params }: StudyPageProps) {
                             routeParamsId: routeParams?.id
                           });
                           setCurrentStepIndex(navStepIndex);
-                          
+
                           // 重置答题状态
                           setSelectedAnswers({});
                           setWrongAnswers(new Set());
                           setHasSubmitted(false);
-                          
+
                           // 自动滚动到页面顶部
                           scrollToTop();
                         }}
                         className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 transform transition-all duration-200 hover:scale-110 ${
-                          isCurrentNavStep 
+                          isCurrentNavStep
                             ? `${colorScheme.bg} ${colorScheme.text} ${colorScheme.border} scale-110 shadow-lg animate-pulse`
                             : `bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200`
                         } ${
@@ -3911,7 +3918,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               const stepsData = getStepsData().slice(1);
               const targetIndex = currentStepIndex - 1;
               const step = stepsData[targetIndex];
-              
+
               if (!step) {
                 return (
                   <div className="h-full flex items-center justify-center">
@@ -3922,7 +3929,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                   </div>
                 );
               }
-              
+
               return (
                 <div className="h-full learning-content-area">
                   {/* 步骤内容 */}
@@ -4001,7 +4008,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                           }}>
                             📺 {routeParams?.locale === 'en' ? 'Recommended Videos' : '推荐视频'}
                           </h4>
-                          
+
                           <div className="space-y-4">
                             {/* 单个视频显示 - 居中，全宽 */}
                             {getCurrentStepVideos()[currentVideoIndex] && (
@@ -4012,27 +4019,27 @@ export default function StudyPage({ params }: StudyPageProps) {
                                       const processedVideo = processVideoUrl(getCurrentStepVideos()[currentVideoIndex].url);
                                       const { url, platform } = processedVideo;
                                       const currentLocale = routeParams?.locale || 'en';
-                                      
+
                                       // 根据语言环境和平台决定显示方式
-                                      const shouldShowVideo = 
+                                      const shouldShowVideo =
                                         (currentLocale === 'zh' && platform === 'bilibili') ||
                                         (currentLocale === 'en' && platform === 'youtube') ||
                                         (platform === 'youtube' || platform === 'bilibili');
-                                      
+
                                       if (shouldShowVideo && (platform === 'youtube' || platform === 'bilibili')) {
                                         return (
-                                          <iframe 
+                                          <iframe
                                             src={url}
                                             frameBorder="0"
                                             allowFullScreen={true}
-                                            allow={platform === 'youtube' ? 
+                                            allow={platform === 'youtube' ?
                                               "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" :
                                               "autoplay; fullscreen"
                                             }
                                             className="w-full h-full"
                                             referrerPolicy={platform === 'bilibili' ? "no-referrer" : undefined}
-                                            sandbox={platform === 'bilibili' ? 
-                                              "allow-same-origin allow-scripts allow-popups allow-presentation" : 
+                                            sandbox={platform === 'bilibili' ?
+                                              "allow-same-origin allow-scripts allow-popups allow-presentation" :
                                               undefined
                                             }
                                             onError={(e) => {
@@ -4060,7 +4067,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                         );
                                       }
                                     })()}
-                                    
+
                                     {/* 放大/缩小按钮 */}
                                     <button
                                       onClick={() => setIsVideoExpanded(!isVideoExpanded)}
@@ -4074,7 +4081,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                                       )}
                                     </button>
                                   </div>
-                                  
+
                                   {/* 视频标题 */}
                                   <div className="mt-3 px-2 text-center">
                                     <p className="text-sm font-medium text-gray-700 leading-relaxed" style={{
@@ -4108,8 +4115,8 @@ export default function StudyPage({ params }: StudyPageProps) {
                                         key={index}
                                         onClick={() => setCurrentVideoIndex(index)}
                                         className={`w-full text-left p-3 rounded-lg transition-all duration-200 min-h-[60px] ${
-                                          active 
-                                            ? 'bg-yellow-100 border-2 border-yellow-200 transform rotate-1' 
+                                          active
+                                            ? 'bg-yellow-100 border-2 border-yellow-200 transform rotate-1'
                                             : 'bg-white border-2 border-gray-200 hover:bg-yellow-50 hover:border-yellow-100'
                                         }`}
                                         aria-pressed={active}
@@ -4157,7 +4164,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                           {routeParams?.locale === 'en' ? 'Step' : '步骤'} {currentStepIndex}/{getStepsData().length - 1}
                         </span>
                       </div>
-                      
+
                       {/* 下一步按钮 - 移动端 */}
                       {currentStepIndex < getStepsData().length - 1 && (
                         <Button
@@ -4181,7 +4188,7 @@ export default function StudyPage({ params }: StudyPageProps) {
           <div className="relative">
             {/* 折叠状态的聊天输入框 */}
             {!mobileChatExpanded && (
-              <div 
+              <div
                 className="border-t bg-white cursor-pointer mobile-chat-input-safe"
                 style={{
                   paddingTop: '1rem',
@@ -4203,7 +4210,7 @@ export default function StudyPage({ params }: StudyPageProps) {
 
             {/* 展开状态的完整聊天界面 */}
             {mobileChatExpanded && (
-              <div 
+              <div
                 className="absolute bottom-0 left-0 right-0 bg-white border-t shadow-lg transform transition-transform duration-300 mobile-chat-container-safe"
                 style={{
                   height: 'calc(100dvh - 4rem)',
@@ -4236,7 +4243,7 @@ export default function StudyPage({ params }: StudyPageProps) {
                     onTaskUpdateComplete={(newTaskData) => {
                       console.log('📝 任务更新完成，更新本地状态:', newTaskData);
                       setCurrentTask(newTaskData);
-                      
+
                       // 如果是quiz类型，重置答题状态
                       if (newTaskData?.type === 'quiz') {
                         setSelectedAnswers({});
@@ -4269,12 +4276,12 @@ export default function StudyPage({ params }: StudyPageProps) {
         const contentArea = document.querySelector('.learning-content-area');
         if (contentArea) {
           const rect = contentArea.getBoundingClientRect();
-          const isInContentArea = 
+          const isInContentArea =
             pos.x >= rect.left &&
             pos.x <= rect.right &&
             pos.y >= rect.top &&
             pos.y <= rect.bottom;
-          
+
           if (isInContentArea) {
             // 使用锚点元素进行精确定位：找到最近的上方标签（带 data-anchor-index）
             const allAnchors = Array.from(contentArea.querySelectorAll('[data-anchor-index]')) as HTMLElement[];
@@ -4309,7 +4316,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               const allParagraphs = contentArea.querySelectorAll('[data-paragraph-index]');
               if (allParagraphs.length > 0) insertAfterParagraph = allParagraphs.length - 1;
             }
-            
+
             // 创建新笔记
             const newNote: Note = {
               id: `note-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -4321,13 +4328,13 @@ export default function StudyPage({ params }: StudyPageProps) {
               type: 'text',
               origin: 'drag'
             };
-            
+
             // 添加笔记
             setNotes(prev => {
               const newNotes = [...prev, newNote];
               return newNotes.sort((a, b) => a.insertAfterParagraph - b.insertAfterParagraph);
             });
-            
+
             console.log('✅ 笔记已添加:', newNote);
             console.log('📍 精确插入位置（锚点对应段落）:', insertAfterParagraph === -1 ? 'beginning' : `after paragraph ${insertAfterParagraph + 1}`);
             console.log('🎯 鼠标位置:', { x: pos.x, y: pos.y });
@@ -4338,7 +4345,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       }}
       containerSelector=".ai-chat-interface"
     />
-    
+
     {/* 隐藏的图片上传输入 */}
     <input
       ref={imageUploadRef}
@@ -4358,7 +4365,7 @@ export default function StudyPage({ params }: StudyPageProps) {
     />
 
 
-    
+
     {/* 移动端聊天样式 */}
     <style jsx global>{`
       .mobile-chat-padding [data-chat-area="true"] > div {
@@ -4367,4 +4374,4 @@ export default function StudyPage({ params }: StudyPageProps) {
     `}</style>
     </>
   );
-} 
+}
