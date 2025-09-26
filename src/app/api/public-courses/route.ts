@@ -1,6 +1,9 @@
 import { getDb } from '@/db';
-import { userCourses } from '@/db/schema';
-import { NextRequest, NextResponse } from 'next/server';
+import { userCourses, user } from '@/db/schema';
+import { eq } from 'drizzle-orm';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import { isCreatorEmail } from '@/lib/creator-utils';
 
 export async function GET(request: NextRequest) {
 	try {
@@ -8,16 +11,26 @@ export async function GET(request: NextRequest) {
 		const search = searchParams.get('search')?.toLowerCase() || '';
 
 		const db = await getDb();
-		// 获取全部课程，再在内存中过滤 isPublic（coursePlan 为 JSONB，避免复杂 where 语句）
-		const rows = await db.select().from(userCourses);
-		let publicCourses = rows.filter((r: any) => r.coursePlan && (r.coursePlan as any).isPublic === true);
+		// 获取全部课程和用户信息，再在内存中过滤 isPublic（coursePlan 为 JSONB，避免复杂 where 语句）
+		const rows = await db
+			.select({
+				id: userCourses.id,
+				userId: userCourses.userId,
+				coursePlan: userCourses.coursePlan,
+				createdAt: userCourses.createdAt,
+				userEmail: user.email,
+				isCreator: user.isCreator,
+			})
+			.from(userCourses)
+			.innerJoin(user, eq(userCourses.userId, user.id));
+		const publicCourses = rows.filter((r: any) => r.coursePlan && (r.coursePlan as any).isPublic === true);
 
 		// 规范化输出，供首页卡片使用
 		const normalized = publicCourses.map((c: any) => {
 			const rawPlan = c.coursePlan?.plan;
 			let coursePlan: any;
 			let planSteps: any[];
-			
+
 			// 兼容新旧格式
 			if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
 				// 新格式：rawPlan 是包含 title、description、plan 的对象
@@ -28,16 +41,20 @@ export async function GET(request: NextRequest) {
 				coursePlan = {};
 				planSteps = Array.isArray(rawPlan) ? rawPlan : [];
 			}
-			
+
 			// 优先使用 instruction 中的标题和描述，回退到第一步的信息
 			const title = coursePlan.title || planSteps[0]?.title || 'Untitled Course';
 			const description = coursePlan.description || planSteps[0]?.description || 'No description';
-			
+
 			const firstVideo = planSteps[0]?.videos?.[0];
 			const coverImage = firstVideo?.cover || '/images/blog/post-1.png';
 			const rating = 4; // 默认4星评级
 			const type = planSteps[0]?.type || 'theory';
 			const difficulty = (type === 'coding' ? 'intermediate' : 'beginner') as 'beginner'|'intermediate'|'advanced';
+
+			// 判断是否为创作者账号
+			const isCreatorAccount = c.isCreator || isCreatorEmail(c.userEmail || '');
+
 			return {
 				id: c.id,
 				title,
@@ -47,12 +64,13 @@ export async function GET(request: NextRequest) {
 				difficulty,
 				ownerId: c.userId,
 				createdAt: c.createdAt,
+				isCreator: isCreatorAccount, // 添加创作者标识
 			};
 		});
 
 		// 如果有搜索参数，进行客户端搜索过滤
-		const filteredCourses = search 
-			? normalized.filter(course => 
+		const filteredCourses = search
+			? normalized.filter(course =>
 				course.title.toLowerCase().includes(search) ||
 				course.description.toLowerCase().includes(search)
 			)
@@ -68,4 +86,4 @@ export async function GET(request: NextRequest) {
 	} catch (e) {
 		return NextResponse.json({ error: 'Failed to fetch public courses' }, { status: 500 });
 	}
-} 
+}

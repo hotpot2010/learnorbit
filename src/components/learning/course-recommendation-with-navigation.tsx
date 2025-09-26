@@ -5,6 +5,7 @@ import { CourseRecommendationGrid } from './course-recommendation-grid';
 import { useLocaleRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import { generateCourseSlug, isCreatorEmail } from '@/lib/creator-utils';
 
 interface Course {
   id: string;
@@ -14,6 +15,7 @@ interface Course {
   rating: number;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   ownerId: string;
+  isCreator?: boolean; // 添加创作者标识
 }
 
 interface CourseRecommendationWithNavigationProps {
@@ -66,17 +68,15 @@ export function CourseRecommendationWithNavigation({
   }, [courses]);
 
   const handleCourseClick = (course: Course) => {
-    // 直接跳转到 slug 学习页：[title]-[ownerId]
-    const raw = `${course.title}`
-      .toString()
-      .trim()
-      .toLowerCase()
-      .replace(/[^a-z0-9\u4e00-\u9fa5\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-');
-    const slug = `${raw}-${course.ownerId}`;
+    // 使用 generateCourseSlug 函数生成正确的 slug
+    const slug = generateCourseSlug(course.title, course.ownerId, course.isCreator || false);
 
-    console.log('🔗 主页课程点击:', { courseTitle: course.title, ownerId: course.ownerId, slug: slug });
+    console.log('🔗 主页课程点击:', {
+      courseTitle: course.title,
+      ownerId: course.ownerId,
+      isCreator: course.isCreator,
+      slug: slug
+    });
 
     const base = (process.env.NEXT_PUBLIC_BASE_URL as string) || '';
     if (base) {

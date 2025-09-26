@@ -9,7 +9,9 @@ import { getTranslations } from 'next-intl/server';
 import { headers } from 'next/headers';
 import { unstable_cache } from 'next/cache';
 import { getDb } from '@/db';
-import { userCourses } from '@/db/schema';
+import { userCourses, user } from '@/db/schema';
+import { eq } from 'drizzle-orm';
+import { isCreatorEmail } from '@/lib/creator-utils';
 
 type PublicCourseCard = {
   id: string;
@@ -20,17 +22,28 @@ type PublicCourseCard = {
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   ownerId: string;
   createdAt?: string;
+  isCreator?: boolean; // 添加创作者标识
 };
 
 const getPublicCoursesCached = unstable_cache(async (): Promise<PublicCourseCard[]> => {
   const db = await getDb();
-  const rows = await db.select().from(userCourses);
+  const rows = await db
+    .select({
+      id: userCourses.id,
+      userId: userCourses.userId,
+      coursePlan: userCourses.coursePlan,
+      createdAt: userCourses.createdAt,
+      userEmail: user.email,
+      isCreator: user.isCreator,
+    })
+    .from(userCourses)
+    .innerJoin(user, eq(userCourses.userId, user.id));
   const publicCourses = rows.filter((r: any) => r.coursePlan && (r.coursePlan as any).isPublic === true);
   return publicCourses.map((c: any) => {
     const rawPlan = c.coursePlan?.plan;
     let coursePlan: any;
     let planSteps: any[];
-    
+
     // 兼容新旧格式
     if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
       // 新格式：rawPlan 是包含 title、description、plan 的对象
@@ -41,17 +54,31 @@ const getPublicCoursesCached = unstable_cache(async (): Promise<PublicCourseCard
       coursePlan = {};
       planSteps = Array.isArray(rawPlan) ? rawPlan : [];
     }
-    
+
     // 优先使用 instruction 中的标题和描述，回退到第一步的信息
     const title = coursePlan.title || planSteps[0]?.title || 'Untitled Course';
     const description = coursePlan.description || planSteps[0]?.description || 'No description';
-    
+
     const firstVideo = planSteps[0]?.videos?.[0];
     const coverImage = firstVideo?.cover || '/images/blog/post-1.png';
     const rating = 4; // 默认4星评级
     const type = planSteps[0]?.type || 'theory';
     const difficulty = (type === 'coding' ? 'intermediate' : 'beginner') as 'beginner'|'intermediate'|'advanced';
-    return { id: c.id, title, description, coverImage, rating, difficulty, ownerId: c.userId, createdAt: c.createdAt };
+
+    // 判断是否为创作者账号
+    const isCreatorAccount = c.isCreator || isCreatorEmail(c.userEmail || '');
+
+    return {
+      id: c.id,
+      title,
+      description,
+      coverImage,
+      rating,
+      difficulty,
+      ownerId: c.userId,
+      createdAt: c.createdAt,
+      isCreator: isCreatorAccount
+    };
   });
 }, ['public-courses'], { revalidate: 300, tags: ['public-courses'] });
 
@@ -82,10 +109,10 @@ export default async function HomePage(props: HomePageProps) {
   const { locale } = params;
   const t = await getTranslations({ locale, namespace: 'LearningPlatform' });
   const preloadedCourses = await getPublicCoursesCached();
-  
+
   // 移动端英文模式使用正常字体，其他情况使用卡通字体
   const getFontFamily = (isEnglish: boolean) => {
-    return isEnglish 
+    return isEnglish
       ? 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif'
       : '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
   };

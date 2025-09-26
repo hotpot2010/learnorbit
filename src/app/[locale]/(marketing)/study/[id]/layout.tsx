@@ -16,6 +16,28 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale, id } = resolvedParams;
   const baseUrl = process.env.NODE_ENV === 'production' ? 'https://aitutorly.ai' : getBaseUrl();
 
+  // 特殊处理 "custom" 路径 - 这是用户自定义课程的路径
+  if (id === 'custom') {
+    return {
+      title: '自定义学习计划 - AI智能学习助手 | AiTutorly',
+      description: '通过AI智能助手创建个性化学习计划，定制专属学习路径。',
+      keywords: 'AI学习, 个性化学习, 自定义课程, 智能助手, 在线教育',
+      authors: [{ name: 'AiTutorly' }],
+      creator: 'AiTutorly',
+      publisher: 'AiTutorly',
+      formatDetection: {
+        email: false,
+        address: false,
+        telephone: false,
+      },
+      metadataBase: new URL(baseUrl),
+      robots: {
+        index: false, // 自定义课程不需要被搜索引擎索引
+        follow: true,
+      },
+    };
+  }
+
   try {
     const db = await getDb();
 
