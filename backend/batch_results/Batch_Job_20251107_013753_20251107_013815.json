@@ -1,0 +1,43 @@
+{
+  "job_id": "978d6cf6-2350-4011-9111-69bdb3e7d07e",
+  "job_name": "Batch Job 20251107_013753",
+  "created_at": "2025-11-07T01:37:53.286280",
+  "status": "completed",
+  "total_videos": 1,
+  "completed_videos": 1,
+  "failed_videos": 0,
+  "video_urls": [
+    "https://www.bilibili.com/video/BV1Jgf6YvE8e?spm_id_from=333.788.player.switch&vd_source=406c2915ecba48ec3702134471f44902&p=3"
+  ],
+  "prompt": "请分析这个视频的内容，生成一个详细的摘要和时间轴。\n",
+  "results": [
+    {
+      "success": true,
+      "video_info": {
+        "bv_id": "BV1Jgf6YvE8e_p3",
+        "title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p03 Windows | 安装Python和PyCharm",
+        "description": "把Python教程做成动画片了，教学通俗易懂，2025最新版，学完入门编程！\n全部配套课程源码+学习资料，领取方式：关注【林粒粒呀】公综号",
+        "duration": 226.222,
+        "uploader": "林粒粒呀",
+        "upload_date": "20250201",
+        "view_count": 3713143,
+        "like_count": 47522,
+        "thumbnail": "http://i0.hdslb.com/bfs/archive/f434c48d7cbea2b3efd71fd05f0f705132a22e57.jpg",
+        "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?spm_id_from=333.788.player.switch&vd_source=406c2915ecba48ec3702134471f44902&p=3"
+      },
+      "analysis": {
+        "success": false,
+        "analysis_type": "custom",
+        "method": "asr_doubao",
+        "error": "无法提取 ASR 逐字稿: 无法从 ASR 结果中提取逐字稿，请检查 ASR 任务状态",
+        "processing_time": 16.48687481880188
+      },
+      "analyzed_at": "2025-11-07T01:38:15.853474",
+      "from_cache": false
+    }
+  ],
+  "errors": [],
+  "started_at": "2025-11-07T01:37:53.311397",
+  "progress": 100.0,
+  "completed_at": "2025-11-07T01:38:15.858412"
+}

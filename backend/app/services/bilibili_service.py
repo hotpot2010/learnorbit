@@ -1,0 +1,351 @@
+"""
+Bilibili video download and management service
+"""
+import os
+import json
+import yt_dlp
+import tempfile
+from typing import Dict, Any, List, Optional
+from pathlib import Path
+import time
+
+
+class BilibiliService:
+    """Service for downloading and managing Bilibili videos"""
+    
+    def __init__(self, download_dir: Optional[str] = None):
+        """
+        Initialize Bilibili service
+        
+        Args:
+            download_dir: Directory to store downloaded videos (temp dir if not specified)
+        """
+        self.download_dir = download_dir or tempfile.gettempdir()
+        os.makedirs(self.download_dir, exist_ok=True)
+        
+        print(f"📁 Video download directory: {self.download_dir}")
+    
+    def list_available_formats(self, url: str) -> List[Dict[str, Any]]:
+        """
+        List all available formats for a video (for debugging)
+        
+        Args:
+            url: Bilibili video URL or BV number
+            
+        Returns:
+            List of available formats
+        """
+        if url.startswith('BV'):
+            url = f'https://www.bilibili.com/video/{url}'
+        
+        ydl_opts = {
+            'quiet': True,
+            'no_warnings': True,
+        }
+        
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=False)
+                
+                if 'formats' in info:
+                    formats = []
+                    for fmt in info['formats']:
+                        formats.append({
+                            'format_id': fmt.get('format_id', ''),
+                            'ext': fmt.get('ext', ''),
+                            'resolution': fmt.get('resolution', 'N/A'),
+                            'filesize': fmt.get('filesize', 0),
+                            'vcodec': fmt.get('vcodec', 'none'),
+                            'acodec': fmt.get('acodec', 'none'),
+                        })
+                    return formats
+                
+                return []
+        except Exception as e:
+            print(f"⚠️ Failed to list formats: {str(e)}")
+            return []
+    
+    def extract_video_info(self, url: str) -> Dict[str, Any]:
+        """
+        Extract video information without downloading
+        
+        Args:
+            url: Bilibili video URL or BV number
+            
+        Returns:
+            Video information dictionary
+        """
+        # Convert BV number to full URL if needed
+        if url.startswith('BV'):
+            url = f'https://www.bilibili.com/video/{url}'
+        
+        ydl_opts = {
+            'quiet': True,
+            'no_warnings': True,
+            'extract_flat': False,
+        }
+        
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=False)
+                
+                # Extract relevant information
+                return {
+                    'bv_id': info.get('id', ''),
+                    'title': info.get('title', ''),
+                    'description': info.get('description', ''),
+                    'duration': info.get('duration', 0),
+                    'uploader': info.get('uploader', ''),
+                    'upload_date': info.get('upload_date', ''),
+                    'view_count': info.get('view_count', 0),
+                    'like_count': info.get('like_count', 0),
+                    'thumbnail': info.get('thumbnail', ''),
+                    'url': url,
+                }
+        except Exception as e:
+            raise Exception(f"Failed to extract video info: {str(e)}")
+    
+    def download_video(self, url: str, output_filename: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Download Bilibili video
+        
+        Args:
+            url: Bilibili video URL or BV number
+            output_filename: Custom output filename (without extension)
+            
+        Returns:
+            Dictionary with download info including file path
+        """
+        # Convert BV number to full URL if needed
+        if url.startswith('BV'):
+            url = f'https://www.bilibili.com/video/{url}'
+        
+        # 多P视频检测已移至 batch_analyzer.py 以避免重复请求
+        # 如果直接调用此方法且是多P视频，会在下载时自动处理
+        
+        # Generate output filename
+        if not output_filename:
+            output_filename = f"bilibili_{int(time.time())}"
+        
+        output_path = os.path.join(self.download_dir, f"{output_filename}.%(ext)s")
+        
+        ydl_opts = {
+            # 🎯 优化：优先使用已合并的格式（无需 FFmpeg）
+            # 如果 FFmpeg 可用，才尝试手动合并
+            'format': (
+                'best[ext=mp4]/'  # 🎯 优先：单一流（已包含音视频，无需合并）
+                'best/'  # 任意最佳格式
+                'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/'  # FFmpeg 合并（需要安装）
+                'bestvideo[height<=1080]+bestaudio/'  # 限制分辨率
+                'bestvideo/bestaudio'  # 最后才是仅视频或仅音频
+            ),
+            'outtmpl': output_path,
+            'quiet': False,
+            'no_warnings': False,
+            'merge_output_format': 'mp4',  # 如果合并，输出 mp4
+            # 错误处理和重试
+            'retries': 3,
+            'fragment_retries': 3,
+            'skip_unavailable_fragments': True,
+            # 网络设置
+            'socket_timeout': 30,
+            # Cookie 支持（某些视频可能需要）
+            'cookiefile': None,  # 如果需要可以指定 cookie 文件
+        }
+        
+        try:
+            print(f"📥 Downloading video from: {url}")
+            
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=True)
+                
+                # Get actual downloaded file path
+                downloaded_file = ydl.prepare_filename(info)
+                
+                # 🔍 增强文件查找逻辑
+                if not os.path.exists(downloaded_file):
+                    print(f"⚠️  Expected file not found: {downloaded_file}")
+                    print(f"🔍 Searching for downloaded file in: {self.download_dir}")
+                    
+                    # 尝试查找实际下载的文件
+                    base_name = os.path.splitext(os.path.basename(downloaded_file))[0]
+                    found_file = None
+                    
+                    # 搜索下载目录
+                    if os.path.exists(self.download_dir):
+                        for file in os.listdir(self.download_dir):
+                            if base_name in file:
+                                found_file = os.path.join(self.download_dir, file)
+                                print(f"✅ Found: {found_file}")
+                                break
+                    
+                    if found_file and os.path.exists(found_file):
+                        downloaded_file = found_file
+                    else:
+                        raise FileNotFoundError(
+                            f"Downloaded file not found. Expected: {downloaded_file}, "
+                            f"Searched in: {self.download_dir}"
+                        )
+                
+                return {
+                    'success': True,
+                    'file_path': downloaded_file,
+                    'file_size': os.path.getsize(downloaded_file),
+                    'bv_id': info.get('id', ''),
+                    'title': info.get('title', ''),
+                    'duration': info.get('duration', 0),
+                    'url': url,
+                }
+        except Exception as e:
+            error_msg = str(e)
+            print(f"❌ Download failed with primary format: {error_msg}")
+            
+            # 尝试多种降级策略（根据诊断结果调整顺序）
+            fallback_strategies = [
+                ('Strategy 1: Best video only', {'format': 'bestvideo'}),  # 某些视频只有这个
+                ('Strategy 2: Simple best', {'format': 'best'}),
+                ('Strategy 3: Best audio only', {'format': 'bestaudio'}),
+                ('Strategy 4: Worst quality', {'format': 'worst'}),
+                ('Strategy 5: Any format', {'format': None}),  # Let yt-dlp decide
+            ]
+            
+            for strategy_name, format_opts in fallback_strategies:
+                if 'Requested format is not available' in error_msg or 'format' in error_msg.lower():
+                    print(f"🔄 Trying {strategy_name}...")
+                    
+                    fallback_opts = {
+                        'outtmpl': ydl_opts['outtmpl'],
+                        'quiet': False,
+                        'no_warnings': False,
+                        'retries': 3,
+                        'fragment_retries': 3,
+                        'skip_unavailable_fragments': True,
+                        'socket_timeout': 30,
+                    }
+                    
+                    # Add format if specified
+                    if format_opts.get('format'):
+                        fallback_opts['format'] = format_opts['format']
+                    
+                    try:
+                        with yt_dlp.YoutubeDL(fallback_opts) as ydl:
+                            info = ydl.extract_info(url, download=True)
+                            downloaded_file = ydl.prepare_filename(info)
+                            
+                            # 🔍 增强文件查找逻辑
+                            if not os.path.exists(downloaded_file):
+                                print(f"⚠️  File not found: {downloaded_file}")
+                                print(f"🔍 Searching in: {self.download_dir}")
+                                
+                                # 方法1: 尝试不同扩展名
+                                base_path = os.path.splitext(downloaded_file)[0]
+                                for ext in ['.mp4', '.flv', '.webm', '.mkv', '.m4a', '.mp3', '.part']:
+                                    potential_file = base_path + ext
+                                    if os.path.exists(potential_file):
+                                        downloaded_file = potential_file
+                                        print(f"✅ Found with extension: {downloaded_file}")
+                                        break
+                                
+                                # 方法2: 搜索下载目录中的所有文件
+                                if not os.path.exists(downloaded_file):
+                                    base_name = os.path.splitext(os.path.basename(downloaded_file))[0]
+                                    if os.path.exists(self.download_dir):
+                                        for file in os.listdir(self.download_dir):
+                                            if base_name in file and not file.endswith('.part'):
+                                                downloaded_file = os.path.join(self.download_dir, file)
+                                                print(f"✅ Found in directory: {downloaded_file}")
+                                                break
+                            
+                            if os.path.exists(downloaded_file):
+                                print(f"✅ Download succeeded with {strategy_name}")
+                                
+                                return {
+                                    'success': True,
+                                    'file_path': downloaded_file,
+                                    'file_size': os.path.getsize(downloaded_file),
+                                    'bv_id': info.get('id', ''),
+                                    'title': info.get('title', ''),
+                                    'duration': info.get('duration', 0),
+                                    'url': url,
+                                    'download_strategy': strategy_name,
+                                }
+                            else:
+                                print(f"❌ File not found after download (searched: {downloaded_file})")
+                                continue
+                                
+                    except Exception as fallback_error:
+                        print(f"❌ {strategy_name} failed: {str(fallback_error)}")
+                        continue
+            
+            # All strategies failed
+            raise Exception(
+                f"Failed to download video after trying all strategies. "
+                f"This video might require authentication (Cookie), be region-locked, "
+                f"or have DRM protection. Original error: {error_msg}"
+            )
+    
+    def download_playlist(self, url: str) -> List[Dict[str, Any]]:
+        """
+        Download all videos from a Bilibili playlist/series
+        
+        Args:
+            url: Bilibili playlist URL
+            
+        Returns:
+            List of download results
+        """
+        ydl_opts = {
+            'quiet': True,
+            'no_warnings': True,
+            'extract_flat': True,  # Only get playlist info first
+        }
+        
+        results = []
+        
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                playlist_info = ydl.extract_info(url, download=False)
+                
+                # Check if it's a playlist
+                if 'entries' not in playlist_info:
+                    # Single video, treat as single item
+                    result = self.download_video(url)
+                    return [result]
+                
+                # Download each video in playlist
+                for idx, entry in enumerate(playlist_info['entries'], 1):
+                    video_url = entry.get('url') or entry.get('webpage_url')
+                    video_id = entry.get('id', f'video_{idx}')
+                    
+                    try:
+                        print(f"📥 Downloading video {idx}/{len(playlist_info['entries'])}: {video_id}")
+                        result = self.download_video(video_url, output_filename=f"playlist_{video_id}")
+                        result['playlist_index'] = idx
+                        results.append(result)
+                    except Exception as e:
+                        print(f"❌ Failed to download video {idx}: {str(e)}")
+                        results.append({
+                            'success': False,
+                            'error': str(e),
+                            'url': video_url,
+                            'playlist_index': idx,
+                        })
+                
+                return results
+        except Exception as e:
+            raise Exception(f"Failed to process playlist: {str(e)}")
+    
+    def cleanup_video(self, file_path: str):
+        """
+        Remove downloaded video file
+        
+        Args:
+            file_path: Path to video file
+        """
+        try:
+            if os.path.exists(file_path):
+                os.remove(file_path)
+                print(f"🗑️ Cleaned up: {file_path}")
+        except Exception as e:
+            print(f"⚠️ Failed to cleanup {file_path}: {str(e)}")
+

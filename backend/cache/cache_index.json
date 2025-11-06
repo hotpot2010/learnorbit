@@ -1,0 +1,13 @@
+{
+  "asr_ae67be90f3a9f5dd3786047c77b30400": {
+    "type": "asr",
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?spm_id_from=333.788.player.switch&vd_source=406c2915ecba48ec3702134471f44902&p=3",
+    "cached_at": "2025-11-07T01:59:03.352523",
+    "file": "cache\\asr_ae67be90f3a9f5dd3786047c77b30400.json"
+  },
+  "d62f1d8ee4136a2cb87d0d3f571d4c74": {
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?spm_id_from=333.788.player.switch&vd_source=406c2915ecba48ec3702134471f44902&p=3",
+    "cached_at": "2025-11-07T01:59:09.664419",
+    "file": "cache\\d62f1d8ee4136a2cb87d0d3f571d4c74.json"
+  }
+}
