@@ -1,0 +1,12 @@
+{
+  "cache_key": "9cdc2d1c31acd6d69d202b3b2d8c49f1",
+  "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=3",
+  "knowledge_point_name": "Python解释器的作用",
+  "note": "# Python解释器的作用 🐍\n\n## 核心功能 💡\n**充当翻译官**：将人类可读的Python代码转换为机器可执行的二进制码\n\n## 工作方式 ⚙️\n- **逐行解释执行**：翻译一行 → 执行一行\n- 实时转换，无需预编译\n\n## 关键概念 🔑\n💾 **安装Python = 安装解释器**\n\n---\n*总结：解释器是连接代码与机器的桥梁*",
+  "note_length": 174,
+  "cached_at": "2025-11-07T16:28:33.158800",
+  "metadata": {
+    "video_title": "在你开始编程之前 | 为什么安装Python和PyCharm",
+    "transcript_length": 166
+  }
+}

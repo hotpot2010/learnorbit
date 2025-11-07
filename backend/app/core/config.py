@@ -35,6 +35,7 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         case_sensitive = True
+        extra = 'ignore'  # 忽略未定义的环境变量
 
 # Global settings instance
 settings = Settings()

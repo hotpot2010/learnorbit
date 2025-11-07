@@ -1,0 +1,12 @@
+{
+  "cache_key": "e34d2a1a3ef22aead7e0efe541cd34c7",
+  "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=3",
+  "knowledge_point_name": "单行注释语法",
+  "note": "# 单行注释语法\n\n## 📝 基本语法\n- 使用 `#` 号开头\n- `#` 后面的内容不会被执行\n\n## ⚠️ 重要特性\n- **仅对单行有效**\n- 多行注释需要每行都加 `#`\n\n## 💡 示例python\n# 这是单行注释\n# 多行注释\n# 需要每行加井号",
+  "note_length": 132,
+  "cached_at": "2025-11-07T17:29:19.775577",
+  "metadata": {
+    "video_title": "Python注释 | 悄悄在代码里骂用户？",
+    "transcript_length": 105
+  }
+}

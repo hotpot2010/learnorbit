@@ -1,0 +1,64 @@
+{
+  "cache_key": "d11c8f0dc26f023af03f019ec9e697a1",
+  "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=2",
+  "prompt": "提取视频中的知识点",
+  "result": {
+    "success": true,
+    "analysis_type": "custom",
+    "result": {
+      "content": "{\n  \"knowledge_points\": [\n    {\n      \"name\": \"Python解释器的作用\",\n      \"start_time\": \"00:07\",\n      \"end_time\": \"00:25\"\n    },\n    {\n      \"name\": \"Python运行机制\",\n      \"start_time\": \"00:17\",\n      \"end_time\": \"00:20\"\n    },\n    {\n      \"name\": \"代码编辑器的必要性\",\n      \"start_time\": \"00:26\",\n      \"end_time\": \"00:34\"\n    },\n    {\n      \"name\": \"PyCharm编辑器介绍\",\n      \"start_time\": \"00:42\",\n      \"end_time\": \"00:49\"\n    },\n    {\n      \"name\": \"IDE集成开发环境概念\",\n      \"start_time\": \"00:49\",\n      \"end_time\": \"01:04\"\n    }\n  ]\n}",
+      "knowledge_points": [
+        {
+          "name": "Python解释器的作用",
+          "start_time": "00:07",
+          "end_time": "00:25"
+        },
+        {
+          "name": "Python运行机制",
+          "start_time": "00:17",
+          "end_time": "00:20"
+        },
+        {
+          "name": "代码编辑器的必要性",
+          "start_time": "00:26",
+          "end_time": "00:34"
+        },
+        {
+          "name": "PyCharm编辑器介绍",
+          "start_time": "00:42",
+          "end_time": "00:49"
+        },
+        {
+          "name": "IDE集成开发环境概念",
+          "start_time": "00:49",
+          "end_time": "01:04"
+        }
+      ],
+      "transcript": "[00:00 - 00:04] 在写下第一行排放代码之前，你还有两件事情需要做。\n[00:04 - 00:07] 第一件事情是安装排放解释器。\n[00:07 - 00:16] 机器其实是没办法直接读懂我们写的排放代码的，而是需要一个解释器作为中间的翻译，把代码转换成4000码后再直行。\n[00:17 - 00:20] 排放的运行过程就是翻译一行，执行一行。\n[00:20 - 00:22] 我们一般说安装拍放。\n[00:22 - 00:25] 本质上指的就是安装拍放解示器。\n[00:26 - 00:29] 第二件事情是安装一个代码编辑器。\n[00:29 - 00:31] 正好比我们写文档大多数用word。\n[00:32 - 00:34] 像写代码也需要一个软件。\n[00:34 - 00:41] 现在已经有非常多的代码编辑器，关于哪个编辑器最好用这个话题都可能挑起程序员之间的战争。\n[00:42 - 00:43] 我比较推荐的是拍叉。\n[00:43 - 00:49] 它是JAB公司简称JB公司专门为拍坊设计的编辑器。\n[00:49 - 00:55] 而且拍唱不止可以用来写代码，它的本质叫做IDE集成开发环境。\n[00:55 - 01:04] 除了拥有代码补全、自动格式化、拼写检查等许多编辑器智能功能之外，还包含了调试器、版本控制工具等，非常强大。\n[01:05 - 01:06] 但是作为新手呢。\n[01:06 - 01:11] 不需要一次学会所有的，随着经验增加，你上手的功能会越来越多。\n[01:12 - 01:19] 后面两个视频会带着你一起在Windows系统或者Mac OS系统上安装，这俩东西我们稍后见。",
+      "video_info": {
+        "path": "C:\\Users\\wangz\\AppData\\Local\\Temp\\temp_BV1Jgf6YvE8e_p2_p2.mp4",
+        "url": "http://file.gsxservice.com/3286498489_2tsbh5tr.mp4",
+        "size_bytes": 2629594
+      },
+      "asr_task_id": 1355327,
+      "asr_from_cache": false,
+      "knowledge_point_count": 5
+    },
+    "processing_time": 15.67549204826355,
+    "method": "asr_doubao",
+    "part_number": 2,
+    "series_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p02 在你开始编程之前 | 为什么安装Python和PyCharm",
+    "video_info": {
+      "title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p02 在你开始编程之前 | 为什么安装Python和PyCharm",
+      "bv_id": "BV1Jgf6YvE8e_p2",
+      "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=2",
+      "part_number": 2
+    }
+  },
+  "metadata": {
+    "bv_id": "BV1Jgf6YvE8e_p2",
+    "title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p02 在你开始编程之前 | 为什么安装Python和PyCharm",
+    "part_number": 2
+  },
+  "cached_at": "2025-11-07T15:16:31.897604"
+}

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import ReactMarkdown from 'react-markdown';
 import Editor from '@monaco-editor/react';
+import html2canvas from 'html2canvas';
 import { 
   Play, 
   Pause, 
@@ -20,6 +21,7 @@ import {
   Share2,
   StickyNote,
   CheckSquare,
+  CheckCircle,
   Lightbulb,
   FileText,
   Search,
@@ -56,10 +58,6 @@ interface Exercise {
   starter_code: string;
   solution: string;
   hints: string[];
-  test_cases: Array<{
-    input: string;
-    expected: string;
-  }>;
 }
 
 // 知识点类型定义
@@ -75,14 +73,36 @@ interface KnowledgePoint {
   exercise?: Exercise;  // 练习题
   isGeneratingExercise?: boolean;  // 是否正在生成练习
   userCode?: string;  // 用户编写的代码
+  validationResult?: ValidationResult;  // 答案验证结果
+  isValidating?: boolean;  // 是否正在验证答案
+}
+
+// 答案验证结果类型
+interface ValidationResult {
+  passed: boolean;
+  score?: number;
+  feedback?: string;
+}
+
+interface PartInfo {
+  part_number: number;
+  part_title: string;
+  duration: number;
+  url: string;
+  bv_id: string;
 }
 
 interface VideoAnalysisResult {
   success: boolean;
+  is_series?: boolean;
+  series_title?: string;
+  total_parts?: number;
+  parts?: PartInfo[];
   video_info?: {
     title: string;
     bv_id: string;
     url: string;
+    part_number?: number;
   };
   analysis?: {
     result?: {
@@ -265,6 +285,13 @@ export default function VideoNotesPrototypePage() {
   const [currentTime, setCurrentTime] = useState(0);
   const [currentKnowledgeIndex, setCurrentKnowledgeIndex] = useState(0);
   
+  // 视频序列相关状态
+  const [isSeries, setIsSeries] = useState(false);
+  const [seriesTitle, setSeriesTitle] = useState<string>('');
+  const [allParts, setAllParts] = useState<PartInfo[]>([]);
+  const [currentPartIndex, setCurrentPartIndex] = useState(0);
+  const [loadingPartIndex, setLoadingPartIndex] = useState<number | null>(null);
+  
   // UI状态
   const [isPlaying, setIsPlaying] = useState(false);
   const [showTranscript, setShowTranscript] = useState(true);
@@ -292,6 +319,107 @@ export default function VideoNotesPrototypePage() {
       return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
     }
     return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+  };
+  
+  // 加载单个分P
+  const loadPart = async (part: PartInfo, partIndex: number) => {
+    setLoadingPartIndex(partIndex);
+    setCurrentPartIndex(partIndex);
+    
+    try {
+      console.log(`📺 加载第 ${part.part_number} P:`, part.part_title);
+      
+      const response = await fetch('http://localhost:8000/batch/analyze-part', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          video_url: part.url,
+          prompt: '提取视频中的知识点',
+          part_number: part.part_number,
+        }),
+      });
+      
+      const data = await response.json();
+      
+      console.log('🔍 API响应数据:', data);
+      console.log('🔍 data.success:', data.success);
+      console.log('🔍 data.data:', data.data);
+      
+      if (data.success && data.data) {
+        const result = data.data;
+        
+        console.log('🔍 result对象:', result);
+        console.log('🔍 from_cache:', result.from_cache);
+        
+        // 更新当前P的知识点
+        // 注意：新分析和缓存的数据结构不同
+        // - 新分析: result.result.knowledge_points
+        // - 缓存: result.analysis.result.knowledge_points
+        const points = result.result?.knowledge_points || 
+                      result.analysis?.result?.knowledge_points || 
+                      [];
+        console.log('🔍 提取的知识点数组:', points);
+        console.log('🔍 知识点数量:', points.length);
+        
+        setKnowledgePoints(points);
+        
+        // 更新CDN视频URL
+        const videoUrl = result.result?.video_info?.url || 
+                        result.analysis?.result?.video_info?.url || 
+                        '';
+        console.log('🔍 CDN视频URL:', videoUrl);
+        setCdnVideoUrl(videoUrl);
+        
+        // 更新视频标题（使用分P标题）
+        console.log('🔍 设置视频标题:', part.part_title);
+        setVideoTitle(part.part_title);
+        
+        // 更新逐字稿
+        const transcript = result.result?.transcript || 
+                          result.analysis?.result?.transcript || 
+                          '';
+        console.log('🔍 逐字稿长度:', transcript.length);
+        setFullTranscript(transcript);
+        
+        // 保存原始视频URL（用于笔记缓存）
+        setCurrentVideoUrl(part.url);
+        
+        // 重置知识点展开状态和当前索引
+        setExpandedKnowledgePoints(new Set([0]));
+        setCurrentKnowledgeIndex(0);
+        
+        // 重置视频播放状态
+        if (videoRef.current) {
+          videoRef.current.currentTime = 0;
+        }
+        
+        console.log(`✅ P${part.part_number} 加载完成，提取到`, points.length, '个知识点');
+        console.log(`✅ 状态更新完成 - 知识点: ${points.length}, 视频URL:已设置, 标题:已设置`);
+      } else {
+        console.error(`❌ P${part.part_number} 加载失败:`, data);
+        alert(`加载第${part.part_number}P失败: ${data.error || '未知错误'}`);
+      }
+    } catch (error) {
+      console.error(`❌ P${part.part_number} 加载异常:`, error);
+      alert(`加载第${part.part_number}P失败: ${error}`);
+    } finally {
+      setLoadingPartIndex(null);
+    }
+  };
+  
+  // 视频播放结束处理
+  const handleVideoEnded = () => {
+    setIsPlaying(false);
+    
+    // 如果是视频序列且不是最后一P，自动播放下一P
+    if (isSeries && currentPartIndex < allParts.length - 1) {
+      const nextPartIndex = currentPartIndex + 1;
+      const nextPart = allParts[nextPartIndex];
+      console.log(`🎬 自动播放下一P: P${nextPart.part_number}`);
+      loadPart(nextPart, nextPartIndex);
+    }
   };
   
   // 解析视频
@@ -354,6 +482,37 @@ export default function VideoNotesPrototypePage() {
             const result = job.results[0];
             setAnalysisResult(result);
             
+            // 检查是否是视频序列
+            if (result.is_series && result.parts && result.parts.length > 0) {
+              console.log('🎬 检测到视频序列:', result.series_title);
+              console.log('📊 共', result.total_parts, '个分P');
+              
+              // 设置序列信息
+              setIsSeries(true);
+              setSeriesTitle(result.series_title || '');
+              setAllParts(result.parts);
+              
+              // 检查URL中是否指定了分P（如?p=3）
+              let initialPartIndex = 0;
+              const urlParams = new URLSearchParams(window.location.search);
+              const pParam = urlParams.get('p');
+              if (pParam) {
+                const partNum = parseInt(pParam, 10);
+                if (!isNaN(partNum) && partNum >= 1 && partNum <= result.parts.length) {
+                  initialPartIndex = partNum - 1; // 转换为0-based索引
+                  console.log(`📍 URL指定加载P${partNum}`);
+                }
+              }
+              
+              setCurrentPartIndex(initialPartIndex);
+              
+              // 自动加载指定的P
+              await loadPart(result.parts[initialPartIndex], initialPartIndex);
+              
+              return true;
+            }
+            
+            // 单视频处理
             // 提取知识点
             const points = result.analysis?.result?.knowledge_points || [];
             setKnowledgePoints(points);
@@ -575,6 +734,13 @@ export default function VideoNotesPrototypePage() {
   const generateNote = async (index: number) => {
     const point = knowledgePoints[index];
     
+    // 自动暂停视频
+    if (videoRef.current && !videoRef.current.paused) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+      console.log('⏸️ Video paused for note generation');
+    }
+    
     // 标记为正在生成
     setKnowledgePoints(prev => prev.map((p, i) => 
       i === index ? { ...p, isGeneratingNote: true } : p
@@ -763,6 +929,492 @@ export default function VideoNotesPrototypePage() {
     ));
   };
   
+  // 保存笔记为长图（小红书风格）
+  const saveNotesAsImage = async () => {
+    try {
+      console.log('📸 开始导出笔记...');
+      
+      // 筛选有内容的知识点（有笔记、Q&A或练习）
+      const pointsWithContent = knowledgePoints.filter(point => 
+        point.note || 
+        (point.qaList && point.qaList.length > 0) || 
+        point.exercise
+      );
+      
+      if (pointsWithContent.length === 0) {
+        alert('没有可导出的笔记内容');
+        return;
+      }
+      
+      console.log(`📝 找到 ${pointsWithContent.length} 个有内容的知识点`);
+      
+      // 创建一个临时容器用于渲染（小红书风格）
+      const container = document.createElement('div');
+      container.style.position = 'absolute';
+      container.style.left = '-9999px';
+      container.style.top = '0';
+      container.style.width = '800px';
+      container.style.background = 'linear-gradient(135deg, #fef3e2 0%, #fce8d6 50%, #f9e8d7 100%)';
+      container.style.padding = '50px 40px';
+      container.style.fontFamily = '"Comic Sans MS", "Apple Color Emoji", "Segoe UI Emoji", sans-serif';
+      container.style.color = '#2d2d2d';
+      container.style.boxShadow = '0 0 100px rgba(0,0,0,0.05)';
+      document.body.appendChild(container);
+      
+      // 顶部装饰条
+      const topDecor = document.createElement('div');
+      topDecor.style.cssText = `
+        height: 8px;
+        background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
+        border-radius: 50px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      `;
+      container.appendChild(topDecor);
+      
+      // 标题（小红书风格）
+      const title = document.createElement('div');
+      title.style.cssText = `
+        font-size: 38px;
+        font-weight: 900;
+        color: #333;
+        margin-bottom: 10px;
+        text-align: center;
+        text-shadow: 3px 3px 0px rgba(255, 200, 124, 0.3);
+        letter-spacing: 2px;
+        font-family: '"Comic Sans MS", "Marker Felt", cursive';
+      `;
+      title.textContent = `📚 ${videoTitle || '视频笔记'}`;
+      container.appendChild(title);
+      
+      // 副标题装饰
+      const subtitle = document.createElement('div');
+      subtitle.style.cssText = `
+        font-size: 16px;
+        color: #888;
+        margin-bottom: 30px;
+        text-align: center;
+        font-weight: 500;
+        letter-spacing: 1px;
+      `;
+      subtitle.textContent = `✨ ${new Date().toLocaleDateString('zh-CN')} ✨`;
+      container.appendChild(subtitle);
+      
+      // 渲染每个知识点
+      pointsWithContent.forEach((point, index) => {
+        // 知识点卡片（小红书风格）
+        const card = document.createElement('div');
+        card.style.cssText = `
+          margin-bottom: 28px;
+          padding: 28px;
+          border-radius: 24px;
+          background: #ffffff;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.02);
+          position: relative;
+          overflow: hidden;
+        `;
+        
+        // 卡片左上角装饰
+        const cornerDecor = document.createElement('div');
+        cornerDecor.style.cssText = `
+          position: absolute;
+          top: -20px;
+          right: -20px;
+          width: 100px;
+          height: 100px;
+          background: linear-gradient(135deg, rgba(255,107,107,0.15), rgba(255,217,61,0.15));
+          border-radius: 50%;
+        `;
+        card.appendChild(cornerDecor);
+        
+        // 知识点序号标签
+        const badge = document.createElement('div');
+        badge.style.cssText = `
+          display: inline-block;
+          background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+          color: white;
+          font-size: 14px;
+          font-weight: 900;
+          padding: 8px 18px;
+          border-radius: 50px;
+          margin-bottom: 16px;
+          box-shadow: 0 4px 12px rgba(255,107,107,0.3);
+          letter-spacing: 1px;
+        `;
+        badge.textContent = `知识点 ${index + 1}`;
+        card.appendChild(badge);
+        
+        // 知识点标题
+        const pointTitle = document.createElement('div');
+        pointTitle.style.cssText = `
+          font-size: 26px;
+          font-weight: 900;
+          color: #222;
+          margin-bottom: 12px;
+          line-height: 1.4;
+          font-family: '"Comic Sans MS", "Marker Felt", cursive';
+          letter-spacing: 0.5px;
+        `;
+        pointTitle.textContent = point.name;
+        card.appendChild(pointTitle);
+        
+        // 时间戳
+        const timestamp = document.createElement('div');
+        timestamp.style.cssText = `
+          font-size: 14px;
+          color: #999;
+          margin-bottom: 20px;
+          padding: 8px 16px;
+          background: rgba(107,114,128,0.08);
+          border-radius: 50px;
+          display: inline-block;
+          font-weight: 600;
+        `;
+        timestamp.textContent = `⏱️ ${point.start_time} - ${point.end_time}`;
+        card.appendChild(timestamp);
+        
+        // 笔记内容（小红书风格）
+        if (point.note) {
+          const noteSection = document.createElement('div');
+          noteSection.style.cssText = `
+            margin-top: 20px;
+            padding: 24px;
+            background: linear-gradient(135deg, #fff5eb 0%, #fff8f0 100%);
+            border-radius: 20px;
+            border: 3px dashed #ffa94d;
+            position: relative;
+          `;
+          
+          // 笔记图标装饰
+          const noteIcon = document.createElement('div');
+          noteIcon.style.cssText = `
+            position: absolute;
+            top: -16px;
+            left: 20px;
+            background: linear-gradient(135deg, #ffd93d, #ffa94d);
+            color: white;
+            font-size: 14px;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 900;
+            box-shadow: 0 4px 12px rgba(255,169,77,0.4);
+          `;
+          noteIcon.textContent = '📝 我的笔记';
+          noteSection.appendChild(noteIcon);
+          
+          const noteContent = document.createElement('div');
+          noteContent.style.cssText = `
+            font-size: 18px;
+            color: #4a4a4a;
+            line-height: 2;
+            margin-top: 20px;
+            font-family: '"Comic Sans MS", "Apple Color Emoji", sans-serif';
+            letter-spacing: 0.3px;
+            white-space: pre-wrap;
+          `;
+          noteContent.textContent = point.note;
+          noteSection.appendChild(noteContent);
+          
+          // 缩略图
+          if (point.thumbnail) {
+            const img = document.createElement('img');
+            img.src = point.thumbnail;
+            img.style.cssText = `
+              width: 100%;
+              max-width: 500px;
+              margin-top: 20px;
+              border-radius: 16px;
+              box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+              border: 4px solid white;
+            `;
+            noteSection.appendChild(img);
+          }
+          
+          card.appendChild(noteSection);
+        }
+        
+        // Q&A内容（小红书风格）
+        if (point.qaList && point.qaList.length > 0) {
+          const qaSection = document.createElement('div');
+          qaSection.style.cssText = `
+            margin-top: 20px;
+          `;
+          
+          point.qaList.forEach((qa, qaIndex) => {
+            const qaItem = document.createElement('div');
+            qaItem.style.cssText = `
+              padding: 20px;
+              background: linear-gradient(135deg, #e0f2fe 0%, #ecfeff 100%);
+              border-radius: 18px;
+              margin-bottom: 16px;
+              border: 3px solid #7dd3fc;
+              box-shadow: 0 4px 12px rgba(125,211,252,0.2);
+              position: relative;
+            `;
+            
+            // Q&A序号标签
+            const qaBadge = document.createElement('div');
+            qaBadge.style.cssText = `
+              position: absolute;
+              top: -12px;
+              left: 16px;
+              background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+              color: white;
+              font-size: 12px;
+              padding: 4px 12px;
+              border-radius: 50px;
+              font-weight: 900;
+              box-shadow: 0 3px 8px rgba(14,165,233,0.3);
+            `;
+            qaBadge.textContent = `💬 Q&A ${qaIndex + 1}`;
+            qaItem.appendChild(qaBadge);
+            
+            const question = document.createElement('div');
+            question.style.cssText = `
+              font-size: 17px;
+              color: #0c4a6e;
+              margin-bottom: 12px;
+              margin-top: 16px;
+              font-weight: 800;
+              font-family: '"Comic Sans MS", cursive';
+              letter-spacing: 0.3px;
+            `;
+            question.textContent = `Q: ${qa.question}`;
+            qaItem.appendChild(question);
+            
+            const answer = document.createElement('div');
+            answer.style.cssText = `
+              font-size: 16px;
+              color: #374151;
+              line-height: 1.9;
+              padding-left: 16px;
+              border-left: 4px solid #0ea5e9;
+              font-family: '"Comic Sans MS", sans-serif';
+            `;
+            answer.textContent = `A: ${qa.answer}`;
+            qaItem.appendChild(answer);
+            
+            qaSection.appendChild(qaItem);
+          });
+          
+          card.appendChild(qaSection);
+        }
+        
+        // 练习内容
+        if (point.exercise) {
+          const exerciseSection = document.createElement('div');
+          exerciseSection.style.cssText = `
+            margin-top: 16px;
+            padding: 16px;
+            background: #fef3c7;
+            border-radius: 8px;
+            border: 1px solid #fbbf24;
+          `;
+          
+          const exerciseLabel = document.createElement('div');
+          exerciseLabel.style.cssText = `
+            font-size: 14px;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+          `;
+          exerciseLabel.textContent = `💻 练习：${point.exercise.title}`;
+          exerciseSection.appendChild(exerciseLabel);
+          
+          const exerciseDesc = document.createElement('div');
+          exerciseDesc.style.cssText = `
+            font-size: 13px;
+            color: #78350f;
+            margin-bottom: 12px;
+          `;
+          exerciseDesc.textContent = point.exercise.description;
+          exerciseSection.appendChild(exerciseDesc);
+          
+          // 用户代码
+          if (point.userCode) {
+            const codeBlock = document.createElement('pre');
+            codeBlock.style.cssText = `
+              background: #1f2937;
+              color: #f9fafb;
+              padding: 12px;
+              border-radius: 6px;
+              font-size: 12px;
+              overflow-x: auto;
+              font-family: 'Courier New', monospace;
+              white-space: pre-wrap;
+              word-wrap: break-word;
+            `;
+            codeBlock.textContent = point.userCode;
+            exerciseSection.appendChild(codeBlock);
+          }
+          
+          // 验证结果
+          if (point.validationResult) {
+            const resultDiv = document.createElement('div');
+            resultDiv.style.cssText = `
+              margin-top: 12px;
+              padding: 12px;
+              background: ${point.validationResult.passed ? '#d1fae5' : '#fee2e2'};
+              border-radius: 6px;
+              border: 1px solid ${point.validationResult.passed ? '#10b981' : '#f87171'};
+            `;
+            
+            const resultText = document.createElement('div');
+            resultText.style.cssText = `
+              font-size: 13px;
+              font-weight: 600;
+              color: ${point.validationResult.passed ? '#065f46' : '#991b1b'};
+            `;
+            resultText.textContent = `${point.validationResult.passed ? '✓ 通过' : '✗ 未通过'} - 得分：${point.validationResult.score}分`;
+            resultDiv.appendChild(resultText);
+            
+            exerciseSection.appendChild(resultDiv);
+          }
+          
+          card.appendChild(exerciseSection);
+        }
+        
+        container.appendChild(card);
+      });
+      
+      // 添加小红书风格的页脚
+      const footer = document.createElement('div');
+      footer.style.cssText = `
+        margin-top: 50px;
+        padding: 30px;
+        background: linear-gradient(135deg, #fef3e2, #fce8d6);
+        border-radius: 24px;
+        text-align: center;
+        border: 3px dashed #ffd93d;
+      `;
+      
+      const footerEmoji = document.createElement('div');
+      footerEmoji.style.cssText = `
+        font-size: 40px;
+        margin-bottom: 12px;
+      `;
+      footerEmoji.textContent = '✨📚✨';
+      footer.appendChild(footerEmoji);
+      
+      const footerText = document.createElement('div');
+      footerText.style.cssText = `
+        font-size: 18px;
+        font-weight: 900;
+        color: #666;
+        margin-bottom: 8px;
+        font-family: '"Comic Sans MS", "Marker Felt", cursive';
+        letter-spacing: 1px;
+      `;
+      footerText.textContent = '笔记来自 LearnOrbit';
+      footer.appendChild(footerText);
+      
+      const footerSubtext = document.createElement('div');
+      footerSubtext.style.cssText = `
+        font-size: 14px;
+        color: #999;
+        font-weight: 500;
+      `;
+      footerSubtext.textContent = `🎬 AI驱动的视频学习平台 | ${new Date().toLocaleDateString('zh-CN')}`;
+      footer.appendChild(footerSubtext);
+      
+      container.appendChild(footer);
+      
+      // 使用html2canvas生成图片
+      console.log('🎨 正在生成图片...');
+      
+      // 先尝试移除父页面可能的样式干扰
+      const originalBodyStyle = document.body.style.cssText;
+      const originalHtmlStyle = document.documentElement.style.cssText;
+      
+      const canvas = await html2canvas(container, {
+        backgroundColor: '#ffffff',
+        scale: 2, // 提高清晰度
+        logging: true, // 暂时开启日志，查看具体错误
+        useCORS: true,
+        allowTaint: true,
+        foreignObjectRendering: false, // 禁用外部对象渲染
+        onclone: (clonedDoc, clonedElement) => {
+          console.log('🔧 开始清理克隆文档的样式...');
+          
+          // 1. 移除所有样式表和 style 标签
+          const styleSheets = clonedDoc.querySelectorAll('style, link[rel="stylesheet"]');
+          console.log(`📋 移除 ${styleSheets.length} 个样式表`);
+          styleSheets.forEach((sheet: any) => sheet.remove());
+          
+          // 2. 清除 HTML 根元素的所有样式和 CSS 变量
+          const htmlElement = clonedDoc.documentElement;
+          if (htmlElement) {
+            // 清除所有内联样式
+            htmlElement.removeAttribute('style');
+            htmlElement.removeAttribute('class');
+          }
+          
+          // 3. 清除 body 的样式
+          const bodyElement = clonedDoc.body;
+          if (bodyElement) {
+            bodyElement.removeAttribute('style');
+            bodyElement.removeAttribute('class');
+            // 设置基础样式
+            bodyElement.style.margin = '0';
+            bodyElement.style.padding = '0';
+            bodyElement.style.background = '#ffffff';
+          }
+          
+          // 4. 找到我们的容器元素并确保它的子元素没有继承任何 oklch 样式
+          const targetContainer = clonedElement;
+          if (targetContainer) {
+            // 递归清理所有子元素
+            const cleanElement = (el: any) => {
+              // 移除 class（避免外部 CSS 影响）
+              el.removeAttribute('class');
+              
+              // 清理可能包含 oklch 的内联样式
+              const style = el.style;
+              if (style && style.cssText) {
+                const cssText = style.cssText;
+                if (cssText.includes('oklch')) {
+                  console.warn('⚠️ 发现 oklch 样式:', el.tagName, cssText);
+                  // 完全清除样式然后重新设置安全值
+                  el.removeAttribute('style');
+                }
+              }
+              
+              // 递归处理子元素
+              Array.from(el.children).forEach(cleanElement);
+            };
+            
+            cleanElement(targetContainer);
+          }
+          
+          console.log('✅ 样式清理完成');
+        }
+      });
+      
+      // 清理临时容器
+      document.body.removeChild(container);
+      
+      // 转换为图片并下载
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          const fileName = `${videoTitle || '视频笔记'}_${new Date().getTime()}.png`;
+          link.download = fileName;
+          link.href = url;
+          link.click();
+          URL.revokeObjectURL(url);
+          
+          console.log('✅ 笔记导出成功！');
+          alert(`笔记已保存为图片：${fileName}`);
+        }
+      }, 'image/png');
+      
+    } catch (error) {
+      console.error('❌ 导出笔记失败:', error);
+      alert(`导出失败: ${error}`);
+    }
+  };
+  
   // 生成练习题
   const generateExercise = async (index: number) => {
     const point = knowledgePoints[index];
@@ -832,6 +1484,144 @@ export default function VideoNotesPrototypePage() {
       ));
     }
   };
+  
+  // 运行代码
+  const runCode = async (index: number) => {
+    const point = knowledgePoints[index];
+    if (!point.exercise || !point.userCode) {
+      alert('请先编写代码');
+      return;
+    }
+    
+    console.log('🏃 运行代码:', point.name);
+    
+    // 标记为正在运行
+    setKnowledgePoints(prev => prev.map((p, i) => 
+      i === index ? { 
+        ...p, 
+        isRunningCode: true, 
+        codeOutput: '', 
+        codeError: '' 
+      } : p
+    ));
+    
+    try {
+      const response = await fetch('http://localhost:8000/notes/execute-code', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code: point.userCode,
+          language: point.exercise.language
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      console.log('📤 代码执行结果:', data);
+      
+      setKnowledgePoints(prev => prev.map((p, i) => {
+        if (i === index) {
+          return {
+            ...p,
+            isRunningCode: false,
+            codeOutput: data.success ? data.output : '',
+            codeError: data.error || (data.warning ? `⚠️ ${data.warning}\n\n${data.output || ''}` : null)
+          };
+        }
+        return p;
+      }));
+      
+    } catch (error) {
+      console.error('❌ Error running code:', error);
+      setKnowledgePoints(prev => prev.map((p, i) => 
+        i === index ? { 
+          ...p, 
+          isRunningCode: false,
+          codeError: `执行失败: ${error}`
+        } : p
+      ));
+    }
+  };
+  
+  // 验证答案
+  const validateAnswer = async (index: number) => {
+    const point = knowledgePoints[index];
+    if (!point.exercise || !point.userCode) {
+      alert('请先编写代码');
+      return;
+    }
+    
+    console.log('🎯 验证答案:', point.name);
+    
+    // 标记为正在验证
+    setKnowledgePoints(prev => prev.map((p, i) => 
+      i === index ? { ...p, isValidating: true } : p
+    ));
+    
+    try {
+      const response = await fetch('http://localhost:8000/notes/validate-answer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_code: point.userCode,
+          exercise: point.exercise,
+          language: point.exercise.language,
+          video_url: currentVideoUrl,
+          knowledge_point_name: point.name
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      console.log('📊 验证结果:', data);
+      
+      if (data.success) {
+        setKnowledgePoints(prev => prev.map((p, i) => {
+          if (i === index) {
+            return {
+              ...p,
+              isValidating: false,
+              validationResult: {
+                passed: data.passed,
+                score: data.score,
+                feedback: data.feedback,
+                test_results: data.test_results
+              }
+            };
+          }
+          return p;
+        }));
+        
+        // 显示通知
+        if (data.passed) {
+          alert(`🎉 恭喜通过！得分：${data.score}分`);
+        } else {
+          alert(`继续加油！得分：${data.score}分\n查看反馈了解改进建议。`);
+        }
+      } else {
+        throw new Error(data.error || '验证失败');
+      }
+      
+    } catch (error) {
+      console.error('❌ Error validating answer:', error);
+      alert(`验证失败: ${error}`);
+      setKnowledgePoints(prev => prev.map((p, i) => 
+        i === index ? { ...p, isValidating: false } : p
+      ));
+    }
+  };
 
   const handleAddToNotes = (item: any) => {
     const newNote = {
@@ -892,13 +1682,62 @@ export default function VideoNotesPrototypePage() {
           
           {/* 视频和按钮容器 */}
           <div className="flex flex-col gap-4">
-            {/* 视频标题 - 无底框 */}
-            {videoTitle && (
-              <div className="px-2 flex-shrink-0">
-                <h2 className="text-2xl font-bold text-gray-800" style={{ fontFamily: getFontFamily() }}>
-                  {videoTitle}
+            {/* 序列标题和P标签 */}
+            {isSeries ? (
+              <div className="px-2 flex-shrink-0 space-y-3">
+                {/* 序列标题 */}
+                <h2 className="text-xl font-bold text-gray-800" style={{ fontFamily: getFontFamily() }}>
+                  {seriesTitle}
                 </h2>
+                
+                {/* P标签横向列表 */}
+                <div className="relative">
+                  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                    {allParts.map((part, index) => {
+                      const isActive = index === currentPartIndex;
+                      const isLoading = index === loadingPartIndex;
+                      
+                      return (
+                        <button
+                          key={part.part_number}
+                          onClick={() => loadPart(part, index)}
+                          disabled={isLoading}
+                          className={`
+                            flex-shrink-0 px-4 py-2 rounded-lg font-medium text-sm transition-all
+                            ${isActive 
+                              ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg scale-105' 
+                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }
+                            ${isLoading ? 'opacity-50 cursor-wait' : 'cursor-pointer'}
+                          `}
+                        >
+                          {isLoading ? (
+                            <Loader2 className="w-4 h-4 animate-spin inline" />
+                          ) : (
+                            <>
+                              <span>P{part.part_number}</span>
+                              {isActive && (
+                                <span className="ml-2 text-xs opacity-90">
+                                  {part.part_title.length > 15 ? part.part_title.substring(0, 15) + '...' : part.part_title}
+                                </span>
+                              )}
+                            </>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
+            ) : (
+              /* 单视频标题 */
+              videoTitle && (
+                <div className="px-2 flex-shrink-0">
+                  <h2 className="text-2xl font-bold text-gray-800" style={{ fontFamily: getFontFamily() }}>
+                    {videoTitle}
+                  </h2>
+                </div>
+              )
             )}
             
             {/* 视频播放器 */}
@@ -926,7 +1765,7 @@ export default function VideoNotesPrototypePage() {
                   crossOrigin="anonymous"
                   onPlay={() => setIsPlaying(true)}
                   onPause={() => setIsPlaying(false)}
-                  onEnded={() => setIsPlaying(false)}
+                  onEnded={handleVideoEnded}
                   onTimeUpdate={handleTimeUpdate}
                 >
                   您的浏览器不支持 video 标签。
@@ -976,7 +1815,14 @@ export default function VideoNotesPrototypePage() {
             
             {/* 提问按钮 - 蓝色 */}
             <Button
-              onClick={() => setAskingKnowledgeIndex(currentKnowledgeIndex)}
+              onClick={() => {
+                // 打开提问框时暂停视频
+                if (videoRef.current && isPlaying) {
+                  videoRef.current.pause();
+                  setIsPlaying(false);
+                }
+                setAskingKnowledgeIndex(currentKnowledgeIndex);
+              }}
               className="flex-1 max-w-xs py-6 text-lg font-bold bg-blue-500 text-white shadow-lg hover:bg-blue-600 transition-colors"
               size="lg"
             >
@@ -1281,35 +2127,95 @@ export default function VideoNotesPrototypePage() {
                                   </details>
                                 )}
                                 
-                                {/* 测试用例 */}
-                                {point.exercise.test_cases && point.exercise.test_cases.length > 0 && (
-                                  <details className="group">
-                                    <summary className="cursor-pointer text-blue-400 hover:text-blue-300 font-medium flex items-center gap-2">
-                                      🧪 测试用例 ({point.exercise.test_cases.length})
-                                      <span className="text-xs text-gray-400">(点击展开)</span>
-                                    </summary>
-                                    <div className="mt-2 space-y-2 text-sm">
-                                      {point.exercise.test_cases.map((test, i) => (
-                                        <div key={i} className="bg-gray-700 p-3 rounded">
-                                          <div className="text-gray-400 mb-1">
-                                            <span className="font-semibold">输入:</span> {test.input}
-                                          </div>
-                                          <div className="text-gray-400">
-                                            <span className="font-semibold">期望:</span> {test.expected}
-                                          </div>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </details>
-                                )}
                                 
-                                {/* 提交按钮（暂未实现） */}
-                                <button 
-                                  disabled
-                                  className="w-full py-2 bg-gray-600 text-gray-400 rounded cursor-not-allowed hover:bg-gray-600 transition-colors"
+                                {/* 提交答案按钮 */}
+                                <button
+                                  onClick={() => validateAnswer(index)}
+                                  disabled={point.isValidating || !point.userCode}
+                                  className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed flex items-center justify-center font-semibold text-base shadow-md"
                                 >
-                                  提交答案（功能开发中）
+                                  {point.isValidating ? (
+                                    <>
+                                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                                      验证中...
+                                    </>
+                                  ) : (
+                                    <>
+                                      <CheckCircle className="w-5 h-5 mr-2" />
+                                      提交答案
+                                    </>
+                                  )}
                                 </button>
+                                
+                                {/* 答案验证结果 */}
+                                {point.validationResult && (
+                                  <div className={`mt-4 rounded-xl p-5 border-2 shadow-lg ${
+                                    point.validationResult.passed
+                                      ? 'bg-gradient-to-br from-green-50 to-emerald-50 border-green-400'
+                                      : 'bg-gradient-to-br from-orange-50 to-red-50 border-orange-400'
+                                  }`}>
+                                    {/* 头部：通过/未通过 + 分数 */}
+                                    <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-gray-200">
+                                      <div className="flex items-center gap-3">
+                                        {point.validationResult.passed ? (
+                                          <>
+                                            <CheckCircle className="w-8 h-8 text-green-600" />
+                                            <span className="text-xl font-bold text-green-800">通过 ✓</span>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <X className="w-8 h-8 text-orange-600" />
+                                            <span className="text-xl font-bold text-orange-800">未通过 ✗</span>
+                                          </>
+                                        )}
+                                      </div>
+                                      {typeof point.validationResult.score === 'number' && (
+                                        <div className={`text-3xl font-bold ${
+                                          point.validationResult.passed ? 'text-green-700' : 'text-orange-700'
+                                        }`}>
+                                          {point.validationResult.score} <span className="text-xl">分</span>
+                                        </div>
+                                      )}
+                                    </div>
+                                    
+                                    {/* 反馈内容（优化样式） */}
+                                    {point.validationResult.feedback && (
+                                      <div className="bg-white rounded-lg p-4 shadow-sm">
+                                        <div className="prose prose-sm max-w-none text-gray-800">
+                                          <style jsx>{`
+                                            :global(.prose p) {
+                                              color: #1f2937;
+                                              line-height: 1.7;
+                                            }
+                                            :global(.prose strong) {
+                                              color: #111827;
+                                              font-weight: 700;
+                                            }
+                                            :global(.prose ul) {
+                                              list-style-type: none;
+                                              padding-left: 0;
+                                            }
+                                            :global(.prose li) {
+                                              padding-left: 1.5em;
+                                              position: relative;
+                                              color: #374151;
+                                              margin-bottom: 0.5em;
+                                            }
+                                            :global(.prose li::before) {
+                                              content: "•";
+                                              position: absolute;
+                                              left: 0.5em;
+                                              color: #6366f1;
+                                              font-weight: bold;
+                                            }
+                                          `}</style>
+                                          <ReactMarkdown>{point.validationResult.feedback}</ReactMarkdown>
+                                        </div>
+                                      </div>
+                                    )}
+                                    
+                                  </div>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -1325,10 +2231,7 @@ export default function VideoNotesPrototypePage() {
             {knowledgePoints.length > 0 && (
               <div className="mt-4 px-4">
                 <button
-                  onClick={() => {
-                    // TODO: 实现保存笔记功能
-                    alert('保存笔记功能待实现');
-                  }}
+                  onClick={saveNotesAsImage}
                   className="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium rounded-lg shadow-md hover:shadow-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 flex items-center justify-center gap-2"
                 >
                   <svg 

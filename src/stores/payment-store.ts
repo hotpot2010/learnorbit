@@ -134,14 +134,25 @@ export const usePaymentStore = create<PaymentState>((set, get) => ({
         }
       } else {
         // Failed to fetch subscription
-        console.error(
-          'fetch subscription for user failed',
-          result?.data?.error
-        );
-        set({
-          error: result?.data?.error || 'Failed to fetch payment data',
-          isLoading: false,
-        });
+        // 如果是未授权错误(用户未登录),使用静默处理
+        const error = result?.data?.error;
+        if (error === 'Unauthorized') {
+          console.debug('User not authenticated, skipping subscription fetch');
+          set({
+            subscription: null,
+            isLoading: false,
+            error: null, // 不设置错误状态,避免不必要的错误提示
+          });
+        } else {
+          console.error(
+            'fetch subscription for user failed',
+            error
+          );
+          set({
+            error: error || 'Failed to fetch payment data',
+            isLoading: false,
+          });
+        }
       }
     } catch (error) {
       console.error('fetch payment data error:', error);

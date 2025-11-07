@@ -33,6 +33,13 @@ class CreateJobRequest(BaseModel):
     job_name: Optional[str] = None
 
 
+class AnalyzePartRequest(BaseModel):
+    """Request model for analyzing a single part of a series"""
+    video_url: str
+    prompt: str
+    part_number: int
+
+
 class PromptTemplate(BaseModel):
     """Prompt template model"""
     id: str
@@ -235,6 +242,26 @@ async def create_job(request: CreateJobRequest, background_tasks: BackgroundTask
         }
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.post("/analyze-part")
+async def analyze_part(request: AnalyzePartRequest) -> Dict[str, Any]:
+    """
+    Analyze a single part of a video series
+    """
+    try:
+        result = batch_analyzer.analyze_single_part(
+            video_url=request.video_url,
+            prompt=request.prompt,
+            part_number=request.part_number,
+        )
+        
+        return {
+            "success": result.get('success', False),
+            "data": result
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/jobs/{job_id}")

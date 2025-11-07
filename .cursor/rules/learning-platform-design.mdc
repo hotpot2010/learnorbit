@@ -1,0 +1,1154 @@
+---
+description: 学习平台的设计规范、样式风格、组件模式和最佳实践指南
+globs: *.tsx,*.ts,*.css
+alwaysApply: false
+---
+
+### 不要写文档！
+
+# Learning Platform Design System
+
+学习平台的设计规范、样式风格、组件模式和最佳实践指南。
+
+## 1. 设计哲学 🎨
+
+### 1.1 核心设计理念
+- **手写笔记风格**：模仿真实的学习笔记体验，使用卡通字体和倾斜效果
+- **友好互动**：emoji 图标点缀，营造轻松愉快的学习氛围
+- **清晰层次**：使用卡片、边框、阴影创建清晰的信息层次
+- **响应式设计**：桌面端和移动端有不同的布局和交互模式
+
+### 1.2 色彩系统
+```css
+/* 主要色彩 */
+--primary: oklch(0.59 0.2 277.12);        /* 紫色 - 主要交互 */
+--secondary: oklch(0.93 0.01 264.53);     /* 浅灰 - 次要元素 */
+--accent: oklch(0.88 0.02 258.77);        /* 强调色 */
+
+/* 语义色彩 */
+--success: #10b981;      /* 绿色 - 成功/完成 */
+--warning: #f59e0b;      /* 橙色 - 警告 */
+--error: #ef4444;        /* 红色 - 错误 */
+--info: #3b82f6;         /* 蓝色 - 信息 */
+
+/* 高亮色彩 */
+--yellow-highlight: #fef08a;   /* 黄色荧光笔效果 */
+--pink-highlight: #fecdd3;     /* 粉色荧光笔效果 */
+--blue-highlight: #bfdbfe;     /* 蓝色荧光笔效果 */
+--green-highlight: #bbf7d0;    /* 绿色荧光笔效果 */
+```
+
+### 1.3 背景效果
+```tsx
+// 网格笔记本背景
+<div
+  style={{
+    backgroundImage: `
+      linear-gradient(to right, #f0f0f0 1px, transparent 1px),
+      linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)
+    `,
+    backgroundSize: '20px 20px',
+  }}
+>
+```
+
+## 2. 字体系统 📝
+
+### 2.1 字体选择策略
+
+```typescript
+/**
+ * 根据设备类型和语言返回合适的字体
+ * 移动端英文模式使用正常字体，其他情况使用卡通字体
+ */
+const getFontFamily = (isMobile: boolean, locale: string) => {
+  if (isMobile && locale === 'en') {
+    // 移动端英文：使用系统字体栈，提升可读性
+    return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
+  } else {
+    // 桌面端或中文：使用卡通字体，营造友好氛围
+    return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+  }
+};
+```
+
+### 2.2 字体应用规则
+
+- **标题**：使用卡通字体 + 倾斜效果 (`transform: rotate(-1deg)`)
+- **正文**：根据设备和语言动态选择
+- **代码**：始终使用等宽字体 (`font-mono`)
+- **数学公式**：使用 KaTeX 渲染，保持专业性
+
+### 2.3 移动端字体优化
+
+```css
+/* 移动端英文标题使用正常字体 */
+@media (max-width: 768px) {
+  [data-locale="en"] .homepage-title,
+  [data-locale="en"] .homepage-subtitle {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 
+                 "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !important;
+  }
+}
+```
+
+## 3. 组件设计模式 🧩
+
+### 3.1 卡片组件
+
+```tsx
+// 标准卡片样式
+<div className="bg-white rounded-xl shadow-lg p-6 border-2 border-gray-200 transform hover:scale-105 transition-transform duration-200">
+  {/* 卡片内容 */}
+</div>
+
+// 高亮卡片（重要信息）
+<div className="bg-yellow-100 rounded-lg p-4 border-2 border-yellow-300 shadow-sm">
+  {/* 高亮内容 */}
+</div>
+
+// 互动卡片（可点击）
+<div className="bg-white rounded-xl shadow-md p-5 border-2 border-gray-200 hover:border-indigo-400 hover:shadow-xl transition-all duration-200 cursor-pointer">
+  {/* 互动内容 */}
+</div>
+```
+
+### 3.2 步骤/进度指示器
+
+```tsx
+// 步骤列表项
+<div className="flex items-start space-x-3 p-4">
+  {/* 步骤编号 */}
+  <div className="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold text-sm transform rotate-6 shadow-md flex-shrink-0">
+    {stepNumber}
+  </div>
+  
+  {/* 步骤内容 */}
+  <div className="flex-1">
+    <h3 className="font-bold text-lg text-gray-800">{title}</h3>
+    <p className="text-gray-600 mt-1">{description}</p>
+  </div>
+  
+  {/* 状态图标 */}
+  <div className="flex-shrink-0">
+    {completed ? <CheckCircle className="text-green-500" /> : <Circle className="text-gray-300" />}
+  </div>
+</div>
+```
+
+### 3.3 任务类型徽章
+
+```tsx
+// 任务类型展示
+const TaskTypeBadge = ({ type }: { type: string }) => {
+  const styles = {
+    quiz: {
+      bg: 'bg-blue-100',
+      border: 'border-blue-300',
+      text: 'text-blue-700',
+      emoji: '📝'
+    },
+    coding: {
+      bg: 'bg-purple-100',
+      border: 'border-purple-300',
+      text: 'text-purple-700',
+      emoji: '💻'
+    },
+    theory: {
+      bg: 'bg-green-100',
+      border: 'border-green-300',
+      text: 'text-green-700',
+      emoji: '📖'
+    }
+  };
+  
+  const style = styles[type] || styles.theory;
+  
+  return (
+    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border-2 ${style.bg} ${style.border} ${style.text}`}>
+      <span className="mr-1">{style.emoji}</span>
+      {type}
+    </span>
+  );
+};
+```
+
+### 3.4 难度指示器
+
+```tsx
+// 难度级别展示
+const DifficultyBadge = ({ level }: { level: 'easy' | 'medium' | 'hard' }) => {
+  const config = {
+    easy: { color: 'text-green-600', label: '简单', emoji: '🌱' },
+    medium: { color: 'text-yellow-600', label: '中等', emoji: '🌟' },
+    hard: { color: 'text-red-600', label: '困难', emoji: '🔥' }
+  };
+  
+  const { color, label, emoji } = config[level];
+  
+  return (
+    <span className={`inline-flex items-center ${color} font-medium text-sm`}>
+      <span className="mr-1">{emoji}</span>
+      {label}
+    </span>
+  );
+};
+```
+
+## 4. 布局系统 📐
+
+### 4.1 桌面端布局
+
+```tsx
+// 三栏布局（学习页面）
+<div className="flex h-screen">
+  {/* 左侧：步骤列表 */}
+  <div className="w-80 border-r-2 border-gray-200 overflow-y-auto">
+    {/* 步骤导航 */}
+  </div>
+  
+  {/* 中间：内容区域 */}
+  <div className="flex-1 overflow-y-auto">
+    {/* 主要学习内容 */}
+  </div>
+  
+  {/* 右侧：AI 聊天 */}
+  <div className="w-96 border-l-2 border-gray-200 flex flex-col">
+    <AIChatInterface />
+  </div>
+</div>
+```
+
+### 4.2 移动端布局
+
+```tsx
+// 移动端全屏布局
+<div className="min-h-screen flex flex-col">
+  {/* 顶部：步骤导航（可折叠） */}
+  <div className="bg-white border-b-2 border-gray-200">
+    {/* 折叠式步骤导航 */}
+  </div>
+  
+  {/* 中间：内容区域（可滚动） */}
+  <div className="flex-1 overflow-y-auto">
+    {/* 学习内容 */}
+  </div>
+  
+  {/* 底部：聊天入口（固定） */}
+  <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 mobile-chat-container-safe">
+    {/* 聊天输入框或展开的聊天界面 */}
+  </div>
+</div>
+```
+
+### 4.3 移动端安全区域处理
+
+```css
+/* 支持移动端动态视口和安全区域 */
+@supports (height: 100dvh) {
+  .mobile-chat-container-safe {
+    height: calc(100dvh - env(safe-area-inset-top));
+  }
+}
+
+.mobile-chat-input-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+```
+
+## 5. 交互模式 🎯
+
+### 5.1 聊天界面
+
+```tsx
+// AI 聊天消息
+<div className="space-y-4">
+  {/* 用户消息 */}
+  <div className="flex justify-end">
+    <div className="bg-indigo-500 text-white rounded-2xl px-4 py-2 max-w-xs">
+      {message}
+    </div>
+  </div>
+  
+  {/* AI 消息 */}
+  <div className="flex justify-start">
+    <div className="bg-gray-100 text-gray-800 rounded-2xl px-4 py-2 max-w-xs">
+      {message}
+    </div>
+  </div>
+</div>
+```
+
+### 5.2 加载状态
+
+```tsx
+// 加载动画
+<div className="flex items-center space-x-2">
+  <div className="w-2 h-2 rounded-full bg-indigo-500 animate-bounce" style={{ animationDelay: '0ms' }}></div>
+  <div className="w-2 h-2 rounded-full bg-indigo-500 animate-bounce" style={{ animationDelay: '150ms' }}></div>
+  <div className="w-2 h-2 rounded-full bg-indigo-500 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+</div>
+
+// 骨架屏
+<div className="animate-pulse">
+  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+</div>
+```
+
+### 5.3 空状态
+
+```tsx
+// 空状态展示
+<div className="flex flex-col items-center justify-center py-12 px-4">
+  <div className="text-6xl mb-4">📚</div>
+  <h3 className="text-xl font-bold text-gray-700 mb-2">还没有内容</h3>
+  <p className="text-gray-500 text-center max-w-sm">
+    开始创建你的第一个学习计划吧！
+  </p>
+  <Button className="mt-6">开始创建</Button>
+</div>
+```
+
+## 6. 特殊功能组件 🌟
+
+### 6.1 LaTeX 数学公式
+
+```tsx
+import { LaTeXRenderer } from '@/components/learning/latex-renderer';
+import { preprocessMathContent } from '@/lib/math-renderer';
+
+// 使用方式
+<LaTeXRenderer 
+  content={preprocessMathContent(content)} 
+  isMobile={isMobile}
+/>
+```
+
+**数学公式样式规范**：
+```css
+/* 块级公式 */
+.katex-display {
+  font-size: 1.1rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+/* 行内公式 */
+.katex {
+  font-size: 1.05em;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .katex-display {
+    font-size: 0.95rem;
+    padding: 0.75rem;
+    margin: 1rem 0;
+  }
+}
+```
+
+### 6.2 代码编辑器
+
+```tsx
+import Editor from '@monaco-editor/react';
+
+// Monaco Editor 配置
+<Editor
+  height="500px"
+  defaultLanguage="python"
+  value={codeValue}
+  onChange={(value) => setCodeValue(value || '')}
+  theme="vs-light"
+  options={{
+    minimap: { enabled: false },
+    fontSize: 14,
+    lineNumbers: 'on',
+    scrollBeyondLastLine: false,
+    automaticLayout: true,
+    tabSize: 2,
+  }}
+/>
+```
+
+### 6.3 视频播放器
+
+```tsx
+// 视频展示（带封面）
+<div className="relative aspect-video rounded-lg overflow-hidden shadow-lg border-2 border-gray-200">
+  {!isPlaying ? (
+    <>
+      <img 
+        src={video.cover} 
+        alt={video.title}
+        className="w-full h-full object-cover"
+      />
+      <button 
+        onClick={() => setIsPlaying(true)}
+        className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 hover:bg-opacity-40 transition-all"
+      >
+        <Play className="w-16 h-16 text-white" />
+      </button>
+    </>
+  ) : (
+    <video 
+      src={video.url} 
+      controls 
+      autoPlay
+      className="w-full h-full"
+    />
+  )}
+</div>
+```
+
+## 7. 响应式设计规范 📱
+
+### 7.1 断点系统
+
+```typescript
+// Tailwind 断点
+const breakpoints = {
+  sm: '640px',   // 小手机
+  md: '768px',   // 平板
+  lg: '1024px',  // 笔记本
+  xl: '1280px',  // 桌面
+  '2xl': '1536px' // 大屏
+};
+
+// 使用 hook 判断移动端
+import { useMobileLayout } from '@/hooks/use-mobile-layout';
+
+const { isMobile } = useMobileLayout(); // < 768px 为 true
+```
+
+### 7.2 移动端适配规则
+
+1. **隐藏桌面端专属功能**：
+   - 代码编辑器（coding tasks）
+   - 复杂的可视化图表
+   - 多列布局
+
+2. **简化移动端交互**：
+   - 使用全屏模态框代替侧边栏
+   - 折叠式导航和手风琴菜单
+   - 底部固定的主要操作按钮
+
+3. **触摸优化**：
+   - 按钮最小尺寸 44x44px
+   - 增大点击区域的 padding
+   - 使用滑动手势
+
+```tsx
+// 条件渲染示例
+{isMobile ? (
+  <MobileLayout />
+) : (
+  <DesktopLayout />
+)}
+
+// 响应式类名
+<div className="p-4 md:p-6 lg:p-8">
+  <h1 className="text-2xl md:text-3xl lg:text-4xl">Title</h1>
+</div>
+```
+
+## 8. 动画和过渡效果 ✨
+
+### 8.1 标准过渡
+
+```tsx
+// 悬停效果
+className="transition-all duration-200 hover:scale-105 hover:shadow-lg"
+
+// 淡入淡出
+className="transition-opacity duration-300 opacity-0 hover:opacity-100"
+
+// 滑动效果
+className="transition-transform duration-300 translate-x-0 hover:translate-x-2"
+```
+
+### 8.2 页面切换动画
+
+```tsx
+// 使用 Framer Motion
+import { motion } from 'framer-motion';
+
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  exit={{ opacity: 0, y: -20 }}
+  transition={{ duration: 0.3 }}
+>
+  {content}
+</motion.div>
+```
+
+### 8.3 加载骨架屏
+
+```tsx
+// 内容加载占位
+<div className="animate-pulse space-y-4">
+  <div className="h-8 bg-gray-200 rounded w-3/4"></div>
+  <div className="h-4 bg-gray-200 rounded"></div>
+  <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+</div>
+```
+
+## 9. 图标和 Emoji 使用规范 🎨
+
+### 9.1 图标库
+
+使用 `lucide-react` 作为主要图标库：
+
+```tsx
+import { 
+  CheckCircle,  // 完成
+  Circle,       // 未完成
+  Clock,        // 时间
+  PlayCircle,   // 播放
+  FileText,     // 文档
+  Bot,          // AI
+  User,         // 用户
+  Send,         // 发送
+  ChevronDown,  // 展开
+  ChevronUp,    // 收起
+} from 'lucide-react';
+```
+
+### 9.2 Emoji 使用场景
+
+```tsx
+// 任务类型
+const typeEmojis = {
+  theory: '📖',
+  quiz: '📝',
+  coding: '💻',
+  video: '🎬',
+  practice: '🎯'
+};
+
+// 状态指示
+const statusEmojis = {
+  pending: '⏳',
+  inProgress: '🏃',
+  completed: '✅',
+  failed: '❌'
+};
+
+// 难度级别
+const difficultyEmojis = {
+  easy: '🌱',
+  medium: '🌟',
+  hard: '🔥'
+};
+
+// 情感反馈
+const feedbackEmojis = {
+  success: '🎉',
+  congrats: '🎊',
+  thinking: '🤔',
+  idea: '💡',
+  warning: '⚠️'
+};
+```
+
+## 10. 可访问性规范 ♿
+
+### 10.1 ARIA 标签
+
+```tsx
+// 按钮
+<button aria-label="发送消息" aria-disabled={isLoading}>
+  <Send />
+</button>
+
+// 输入框
+<input 
+  aria-label="搜索课程" 
+  aria-describedby="search-hint"
+  placeholder="输入关键词..."
+/>
+<span id="search-hint" className="sr-only">
+  输入至少3个字符进行搜索
+</span>
+
+// 状态
+<div role="status" aria-live="polite">
+  {loading && '正在加载...'}
+</div>
+```
+
+### 10.2 键盘导航
+
+```tsx
+// Enter 键提交
+const handleKeyPress = (e: React.KeyboardEvent) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    handleSubmit();
+  }
+};
+
+// Tab 键导航
+<div tabIndex={0} onKeyDown={handleKeyDown}>
+  {/* 可聚焦内容 */}
+</div>
+```
+
+### 10.3 对比度和可读性
+
+```css
+/* 确保文字对比度至少 4.5:1 */
+.text-primary {
+  color: #1e293b; /* 深灰色文字 */
+}
+
+.text-secondary {
+  color: #64748b; /* 中灰色文字 */
+}
+
+/* 避免纯白背景上的浅色文字 */
+.bg-content {
+  background: #f8fafc; /* 浅灰背景 */
+}
+```
+
+## 11. 性能优化规范 ⚡
+
+### 11.1 图片优化
+
+```tsx
+import Image from 'next/image';
+
+// 使用 Next.js Image 组件
+<Image
+  src={imageUrl}
+  alt="描述"
+  width={800}
+  height={600}
+  loading="lazy"
+  placeholder="blur"
+/>
+```
+
+### 11.2 代码分割
+
+```tsx
+// 动态导入大型组件
+import dynamic from 'next/dynamic';
+
+const Editor = dynamic(() => import('@monaco-editor/react'), {
+  ssr: false,
+  loading: () => <div>加载编辑器中...</div>
+});
+```
+
+### 11.3 记忆化
+
+```tsx
+import { useMemo, useCallback } from 'react';
+
+// 缓存计算结果
+const processedSteps = useMemo(() => {
+  return steps.map(step => processStep(step));
+}, [steps]);
+
+// 缓存函数引用
+const handleClick = useCallback(() => {
+  doSomething();
+}, [dependencies]);
+```
+
+## 12. 状态管理模式 🔄
+
+### 12.1 本地状态（useState）
+
+```tsx
+// 简单的 UI 状态
+const [isExpanded, setIsExpanded] = useState(false);
+const [inputValue, setInputValue] = useState('');
+```
+
+### 12.2 会话状态（sessionStorage）
+
+```tsx
+// 页面刷新保持的状态
+const [sessionId] = useState(() => {
+  if (typeof window !== 'undefined') {
+    const cached = sessionStorage.getItem('sessionId');
+    if (cached) return cached;
+  }
+  const id = crypto.randomUUID();
+  sessionStorage.setItem('sessionId', id);
+  return id;
+});
+```
+
+### 12.3 全局状态（Zustand）
+
+```tsx
+// store/learning-store.ts
+import { create } from 'zustand';
+
+interface LearningStore {
+  currentPlan: LearningPlan | null;
+  currentStep: number;
+  setCurrentPlan: (plan: LearningPlan) => void;
+  setCurrentStep: (step: number) => void;
+}
+
+export const useLearningStore = create<LearningStore>((set) => ({
+  currentPlan: null,
+  currentStep: 0,
+  setCurrentPlan: (plan) => set({ currentPlan: plan }),
+  setCurrentStep: (step) => set({ currentStep: step }),
+}));
+```
+
+## 13. 错误处理和反馈 🚨
+
+### 13.1 错误边界
+
+```tsx
+// components/error-boundary.tsx
+import { Component, ReactNode } from 'react';
+
+class ErrorBoundary extends Component<
+  { children: ReactNode; fallback?: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: any) {
+    console.error('Error caught:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback || (
+        <div className="text-center py-12">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">出错了 😕</h2>
+          <p className="text-gray-600">请刷新页面重试</p>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+```
+
+### 13.2 Toast 通知
+
+```tsx
+import { toast } from 'sonner';
+
+// 成功通知
+toast.success('保存成功！', {
+  description: '你的学习进度已更新',
+  duration: 3000,
+});
+
+// 错误通知
+toast.error('操作失败', {
+  description: error.message,
+  action: {
+    label: '重试',
+    onClick: () => retry(),
+  },
+});
+```
+
+### 13.3 内联错误提示
+
+```tsx
+// 表单验证错误
+{errors.email && (
+  <p className="text-red-500 text-sm mt-1 flex items-center">
+    <span className="mr-1">⚠️</span>
+    {errors.email.message}
+  </p>
+)}
+```
+
+## 14. 数据获取模式 📡
+
+### 14.1 客户端数据获取
+
+```tsx
+// 使用 SWR 或 React Query
+import useSWR from 'swr';
+
+const { data, error, isLoading } = useSWR(
+  `/api/courses/${id}`,
+  fetcher,
+  {
+    revalidateOnFocus: false,
+    refreshInterval: 0,
+  }
+);
+
+if (isLoading) return <LoadingState />;
+if (error) return <ErrorState error={error} />;
+```
+
+### 14.2 服务端数据获取
+
+```tsx
+// app/courses/[id]/page.tsx
+export default async function CoursePage({ 
+  params 
+}: { 
+  params: Promise<{ id: string }> 
+}) {
+  const { id } = await params;
+  const course = await getCourse(id);
+  
+  return <CourseView course={course} />;
+}
+```
+
+### 14.3 乐观更新
+
+```tsx
+const handleUpdateTask = async (taskId: string, updates: any) => {
+  // 立即更新 UI
+  setTasks(prev => prev.map(t => 
+    t.id === taskId ? { ...t, ...updates } : t
+  ));
+  
+  try {
+    // 发送到服务器
+    await updateTask(taskId, updates);
+    toast.success('更新成功');
+  } catch (error) {
+    // 回滚
+    setTasks(originalTasks);
+    toast.error('更新失败');
+  }
+};
+```
+
+## 15. 国际化（i18n）规范 🌍
+
+### 15.1 翻译文件结构
+
+```typescript
+// messages/en.json
+{
+  "LearningPlatform": {
+    "hero": {
+      "title": "Learn Anything, Anytime",
+      "subtitle": "AI-powered personalized learning"
+    },
+    "buttons": {
+      "start": "Start Learning",
+      "continue": "Continue",
+      "complete": "Mark Complete"
+    }
+  }
+}
+```
+
+### 15.2 使用翻译
+
+```tsx
+import { useTranslations } from 'next-intl';
+
+const t = useTranslations('LearningPlatform');
+
+<h1>{t('hero.title')}</h1>
+<p>{t('hero.subtitle')}</p>
+<Button>{t('buttons.start')}</Button>
+```
+
+### 15.3 语言切换
+
+```tsx
+import { useLocaleRouter } from '@/i18n/navigation';
+
+const router = useLocaleRouter();
+
+<select onChange={(e) => router.push('/', e.target.value)}>
+  <option value="en">English</option>
+  <option value="zh">中文</option>
+</select>
+```
+
+## 16. 测试规范 🧪
+
+### 16.1 组件测试
+
+```tsx
+// components/__tests__/task-badge.test.tsx
+import { render, screen } from '@testing-library/react';
+import { TaskBadge } from '../task-badge';
+
+describe('TaskBadge', () => {
+  it('renders quiz badge correctly', () => {
+    render(<TaskBadge type="quiz" />);
+    expect(screen.getByText('📝')).toBeInTheDocument();
+    expect(screen.getByText('quiz')).toBeInTheDocument();
+  });
+});
+```
+
+### 16.2 集成测试
+
+```tsx
+// e2e/learning-flow.spec.ts
+import { test, expect } from '@playwright/test';
+
+test('complete learning flow', async ({ page }) => {
+  await page.goto('/study/123');
+  
+  // 检查页面加载
+  await expect(page.locator('h1')).toBeVisible();
+  
+  // 完成一个步骤
+  await page.click('button[aria-label="标记为完成"]');
+  await expect(page.locator('.text-green-500')).toBeVisible();
+});
+```
+
+## 17. 开发工具和调试 🛠️
+
+### 17.1 开发模式调试
+
+```tsx
+// 仅在开发环境显示的调试信息
+{process.env.NODE_ENV === 'development' && (
+  <div className="fixed bottom-4 right-4 bg-black text-white p-4 rounded-lg text-xs">
+    <p>SessionID: {sessionId}</p>
+    <p>Current Step: {currentStep}</p>
+    <p>Is Mobile: {isMobile ? 'Yes' : 'No'}</p>
+  </div>
+)}
+```
+
+### 17.2 Console 日志规范
+
+```typescript
+// 使用有意义的前缀 emoji
+console.log('🔍 Checking user state:', user);
+console.log('✅ Task completed:', taskId);
+console.log('❌ Error occurred:', error);
+console.log('📊 Analytics event:', eventData);
+console.log('🚀 API request:', requestData);
+console.log('🆔 Session ID:', sessionId);
+```
+
+### 17.3 React DevTools
+
+```tsx
+// 为组件添加有意义的 displayName
+TaskBadge.displayName = 'TaskBadge';
+
+// 使用 React DevTools Profiler
+import { Profiler } from 'react';
+
+<Profiler id="LearningPlan" onRender={onRenderCallback}>
+  <LearningPlan />
+</Profiler>
+```
+
+## 18. 代码组织规范 📂
+
+### 18.1 文件命名
+
+```
+components/
+├── learning/
+│   ├── ai-chat-interface.tsx        # 组件名用 kebab-case
+│   ├── custom-learning-plan.tsx
+│   └── latex-renderer.tsx
+├── ui/
+│   ├── button.tsx
+│   └── input.tsx
+└── mobile/
+    └── mobile-flow-diagram.tsx
+
+lib/
+├── math-renderer.ts                  # 工具函数用 kebab-case
+└── key-actions-analytics.ts
+
+types/
+└── learning-plan.ts                  # 类型定义用 kebab-case
+```
+
+### 18.2 组件结构
+
+```tsx
+// 1. Imports
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { useTranslations } from 'next-intl';
+
+// 2. Types
+interface ComponentProps {
+  title: string;
+  onSave?: () => void;
+}
+
+// 3. Constants
+const DEFAULT_CONFIG = {
+  timeout: 5000,
+};
+
+// 4. Component
+export function Component({ title, onSave }: ComponentProps) {
+  // 4.1 Hooks
+  const t = useTranslations();
+  const [state, setState] = useState(false);
+  
+  // 4.2 Effects
+  useEffect(() => {
+    // ...
+  }, []);
+  
+  // 4.3 Handlers
+  const handleClick = () => {
+    // ...
+  };
+  
+  // 4.4 Render
+  return (
+    <div>
+      {/* ... */}
+    </div>
+  );
+}
+
+// 5. Sub-components (if any)
+const SubComponent = () => {
+  // ...
+};
+```
+
+## 19. Git 提交规范 📝
+
+```bash
+# 功能开发
+git commit -m "feat: 添加视频播放功能"
+
+# Bug 修复
+git commit -m "fix: 修复移动端聊天框被遮挡的问题"
+
+# 样式调整
+git commit -m "style: 优化学习卡片的阴影效果"
+
+# 文档更新
+git commit -m "docs: 更新组件使用说明"
+
+# 性能优化
+git commit -m "perf: 优化大型列表的渲染性能"
+
+# 重构
+git commit -m "refactor: 重构任务状态管理逻辑"
+
+# 测试
+git commit -m "test: 添加任务组件的单元测试"
+```
+
+## 20. 常见问题和解决方案 💡
+
+### 20.1 移动端浏览器导航栏遮挡问题
+
+```css
+/* 使用动态视口高度和安全区域 */
+@supports (height: 100dvh) {
+  .mobile-container {
+    height: calc(100dvh - env(safe-area-inset-top));
+  }
+}
+
+.mobile-input {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+```
+
+### 20.2 LaTeX 公式不显示
+
+```tsx
+// 确保导入 KaTeX CSS
+import 'katex/dist/katex.min.css';
+
+// 预处理内容
+import { preprocessMathContent } from '@/lib/math-renderer';
+const processed = preprocessMathContent(content);
+```
+
+### 20.3 Monaco Editor 在 SSR 中报错
+
+```tsx
+// 使用动态导入禁用 SSR
+import dynamic from 'next/dynamic';
+
+const Editor = dynamic(() => import('@monaco-editor/react'), {
+  ssr: false,
+});
+```
+
+### 20.4 状态不同步问题
+
+```tsx
+// 使用 useEffect 统一管理派生状态
+useEffect(() => {
+  if (currentTask?.type === 'coding' && currentTask.task?.starter_code) {
+    setCodeValue(currentTask.task.starter_code);
+  } else if (currentTask?.type !== 'coding') {
+    setCodeValue('');
+  }
+}, [currentTask]);
+```
+
+## 21. 快速参考 📚
+
+### 21.1 常用组件清单
+
+- `AIChatInterface` - AI 聊天界面
+- `CustomLearningPlan` - 定制学习计划
+- `LaTeXRenderer` - 数学公式渲染
+- `CourseInputSection` - 课程输入
+- `FlowDiagram` - 学习流程图
+- `MobileFlowDiagram` - 移动端流程图
+- `TextSelectionPopup` - 文本选择弹窗
+- `WelcomePage` - 欢迎页面
+
+### 21.2 常用 Hooks
+
+- `useCurrentUser()` - 获取当前用户
+- `useMobileLayout()` - 判断移动端
+- `useTranslations()` - 国际化翻译
+- `useLocale()` - 获取当前语言
+- `useLocaleRouter()` - 路由导航
+
+### 21.3 常用工具函数
+
+- `preprocessMathContent()` - 预处理数学公式
+- `trackKeyActionSafely()` - 埋点分析
+- `generateUniqueId()` - 生成唯一 ID
+- `getFontFamily()` - 获取字体样式
+
+---
+
+## 总结 🎓
+
+这份设计系统文档涵盖了 LearnOrbit 学习平台的所有核心设计理念、组件模式和最佳实践。在开发新功能时：
+
+1. **保持一致性** - 遵循现有的设计模式和组件风格
+2. **考虑响应式** - 始终考虑桌面端和移动端的不同体验
+3. **注重细节** - 字体、颜色、间距、动画都要精心设计
+4. **性能优先** - 使用代码分割、懒加载等优化手段
+5. **可访问性** - 确保所有用户都能良好使用
+6. **国际化支持** - 所有文本都要使用翻译系统
+
+记住，好的学习体验来自于细心的设计和周到的实现！✨

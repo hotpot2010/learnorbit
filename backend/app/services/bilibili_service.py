@@ -19,6 +19,8 @@ if sys.platform == 'win32':
     except:
         pass
 
+from .series_cache_service import SeriesCacheService
+
 
 class BilibiliService:
     """Service for downloading and managing Bilibili videos"""
@@ -32,6 +34,9 @@ class BilibiliService:
         """
         self.download_dir = download_dir or tempfile.gettempdir()
         os.makedirs(self.download_dir, exist_ok=True)
+        
+        # Initialize series cache service
+        self.series_cache = SeriesCacheService()
         
         print(f"📁 Video download directory: {self.download_dir}")
     
@@ -75,12 +80,13 @@ class BilibiliService:
             print(f"⚠️ Failed to list formats: {str(e)}")
             return []
     
-    def extract_video_info(self, url: str) -> Dict[str, Any]:
+    def extract_video_info(self, url: str, use_cache: bool = True) -> Dict[str, Any]:
         """
         Extract video information without downloading
         
         Args:
             url: Bilibili video URL or BV number
+            use_cache: Whether to use cached series info
             
         Returns:
             Video information dictionary
@@ -88,6 +94,15 @@ class BilibiliService:
         # Convert BV number to full URL if needed
         if url.startswith('BV'):
             url = f'https://www.bilibili.com/video/{url}'
+        
+        # 尝试从缓存加载序列信息
+        if use_cache:
+            cached_series = self.series_cache.get_cached_series(url)
+            if cached_series:
+                print(f"✅ 使用缓存的序列信息: {cached_series.get('title', '')[:50]}...")
+                return cached_series
+        
+        print(f"📋 Extracting video info: {url}")
         
         ydl_opts = {
             'quiet': True,
@@ -99,19 +114,89 @@ class BilibiliService:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(url, download=False)
                 
-                # Extract relevant information
-                return {
+                # 检查是否是多P视频
+                is_playlist = 'entries' in info
+                total_parts = len(info.get('entries', [])) if is_playlist else 1
+                
+                # 如果是单视频，直接返回
+                if not is_playlist:
+                    result = {
+                        'bv_id': info.get('id', ''),
+                        'title': info.get('title', ''),
+                        'description': info.get('description', ''),
+                        'duration': info.get('duration', 0),
+                        'uploader': info.get('uploader', ''),
+                        'upload_date': info.get('upload_date', ''),
+                        'view_count': info.get('view_count', 0),
+                        'like_count': info.get('like_count', 0),
+                        'thumbnail': info.get('thumbnail', ''),
+                        'url': url,
+                        'is_series': False,
+                        'total_parts': 1,
+                        'part_number': 1,
+                    }
+                    
+                    # 缓存单视频信息
+                    if use_cache:
+                        self.series_cache.set_cached_series(url, result)
+                    
+                    return result
+                
+                # 多P视频：返回序列信息和所有分P信息
+                series_title = info.get('title', '')
+                parts_info = []
+                
+                for idx, entry in enumerate(info.get('entries', []), 1):
+                    full_title = entry.get('title', f'P{idx}')
+                    
+                    # 提取分P小标题（去除系列标题）
+                    # B站格式通常是: "系列标题 pXX 小标题" 或 "系列标题 小标题"
+                    part_title = full_title
+                    
+                    # 尝试按 " p" 分割（注意小写p，B站格式）
+                    if ' p' in full_title.lower():
+                        parts = full_title.split(' p', 1)
+                        if len(parts) > 1:
+                            # 取 "pXX 小标题" 部分，再去掉 "pXX "
+                            after_p = parts[1]
+                            # 去掉数字和空格，只保留小标题
+                            import re
+                            part_title = re.sub(r'^\d+\s+', '', after_p).strip()
+                    
+                    # 如果提取失败或为空，使用完整标题
+                    if not part_title:
+                        part_title = full_title
+                    
+                    parts_info.append({
+                        'part_number': idx,
+                        'part_title': part_title,
+                        'full_title': full_title,  # 保留完整标题供参考
+                        'duration': entry.get('duration', 0),
+                        'url': entry.get('url') or entry.get('webpage_url') or f"{url}?p={idx}",
+                        'bv_id': entry.get('id', ''),
+                    })
+                
+                result = {
                     'bv_id': info.get('id', ''),
-                    'title': info.get('title', ''),
+                    'title': series_title,
                     'description': info.get('description', ''),
-                    'duration': info.get('duration', 0),
                     'uploader': info.get('uploader', ''),
                     'upload_date': info.get('upload_date', ''),
                     'view_count': info.get('view_count', 0),
                     'like_count': info.get('like_count', 0),
                     'thumbnail': info.get('thumbnail', ''),
                     'url': url,
+                    'is_series': True,
+                    'total_parts': total_parts,
+                    'series_title': series_title,
+                    'parts': parts_info,
                 }
+                
+                # 缓存序列信息
+                if use_cache:
+                    self.series_cache.set_cached_series(url, result)
+                
+                return result
         except Exception as e:
             raise Exception(f"Failed to extract video info: {str(e)}")
     
@@ -197,6 +282,11 @@ class BilibiliService:
                             f"Searched in: {self.download_dir}"
                         )
                 
+                # 提取分P信息（如果有）
+                part_number = info.get('playlist_index', 1)
+                total_parts = info.get('n_entries', 1)
+                series_title = info.get('playlist_title', info.get('title', ''))
+                
                 return {
                     'success': True,
                     'file_path': downloaded_file,
@@ -205,6 +295,10 @@ class BilibiliService:
                     'title': info.get('title', ''),
                     'duration': info.get('duration', 0),
                     'url': url,
+                    'part_number': part_number,
+                    'total_parts': total_parts,
+                    'series_title': series_title,
+                    'is_series': total_parts > 1,
                 }
         except Exception as e:
             error_msg = str(e)

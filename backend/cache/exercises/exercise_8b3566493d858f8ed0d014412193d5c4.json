@@ -1,0 +1,25 @@
+{
+  "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=10",
+  "knowledge_point_name": "math库函数调用",
+  "exercise": {
+    "type": "fill_blank",
+    "title": "计算三角函数值",
+    "description": "使用math库计算指定角度的正弦值",
+    "difficulty": "beginner",
+    "language": "python",
+    "starter_code": "import ___\n\n# 计算1弧度的正弦值\nresult = ___.___(___)\nprint(f\"sin(1) = {result}\")",
+    "solution": "import math\n\n# 计算1弧度的正弦值\nresult = math.sin(1)\nprint(f\"sin(1) = {result}\")",
+    "hints": [
+      "第1个空：需要导入数学运算库，库名为math",
+      "第2个空：调用math库中的函数，需要写库名",
+      "第3个空：sin是正弦函数的英文缩写",
+      "第4个空：要计算的弧度值为1",
+      "注意：调用库函数时，必须使用'库名.函数名'的格式"
+    ]
+  },
+  "cached_at": "2025-11-07T16:44:42.859157",
+  "metadata": {
+    "video_title": "Python数学运算 | 用代码秒杀计算器",
+    "transcript_length": 108
+  }
+}

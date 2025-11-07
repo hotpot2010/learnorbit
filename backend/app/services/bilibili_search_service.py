@@ -105,17 +105,19 @@ class BilibiliSearchService:
     
     async def search_videos_with_rerank(self, query: str, limit: int = 3) -> List[Dict[str, Any]]:
         """
-        搜索B站视频并智能排序
+        搜索B站视频并智能排序 - 多样化时长分布
         
         优化目标：
-        1. 优先选择系列视频（多P）
-        2. 总时长：2-3小时最佳（7200-10800秒）
-        3. 播放量：≥100万优先
-        4. 避免过长（>5小时）或过短（<1小时）的系列
+        1. 所有视频播放量 ≥ 100万（优先）
+        2. 时长多样化分布：
+           - 第1个：2-3小时（深度学习）
+           - 第2个：1-2小时（适中学习）
+           - 第3个：0-1小时（快速入门）
+        3. 优先系列视频（多P）
         
         Args:
             query: 搜索关键词
-            limit: 返回结果数量
+            limit: 返回结果数量（默认3）
             
         Returns:
             智能排序后的视频列表
@@ -127,86 +129,159 @@ class BilibiliSearchService:
         if not results:
             return []
         
-        safe_print(f"\n📊 开始智能排序 {len(results)} 个视频...")
+        safe_print(f"\n📊 开始智能排序（多样化时长分布）...")
         
-        # 为每个视频计算综合得分
-        scored_videos = []
+        # 第一步：筛选百万播放量的视频
+        million_plus = [v for v in results if v.get('play', 0) >= 1000000]
         
-        for i, video in enumerate(results):
-            score = 0
-            duration_seconds = video.get('duration_seconds', 0)
-            play_count = video.get('play', 0)
+        safe_print(f"✅ 筛选出 {len(million_plus)} 个百万播放量视频（共{len(results)}个）")
+        
+        # 如果百万+视频不足，降低标准
+        if len(million_plus) < limit:
+            safe_print(f"⚠️  百万+视频不足，扩展到50万播放量")
+            million_plus = [v for v in results if v.get('play', 0) >= 500000]
+        
+        # 第二步：按时长分组（扩大范围以包含更多视频）
+        groups = {'long': [], 'medium': [], 'short': [], 'other': []}
+        
+        for video in million_plus:
+            dur = video.get('duration_seconds', 0)
+            # 长视频：≥1.5小时（优先接近3小时的）
+            if dur >= 5400:  # ≥1.5小时（90分钟）
+                groups['long'].append(video)
+            # 中视频：30分钟-1.5小时
+            elif 1800 <= dur < 5400:  # 30分钟-1.5小时
+                groups['medium'].append(video)
+            # 短视频：<30分钟
+            elif 0 < dur < 1800:  # <30分钟
+                groups['short'].append(video)
+            else:
+                groups['other'].append(video)
+        
+        safe_print(f"\n📈 时长分布: 长≥1.5h({len(groups['long'])}) "
+                  f"中0.5-1.5h({len(groups['medium'])}) "
+                  f"短<0.5h({len(groups['short'])}) 其他({len(groups['other'])})")
+        
+        # 第三步：为每组内视频打分
+        def score_video(video, rank, is_long_group=False):
+            s = 0
             is_series = video.get('is_series', False)
-            video_amount = video.get('video_amount', 1)
-            title = video.get('title', '')[:40]
+            amount = video.get('video_amount', 1)
+            play = video.get('play', 0)
+            dur = video.get('duration_seconds', 0)
             
-            # === 1. 系列视频优先（权重：40%）===
-            if is_series and video_amount > 1:
-                score += 150  # 系列视频基础分
+            # 系列视频优先（40分）
+            if is_series and 5 <= amount <= 20:
+                s += 40
+            elif is_series:
+                s += 30
+            else:
+                s += 20
+            
+            # 播放量（30分）
+            if play >= 5000000:
+                s += 30
+            elif play >= 2000000:
+                s += 25
+            elif play >= 1000000:
+                s += 20
+            else:
+                s += 15
+            
+            # 原始排名（20分）
+            s += max(0, 20 - rank * 2)
+            
+            # 收藏率（10分）
+            fav = video.get('favorites', 0)
+            if play > 0 and fav / play > 0.1:
+                s += 10
+            elif play > 0 and fav / play > 0.05:
+                s += 5
+            
+            # 🆕 长视频组额外加分：优先接近3小时的视频（30分）
+            if is_long_group:
+                target_duration = 10800  # 3小时 = 10800秒
+                # 计算与3小时的距离，越近分数越高
+                duration_diff = abs(dur - target_duration)
                 
-                # 根据视频数量调整（5-20P最佳）
-                if 5 <= video_amount <= 20:
-                    score += 50  # 理想数量
-                elif 3 <= video_amount < 5:
-                    score += 30  # 较少但可接受
-                elif 20 < video_amount <= 30:
-                    score += 30  # 较多但可接受
+                if duration_diff <= 1800:  # 与3小时相差≤30分钟
+                    s += 30  # 完美！2.5-3.5小时
+                elif duration_diff <= 3600:  # 与3小时相差≤1小时
+                    s += 25  # 很好！2-4小时
+                elif duration_diff <= 5400:  # 与3小时相差≤1.5小时
+                    s += 20  # 可接受！1.5-4.5小时
                 else:
-                    score += 10  # 过少或过多
+                    s += 10  # 其他
+            
+            return s
+        
+        # 为每组排序（长视频组特殊处理）
+        for group_name, group_videos in groups.items():
+            for v in group_videos:
+                v['_rank'] = results.index(v)
+            
+            is_long = (group_name == 'long')
+            group_videos.sort(
+                key=lambda v: score_video(v, v['_rank'], is_long_group=is_long), 
+                reverse=True
+            )
+        
+        # 第四步：选择最终结果
+        final = []
+        
+        # 辅助函数：格式化时长显示
+        def format_duration(seconds):
+            hours = seconds // 3600
+            minutes = (seconds % 3600) // 60
+            if hours > 0:
+                return f"{hours}h{minutes}m"
             else:
-                score += 20  # 单视频得分较低
-            
-            # === 2. 总时长得分（权重：30%）===
-            ideal_min = 7200   # 2小时
-            ideal_max = 10800  # 3小时
-            
-            if ideal_min <= duration_seconds <= ideal_max:
-                score += 120  # 完美时长！
-            elif 5400 <= duration_seconds < ideal_min:  # 1.5-2小时
-                score += 90
-            elif ideal_max < duration_seconds <= 14400:  # 3-4小时
-                score += 90
-            elif 3600 <= duration_seconds < 5400:  # 1-1.5小时
-                score += 60
-            elif 14400 < duration_seconds <= 18000:  # 4-5小时
-                score += 60
-            elif duration_seconds < 3600:  # <1小时（太短）
-                score += 20
-            elif duration_seconds > 18000:  # >5小时（太长）
-                score += 30
-            
-            # === 3. 播放量得分（权重：25%）===
-            if play_count >= 1000000:  # ≥100万
-                score += 100
-            elif play_count >= 500000:  # 50-100万
-                score += 80
-            elif play_count >= 100000:  # 10-50万
-                score += 60
-            elif play_count >= 50000:   # 5-10万
-                score += 40
-            else:
-                score += 20
-            
-            # === 4. 原始排名奖励（权重：5%）===
-            rank_bonus = max(0, 30 - i * 3)
-            score += rank_bonus
-            
-            # 调试输出
-            safe_print(f"  [{i+1}] {title}")
-            safe_print(f"      {'[系列]' if is_series else '[单P]'} {video_amount}P | "
-                      f"时长:{duration_seconds//60}分 | 播放:{play_count//10000}万 | 得分:{score}")
-            
-            scored_videos.append((score, video))
+                return f"{minutes}m"
         
-        # 按得分排序
-        scored_videos.sort(key=lambda x: x[0], reverse=True)
+        # 1. 选最佳长视频（≥1.5h，优先接近3h）
+        if groups['long']:
+            best = groups['long'][0]
+            final.append(best)
+            dur_sec = best.get('duration_seconds', 0)
+            safe_print(f"\n✅ [1] 长视频(≥1.5h): {best.get('title', '')[:40]}")
+            safe_print(f"    时长:{format_duration(dur_sec)}({dur_sec//60}分) | "
+                      f"{best.get('play', 0)//10000}万播 | "
+                      f"{'系列' if best.get('is_series') else '单P'} {best.get('video_amount', 1)}P")
         
-        safe_print(f"\n🏆 排序结果（前{limit}个）:")
-        for i, (score, video) in enumerate(scored_videos[:limit]):
-            safe_print(f"  #{i+1} 得分:{score} | {video.get('title', '')[:50]}")
+        # 2. 选最佳中视频（0.5-1.5h）
+        if groups['medium'] and len(final) < limit:
+            best = groups['medium'][0]
+            if best not in final:
+                final.append(best)
+                dur_sec = best.get('duration_seconds', 0)
+                safe_print(f"\n✅ [2] 中视频(0.5-1.5h): {best.get('title', '')[:40]}")
+                safe_print(f"    时长:{format_duration(dur_sec)}({dur_sec//60}分) | "
+                          f"{best.get('play', 0)//10000}万播 | "
+                          f"{'系列' if best.get('is_series') else '单P'} {best.get('video_amount', 1)}P")
         
-        # 返回前N个
-        return [video for _, video in scored_videos[:limit]]
+        # 3. 选最佳短视频（<0.5h）
+        if groups['short'] and len(final) < limit:
+            best = groups['short'][0]
+            if best not in final:
+                final.append(best)
+                dur_sec = best.get('duration_seconds', 0)
+                safe_print(f"\n✅ [3] 短视频(<0.5h): {best.get('title', '')[:40]}")
+                safe_print(f"    时长:{format_duration(dur_sec)}({dur_sec//60}分) | "
+                          f"{best.get('play', 0)//10000}万播 | "
+                          f"{'系列' if best.get('is_series') else '单P'} {best.get('video_amount', 1)}P")
+        
+        # 4. 如果不足3个，补充其他组
+        if len(final) < limit:
+            safe_print(f"\n⚠️  需补充 {limit - len(final)} 个视频")
+            for group_name in ['other', 'long', 'medium', 'short']:
+                for v in groups[group_name]:
+                    if v not in final and len(final) < limit:
+                        final.append(v)
+                        safe_print(f"   补充: {v.get('title', '')[:40]} ({v.get('duration_seconds', 0)//60}分)")
+        
+        safe_print(f"\n🏆 返回 {len(final)} 个多样化视频\n")
+        
+        return final[:limit]
     
     def _parse_duration(self, duration_str: str) -> int:
         """

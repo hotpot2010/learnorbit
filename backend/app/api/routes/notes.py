@@ -253,10 +253,7 @@ async def generate_exercise(request: ExerciseGenerationRequest):
   "language": "编程语言（python/javascript等）",
   "starter_code": "初始代码模板",
   "solution": "参考答案",
-  "hints": ["提示1", "提示2"],
-  "test_cases": [
-    {{"input": "输入", "expected": "期望输出"}}
-  ]
+  "hints": ["提示1", "提示2"]
 }}
 
 **题型选择规则**：
@@ -433,24 +430,7 @@ async def validate_answer(request: AnswerValidationRequest):
         print(f"   语言: {request.language}")
         print(f"   题型: {request.exercise.get('type')}")
         
-        # 1. 先运行测试用例（如果有）
-        test_results = None
-        test_passed = False
-        
-        test_cases = request.exercise.get('test_cases', [])
-        if test_cases:
-            print(f"🧪 运行 {len(test_cases)} 个测试用例...")
-            test_results = await code_execution_service.validate_with_test_cases(
-                code=request.user_code,
-                language=request.language,
-                test_cases=test_cases
-            )
-            test_passed = test_results.get('all_passed', False)
-            print(f"   通过: {test_results.get('passed_count')}/{test_results.get('total_count')}")
-        else:
-            print("⚠️ 没有测试用例，仅进行LLM评估")
-        
-        # 2. 使用LLM进行深度评估
+        # 使用LLM进行代码评估
         print(f"🤖 调用LLM进行代码评估...")
         
         # 构建评估prompt
@@ -473,9 +453,6 @@ async def validate_answer(request: AnswerValidationRequest):
 {request.user_code}
 ```
 
-**测试结果**：
-{f"通过 {test_results.get('passed_count')}/{test_results.get('total_count')} 个测试用例" if test_results else "无测试用例"}
-
 请按以下JSON格式返回评估结果：
 
 {{
@@ -487,22 +464,21 @@ async def validate_answer(request: AnswerValidationRequest):
 }}
 
 **评分标准**：
-1. 功能正确性 (40%): 是否实现了要求的功能
-2. 代码质量 (30%): 代码是否简洁、可读
-3. 测试通过率 (20%): 测试用例通过情况
-4. 最佳实践 (10%): 是否遵循最佳实践
+1. 功能正确性 (50%): 是否实现了要求的功能，逻辑是否正确
+2. 代码质量 (30%): 代码是否简洁、可读、规范
+3. 完整性 (20%): 是否完整实现了所有要求
 
 **要求**：
-1. 如果测试用例全部通过且代码质量好，给90-100分
-2. 如果测试用例全部通过但代码质量一般，给70-89分
-3. 如果部分测试用例通过，给40-69分
-4. 如果测试用例全部失败或代码无法运行，给0-39分
+1. 如果代码完全正确且质量高，给90-100分
+2. 如果代码基本正确但有小问题，给70-89分
+3. 如果代码部分正确或逻辑有误，给40-69分
+4. 如果代码错误或无法运行，给0-39分
 5. 反馈要具体、有建设性，指出明确的改进方向
 6. 只输出JSON，不要其他内容"""
 
         # 调用LLM
         llm_result = await doubao_service.generate_outline(
-            transcript=f"测试通过率: {test_results.get('passed_count') if test_results else 0}/{len(test_cases)}",
+            transcript="",
             prompt=prompt
         )
         
@@ -513,7 +489,7 @@ async def validate_answer(request: AnswerValidationRequest):
             import json
             assessment = json.loads(llm_result)
             
-            passed = assessment.get('passed', test_passed)
+            passed = assessment.get('passed', False)
             score = assessment.get('score', 0)
             
             # 构建反馈
@@ -538,40 +514,20 @@ async def validate_answer(request: AnswerValidationRequest):
                 passed=passed,
                 score=score,
                 feedback=feedback,
-                test_results=test_results
+                test_results=None  # 不再返回测试结果
             )
             
         except json.JSONDecodeError as e:
-            print(f"⚠️ LLM返回的不是有效JSON，使用测试结果")
+            print(f"❌ LLM返回的不是有效JSON: {e}")
+            print(f"原始返回: {llm_result[:500]}")
             
-            # 如果LLM返回格式错误，使用测试结果
-            if test_results:
-                passed_count = test_results.get('passed_count', 0)
-                total_count = test_results.get('total_count', 1)
-                score = int((passed_count / total_count) * 100) if total_count > 0 else 0
-                
-                feedback = f"测试用例通过率: {passed_count}/{total_count}\n\n"
-                if test_passed:
-                    feedback += "🎉 所有测试用例通过！代码功能正确。"
-                else:
-                    feedback += "⚠️ 部分测试用例未通过，请检查代码逻辑。"
-                
-                return AnswerValidationResponse(
-                    success=True,
-                    passed=test_passed,
-                    score=score,
-                    feedback=feedback,
-                    test_results=test_results
-                )
-            else:
-                # 没有测试用例，无法评估
-                return AnswerValidationResponse(
-                    success=False,
-                    passed=False,
-                    score=0,
-                    feedback="无法评估：LLM返回格式错误且没有测试用例",
-                    error="LLM response format error"
-                )
+            return AnswerValidationResponse(
+                success=False,
+                passed=False,
+                score=0,
+                feedback="评估失败：LLM返回格式错误，请稍后重试",
+                error=f"LLM response format error: {str(e)}"
+            )
         
     except Exception as e:
         print(f"❌ Error validating answer: {e}")

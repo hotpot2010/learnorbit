@@ -1,0 +1,24 @@
+{
+  "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=9",
+  "knowledge_point_name": "变量命名的硬性规则",
+  "exercise": {
+    "type": "code_choice",
+    "title": "识别正确的Python变量名",
+    "description": "根据Python变量命名规则，选出所有合法的变量名",
+    "difficulty": "beginner",
+    "language": "python",
+    "starter_code": "# 以下哪些是合法的Python变量名？\n# 请在正确的变量名后标注 ✓，错误的标注 ✗\n\nuser_name = \"Alice\"      # ___\nuser-name = \"Bob\"        # ___\n2nd_user = \"Charlie\"     # ___\n_user2 = \"David\"         # ___\nuser name = \"Eve\"        # ___\nuser_name_2 = \"Frank\"    # ___",
+    "solution": "# 以下哪些是合法的Python变量名？\n# 请在正确的变量名后标注 ✓，错误的标注 ✗\n\nuser_name = \"Alice\"      # ✓ 合法：字母+下划线\nuser-name = \"Bob\"        # ✗ 错误：包含减号\n2nd_user = \"Charlie\"     # ✗ 错误：数字开头\n_user2 = \"David\"         # ✓ 合法：下划线开头+字母+数字\nuser name = \"Eve\"        # ✗ 错误：包含空格\nuser_name_2 = \"Frank\"    # ✓ 合法：字母+下划线+数字",
+    "hints": [
+      "记住三条硬性规则：只能包含字母、数字、下划线",
+      "不能包含空格或其他符号（如减号、加号等）",
+      "不能以数字开头，但可以以下划线开头",
+      "正确答案：user_name ✓、_user2 ✓、user_name_2 ✓"
+    ]
+  },
+  "cached_at": "2025-11-07T17:54:47.178023",
+  "metadata": {
+    "video_title": "Python命名规则 | 哪些变量名算好名字",
+    "transcript_length": 106
+  }
+}

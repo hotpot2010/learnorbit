@@ -19,5 +19,40 @@
     "knowledge_point_name": "验证Python安装成功",
     "exercise_type": "guided_steps",
     "timestamp": "2025-11-07T09:44:28.833387"
+  },
+  "9fea36a43c51ac0dc632a2ff92d60b27": {
+    "file": "exercise_9fea36a43c51ac0dc632a2ff92d60b27.json",
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=8",
+    "knowledge_point_name": "变量的使用方法",
+    "exercise_type": "fill_blank",
+    "timestamp": "2025-11-07T16:05:01.601694"
+  },
+  "afb73853d0e75bd4ee595ebbccccbf69": {
+    "file": "exercise_afb73853d0e75bd4ee595ebbccccbf69.json",
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=10",
+    "knowledge_point_name": "math库导入方法",
+    "exercise_type": "fill_blank",
+    "timestamp": "2025-11-07T16:34:21.626737"
+  },
+  "8b3566493d858f8ed0d014412193d5c4": {
+    "file": "exercise_8b3566493d858f8ed0d014412193d5c4.json",
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=10",
+    "knowledge_point_name": "math库函数调用",
+    "exercise_type": "fill_blank",
+    "timestamp": "2025-11-07T16:44:42.859157"
+  },
+  "621b13828da31598da4ef4a10f6a06f1": {
+    "file": "exercise_621b13828da31598da4ef4a10f6a06f1.json",
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=1",
+    "knowledge_point_name": "课程特点二：精炼内容",
+    "exercise_type": "fill_blank",
+    "timestamp": "2025-11-07T17:24:15.495251"
+  },
+  "d780785a4a647f2190ec49361c766911": {
+    "file": "exercise_d780785a4a647f2190ec49361c766911.json",
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=9",
+    "knowledge_point_name": "变量命名的硬性规则",
+    "exercise_type": "code_choice",
+    "timestamp": "2025-11-07T17:54:47.178023"
   }
 }

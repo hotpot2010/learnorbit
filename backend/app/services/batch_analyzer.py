@@ -40,6 +40,9 @@ class BatchAnalyzer:
         self.use_cache = use_cache
         self.use_asr_doubao = use_asr_doubao  # 默认使用 ASR + 豆包
         
+        # Initialize thread pool for background preloading
+        self.executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="preload_")
+        
         print(f"📊 BatchAnalyzer initialized:")
         print(f"  - Storage: {storage_dir}")
         print(f"  - Cache: {'✅ Enabled' if use_cache else '❌ Disabled'}")
@@ -95,6 +98,234 @@ class BatchAnalyzer:
         """
         return self.jobs.get(job_id)
     
+    def _preload_next_part(self, current_video_url: str, prompt: str, current_part_number: int):
+        """
+        在后台预加载下一个分P（如果还没缓存）
+        这个方法在线程池中异步执行，不阻塞当前请求
+        
+        Args:
+            current_video_url: 当前视频URL（包含 ?p=X）
+            prompt: 使用的prompt
+            current_part_number: 当前P的编号
+        """
+        # 构建下一P的URL
+        next_part_number = current_part_number + 1
+        base_url = current_video_url.split('?')[0]
+        next_video_url = f"{base_url}?p={next_part_number}"
+        
+        # 首先检查下一P是否已经在缓存中
+        if self.use_cache:
+            cached = self.cache_service.get(
+                video_url=next_video_url,
+                prompt=prompt,
+                max_age_hours=24 * 7
+            )
+            
+            if cached:
+                print(f"⏭️  P{next_part_number} 已在缓存中，跳过预加载")
+                return
+        
+        # 获取序列信息，检查下一P是否存在
+        try:
+            series_info = self.bilibili_service.extract_video_info(base_url, use_cache=True)
+            
+            if not series_info.get('is_series'):
+                print(f"⏭️  这不是系列视频，无需预加载")
+                return
+            
+            total_parts = series_info.get('total_parts', 0)
+            
+            if next_part_number > total_parts:
+                print(f"⏭️  P{next_part_number} 不存在（总共 {total_parts} P），无需预加载")
+                return
+            
+            print(f"🔄 开始后台预加载 P{next_part_number}...")
+            
+            # 在线程池中异步执行预加载（不阻塞当前请求）
+            def preload_task():
+                try:
+                    result = self.analyze_single_part(
+                        video_url=next_video_url,
+                        prompt=prompt,
+                        part_number=next_part_number,
+                    )
+                    
+                    if result.get('success'):
+                        print(f"✅ P{next_part_number} 预加载完成")
+                    else:
+                        print(f"⚠️  P{next_part_number} 预加载失败: {result.get('error', 'Unknown error')}")
+                        
+                except Exception as e:
+                    print(f"⚠️  P{next_part_number} 预加载异常: {e}")
+            
+            # 提交到线程池异步执行
+            if hasattr(self, 'executor'):
+                self.executor.submit(preload_task)
+            else:
+                # 如果没有线程池，创建一个单线程执行
+                import threading
+                thread = threading.Thread(target=preload_task, daemon=True)
+                thread.start()
+                
+        except Exception as e:
+            print(f"⚠️  预加载检查失败: {e}")
+    
+    def analyze_single_part(
+        self,
+        video_url: str,
+        prompt: str,
+        part_number: int,
+    ) -> Dict[str, Any]:
+        """
+        Analyze a single part of a video series
+        
+        Args:
+            video_url: Bilibili video URL (should include ?p=X parameter)
+            prompt: Custom prompt for analysis
+            part_number: Part number (for metadata)
+            
+        Returns:
+            Analysis result dictionary for this specific part
+        """
+        # 确保URL包含分P参数
+        if '?p=' not in video_url:
+            base_url = video_url.split('?')[0]
+            video_url = f"{base_url}?p={part_number}"
+        
+        print(f"📺 分析第 {part_number} P: {video_url}")
+        
+        # 使用正常的单视频分析流程
+        # 先检查缓存
+        if self.use_cache:
+            cached_result = self.cache_service.get(
+                video_url=video_url,
+                prompt=prompt,
+                max_age_hours=24 * 7  # 7 days cache
+            )
+            
+            if cached_result:
+                print(f"✅ Using cached result for P{part_number}")
+                cached_result['part_number'] = part_number
+                
+                # 即使使用缓存，也要触发下一P的预加载
+                self._preload_next_part(video_url, prompt, part_number)
+                
+                return {
+                    'success': True,
+                    'from_cache': True,
+                    **cached_result
+                }
+        
+        video_file_path = None
+        
+        try:
+            # 提取视频信息
+            video_info = self.bilibili_service.extract_video_info(video_url)
+            
+            # 下载视频
+            print(f"📥 Downloading P{part_number}: {video_info.get('title', '')}")
+            download_result = self.bilibili_service.download_video(
+                video_url,
+                output_filename=f"temp_{video_info.get('bv_id', 'unknown')}_p{part_number}"
+            )
+            video_file_path = download_result['file_path']
+            
+            # 选择分析方法
+            method = AnalysisMethod.ASR_DOUBAO if self.use_asr_doubao else AnalysisMethod.GEMINI
+            
+            # 调用统一的视频分析服务
+            # 由于FastAPI已经在事件循环中，直接使用 asyncio.create_task 或在同步上下文中使用 run_coroutine_threadsafe
+            import asyncio
+            try:
+                # 尝试获取当前事件循环
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    # 如果循环正在运行，使用 nest_asyncio 或创建任务
+                    import nest_asyncio
+                    nest_asyncio.apply()
+                    result = loop.run_until_complete(
+                        self.video_analysis_service.analyze_video(
+                            video_path=video_file_path,
+                            custom_prompt=prompt,
+                            method=method,
+                            video_url_for_cache=video_url
+                        )
+                    )
+                else:
+                    # 如果循环未运行，直接运行
+                    result = loop.run_until_complete(
+                        self.video_analysis_service.analyze_video(
+                            video_path=video_file_path,
+                            custom_prompt=prompt,
+                            method=method,
+                            video_url_for_cache=video_url
+                        )
+                    )
+            except RuntimeError:
+                # 如果没有事件循环，创建新的
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                try:
+                    result = loop.run_until_complete(
+                        self.video_analysis_service.analyze_video(
+                            video_path=video_file_path,
+                            custom_prompt=prompt,
+                            method=method,
+                            video_url_for_cache=video_url
+                        )
+                    )
+                finally:
+                    loop.close()
+            
+            # 清理下载的视频文件
+            try:
+                os.remove(video_file_path)
+                print(f"🗑️  Cleaned up: {video_file_path}")
+            except Exception as e:
+                print(f"⚠️  Failed to clean up: {e}")
+            
+            # 添加分P信息
+            result['part_number'] = part_number
+            result['series_title'] = download_result.get('series_title', '')
+            result['video_info'] = {
+                'title': video_info.get('title', ''),
+                'bv_id': video_info.get('bv_id', ''),
+                'url': video_url,
+                'part_number': part_number,
+            }
+            
+            # 保存到缓存
+            if self.use_cache and result.get('success'):
+                self.cache_service.set(
+                    video_url=video_url,
+                    prompt=prompt,
+                    result=result,
+                    metadata={'bv_id': video_info.get('bv_id', ''), 'title': video_info.get('title', ''), 'part_number': part_number}
+                )
+            
+            # 后台预加载下一P（异步，不阻塞当前请求）
+            self._preload_next_part(video_url, prompt, part_number)
+            
+            return result
+            
+        except Exception as e:
+            error_msg = str(e)
+            print(f"❌ Failed to analyze P{part_number}: {error_msg}")
+            
+            # Cleanup on error
+            if video_file_path and os.path.exists(video_file_path):
+                try:
+                    os.remove(video_file_path)
+                except:
+                    pass
+            
+            return {
+                'success': False,
+                'error': error_msg,
+                'part_number': part_number,
+                'video_url': video_url,
+            }
+    
     def analyze_video_with_prompt(
         self,
         video_url: str,
@@ -108,9 +339,37 @@ class BatchAnalyzer:
             prompt: Custom prompt for analysis
             
         Returns:
-            Analysis result dictionary
+            Analysis result dictionary (for series, contains all parts)
         """
-        # Step 0: Check cache first
+        # Step 0: Extract video info to check if it's a series
+        print(f"📋 Extracting video info: {video_url}")
+        
+        # 为了检测序列，移除URL中的?p=参数
+        base_url = video_url.split('?')[0] if '?' in video_url else video_url
+        video_info = self.bilibili_service.extract_video_info(base_url)
+        
+        # 如果是视频序列，返回序列信息和所有分P的占位符
+        if video_info.get('is_series'):
+            print(f"🎬 检测到视频序列: {video_info.get('series_title')}")
+            print(f"📊 共 {video_info.get('total_parts')} 个分P")
+            
+            return {
+                'success': True,
+                'is_series': True,
+                'series_title': video_info.get('series_title'),
+                'total_parts': video_info.get('total_parts'),
+                'parts': video_info.get('parts', []),  # 所有分P的信息
+                'video_info': {
+                    'title': video_info.get('series_title'),
+                    'bv_id': video_info.get('bv_id'),
+                    'url': video_url,
+                },
+                # 注意：序列视频不直接分析，前端需要逐个请求每个P的分析
+                'message': '视频序列已识别，请前端逐个请求分P分析'
+            }
+        
+        # 单P视频：正常分析流程
+        # 检查缓存
         if self.use_cache:
             cached_result = self.cache_service.get(
                 video_url=video_url,
@@ -129,17 +388,6 @@ class BatchAnalyzer:
         video_file_path = None
         
         try:
-            # Step 1: Extract video info (also checks if multi-part)
-            print(f"📋 Extracting video info: {video_url}")
-            video_info = self.bilibili_service.extract_video_info(video_url)
-            
-            # 优化：如果检测到多P视频但没有指定分集，自动添加 ?p=1
-            if '?p=' not in video_url and 'bilibili.com/video/' in video_url:
-                # 检查是否是系列视频
-                if video_info.get('_type') == 'playlist' or 'entries' in video_info:
-                    print(f"⚠️  检测到多P视频，自动调整为第1集")
-                    video_url = video_url.split('?')[0] + '?p=1'
-                    print(f"✅ 调整后URL: {video_url}")
             
             # Step 2: Download video
             print(f"📥 Downloading video: {video_info['title']}")
