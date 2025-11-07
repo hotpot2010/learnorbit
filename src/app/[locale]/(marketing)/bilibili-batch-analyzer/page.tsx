@@ -21,6 +21,7 @@ import {
   ChevronUp,
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { buildApiUrl, API_ENDPOINTS } from '@/config/api';
 
 // Types
 interface VideoInfo {
@@ -136,7 +137,7 @@ export default function BilibiliBatchAnalyzerPage() {
 
   const fetchSavedJobs = async () => {
     try {
-      const response = await fetch('http://localhost:8000/batch/jobs');
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.batchJobs));
       const data = await response.json();
       if (data.success) {
         setSavedJobs(data.data);
@@ -148,7 +149,7 @@ export default function BilibiliBatchAnalyzerPage() {
 
   const fetchJobStatus = async (jobId: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/batch/jobs/${jobId}`);
+      const response = await fetch(buildApiUrl(`${API_ENDPOINTS.batchJobs}/${jobId}`));
       const data = await response.json();
       
       if (data.success) {
@@ -190,7 +191,7 @@ export default function BilibiliBatchAnalyzerPage() {
 
   const fetchJobResults = async (filename: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/batch/results/${filename}`);
+      const response = await fetch(buildApiUrl(`${API_ENDPOINTS.batchResults}/${filename}`));
       const data = await response.json();
       if (data.success) {
         setSelectedJobResults(data.data);
@@ -231,7 +232,7 @@ export default function BilibiliBatchAnalyzerPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/batch/jobs', {
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.batchJobs), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -38,6 +38,7 @@ import {
   ChevronUp
 } from 'lucide-react';
 import { useMobileLayout } from '@/hooks/use-mobile-layout';
+import { buildApiUrl, API_ENDPOINTS, API_BASE_URL } from '@/config/api';
 
 // QA对类型定义
 interface QAPair {
@@ -329,7 +330,7 @@ export default function VideoNotesPrototypePage() {
     try {
       console.log(`📺 加载第 ${part.part_number} P:`, part.part_title);
       
-      const response = await fetch('http://localhost:8000/batch/analyze-part', {
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.batchAnalyzePart), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -432,7 +433,7 @@ export default function VideoNotesPrototypePage() {
         job_name: '视频笔记测试'
       });
       
-      const response = await fetch('http://localhost:8000/batch/jobs', {
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.batchJobs), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -459,7 +460,7 @@ export default function VideoNotesPrototypePage() {
       }
     } catch (error) {
       console.error('❌ 解析视频异常:', error);
-      alert(`解析视频失败: ${error}\n\n请检查：\n1. 后端服务是否在运行 (http://localhost:8000)\n2. 网络连接是否正常\n3. 浏览器控制台查看详细错误`);
+      alert(`解析视频失败: ${error}\n\n请检查：\n1. 后端服务是否在运行 (${API_BASE_URL})\n2. 网络连接是否正常\n3. 浏览器控制台查看详细错误`);
     } finally {
       setIsAnalyzing(false);
     }
@@ -472,7 +473,7 @@ export default function VideoNotesPrototypePage() {
     
     const checkStatus = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/batch/jobs/${jobId}`);
+        const response = await fetch(buildApiUrl(`${API_ENDPOINTS.batchJobs}/${jobId}`));
         const data = await response.json();
         
         if (data.success && data.data) {
@@ -760,9 +761,10 @@ export default function VideoNotesPrototypePage() {
       console.log('📄 Transcript segment:', transcriptSegment.substring(0, 100), '...');
       
       // 调用后端API生成笔记
-      console.log('🔗 Calling backend API:', 'http://localhost:8000/notes/generate');
+      const apiUrl = buildApiUrl(API_ENDPOINTS.notesGenerate);
+      console.log('🔗 Calling backend API:', apiUrl);
       
-      const response = await fetch('http://localhost:8000/notes/generate', {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -858,7 +860,7 @@ export default function VideoNotesPrototypePage() {
       console.log('📄 Context:', transcriptSegment.substring(0, 100), '...');
       
       // 调用LLM API回答问题
-      const response = await fetch('http://localhost:8000/notes/answer-question', {
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.notesAnswerQuestion), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1439,7 +1441,7 @@ export default function VideoNotesPrototypePage() {
       console.log('📄 Context:', transcriptSegment.substring(0, 100), '...');
       
       // 调用LLM API生成练习
-      const response = await fetch('http://localhost:8000/notes/generate-exercise', {
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.notesGenerateExercise), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1565,7 +1567,7 @@ export default function VideoNotesPrototypePage() {
     ));
     
     try {
-      const response = await fetch('http://localhost:8000/notes/validate-answer', {
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.notesValidateAnswer), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

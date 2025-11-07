@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Play, Clock, Eye, ThumbsUp, Loader2, ExternalLink } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { buildApiUrl, API_ENDPOINTS } from '@/config/api';
 
 interface VideoInfo {
   title: string;
@@ -48,7 +49,7 @@ export default function VideoEntryPage() {
     try {
       console.log('🔍 搜索视频:', searchQuery);
 
-      const response = await fetch('http://localhost:8000/video-search/search', {
+      const response = await fetch(buildApiUrl(API_ENDPOINTS.videoSearch), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
