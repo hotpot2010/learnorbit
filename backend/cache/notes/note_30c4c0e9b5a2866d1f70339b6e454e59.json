@@ -1,0 +1,12 @@
+{
+  "cache_key": "30c4c0e9b5a2866d1f70339b6e454e59",
+  "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=3",
+  "knowledge_point_name": "添加Python到环境变量",
+  "note": "# 📝 添加Python到环境变量\n\n## ✅ 核心要点\n\n在安装Python时，**必须勾选** \"Add Python to PATH\" 选项\n\n## 🎯 作用\n\n让系统自动识别Python的安装位置，确保在任何目录下都能直接运行Python命令\n\n## ⚠️ 注意\n\n安装时务必勾选此选项，否则需要手动配置环境变量",
+  "note_length": 160,
+  "cached_at": "2025-11-07T07:39:19.132914",
+  "metadata": {
+    "video_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p03 Windows | 安装Python和PyCharm",
+    "transcript_length": 82
+  }
+}

@@ -63,6 +63,7 @@ class ExerciseGenerationResponse(BaseModel):
     success: bool
     exercise: Optional[dict] = None
     error: Optional[str] = None
+    from_cache: bool = False
 
 
 @router.post("/generate", response_model=NoteGenerationResponse)
@@ -214,8 +215,27 @@ async def generate_exercise(request: ExerciseGenerationRequest):
         AI生成的练习题（JSON格式，包含题型、题干、代码等）
     """
     try:
+        from app.services.exercise_cache_service import exercise_cache_service
+        
         print(f"💪 Generating exercise for: {request.knowledge_point_name}")
         print(f"📄 Context length: {len(request.transcript_segment)} chars")
+        
+        # 1. 尝试从缓存获取
+        if request.video_url:
+            cached = exercise_cache_service.get_cached_exercise(
+                video_url=request.video_url,
+                knowledge_point_name=request.knowledge_point_name
+            )
+            
+            if cached and cached.get('exercise'):
+                print(f"💾 使用缓存的练习题")
+                return ExerciseGenerationResponse(
+                    success=True,
+                    exercise=cached['exercise'],
+                    from_cache=True
+                )
+        else:
+            print(f"⚠️ 没有提供video_url，跳过缓存")
         
         # 构建练习生成 prompt
         prompt = f"""你是一位专业的编程教学专家。请根据视频内容为知识点生成一道编程练习题。
@@ -276,9 +296,22 @@ async def generate_exercise(request: ExerciseGenerationRequest):
             print(f"📝 Type: {exercise_data.get('type')}")
             print(f"🎯 Title: {exercise_data.get('title')}")
             
+            # 2. 保存到缓存
+            if request.video_url:
+                exercise_cache_service.set_cached_exercise(
+                    video_url=request.video_url,
+                    knowledge_point_name=request.knowledge_point_name,
+                    exercise=exercise_data,
+                    metadata={
+                        'video_title': request.video_title,
+                        'transcript_length': len(request.transcript_segment)
+                    }
+                )
+            
             return ExerciseGenerationResponse(
                 success=True,
-                exercise=exercise_data
+                exercise=exercise_data,
+                from_cache=False
             )
         except json.JSONDecodeError as e:
             print(f"❌ Failed to parse exercise JSON: {e}")
@@ -295,6 +328,259 @@ async def generate_exercise(request: ExerciseGenerationRequest):
         
         return ExerciseGenerationResponse(
             success=False,
+            error=str(e)
+        )
+
+
+class CodeExecutionRequest(BaseModel):
+    """代码执行请求模型"""
+    code: str
+    language: str
+    test_inputs: Optional[list] = None
+
+
+class CodeExecutionResponse(BaseModel):
+    """代码执行响应模型"""
+    success: bool
+    output: Optional[str] = None
+    error: Optional[str] = None
+    exit_code: Optional[int] = None
+    warning: Optional[str] = None
+
+
+class AnswerValidationRequest(BaseModel):
+    """答案验证请求模型"""
+    user_code: str
+    exercise: dict  # 包含题目信息、参考答案、测试用例等
+    language: str
+    video_url: Optional[str] = None
+    knowledge_point_name: Optional[str] = None
+
+
+class AnswerValidationResponse(BaseModel):
+    """答案验证响应模型"""
+    success: bool
+    passed: bool  # 是否通过
+    score: Optional[int] = None  # 评分 (0-100)
+    feedback: Optional[str] = None  # LLM反馈
+    test_results: Optional[dict] = None  # 测试用例结果
+    error: Optional[str] = None
+
+
+@router.post("/execute-code", response_model=CodeExecutionResponse)
+async def execute_code(request: CodeExecutionRequest):
+    """
+    执行代码
+    
+    Args:
+        request: 包含代码、语言、测试输入的请求
+        
+    Returns:
+        代码执行结果
+    """
+    try:
+        from app.services.code_execution_service import code_execution_service
+        
+        print(f"💻 执行代码:")
+        print(f"   语言: {request.language}")
+        print(f"   代码长度: {len(request.code)} 字符")
+        if request.test_inputs:
+            print(f"   测试输入: {request.test_inputs}")
+        
+        # 执行代码
+        result = await code_execution_service.execute_code(
+            code=request.code,
+            language=request.language,
+            test_inputs=request.test_inputs
+        )
+        
+        if result['success']:
+            print(f"✅ 代码执行成功")
+            if result.get('output'):
+                print(f"📤 输出: {result['output'][:100]}...")
+        else:
+            print(f"❌ 代码执行失败: {result.get('error')}")
+        
+        return CodeExecutionResponse(**result)
+        
+    except Exception as e:
+        print(f"❌ Error executing code: {e}")
+        import traceback
+        traceback.print_exc()
+        
+        return CodeExecutionResponse(
+            success=False,
+            error=str(e)
+        )
+
+
+@router.post("/validate-answer", response_model=AnswerValidationResponse)
+async def validate_answer(request: AnswerValidationRequest):
+    """
+    验证用户答案
+    
+    Args:
+        request: 包含用户代码、练习题、语言等信息的请求
+        
+    Returns:
+        验证结果，包括是否通过、评分、反馈等
+    """
+    try:
+        from app.services.code_execution_service import code_execution_service
+        
+        print(f"🎯 验证答案:")
+        print(f"   知识点: {request.knowledge_point_name}")
+        print(f"   语言: {request.language}")
+        print(f"   题型: {request.exercise.get('type')}")
+        
+        # 1. 先运行测试用例（如果有）
+        test_results = None
+        test_passed = False
+        
+        test_cases = request.exercise.get('test_cases', [])
+        if test_cases:
+            print(f"🧪 运行 {len(test_cases)} 个测试用例...")
+            test_results = await code_execution_service.validate_with_test_cases(
+                code=request.user_code,
+                language=request.language,
+                test_cases=test_cases
+            )
+            test_passed = test_results.get('all_passed', False)
+            print(f"   通过: {test_results.get('passed_count')}/{test_results.get('total_count')}")
+        else:
+            print("⚠️ 没有测试用例，仅进行LLM评估")
+        
+        # 2. 使用LLM进行深度评估
+        print(f"🤖 调用LLM进行代码评估...")
+        
+        # 构建评估prompt
+        prompt = f"""你是一位专业的编程教学专家。请评估学生提交的代码答案。
+
+**练习题信息**：
+- 标题：{request.exercise.get('title')}
+- 描述：{request.exercise.get('description')}
+- 题型：{request.exercise.get('type')}
+- 难度：{request.exercise.get('difficulty')}
+- 语言：{request.language}
+
+**参考答案**：
+```{request.language}
+{request.exercise.get('solution', '无')}
+```
+
+**学生提交的代码**：
+```{request.language}
+{request.user_code}
+```
+
+**测试结果**：
+{f"通过 {test_results.get('passed_count')}/{test_results.get('total_count')} 个测试用例" if test_results else "无测试用例"}
+
+请按以下JSON格式返回评估结果：
+
+{{
+  "passed": true/false,
+  "score": 0-100,
+  "feedback": "简洁的反馈（100字以内）",
+  "strengths": ["优点1", "优点2"],
+  "improvements": ["改进建议1", "改进建议2"]
+}}
+
+**评分标准**：
+1. 功能正确性 (40%): 是否实现了要求的功能
+2. 代码质量 (30%): 代码是否简洁、可读
+3. 测试通过率 (20%): 测试用例通过情况
+4. 最佳实践 (10%): 是否遵循最佳实践
+
+**要求**：
+1. 如果测试用例全部通过且代码质量好，给90-100分
+2. 如果测试用例全部通过但代码质量一般，给70-89分
+3. 如果部分测试用例通过，给40-69分
+4. 如果测试用例全部失败或代码无法运行，给0-39分
+5. 反馈要具体、有建设性，指出明确的改进方向
+6. 只输出JSON，不要其他内容"""
+
+        # 调用LLM
+        llm_result = await doubao_service.generate_outline(
+            transcript=f"测试通过率: {test_results.get('passed_count') if test_results else 0}/{len(test_cases)}",
+            prompt=prompt
+        )
+        
+        print(f"📊 LLM评估结果: {llm_result[:200]}...")
+        
+        # 解析LLM返回的JSON
+        try:
+            import json
+            assessment = json.loads(llm_result)
+            
+            passed = assessment.get('passed', test_passed)
+            score = assessment.get('score', 0)
+            
+            # 构建反馈
+            feedback_parts = [assessment.get('feedback', '')]
+            
+            if assessment.get('strengths'):
+                feedback_parts.append("\n\n**✨ 优点**:")
+                for strength in assessment['strengths']:
+                    feedback_parts.append(f"- {strength}")
+            
+            if assessment.get('improvements'):
+                feedback_parts.append("\n\n**💡 改进建议**:")
+                for improvement in assessment['improvements']:
+                    feedback_parts.append(f"- {improvement}")
+            
+            feedback = '\n'.join(feedback_parts)
+            
+            print(f"✅ 评估完成: {'通过' if passed else '未通过'} | 得分: {score}")
+            
+            return AnswerValidationResponse(
+                success=True,
+                passed=passed,
+                score=score,
+                feedback=feedback,
+                test_results=test_results
+            )
+            
+        except json.JSONDecodeError as e:
+            print(f"⚠️ LLM返回的不是有效JSON，使用测试结果")
+            
+            # 如果LLM返回格式错误，使用测试结果
+            if test_results:
+                passed_count = test_results.get('passed_count', 0)
+                total_count = test_results.get('total_count', 1)
+                score = int((passed_count / total_count) * 100) if total_count > 0 else 0
+                
+                feedback = f"测试用例通过率: {passed_count}/{total_count}\n\n"
+                if test_passed:
+                    feedback += "🎉 所有测试用例通过！代码功能正确。"
+                else:
+                    feedback += "⚠️ 部分测试用例未通过，请检查代码逻辑。"
+                
+                return AnswerValidationResponse(
+                    success=True,
+                    passed=test_passed,
+                    score=score,
+                    feedback=feedback,
+                    test_results=test_results
+                )
+            else:
+                # 没有测试用例，无法评估
+                return AnswerValidationResponse(
+                    success=False,
+                    passed=False,
+                    score=0,
+                    feedback="无法评估：LLM返回格式错误且没有测试用例",
+                    error="LLM response format error"
+                )
+        
+    except Exception as e:
+        print(f"❌ Error validating answer: {e}")
+        import traceback
+        traceback.print_exc()
+        
+        return AnswerValidationResponse(
+            success=False,
+            passed=False,
             error=str(e)
         )
 

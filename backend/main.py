@@ -52,6 +52,14 @@ except Exception as e:
     print("💡 笔记生成功能不可用")
     NOTES_ROUTES_AVAILABLE = False
 
+try:
+    from app.api.routes import video_search
+    VIDEO_SEARCH_ROUTES_AVAILABLE = True
+except Exception as e:
+    print(f"⚠️ 视频搜索路由模块导入失败: {e}")
+    print("💡 视频搜索功能不可用")
+    VIDEO_SEARCH_ROUTES_AVAILABLE = False
+
 # Create FastAPI application
 app = FastAPI(
     title="Video Analysis API",
@@ -96,6 +104,12 @@ if NOTES_ROUTES_AVAILABLE:
     print("✅ 笔记生成功能已启用")
 else:
     print("⚠️ 笔记生成功能不可用")
+
+if VIDEO_SEARCH_ROUTES_AVAILABLE:
+    app.include_router(video_search.router, prefix="/video-search", tags=["video-search"])
+    print("✅ 视频搜索功能已启用")
+else:
+    print("⚠️ 视频搜索功能不可用")
 
 # 自定义OpenAPI规范
 def custom_openapi():

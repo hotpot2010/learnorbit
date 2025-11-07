@@ -1,0 +1,31 @@
+{
+  "video_url": "http://file.gsxservice.com/3285853419_0qhwbrql.mp4",
+  "knowledge_point_name": "验证Python安装成功",
+  "exercise": {
+    "type": "guided_steps",
+    "title": "验证Python安装并查看版本信息",
+    "description": "通过命令行验证Python是否安装成功，并获取版本信息",
+    "difficulty": "beginner",
+    "language": "python",
+    "starter_code": "# 任务：编写一个Python脚本，自动获取并打印Python版本信息\n# 提示：使用sys模块可以获取Python版本\n\nimport sys\n\ndef check_python_installation():\n    # 在这里完成代码\n    pass\n\nif __name__ == \"__main__\":\n    check_python_installation()",
+    "solution": "import sys\n\ndef check_python_installation():\n    # 获取Python版本信息\n    version = sys.version\n    version_info = sys.version_info\n    \n    # 打印详细版本信息\n    print(f\"Python版本: {version_info.major}.{version_info.minor}.{version_info.micro}\")\n    print(f\"完整版本信息: {version}\")\n    print(\"Python安装成功！\")\n\nif __name__ == \"__main__\":\n    check_python_installation()",
+    "hints": [
+      "步骤1：导入sys模块，它包含了Python解释器的相关信息",
+      "步骤2：使用sys.version获取完整的版本字符串",
+      "步骤3：使用sys.version_info获取版本号元组（major, minor, micro等）",
+      "步骤4：使用print()函数输出版本信息，可以使用f-string格式化输出",
+      "步骤5：运行脚本，验证输出结果与命令行中输入'python'看到的信息一致"
+    ],
+    "test_cases": [
+      {
+        "input": "运行脚本",
+        "expected": "输出类似：Python版本: 3.x.x\n完整版本信息: 3.x.x (tags/v3.x.x...)\nPython安装成功！"
+      }
+    ]
+  },
+  "cached_at": "2025-11-07T09:44:28.833387",
+  "metadata": {
+    "video_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p03 Windows | 安装Python和PyCharm",
+    "transcript_length": 134
+  }
+}

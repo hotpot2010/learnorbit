@@ -1,0 +1,23 @@
+{
+  "4212ddfe3a300ecbf55d089872a9a990": {
+    "file": "exercise_4212ddfe3a300ecbf55d089872a9a990.json",
+    "video_url": "http://file.gsxservice.com/3285853419_0qhwbrql.mp4",
+    "knowledge_point_name": "PyCharm版本选择",
+    "exercise_type": "code_choice",
+    "timestamp": "2025-11-07T09:30:49.873121"
+  },
+  "67953ffa4e52159758d5d6bb3dd999e2": {
+    "file": "exercise_67953ffa4e52159758d5d6bb3dd999e2.json",
+    "video_url": "http://file.gsxservice.com/3285853419_0qhwbrql.mp4",
+    "knowledge_point_name": "访问PyCharm官网",
+    "exercise_type": "guided_steps",
+    "timestamp": "2025-11-07T09:32:32.396525"
+  },
+  "9bfc9b8d8d63c4702e669f3eea2e147f": {
+    "file": "exercise_9bfc9b8d8d63c4702e669f3eea2e147f.json",
+    "video_url": "http://file.gsxservice.com/3285853419_0qhwbrql.mp4",
+    "knowledge_point_name": "验证Python安装成功",
+    "exercise_type": "guided_steps",
+    "timestamp": "2025-11-07T09:44:28.833387"
+  }
+}

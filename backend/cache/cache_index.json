@@ -9,5 +9,38 @@
     "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?spm_id_from=333.788.player.switch&vd_source=406c2915ecba48ec3702134471f44902&p=3",
     "cached_at": "2025-11-07T01:59:09.664419",
     "file": "cache\\d62f1d8ee4136a2cb87d0d3f571d4c74.json"
+  },
+  "asr_390a9c55262e0436ffc1ef6e3431f26b": {
+    "type": "asr",
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=3",
+    "cached_at": "2025-11-07T02:14:08.653547",
+    "file": "cache\\asr_390a9c55262e0436ffc1ef6e3431f26b.json"
+  },
+  "d3b8145350a5708a18992191892e5369": {
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=3",
+    "cached_at": "2025-11-07T02:14:15.525929",
+    "file": "cache\\d3b8145350a5708a18992191892e5369.json"
+  },
+  "asr_aa5794ecbfa649087b2a4301c8421ddc": {
+    "type": "asr",
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?spm_id_from=333.788.videopod.episodes&vd_source=406c2915ecba48ec3702134471f44902&p=19",
+    "cached_at": "2025-11-07T08:49:34.720156",
+    "file": "cache\\asr_aa5794ecbfa649087b2a4301c8421ddc.json"
+  },
+  "e73113319d311d721c70d2a054355133": {
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?spm_id_from=333.788.videopod.episodes&vd_source=406c2915ecba48ec3702134471f44902&p=19",
+    "cached_at": "2025-11-07T08:49:43.408966",
+    "file": "cache\\e73113319d311d721c70d2a054355133.json"
+  },
+  "asr_e2f73a4e764603d6d10846bd4915691d": {
+    "type": "asr",
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?spm_id_from=333.788.videopod.episodes&vd_source=406c2915ecba48ec3702134471f44902&p=17",
+    "cached_at": "2025-11-07T12:02:53.870695",
+    "file": "cache\\asr_e2f73a4e764603d6d10846bd4915691d.json"
+  },
+  "247f7dc76716a57b793b13aab412890e": {
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?spm_id_from=333.788.videopod.episodes&vd_source=406c2915ecba48ec3702134471f44902&p=17",
+    "cached_at": "2025-11-07T12:03:03.669746",
+    "file": "cache\\247f7dc76716a57b793b13aab412890e.json"
   }
 }

@@ -1,0 +1,39 @@
+{
+  "video_url": "http://file.gsxservice.com/3285853419_0qhwbrql.mp4",
+  "knowledge_point_name": "PyCharm版本选择",
+  "exercise": {
+    "type": "code_choice",
+    "title": "PyCharm版本选择判断",
+    "description": "根据不同开发需求，选择合适的PyCharm版本",
+    "difficulty": "beginner",
+    "language": "python",
+    "starter_code": "# 假设你是一名Python初学者，正在选择PyCharm版本\n# 以下哪个选择最适合你的情况？\n\n# 情境：你刚开始学习Python基础语法，预算有限\n# 需要一个IDE来编写和运行Python代码",
+    "solution": "选项B：下载PyCharm Community Edition（社区版）",
+    "hints": [
+      "选项A：购买PyCharm Professional Edition（专业版）- 收费版本，功能更全面",
+      "选项B：下载PyCharm Community Edition（社区版）- 免费版本，适合纯Python开发",
+      "选项C：同时安装专业版和社区版 - 浪费存储空间且无必要",
+      "选项D：不使用PyCharm，直接用记事本写代码 - 缺少代码提示和调试功能",
+      "正确答案：B。对于Python初学者和纯Python开发，免费的社区版(Community Edition)已经足够使用"
+    ],
+    "test_cases": [
+      {
+        "input": "需求：学习Python基础，预算：0元",
+        "expected": "选择Community Edition（社区版）"
+      },
+      {
+        "input": "需求：纯Python项目开发，预算：有限",
+        "expected": "选择Community Edition（社区版）"
+      },
+      {
+        "input": "需求：Web开发+数据库+Python，预算：充足",
+        "expected": "可考虑Professional Edition（专业版）"
+      }
+    ]
+  },
+  "cached_at": "2025-11-07T09:30:49.873121",
+  "metadata": {
+    "video_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p03 Windows | 安装Python和PyCharm",
+    "transcript_length": 152
+  }
+}

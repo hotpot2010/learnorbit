@@ -7,6 +7,15 @@ import aiohttp
 import json
 from typing import Optional, Dict, Any
 
+# 安全的打印函数
+def safe_print(msg: str):
+    """安全的打印，避免 Windows 控制台编码问题"""
+    try:
+        print(msg)
+    except (ValueError, OSError):
+        import logging
+        logging.info(msg)
+
 
 class DoubaoService:
     """豆包 AI 服务类（使用百家接口）"""
@@ -18,9 +27,9 @@ class DoubaoService:
         self.base_url = os.getenv('BAIJIA_BASE_URL', 'https://llm.baijia.com/v1/chat/completions')
         self.model = os.getenv('BAIJIA_MODEL', 'claude-4.5-sonnet')
         
-        print(f"🤖 Doubao Service initialized")
-        print(f"📍 Using Baijia LLM API: {self.base_url}")
-        print(f"🤖 Model: {self.model}")
+        safe_print(f"🤖 Doubao Service initialized")
+        safe_print(f"📍 Using Baijia LLM API: {self.base_url}")
+        safe_print(f"🤖 Model: {self.model}")
     
     async def generate_outline(
         self,
@@ -39,9 +48,9 @@ class DoubaoService:
         Returns:
             生成的大纲文本
         """
-        print(f"🤖 Generating outline with Baijia LLM...")
-        print(f"📝 Transcript length: {len(transcript)} chars")
-        print(f"📋 Prompt length: {len(prompt)} chars")
+        safe_print(f"🤖 Generating outline with Baijia LLM...")
+        safe_print(f"📝 Transcript length: {len(transcript)} chars")
+        safe_print(f"📋 Prompt length: {len(prompt)} chars")
         
         # 构建消息 - OpenAI 兼容格式
         system_message = "你是一个专业的视频内容分析助手，擅长从视频逐字稿中提取关键信息并生成结构化的内容大纲。"
@@ -62,7 +71,7 @@ class DoubaoService:
             # 调用百家 LLM API（非流式）
             timeout = aiohttp.ClientTimeout(total=120, connect=30, sock_read=90)
             
-            print(f"🔗 Connecting to: {self.base_url}")
+            safe_print(f"🔗 Connecting to: {self.base_url}")
             
             # 构建请求数据
             request_data = {
@@ -88,11 +97,11 @@ class DoubaoService:
                             json=request_data,
                             headers=headers
                         ) as response:
-                            print(f"📡 Response status: {response.status} (attempt {attempt + 1}/{max_retries})")
+                            safe_print(f"📡 Response status: {response.status} (attempt {attempt + 1}/{max_retries})")
                             
                             if response.status != 200:
                                 error_text = await response.text()
-                                print(f"❌ API error response: {error_text[:500]}")
+                                safe_print(f"❌ API error response: {error_text[:500]}")
                                 
                                 # 如果不是最后一次尝试，等待后重试
                                 if attempt < max_retries - 1:
@@ -106,11 +115,11 @@ class DoubaoService:
                             response_text = await response.text()
                             response_json = json.loads(response_text)
                             
-                            print(f"✅ API response received")
+                            safe_print(f"✅ API response received")
                             
                             # 提取内容 - OpenAI 兼容格式
                             if 'choices' not in response_json:
-                                print(f"⚠️ Unexpected response format: {response_json}")
+                                safe_print(f"⚠️ Unexpected response format: {response_json}")
                                 raise Exception(f"API响应格式错误: 缺少 choices 字段")
                             
                             try:
@@ -122,21 +131,21 @@ class DoubaoService:
                                 # 清理可能的 markdown 代码块标记
                                 content = content.replace('```json\n', '').replace('\n```', '').replace('```json', '').replace('```', '').strip()
                                 
-                                print(f"✅ Outline generated ({len(content)} chars)")
-                                print(f"📝 Preview: {content[:200]}...")
+                                safe_print(f"✅ Outline generated ({len(content)} chars)")
+                                safe_print(f"📝 Preview: {content[:200]}...")
                                 
                                 return content
                                 
                             except (KeyError, IndexError, TypeError) as e:
-                                print(f"❌ Error extracting content: {e}")
-                                print(f"Response: {response_json}")
+                                safe_print(f"❌ Error extracting content: {e}")
+                                safe_print(f"Response: {response_json}")
                                 raise Exception(f"解析API响应失败: {str(e)}")
                         
                         # 成功则退出重试循环
                         break
                         
                 except aiohttp.ClientError as e:
-                    print(f"⚠️ Network error (attempt {attempt + 1}/{max_retries}): {e}")
+                    safe_print(f"⚠️ Network error (attempt {attempt + 1}/{max_retries}): {e}")
                     if attempt < max_retries - 1:
                         import asyncio
                         await asyncio.sleep(2 ** attempt)
@@ -144,7 +153,7 @@ class DoubaoService:
                     raise
                     
         except Exception as e:
-            print(f"❌ Baijia LLM API error: {e}")
+            safe_print(f"❌ Baijia LLM API error: {e}")
             import traceback
             traceback.print_exc()
             raise Exception(f"生成大纲失败: {str(e)}")
@@ -170,3 +179,6 @@ class DoubaoService:
         # 目前回退到流式方法
         return await self.generate_outline(transcript, prompt, user_id)
 
+
+# 创建全局实例
+doubao_service = DoubaoService()

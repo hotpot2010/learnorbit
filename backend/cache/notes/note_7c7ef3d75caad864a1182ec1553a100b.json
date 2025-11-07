@@ -1,0 +1,12 @@
+{
+  "cache_key": "7c7ef3d75caad864a1182ec1553a100b",
+  "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=3",
+  "knowledge_point_name": "下载Python安装包",
+  "note": "# 📥 下载Python安装包\n\n## 操作步骤\n\n1. **进入下载页面** → 点击 `Download` 按钮\n2. **系统自动识别** 🖥️ 网站会自动检测你的操作系统（如显示 \"for Windows\"）\n3. **开始下载** 点击**黄色大按钮**，即可下载最新版Python安装包\n\n> 💡 **提示**：网站会自动匹配适合你电脑系统的版本，无需手动选择",
+  "note_length": 186,
+  "cached_at": "2025-11-07T07:40:22.735639",
+  "metadata": {
+    "video_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p03 Windows | 安装Python和PyCharm",
+    "transcript_length": 174
+  }
+}
