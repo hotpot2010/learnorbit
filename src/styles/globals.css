@@ -186,6 +186,9 @@
 }
 
 :root {
+  /* Layout */
+  --navbar-height: 64px; /* Navbar height: py-2 + content */
+  
   --background: oklch(0.98 0.0 247.86);
   --foreground: oklch(0.28 0.04 260.03);
   --card: oklch(1.0 0 0);

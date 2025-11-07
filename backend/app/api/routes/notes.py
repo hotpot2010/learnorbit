@@ -1,0 +1,300 @@
+"""
+笔记生成相关的 API 路由
+"""
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from typing import Optional
+import sys
+import os
+
+# 添加项目根目录到 Python 路径
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+from app.services.doubao_service import DoubaoService
+from app.services.note_cache_service import NoteCacheService
+
+router = APIRouter()
+doubao_service = DoubaoService()
+note_cache_service = NoteCacheService()
+
+
+class NoteGenerationRequest(BaseModel):
+    """笔记生成请求模型"""
+    knowledge_point_name: str
+    transcript_segment: str
+    video_title: Optional[str] = None
+    video_url: Optional[str] = None  # 用于缓存键
+
+
+class NoteGenerationResponse(BaseModel):
+    """笔记生成响应模型"""
+    success: bool
+    note: Optional[str] = None
+    error: Optional[str] = None
+    from_cache: bool = False  # 是否来自缓存
+
+
+class QuestionAnswerRequest(BaseModel):
+    """问答请求模型"""
+    question: str
+    knowledge_point_name: str
+    transcript_segment: str
+    video_title: Optional[str] = None
+    video_url: Optional[str] = None
+
+
+class QuestionAnswerResponse(BaseModel):
+    """问答响应模型"""
+    success: bool
+    answer: Optional[str] = None
+    error: Optional[str] = None
+
+
+class ExerciseGenerationRequest(BaseModel):
+    """练习生成请求模型"""
+    knowledge_point_name: str
+    transcript_segment: str
+    video_title: Optional[str] = None
+    video_url: Optional[str] = None
+
+
+class ExerciseGenerationResponse(BaseModel):
+    """练习生成响应模型"""
+    success: bool
+    exercise: Optional[dict] = None
+    error: Optional[str] = None
+
+
+@router.post("/generate", response_model=NoteGenerationResponse)
+async def generate_note(request: NoteGenerationRequest):
+    """
+    为特定知识点生成笔记（支持缓存）
+    
+    Args:
+        request: 包含知识点名称和对应逐字稿片段的请求
+        
+    Returns:
+        生成的 Markdown 格式笔记
+    """
+    try:
+        print(f"📝 Generating note for knowledge point: {request.knowledge_point_name}")
+        print(f"📄 Transcript segment length: {len(request.transcript_segment)} chars")
+        
+        # 尝试从缓存获取笔记（如果提供了video_url）
+        if request.video_url:
+            cached_note = note_cache_service.get_cached_note(
+                video_url=request.video_url,
+                knowledge_point_name=request.knowledge_point_name,
+                max_age_hours=24 * 7  # 缓存7天
+            )
+            
+            if cached_note:
+                print(f"✅ Returning cached note")
+                return NoteGenerationResponse(
+                    success=True,
+                    note=cached_note,
+                    from_cache=True
+                )
+        
+        # 构建专门用于笔记生成的 prompt
+        prompt = f"""请为知识点「{request.knowledge_point_name}」生成一份简洁的学习笔记。
+
+要求：
+1. 使用 Markdown 格式
+2. 内容简洁清晰，100字以内
+3. 突出核心要点和关键概念
+4. 可以使用 emoji 增强可读性
+5. 条理清晰，易于理解
+
+请直接输出笔记内容，不要包含任何额外说明。"""
+
+        # 调用 LLM 生成笔记
+        note_content = await doubao_service.generate_outline(
+            transcript=request.transcript_segment,
+            prompt=prompt
+        )
+        
+        print(f"✅ Note generated successfully")
+        print(f"📝 Note preview: {note_content[:100]}...")
+        
+        # 缓存笔记（如果提供了video_url）
+        if request.video_url:
+            note_cache_service.set_cached_note(
+                video_url=request.video_url,
+                knowledge_point_name=request.knowledge_point_name,
+                note=note_content,
+                metadata={
+                    'video_title': request.video_title,
+                    'transcript_length': len(request.transcript_segment)
+                }
+            )
+        
+        return NoteGenerationResponse(
+            success=True,
+            note=note_content,
+            from_cache=False
+        )
+        
+    except Exception as e:
+        print(f"❌ Error generating note: {e}")
+        import traceback
+        traceback.print_exc()
+        
+        return NoteGenerationResponse(
+            success=False,
+            error=str(e),
+            from_cache=False
+        )
+
+
+@router.post("/answer-question", response_model=QuestionAnswerResponse)
+async def answer_question(request: QuestionAnswerRequest):
+    """
+    回答用户关于特定知识点的问题
+    
+    Args:
+        request: 包含问题、知识点名称和上下文逐字稿的请求
+        
+    Returns:
+        AI生成的回答
+    """
+    try:
+        print(f"🤔 Answering question: {request.question}")
+        print(f"📚 Knowledge point: {request.knowledge_point_name}")
+        print(f"📄 Context length: {len(request.transcript_segment)} chars")
+        
+        # 构建问答 prompt（精简版）
+        prompt = f"""请用一句话简洁回答学生的问题。
+
+知识点：{request.knowledge_point_name}
+问题：{request.question}
+
+要求：
+1. 回答控制在30-50字
+2. 直接给出答案，不要解释性前缀
+3. 语言简洁明了
+4. 基于视频内容回答，如超出范围直接说"视频未涉及"
+
+只输出答案，不要其他内容。"""
+
+        # 调用 LLM 生成回答
+        answer = await doubao_service.generate_outline(
+            transcript=request.transcript_segment,
+            prompt=prompt
+        )
+        
+        print(f"✅ Answer generated successfully")
+        print(f"💬 Answer preview: {answer[:100]}...")
+        
+        return QuestionAnswerResponse(
+            success=True,
+            answer=answer
+        )
+        
+    except Exception as e:
+        print(f"❌ Error answering question: {e}")
+        import traceback
+        traceback.print_exc()
+        
+        return QuestionAnswerResponse(
+            success=False,
+            error=str(e)
+        )
+
+
+@router.post("/generate-exercise", response_model=ExerciseGenerationResponse)
+async def generate_exercise(request: ExerciseGenerationRequest):
+    """
+    为特定知识点生成编程练习题
+    
+    Args:
+        request: 包含知识点名称和上下文逐字稿的请求
+        
+    Returns:
+        AI生成的练习题（JSON格式，包含题型、题干、代码等）
+    """
+    try:
+        print(f"💪 Generating exercise for: {request.knowledge_point_name}")
+        print(f"📄 Context length: {len(request.transcript_segment)} chars")
+        
+        # 构建练习生成 prompt
+        prompt = f"""你是一位专业的编程教学专家。请根据视频内容为知识点生成一道编程练习题。
+
+知识点：{request.knowledge_point_name}
+视频标题：{request.video_title or '未知'}
+
+请根据知识点难度选择合适的题型并生成练习题。必须严格按照以下JSON格式返回：
+
+{{
+  "type": "题型（fill_blank/guided_steps/code_choice/complete之一）",
+  "title": "练习题标题",
+  "description": "题目描述（50字以内）",
+  "difficulty": "难度（beginner/intermediate/advanced）",
+  "language": "编程语言（python/javascript等）",
+  "starter_code": "初始代码模板",
+  "solution": "参考答案",
+  "hints": ["提示1", "提示2"],
+  "test_cases": [
+    {{"input": "输入", "expected": "期望输出"}}
+  ]
+}}
+
+**题型选择规则**：
+1. fill_blank（填空）：适合简单语法、单一概念（如变量赋值、基本运算）
+2. guided_steps（分步引导）：适合需要实现完整函数的任务（如编写函数、实现算法）
+3. code_choice（代码选择）：适合比较不同实现、理解逻辑
+4. complete（完整编程）：适合综合应用、高级任务
+
+**题型特定字段**：
+- fill_blank: starter_code中用 "___" 标记填空位置，在hints中说明每个空填什么
+- guided_steps: 在hints中列出3-5个步骤，每步说明要完成什么
+- code_choice: 在hints中提供3-4个代码选项，标注正确答案
+- complete: 提供基本框架，hints给出思路提示
+
+**要求**：
+1. 题目必须与视频内容和知识点直接相关
+2. 难度适中，适合初学者
+3. 代码简洁，不超过20行
+4. 提示清晰，帮助理解不直接给答案
+5. 只输出JSON，不要其他内容
+6. 确保JSON格式正确，可以被解析"""
+
+        # 调用 LLM 生成练习题
+        exercise_json = await doubao_service.generate_outline(
+            transcript=request.transcript_segment,
+            prompt=prompt
+        )
+        
+        print(f"✅ Exercise generated")
+        print(f"💻 Exercise preview: {exercise_json[:200]}...")
+        
+        # 解析JSON
+        try:
+            import json
+            exercise_data = json.loads(exercise_json)
+            print(f"✅ Exercise parsed successfully")
+            print(f"📝 Type: {exercise_data.get('type')}")
+            print(f"🎯 Title: {exercise_data.get('title')}")
+            
+            return ExerciseGenerationResponse(
+                success=True,
+                exercise=exercise_data
+            )
+        except json.JSONDecodeError as e:
+            print(f"❌ Failed to parse exercise JSON: {e}")
+            print(f"Raw response: {exercise_json}")
+            return ExerciseGenerationResponse(
+                success=False,
+                error=f"解析练习题JSON失败: {str(e)}"
+            )
+        
+    except Exception as e:
+        print(f"❌ Error generating exercise: {e}")
+        import traceback
+        traceback.print_exc()
+        
+        return ExerciseGenerationResponse(
+            success=False,
+            error=str(e)
+        )
+

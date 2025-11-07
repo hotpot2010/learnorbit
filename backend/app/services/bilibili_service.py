@@ -2,12 +2,22 @@
 Bilibili video download and management service
 """
 import os
+import sys
 import json
 import yt_dlp
 import tempfile
 from typing import Dict, Any, List, Optional
 from pathlib import Path
 import time
+
+# 设置Windows控制台编码为UTF-8
+if sys.platform == 'win32':
+    try:
+        import io
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+    except:
+        pass
 
 
 class BilibiliService:

@@ -45,6 +45,7 @@ interface KnowledgePoint {
 interface JobResult {
   success: boolean;
   video_info?: VideoInfo;
+  video_url?: string;  // 视频URL（用于错误显示）
   analysis?: {
     success: boolean;
     result?: {

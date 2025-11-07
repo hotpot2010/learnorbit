@@ -44,6 +44,14 @@ except Exception as e:
     print("💡 批量分析功能不可用")
     BATCH_ROUTES_AVAILABLE = False
 
+try:
+    from app.api.routes import notes
+    NOTES_ROUTES_AVAILABLE = True
+except Exception as e:
+    print(f"⚠️ 笔记路由模块导入失败: {e}")
+    print("💡 笔记生成功能不可用")
+    NOTES_ROUTES_AVAILABLE = False
+
 # Create FastAPI application
 app = FastAPI(
     title="Video Analysis API",
@@ -82,6 +90,12 @@ if BATCH_ROUTES_AVAILABLE:
     print("✅ 批量分析功能已启用")
 else:
     print("⚠️ 批量分析功能不可用")
+
+if NOTES_ROUTES_AVAILABLE:
+    app.include_router(notes.router, prefix="/notes", tags=["notes"])
+    print("✅ 笔记生成功能已启用")
+else:
+    print("⚠️ 笔记生成功能不可用")
 
 # 自定义OpenAPI规范
 def custom_openapi():
