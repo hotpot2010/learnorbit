@@ -4,7 +4,7 @@
 """
 import asyncio
 from typing import Dict, Any, List
-from app.services.doubao_service import doubao_service
+from app.services.volcano_service import volcano_service
 
 # 安全的打印函数
 def safe_print(msg: str):
@@ -19,8 +19,8 @@ class VideoAnalyzerService:
     """视频分析服务"""
     
     def __init__(self):
-        self.doubao = doubao_service
-        safe_print("🤖 VideoAnalyzerService initialized")
+        self.volcano = volcano_service  # 使用火山引擎
+        safe_print("🤖 VideoAnalyzerService initialized (Volcano Engine)")
     
     async def analyze_video(self, video_info: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -49,10 +49,10 @@ class VideoAnalyzerService:
             # 构建分析 prompt
             prompt = self._build_analysis_prompt(title, description, author, duration, play)
             
-            # 调用LLM进行分析
-            # 注意：generate_outline 需要 transcript 和 prompt 两个参数
-            # 对于视频搜索分析，我们用空字符串作为 transcript，prompt 包含所有信息
-            analysis_text = await self.doubao.generate_outline("", prompt)
+            # 调用火山引擎 LLM 进行分析
+            # 注意：generate_outline 需要 transcript 和 custom_prompt 两个参数
+            # 对于视频搜索分析，我们用空字符串作为 transcript，custom_prompt 包含所有信息
+            analysis_text = await self.volcano.generate_outline("", prompt)
             
             # 解析LLM返回的结果
             result = self._parse_analysis_result(analysis_text, video_info)

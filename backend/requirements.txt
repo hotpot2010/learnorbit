@@ -24,5 +24,8 @@ aiohttp==3.9.1  # For ASR and Doubao async requests
 # Async utilities
 nest-asyncio==1.6.0  # For nested event loops
 
+# Volcano Engine SDK for ARK (LLM)
+volcengine-python-sdk[ark]==1.0.119
+
 # Bilibili video downloader
 yt-dlp==2024.12.23

@@ -54,5 +54,12 @@
     "knowledge_point_name": "变量命名的硬性规则",
     "exercise_type": "code_choice",
     "timestamp": "2025-11-07T17:54:47.178023"
+  },
+  "79fe94ce4f7e74da20862f63536beb5a": {
+    "file": "exercise_79fe94ce4f7e74da20862f63536beb5a.json",
+    "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=6",
+    "knowledge_point_name": "编写print语句",
+    "exercise_type": "fill_blank",
+    "timestamp": "2025-11-07T18:22:07.398630"
   }
 }

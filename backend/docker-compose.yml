@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: learnorbit-backend
+    ports:
+      - "8000:8000"
+    environment:
+      # FastAPI 配置
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=False
+      
+      # 火山引擎配置（从宿主机环境变量读取）
+      - VOLC_ACCESS_KEY=${VOLC_ACCESS_KEY}
+      - VOLC_SECRET_KEY=${VOLC_SECRET_KEY}
+      - VOLC_CHAT_MODEL=${VOLC_CHAT_MODEL}
+      
+      # Gemini 配置（可选）
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      
+      # 百家 LLM 配置（可选，已不使用）
+      - BAIJIA_API_KEY=${BAIJIA_API_KEY:-}
+      - BAIJIA_BASE_URL=${BAIJIA_BASE_URL:-}
+      - BAIJIA_MODEL=${BAIJIA_MODEL:-}
+    
+    volumes:
+      # 持久化数据卷
+      - ./uploads:/app/uploads
+      - ./cache:/app/cache
+      - ./batch_results:/app/batch_results
+      - ./logs:/app/logs
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    
+    networks:
+      - learnorbit-network
+    
+    # 资源限制（可选）
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+
+networks:
+  learnorbit-network:
+    driver: bridge
+

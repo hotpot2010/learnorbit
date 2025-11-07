@@ -5,14 +5,14 @@
 import asyncio
 import json
 from typing import List, Dict, Any
-from .doubao_service import DoubaoService
+from .volcano_service import VolcanoService
 
 
 class KnowledgePointExtractor:
     """知识点提取器"""
     
     def __init__(self):
-        self.doubao_service = DoubaoService()
+        self.volcano_service = VolcanoService()  # 使用火山引擎
         self.max_segment_length = 8000  # 每段最大字符数
         
     def split_transcript_by_time(
@@ -143,10 +143,10 @@ class KnowledgePointExtractor:
 - 如果没有明确的知识点，返回空数组"""
         
         try:
-            # 调用 LLM
-            response = await self.doubao_service.generate_outline(
+            # 调用火山引擎 LLM
+            response = await self.volcano_service.generate_outline(
                 transcript=segment['text'],
-                prompt=prompt
+                custom_prompt=prompt
             )
             
             # 解析 JSON 响应

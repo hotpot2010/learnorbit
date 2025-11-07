@@ -9,6 +9,7 @@ from ..models.video import AnalysisType
 from .gemini_service import GeminiService
 from .asr_service import AsrService
 from .doubao_service import DoubaoService
+from .volcano_service import VolcanoService
 from .file_upload_service import FileUploadService
 from .cache_service import CacheService
 from .knowledge_point_extractor import KnowledgePointExtractor
@@ -32,16 +33,17 @@ class VideoAnalysisService:
         """初始化视频分析服务"""
         self.gemini_service = GeminiService()
         self.asr_service = AsrService()
-        self.doubao_service = DoubaoService()
+        self.doubao_service = DoubaoService()  # 保留但不使用
+        self.volcano_service = VolcanoService()  # 使用火山引擎
         self.file_upload_service = FileUploadService()
         self.cache_service = CacheService(cache_dir="cache")
         self.knowledge_point_extractor = KnowledgePointExtractor()
         
         self.use_cache = use_cache
         
-        # 默认使用 ASR + 豆包方案
+        # 默认使用 ASR + 火山引擎方案
         self.default_method = AnalysisMethod.ASR_DOUBAO
-        print(f"🎬 VideoAnalysisService initialized (default: {self.default_method}, cache: {'✅' if use_cache else '❌'})")
+        print(f"🎬 VideoAnalysisService initialized (default: {self.default_method} with Volcano Engine, cache: {'✅' if use_cache else '❌'})")
     
     async def analyze_video(
         self,
@@ -114,17 +116,17 @@ class VideoAnalysisService:
         video_url_for_cache: Optional[str] = None
     ) -> Dict[str, Any]:
         """
-        使用 ASR + 豆包方案分析视频
+        使用 ASR + 火山引擎方案分析视频
         
         步骤：
         1. 上传视频到文件服务器获取 URL
         2. 检查 ASR 缓存，如果有则跳过 ASR
         3. 调用 ASR 识别逐字稿（如果没有缓存）
         4. 保存 ASR 结果到缓存
-        5. 使用豆包根据逐字稿生成大纲
+        5. 使用火山引擎根据逐字稿生成大纲
         """
         print("=" * 70)
-        print("📋 Method: ASR + Doubao")
+        print("📋 Method: ASR + Volcano Engine")
         print("=" * 70)
         
         # Step 1: 获取视频 URL

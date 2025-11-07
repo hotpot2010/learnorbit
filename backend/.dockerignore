@@ -1,0 +1,79 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Cache and temporary files
+# cache/ - 不忽略，保留缓存文件（用户需求）
+cache/**/*.json.tmp  # 只忽略临时文件
+*.cache
+tmp/
+temp/
+uploads/  # 上传文件运行时生成，不打包
+batch_results/  # 批量结果运行时生成，不打包
+
+# Documentation
+*.md
+docs/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Test files
+test_*.py
+*_test.py
+tests/
+
+# Diagnostic scripts
+check_*.py
+diagnose_*.py
+debug_*.py
+example_*.py
+one_click_setup.py
+start.py
+
+# Windows
+Thumbs.db
+desktop.ini
+
