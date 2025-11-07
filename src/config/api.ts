@@ -8,27 +8,18 @@
  * 
  * 优先级：
  * 1. 环境变量 NEXT_PUBLIC_API_URL
- * 2. 生产环境：https://video-improvements.zeabur.app
- * 3. 开发环境：http://localhost:8000
+ * 2. 默认使用线上后端：https://video-improvements.zeabur.app
+ * 
+ * 注意：本地开发也使用线上后端进行测试
  */
 export const getApiBaseUrl = (): string => {
-  // 1. 检查环境变量
+  // 1. 检查环境变量（可以覆盖为本地后端）
   if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_API_URL) {
     return process.env.NEXT_PUBLIC_API_URL;
   }
   
-  // 2. 生产环境检测
-  if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname;
-    
-    // Vercel 生产环境
-    if (hostname.includes('vercel.app') || hostname.includes('learnorbit')) {
-      return 'https://video-improvements.zeabur.app';
-    }
-  }
-  
-  // 3. 开发环境默认
-  return 'http://localhost:8000';
+  // 2. 默认使用线上后端（本地和生产环境都使用）
+  return 'https://video-improvements.zeabur.app';
 };
 
 /**
