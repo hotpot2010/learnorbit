@@ -8,17 +8,28 @@
  * 
  * 优先级：
  * 1. 环境变量 NEXT_PUBLIC_API_URL
- * 2. 默认使用线上后端：https://video-improvements.zeabur.app
+ * 2. 生产环境：使用 Next.js API 代理路由（解决 CORS 问题）
+ * 3. 本地开发：使用线上后端直接测试
  * 
- * 注意：本地开发也使用线上后端进行测试
+ * 注意：生产环境使用 /api/proxy 避免 CORS 问题
  */
 export const getApiBaseUrl = (): string => {
-  // 1. 检查环境变量（可以覆盖为本地后端）
+  // 1. 检查环境变量（可以覆盖）
   if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_API_URL) {
     return process.env.NEXT_PUBLIC_API_URL;
   }
   
-  // 2. 默认使用线上后端（本地和生产环境都使用）
+  // 2. 生产环境检测（Vercel 或其他部署平台）
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+    
+    // 如果是生产域名，使用 API 代理路由避免 CORS
+    if (hostname.includes('aitutorly.ai') || hostname.includes('vercel.app')) {
+      return '/api/proxy';
+    }
+  }
+  
+  // 3. 本地开发：直接使用线上后端（本地开发环境通常没有 CORS 限制）
   return 'https://video-improvements.zeabur.app';
 };
 
