@@ -3,8 +3,10 @@
 生成学习目标、适用人群、核心特点
 """
 import asyncio
+import os
 from typing import Dict, Any, List
 from app.services.volcano_service import volcano_service
+from app.services.doubao_service import doubao_service
 
 # 安全的打印函数
 def safe_print(msg: str):
@@ -19,8 +21,17 @@ class VideoAnalyzerService:
     """视频分析服务"""
     
     def __init__(self):
-        self.volcano = volcano_service  # 使用火山引擎
-        safe_print("🤖 VideoAnalyzerService initialized (Volcano Engine)")
+        # 通过环境变量选择 LLM 服务（默认：volcano）
+        llm_provider = os.getenv('LLM_PROVIDER', 'volcano')
+        
+        if llm_provider == 'baijia':
+            self.llm = doubao_service
+            llm_name = "百家 LLM"
+        else:
+            self.llm = volcano_service
+            llm_name = "火山引擎"
+        
+        safe_print(f"🤖 VideoAnalyzerService initialized ({llm_name})")
     
     async def analyze_video(self, video_info: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -52,7 +63,7 @@ class VideoAnalyzerService:
             # 调用火山引擎 LLM 进行分析
             # 注意：generate_outline 需要 transcript 和 custom_prompt 两个参数
             # 对于视频搜索分析，我们用空字符串作为 transcript，custom_prompt 包含所有信息
-            analysis_text = await self.volcano.generate_outline("", prompt)
+            analysis_text = await self.llm.generate_outline("", prompt)
             
             # 解析LLM返回的结果
             result = self._parse_analysis_result(analysis_text, video_info)

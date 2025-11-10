@@ -4,15 +4,24 @@
 """
 import asyncio
 import json
+import os
 from typing import List, Dict, Any
 from .volcano_service import VolcanoService
+from .doubao_service import DoubaoService
 
 
 class KnowledgePointExtractor:
     """知识点提取器"""
     
     def __init__(self):
-        self.volcano_service = VolcanoService()  # 使用火山引擎
+        # 通过环境变量选择 LLM 服务（默认：volcano）
+        llm_provider = os.getenv('LLM_PROVIDER', 'volcano')
+        
+        if llm_provider == 'baijia':
+            self.llm_service = DoubaoService()
+        else:
+            self.llm_service = VolcanoService()
+        
         self.max_segment_length = 8000  # 每段最大字符数
         
     def split_transcript_by_time(
@@ -144,7 +153,7 @@ class KnowledgePointExtractor:
         
         try:
             # 调用火山引擎 LLM
-            response = await self.volcano_service.generate_outline(
+            response = await self.llm_service.generate_outline(
                 transcript=segment['text'],
                 custom_prompt=prompt
             )

@@ -33,17 +33,27 @@ class VideoAnalysisService:
         """初始化视频分析服务"""
         self.gemini_service = GeminiService()
         self.asr_service = AsrService()
-        self.doubao_service = DoubaoService()  # 保留但不使用
-        self.volcano_service = VolcanoService()  # 使用火山引擎
+        self.doubao_service = DoubaoService()  # 百家接口
+        self.volcano_service = VolcanoService()  # 火山引擎接口
         self.file_upload_service = FileUploadService()
         self.cache_service = CacheService(cache_dir="cache")
         self.knowledge_point_extractor = KnowledgePointExtractor()
         
         self.use_cache = use_cache
         
-        # 默认使用 ASR + 火山引擎方案
+        # 通过环境变量选择 LLM 服务（默认：volcano）
+        self.llm_provider = os.getenv('LLM_PROVIDER', 'volcano')  # 可选: 'volcano' 或 'baijia'
+        
+        # 根据配置选择实际使用的 LLM 服务
+        if self.llm_provider == 'baijia':
+            self.llm_service = self.doubao_service
+            llm_name = "百家 LLM"
+        else:
+            self.llm_service = self.volcano_service
+            llm_name = "火山引擎"
+        
         self.default_method = AnalysisMethod.ASR_DOUBAO
-        print(f"🎬 VideoAnalysisService initialized (default: {self.default_method} with Volcano Engine, cache: {'✅' if use_cache else '❌'})")
+        print(f"🎬 VideoAnalysisService initialized (LLM: {llm_name}, cache: {'✅' if use_cache else '❌'})")
     
     async def analyze_video(
         self,

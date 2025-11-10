@@ -11,10 +11,18 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from app.services.volcano_service import VolcanoService
+from app.services.doubao_service import DoubaoService
 from app.services.note_cache_service import NoteCacheService
 
 router = APIRouter()
-volcano_service = VolcanoService()  # 使用火山引擎
+
+# 通过环境变量选择 LLM 服务（默认：volcano）
+llm_provider = os.getenv('LLM_PROVIDER', 'volcano')
+if llm_provider == 'baijia':
+    llm_service = DoubaoService()
+else:
+    llm_service = VolcanoService()
+
 note_cache_service = NoteCacheService()
 
 
@@ -110,7 +118,7 @@ async def generate_note(request: NoteGenerationRequest):
 请直接输出笔记内容，不要包含任何额外说明。"""
 
         # 调用 LLM 生成笔记
-        note_content = await volcano_service.generate_outline(
+        note_content = await llm_service.generate_outline(
             transcript=request.transcript_segment,
             custom_prompt=prompt
         )
@@ -179,7 +187,7 @@ async def answer_question(request: QuestionAnswerRequest):
 只输出答案，不要其他内容。"""
 
         # 调用 LLM 生成回答
-        answer = await volcano_service.generate_outline(
+        answer = await llm_service.generate_outline(
             transcript=request.transcript_segment,
             custom_prompt=prompt
         )
@@ -277,7 +285,7 @@ async def generate_exercise(request: ExerciseGenerationRequest):
 6. 确保JSON格式正确，可以被解析"""
 
         # 调用 LLM 生成练习题
-        exercise_json = await volcano_service.generate_outline(
+        exercise_json = await llm_service.generate_outline(
             transcript=request.transcript_segment,
             custom_prompt=prompt
         )
@@ -477,7 +485,7 @@ async def validate_answer(request: AnswerValidationRequest):
 6. 只输出JSON，不要其他内容"""
 
         # 调用LLM
-        llm_result = await volcano_service.generate_outline(
+        llm_result = await llm_service.generate_outline(
             transcript="",
             custom_prompt=prompt
         )
