@@ -5,6 +5,11 @@ import os
 import time
 from typing import Dict, Any, Optional
 from enum import Enum
+from dotenv import load_dotenv
+
+# 显式加载环境变量
+load_dotenv()
+
 from ..models.video import AnalysisType
 from .gemini_service import GeminiService
 from .asr_service import AsrService
@@ -43,6 +48,9 @@ class VideoAnalysisService:
         
         # 通过环境变量选择 LLM 服务（默认：volcano）
         self.llm_provider = os.getenv('LLM_PROVIDER', 'volcano')  # 可选: 'volcano' 或 'baijia'
+        
+        # 调试：打印环境变量值
+        print(f"🔍 [DEBUG] LLM_PROVIDER 环境变量 = '{self.llm_provider}'")
         
         # 根据配置选择实际使用的 LLM 服务
         if self.llm_provider == 'baijia':

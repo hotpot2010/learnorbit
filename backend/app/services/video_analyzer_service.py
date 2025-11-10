@@ -5,8 +5,12 @@
 import asyncio
 import os
 from typing import Dict, Any, List
+from dotenv import load_dotenv
 from app.services.volcano_service import volcano_service
 from app.services.doubao_service import doubao_service
+
+# 显式加载环境变量
+load_dotenv()
 
 # 安全的打印函数
 def safe_print(msg: str):
@@ -23,6 +27,8 @@ class VideoAnalyzerService:
     def __init__(self):
         # 通过环境变量选择 LLM 服务（默认：volcano）
         llm_provider = os.getenv('LLM_PROVIDER', 'volcano')
+        
+        safe_print(f"🔍 [DEBUG] VideoAnalyzerService LLM_PROVIDER = '{llm_provider}'")
         
         if llm_provider == 'baijia':
             self.llm = doubao_service

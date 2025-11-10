@@ -6,8 +6,12 @@ import asyncio
 import json
 import os
 from typing import List, Dict, Any
+from dotenv import load_dotenv
 from .volcano_service import VolcanoService
 from .doubao_service import DoubaoService
+
+# 显式加载环境变量
+load_dotenv()
 
 
 class KnowledgePointExtractor:
@@ -16,6 +20,8 @@ class KnowledgePointExtractor:
     def __init__(self):
         # 通过环境变量选择 LLM 服务（默认：volcano）
         llm_provider = os.getenv('LLM_PROVIDER', 'volcano')
+        
+        print(f"🔍 [DEBUG] KnowledgePointExtractor LLM_PROVIDER = '{llm_provider}'")
         
         if llm_provider == 'baijia':
             self.llm_service = DoubaoService()
