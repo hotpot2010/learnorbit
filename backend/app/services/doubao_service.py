@@ -22,9 +22,16 @@ class DoubaoService:
     
     def __init__(self):
         """初始化豆包服务"""
-        # 使用百家 LLM 接口
+        # 使用转发服务
+        from dotenv import load_dotenv
+        load_dotenv()
+        
+        # 转发服务地址（默认本地，生产环境可通过环境变量配置）
+        proxy_base_url = os.getenv('API_PROXY_URL', 'http://localhost:8001')
+        self.base_url = f"{proxy_base_url}/llm/chat"
+        
+        # API Key 在转发服务中配置，这里保留用于兼容
         self.api_key = os.getenv('BAIJIA_API_KEY', 'sk-7BfuPhPxtPMjaAJn86vR2g')
-        self.base_url = os.getenv('BAIJIA_BASE_URL', 'https://llm.baijia.com/v1/chat/completions')
         self.model = os.getenv('BAIJIA_MODEL', 'claude-4.5-sonnet')
         
         safe_print(f"🤖 Doubao Service initialized")

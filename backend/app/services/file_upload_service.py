@@ -12,12 +12,20 @@ class FileUploadService:
     
     def __init__(self):
         """初始化文件上传服务"""
-        self.upload_url = "http://internal-storage.genshuixue.com/webupload.php"
+        # 使用转发服务
+        import os
+        from dotenv import load_dotenv
+        load_dotenv()
+        
+        # 转发服务地址（默认本地，生产环境可通过环境变量配置）
+        proxy_base_url = os.getenv('API_PROXY_URL', 'http://localhost:8001')
+        self.upload_url = f"{proxy_base_url}/upload"
+        
+        # 文件访问基础URL（内部存储服务返回相对路径时使用）
         self.base_url = "http://file.gsxservice.com/"
         self.uid = "20210716"
         print(f"📤 File upload service initialized")
-        print(f"   Upload URL: {self.upload_url}")
-        print(f"   Base URL: {self.base_url}")
+        print(f"📍 Upload URL: {self.upload_url}")
     
     def upload_file(self, file_path: str, file_key: str = "file0") -> Optional[str]:
         """

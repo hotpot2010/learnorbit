@@ -8,11 +8,20 @@ import asyncio
 from typing import Optional
 from ..models.asr import AsrCreate, AsrAsyncTaskResult, AsrAsyncTaskContentAttribute
 
-# ASR 配置
+# ASR 配置 - 使用转发服务
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# 转发服务地址（默认本地，生产环境可通过环境变量配置）
+PROXY_BASE_URL = os.getenv("API_PROXY_URL", "http://localhost:8001")
+ASR_CREATE_URL = f"{PROXY_BASE_URL}/asr/create"
+ASR_GET_URL = f"{PROXY_BASE_URL}/asr/get"
+
+# 这些配置在转发服务中，这里保留用于兼容
 ASR_APP_ID = 1728
 ASR_APP_KEY = '09450965e796431cb730d04b7b784c76'
-ASR_CREATE_URL = "https://tech.baijia.com/ai/tool/asr/async/create"
-ASR_GET_URL = "https://tech.baijia.com/ai/tool/asr/async/getById"
 
 
 class AsrService:

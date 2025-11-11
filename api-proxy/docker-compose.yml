@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  api-proxy:
+    build: .
+    container_name: api-proxy
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      - PORT=8001
+      - ASR_APP_ID=${ASR_APP_ID:-1728}
+      - ASR_APP_KEY=${ASR_APP_KEY:-09450965e796431cb730d04b7b784c76}
+      - BAIJIA_API_KEY=${BAIJIA_API_KEY:-sk-7BfuPhPxtPMjaAJn86vR2g}
+      - FILE_UPLOAD_UID=${FILE_UPLOAD_UID:-20210716}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8001/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
