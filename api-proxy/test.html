@@ -250,7 +250,7 @@
             log('开始测试健康检查端点...');
             
             try {
-                const url = `${getApiUrl()}/health`;
+                const url = `${getApiUrl()}/open-api/health`;
                 log(`请求地址: ${url}`);
                 
                 const startTime = performance.now();
@@ -282,7 +282,7 @@
             log('开始测试 ASR 创建端点...');
             
             try {
-                const url = `${getApiUrl()}/asr/create`;
+                const url = `${getApiUrl()}/open-api/asr/create`;
                 log(`请求地址: ${url}`);
                 
                 const testPayload = {
@@ -324,7 +324,7 @@
             log('开始测试 LLM 对话端点...');
             
             try {
-                const url = `${getApiUrl()}/llm/chat`;
+                const url = `${getApiUrl()}/open-api/llm/chat`;
                 log(`请求地址: ${url}`);
                 
                 const testPayload = {
@@ -378,18 +378,18 @@
             
             // 1. 健康检查
             log('【1/3】测试健康检查端点...');
-            await testEndpoint('/health', 'GET');
+            await testEndpoint('/open-api/health', 'GET');
             await sleep(500);
             
             // 2. ASR Get (模拟)
             log('\n【2/3】测试 ASR 查询端点...');
-            await testEndpoint('/asr/get?id=test-task-123', 'GET');
+            await testEndpoint('/open-api/asr/get?id=test-task-123', 'GET');
             await sleep(500);
             
             // 3. 文件上传 (仅测试连通性)
             log('\n【3/3】测试文件上传端点连通性...');
             log('注意：文件上传需要实际文件，这里仅测试端点是否可达');
-            await testEndpoint('/upload', 'POST', {}, true);
+            await testEndpoint('/open-api/upload', 'POST', {}, true);
             
             log('\n======================================');
             log('✅ 所有端点测试完成！');

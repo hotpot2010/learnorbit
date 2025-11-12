@@ -2,7 +2,7 @@
 API 转发服务
 统一转发 ASR、LLM、文件上传等外部接口请求
 """
-from fastapi import FastAPI, Request, HTTPException, UploadFile, File, Form
+from fastapi import FastAPI, APIRouter, Request, HTTPException, UploadFile, File, Form
 from fastapi.responses import JSONResponse, StreamingResponse, HTMLResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -19,6 +19,9 @@ app = FastAPI(
     description="统一转发 ASR、LLM、文件上传接口",
     version="1.0.0"
 )
+
+# 创建路由器，添加统一的路径前缀
+api_router = APIRouter(prefix="/open-api")
 
 # CORS 配置
 app.add_middleware(
@@ -50,39 +53,39 @@ client = httpx.AsyncClient(timeout=timeout)
 
 # ==================== 健康检查 ====================
 
-@app.get("/")
-async def root():
-    """健康检查"""
+# ==================== API 路由（使用 /open-api 前缀） ====================
+
+@api_router.get("/")
+async def api_info():
+    """API 信息"""
     return {
         "service": "API Proxy Service",
         "status": "running",
         "version": "1.0.0",
+        "base_path": "/open-api",
         "endpoints": {
-            "asr_create": "/asr/create",
-            "asr_get": "/asr/get",
-            "llm_chat": "/llm/chat",
-            "file_upload": "/upload"
+            "health": "/open-api/health",
+            "test": "/open-api/test",
+            "asr_create": "/open-api/asr/create",
+            "asr_get": "/open-api/asr/get",
+            "llm_chat": "/open-api/llm/chat",
+            "file_upload": "/open-api/upload"
         }
     }
 
-@app.get("/health")
+@api_router.get("/health")
 async def health_check():
     """健康检查"""
     return {"status": "ok", "message": "API Proxy Service is running"}
 
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    """根路径重定向到测试页面"""
-    return FileResponse("test.html")
-
-@app.get("/test", response_class=HTMLResponse)
+@api_router.get("/test", response_class=HTMLResponse)
 async def test_page():
     """测试页面"""
     return FileResponse("test.html")
 
 # ==================== ASR 接口 ====================
 
-@app.post("/asr/create")
+@api_router.post("/asr/create")
 async def asr_create(request: Request):
     """
     创建 ASR 异步任务
@@ -122,7 +125,7 @@ async def asr_create(request: Request):
         print(f"❌ ASR Create Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/asr/get")
+@api_router.get("/asr/get")
 async def asr_get(id: str):
     """
     获取 ASR 任务结果
@@ -156,7 +159,7 @@ async def asr_get(id: str):
 
 # ==================== LLM 接口 ====================
 
-@app.post("/llm/chat")
+@api_router.post("/llm/chat")
 async def llm_chat(request: Request):
     """
     LLM 聊天接口
@@ -194,7 +197,7 @@ async def llm_chat(request: Request):
 
 # ==================== 文件上传接口 ====================
 
-@app.post("/upload")
+@api_router.post("/upload")
 async def file_upload(
     files: list[UploadFile] = File(...),
     uid: Optional[str] = Form(None)
@@ -237,6 +240,11 @@ async def file_upload(
         print(f"❌ File Upload Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+# ==================== 注册路由器 ====================
+
+# 将 api_router 注册到 app，所有 API 路由都会有 /open-api 前缀
+app.include_router(api_router)
+
 # ==================== 启动和关闭事件 ====================
 
 @app.on_event("startup")
@@ -245,6 +253,7 @@ async def startup_event():
     print("=" * 60)
     print("🚀 API Proxy Service Started")
     print("=" * 60)
+    print(f"📍 Base Path: /open-api")
     print(f"📍 ASR Service: {ASR_BASE_URL}")
     print(f"📍 LLM Service: {LLM_BASE_URL}")
     print(f"📍 File Upload: {FILE_UPLOAD_URL}")
