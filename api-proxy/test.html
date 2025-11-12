@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Proxy 测试页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .config-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .config-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            color: #555;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .test-section {
+            margin-bottom: 20px;
+        }
+        
+        .test-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .test-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .result-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .result-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .result-box {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 API Proxy 服务测试</h1>
+        <p class="subtitle">测试 API 转发服务的连通性和功能</p>
+        
+        <!-- 配置区域 -->
+        <div class="config-section">
+            <h3>⚙️ 配置</h3>
+            <div class="input-group">
+                <label for="apiUrl">API Proxy 地址</label>
+                <input type="text" id="apiUrl" value="http://localhost:8001" placeholder="http://localhost:8001">
+            </div>
+        </div>
+        
+        <!-- 测试按钮 -->
+        <div class="test-section">
+            <h3>🧪 测试项目</h3>
+            <div class="test-buttons">
+                <button onclick="testHealth()">健康检查</button>
+                <button onclick="testASRCreate()">测试 ASR 创建</button>
+                <button onclick="testLLMChat()">测试 LLM 对话</button>
+                <button onclick="testAllEndpoints()">测试所有端点</button>
+            </div>
+        </div>
+        
+        <!-- 结果显示 -->
+        <div class="result-section">
+            <h3>📊 测试结果</h3>
+            <div id="result" class="result-box">点击上方按钮开始测试...</div>
+        </div>
+    </div>
+    
+    <script>
+        const resultBox = document.getElementById('result');
+        const apiUrlInput = document.getElementById('apiUrl');
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString('zh-CN');
+            const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+            resultBox.textContent += `[${timestamp}] ${prefix} ${message}\n`;
+            resultBox.scrollTop = resultBox.scrollHeight;
+        }
+        
+        function clearLog() {
+            resultBox.textContent = '';
+        }
+        
+        function getApiUrl() {
+            return apiUrlInput.value.trim() || 'http://localhost:8001';
+        }
+        
+        async function testHealth() {
+            clearLog();
+            log('开始测试健康检查端点...');
+            
+            try {
+                const url = `${getApiUrl()}/health`;
+                log(`请求地址: ${url}`);
+                
+                const startTime = performance.now();
+                const response = await fetch(url);
+                const endTime = performance.now();
+                const duration = (endTime - startTime).toFixed(2);
+                
+                log(`响应状态: ${response.status} ${response.statusText}`);
+                log(`响应时间: ${duration}ms`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    log('响应数据: ' + JSON.stringify(data, null, 2), 'success');
+                    log('✅ 健康检查通过！服务运行正常', 'success');
+                } else {
+                    log(`请求失败: ${response.status} ${response.statusText}`, 'error');
+                }
+            } catch (error) {
+                log(`连接失败: ${error.message}`, 'error');
+                log('请确认：', 'error');
+                log('1. API Proxy 服务是否已启动', 'error');
+                log('2. 端口 8001 是否正确', 'error');
+                log('3. 防火墙是否阻止了连接', 'error');
+            }
+        }
+        
+        async function testASRCreate() {
+            clearLog();
+            log('开始测试 ASR 创建端点...');
+            
+            try {
+                const url = `${getApiUrl()}/asr/create`;
+                log(`请求地址: ${url}`);
+                
+                const testPayload = {
+                    url: "https://example.com/test-audio.mp3",
+                    callbackUrl: "https://example.com/callback"
+                };
+                
+                log('请求数据: ' + JSON.stringify(testPayload, null, 2));
+                
+                const startTime = performance.now();
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testPayload)
+                });
+                const endTime = performance.now();
+                const duration = (endTime - startTime).toFixed(2);
+                
+                log(`响应状态: ${response.status} ${response.statusText}`);
+                log(`响应时间: ${duration}ms`);
+                
+                const data = await response.json();
+                log('响应数据: ' + JSON.stringify(data, null, 2));
+                
+                if (response.ok) {
+                    log('✅ ASR 创建端点测试通过', 'success');
+                } else {
+                    log('⚠️ ASR 服务返回错误（这可能是正常的，因为使用了测试数据）', 'info');
+                }
+            } catch (error) {
+                log(`请求失败: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testLLMChat() {
+            clearLog();
+            log('开始测试 LLM 对话端点...');
+            
+            try {
+                const url = `${getApiUrl()}/llm/chat`;
+                log(`请求地址: ${url}`);
+                
+                const testPayload = {
+                    model: "claude-4.5-sonnet",
+                    messages: [
+                        {
+                            role: "user",
+                            content: "你好，这是一个测试消息"
+                        }
+                    ],
+                    max_tokens: 100
+                };
+                
+                log('请求数据: ' + JSON.stringify(testPayload, null, 2));
+                
+                const startTime = performance.now();
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testPayload)
+                });
+                const endTime = performance.now();
+                const duration = (endTime - startTime).toFixed(2);
+                
+                log(`响应状态: ${response.status} ${response.statusText}`);
+                log(`响应时间: ${duration}ms`);
+                
+                const data = await response.json();
+                log('响应数据: ' + JSON.stringify(data, null, 2));
+                
+                if (response.ok && data.choices) {
+                    log('✅ LLM 对话端点测试通过', 'success');
+                    if (data.choices[0]?.message?.content) {
+                        log('AI 回复: ' + data.choices[0].message.content, 'success');
+                    }
+                } else {
+                    log('⚠️ LLM 服务返回异常', 'info');
+                }
+            } catch (error) {
+                log(`请求失败: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testAllEndpoints() {
+            clearLog();
+            log('======================================');
+            log('开始完整测试所有端点');
+            log('======================================\n');
+            
+            // 1. 健康检查
+            log('【1/3】测试健康检查端点...');
+            await testEndpoint('/health', 'GET');
+            await sleep(500);
+            
+            // 2. ASR Get (模拟)
+            log('\n【2/3】测试 ASR 查询端点...');
+            await testEndpoint('/asr/get?id=test-task-123', 'GET');
+            await sleep(500);
+            
+            // 3. 文件上传 (仅测试连通性)
+            log('\n【3/3】测试文件上传端点连通性...');
+            log('注意：文件上传需要实际文件，这里仅测试端点是否可达');
+            await testEndpoint('/upload', 'POST', {}, true);
+            
+            log('\n======================================');
+            log('✅ 所有端点测试完成！');
+            log('======================================');
+        }
+        
+        async function testEndpoint(path, method = 'GET', body = null, expectError = false) {
+            try {
+                const url = `${getApiUrl()}${path}`;
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+                
+                if (body && method !== 'GET') {
+                    options.body = JSON.stringify(body);
+                }
+                
+                const startTime = performance.now();
+                const response = await fetch(url);
+                const endTime = performance.now();
+                const duration = (endTime - startTime).toFixed(2);
+                
+                log(`  URL: ${url}`);
+                log(`  状态: ${response.status} ${response.statusText}`);
+                log(`  耗时: ${duration}ms`);
+                
+                if (response.ok || expectError) {
+                    log(`  ✅ 端点可达`, 'success');
+                    return true;
+                } else {
+                    log(`  ⚠️ 状态异常`, 'info');
+                    return false;
+                }
+            } catch (error) {
+                log(`  ❌ 连接失败: ${error.message}`, 'error');
+                return false;
+            }
+        }
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        // 页面加载时自动运行健康检查
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                log('页面加载完成，自动运行健康检查...\n');
+                testHealth();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
+

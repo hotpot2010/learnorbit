@@ -3,8 +3,9 @@ API 转发服务
 统一转发 ASR、LLM、文件上传等外部接口请求
 """
 from fastapi import FastAPI, Request, HTTPException, UploadFile, File, Form
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse, HTMLResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 import httpx
 import os
 from typing import Optional
@@ -67,7 +68,17 @@ async def root():
 @app.get("/health")
 async def health_check():
     """健康检查"""
-    return {"status": "ok"}
+    return {"status": "ok", "message": "API Proxy Service is running"}
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    """根路径重定向到测试页面"""
+    return FileResponse("test.html")
+
+@app.get("/test", response_class=HTMLResponse)
+async def test_page():
+    """测试页面"""
+    return FileResponse("test.html")
 
 # ==================== ASR 接口 ====================
 
@@ -259,5 +270,6 @@ if __name__ == "__main__":
         reload=True,
         log_level="info"
     )
+
 
 
