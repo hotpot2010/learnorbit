@@ -66,10 +66,10 @@ class VideoAnalyzerService:
             # 构建分析 prompt
             prompt = self._build_analysis_prompt(title, description, author, duration, play)
             
-            # 调用火山引擎 LLM 进行分析
+            # 调用 LLM 进行分析
             # 注意：generate_outline 需要 transcript 和 custom_prompt 两个参数
             # 对于视频搜索分析，我们用空字符串作为 transcript，custom_prompt 包含所有信息
-            analysis_text = await self.llm.generate_outline("", prompt)
+            analysis_text = await self.llm.generate_outline(transcript="", custom_prompt=prompt)
             
             # 解析LLM返回的结果
             result = self._parse_analysis_result(analysis_text, video_info)

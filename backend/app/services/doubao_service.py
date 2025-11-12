@@ -40,8 +40,9 @@ class DoubaoService:
     
     async def generate_outline(
         self,
-        transcript: str,
-        prompt: str,
+        transcript: str = "",
+        prompt: str = "",
+        custom_prompt: str = "",
         user_id: str = "bilibili_analyzer"
     ) -> str:
         """
@@ -49,20 +50,24 @@ class DoubaoService:
         
         Args:
             transcript: 视频逐字稿
-            prompt: 分析提示词
+            prompt: 分析提示词（兼容旧参数）
+            custom_prompt: 自定义提示词（与 VolcanoService 统一）
             user_id: 用户 ID (未使用，保留兼容性)
             
         Returns:
             生成的大纲文本
         """
+        # 统一参数：优先使用 custom_prompt，否则使用 prompt
+        actual_prompt = custom_prompt or prompt
+        
         safe_print(f"🤖 Generating outline with Baijia LLM...")
         safe_print(f"📝 Transcript length: {len(transcript)} chars")
-        safe_print(f"📋 Prompt length: {len(prompt)} chars")
+        safe_print(f"📋 Prompt length: {len(actual_prompt)} chars")
         
         # 构建消息 - OpenAI 兼容格式
         system_message = "你是一个专业的视频内容分析助手，擅长从视频逐字稿中提取关键信息并生成结构化的内容大纲。"
         
-        user_message = f"""请根据以下视频逐字稿，{prompt}
+        user_message = f"""请根据以下视频逐字稿，{actual_prompt}
 
 视频逐字稿：
 {transcript}

@@ -26,3 +26,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 # 启动服务
 CMD ["python", "main.py"]
 
+
