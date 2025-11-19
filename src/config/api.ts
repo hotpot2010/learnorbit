@@ -41,6 +41,7 @@ export const API_ENDPOINTS = {
   batchJobs: '/batch/jobs',
   batchAnalyzePart: '/batch/analyze-part',
   batchResults: '/batch/results',
+  batchGetPlayUrl: '/batch/get-play-url',
   
   // 笔记和学习
   notesGenerate: '/notes/generate',

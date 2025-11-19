@@ -38,6 +38,75 @@ interface StudyPageProps {
   params: Promise<{ locale: string; id: string }>;
 }
 
+// 编辑 textarea 组件 - 使用 memo 避免不必要的重新渲染
+const EditingTextarea = React.memo(({ 
+  noteId, 
+  editingNoteText, 
+  setEditingNoteText, 
+  handleSaveEdit, 
+  handleCancelEdit,
+  noteType,
+  fontFamily
+}: {
+  noteId: string;
+  editingNoteText: string;
+  setEditingNoteText: (text: string) => void;
+  handleSaveEdit: (noteId: string) => void;
+  handleCancelEdit: () => void;
+  noteType: 'video' | 'image' | 'drag' | 'text';
+  fontFamily: string;
+}) => {
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+  const isInitialMount = React.useRef(true);
+
+  // 只在首次挂载时将光标移到末尾
+  React.useEffect(() => {
+    if (isInitialMount.current && textareaRef.current) {
+      const textarea = textareaRef.current;
+      textarea.focus();
+      const length = textarea.value.length;
+      textarea.setSelectionRange(length, length);
+      isInitialMount.current = false;
+    }
+  }, []);
+
+  const borderColorClass = 
+    noteType === 'video' ? 'border-purple-300 bg-purple-50 text-purple-800 focus:ring-purple-400' :
+    noteType === 'image' ? 'border-pink-300 bg-pink-50 text-pink-800 focus:ring-pink-400' :
+    noteType === 'drag' ? 'border-sky-300 bg-sky-50 text-sky-800 focus:ring-sky-400' :
+    'border-yellow-300 bg-yellow-50 text-yellow-800 focus:ring-yellow-400';
+
+  return (
+    <div className="space-y-3">
+      <textarea
+        ref={textareaRef}
+        value={editingNoteText}
+        onChange={(e) => setEditingNoteText(e.target.value)}
+        className={`w-full p-3 border rounded-lg ${borderColorClass} resize-none focus:outline-none focus:ring-2`}
+        style={{
+          fontFamily: fontFamily,
+          fontSize: '16px',
+          lineHeight: '1.6',
+          minHeight: '80px'
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') {
+            handleCancelEdit();
+          } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            handleSaveEdit(noteId);
+          }
+        }}
+        placeholder="输入便签内容..."
+      />
+    </div>
+  );
+}, (prevProps, nextProps) => {
+  // 自定义比较函数：只有 editingNoteText 变化时才重新渲染
+  return prevProps.editingNoteText === nextProps.editingNoteText;
+});
+
+EditingTextarea.displayName = 'EditingTextarea';
+
 export default function StudyPage({ params }: StudyPageProps) {
   const currentUser = useCurrentUser();
   const { isMobile } = useMobileLayout();
@@ -229,12 +298,13 @@ export default function StudyPage({ params }: StudyPageProps) {
   }
   const [notes, setNotes] = useState<Note[]>([]);
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
+  const [editingNoteText, setEditingNoteText] = useState<string>(''); // 添加：编辑中的文本状态
   const [expandedNoteVideoIds, setExpandedNoteVideoIds] = useState<Record<string, boolean>>({});
   const [noteVideoIndices, setNoteVideoIndices] = useState<Record<string, number>>({});
   const [expandedNoteImageIds, setExpandedNoteImageIds] = useState<Record<string, boolean>>({});
   const [noteImageIndices, setNoteImageIndices] = useState<Record<string, number>>({});
   
-  // 便签编辑 - 简化的非受控组件 ref
+  // 便签编辑 - ref 用于聚焦
   const editingTextareaRef = useRef<HTMLTextAreaElement>(null);
   
   // 图片上传相关
@@ -450,25 +520,18 @@ export default function StudyPage({ params }: StudyPageProps) {
                   <div className="flex-1 min-w-0">
                     {editingNoteId === note.id ? (
                       <div className="space-y-3">
-                        <textarea
-                          ref={editingTextareaRef}
-                          key={`textarea-${note.id}-${editingNoteId}`}
-                          defaultValue={note.text || ''}
-                          className={`w-full p-3 border rounded-lg ${isVideo ? 'border-purple-300 bg-purple-50 text-purple-800 focus:ring-purple-400' : isImage ? 'border-pink-300 bg-pink-50 text-pink-800 focus:ring-pink-400' : isDrag ? 'border-sky-300 bg-sky-50 text-sky-800 focus:ring-sky-400' : 'border-yellow-300 bg-yellow-50 text-yellow-800 focus:ring-yellow-400'} resize-none focus:outline-none focus:ring-2`}
-                          style={{
-                            fontFamily: getFontFamily(),
-                            fontSize: '16px',
-                            lineHeight: '1.6',
-                            minHeight: '80px'
-                          }}
-                          autoFocus
-                          onKeyDown={(e) => {
-                            if (e.key === 'Escape') {
-                              handleCancelEdit();
-                            } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-                              handleSaveEdit(note.id);
-                            }
-                          }}
+                        <EditingTextarea 
+                          noteId={note.id}
+                          editingNoteText={editingNoteText}
+                          setEditingNoteText={setEditingNoteText}
+                          handleSaveEdit={handleSaveEdit}
+                          handleCancelEdit={handleCancelEdit}
+                          noteType={isVideo ? 'video' : isImage ? 'image' : isDrag ? 'drag' : 'text'}
+                          fontFamily={
+                            isMobile && routeParams?.locale === 'en'
+                              ? 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif'
+                              : '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
+                          }
                         />
                         
                         {/* 编辑时的图片预览 */}
@@ -2273,6 +2336,77 @@ export default function StudyPage({ params }: StudyPageProps) {
     }
   }, [currentStepIndex]);
 
+  // 💾 自动保存便签到 sessionStorage（防止数据丢失）
+  useEffect(() => {
+    if (!routeParams || notes.length === 0) return;
+    
+    const saveKey = `notes:${routeParams.id}:${sessionId}`;
+    const notesToSave = notes.map(note => ({
+      ...note,
+      timestamp: note.timestamp.toISOString() // 转换为字符串以便 JSON 序列化
+    }));
+    
+    try {
+      sessionStorage.setItem(saveKey, JSON.stringify(notesToSave));
+      console.log('💾 已自动保存便签到 sessionStorage:', {
+        key: saveKey,
+        count: notes.length,
+        timestamp: new Date().toLocaleTimeString()
+      });
+    } catch (error) {
+      console.error('❌ 保存便签失败:', error);
+    }
+  }, [notes, routeParams, sessionId]);
+
+  // 便签编辑相关函数 - 使用 useCallback 保持引用稳定
+  const handleStartEdit = useCallback((noteId: string, currentText: string) => {
+    console.log('🖊️ 开始编辑便签:', { noteId, currentText, textLength: currentText?.length });
+    setEditingNoteId(noteId);
+    setEditingNoteText(currentText || '');
+  }, []);
+
+  const handleSaveEdit = useCallback((noteId: string) => {
+    console.log('💾 保存便签:', {
+      noteId,
+      editingNoteText,
+      textLength: editingNoteText.length,
+    });
+    
+    setNotes(prev => {
+      const updated = prev.map(note => 
+        note.id === noteId 
+          ? { ...note, text: editingNoteText.trim() }
+          : note
+      );
+      const savedNote = updated.find(n => n.id === noteId);
+      console.log('✅ 便签保存成功:', savedNote);
+      return updated;
+    });
+    
+    setEditingNoteId(null);
+    setEditingNoteText('');
+  }, [editingNoteText]);
+
+  const handleCancelEdit = useCallback(() => {
+    console.log('❌ 取消编辑便签');
+    setEditingNoteId(null);
+    setEditingNoteText('');
+  }, []);
+
+  // 获取字体样式函数
+  const getFontFamily = useCallback(() => {
+    if (isMobile && routeParams?.locale === 'en') {
+      // 移动端英文模式使用正常字体
+      return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
+    } else if (isMobile) {
+      // 移动端中文模式保持卡通字体
+      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+    } else {
+      // 桌面端保持原有的卡通字体
+      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+    }
+  }, [isMobile, routeParams?.locale]);
+
   // 处理答案选择
   const handleAnswerSelect = (questionIndex: number, answer: string) => {
     setSelectedAnswers(prev => ({
@@ -2815,40 +2949,6 @@ export default function StudyPage({ params }: StudyPageProps) {
     return steps.filter(step => taskGenerationStatus[step.step] === 'completed').length;
   };
 
-  // 便签编辑相关函数
-  // 📝 简化的便签编辑函数 - 非受控组件方案
-  const handleStartEdit = (noteId: string, currentText: string) => {
-    setEditingNoteId(noteId);
-    
-    // 🎯 非受控组件：光标自然位于末尾，无需手动管理
-    setTimeout(() => {
-      if (editingTextareaRef.current) {
-        editingTextareaRef.current.focus();
-        // 光标会自动定位到文本末尾，无需 setSelectionRange
-      }
-    }, 0);
-  };
-
-  const handleSaveEdit = (noteId: string) => {
-    // 🎯 非受控组件：直接从 DOM 获取当前值
-    const currentValue = editingTextareaRef.current?.value || '';
-    
-    if (currentValue.trim()) {
-      setNotes(prev => prev.map(note => 
-        note.id === noteId 
-          ? { ...note, text: currentValue.trim() }
-          : note
-      ));
-    }
-    setEditingNoteId(null);
-    // 🎯 无需清理 editingText 状态（已移除）
-  };
-
-  const handleCancelEdit = () => {
-    setEditingNoteId(null);
-    // 🎯 无需清理 editingText 状态（已移除）
-  };
-
   const handleDeleteNote = (noteId: string) => {
     setNotes(prev => prev.filter(n => n.id !== noteId));
     // 如果正在编辑这个笔记，也要取消编辑状态
@@ -3022,20 +3122,6 @@ export default function StudyPage({ params }: StudyPageProps) {
       return React.cloneElement(node, { ...(node as any).props, children: renderNodeWithHighlights(children, anchorIdx) });
     }
     return node;
-  };
-
-  // 获取字体样式函数
-  const getFontFamily = () => {
-    if (isMobile && routeParams?.locale === 'en') {
-      // 移动端英文模式使用正常字体
-      return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
-    } else if (isMobile) {
-      // 移动端中文模式保持卡通字体
-      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
-    } else {
-      // 桌面端保持原有的卡通字体
-      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
-    }
   };
 
   // 通用滚动到顶部函数

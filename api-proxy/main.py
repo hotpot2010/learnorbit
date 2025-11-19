@@ -198,31 +198,46 @@ async def llm_chat(request: Request):
 # ==================== 文件上传接口 ====================
 
 @api_router.post("/upload")
-async def file_upload(
-    files: list[UploadFile] = File(...),
-    uid: Optional[str] = Form(None)
-):
+async def file_upload(request: Request):
     """
     文件上传接口
     转发到: http://internal-storage.genshuixue.com/webupload.php
+    支持单文件和多文件上传
     """
     try:
-        # 使用传入的 uid 或默认值
-        upload_uid = uid or FILE_UPLOAD_UID
+        # 解析 multipart/form-data
+        form = await request.form()
+        
+        # 获取 uid（如果有）
+        upload_uid = form.get("uid", FILE_UPLOAD_UID)
         
         # 准备表单数据
         form_data = {"uid": upload_uid}
         
-        # 准备文件
+        # 准备文件字典
         files_dict = {}
-        for idx, file in enumerate(files):
-            file_key = f"file{idx}"
-            file_content = await file.read()
-            files_dict[file_key] = (file.filename, file_content, file.content_type)
+        file_count = 0
         
-        print(f"📤 File Upload Request: {len(files)} file(s), uid={upload_uid}")
+        # 遍历表单中的所有字段
+        for field_name, field_value in form.items():
+            # 检查是否是文件字段
+            if hasattr(field_value, 'filename'):
+                # 这是一个文件
+                file_content = await field_value.read()
+                files_dict[field_name] = (
+                    field_value.filename,
+                    file_content,
+                    field_value.content_type or 'application/octet-stream'
+                )
+                file_count += 1
+                print(f"📎 Found file: {field_name} = {field_value.filename} ({len(file_content)} bytes)")
         
-        # 转发请求
+        if file_count == 0:
+            raise HTTPException(status_code=400, detail="No files provided")
+        
+        print(f"📤 File Upload Request: {file_count} file(s), uid={upload_uid}")
+        
+        # 转发请求到目标服务
         response = await client.post(
             FILE_UPLOAD_URL,
             data=form_data,
@@ -230,14 +245,19 @@ async def file_upload(
         )
         
         print(f"✅ File Upload Response: {response.status_code}")
+        print(f"📦 Response content: {response.text[:200]}")
         
         return JSONResponse(
             status_code=response.status_code,
             content=response.json()
         )
         
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"❌ File Upload Error: {e}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 # ==================== 注册路由器 ====================

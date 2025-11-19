@@ -238,12 +238,8 @@ export default function MyCoursesPage() {
     const [descDraft, setDescDraft] = useState(courseInfo.description);
 
     return (
-      <div className="w-64 flex-shrink-0 group cursor-pointer transform hover:rotate-1 hover:scale-105 transition-all duration-300 relative">
-        <div
-          className={`bg-white p-4 rounded-lg shadow-lg transform transition-all duration-300 ${
-            index % 2 === 0 ? 'rotate-2' : '-rotate-1'
-          } group-hover:rotate-0`}
-        >
+      <div className="w-64 flex-shrink-0 group cursor-pointer transform hover:scale-105 transition-all duration-300 relative">
+        <div className="bg-white p-4 rounded-lg shadow-lg transition-all duration-300">
           {/* 删除按钮（若已发布：作为 Unpublish 使用）*/}
           <button
             type="button"
@@ -283,7 +279,7 @@ export default function MyCoursesPage() {
         {/* 进度条 */}
           {progress > 0 && course.status === 'in-progress' && (
           <div className="mb-3">
-            <div className="w-full bg-gray-200 rounded-full h-2 transform -rotate-1">
+            <div className="w-full bg-gray-200 rounded-full h-2">
               <div
                 className={`h-2 rounded-full ${
                     progress === 100 ? 'bg-green-400' : 'bg-blue-400'
@@ -292,7 +288,7 @@ export default function MyCoursesPage() {
                 />
             </div>
               <span
-                className="text-xs text-gray-600 mt-1 inline-block transform rotate-1"
+                className="text-xs text-gray-600 mt-1 inline-block"
                 style={{
                   fontFamily:
                     '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -308,7 +304,7 @@ export default function MyCoursesPage() {
           {!course.tasksGenerated && (
             <div className="mb-3">
               <span
-                className="text-xs text-orange-600 font-bold inline-block transform -rotate-1 bg-orange-100 px-2 py-1 rounded flex items-center gap-1"
+                className="text-xs text-orange-600 font-bold inline-block bg-orange-100 px-2 py-1 rounded flex items-center gap-1"
                 style={{
                   fontFamily:
                     '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -325,7 +321,7 @@ export default function MyCoursesPage() {
           {course.status === 'completed' && (
           <div className="mb-3">
               <span
-                className="text-xs text-green-600 font-bold inline-block transform -rotate-1 bg-green-100 px-2 py-1 rounded"
+                className="text-xs text-green-600 font-bold inline-block bg-green-100 px-2 py-1 rounded"
                 style={{
                   fontFamily:
                     '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -346,7 +342,7 @@ export default function MyCoursesPage() {
               />
             ) : (
               <h3
-                className="font-bold text-base text-gray-800 transform -rotate-1"
+                className="font-bold text-base text-gray-800"
               style={{
                   fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                 }}
@@ -364,7 +360,7 @@ export default function MyCoursesPage() {
               />
             ) : (
               <p
-                className="text-sm text-gray-600 line-clamp-3 transform rotate-0.5"
+                className="text-sm text-gray-600 line-clamp-3"
              style={{
                   fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                 }}
@@ -377,7 +373,7 @@ export default function MyCoursesPage() {
 
           <div className="flex items-center justify-between mt-3">
               <span
-                className={`px-2 py-1 rounded text-xs transform -rotate-3 ${
+                className={`px-2 py-1 rounded text-xs ${
                   courseInfo.difficulty === 'beginner'
                     ? 'bg-green-100 text-green-800'
                     : courseInfo.difficulty === 'intermediate'
@@ -392,7 +388,7 @@ export default function MyCoursesPage() {
                 {courseInfo.difficulty.charAt(0).toUpperCase() +
                   courseInfo.difficulty.slice(1)}
             </span>
-                            <div className="flex items-center bg-yellow-100 px-2 py-1 rounded transform rotate-2">
+                            <div className="flex items-center bg-yellow-100 px-2 py-1 rounded">
                 <StarRating rating={courseInfo.rating} size="sm" />
                 <span className="ml-1 text-xs text-gray-600"
                       style={{
@@ -451,7 +447,7 @@ export default function MyCoursesPage() {
                   handleCourseClick(course);
                 }
               }}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm transform rotate-1 hover:rotate-0 shadow-md"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm shadow-md"
                     style={{
                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
               }}
@@ -486,7 +482,7 @@ export default function MyCoursesPage() {
                     if (btn) btn.disabled = false;
                   }
                 }}
-                className="w-full mt-2 bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm transform -rotate-1 hover:rotate-0 shadow-md"
+                className="w-full mt-2 bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm shadow-md"
                 style={{ fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive' }}
               >
                 Publish 🔓

@@ -99,7 +99,7 @@ export default function CourseMarketplacePage() {
         {/* 页面标题 */}
         <div className="text-center mb-12">
           <h1 
-            className="text-4xl font-bold text-gray-800 mb-4 transform -rotate-1"
+            className="text-4xl font-bold text-gray-800 mb-4"
             style={{
               fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
             }}
@@ -107,7 +107,7 @@ export default function CourseMarketplacePage() {
             📚 {t('title')}
           </h1>
           <p 
-            className="text-lg text-gray-600 transform rotate-1"
+            className="text-lg text-gray-600"
             style={{
               fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
             }}
@@ -125,7 +125,7 @@ export default function CourseMarketplacePage() {
               placeholder={t('searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 py-3 text-lg border-2 rounded-xl shadow-lg transform -rotate-1 hover:rotate-0 transition-transform duration-300"
+              className="pl-10 py-3 text-lg border-2 rounded-xl shadow-lg transition-all duration-300"
               style={{
                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
               }}
@@ -137,7 +137,7 @@ export default function CourseMarketplacePage() {
         {!loading && filteredCourses.length > 0 && (
           <div className="text-center mb-8">
             <p 
-              className="text-gray-600 transform rotate-1"
+              className="text-gray-600"
               style={{
                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
               }}
@@ -150,7 +150,7 @@ export default function CourseMarketplacePage() {
         {/* 错误状态 */}
         {error && (
           <div className="text-center mb-8">
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6 transform -rotate-1">
+            <div className="bg-red-50 border border-red-200 rounded-lg p-6">
               <p className="text-red-600 font-medium">{error}</p>
               <Button
                 onClick={() => window.location.reload()}
@@ -189,7 +189,7 @@ export default function CourseMarketplacePage() {
         {/* 空状态 */}
         {!loading && filteredCourses.length === 0 && !error && (
           <div className="text-center py-16">
-            <div className="transform -rotate-2">
+            <div>
               <BookOpen className="w-24 h-24 text-gray-300 mx-auto mb-4" />
               <h3 
                 className="text-xl font-bold text-gray-600 mb-2"
@@ -226,7 +226,7 @@ export default function CourseMarketplacePage() {
         {/* 底部提示 */}
         {!loading && !currentUser && filteredCourses.length > 0 && (
           <div className="mt-16 text-center">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 transform rotate-1">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
               <p 
                 className="text-blue-800 font-medium mb-4"
                 style={{
@@ -256,16 +256,14 @@ const CourseCard = ({ course, index }: { course: PublicCourse; index: number }) 
 
   return (
     <LocaleLink href={`/study/${slug}`}>
-      <div className="w-full group cursor-pointer transform hover:rotate-1 hover:scale-105 transition-all duration-300 relative">
+      <div className="w-full group cursor-pointer transform hover:scale-105 transition-all duration-300 relative">
         {/* 照片外框 - 白色边框模拟相片但不显示图片 */}
-        <div className={`bg-white p-4 rounded-lg shadow-lg transform transition-all duration-300 ${
-          index % 2 === 0 ? 'rotate-2' : '-rotate-1'
-        } group-hover:rotate-0`}>
+        <div className="bg-white p-4 rounded-lg shadow-lg transition-all duration-300">
           {/* 手写标注区域 */}
           <div className="space-y-3">
             {/* 手写标题 */}
             <h3
-              className="font-bold text-base text-gray-800 transform -rotate-1"
+              className="font-bold text-base text-gray-800"
               style={{
                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
               }}
@@ -275,7 +273,7 @@ const CourseCard = ({ course, index }: { course: PublicCourse; index: number }) 
 
             {/* 手写描述 */}
             <p
-              className="text-sm text-gray-600 line-clamp-3 transform rotate-0.5"
+              className="text-sm text-gray-600 line-clamp-3"
               style={{
                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                 display: '-webkit-box',
@@ -290,7 +288,7 @@ const CourseCard = ({ course, index }: { course: PublicCourse; index: number }) 
             {/* 标签和时间 - 像便签纸一样 */}
             <div className="flex items-center justify-between mt-3">
               <span
-                className={`px-2 py-1 rounded text-xs transform -rotate-3 ${
+                className={`px-2 py-1 rounded text-xs ${
                   course.difficulty === 'beginner'
                     ? 'bg-green-100 text-green-800'
                     : course.difficulty === 'intermediate'
@@ -303,7 +301,7 @@ const CourseCard = ({ course, index }: { course: PublicCourse; index: number }) 
               >
                 {t(`difficulty.${course.difficulty}`)}
               </span>
-              <div className="flex items-center bg-yellow-100 px-2 py-1 rounded transform rotate-2">
+              <div className="flex items-center bg-yellow-100 px-2 py-1 rounded">
                 <StarRating rating={course.rating} size="sm" />
                 <span className="ml-1 text-xs text-gray-600"
                       style={{
@@ -316,17 +314,17 @@ const CourseCard = ({ course, index }: { course: PublicCourse; index: number }) 
 
             {/* 创建者信息 */}
             <div className="flex items-center justify-between text-xs text-gray-400">
-              <span className="transform -rotate-1">
+              <span>
                 {t('labels.public')}
               </span>
-              <span className="transform rotate-1">
+              <span>
                 {new Date(course.createdAt).toLocaleDateString()}
               </span>
             </div>
 
             {/* 开始学习按钮 */}
             <button
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm transform rotate-1 hover:rotate-0 shadow-md"
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm shadow-md"
               style={{
                 fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
               }}

@@ -52,6 +52,8 @@ next-env.d.ts
 /backend/venv/
 /backend/uploads/*
 !/backend/uploads/.gitkeep
+/backend/downloads/*
+!/backend/downloads/.gitkeep
 /backend/__pycache__/
 /backend/**/__pycache__/
 /backend/**/*.pyc

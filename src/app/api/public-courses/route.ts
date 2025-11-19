@@ -7,9 +7,30 @@ export async function GET(request: NextRequest) {
 		const { searchParams } = new URL(request.url);
 		const search = searchParams.get('search')?.toLowerCase() || '';
 
-		const db = await getDb();
-		// 获取全部课程，再在内存中过滤 isPublic（coursePlan 为 JSONB，避免复杂 where 语句）
-		const rows = await db.select().from(userCourses);
+		// 添加重试机制处理连接关闭错误
+		let db;
+		let rows;
+		let retries = 3;
+		
+		while (retries > 0) {
+			try {
+				db = await getDb();
+				// 获取全部课程，再在内存中过滤 isPublic（coursePlan 为 JSONB，避免复杂 where 语句）
+				rows = await db.select().from(userCourses);
+				break; // 成功则退出循环
+			} catch (error: any) {
+				retries--;
+				if (error?.code === 'CONNECTION_CLOSED' || error?.message?.includes('CONNECTION_CLOSED')) {
+					if (retries > 0) {
+						console.log(`⚠️ Connection closed, retrying... (${retries} attempts left)`);
+						// 等待一小段时间后重试
+						await new Promise(resolve => setTimeout(resolve, 1000));
+						continue;
+					}
+				}
+				throw error; // 非连接关闭错误或重试次数用完，抛出错误
+			}
+		}
 		let publicCourses = rows.filter((r: any) => r.coursePlan && (r.coursePlan as any).isPublic === true);
 
 		// 规范化输出，供首页卡片使用

@@ -112,7 +112,7 @@ export default async function HomePage(props: HomePageProps) {
               {/* 手写标题 */}
               <div className="space-y-4">
                 <h1
-                  className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-slate-800 leading-tight transform -rotate-1 homepage-title"
+                  className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-bold text-slate-800 leading-tight homepage-title"
                   style={{
                     fontFamily: getFontFamily(locale === 'en'),
                   }}
@@ -124,7 +124,7 @@ export default async function HomePage(props: HomePageProps) {
 
                 {/* 手写副标题 */}
                 <p
-                  className="text-lg md:text-xl lg:text-xl text-gray-600 max-w-2xl mx-auto transform rotate-0.5 homepage-subtitle"
+                  className="text-lg md:text-xl lg:text-xl text-gray-600 max-w-2xl mx-auto homepage-subtitle"
                   style={{
                     fontFamily: getFontFamily(locale === 'en'),
                   }}
@@ -135,9 +135,7 @@ export default async function HomePage(props: HomePageProps) {
 
               {/* 输入框区域 */}
               <div className="pt-6">
-                <div className="transform -rotate-0.5">
-                  <CourseInputSection />
-                </div>
+                <CourseInputSection />
               </div>
             </div>
           </Container>

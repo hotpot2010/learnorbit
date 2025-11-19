@@ -196,6 +196,8 @@ curl: (7) Failed to connect to localhost port 8001: Connection refused
 - 确保使用了 `/open-api` 前缀
 - 旧路径：`/health` ❌
 - 新路径：`/open-api/health` ✅
+- 旧路径：`/test` ❌
+- 新路径：`/open-api/test` ✅
 
 ### 问题：主项目无法调用 API Proxy
 

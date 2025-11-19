@@ -70,16 +70,16 @@ export function CourseRecommendationGrid({
           {courses.map((course) => (
             <div
               key={`first-${course.id}`}
-              className="w-64 flex-shrink-0 group cursor-pointer transform hover:rotate-1 hover:scale-105 transition-all duration-300 relative"
+              className="w-64 flex-shrink-0 group cursor-pointer transform hover:scale-105 transition-all duration-300 relative"
               onClick={() => handleCourseClick(course)}
             >
               {/* 照片外框 - 白色边框模拟相片但不显示图片 */}
-              <div className="bg-white p-4 rounded-lg shadow-lg transform rotate-2 group-hover:rotate-0 transition-all duration-300">
+              <div className="bg-white p-4 rounded-lg shadow-lg transition-all duration-300">
                 {/* 手写标注区域 */}
                 <div className="space-y-3">
                   {/* 手写标题 */}
                   <h3
-                    className="font-bold text-base text-gray-800 transform -rotate-1"
+                    className="font-bold text-base text-gray-800"
                     style={{
                       fontFamily:
                         '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -90,7 +90,7 @@ export function CourseRecommendationGrid({
 
                   {/* 手写描述 */}
                   <p
-                    className="text-sm text-gray-600 line-clamp-3 transform rotate-0.5"
+                    className="text-sm text-gray-600 line-clamp-3"
                     style={{
                       fontFamily:
                         '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -102,7 +102,7 @@ export function CourseRecommendationGrid({
                   {/* 标签和时间 - 像便签纸一样 */}
                   <div className="flex items-center justify-between mt-3">
                     <span
-                      className={`px-2 py-1 rounded text-xs transform -rotate-3 ${
+                      className={`px-2 py-1 rounded text-xs ${
                         course.difficulty === 'beginner'
                           ? 'bg-green-100 text-green-800'
                           : course.difficulty === 'intermediate'
@@ -117,7 +117,7 @@ export function CourseRecommendationGrid({
                       {course.difficulty.charAt(0).toUpperCase() +
                         course.difficulty.slice(1)}
                     </span>
-                    <div className="flex items-center bg-yellow-100 px-2 py-1 rounded transform rotate-2">
+                    <div className="flex items-center bg-yellow-100 px-2 py-1 rounded">
                       <StarRating rating={course.rating} size="sm" />
                       <span className="ml-1 text-xs text-gray-600"
                             style={{
@@ -130,7 +130,7 @@ export function CourseRecommendationGrid({
 
                   {/* 开始学习按钮 */}
                   <button
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm transform rotate-1 hover:rotate-0 shadow-md"
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm shadow-md"
                     style={{
                       fontFamily:
                         '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -142,7 +142,7 @@ export function CourseRecommendationGrid({
               </div>
 
               {/* 图钉装饰 */}
-              <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full shadow-md transform rotate-45 opacity-80"></div>
+              <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full shadow-md opacity-80"></div>
             </div>
           ))}
 
@@ -150,16 +150,16 @@ export function CourseRecommendationGrid({
           {courses.map((course) => (
             <div
               key={`second-${course.id}`}
-              className="w-64 flex-shrink-0 group cursor-pointer transform hover:rotate-1 hover:scale-105 transition-all duration-300 relative"
+              className="w-64 flex-shrink-0 group cursor-pointer transform hover:scale-105 transition-all duration-300 relative"
               onClick={() => handleCourseClick(course)}
             >
               {/* 照片外框 - 白色边框模拟相片但不显示图片 */}
-              <div className="bg-white p-4 rounded-lg shadow-lg transform rotate-2 group-hover:rotate-0 transition-all duration-300">
+              <div className="bg-white p-4 rounded-lg shadow-lg transition-all duration-300">
                 {/* 手写标注区域 */}
                 <div className="space-y-3">
                   {/* 手写标题 */}
                   <h3
-                    className="font-bold text-base text-gray-800 transform -rotate-1"
+                    className="font-bold text-base text-gray-800"
                     style={{
                       fontFamily:
                         '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -170,7 +170,7 @@ export function CourseRecommendationGrid({
 
                   {/* 手写描述 */}
                   <p
-                    className="text-sm text-gray-600 line-clamp-3 transform rotate-0.5"
+                    className="text-sm text-gray-600 line-clamp-3"
                     style={{
                       fontFamily:
                         '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -182,7 +182,7 @@ export function CourseRecommendationGrid({
                   {/* 标签和时间 - 像便签纸一样 */}
                   <div className="flex items-center justify-between mt-3">
                     <span
-                      className={`px-2 py-1 rounded text-xs transform -rotate-3 ${
+                      className={`px-2 py-1 rounded text-xs ${
                         course.difficulty === 'beginner'
                           ? 'bg-green-100 text-green-800'
                           : course.difficulty === 'intermediate'
@@ -197,7 +197,7 @@ export function CourseRecommendationGrid({
                       {course.difficulty.charAt(0).toUpperCase() +
                         course.difficulty.slice(1)}
                     </span>
-                    <div className="flex items-center bg-yellow-100 px-2 py-1 rounded transform rotate-2">
+                    <div className="flex items-center bg-yellow-100 px-2 py-1 rounded">
                       <StarRating rating={course.rating} size="sm" />
                       <span className="ml-1 text-xs text-gray-600"
                             style={{
@@ -210,7 +210,7 @@ export function CourseRecommendationGrid({
 
                   {/* 开始学习按钮 */}
                   <button
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm transform rotate-1 hover:rotate-0 shadow-md"
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm shadow-md"
                     style={{
                       fontFamily:
                         '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
@@ -222,7 +222,7 @@ export function CourseRecommendationGrid({
               </div>
 
               {/* 图钉装饰 */}
-              <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full shadow-md transform rotate-45 opacity-80"></div>
+              <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full shadow-md opacity-80"></div>
             </div>
           ))}
         </div>

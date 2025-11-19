@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Play, Clock, Eye, ThumbsUp, Loader2, ExternalLink } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useLocaleRouter } from '@/i18n/navigation';
 import { buildApiUrl, API_ENDPOINTS } from '@/config/api';
 
 interface VideoInfo {
@@ -14,21 +14,14 @@ interface VideoInfo {
   duration: string;
   author: string;
   play: number;
-  video_review: number;
-  favorites: number;
-  description: string;
   video_amount: number;
   is_series: boolean;
-  style: string;            // 轻松/严谨
-  target_audience: string;  // 新手/进阶/高级
-  instructor: string;       // 名师/大V/素人
-  video_focus: string;      // 教学/练习/项目/理论/综合
-  learning_goals: string[]; // 求职/升学/兴趣/技能提升/考证
-  recommendation_score: number;
+  target_audience: string;  // 新手入门/备考考生/职场进阶
+  description: string;       // LLM生成的100字左右描述
 }
 
 export default function VideoEntryPage() {
-  const router = useRouter();
+  const router = useLocaleRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [videos, setVideos] = useState<VideoInfo[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -56,7 +49,7 @@ export default function VideoEntryPage() {
         },
         body: JSON.stringify({
           query: searchQuery,
-          limit: 3,
+          limit: 10,
         }),
       });
 
@@ -96,9 +89,30 @@ export default function VideoEntryPage() {
 
   // 开始学习
   const handleStartLearning = (videoUrl: string) => {
+    console.log('🎯 开始学习按钮被点击');
+    console.log('📹 原始视频URL:', videoUrl);
+    
     // 编码URL并跳转到视频笔记页面
     const encodedUrl = encodeURIComponent(videoUrl);
-    router.push(`/zh/video-notes-prototype?videoUrl=${encodedUrl}`);
+    console.log('🔐 编码后的URL:', encodedUrl);
+    
+    // 使用完整路径直接跳转
+    const targetUrl = `/zh/video-notes-prototype?videoUrl=${encodedUrl}`;
+    console.log('🚀 准备跳转到:', targetUrl);
+    console.log('🔍 当前 window.location.href:', window.location.href);
+    
+    // 使用 window.location.href 强制跳转
+    try {
+      window.location.href = targetUrl;
+      console.log('✅ window.location.href 已设置为:', targetUrl);
+      
+      // 延迟检查是否真的跳转了
+      setTimeout(() => {
+        console.log('⏱️ 500ms 后检查 - 当前 URL:', window.location.href);
+      }, 500);
+    } catch (error) {
+      console.error('❌ 跳转失败:', error);
+    }
   };
 
   // 格式化播放量
@@ -173,7 +187,7 @@ export default function VideoEntryPage() {
               {!hasSearched && (
                 <div className="space-y-4">
                   <h1
-                    className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 leading-tight transform -rotate-1"
+                    className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 leading-tight"
                     style={{
                       fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                     }}
@@ -184,7 +198,7 @@ export default function VideoEntryPage() {
                   </h1>
 
                   <p
-                    className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto transform rotate-0.5"
+                    className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto"
                     style={{
                       fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                     }}
@@ -337,19 +351,20 @@ export default function VideoEntryPage() {
                           </div>
                         </div>
 
-                        {/* 中间：AI 分析标签 */}
+                        {/* 中间：视频信息 */}
                         <div className="flex-1 flex items-center">
                           <div className="space-y-4 w-full">
-                            {/* 第一行：风格 + 适用人群 */}
-                            <div className="flex items-center gap-6">
-                              {/* 风格 */}
+                            {/* 第一行：是否视频课 + 适用人群 */}
+                            <div className="flex items-center gap-6 flex-wrap">
+                              {/* 是否视频课 */}
                               <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium text-gray-500">风格</span>
+                                <span className="text-sm font-medium text-gray-500">类型</span>
                                 <span className={`px-4 py-1.5 rounded-full text-sm font-medium shadow-sm ${
-                                  video.style === '轻松' ? 'bg-pink-100 text-pink-700 border border-pink-300' :
-                                  'bg-slate-100 text-slate-700 border border-slate-300'
+                                  video.is_series 
+                                    ? 'bg-purple-100 text-purple-700 border border-purple-300' 
+                                    : 'bg-gray-100 text-gray-700 border border-gray-300'
                                 }`}>
-                                  {video.style}
+                                  {video.is_series ? `系列课 (${video.video_amount}P)` : '单视频'}
                                 </span>
                               </div>
 
@@ -357,61 +372,22 @@ export default function VideoEntryPage() {
                               <div className="flex items-center gap-2">
                                 <span className="text-sm font-medium text-gray-500">适用人群</span>
                                 <span className={`px-4 py-1.5 rounded-full text-sm font-medium shadow-sm ${
-                                  video.target_audience === '新手' ? 'bg-green-100 text-green-700 border border-green-300' :
-                                  video.target_audience === '进阶' ? 'bg-blue-100 text-blue-700 border border-blue-300' :
-                                  'bg-purple-100 text-purple-700 border border-purple-300'
+                                  video.target_audience === '新手入门' ? 'bg-green-100 text-green-700 border border-green-300' :
+                                  video.target_audience === '备考考生' ? 'bg-blue-100 text-blue-700 border border-blue-300' :
+                                  video.target_audience === '职场进阶' ? 'bg-purple-100 text-purple-700 border border-purple-300' :
+                                  'bg-gray-100 text-gray-700 border border-gray-300'
                                 }`}>
                                   {video.target_audience}
                                 </span>
                               </div>
                             </div>
 
-                            {/* 第二行：讲师 + 视频重点 */}
-                            <div className="flex items-center gap-6">
-                              {/* 讲师 */}
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium text-gray-500">讲师</span>
-                                <span className={`px-4 py-1.5 rounded-full text-sm font-medium shadow-sm ${
-                                  video.instructor === '名师' ? 'bg-amber-100 text-amber-700 border border-amber-300' :
-                                  video.instructor === '大V' ? 'bg-sky-100 text-sky-700 border border-sky-300' :
-                                  'bg-gray-100 text-gray-700 border border-gray-300'
-                                }`}>
-                                  {video.instructor}
-                                </span>
-                              </div>
-
-                              {/* 视频重点 */}
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium text-gray-500">视频重点</span>
-                                <span className={`px-4 py-1.5 rounded-full text-sm font-medium shadow-sm ${
-                                  video.video_focus === '教学' ? 'bg-orange-100 text-orange-700 border border-orange-300' :
-                                  video.video_focus === '练习' ? 'bg-cyan-100 text-cyan-700 border border-cyan-300' :
-                                  video.video_focus === '项目' ? 'bg-pink-100 text-pink-700 border border-pink-300' :
-                                  video.video_focus === '理论' ? 'bg-indigo-100 text-indigo-700 border border-indigo-300' :
-                                  'bg-gray-100 text-gray-700 border border-gray-300'
-                                }`}>
-                                  {video.video_focus}
-                                </span>
-                              </div>
-                            </div>
-
-                            {/* 第三行：学习目标 */}
+                            {/* 第二行：描述 */}
                             <div className="flex items-start gap-3">
-                              <span className="text-sm font-medium text-gray-500 pt-1">学习目标</span>
-                              <div className="flex flex-wrap gap-2">
-                                {video.learning_goals && video.learning_goals.length > 0 ? (
-                                  video.learning_goals.map((goal, idx) => (
-                                    <span
-                                      key={idx}
-                                      className="px-4 py-1.5 bg-yellow-100 text-yellow-700 border border-yellow-300 text-sm font-medium rounded-full shadow-sm"
-                                    >
-                                      {goal}
-                                    </span>
-                                  ))
-                                ) : (
-                                  <span className="text-sm text-gray-400">暂无</span>
-                                )}
-                              </div>
+                              <span className="text-sm font-medium text-gray-500 pt-1">描述</span>
+                              <p className="text-sm text-gray-700 leading-relaxed flex-1">
+                                {video.description || '暂无描述'}
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -419,7 +395,11 @@ export default function VideoEntryPage() {
                         {/* 右侧：开始学习按钮 */}
                         <div className="flex-shrink-0 flex items-center justify-center md:w-32">
                           <Button
-                            onClick={() => handleStartLearning(video.url)}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleStartLearning(video.url);
+                            }}
                             className="w-full md:w-auto px-6 py-8 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 flex flex-col items-center justify-center space-y-2"
                           >
                             <Play className="w-8 h-8" />

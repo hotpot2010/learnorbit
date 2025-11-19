@@ -73,14 +73,14 @@ export function CourseCard({
       )}
 
       <div className="space-y-3">
-        <h3 className="font-bold text-base text-gray-800 line-clamp-2 transform -rotate-1"
+        <h3 className="font-bold text-base text-gray-800 line-clamp-2"
             style={{
               fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
             }}>
           {title}
         </h3>
 
-        <p className="text-sm text-gray-600 line-clamp-3 transform rotate-0.5"
+        <p className="text-sm text-gray-600 line-clamp-3"
            style={{
              fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
            }}>
@@ -88,14 +88,14 @@ export function CourseCard({
         </p>
 
         <div className="flex items-center justify-between">
-          <span className={`px-2 py-1 rounded text-xs transform -rotate-3 ${getDifficultyColor()}`}
+          <span className={`px-2 py-1 rounded text-xs ${getDifficultyColor()}`}
                 style={{
                   fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                 }}>
             {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
           </span>
 
-          <div className="flex items-center bg-yellow-100 px-2 py-1 rounded transform rotate-2">
+          <div className="flex items-center bg-yellow-100 px-2 py-1 rounded">
             <StarRating rating={rating} size="sm" />
             <span className="ml-1 text-xs text-gray-600"
                   style={{
@@ -109,13 +109,13 @@ export function CourseCard({
         {/* Progress Bar */}
         {showProgress && progress !== undefined && (
           <div className="space-y-1">
-            <div className="w-full bg-gray-200 rounded-full h-2 transform -rotate-1">
+            <div className="w-full bg-gray-200 rounded-full h-2">
               <div
                 className="bg-blue-500 h-2 rounded-full transition-all duration-500"
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <span className="text-xs text-gray-500 transform rotate-1 inline-block"
+            <span className="text-xs text-gray-500 inline-block"
                   style={{
                     fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
                   }}>
@@ -127,7 +127,7 @@ export function CourseCard({
         {/* 开始学习按钮 */}
         <div className="mt-4">
           <Button
-            className="w-full bg-blue-500 hover:bg-blue-600 transform rotate-1 hover:rotate-0 transition-all duration-300 shadow-md"
+            className="w-full bg-blue-500 hover:bg-blue-600 transition-all duration-300 shadow-md"
             onClick={handleClick}
             style={{
               fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
@@ -140,7 +140,7 @@ export function CourseCard({
       </div>
 
       {/* 图钉装饰 */}
-      <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full shadow-md transform rotate-45 opacity-80"></div>
+      <div className="absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full shadow-md opacity-80"></div>
     </div>
   );
 

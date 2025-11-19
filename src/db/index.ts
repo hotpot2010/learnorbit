@@ -26,8 +26,39 @@ if (typeof process !== 'undefined') {
   process.on('SIGTERM', closeDb);
 }
 
+// 连接健康检查函数
+async function checkConnection(client: ReturnType<typeof postgres>): Promise<boolean> {
+  try {
+    await client`SELECT 1`;
+    return true;
+  } catch (error: any) {
+    // 检查是否是连接关闭错误
+    if (error?.code === 'CONNECTION_CLOSED' || error?.message?.includes('CONNECTION_CLOSED')) {
+      return false;
+    }
+    // 其他错误也认为连接不可用
+    return false;
+  }
+}
+
 export async function getDb() {
-  if (db) return db;
+  // 如果已有连接，先检查连接是否健康
+  if (db && client) {
+    const isHealthy = await checkConnection(client);
+    if (isHealthy) {
+      return db;
+    } else {
+      // 连接已关闭，清理并重新创建
+      console.log('⚠️ Database connection closed, recreating...');
+      try {
+        client.end();
+      } catch (e) {
+        // 忽略清理错误
+      }
+      db = null;
+      client = null;
+    }
+  }
 
   let connectionString = process.env.DATABASE_URL!;
 
@@ -46,9 +77,9 @@ export async function getDb() {
     prepare: false,
     // 连接配置 - 更严格的限制防止连接泄漏
     max: 5, // 严格限制最大连接数
-    idle_timeout: 10, // 10秒空闲超时，快速释放
+    idle_timeout: 20, // 20秒空闲超时（增加以避免过早关闭）
     connect_timeout: 10, // 10秒连接超时
-    max_lifetime: 60 * 10, // 10分钟连接生命周期，频繁刷新
+    max_lifetime: 60 * 30, // 30分钟连接生命周期（增加以避免频繁重连）
     // SSL配置
     ssl: { rejectUnauthorized: false },
     // 错误处理
@@ -60,8 +91,8 @@ export async function getDb() {
     // 开发环境特殊配置
     ...(process.env.NODE_ENV === 'development' && {
       max: 3, // 开发环境更严格限制
-      idle_timeout: 5, // 更快释放
-      max_lifetime: 60 * 5, // 5分钟生命周期
+      idle_timeout: 15, // 15秒空闲超时
+      max_lifetime: 60 * 15, // 15分钟生命周期
     })
   });
 
@@ -82,16 +113,20 @@ export async function getDb() {
 
       // 先清理之前的客户端
       if (client) {
-        client.end();
+        try {
+          client.end();
+        } catch (e) {
+          // 忽略清理错误
+        }
         client = null;
       }
 
       client = postgres(poolerConnectionString, {
         prepare: false,
         max: 3, // pooler连接更严格限制
-        idle_timeout: 5,
+        idle_timeout: 15,
         connect_timeout: 10,
-        max_lifetime: 60 * 5,
+        max_lifetime: 60 * 15,
         ssl: { rejectUnauthorized: false },
         onnotice: () => {},
         debug: false,
@@ -107,10 +142,16 @@ export async function getDb() {
         return db;
       } catch (fallbackError) {
         console.error('❌ Fallback connection also failed:', fallbackError);
+        // 清理失败的连接
+        db = null;
+        client = null;
         throw fallbackError;
       }
     }
 
+    // 清理失败的连接
+    db = null;
+    client = null;
     throw error;
   }
 }
