@@ -86,28 +86,28 @@ os.makedirs(static_dir, exist_ok=True)
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 print(f"📁 Static files mounted: /static -> {static_dir}")
 
-# Include API routes (如果可用)
+# Include API routes (如果可用) - 所有路由统一添加 /open-api 前缀
 if VIDEO_ROUTES_AVAILABLE:
-    app.include_router(video.router)
-    print("✅ 视频分析功能已启用")
+    app.include_router(video.router, prefix="/open-api")
+    print("✅ 视频分析功能已启用 (/open-api/api/v1/video)")
 else:
     print("⚠️ 视频分析功能不可用，仅提供基础API")
 
 if BATCH_ROUTES_AVAILABLE:
-    app.include_router(batch_analysis.router)
-    print("✅ 批量分析功能已启用")
+    app.include_router(batch_analysis.router, prefix="/open-api")
+    print("✅ 批量分析功能已启用 (/open-api/batch)")
 else:
     print("⚠️ 批量分析功能不可用")
 
 if NOTES_ROUTES_AVAILABLE:
-    app.include_router(notes.router, prefix="/notes", tags=["notes"])
-    print("✅ 笔记生成功能已启用")
+    app.include_router(notes.router, prefix="/open-api/notes", tags=["notes"])
+    print("✅ 笔记生成功能已启用 (/open-api/notes)")
 else:
     print("⚠️ 笔记生成功能不可用")
 
 if VIDEO_SEARCH_ROUTES_AVAILABLE:
-    app.include_router(video_search.router, prefix="/video-search", tags=["video-search"])
-    print("✅ 视频搜索功能已启用")
+    app.include_router(video_search.router, prefix="/open-api/video-search", tags=["video-search"])
+    print("✅ 视频搜索功能已启用 (/open-api/video-search)")
 else:
     print("⚠️ 视频搜索功能不可用")
 
@@ -285,19 +285,20 @@ async def root():
     return html_content
 
 # JSON API endpoint
-@app.get("/api")
+@app.get("/open-api")
+@app.get("/open-api/")
 async def api_info():
     """JSON API information endpoint"""
     return {
         "message": "Video Analysis API",
         "version": "1.0.0",
         "docs": "/docs",
-        "health": "/api/v1/video/health"
+        "health": "/open-api/api/v1/video/health"
     }
 
 # 如果视频路由不可用，提供备用端点
 if not VIDEO_ROUTES_AVAILABLE:
-    @app.get("/api/v1/video/health")
+    @app.get("/open-api/api/v1/video/health")
     async def fallback_health():
         """备用健康检查端点"""
         return {
@@ -307,7 +308,7 @@ if not VIDEO_ROUTES_AVAILABLE:
             "note": "请检查依赖安装或使用简化版本"
         }
     
-    @app.get("/api/v1/video/analysis-types")
+    @app.get("/open-api/api/v1/video/analysis-types")
     async def fallback_analysis_types():
         """备用分析类型端点"""
         return {
@@ -316,7 +317,7 @@ if not VIDEO_ROUTES_AVAILABLE:
             "note": "AI分析功能不可用，请检查Gemini API配置"
         }
     
-    @app.post("/api/v1/video/upload-and-analyze")
+    @app.post("/open-api/api/v1/video/upload-and-analyze")
     async def fallback_upload():
         """备用上传端点"""
         from fastapi import HTTPException

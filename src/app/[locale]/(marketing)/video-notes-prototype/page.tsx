@@ -1791,7 +1791,7 @@ export default function VideoNotesPrototypePage() {
     ));
     
     try {
-      const response = await fetch('http://localhost:8000/notes/execute-code', {
+      const response = await fetch('http://localhost:8000/open-api/notes/execute-code', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

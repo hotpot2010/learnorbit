@@ -35,23 +35,24 @@ export const getApiBaseUrl = (): string => {
 
 /**
  * API 端点配置
+ * 所有端点统一使用 /open-api 前缀
  */
 export const API_ENDPOINTS = {
   // 批量分析
-  batchJobs: '/batch/jobs',
-  batchAnalyzePart: '/batch/analyze-part',
-  batchResults: '/batch/results',
-  batchGetPlayUrl: '/batch/get-play-url',
+  batchJobs: '/open-api/batch/jobs',
+  batchAnalyzePart: '/open-api/batch/analyze-part',
+  batchResults: '/open-api/batch/results',
+  batchGetPlayUrl: '/open-api/batch/get-play-url',
   
   // 笔记和学习
-  notesGenerate: '/notes/generate',
-  notesAnswerQuestion: '/notes/answer-question',
-  notesGenerateExercise: '/notes/generate-exercise',
-  notesExecuteCode: '/notes/execute-code',
-  notesValidateAnswer: '/notes/validate-answer',
+  notesGenerate: '/open-api/notes/generate',
+  notesAnswerQuestion: '/open-api/notes/answer-question',
+  notesGenerateExercise: '/open-api/notes/generate-exercise',
+  notesExecuteCode: '/open-api/notes/execute-code',
+  notesValidateAnswer: '/open-api/notes/validate-answer',
   
   // 视频搜索
-  videoSearch: '/video-search/search',
+  videoSearch: '/open-api/video-search/search',
 } as const;
 
 /**
