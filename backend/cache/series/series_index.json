@@ -19,5 +19,12 @@
     "is_series": true,
     "total_parts": 37,
     "cached_at": "2025-11-14T16:59:50.422055"
+  },
+  "series_av586659692": {
+    "bv_id": "BV1Sz4y1U77N",
+    "title": "20分钟学完一遍python基础",
+    "is_series": false,
+    "total_parts": 1,
+    "cached_at": "2025-11-19T14:07:10.991550"
   }
 }

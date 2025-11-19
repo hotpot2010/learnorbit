@@ -36,5 +36,10 @@
     "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=3",
     "cached_at": "2025-11-14T17:39:54.510753",
     "file": "cache\\d3b8145350a5708a18992191892e5369.json"
+  },
+  "9480052523409c551ed3a655406c4983": {
+    "video_url": "http://www.bilibili.com/video/av586659692",
+    "cached_at": "2025-11-19T14:07:48.483200",
+    "file": "cache\\9480052523409c551ed3a655406c4983.json"
   }
 }

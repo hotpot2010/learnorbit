@@ -2,10 +2,12 @@
 API 转发服务
 统一转发 ASR、LLM、文件上传等外部接口请求
 """
-from fastapi import FastAPI, APIRouter, Request, HTTPException, UploadFile, File, Form
+from fastapi import FastAPI, APIRouter, Request, HTTPException, UploadFile, File, Form, Request
 from fastapi.responses import JSONResponse, StreamingResponse, HTMLResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
 import httpx
 import os
 from typing import Optional
@@ -31,6 +33,44 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# 异常处理器：捕获 FastAPI 的 422 验证错误
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    """处理 FastAPI 的请求验证错误（422）"""
+    print(f"❌ FastAPI Validation Error (422):")
+    print(f"   URL: {request.url}")
+    print(f"   Method: {request.method}")
+    print(f"   Content-Type: {request.headers.get('content-type', 'N/A')}")
+    print(f"   Headers: {dict(request.headers)}")
+    print(f"   Errors: {exc.errors()}")
+    
+    # 尝试读取请求体（对于 multipart/form-data，可能无法读取）
+    try:
+        body = await request.body()
+        body_preview = body[:500] if len(body) > 500 else body
+        print(f"   Body preview (first 500 bytes): {body_preview[:500]}")
+    except Exception as e:
+        print(f"   Body: Cannot read (multipart/form-data or other): {e}")
+        body_preview = None
+    
+    # 尝试解析 form 数据
+    try:
+        form = await request.form()
+        print(f"   Form fields: {list(form.keys())}")
+        for field_name, field_value in form.items():
+            print(f"     - {field_name}: {type(field_value).__name__}")
+    except Exception as e:
+        print(f"   Form: Cannot parse: {e}")
+    
+    return JSONResponse(
+        status_code=422,
+        content={
+            "detail": exc.errors(),
+            "body_preview": str(body_preview) if body_preview else None,
+            "message": "FastAPI validation error. Check server logs for details."
+        }
+    )
 
 # ==================== 配置 ====================
 
@@ -208,6 +248,17 @@ async def file_upload(request: Request):
         # 解析 multipart/form-data
         form = await request.form()
         
+        # 调试：打印所有接收到的字段
+        print(f"🔍 Debug: Received form fields:")
+        for field_name, field_value in form.items():
+            field_type = type(field_value).__name__
+            has_filename = hasattr(field_value, 'filename')
+            print(f"   - {field_name}: type={field_type}, has_filename={has_filename}")
+            if has_filename:
+                print(f"     filename={field_value.filename}, content_type={getattr(field_value, 'content_type', 'N/A')}")
+            else:
+                print(f"     value={str(field_value)[:100]}")
+        
         # 获取 uid（如果有）
         upload_uid = form.get("uid", FILE_UPLOAD_UID)
         
@@ -231,26 +282,67 @@ async def file_upload(request: Request):
                 )
                 file_count += 1
                 print(f"📎 Found file: {field_name} = {field_value.filename} ({len(file_content)} bytes)")
+            else:
+                # 非文件字段，添加到 form_data（如果需要）
+                if field_name != 'uid':  # uid 已经单独处理
+                    form_data[field_name] = str(field_value)
+        
+        print(f"📊 Summary: {file_count} file(s), {len(form_data)} form field(s)")
+        print(f"   Form fields: {list(form_data.keys())}")
+        print(f"   File fields: {list(files_dict.keys())}")
         
         if file_count == 0:
-            raise HTTPException(status_code=400, detail="No files provided")
+            error_msg = f"No files provided. Received fields: {list(files_dict.keys())}"
+            print(f"❌ {error_msg}")
+            raise HTTPException(status_code=400, detail=error_msg)
         
         print(f"📤 File Upload Request: {file_count} file(s), uid={upload_uid}")
+        print(f"   Target URL: {FILE_UPLOAD_URL}")
         
         # 转发请求到目标服务
-        response = await client.post(
-            FILE_UPLOAD_URL,
-            data=form_data,
-            files=files_dict
-        )
-        
-        print(f"✅ File Upload Response: {response.status_code}")
-        print(f"📦 Response content: {response.text[:200]}")
-        
-        return JSONResponse(
-            status_code=response.status_code,
-            content=response.json()
-        )
+        try:
+            response = await client.post(
+                FILE_UPLOAD_URL,
+                data=form_data,
+                files=files_dict
+            )
+            
+            print(f"✅ File Upload Response: {response.status_code}")
+            response_text = response.text
+            print(f"📦 Response content (first 500 chars): {response_text[:500]}")
+            
+            # 如果响应状态码不是 2xx，记录详细信息
+            if response.status_code >= 400:
+                print(f"⚠️  Error response from target service:")
+                print(f"   Status: {response.status_code}")
+                print(f"   Headers: {dict(response.headers)}")
+                print(f"   Full response: {response_text}")
+            
+            # 尝试解析 JSON 响应
+            try:
+                response_json = response.json()
+                return JSONResponse(
+                    status_code=response.status_code,
+                    content=response_json
+                )
+            except Exception as json_error:
+                print(f"⚠️  Failed to parse JSON response: {json_error}")
+                # 如果不是 JSON，返回文本响应
+                return JSONResponse(
+                    status_code=response.status_code,
+                    content={"detail": response_text}
+                )
+        except httpx.HTTPStatusError as e:
+            print(f"❌ HTTP Status Error: {e}")
+            print(f"   Response status: {e.response.status_code}")
+            print(f"   Response text: {e.response.text[:500]}")
+            raise HTTPException(
+                status_code=e.response.status_code,
+                detail=f"Target service error: {e.response.text[:200]}"
+            )
+        except httpx.RequestError as e:
+            print(f"❌ Request Error: {e}")
+            raise HTTPException(status_code=500, detail=f"Request to target service failed: {str(e)}")
         
     except HTTPException:
         raise
