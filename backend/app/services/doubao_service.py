@@ -28,7 +28,7 @@ class DoubaoService:
         
         # 转发服务地址（默认本地，生产环境可通过环境变量配置）
         proxy_base_url = os.getenv('API_PROXY_URL', 'http://localhost:8001')
-        self.base_url = f"{proxy_base_url}/llm/chat"
+        self.base_url = f"{proxy_base_url}/open-api/llm/chat"
         
         # API Key 在转发服务中配置，这里保留用于兼容
         self.api_key = os.getenv('BAIJIA_API_KEY', 'sk-7BfuPhPxtPMjaAJn86vR2g')

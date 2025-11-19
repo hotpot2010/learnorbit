@@ -16,8 +16,8 @@ load_dotenv()
 
 # 转发服务地址（默认本地，生产环境可通过环境变量配置）
 PROXY_BASE_URL = os.getenv("API_PROXY_URL", "http://localhost:8001")
-ASR_CREATE_URL = f"{PROXY_BASE_URL}/asr/create"
-ASR_GET_URL = f"{PROXY_BASE_URL}/asr/get"
+ASR_CREATE_URL = f"{PROXY_BASE_URL}/open-api/asr/create"
+ASR_GET_URL = f"{PROXY_BASE_URL}/open-api/asr/get"
 
 # 这些配置在转发服务中，这里保留用于兼容
 ASR_APP_ID = 1728

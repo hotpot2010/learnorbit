@@ -6,59 +6,350 @@
     "success": true,
     "analysis_type": "custom",
     "result": {
-      "content": "{\n  \"knowledge_points\": [\n    {\n      \"name\": \"Python解释器的作用\",\n      \"start_time\": \"00:07\",\n      \"end_time\": \"00:25\"\n    },\n    {\n      \"name\": \"Python运行机制\",\n      \"start_time\": \"00:17\",\n      \"end_time\": \"00:20\"\n    },\n    {\n      \"name\": \"代码编辑器的必要性\",\n      \"start_time\": \"00:26\",\n      \"end_time\": \"00:34\"\n    },\n    {\n      \"name\": \"PyCharm编辑器介绍\",\n      \"start_time\": \"00:42\",\n      \"end_time\": \"00:49\"\n    },\n    {\n      \"name\": \"IDE集成开发环境概念\",\n      \"start_time\": \"00:49\",\n      \"end_time\": \"01:04\"\n    }\n  ]\n}",
+      "content": "{\n  \"knowledge_points\": [\n    {\n      \"name\": \"Python解释器\",\n      \"start_time\": \"00:06\",\n      \"end_time\": \"00:25\"\n    },\n    {\n      \"name\": \"代码编辑器\",\n      \"start_time\": \"00:27\",\n      \"end_time\": \"01:05\"\n    }\n  ]\n}",
       "knowledge_points": [
         {
-          "name": "Python解释器的作用",
-          "start_time": "00:07",
+          "name": "Python解释器",
+          "start_time": "00:06",
           "end_time": "00:25"
         },
         {
-          "name": "Python运行机制",
-          "start_time": "00:17",
-          "end_time": "00:20"
-        },
-        {
-          "name": "代码编辑器的必要性",
-          "start_time": "00:26",
-          "end_time": "00:34"
-        },
-        {
-          "name": "PyCharm编辑器介绍",
-          "start_time": "00:42",
-          "end_time": "00:49"
-        },
-        {
-          "name": "IDE集成开发环境概念",
-          "start_time": "00:49",
-          "end_time": "01:04"
+          "name": "代码编辑器",
+          "start_time": "00:27",
+          "end_time": "01:05"
         }
       ],
-      "transcript": "[00:00 - 00:04] 在写下第一行排放代码之前，你还有两件事情需要做。\n[00:04 - 00:07] 第一件事情是安装排放解释器。\n[00:07 - 00:16] 机器其实是没办法直接读懂我们写的排放代码的，而是需要一个解释器作为中间的翻译，把代码转换成4000码后再直行。\n[00:17 - 00:20] 排放的运行过程就是翻译一行，执行一行。\n[00:20 - 00:22] 我们一般说安装拍放。\n[00:22 - 00:25] 本质上指的就是安装拍放解示器。\n[00:26 - 00:29] 第二件事情是安装一个代码编辑器。\n[00:29 - 00:31] 正好比我们写文档大多数用word。\n[00:32 - 00:34] 像写代码也需要一个软件。\n[00:34 - 00:41] 现在已经有非常多的代码编辑器，关于哪个编辑器最好用这个话题都可能挑起程序员之间的战争。\n[00:42 - 00:43] 我比较推荐的是拍叉。\n[00:43 - 00:49] 它是JAB公司简称JB公司专门为拍坊设计的编辑器。\n[00:49 - 00:55] 而且拍唱不止可以用来写代码，它的本质叫做IDE集成开发环境。\n[00:55 - 01:04] 除了拥有代码补全、自动格式化、拼写检查等许多编辑器智能功能之外，还包含了调试器、版本控制工具等，非常强大。\n[01:05 - 01:06] 但是作为新手呢。\n[01:06 - 01:11] 不需要一次学会所有的，随着经验增加，你上手的功能会越来越多。\n[01:12 - 01:19] 后面两个视频会带着你一起在Windows系统或者Mac OS系统上安装，这俩东西我们稍后见。",
+      "transcript": "[00:00 - 00:04] 在写下第一行排放代码之前，你还有两件事情需要做。\n[00:04 - 00:06] 第一件事情是安装。\n[00:06 - 00:07] 排放解释器。\n[00:07 - 00:11] 机器其实是没办法直接读懂我们写的排放代码的。而是。\n[00:11 - 00:11] 需要。\n[00:11 - 00:16] 一个解释器作为中间的翻译，把代码转换成4000码后再直行。\n[00:17 - 00:18] 排放的运行。\n[00:18 - 00:21] 过程就是翻译一行执行一行。我们。\n[00:21 - 00:22] 一般说安装拍放。\n[00:22 - 00:25] 本质上指的就是安装拍放解示器。\n[00:26 - 00:27] 第二件事情是。\n[00:27 - 00:29] 安装一个代码编辑器。\n[00:29 - 00:30] 正好比我们写。\n[00:30 - 00:32] 文档大多数用word。\n[00:32 - 00:33] 像写代码也。\n[00:33 - 00:33] 需要一个。\n[00:33 - 00:34] 软件。\n[00:34 - 00:35] 现在已经有。\n[00:35 - 00:41] 非常多的代码编辑器，关于哪个编辑器最好用这个话题都可能挑起程序员之间的战争。\n[00:42 - 00:43] 我比较推荐。\n[00:43 - 00:49] 的是拍叉，它是JAB公司简称JB公司专门为拍坊设计的编辑器。\n[00:49 - 00:50] 而且拍唱。\n[00:50 - 00:55] 不止可以用来写代码，它的本质叫做IDE集成开发环境。\n[00:55 - 00:56] 除了拥有代码。\n[00:56 - 01:05] 补全、自动格式化、拼写检查等许多编辑器智能功能之外，还包含了调试器、版本控制工具等，非常强大。\n[01:05 - 01:06] 但是作为新手。\n[01:06 - 01:11] 呢，不需要一次学会所有的，随着经验增加，你上手的功能会越来越多。\n[01:12 - 01:18] 后面两个视频会带着你一起在Windows系统或者Mac OS系统上安装。这俩东西我们稍后。\n[01:18 - 01:19] 见。",
       "video_info": {
-        "path": "C:\\Users\\wangz\\AppData\\Local\\Temp\\temp_BV1Jgf6YvE8e_p2_p2.mp4",
-        "url": "http://file.gsxservice.com/3286498489_2tsbh5tr.mp4",
-        "size_bytes": 2629594
+        "path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\audio_BV1Jgf6YvE8e_p2.m4a",
+        "url": "http://file.gsxservice.com/3301646518_1sufj72j.m4a",
+        "size_bytes": 884115
       },
-      "asr_task_id": 1355327,
+      "asr_task_id": 1513062,
       "asr_from_cache": false,
-      "knowledge_point_count": 5
+      "knowledge_point_count": 2
     },
-    "processing_time": 15.67549204826355,
+    "processing_time": 43.2215576171875,
     "method": "asr_doubao",
     "part_number": 2,
-    "series_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p02 在你开始编程之前 | 为什么安装Python和PyCharm",
+    "series_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】",
     "video_info": {
-      "title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p02 在你开始编程之前 | 为什么安装Python和PyCharm",
-      "bv_id": "BV1Jgf6YvE8e_p2",
-      "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=2",
-      "part_number": 2
+      "bv_id": "BV1Jgf6YvE8e",
+      "title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】",
+      "description": "",
+      "uploader": "",
+      "upload_date": "",
+      "view_count": 0,
+      "like_count": 0,
+      "thumbnail": "",
+      "url": "http://file.gsxservice.com/3301646584_td61nevv.mp4",
+      "is_series": true,
+      "total_parts": 37,
+      "series_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】",
+      "parts": [
+        {
+          "part_number": 1,
+          "part_title": "先导篇 | 为什么做这个教程，UP主是闲得发慌吗",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p01 先导篇 | 为什么做这个教程，UP主是闲得发慌吗",
+          "duration": 176.502,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=1",
+          "bv_id": "BV1Jgf6YvE8e_p1"
+        },
+        {
+          "part_number": 2,
+          "part_title": "在你开始编程之前 | 为什么安装Python和PyCharm",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p02 在你开始编程之前 | 为什么安装Python和PyCharm",
+          "duration": 84.782,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=2",
+          "bv_id": "BV1Jgf6YvE8e_p2"
+        },
+        {
+          "part_number": 3,
+          "part_title": "Windows | 安装Python和PyCharm",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p03 Windows | 安装Python和PyCharm",
+          "duration": 233.453,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=3",
+          "bv_id": "BV1Jgf6YvE8e_p3"
+        },
+        {
+          "part_number": 4,
+          "part_title": "macOS | 安装Python和PyCharm",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p04 macOS | 安装Python和PyCharm",
+          "duration": 250.334,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=4",
+          "bv_id": "BV1Jgf6YvE8e_p4"
+        },
+        {
+          "part_number": 5,
+          "part_title": "PyCharm | 创建你的第一个项目",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p05 PyCharm | 创建你的第一个项目",
+          "duration": 202.431,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=5",
+          "bv_id": "BV1Jgf6YvE8e_p5"
+        },
+        {
+          "part_number": 6,
+          "part_title": "print | 让程序给你打印“爸爸”",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p06 print | 让程序给你打印“爸爸”",
+          "duration": 385.125,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=6",
+          "bv_id": "BV1Jgf6YvE8e_p6"
+        },
+        {
+          "part_number": 7,
+          "part_title": "更多 print | 让程序给你打印一首诗",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p07 更多 print | 让程序给你打印一首诗",
+          "duration": 402.688,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=7",
+          "bv_id": "BV1Jgf6YvE8e_p7"
+        },
+        {
+          "part_number": 8,
+          "part_title": "Python变量 | 怎么让程序记住你对象的手机号",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p08 Python变量 | 怎么让程序记住你对象的手机号",
+          "duration": 348.502,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=8",
+          "bv_id": "BV1Jgf6YvE8e_p8"
+        },
+        {
+          "part_number": 9,
+          "part_title": "Python命名规则 | 哪些变量名算好名字",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p09 Python命名规则 | 哪些变量名算好名字",
+          "duration": 181.222,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=9",
+          "bv_id": "BV1Jgf6YvE8e_p9"
+        },
+        {
+          "part_number": 10,
+          "part_title": "Python数学运算 | 用代码秒杀计算器",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p10 Python数学运算 | 用代码秒杀计算器",
+          "duration": 482.188,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=10",
+          "bv_id": "BV1Jgf6YvE8e_p10"
+        },
+        {
+          "part_number": 11,
+          "part_title": "Python注释 | 悄悄在代码里骂用户？",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p11 Python注释 | 悄悄在代码里骂用户？",
+          "duration": 148.982,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=11",
+          "bv_id": "BV1Jgf6YvE8e_p11"
+        },
+        {
+          "part_number": 12,
+          "part_title": "Python数据类型 | 程序世界的物种们",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p12 Python数据类型 | 程序世界的物种们",
+          "duration": 418.542,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=12",
+          "bv_id": "BV1Jgf6YvE8e_p12"
+        },
+        {
+          "part_number": 13,
+          "part_title": "Python交互模式 | 读一行执行一行",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p13 Python交互模式 | 读一行执行一行",
+          "duration": 164.822,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=13",
+          "bv_id": "BV1Jgf6YvE8e_p13"
+        },
+        {
+          "part_number": 14,
+          "part_title": "Python input | 写个用户问答互动程序",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p14 Python input | 写个用户问答互动程序",
+          "duration": 281.142,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=14",
+          "bv_id": "BV1Jgf6YvE8e_p14"
+        },
+        {
+          "part_number": 15,
+          "part_title": "Python条件语句 | 对象今天会生气吗",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p15 Python条件语句 | 对象今天会生气吗",
+          "duration": 339.722,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=15",
+          "bv_id": "BV1Jgf6YvE8e_p15"
+        },
+        {
+          "part_number": 16,
+          "part_title": "Python嵌套/多条件判断 | 对象今天会生气吗 II",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p16 Python嵌套/多条件判断 | 对象今天会生气吗 II",
+          "duration": 345.588,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=16",
+          "bv_id": "BV1Jgf6YvE8e_p16"
+        },
+        {
+          "part_number": 17,
+          "part_title": "Python逻辑运算 | 今年过节能收礼吗",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p17 Python逻辑运算 | 今年过节能收礼吗",
+          "duration": 176.342,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=17",
+          "bv_id": "BV1Jgf6YvE8e_p17"
+        },
+        {
+          "part_number": 18,
+          "part_title": "Python列表 | 创一个购物清单",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p18 Python列表 | 创一个购物清单",
+          "duration": 391.182,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=18",
+          "bv_id": "BV1Jgf6YvE8e_p18"
+        },
+        {
+          "part_number": 19,
+          "part_title": "Python字典 | 创个秒查流行语的词典",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p19 Python字典 | 创个秒查流行语的词典",
+          "duration": 483.622,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=19",
+          "bv_id": "BV1Jgf6YvE8e_p19"
+        },
+        {
+          "part_number": 20,
+          "part_title": "Python for循环 | 找出不正常体温",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p20 Python for循环 | 找出不正常体温",
+          "duration": 240.422,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=20",
+          "bv_id": "BV1Jgf6YvE8e_p20"
+        },
+        {
+          "part_number": 21,
+          "part_title": "Python while循环 | 捕捉日落",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p21 Python while循环 | 捕捉日落",
+          "duration": 524.91,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=21",
+          "bv_id": "BV1Jgf6YvE8e_p21"
+        },
+        {
+          "part_number": 22,
+          "part_title": "Python 格式化字符串 | 优雅群发春节短信",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p22 Python 格式化字符串 | 优雅群发春节短信",
+          "duration": 199.222,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=22",
+          "bv_id": "BV1Jgf6YvE8e_p22"
+        },
+        {
+          "part_number": 23,
+          "part_title": "Python函数（上） | 不做代码复读机",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p23 Python函数（上） | 不做代码复读机",
+          "duration": 239.102,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=23",
+          "bv_id": "BV1Jgf6YvE8e_p23"
+        },
+        {
+          "part_number": 24,
+          "part_title": "Python函数（下） | 不做代码复读机",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p24 Python函数（下） | 不做代码复读机",
+          "duration": 420.622,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=24",
+          "bv_id": "BV1Jgf6YvE8e_p24"
+        },
+        {
+          "part_number": 25,
+          "part_title": "Python引入模块 | 别人写的，拿来吧你",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p25 Python引入模块 | 别人写的，拿来吧你",
+          "duration": 377.388,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=25",
+          "bv_id": "BV1Jgf6YvE8e_p25"
+        },
+        {
+          "part_number": 26,
+          "part_title": "8分钟搞懂面向对象编程",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p26 8分钟搞懂面向对象编程",
+          "duration": 524.388,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=26",
+          "bv_id": "BV1Jgf6YvE8e_p26"
+        },
+        {
+          "part_number": 27,
+          "part_title": "Python创建类（上）| 没对象？实例化一个",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p27 Python创建类（上）| 没对象？实例化一个",
+          "duration": 233.382,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=27",
+          "bv_id": "BV1Jgf6YvE8e_p27"
+        },
+        {
+          "part_number": 28,
+          "part_title": "Python创建类（下）| 当上帝的时刻到了",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p28 Python创建类（下）| 当上帝的时刻到了",
+          "duration": 537.309,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=28",
+          "bv_id": "BV1Jgf6YvE8e_p28"
+        },
+        {
+          "part_number": 29,
+          "part_title": "Python 类继承 | 老鼠的儿子会打洞",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p29 Python 类继承 | 老鼠的儿子会打洞",
+          "duration": 470.436,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=29",
+          "bv_id": "BV1Jgf6YvE8e_p29"
+        },
+        {
+          "part_number": 30,
+          "part_title": "Python文件路径 | 文件在哪里，代码咋知道",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p30 Python文件路径 | 文件在哪里，代码咋知道",
+          "duration": 180.855,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=30",
+          "bv_id": "BV1Jgf6YvE8e_p30"
+        },
+        {
+          "part_number": 31,
+          "part_title": "Python文件操作（上）| 会读文件，程序便有了眼睛",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p31 Python文件操作（上）| 会读文件，程序便有了眼睛",
+          "duration": 582.188,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=31",
+          "bv_id": "BV1Jgf6YvE8e_p31"
+        },
+        {
+          "part_number": 32,
+          "part_title": "Python文件操作（下）| 会写文件，程序便有了记忆",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p32 Python文件操作（下）| 会写文件，程序便有了记忆",
+          "duration": 372.688,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=32",
+          "bv_id": "BV1Jgf6YvE8e_p32"
+        },
+        {
+          "part_number": 33,
+          "part_title": "Python异常处理 | 程序炸之前，走一波预判",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p33 Python异常处理 | 程序炸之前，走一波预判",
+          "duration": 262.622,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=33",
+          "bv_id": "BV1Jgf6YvE8e_p33"
+        },
+        {
+          "part_number": 34,
+          "part_title": "Python测试（上）| 不存在不写bug的程序员",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p34 Python测试（上）| 不存在不写bug的程序员",
+          "duration": 334.599,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=34",
+          "bv_id": "BV1Jgf6YvE8e_p34"
+        },
+        {
+          "part_number": 35,
+          "part_title": "Python测试（下） | 高效率把bug揪出来",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p35 Python测试（下） | 高效率把bug揪出来",
+          "duration": 423.222,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=35",
+          "bv_id": "BV1Jgf6YvE8e_p35"
+        },
+        {
+          "part_number": 36,
+          "part_title": "Python高阶和匿名函数 | 脱了马甲也要认识",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p36 Python高阶和匿名函数 | 脱了马甲也要认识",
+          "duration": 315.522,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=36",
+          "bv_id": "BV1Jgf6YvE8e_p36"
+        },
+        {
+          "part_number": 37,
+          "part_title": "Python入门啦 | 下一步是什么？",
+          "full_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p37 Python入门啦 | 下一步是什么？",
+          "duration": 87.555,
+          "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e?p=37",
+          "bv_id": "BV1Jgf6YvE8e_p37"
+        }
+      ]
     }
   },
   "metadata": {
-    "bv_id": "BV1Jgf6YvE8e_p2",
-    "title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】 p02 在你开始编程之前 | 为什么安装Python和PyCharm",
+    "bv_id": "BV1Jgf6YvE8e",
+    "title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】",
     "part_number": 2
   },
-  "cached_at": "2025-11-07T15:16:31.897604"
+  "cached_at": "2025-11-14T17:38:22.652270"
 }

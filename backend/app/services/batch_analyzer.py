@@ -14,42 +14,150 @@ from .bilibili_service import BilibiliService
 from .gemini_service import GeminiService
 from .cache_service import CacheService
 from .video_analysis_service import VideoAnalysisService, AnalysisMethod
+from .file_cleanup_service import FileCleanupService
+from .file_upload_service import FileUploadService
 from ..models.video import AnalysisType
 
 
 class BatchAnalyzer:
     """Service for batch analyzing videos"""
     
-    def __init__(self, storage_dir: str = "batch_results", use_cache: bool = True, use_asr_doubao: bool = True):
+    def __init__(self, use_cache: bool = True, use_asr_doubao: bool = True, auto_preload_next_part: bool = False):
         """
         Initialize batch analyzer
         
         Args:
-            storage_dir: Directory to store analysis results
             use_cache: Whether to use cache for analysis results
             use_asr_doubao: Whether to use ASR+Doubao method (default True)
+            auto_preload_next_part: Whether to automatically preload next part for multi-part videos (default False, disabled for testing)
         """
-        self.storage_dir = storage_dir
-        os.makedirs(storage_dir, exist_ok=True)
-        
         self.bilibili_service = BilibiliService()
         self.gemini_service = GeminiService()  # 保留作为备选
         self.cache_service = CacheService(cache_dir="cache")
         self.video_analysis_service = VideoAnalysisService()  # 新的统一分析服务
+        self.file_upload_service = FileUploadService()  # 文件上传服务（用于上传视频到CDN）
         
         self.use_cache = use_cache
         self.use_asr_doubao = use_asr_doubao  # 默认使用 ASR + 豆包
+        self.auto_preload_next_part = auto_preload_next_part  # 自动预加载下一P（默认关闭，用于测试）
         
         # Initialize thread pool for background preloading
         self.executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="preload_")
         
+        # Initialize file cleanup service
+        self.cleanup_service = FileCleanupService()
+        
         print(f"📊 BatchAnalyzer initialized:")
-        print(f"  - Storage: {storage_dir}")
         print(f"  - Cache: {'✅ Enabled' if use_cache else '❌ Disabled'}")
         print(f"  - Method: {'ASR+Doubao' if use_asr_doubao else 'Gemini'}")
+        print(f"  - Auto Preload Next Part: {'✅ Enabled' if auto_preload_next_part else '❌ Disabled (for testing)'}")
         
         # Store active jobs
         self.jobs: Dict[str, Dict[str, Any]] = {}
+    
+    def _save_pending_cdn_url(self, video_url: str, cdn_url: str, bv_id: str, part_number: Optional[int] = None):
+        """
+        保存待写入的CDN URL（当分析结果缓存尚未保存时使用）
+        
+        Args:
+            video_url: 原始视频URL
+            cdn_url: CDN URL
+            bv_id: 视频BV ID
+            part_number: 分P编号（可选）
+        """
+        try:
+            cache_key = f"pending_cdn_url_{bv_id}"
+            if part_number is not None:
+                cache_key += f"_p{part_number}"
+            
+            cache_file = os.path.join(self.cache_service.cache_dir, f"{cache_key}.json")
+            cache_data = {
+                'cdn_url': cdn_url,
+                'video_url': video_url,
+                'bv_id': bv_id,
+                'part_number': part_number,
+                'cached_at': datetime.now().isoformat()
+            }
+            
+            os.makedirs(os.path.dirname(cache_file), exist_ok=True)
+            with open(cache_file, 'w', encoding='utf-8') as f:
+                json.dump(cache_data, f, ensure_ascii=False, indent=2)
+            
+            print(f"✅ CDN URL已保存到临时缓存: {cache_key}")
+        except Exception as e:
+            print(f"⚠️ 保存临时CDN URL缓存失败: {str(e)}")
+    
+    def _get_pending_cdn_url(self, bv_id: str, part_number: Optional[int] = None) -> Optional[str]:
+        """
+        获取待写入的CDN URL（如果存在）
+        
+        Args:
+            bv_id: 视频BV ID
+            part_number: 分P编号（可选）
+            
+        Returns:
+            CDN URL，如果不存在则返回None
+        """
+        import time
+        
+        # 构建基础缓存key
+        cache_key_base = f"pending_cdn_url_{bv_id}"
+        if part_number is not None:
+            cache_key_base += f"_p{part_number}"
+        
+        # 尝试读取正确文件名和可能的拼写错误文件名（向后兼容）
+        possible_keys = [
+            cache_key_base,  # 正确的文件名: pending_cdn_url_xxx
+            cache_key_base.replace("pending_cdn_url", "pendingg_cdn_url"),  # 拼写错误的旧文件名: pendingg_cdn_url_xxx
+        ]
+        
+        for cache_key in possible_keys:
+            cache_file = os.path.join(self.cache_service.cache_dir, f"{cache_key}.json")
+            
+            if not os.path.exists(cache_file):
+                continue
+            
+            # 使用重试机制处理文件占用问题
+            max_retries = 3
+            retry_delay = 0.1  # 100ms
+            
+            for attempt in range(max_retries):
+                try:
+                    # 尝试读取文件
+                    with open(cache_file, 'r', encoding='utf-8') as f:
+                        cache_data = json.load(f)
+                        cdn_url = cache_data.get('cdn_url')
+                        if cdn_url:
+                            print(f"✅ 找到待写入的CDN URL: {cdn_url[:100]}...")
+                            
+                            # 读取成功后，尝试删除临时文件（使用重试）
+                            # 确保文件句柄已关闭后再删除
+                            time.sleep(0.05)  # 短暂延迟确保文件句柄已释放
+                            
+                            for delete_attempt in range(max_retries):
+                                try:
+                                    if os.path.exists(cache_file):
+                                        os.remove(cache_file)
+                                        print(f"🗑️ 已删除临时CDN URL缓存: {cache_key}")
+                                    break
+                                except (PermissionError, OSError) as e:
+                                    if delete_attempt < max_retries - 1:
+                                        time.sleep(retry_delay * (delete_attempt + 1))
+                                    else:
+                                        print(f"⚠️ 删除临时CDN URL缓存失败（文件可能被占用）: {cache_key}")
+                            
+                            return cdn_url
+                        break  # 文件存在但无CDN URL，跳出重试循环
+                except (PermissionError, OSError) as e:
+                    if attempt < max_retries - 1:
+                        time.sleep(retry_delay * (attempt + 1))
+                    else:
+                        print(f"⚠️ 读取临时CDN URL缓存失败（文件被占用）: {cache_key}, 错误: {str(e)}")
+                except Exception as e:
+                    print(f"⚠️ 读取临时CDN URL缓存失败: {cache_key}, 错误: {str(e)}")
+                    break  # 其他错误不重试
+        
+        return None
     
     def create_job(
         self,
@@ -175,12 +283,14 @@ class BatchAnalyzer:
         video_url: str,
         prompt: str,
         part_number: int,
+        quality: str = 'best',
     ) -> Dict[str, Any]:
         """
         Analyze a single part of a video series
         
         Args:
             video_url: Bilibili video URL (should include ?p=X parameter)
+            quality: Video quality - 'best', '1080p', '720p', '480p', '360p', or 'audio'
             prompt: Custom prompt for analysis
             part_number: Part number (for metadata)
             
@@ -207,8 +317,17 @@ class BatchAnalyzer:
                 print(f"✅ Using cached result for P{part_number}")
                 cached_result['part_number'] = part_number
                 
-                # 即使使用缓存，也要触发下一P的预加载
-                self._preload_next_part(video_url, prompt, part_number)
+                # 🎬 CDN URL已直接保存在缓存中，无需额外检查
+                if 'result' in cached_result and 'video_info' in cached_result['result']:
+                    video_info = cached_result['result']['video_info']
+                    if 'url' in video_info:
+                        print(f"✅ 缓存中包含CDN URL: {video_info['url'][:100]}...")
+                    elif 'path' in video_info:
+                        print(f"ℹ️ 缓存中为本地路径，CDN上传可能尚未完成")
+                
+                # 即使使用缓存，也要触发下一P的预加载（如果启用）
+                if self.auto_preload_next_part:
+                    self._preload_next_part(video_url, prompt, part_number)
                 
                 return {
                     'success': True,
@@ -219,16 +338,163 @@ class BatchAnalyzer:
         video_file_path = None
         
         try:
-            # 提取视频信息
-            video_info = self.bilibili_service.extract_video_info(video_url)
+            # 提取视频信息（移除?p=参数以获取完整系列信息）
+            base_url_for_info = video_url.split('?')[0] if '?' in video_url else video_url
+            video_info = self.bilibili_service.extract_video_info(base_url_for_info)
             
-            # 下载视频
-            print(f"📥 Downloading P{part_number}: {video_info.get('title', '')}")
-            download_result = self.bilibili_service.download_video(
-                video_url,
-                output_filename=f"temp_{video_info.get('bv_id', 'unknown')}_p{part_number}"
-            )
-            video_file_path = download_result['file_path']
+            # 🎬 第一步：获取视频直接播放URL（用于前端播放，不需要下载）
+            print(f"🎬 获取P{part_number}的播放地址: {video_info.get('title', '')} (Quality: {quality})")
+            play_url_result = self.bilibili_service.get_video_play_url(video_url, quality)
+            
+            if not play_url_result.get('success'):
+                raise Exception(f"无法获取视频播放地址: {play_url_result.get('error', '未知错误')}")
+            
+            video_play_url = play_url_result['play_url']
+            print(f"✅ 获取到播放地址: {video_play_url[:100]}...")
+            
+            # 🎵🎬 第二步：并行下载音频和视频
+            bv_id = video_info.get('bv_id', 'unknown')
+            audio_filename = f"audio_{bv_id}_p{part_number}"
+            video_filename = f"video_{bv_id}_p{part_number}"
+            
+            print(f"🎵🎬 并行下载音频和视频 for P{part_number}: {video_info.get('title', '')}")
+            
+            # 🎬 异步处理视频上传到CDN（不阻塞音频分析）
+            def upload_video_to_cdn_async(video_file_path: str, bv_id: str, part_num: int, original_video_url: str):
+                """异步上传视频到CDN并缓存"""
+                try:
+                    # 上传视频到CDN
+                    print(f"📤 开始上传视频到CDN: {os.path.basename(video_file_path)}")
+                    cdn_url = self.file_upload_service.upload_file(video_file_path, file_key="file0")
+                    
+                    if cdn_url:
+                        print(f"✅ 视频已上传到CDN: {cdn_url[:100]}...")
+                        
+                        # 🔄 直接更新分析结果缓存，将CDN URL保存到video_info中
+                        try:
+                            print(f"🔍 [上传完成-P{part_num}] 尝试读取分析结果缓存: {original_video_url}")
+                            # 尝试读取分析结果缓存
+                            analysis_cache = self.cache_service.get(
+                                video_url=original_video_url,
+                                prompt="提取视频中的知识点",  # 默认prompt
+                                max_age_hours=24 * 7
+                            )
+                            
+                            if analysis_cache:
+                                print(f"✅ [上传完成-P{part_num}] 找到分析结果缓存，准备更新CDN URL")
+                                
+                                # 更新缓存中的视频URL为CDN URL，移除本地路径
+                                updated = False
+                                
+                                # 1. 更新 result.video_info.url（分析结果中的video_info）
+                                if 'result' in analysis_cache and 'video_info' in analysis_cache['result']:
+                                    old_url = analysis_cache['result']['video_info'].get('url', '')
+                                    analysis_cache['result']['video_info']['url'] = cdn_url
+                                    # 移除本地路径（如果存在）
+                                    analysis_cache['result']['video_info'].pop('path', None)
+                                    updated = True
+                                    print(f"✅ [上传完成-P{part_num}] 更新 result.video_info.url: {old_url[:50]}... → {cdn_url[:50]}...")
+                                
+                                # 2. 更新顶层的 video_info.url（如果存在）
+                                if 'video_info' in analysis_cache:
+                                    old_url = analysis_cache['video_info'].get('url', '')
+                                    analysis_cache['video_info']['url'] = cdn_url
+                                    analysis_cache['video_info'].pop('path', None)
+                                    updated = True
+                                    print(f"✅ [上传完成-P{part_num}] 更新 video_info.url: {old_url[:50]}... → {cdn_url[:50]}...")
+                                
+                                if updated:
+                                    # 重新保存更新后的缓存
+                                    print(f"💾 [上传完成-P{part_num}] 保存更新后的缓存...")
+                                    self.cache_service.set(
+                                        video_url=original_video_url,
+                                        prompt="提取视频中的知识点",
+                                        result=analysis_cache,
+                                        metadata=analysis_cache.get('metadata', {})
+                                    )
+                                    print(f"✅ [上传完成-P{part_num}] 已更新分析结果缓存，CDN URL已保存到video_info: {cdn_url[:100]}...")
+                                else:
+                                    print(f"⚠️ [上传完成-P{part_num}] 缓存结构不匹配，无法更新CDN URL")
+                                
+                                # 🗑️ 删除临时CDN URL缓存（如果存在）
+                                try:
+                                    cache_key = f"pending_cdn_url_{bv_id}"
+                                    if part_num is not None:
+                                        cache_key += f"_p{part_num}"
+                                    cache_file = os.path.join(self.cache_service.cache_dir, f"{cache_key}.json")
+                                    if os.path.exists(cache_file):
+                                        os.remove(cache_file)
+                                        print(f"🗑️ [上传完成-P{part_num}] 已删除临时CDN URL缓存: {cache_key}")
+                                except Exception as e:
+                                    pass  # 忽略删除临时文件的错误
+                            else:
+                                # 🔄 分析结果缓存尚未保存，先保存到临时CDN URL缓存
+                                # 这样当分析结果保存时，可以检查并合并CDN URL
+                                print(f"ℹ️ [上传完成-P{part_num}] 分析结果缓存尚未保存，先保存CDN URL到临时缓存")
+                                self._save_pending_cdn_url(original_video_url, cdn_url, bv_id, part_num)
+                        except Exception as e:
+                            print(f"⚠️ 更新分析结果缓存失败: {str(e)}")
+                            import traceback
+                            traceback.print_exc()
+                    else:
+                        print(f"❌ 视频上传到CDN失败")
+                    
+                    # 清理下载的视频文件
+                    self.cleanup_service.cleanup_file(video_file_path)
+                    
+                except Exception as e:
+                    print(f"❌ 视频上传到CDN过程出错: {str(e)}")
+                    import traceback
+                    traceback.print_exc()
+            
+            # 使用线程池并行下载
+            executor = ThreadPoolExecutor(max_workers=2)
+            try:
+                audio_future = executor.submit(
+                    self.bilibili_service.download_audio,
+                    video_url,
+                    audio_filename
+                )
+                video_future = executor.submit(
+                    self.bilibili_service.download_video,
+                    video_url,
+                    video_filename,
+                    quality
+                )
+                
+                # 等待音频下载完成（音频先完成，可以立即开始ASR）
+                print(f"⏳ 等待音频下载完成...")
+                audio_result = audio_future.result()
+                audio_file_path = audio_result['file_path']
+                print(f"✅ 音频下载完成: {audio_result.get('file_size', 0) / 1024 / 1024:.2f} MB")
+                
+                # 音频下载完成后，立即开始ASR分析（不等待视频）
+                # 视频下载在后台继续，完成后异步上传到CDN
+                
+                # 在后台线程中处理视频上传（不阻塞）
+                def handle_video_download_and_upload():
+                    try:
+                        print(f"⏳ 等待视频下载完成...")
+                        video_result = video_future.result()
+                        video_file_path = video_result['file_path']
+                        print(f"✅ 视频下载完成: {video_result.get('file_size', 0) / 1024 / 1024:.2f} MB")
+                        
+                        # 上传到CDN并缓存
+                        upload_video_to_cdn_async(video_file_path, bv_id, part_number, video_url)
+                    except Exception as e:
+                        print(f"❌ 视频下载或上传过程出错: {str(e)}")
+                        import traceback
+                        traceback.print_exc()
+                
+                # 在后台线程中执行视频下载完成后的处理（不阻塞）
+                self.executor.submit(handle_video_download_and_upload)
+                
+            finally:
+                # 不关闭executor，让视频下载继续在后台进行
+                pass
+            
+            # 使用音频文件进行ASR分析
+            video_file_path = audio_file_path
             
             # 选择分析方法
             method = AnalysisMethod.ASR_DOUBAO if self.use_asr_doubao else AnalysisMethod.GEMINI
@@ -277,34 +543,76 @@ class BatchAnalyzer:
                 finally:
                     loop.close()
             
-            # 清理下载的视频文件
-            try:
-                os.remove(video_file_path)
-                print(f"🗑️  Cleaned up: {video_file_path}")
-            except Exception as e:
-                print(f"⚠️  Failed to clean up: {e}")
+            # 🧹 立即清理下载的音频文件（不再需要）
+            self.cleanup_service.cleanup_file(video_file_path)
             
-            # 添加分P信息
+            # 🎬 检查是否有待写入的CDN URL（上传先完成的情况）
+            bv_id = video_info.get('bv_id', '')
+            pending_cdn_url = self._get_pending_cdn_url(bv_id, part_number)
+            
+            # 🎬 video_info中的url应该存储CDN URL（如果已上传），否则暂时保留原始URL
+            # 与单P视频保持一致：更新完整的video_info，而不是重新构建
+            video_info_copy = video_info.copy()
+            if pending_cdn_url:
+                video_info_copy['url'] = pending_cdn_url  # 🎬 优先使用CDN URL
+                print(f"✅ 使用待写入的CDN URL更新video_info: {pending_cdn_url[:100]}...")
+            
+            # ⚠️ 移除video_info中的play_url（如果存在），避免缓存过期URL
+            if 'play_url' in video_info_copy:
+                video_info_copy.pop('play_url')
+            
+            # 添加分P信息到result（与单P视频结构保持一致）
             result['part_number'] = part_number
-            result['series_title'] = download_result.get('series_title', '')
-            result['video_info'] = {
-                'title': video_info.get('title', ''),
-                'bv_id': video_info.get('bv_id', ''),
-                'url': video_url,
-                'part_number': part_number,
-            }
+            # 从video_info获取系列标题（如果是系列视频）
+            result['series_title'] = video_info.get('series_title', '') if video_info.get('is_series') else ''
             
-            # 保存到缓存
+            # 🎬 更新result中的video_info（与单P视频保持一致的结构）
+            result['video_info'] = video_info_copy
+            
+            # 🎬 同时更新analysis.result.video_info中的url（如果存在）
+            if 'analysis' in result and 'result' in result['analysis'] and 'video_info' in result['analysis']['result']:
+                if pending_cdn_url:
+                    result['analysis']['result']['video_info']['url'] = pending_cdn_url
+                    result['analysis']['result']['video_info'].pop('path', None)  # 移除本地路径
+                    print(f"✅ 使用待写入的CDN URL更新analysis.result.video_info: {pending_cdn_url[:100]}...")
+            
+            # Step 4: Save to cache（移除播放URL和本地路径，只保存CDN URL）
+            # 与单P视频保持完全一致的缓存保存逻辑
             if self.use_cache and result.get('success'):
+                # 创建缓存副本，确保不包含播放URL
+                cache_result = result.copy()
+                cache_result.pop('video_play_url', None)  # 移除顶层播放URL（如果存在）
+                
+                # 🎬 移除本地路径，只保留CDN URL（如果已上传）
+                if 'analysis' in cache_result and 'result' in cache_result['analysis'] and 'video_info' in cache_result['analysis']['result']:
+                    video_info_cache = cache_result['analysis']['result']['video_info']
+                    # 优先使用待写入的CDN URL，其次使用已有的url
+                    if pending_cdn_url:
+                        video_info_cache['url'] = pending_cdn_url
+                        video_info_cache.pop('path', None)  # 移除本地路径
+                        print(f"✅ 使用待写入的CDN URL: {pending_cdn_url[:100]}...")
+                    elif 'url' in video_info_cache:
+                        video_info_cache.pop('path', None)  # 移除本地路径
+                        print(f"✅ 缓存中保存CDN URL: {video_info_cache['url'][:100]}...")
+                    else:
+                        # 如果还没有CDN URL，保留path（上传完成后会更新）
+                        print(f"ℹ️ 缓存中保留本地路径，等待CDN上传完成后更新")
+                
                 self.cache_service.set(
                     video_url=video_url,
                     prompt=prompt,
-                    result=result,
-                    metadata={'bv_id': video_info.get('bv_id', ''), 'title': video_info.get('title', ''), 'part_number': part_number}
+                    result=cache_result,
+                    metadata={'bv_id': video_info['bv_id'], 'title': video_info['title'], 'part_number': part_number}
                 )
             
-            # 后台预加载下一P（异步，不阻塞当前请求）
-            self._preload_next_part(video_url, prompt, part_number)
+            # 🎬 返回结果时包含播放URL（但不缓存）
+            result['video_play_url'] = video_play_url
+            if 'video_info' in result:
+                result['video_info']['play_url'] = video_play_url
+            
+            # 后台预加载下一P（异步，不阻塞当前请求）- 仅在启用时执行
+            if self.auto_preload_next_part:
+                self._preload_next_part(video_url, prompt, part_number)
             
             return result
             
@@ -312,12 +620,9 @@ class BatchAnalyzer:
             error_msg = str(e)
             print(f"❌ Failed to analyze P{part_number}: {error_msg}")
             
-            # Cleanup on error
-            if video_file_path and os.path.exists(video_file_path):
-                try:
-                    os.remove(video_file_path)
-                except:
-                    pass
+            # 🧹 Cleanup on error
+            if video_file_path:
+                self.cleanup_service.cleanup_file(video_file_path)
             
             return {
                 'success': False,
@@ -379,6 +684,15 @@ class BatchAnalyzer:
             
             if cached_result:
                 print(f"✅ Using cached result for: {video_url}")
+                
+                # 🎬 CDN URL已直接保存在缓存中，无需额外检查
+                if 'result' in cached_result and 'video_info' in cached_result['result']:
+                    video_info = cached_result['result']['video_info']
+                    if 'url' in video_info:
+                        print(f"✅ 缓存中包含CDN URL: {video_info['url'][:100]}...")
+                    elif 'path' in video_info:
+                        print(f"ℹ️ 缓存中为本地路径，CDN上传可能尚未完成")
+                
                 return {
                     'success': True,
                     'from_cache': True,
@@ -388,14 +702,157 @@ class BatchAnalyzer:
         video_file_path = None
         
         try:
+            # 🎬 第一步：获取视频直接播放URL（用于前端播放）
+            print(f"🎬 获取视频播放地址: {video_info['title']}")
+            play_url_result = self.bilibili_service.get_video_play_url(video_url, quality='best')
             
-            # Step 2: Download video
-            print(f"📥 Downloading video: {video_info['title']}")
-            download_result = self.bilibili_service.download_video(
-                video_url,
-                output_filename=f"temp_{video_info['bv_id']}"
-            )
-            video_file_path = download_result['file_path']
+            if not play_url_result.get('success'):
+                raise Exception(f"无法获取视频播放地址: {play_url_result.get('error', '未知错误')}")
+            
+            video_play_url = play_url_result['play_url']
+            print(f"✅ 获取到播放地址: {video_play_url[:100]}...")
+            
+            # 🎵🎬 第二步：并行下载音频和视频
+            bv_id = video_info.get('bv_id', 'unknown')
+            audio_filename = f"audio_{bv_id}"
+            video_filename = f"video_{bv_id}"
+            
+            print(f"🎵🎬 并行下载音频和视频: {video_info['title']}")
+            
+            # 🎬 异步处理视频上传到CDN（不阻塞音频分析）
+            def upload_video_to_cdn_async(video_file_path: str, bv_id: str, original_video_url: str):
+                """异步上传视频到CDN并缓存（单视频，无part_num）"""
+                try:
+                    # 上传视频到CDN
+                    print(f"📤 开始上传视频到CDN: {os.path.basename(video_file_path)}")
+                    cdn_url = self.file_upload_service.upload_file(video_file_path, file_key="file0")
+                    
+                    if cdn_url:
+                        print(f"✅ 视频已上传到CDN: {cdn_url[:100]}...")
+                        
+                        # 🔄 直接更新分析结果缓存，将CDN URL保存到video_info中
+                        try:
+                            print(f"🔍 [上传完成] 尝试读取分析结果缓存: {original_video_url}")
+                            # 尝试读取分析结果缓存
+                            analysis_cache = self.cache_service.get(
+                                video_url=original_video_url,
+                                prompt="提取视频中的知识点",  # 默认prompt
+                                max_age_hours=24 * 7
+                            )
+                            
+                            if analysis_cache:
+                                print(f"✅ [上传完成] 找到分析结果缓存，准备更新CDN URL")
+                                
+                                # 更新缓存中的视频URL为CDN URL，移除本地路径
+                                updated = False
+                                
+                                # 1. 更新 result.video_info.url（分析结果中的video_info）
+                                if 'result' in analysis_cache and 'video_info' in analysis_cache['result']:
+                                    old_url = analysis_cache['result']['video_info'].get('url', '')
+                                    analysis_cache['result']['video_info']['url'] = cdn_url
+                                    # 移除本地路径（如果存在）
+                                    analysis_cache['result']['video_info'].pop('path', None)
+                                    updated = True
+                                    print(f"✅ [上传完成] 更新 result.video_info.url: {old_url[:50]}... → {cdn_url[:50]}...")
+                                
+                                # 2. 更新顶层的 video_info.url（如果存在）
+                                if 'video_info' in analysis_cache:
+                                    old_url = analysis_cache['video_info'].get('url', '')
+                                    analysis_cache['video_info']['url'] = cdn_url
+                                    analysis_cache['video_info'].pop('path', None)
+                                    updated = True
+                                    print(f"✅ [上传完成] 更新 video_info.url: {old_url[:50]}... → {cdn_url[:50]}...")
+                                
+                                if updated:
+                                    # 重新保存更新后的缓存
+                                    print(f"💾 [上传完成] 保存更新后的缓存...")
+                                    self.cache_service.set(
+                                        video_url=original_video_url,
+                                        prompt="提取视频中的知识点",
+                                        result=analysis_cache,
+                                        metadata=analysis_cache.get('metadata', {})
+                                    )
+                                    print(f"✅ [上传完成] 已更新分析结果缓存，CDN URL已保存到video_info: {cdn_url[:100]}...")
+                                else:
+                                    print(f"⚠️ [上传完成] 缓存结构不匹配，无法更新CDN URL")
+                                
+                                # 🗑️ 删除临时CDN URL缓存（如果存在）- 单视频没有part_num
+                                try:
+                                    cache_key = f"pending_cdn_url_{bv_id}"
+                                    cache_file = os.path.join(self.cache_service.cache_dir, f"{cache_key}.json")
+                                    if os.path.exists(cache_file):
+                                        os.remove(cache_file)
+                                        print(f"🗑️ 已删除临时CDN URL缓存: {cache_key}")
+                                except Exception as e:
+                                    pass  # 忽略删除临时文件的错误
+                            else:
+                                # 🔄 分析结果缓存尚未保存，先保存到临时CDN URL缓存
+                                # 这样当分析结果保存时，可以检查并合并CDN URL
+                                print(f"ℹ️ [上传完成] 分析结果缓存尚未保存，先保存CDN URL到临时缓存")
+                                self._save_pending_cdn_url(original_video_url, cdn_url, bv_id, None)  # 单视频没有part_num
+                        except Exception as e:
+                            print(f"⚠️ [上传完成] 更新分析结果缓存失败: {str(e)}")
+                            import traceback
+                            traceback.print_exc()
+                    else:
+                        print(f"❌ 视频上传到CDN失败")
+                    
+                    # 清理下载的视频文件
+                    self.cleanup_service.cleanup_file(video_file_path)
+                    
+                except Exception as e:
+                    print(f"❌ 视频上传到CDN过程出错: {str(e)}")
+                    import traceback
+                    traceback.print_exc()
+            
+            # 使用线程池并行下载
+            executor = ThreadPoolExecutor(max_workers=2)
+            try:
+                audio_future = executor.submit(
+                    self.bilibili_service.download_audio,
+                    video_url,
+                    audio_filename
+                )
+                video_future = executor.submit(
+                    self.bilibili_service.download_video,
+                    video_url,
+                    video_filename,
+                    'best'
+                )
+                
+                # 等待音频下载完成（音频先完成，可以立即开始ASR）
+                print(f"⏳ 等待音频下载完成...")
+                audio_result = audio_future.result()
+                audio_file_path = audio_result['file_path']
+                print(f"✅ 音频下载完成: {audio_result.get('file_size', 0) / 1024 / 1024:.2f} MB")
+                
+                # 音频下载完成后，立即开始ASR分析（不等待视频）
+                # 视频下载在后台继续，完成后异步上传到CDN
+                
+                # 在后台线程中处理视频上传（不阻塞）
+                def handle_video_download_and_upload():
+                    try:
+                        print(f"⏳ 等待视频下载完成...")
+                        video_result = video_future.result()
+                        video_file_path = video_result['file_path']
+                        print(f"✅ 视频下载完成: {video_result.get('file_size', 0) / 1024 / 1024:.2f} MB")
+                        
+                        # 上传到CDN并缓存
+                        upload_video_to_cdn_async(video_file_path, bv_id, video_url)
+                    except Exception as e:
+                        print(f"❌ 视频下载或上传过程出错: {str(e)}")
+                        import traceback
+                        traceback.print_exc()
+                
+                # 在后台线程中执行视频下载完成后的处理（不阻塞）
+                self.executor.submit(handle_video_download_and_upload)
+                
+            finally:
+                # 不关闭executor，让视频下载继续在后台进行
+                pass
+            
+            # 使用音频文件进行ASR分析
+            video_file_path = audio_file_path
             
             # Step 3: Analyze video (使用新的统一分析服务)
             print(f"🤖 Analyzing video...")
@@ -435,23 +892,68 @@ class BatchAnalyzer:
                 else:
                     raise
             
-            # Combine results
+            # 🎬 检查是否有待写入的CDN URL（上传先完成的情况）
+            bv_id = video_info.get('bv_id', '')
+            pending_cdn_url = self._get_pending_cdn_url(bv_id)
+            
+            # 🎬 video_info中的url应该存储CDN URL（如果已上传），否则暂时保留原始URL
+            video_info_copy = video_info.copy()
+            if pending_cdn_url:
+                video_info_copy['url'] = pending_cdn_url  # 🎬 优先使用CDN URL
+                print(f"✅ 使用待写入的CDN URL更新video_info: {pending_cdn_url[:100]}...")
+            
+            # Combine results（不保存播放URL到缓存，因为CDN链接有时效性）
             result = {
                 'success': True,
-                'video_info': video_info,
+                'video_info': video_info_copy,  # 🎬 使用包含CDN URL的video_info
                 'analysis': analysis_result,
                 'analyzed_at': datetime.now().isoformat(),
                 'from_cache': False,
             }
             
-            # Step 4: Save to cache
+            # ⚠️ 移除video_info中的play_url（如果存在）
+            if 'play_url' in result['video_info']:
+                result['video_info'].pop('play_url')
+            
+            # 🎬 同时更新analysis.result.video_info中的url（如果存在）
+            if 'analysis' in result and 'result' in result['analysis'] and 'video_info' in result['analysis']['result']:
+                if pending_cdn_url:
+                    result['analysis']['result']['video_info']['url'] = pending_cdn_url
+                    result['analysis']['result']['video_info'].pop('path', None)  # 移除本地路径
+                    print(f"✅ 使用待写入的CDN URL更新analysis.result.video_info: {pending_cdn_url[:100]}...")
+            
+            # Step 4: Save to cache（移除播放URL和本地路径，只保存CDN URL）
             if self.use_cache:
+                # 创建缓存副本，确保不包含播放URL
+                cache_result = result.copy()
+                cache_result.pop('video_play_url', None)  # 移除顶层播放URL（如果存在）
+                
+                # 🎬 移除本地路径，只保留CDN URL（如果已上传）
+                if 'analysis' in cache_result and 'result' in cache_result['analysis'] and 'video_info' in cache_result['analysis']['result']:
+                    video_info_cache = cache_result['analysis']['result']['video_info']
+                    # 优先使用待写入的CDN URL，其次使用已有的url
+                    if pending_cdn_url:
+                        video_info_cache['url'] = pending_cdn_url
+                        video_info_cache.pop('path', None)  # 移除本地路径
+                        print(f"✅ 使用待写入的CDN URL: {pending_cdn_url[:100]}...")
+                    elif 'url' in video_info_cache:
+                        video_info_cache.pop('path', None)  # 移除本地路径
+                        print(f"✅ 缓存中保存CDN URL: {video_info_cache['url'][:100]}...")
+                    else:
+                        # 如果还没有CDN URL，保留path（上传完成后会更新）
+                        print(f"ℹ️ 缓存中保留本地路径，等待CDN上传完成后更新")
+                
                 self.cache_service.set(
                     video_url=video_url,
                     prompt=prompt,
-                    result=result,
+                    result=cache_result,
                     metadata={'bv_id': video_info['bv_id'], 'title': video_info['title']}
                 )
+            
+            # 🎬 返回结果时包含播放URL（但不缓存）
+            result['video_play_url'] = video_play_url
+            if 'video_info' in result:
+                result['video_info']['play_url'] = video_play_url
             
             return result
             
@@ -466,9 +968,9 @@ class BatchAnalyzer:
             }
         
         finally:
-            # Cleanup downloaded video
-            if video_file_path and os.path.exists(video_file_path):
-                self.bilibili_service.cleanup_video(video_file_path)
+            # 🧹 清理下载的音频文件
+            if video_file_path:
+                self.cleanup_service.cleanup_file(video_file_path)
     
     def run_job(
         self,
@@ -523,81 +1025,8 @@ class BatchAnalyzer:
         job['status'] = 'completed'
         job['completed_at'] = datetime.now().isoformat()
         
-        # Save results to file
-        self.save_job_results(job_id)
+        # 结果已保存在cache中，不再需要单独保存到batch_results文件夹
+        print(f"✅ Job {job_id} completed. Results are cached in cache directory.")
         
         return job
-    
-    def save_job_results(self, job_id: str) -> str:
-        """
-        Save job results to JSON file
-        
-        Args:
-            job_id: Job ID
-            
-        Returns:
-            Path to saved file
-        """
-        job = self.jobs.get(job_id)
-        if not job:
-            raise ValueError(f"Job {job_id} not found")
-        
-        # Create filename with timestamp
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        filename = f"{job['job_name'].replace(' ', '_')}_{timestamp}.json"
-        filepath = os.path.join(self.storage_dir, filename)
-        
-        # Save to JSON
-        with open(filepath, 'w', encoding='utf-8') as f:
-            json.dump(job, f, ensure_ascii=False, indent=2)
-        
-        print(f"💾 Results saved to: {filepath}")
-        job['saved_file'] = filepath
-        
-        return filepath
-    
-    def load_job_results(self, filepath: str) -> Dict[str, Any]:
-        """
-        Load job results from JSON file
-        
-        Args:
-            filepath: Path to JSON file
-            
-        Returns:
-            Job results dictionary
-        """
-        with open(filepath, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    
-    def list_saved_jobs(self) -> List[Dict[str, Any]]:
-        """
-        List all saved job result files
-        
-        Returns:
-            List of job file information
-        """
-        results = []
-        
-        for filename in os.listdir(self.storage_dir):
-            if filename.endswith('.json'):
-                filepath = os.path.join(self.storage_dir, filename)
-                try:
-                    with open(filepath, 'r', encoding='utf-8') as f:
-                        data = json.load(f)
-                        results.append({
-                            'filename': filename,
-                            'filepath': filepath,
-                            'job_name': data.get('job_name', ''),
-                            'created_at': data.get('created_at', ''),
-                            'total_videos': data.get('total_videos', 0),
-                            'completed_videos': data.get('completed_videos', 0),
-                            'failed_videos': data.get('failed_videos', 0),
-                        })
-                except Exception as e:
-                    print(f"⚠️ Failed to load {filename}: {str(e)}")
-        
-        # Sort by creation time (newest first)
-        results.sort(key=lambda x: x['created_at'], reverse=True)
-        
-        return results
 

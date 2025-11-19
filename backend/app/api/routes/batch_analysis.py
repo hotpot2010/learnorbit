@@ -11,7 +11,6 @@ router = APIRouter(prefix="/batch", tags=["batch-analysis"])
 
 # Initialize services
 batch_analyzer = BatchAnalyzer(
-    storage_dir="batch_results",
     use_cache=True,
     use_asr_doubao=True  # 使用 ASR + 豆包 + 文件上传服务
 )
@@ -38,6 +37,13 @@ class AnalyzePartRequest(BaseModel):
     video_url: str
     prompt: str
     part_number: int
+    quality: Optional[str] = 'best'  # 视频清晰度: 'best', '1080p', '720p', '480p', '360p', 'audio'
+
+
+class GetPlayUrlRequest(BaseModel):
+    """Request model for getting video play URL"""
+    video_url: str
+    quality: Optional[str] = 'best'
 
 
 class PromptTemplate(BaseModel):
@@ -254,11 +260,32 @@ async def analyze_part(request: AnalyzePartRequest) -> Dict[str, Any]:
             video_url=request.video_url,
             prompt=request.prompt,
             part_number=request.part_number,
+            quality=request.quality,
         )
         
         return {
             "success": result.get('success', False),
             "data": result
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/get-play-url")
+async def get_play_url(request: GetPlayUrlRequest) -> Dict[str, Any]:
+    """
+    Get fresh video play URL (B站CDN链接有时效性，需要重新获取)
+    """
+    try:
+        result = bilibili_service.get_video_play_url(
+            url=request.video_url,
+            quality=request.quality
+        )
+        
+        return {
+            "success": result.get('success', False),
+            "play_url": result.get('play_url', ''),
+            "error": result.get('error')
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -289,39 +316,30 @@ async def get_job_status(job_id: str) -> Dict[str, Any]:
 
 
 @router.get("/jobs")
-async def list_saved_jobs() -> Dict[str, Any]:
+async def list_active_jobs() -> Dict[str, Any]:
     """
-    List all saved job results
-    """
-    try:
-        jobs = batch_analyzer.list_saved_jobs()
-        return {
-            "success": True,
-            "data": jobs
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.get("/results/{filename}")
-async def get_job_results(filename: str) -> Dict[str, Any]:
-    """
-    Get detailed job results from saved file
+    List all active jobs (results are stored in cache, not batch_results folder)
     """
     try:
-        import os
-        filepath = os.path.join(batch_analyzer.storage_dir, filename)
+        # 返回当前活跃的任务列表
+        jobs_list = []
+        for job_id, job in batch_analyzer.jobs.items():
+            jobs_list.append({
+                'job_id': job_id,
+                'job_name': job.get('job_name', ''),
+                'status': job.get('status', 'unknown'),
+                'created_at': job.get('created_at', ''),
+                'total_videos': job.get('total_videos', 0),
+                'completed_videos': job.get('completed_videos', 0),
+                'failed_videos': job.get('failed_videos', 0),
+                'progress': job.get('progress', 0),
+            })
         
-        if not os.path.exists(filepath):
-            raise HTTPException(status_code=404, detail="Results file not found")
-        
-        results = batch_analyzer.load_job_results(filepath)
         return {
             "success": True,
-            "data": results
+            "data": jobs_list,
+            "message": "Results are stored in cache directory, not batch_results folder"
         }
-    except HTTPException:
-        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

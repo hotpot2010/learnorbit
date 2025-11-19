@@ -1,6 +1,6 @@
 {
-  "cache_key": "series_1Jgf6YvE8e",
-  "video_url": "https://www.bilibili.com/video/BV1Jgf6YvE8e",
+  "cache_key": "series_av113894261588276",
+  "video_url": "http://www.bilibili.com/video/av113894261588276",
   "series_info": {
     "bv_id": "BV1Jgf6YvE8e",
     "title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】",
@@ -10,7 +10,7 @@
     "view_count": 0,
     "like_count": 0,
     "thumbnail": "",
-    "url": "https://www.bilibili.com/video/BV1Jgf6YvE8e",
+    "url": "http://www.bilibili.com/video/av113894261588276",
     "is_series": true,
     "total_parts": 37,
     "series_title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】",
@@ -313,5 +313,5 @@
       }
     ]
   },
-  "cached_at": "2025-11-14T16:59:50.422055"
+  "cached_at": "2025-11-14T16:59:18.467563"
 }

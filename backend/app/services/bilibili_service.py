@@ -30,15 +30,145 @@ class BilibiliService:
         Initialize Bilibili service
         
         Args:
-            download_dir: Directory to store downloaded videos (temp dir if not specified)
+            download_dir: Directory to store downloaded files (defaults to backend/downloads)
         """
-        self.download_dir = download_dir or tempfile.gettempdir()
+        # 使用后端专用下载文件夹，而非系统temp目录
+        if download_dir is None:
+            # 获取backend目录的绝对路径
+            backend_dir = Path(__file__).parent.parent.parent
+            download_dir = backend_dir / 'downloads'
+        
+        self.download_dir = str(download_dir)
         os.makedirs(self.download_dir, exist_ok=True)
         
         # Initialize series cache service
         self.series_cache = SeriesCacheService()
         
-        print(f"📁 Video download directory: {self.download_dir}")
+        print(f"📁 Download directory: {self.download_dir}")
+    
+    def get_video_play_url(self, url: str, quality: str = 'best') -> Dict[str, Any]:
+        """
+        Get direct play URL for Bilibili video without downloading
+        
+        Args:
+            url: Bilibili video URL or BV number
+            quality: Video quality - 'best', '1080p', '720p', '480p', '360p'
+            
+        Returns:
+            Dictionary with play_url, title, duration, etc.
+        """
+        # Convert BV number to full URL if needed
+        if url.startswith('BV'):
+            url = f'https://www.bilibili.com/video/{url}'
+        
+        print(f"🎬 获取视频播放地址: {url} (Quality: {quality})")
+        
+        # 根据清晰度生成format字符串
+        format_str = self._get_format_string(quality)
+        
+        ydl_opts = {
+            'format': format_str,
+            'quiet': True,
+            'no_warnings': True,
+            # B站特定配置
+            'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'referer': 'https://www.bilibili.com/',
+            'headers': {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            },
+            'socket_timeout': 30,
+            'retries': 3,
+        }
+        
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=False)
+                
+                # 获取直接播放URL
+                play_url = info.get('url')
+                
+                # 如果format包含多个流，需要选择video流
+                if 'requested_formats' in info:
+                    # 合并了视频和音频流的情况
+                    for fmt in info['requested_formats']:
+                        if fmt.get('vcodec', 'none') != 'none':
+                            play_url = fmt.get('url')
+                            break
+                
+                if not play_url:
+                    raise Exception("无法获取视频播放地址")
+                
+                print(f"✅ 获取到播放地址: {play_url[:100]}...")
+                
+                return {
+                    'success': True,
+                    'play_url': play_url,
+                    'title': info.get('title', ''),
+                    'duration': info.get('duration', 0),
+                    'bv_id': info.get('id', ''),
+                    'thumbnail': info.get('thumbnail', ''),
+                    'format': info.get('format', ''),
+                    'width': info.get('width', 0),
+                    'height': info.get('height', 0),
+                    'filesize': info.get('filesize', 0),
+                }
+        except Exception as e:
+            print(f"❌ 获取播放地址失败: {str(e)}")
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    def _get_format_string(self, quality: str) -> str:
+        """
+        Generate format string based on quality selection
+        
+        Args:
+            quality: Quality level ('best', '1080p', '720p', '480p', '360p', 'audio')
+            
+        Returns:
+            Format string for yt-dlp
+        """
+        quality_formats = {
+            'best': (
+                'best[ext=mp4]/'  # 优先：单一流
+                'best/'
+                'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/'
+                'bestvideo/bestaudio'
+            ),
+            '1080p': (
+                'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/'
+                'bestvideo[height<=1080]+bestaudio/'
+                'best[height<=1080]/'
+                'bestvideo[height<=1080]/'
+                'best'
+            ),
+            '720p': (
+                'bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/'
+                'bestvideo[height<=720]+bestaudio/'
+                'best[height<=720]/'
+                'bestvideo[height<=720]/'
+                'best'
+            ),
+            '480p': (
+                'bestvideo[height<=480][ext=mp4]+bestaudio[ext=m4a]/'
+                'bestvideo[height<=480]+bestaudio/'
+                'best[height<=480]/'
+                'bestvideo[height<=480]/'
+                'best'
+            ),
+            '360p': (
+                'bestvideo[height<=360][ext=mp4]+bestaudio[ext=m4a]/'
+                'bestvideo[height<=360]+bestaudio/'
+                'best[height<=360]/'
+                'bestvideo[height<=360]/'
+                'worst'
+            ),
+            'audio': 'bestaudio/best',
+        }
+        
+        return quality_formats.get(quality, quality_formats['best'])
     
     def list_available_formats(self, url: str) -> List[Dict[str, Any]]:
         """
@@ -108,6 +238,16 @@ class BilibiliService:
             'quiet': True,
             'no_warnings': True,
             'extract_flat': False,
+            # B站特定配置
+            'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'referer': 'https://www.bilibili.com/',
+            'headers': {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            },
+            # 重试配置
+            'socket_timeout': 30,
+            'retries': 3,
         }
         
         try:
@@ -200,13 +340,113 @@ class BilibiliService:
         except Exception as e:
             raise Exception(f"Failed to extract video info: {str(e)}")
     
-    def download_video(self, url: str, output_filename: Optional[str] = None) -> Dict[str, Any]:
+    def download_audio(self, url: str, output_filename: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Download only audio from Bilibili video (for ASR)
+        
+        Args:
+            url: Bilibili video URL or BV number
+            output_filename: Custom output filename (without extension)
+            
+        Returns:
+            Dictionary with download info including file path
+        """
+        # Convert BV number to full URL if needed
+        if url.startswith('BV'):
+            url = f'https://www.bilibili.com/video/{url}'
+        
+        # Generate output filename
+        if not output_filename:
+            output_filename = f"bilibili_audio_{int(time.time())}"
+        
+        output_path = os.path.join(self.download_dir, f"{output_filename}.%(ext)s")
+        
+        ydl_opts = {
+            'format': 'bestaudio/best',  # 🎵 只下载音频
+            'outtmpl': output_path,
+            'quiet': False,
+            'no_warnings': False,
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'm4a',  # 使用M4A格式（B站原生音频格式）
+                'preferredquality': '192',
+            }],
+            # B站特定配置
+            'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'referer': 'https://www.bilibili.com/',
+            'headers': {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            },
+            'socket_timeout': 30,
+            'retries': 3,
+        }
+        
+        try:
+            print(f"🎵 Downloading audio from: {url}")
+            
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(url, download=True)
+                
+                # 音频文件路径（yt-dlp会自动添加.m4a扩展名）
+                base_filename = os.path.join(self.download_dir, output_filename)
+                audio_file = f"{base_filename}.m4a"
+                
+                # 🔍 查找实际下载的文件
+                if not os.path.exists(audio_file):
+                    print(f"⚠️ Expected audio file not found: {audio_file}")
+                    print(f"🔍 Searching in: {self.download_dir}")
+                    
+                    # 搜索可能的音频文件
+                    for ext in ['.m4a', '.mp3', '.opus', '.webm', '.aac']:
+                        potential_file = f"{base_filename}{ext}"
+                        if os.path.exists(potential_file):
+                            audio_file = potential_file
+                            print(f"✅ Found audio file: {audio_file}")
+                            break
+                    
+                    # 如果还是没找到，搜索目录中的文件
+                    if not os.path.exists(audio_file):
+                        for file in os.listdir(self.download_dir):
+                            if output_filename in file and any(file.endswith(ext) for ext in ['.m4a', '.mp3', '.opus', '.webm', '.aac']):
+                                audio_file = os.path.join(self.download_dir, file)
+                                print(f"✅ Found audio file: {audio_file}")
+                                break
+                
+                if not os.path.exists(audio_file):
+                    raise FileNotFoundError(f"Audio file not found after download: {audio_file}")
+                
+                print(f"✅ Audio downloaded: {audio_file}")
+                
+                # 提取分P信息（如果有）
+                part_number = info.get('playlist_index', 1)
+                total_parts = info.get('n_entries', 1)
+                
+                return {
+                    'success': True,
+                    'file_path': audio_file,
+                    'file_size': os.path.getsize(audio_file),
+                    'bv_id': info.get('id', ''),
+                    'title': info.get('title', ''),
+                    'duration': info.get('duration', 0),
+                    'url': url,
+                    'part_number': part_number,
+                    'total_parts': total_parts,
+                    'is_audio_only': True,
+                }
+        except Exception as e:
+            error_msg = str(e)
+            print(f"❌ Audio download failed: {error_msg}")
+            raise Exception(f"Failed to download audio: {error_msg}")
+    
+    def download_video(self, url: str, output_filename: Optional[str] = None, quality: str = 'best') -> Dict[str, Any]:
         """
         Download Bilibili video
         
         Args:
             url: Bilibili video URL or BV number
             output_filename: Custom output filename (without extension)
+            quality: Video quality - 'best', '1080p', '720p', '480p', '360p', or 'audio'
             
         Returns:
             Dictionary with download info including file path
@@ -224,19 +464,25 @@ class BilibiliService:
         
         output_path = os.path.join(self.download_dir, f"{output_filename}.%(ext)s")
         
+        # 根据清晰度选择format字符串
+        format_str = self._get_format_string(quality)
+        print(f"🎬 选择清晰度: {quality}, format: {format_str}")
+        
         ydl_opts = {
-            # 🎯 优化：优先使用已合并的格式（无需 FFmpeg）
-            # 如果 FFmpeg 可用，才尝试手动合并
-            'format': (
-                'best[ext=mp4]/'  # 🎯 优先：单一流（已包含音视频，无需合并）
-                'best/'  # 任意最佳格式
-                'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/'  # FFmpeg 合并（需要安装）
-                'bestvideo[height<=1080]+bestaudio/'  # 限制分辨率
-                'bestvideo/bestaudio'  # 最后才是仅视频或仅音频
-            ),
+            'format': format_str,
             'outtmpl': output_path,
             'quiet': False,
             'no_warnings': False,
+            # B站特定配置
+            'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'referer': 'https://www.bilibili.com/',
+            'headers': {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            },
+            # 重试配置
+            'socket_timeout': 30,
+            'retries': 3,
             'merge_output_format': 'mp4',  # 如果合并，输出 mp4
             # 错误处理和重试
             'retries': 3,

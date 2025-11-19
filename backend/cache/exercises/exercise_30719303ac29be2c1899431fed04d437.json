@@ -1,0 +1,24 @@
+{
+  "video_url": "http://www.bilibili.com/video/av587941174",
+  "knowledge_point_name": "递归函数定义",
+  "exercise": {
+    "type": "guided_steps",
+    "title": "定义递归函数计算最长子序列长度",
+    "description": "定义递归函数L，接收数组，返回从数组第二个元素开始的最长子序列长度。",
+    "difficulty": "beginner",
+    "language": "python",
+    "starter_code": "def L(arr):\n    # 补充你的代码\n    pass",
+    "solution": "def L(arr):\n    if not arr:  # 基本情况：空数组\n        return 0\n    if len(arr) == 1:  # 只有一个元素，子序列长度为1\n        return 1\n    # 递归调用：从第二个元素开始的子数组\n    return 1 + L(arr[1:])",
+    "hints": [
+      "步骤1：处理基本情况，若数组为空返回0",
+      "步骤2：若数组只有一个元素，返回1",
+      "步骤3：递归调用函数L，传入从第二个元素开始的子数组（arr[1:]）",
+      "步骤4：返回1加上递归调用的结果"
+    ]
+  },
+  "cached_at": "2025-11-14T18:26:57.856766",
+  "metadata": {
+    "video_title": "10分钟彻底搞懂“动态规划”算法",
+    "transcript_length": 54
+  }
+}

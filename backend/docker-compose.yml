@@ -31,7 +31,6 @@ services:
       # 持久化数据卷
       - ./uploads:/app/uploads
       - ./cache:/app/cache
-      - ./batch_results:/app/batch_results
       - ./logs:/app/logs
     
     restart: unless-stopped

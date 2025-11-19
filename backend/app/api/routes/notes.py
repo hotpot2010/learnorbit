@@ -188,7 +188,6 @@ async def answer_question(request: QuestionAnswerRequest):
 1. 回答控制在30-50字
 2. 直接给出答案，不要解释性前缀
 3. 语言简洁明了
-4. 基于视频内容回答，如超出范围直接说"视频未涉及"
 
 只输出答案，不要其他内容。"""
 

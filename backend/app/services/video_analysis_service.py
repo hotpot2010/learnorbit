@@ -18,6 +18,8 @@ from .volcano_service import VolcanoService
 from .file_upload_service import FileUploadService
 from .cache_service import CacheService
 from .knowledge_point_extractor import KnowledgePointExtractor
+from .audio_splitter_service import AudioSplitterService
+from .result_merger_service import ResultMergerService
 
 
 class AnalysisMethod(str, Enum):
@@ -43,6 +45,8 @@ class VideoAnalysisService:
         self.file_upload_service = FileUploadService()
         self.cache_service = CacheService(cache_dir="cache")
         self.knowledge_point_extractor = KnowledgePointExtractor()
+        self.audio_splitter = AudioSplitterService(chunk_duration_seconds=300)  # 5分钟切片
+        self.result_merger = ResultMergerService()
         
         self.use_cache = use_cache
         
@@ -135,24 +139,58 @@ class VideoAnalysisService:
     ) -> Dict[str, Any]:
         """
         使用 ASR + 火山引擎方案分析视频
+        支持长视频自动切分和并行处理
         
         步骤：
-        1. 上传视频到文件服务器获取 URL
-        2. 检查 ASR 缓存，如果有则跳过 ASR
-        3. 调用 ASR 识别逐字稿（如果没有缓存）
-        4. 保存 ASR 结果到缓存
-        5. 使用火山引擎根据逐字稿生成大纲
+        1. 检查音频长度，如果>5分钟则切分
+        2. 并行上传所有切片
+        3. 并行调用ASR识别
+        4. 并行提取知识点
+        5. 合并结果（时间戳对齐）
         """
         print("=" * 70)
-        print("📋 Method: ASR + Volcano Engine")
+        print("📋 Method: ASR + Volcano Engine (with chunking support)")
         print("=" * 70)
         
-        # Step 1: 获取视频 URL
-        video_url = self._get_or_upload_video_url(video_path)
-        print(f"📹 Video URL: {video_url}")
-        
         # 用于缓存的 URL（通常是原始 Bilibili URL）
-        cache_url = video_url_for_cache or video_url
+        cache_url = video_url_for_cache or video_path
+        
+        # Step 0: 检查音频长度并切分（如果需要）
+        print(f"\n🎵 Step 0: Checking audio duration...")
+        chunks_info = self.audio_splitter.split_audio(video_path)
+        
+        if len(chunks_info) > 1:
+            print(f"✂️ Audio split into {len(chunks_info)} chunks for parallel processing")
+            return await self._analyze_chunks_parallel(
+                chunks_info,
+                analysis_type,
+                custom_prompt,
+                cache_url
+            )
+        else:
+            print(f"✅ Audio is short enough, no splitting needed")
+            return await self._analyze_single_chunk(
+                video_path,
+                analysis_type,
+                custom_prompt,
+                cache_url
+            )
+    
+    async def _analyze_single_chunk(
+        self,
+        video_path: str,
+        analysis_type: AnalysisType,
+        custom_prompt: Optional[str],
+        cache_url: str
+    ) -> Dict[str, Any]:
+        """
+        分析单个音频文件（不切分）
+        """
+        # Step 1: 上传视频到文件服务器
+        print(f"\n📤 Step 1: Uploading audio to file server...")
+        video_url = self._get_or_upload_video_url(video_path)
+        print(f"✅ Audio uploaded successfully")
+        print(f"🎵 Audio URL: {video_url}")
         
         # Step 2: 检查 ASR 缓存
         transcript = None
@@ -169,7 +207,7 @@ class VideoAnalysisService:
         
         # Step 3: ASR 识别逐字稿（如果没有缓存）
         if not transcript:
-            print(f"\n📝 Step 1: ASR Recognition")
+            print(f"\n📝 Step 2: ASR Recognition")
             asr_task = await self.asr_service.create_async_task(video_url)
             asr_task_id = asr_task.id
             print(f"✅ ASR task created: {asr_task_id}")
@@ -192,8 +230,8 @@ class VideoAnalysisService:
                     }
                 )
         
-        # Step 5: 知识点提取（并行处理长文本）
-        print(f"\n📚 Step 2: Knowledge Point Extraction")
+        # Step 5: 知识点提取
+        print(f"\n📚 Step 3: Knowledge Point Extraction")
         knowledge_points = await self.knowledge_point_extractor.extract_knowledge_points(transcript)
         
         print(f"✅ Knowledge points extracted: {len(knowledge_points)}")
@@ -210,9 +248,9 @@ class VideoAnalysisService:
             "success": True,
             "analysis_type": analysis_type,
             "result": {
-                "content": knowledge_points_json,  # JSON 格式的知识点列表
-                "knowledge_points": knowledge_points,  # 结构化的知识点列表
-                "transcript": transcript,  # 完整逐字稿（带时间戳）
+                "content": knowledge_points_json,
+                "knowledge_points": knowledge_points,
+                "transcript": transcript,
                 "video_info": {
                     "path": video_path,
                     "url": video_url,
@@ -221,6 +259,117 @@ class VideoAnalysisService:
                 "asr_task_id": asr_task_id,
                 "asr_from_cache": from_cache,
                 "knowledge_point_count": len(knowledge_points)
+            }
+        }
+    
+    async def _analyze_chunks_parallel(
+        self,
+        chunks_info: list,
+        analysis_type: AnalysisType,
+        custom_prompt: Optional[str],
+        cache_url: str
+    ) -> Dict[str, Any]:
+        """
+        并行分析多个音频切片
+        """
+        print(f"\n🚀 Starting parallel analysis of {len(chunks_info)} chunks...")
+        
+        # Step 1: 并行上传所有切片（真正的异步并行）
+        print(f"\n📤 Step 1: Uploading {len(chunks_info)} chunks in parallel...")
+        
+        async def upload_chunk(chunk_info):
+            chunk_path = chunk_info['chunk_path']
+            # 使用异步上传方法
+            if chunk_path.startswith(('http://', 'https://')):
+                video_url = chunk_path
+            else:
+                video_url = await self.file_upload_service.upload_video_for_asr_async(chunk_path)
+                if not video_url:
+                    raise Exception(f"Failed to upload chunk: {chunk_path}")
+            return {**chunk_info, 'video_url': video_url}
+        
+        chunks_with_urls = await self.audio_splitter.process_chunks_parallel(
+            chunks_info,
+            upload_chunk,
+            max_parallel=5  # 增加并行上传数量（从3到5）
+        )
+        print(f"✅ All {len(chunks_with_urls)} chunks uploaded")
+        
+        # Step 2: 并行ASR识别
+        print(f"\n📝 Step 2: ASR Recognition (parallel)...")
+        
+        async def process_asr(chunk_info):
+            video_url = chunk_info['video_url']
+            chunk_index = chunk_info['chunk_index']
+            
+            print(f"📝 ASR for chunk {chunk_index + 1}...")
+            asr_task = await self.asr_service.create_async_task(video_url)
+            asr_result = await self.asr_service.wait_for_completion(asr_task.id)
+            transcript = self.asr_service.extract_transcript(asr_result, with_timestamps=True)
+            
+            return {'text': transcript, 'chunk_index': chunk_index}
+        
+        asr_results = await self.audio_splitter.process_chunks_parallel(
+            chunks_with_urls,
+            process_asr,
+            max_parallel=3
+        )
+        print(f"✅ All ASR completed")
+        
+        # Step 3: 并行知识点提取
+        print(f"\n📚 Step 3: Knowledge Point Extraction (parallel)...")
+        
+        async def extract_knowledge(asr_result):
+            transcript = asr_result['text']
+            chunk_index = asr_result['chunk_index']
+            
+            print(f"💡 Extracting knowledge points for chunk {chunk_index + 1}...")
+            knowledge_points = await self.knowledge_point_extractor.extract_knowledge_points(transcript)
+            
+            return {
+                'knowledge_points': knowledge_points,
+                'chunk_index': chunk_index
+            }
+        
+        analysis_results = await self.audio_splitter.process_chunks_parallel(
+            asr_results,
+            extract_knowledge,
+            max_parallel=3
+        )
+        print(f"✅ All knowledge points extracted")
+        
+        # Step 4: 合并结果
+        print(f"\n🔄 Step 4: Merging results...")
+        merged_result = self.result_merger.merge_analysis_results(
+            asr_results,
+            analysis_results,
+            chunks_info,
+            {'path': chunks_info[0]['chunk_path'].replace('_chunk000', '')}
+        )
+        
+        # Step 5: 清理切片文件
+        print(f"\n🧹 Step 5: Cleaning up chunks...")
+        self.audio_splitter.cleanup_chunks(chunks_info)
+        
+        # 格式化为标准返回格式
+        import json
+        knowledge_points_json = json.dumps(
+            {"knowledge_points": merged_result['result']['knowledge_points']},
+            ensure_ascii=False,
+            indent=2
+        )
+        
+        return {
+            "success": True,
+            "analysis_type": analysis_type,
+            "result": {
+                "content": knowledge_points_json,
+                "knowledge_points": merged_result['result']['knowledge_points'],
+                "transcript": merged_result['result']['transcript'],
+                "video_info": merged_result['result']['video_info'],
+                "was_chunked": True,
+                "num_chunks": len(chunks_info),
+                "knowledge_point_count": len(merged_result['result']['knowledge_points'])
             }
         }
     

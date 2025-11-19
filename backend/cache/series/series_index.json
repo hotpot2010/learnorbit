@@ -1,9 +1,23 @@
 {
+  "series_av587941174": {
+    "bv_id": "BV1AB4y1w7eT",
+    "title": "10分钟彻底搞懂“动态规划”算法",
+    "is_series": false,
+    "total_parts": 1,
+    "cached_at": "2025-11-14T16:52:38.870966"
+  },
+  "series_av113894261588276": {
+    "bv_id": "BV1Jgf6YvE8e",
+    "title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】",
+    "is_series": true,
+    "total_parts": 37,
+    "cached_at": "2025-11-14T16:59:18.467563"
+  },
   "series_1Jgf6YvE8e": {
     "bv_id": "BV1Jgf6YvE8e",
     "title": "3小时超快速入门Python | 动画教学【2025新版】【自学Python教程】【零基础Python】【计算机二级Python】【Python期末速成】",
     "is_series": true,
     "total_parts": 37,
-    "cached_at": "2025-11-07T15:45:15.236642"
+    "cached_at": "2025-11-14T16:59:50.422055"
   }
 }

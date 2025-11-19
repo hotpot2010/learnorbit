@@ -119,9 +119,9 @@ class VideoAnalyzerService:
         duration: str, 
         play: int
     ) -> str:
-        """构建LLM分析 prompt - 生成简化标签"""
+        """构建LLM分析 prompt - 生成简化输出：适用人群和描述"""
         
-        prompt = f"""请分析以下B站视频，生成简洁的学习标签。
+        prompt = f"""请分析以下B站视频，生成简洁的分析结果。
 
 **视频信息：**
 - 标题：{title}
@@ -131,37 +131,21 @@ class VideoAnalyzerService:
 - 播放量：{play:,}
 
 **分析要求：**
-- 只输出JSON格式的标签，不需要任何分析依据或解释
+- 只输出JSON格式，不需要任何分析依据或解释
 - 直接根据视频信息判断即可
 
-**请提供以下分析（使用简洁的标签）：**
+**请提供以下分析：**
 
-1. **风格** - 从以下选择一个：轻松、严谨
-2. **适用人群** - 从以下选择一个：新手、进阶、高级
-3. **讲师** - 从以下选择一个：名师、大V、素人
-4. **视频重点** - 从以下选择一个：教学、练习、项目、理论、综合
-5. **学习目标** - 从以下选择最多2个：求职、升学、兴趣、技能提升、考证
-6. **推荐分数** - 0-10分
+1. **适用人群** - 从以下选择一个：新手入门、 备考考生、职场进阶
+2. **描述** - 生成约100字的视频简介，简洁概括视频内容、特点和价值
 
 **输出格式要求：**
 严格按照以下JSON格式输出：
 
 {{
-  "style": "轻松",
-  "target_audience": "新手",
-  "instructor": "大V",
-  "video_focus": "教学",
-  "learning_goals": ["求职", "技能提升"],
-  "recommendation_score": 8
+  "target_audience": "新手入门",
+  "description": "这是一个关于Python基础编程的教程，从零开始讲解变量、函数、面向对象等核心概念，适合编程初学者。课程内容系统全面，讲解清晰易懂，配有丰富的实例演示，帮助学习者快速掌握Python编程基础。"
 }}
-
-**选项说明：**
-- style: 轻松、严谨（必须选一个）
-- target_audience: 新手、进阶、高级（必须选一个）
-- instructor: 名师、大V、素人（必须选一个）
-- video_focus: 教学、练习、项目、理论、综合（必须选一个）
-- learning_goals: 求职、升学、兴趣、技能提升、考证（最多选2个）
-- recommendation_score: 0-10的整数
 
 请确保输出是有效的JSON格式。
 """
@@ -206,15 +190,22 @@ class VideoAnalyzerService:
             # 解析JSON
             analysis = json.loads(cleaned_text)
             
-            # 合并视频信息和分析结果
+            # 合并视频信息和分析结果（只保留需要的字段）
             result = {
-                **video_info,
-                'style': analysis.get('style', '轻松'),
-                'target_audience': analysis.get('target_audience', '新手'),
-                'instructor': analysis.get('instructor', '素人'),
-                'video_focus': analysis.get('video_focus', '教学'),
-                'learning_goals': analysis.get('learning_goals', []),
-                'recommendation_score': analysis.get('recommendation_score', 5),
+                # 基础视频信息
+                'title': video_info.get('title', ''),
+                'url': video_info.get('url', ''),
+                'cover': video_info.get('cover', ''),
+                'duration': video_info.get('duration', ''),
+                'duration_seconds': video_info.get('duration_seconds', 0),
+                'author': video_info.get('author', ''),
+                'play': video_info.get('play', 0),
+                # 是否视频课（系列课）
+                'is_series': video_info.get('is_series', False),
+                'video_amount': video_info.get('video_amount', 1),
+                # LLM生成的分析结果
+                'target_audience': analysis.get('target_audience', '新手入门'),
+                'description': analysis.get('description', video_info.get('description', '暂无描述')),
             }
             
             return result
@@ -227,13 +218,20 @@ class VideoAnalyzerService:
     def _get_fallback_analysis(self, video_info: Dict[str, Any]) -> Dict[str, Any]:
         """获取备用分析结果（当LLM分析失败时）"""
         return {
-            **video_info,
-            'style': '轻松',
-            'target_audience': '新手',
-            'instructor': '素人',
-            'video_focus': '教学',
-            'learning_goals': ['技能提升'],
-            'recommendation_score': 6,
+            # 基础视频信息
+            'title': video_info.get('title', ''),
+            'url': video_info.get('url', ''),
+            'cover': video_info.get('cover', ''),
+            'duration': video_info.get('duration', ''),
+            'duration_seconds': video_info.get('duration_seconds', 0),
+            'author': video_info.get('author', ''),
+            'play': video_info.get('play', 0),
+            # 是否视频课（系列课）
+            'is_series': video_info.get('is_series', False),
+            'video_amount': video_info.get('video_amount', 1),
+            # 默认分析结果
+            'target_audience': '新手入门',
+            'description': video_info.get('description', '暂无描述'),
         }
 
 

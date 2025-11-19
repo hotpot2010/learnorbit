@@ -64,7 +64,6 @@ RUN mkdir -p \
     /app/cache/notes \
     /app/cache/exercises \
     /app/cache/series \
-    /app/batch_results \
     /app/logs
 
 # 5. 创建非 root 用户运行应用（安全最佳实践）

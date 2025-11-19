@@ -3,8 +3,9 @@ B站视频搜索服务
 参考: src_utils_bilibili_retrive.py
 """
 import asyncio
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from bilibili_api import search
+from bilibili_api import video
 
 # 安全的打印函数
 def safe_print(msg: str):
@@ -58,6 +59,13 @@ class BilibiliSearchService:
             # 解析搜索结果
             for item in search_result.get('result', [])[:limit]:
                 if item.get('type') == 'video':
+                    # 调试：打印第一个视频的关键字段（用于排查问题）
+                    if len(results) == 0:
+                        safe_print(f"  🔍 第一个视频的关键字段:")
+                        safe_print(f"    episode_count_text: {item.get('episode_count_text', 'NOT_FOUND')}")
+                        safe_print(f"    bvid: {item.get('bvid', 'NOT_FOUND')}")
+                        safe_print(f"    aid: {item.get('aid', 'NOT_FOUND')}")
+                    
                     # 清理标题中的高亮标签
                     title = item['title'].replace('<em class="keyword">', '').replace('</em>', '')
                     
@@ -71,8 +79,40 @@ class BilibiliSearchService:
                         cover_url = 'https:' + cover_url
                     
                     # 判断是否为系列课（多P视频）
-                    video_amount = item.get('video_amount', 1)  # 视频数量，默认1
+                    # 方法1：尝试从 episode_count_text 字段解析（如 "共3P"）
+                    video_amount = 1
+                    episode_text = item.get('episode_count_text', '')
+                    if episode_text:
+                        try:
+                            # 尝试从文本中提取数字，如 "共3P" -> 3
+                            import re
+                            match = re.search(r'(\d+)', str(episode_text))
+                            if match:
+                                video_amount = int(match.group(1))
+                                safe_print(f"  📚 从episode_count_text解析到: {title} ({video_amount}P)")
+                        except Exception:
+                            pass
+                    
+                    # 方法2：如果方法1失败，通过BV号查询视频详情
+                    if video_amount == 1:
+                        bvid = item.get('bvid', '')
+                        if bvid:
+                            try:
+                                video_amount = await self._get_video_pages_count(bvid)
+                                if video_amount > 1:
+                                    safe_print(f"  📚 通过视频API检测到系列课: {title} ({video_amount}P)")
+                            except Exception as e:
+                                # 如果获取失败，保持默认值1
+                                safe_print(f"  ⚠️ 获取视频分P信息失败 ({bvid}): {e}")
+                                pass
+                    
                     is_series = video_amount > 1
+                    
+                    # 调试日志
+                    if is_series:
+                        safe_print(f"  ✅ 最终判断为系列课: {title} ({video_amount}P)")
+                    else:
+                        safe_print(f"  📹 单视频: {title}")
                     
                     video_info = {
                         'title': title,
@@ -131,7 +171,15 @@ class BilibiliSearchService:
         
         safe_print(f"\n📊 开始智能排序（多样化时长分布）...")
         
-        # 第一步：筛选百万播放量的视频
+        # 第一步：过滤掉大于5小时的视频（5小时 = 18000秒）
+        MAX_DURATION_SECONDS = 18000  # 5小时
+        filtered_results = [v for v in results if v.get('duration_seconds', 0) <= MAX_DURATION_SECONDS]
+        filtered_count = len(results) - len(filtered_results)
+        if filtered_count > 0:
+            safe_print(f"🚫 过滤掉 {filtered_count} 个大于5小时的视频")
+        results = filtered_results
+        
+        # 第二步：筛选百万播放量的视频
         million_plus = [v for v in results if v.get('play', 0) >= 1000000]
         
         safe_print(f"✅ 筛选出 {len(million_plus)} 个百万播放量视频（共{len(results)}个）")
@@ -141,7 +189,7 @@ class BilibiliSearchService:
             safe_print(f"⚠️  百万+视频不足，扩展到50万播放量")
             million_plus = [v for v in results if v.get('play', 0) >= 500000]
         
-        # 第二步：按时长分组（扩大范围以包含更多视频）
+        # 第三步：按时长分组（扩大范围以包含更多视频）
         groups = {'long': [], 'medium': [], 'short': [], 'other': []}
         
         for video in million_plus:
@@ -170,13 +218,9 @@ class BilibiliSearchService:
             play = video.get('play', 0)
             dur = video.get('duration_seconds', 0)
             
-            # 系列视频优先（40分）
-            if is_series and 5 <= amount <= 20:
-                s += 40
-            elif is_series:
-                s += 30
-            else:
-                s += 20
+            # 系列视频加分（10分）
+            if is_series:
+                s += 10
             
             # 播放量（30分）
             if play >= 5000000:
@@ -282,6 +326,35 @@ class BilibiliSearchService:
         safe_print(f"\n🏆 返回 {len(final)} 个多样化视频\n")
         
         return final[:limit]
+    
+    def _extract_bv_id_from_url(self, url: str) -> Optional[str]:
+        """从B站视频URL中提取BV号"""
+        try:
+            # 格式：https://www.bilibili.com/video/BV1xx411c7mD
+            if '/video/' in url:
+                parts = url.split('/video/')
+                if len(parts) > 1:
+                    bv_id = parts[1].split('?')[0].split('/')[0]  # 移除查询参数和路径
+                    if bv_id.startswith('BV'):
+                        return bv_id
+            return None
+        except Exception:
+            return None
+    
+    async def _get_video_pages_count(self, bv_id: str) -> int:
+        """通过BV号获取视频分P数量"""
+        try:
+            v = video.Video(bvid=bv_id)
+            info = await v.get_info()
+            # B站API返回的pages字段包含所有分P信息
+            pages = info.get('pages', [])
+            page_count = len(pages) if pages else 1
+            if page_count > 1:
+                safe_print(f"    📊 BV{bv_id} 有 {page_count} 个分P")
+            return page_count
+        except Exception as e:
+            safe_print(f"  ⚠️ 获取视频分P信息失败 ({bv_id}): {e}")
+            return 1
     
     def _parse_duration(self, duration_str: str) -> int:
         """

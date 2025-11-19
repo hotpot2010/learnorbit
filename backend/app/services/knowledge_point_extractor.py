@@ -106,7 +106,9 @@ class KnowledgePointExtractor:
         
         print(f"📊 Split transcript into {len(segments)} segments")
         for i, seg in enumerate(segments):
-            print(f"  Segment {i+1}: {seg['char_count']} chars, {seg['start_time']} - {seg['end_time']}")
+            start_time = seg.get('start_time', 'N/A')
+            end_time = seg.get('end_time', 'N/A')
+            print(f"  Segment {i+1}: {seg['char_count']} chars, {start_time} - {end_time}")
         
         return segments
     
@@ -126,20 +128,31 @@ class KnowledgePointExtractor:
             知识点列表
         """
         print(f"\n🔍 Processing segment {segment_index + 1}")
-        print(f"   Time range: {segment['start_time']} - {segment['end_time']}")
+        start_time = segment.get('start_time', 'N/A')
+        end_time = segment.get('end_time', 'N/A')
+        print(f"   Time range: {start_time} - {end_time}")
         print(f"   Characters: {segment['char_count']}")
         
         # 构建优化的 prompt
         prompt = f"""请分析以下教学视频的逐字稿片段，提取其中的【知识点】。
 
-要求：
-1. 只提取明确的知识点，不要包含闲聊、过渡语、重复内容
-2. 每个知识点必须包含准确的开始和结束时间
-3. 知识点名称要简洁明确（10字以内）
-4. 按时间顺序排列
-5. 以 JSON 格式输出
+**知识点定义**：
+知识点是指视频中讲解的一个完整概念、技能或主题，应该：
+- 是一个相对独立、完整的学习单元
+- 有明确的开始和结束，包含概念介绍、讲解和总结
+- 不是零散的细节或过渡性内容
+- 通常对应一个可以单独学习和理解的内容模块
 
-逐字稿片段（时间范围：{segment['start_time']} - {segment['end_time']}）：
+**提取要求**：
+1. 只提取明确、完整的知识点，不要包含闲聊、过渡语、重复内容
+2. 每个知识点必须包含准确的开始和结束时间
+3. 知识点名称要简洁明确（10字以内），能概括该知识点的核心内容
+4. **重要：每个知识点对应的视频片段时长应不少于30秒**，避免将知识点拆分过细
+5. 如果某个概念讲解时间很短（少于30秒），应将其合并到相邻的知识点中，或作为更大知识点的子部分
+6. 按时间顺序排列
+7. 以 JSON 格式输出
+
+逐字稿片段（时间范围：{start_time} - {end_time}）：
 {segment['text']}
 
 请以以下 JSON 格式输出：
@@ -155,7 +168,8 @@ class KnowledgePointExtractor:
 
 注意：
 - 只输出 JSON，不要其他说明文字
-- 如果没有明确的知识点，返回空数组"""
+- 如果没有明确的知识点，返回空数组
+- 确保每个知识点的时长（end_time - start_time）至少30秒"""
         
         try:
             # 调用火山引擎 LLM

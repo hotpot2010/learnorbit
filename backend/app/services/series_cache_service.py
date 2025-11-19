@@ -59,13 +59,21 @@ class SeriesCacheService:
         # 移除 ?p= 参数，因为序列信息与具体的P无关
         base_url = video_url.split('?')[0] if '?' in video_url else video_url
         
-        # 提取BV号
+        # 提取BV号或AV号
         if 'BV' in base_url:
+            # BV号格式: https://www.bilibili.com/video/BV1P24y1m7LA
             bv_id = base_url.split('BV')[1].split('/')[0].split('?')[0]
             cache_key = f"series_{bv_id}"
+            print(f"🔑 Generated cache key from BV: {cache_key} (URL: {video_url})")
+        elif '/av' in base_url or 'video/av' in base_url:
+            # AV号格式: http://www.bilibili.com/video/av690173570
+            av_match = base_url.split('/av')[-1].split('/')[0].split('?')[0]
+            cache_key = f"series_av{av_match}"
+            print(f"🔑 Generated cache key from AV: {cache_key} (URL: {video_url})")
         else:
-            # 如果没有BV号，使用URL的hash
+            # 如果既没有BV号也没有AV号，使用URL的hash
             cache_key = f"series_{hashlib.md5(base_url.encode()).hexdigest()[:12]}"
+            print(f"🔑 Generated cache key from hash: {cache_key} (URL: {video_url})")
         
         return cache_key
     

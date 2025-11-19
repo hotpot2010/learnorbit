@@ -22,7 +22,7 @@ router = APIRouter()
 class VideoSearchRequest(BaseModel):
     """视频搜索请求"""
     query: str
-    limit: int = 3  # 默认返回3个结果
+    limit: int = 10  # 默认返回10个结果，最多10个
 
 
 class VideoSearchResponse(BaseModel):
@@ -67,11 +67,13 @@ async def search_videos(request: VideoSearchRequest):
         # 2. 并行调用LLM分析视频
         analyzed_videos = await video_analyzer_service.analyze_videos_batch(videos)
         
-        # 调试：打印第一个视频的封面信息
+        # 调试：打印第一个视频的详细信息
         if analyzed_videos:
             first_video = analyzed_videos[0]
-            safe_print(f"  第一个视频封面URL: {first_video.get('cover', 'N/A')}")
             safe_print(f"  第一个视频标题: {first_video.get('title', 'N/A')[:30]}")
+            safe_print(f"  第一个视频封面URL: {first_video.get('cover', 'N/A')}")
+            safe_print(f"  第一个视频is_series: {first_video.get('is_series', False)}")
+            safe_print(f"  第一个视频video_amount: {first_video.get('video_amount', 1)}")
         
         # 3. 返回结果
         safe_print(f"✅ 搜索完成，返回 {len(analyzed_videos)} 个视频")
