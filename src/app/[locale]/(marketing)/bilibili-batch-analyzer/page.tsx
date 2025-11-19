@@ -194,7 +194,13 @@ export default function BilibiliBatchAnalyzerPage() {
       const response = await fetch(buildApiUrl(`${API_ENDPOINTS.batchResults}/${filename}`));
       const data = await response.json();
       if (data.success) {
-        setSelectedJobResults(data.data);
+        // 确保 results 和 errors 是数组
+        const jobData = {
+          ...data.data,
+          results: Array.isArray(data.data?.results) ? data.data.results : [],
+          errors: Array.isArray(data.data?.errors) ? data.data.errors : [],
+        };
+        setSelectedJobResults(jobData);
         setActiveTab('history');
       }
     } catch (error) {
@@ -691,7 +697,7 @@ export default function BilibiliBatchAnalyzerPage() {
 
                 {/* Results List */}
                 <div className="space-y-4">
-                  {selectedJobResults.results.map((result, index) => {
+                  {(Array.isArray(selectedJobResults.results) ? selectedJobResults.results : []).map((result, index) => {
                     const isExpanded = expandedResults.has(index);
                     
                     return (
@@ -735,7 +741,7 @@ export default function BilibiliBatchAnalyzerPage() {
                   })}
 
                   {/* Errors */}
-                  {selectedJobResults.errors.length > 0 && (
+                  {Array.isArray(selectedJobResults.errors) && selectedJobResults.errors.length > 0 && (
                     <div className="mt-8">
                       <h3 className="text-xl font-bold text-red-600 mb-4">❌ 失败记录</h3>
                       {selectedJobResults.errors.map((error, index) => (

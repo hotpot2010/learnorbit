@@ -30,7 +30,7 @@ export const getApiBaseUrl = (): string => {
   }
   
   // 3. 本地开发：直接使用线上后端（本地开发环境通常没有 CORS 限制）
-  return 'https://video-improvements.zeabur.app';
+  return 'https://learnorbit.gaotu.cn';
 };
 
 /**

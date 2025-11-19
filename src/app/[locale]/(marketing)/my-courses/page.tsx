@@ -70,7 +70,7 @@ const extractCourseInfo = (coursePlan: any) => {
   }
 
   // 基于步骤复杂度判断难度
-  const difficulties = plan.map((step: any) => step.difficulty).filter(Boolean);
+  const difficulties = Array.isArray(plan) ? plan.map((step: any) => step.difficulty).filter(Boolean) : [];
   const hasAdvanced = difficulties.includes('advanced');
   const hasIntermediate = difficulties.includes('intermediate');
 
@@ -117,7 +117,9 @@ export default function MyCoursesPage() {
         throw new Error('Failed to fetch courses');
       }
       const data = await response.json();
-      setCourses(data.courses || []);
+      // 确保 courses 是数组，防止 API 返回非数组类型
+      const coursesArray = Array.isArray(data.courses) ? data.courses : [];
+      setCourses(coursesArray);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
@@ -135,7 +137,10 @@ export default function MyCoursesPage() {
 
       if (response.ok) {
         // 从本地状态中移除课程
-        setCourses((prev) => prev.filter((course) => course.id !== courseId));
+        setCourses((prev) => {
+          const safePrev = Array.isArray(prev) ? prev : [];
+          return safePrev.filter((course) => course.id !== courseId);
+        });
         setDeleteDialogOpen(false);
         setCourseToDelete(null);
       } else {
@@ -208,13 +213,16 @@ export default function MyCoursesPage() {
   }
 
   // 分类课程 - 使用any类型处理数据库返回的数据
-  const inProgressCourses = courses.filter(
+  // 确保 courses 是数组
+  const safeCourses = Array.isArray(courses) ? courses : [];
+  
+  const inProgressCourses = safeCourses.filter(
     (course: any) =>
       course.status === 'in-progress' &&
       (course.currentStep || 0) < (course.coursePlan?.plan?.length || course.coursePlan?.length || 1)
   );
 
-  const completedCourses = courses.filter(
+  const completedCourses = safeCourses.filter(
     (course: any) =>
       course.status === 'completed' ||
       (course.status === 'in-progress' &&
@@ -222,7 +230,7 @@ export default function MyCoursesPage() {
   );
 
   // 注意：数据库中没有'published'状态，这里可能需要根据实际需求调整
-  const publishedCourses: any[] = courses.filter((c: any) => c.coursePlan?.isPublic === true);
+  const publishedCourses: any[] = safeCourses.filter((c: any) => c.coursePlan?.isPublic === true);
 
   const CourseCard = ({ course, index }: { course: any; index: number }) => {
     const courseInfo = extractCourseInfo(course.coursePlan);
@@ -255,7 +263,10 @@ export default function MyCoursesPage() {
                       body: JSON.stringify({ isPublic: false })
                     });
                     if (!resp.ok) throw new Error(await resp.text());
-                    setCourses(prev => prev.map((c) => c.id === course.id ? { ...c, coursePlan: { ...c.coursePlan, isPublic: false } } : c));
+                    setCourses(prev => {
+                      const safePrev = Array.isArray(prev) ? prev : [];
+                      return safePrev.map((c) => c.id === course.id ? { ...c, coursePlan: { ...c.coursePlan, isPublic: false } } : c);
+                    });
                   } catch (err) {
                     console.error('Unpublish 失败', err);
                     alert('Unpublish 失败，请稍后再试');
@@ -474,7 +485,10 @@ export default function MyCoursesPage() {
                       body: JSON.stringify({ isPublic: nextPublic })
                     });
                     if (!resp.ok) throw new Error(await resp.text());
-                    setCourses(prev => prev.map((c) => c.id === course.id ? { ...c, coursePlan: { ...c.coursePlan, isPublic: nextPublic } } : c));
+                    setCourses(prev => {
+                      const safePrev = Array.isArray(prev) ? prev : [];
+                      return safePrev.map((c) => c.id === course.id ? { ...c, coursePlan: { ...c.coursePlan, isPublic: nextPublic } } : c);
+                    });
                   } catch (err) {
                     console.error('发布失败', err);
                     alert('发布失败，请稍后再试');
@@ -514,33 +528,36 @@ export default function MyCoursesPage() {
                             body: JSON.stringify({ title: titleDraft, description: descDraft })
                           });
                           if (!resp.ok) throw new Error(await resp.text());
-                          setCourses(prev => prev.map(c => {
-                            if (c.id === course.id) {
-                              const rawPlan = c.coursePlan?.plan;
-                              let updatedPlan;
-                              
-                              // 兼容新旧格式更新
-                              if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && 
-                                  (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
-                                // 新格式：更新 instruction 级别的 title 和 description
-                                updatedPlan = {
-                                  ...rawPlan,
-                                  title: titleDraft,
-                                  description: descDraft
-                                };
-                              } else {
-                                // 旧格式：更新第一步的 title 和 description
-                                const planSteps = Array.isArray(rawPlan) ? rawPlan : [];
-                                updatedPlan = [
-                                  { ...(planSteps[0] || {}), title: titleDraft, description: descDraft },
-                                  ...planSteps.slice(1)
-                                ];
+                          setCourses(prev => {
+                            const safePrev = Array.isArray(prev) ? prev : [];
+                            return safePrev.map(c => {
+                              if (c.id === course.id) {
+                                const rawPlan = c.coursePlan?.plan;
+                                let updatedPlan;
+                                
+                                // 兼容新旧格式更新
+                                if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && 
+                                    (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
+                                  // 新格式：更新 instruction 级别的 title 和 description
+                                  updatedPlan = {
+                                    ...rawPlan,
+                                    title: titleDraft,
+                                    description: descDraft
+                                  };
+                                } else {
+                                  // 旧格式：更新第一步的 title 和 description
+                                  const planSteps = Array.isArray(rawPlan) ? rawPlan : [];
+                                  updatedPlan = [
+                                    { ...(planSteps[0] || {}), title: titleDraft, description: descDraft },
+                                    ...planSteps.slice(1)
+                                  ];
+                                }
+                                
+                                return { ...c, coursePlan: { ...c.coursePlan, plan: updatedPlan } };
                               }
-                              
-                              return { ...c, coursePlan: { ...c.coursePlan, plan: updatedPlan } };
-                            }
-                            return c;
-                          }));
+                              return c;
+                            });
+                          });
                           setEditing(false);
                         } catch (err) {
                           console.error('保存失败', err);
@@ -641,7 +658,7 @@ export default function MyCoursesPage() {
       }}
     >
       <div className="container mx-auto px-4 py-8">
-        {courses.length === 0 ? (
+        {(Array.isArray(courses) ? courses : []).length === 0 ? (
           /* 空状态 */
           <div className="h-[calc(100vh-8rem)] flex items-center justify-center">
             <div className="text-center">
@@ -696,7 +713,7 @@ export default function MyCoursesPage() {
                   </span>
                 </h2>
                 <div className="flex flex-wrap gap-6 pb-4">
-                    {inProgressCourses.map((course, index) => (
+                    {(Array.isArray(inProgressCourses) ? inProgressCourses : []).map((course, index) => (
                     <CourseCard
                       key={course.id}
                       course={course}
@@ -722,7 +739,7 @@ export default function MyCoursesPage() {
                   </span>
                 </h2>
                 <div className="flex flex-wrap gap-6 pb-4">
-                    {completedCourses.map((course, index) => (
+                    {(Array.isArray(completedCourses) ? completedCourses : []).map((course, index) => (
                     <CourseCard
                       key={course.id}
                       course={course}
@@ -748,7 +765,7 @@ export default function MyCoursesPage() {
                   </span>
                 </h2>
                 <div className="flex flex-wrap gap-6 pb-4">
-                    {publishedCourses.map((course, index) => (
+                    {(Array.isArray(publishedCourses) ? publishedCourses : []).map((course, index) => (
                     <CourseCard
                       key={course.id}
                       course={course}

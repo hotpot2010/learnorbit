@@ -67,10 +67,13 @@ export default function VideoEntryPage() {
       }
 
       if (data.success && data.videos) {
-        setVideos(data.videos);
+        // 确保 videos 是数组，防止 API 返回非数组类型
+        const videosArray = Array.isArray(data.videos) ? data.videos : [];
+        setVideos(videosArray);
         setHasSearched(true);
       } else {
         setError(data.message || '搜索失败');
+        setVideos([]); // 确保失败时也是空数组
       }
     } catch (err: any) {
       console.error('❌ 搜索错误:', err);
@@ -264,7 +267,7 @@ export default function VideoEntryPage() {
                 </div>
 
                 {/* 视频卡片列表 */}
-                {videos.map((video, index) => {
+                {(Array.isArray(videos) ? videos : []).map((video, index) => {
                   // 标题截断函数
                   const truncateTitle = (title: string, maxLength: number = 45) => {
                     return title.length > maxLength ? title.substring(0, maxLength) + '...' : title;

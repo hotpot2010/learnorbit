@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-const BACKEND_URL = 'https://video-improvements.zeabur.app';
+const BACKEND_URL = 'https://learnorbit.gaotu.cn';
 
 export async function GET(
   request: NextRequest,
