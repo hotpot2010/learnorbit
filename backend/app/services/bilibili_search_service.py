@@ -6,6 +6,7 @@ import asyncio
 from typing import List, Dict, Any, Optional
 from bilibili_api import search
 from bilibili_api import video
+import yt_dlp
 
 # 安全的打印函数
 def safe_print(msg: str):
@@ -22,6 +23,50 @@ class BilibiliSearchService:
     
     def __init__(self):
         safe_print("🔍 BilibiliSearchService initialized")
+    
+    def _validate_video_url_sync(self, url: str) -> bool:
+        """
+        同步验证B站视频链接是否有效（在线程中执行）
+        
+        Args:
+            url: B站视频URL
+            
+        Returns:
+            True if URL is valid, False otherwise
+        """
+        if not url or not url.startswith('http'):
+            return False
+        
+        try:
+            ydl_opts = {
+                'quiet': True,
+                'no_warnings': True,
+                'extract_flat': True,  # 只提取基本信息，不下载
+                'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'referer': 'https://www.bilibili.com/',
+                'socket_timeout': 10,  # 10秒超时
+                'retries': 1,  # 只重试1次
+            }
+            
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                ydl.extract_info(url, download=False)
+            return True
+        except Exception as e:
+            safe_print(f"  ⚠️  链接验证失败: {url[:50]}... 错误: {str(e)[:100]}")
+            return False
+    
+    async def _validate_video_url(self, url: str) -> bool:
+        """
+        异步验证B站视频链接是否有效
+        
+        Args:
+            url: B站视频URL
+            
+        Returns:
+            True if URL is valid, False otherwise
+        """
+        # 在线程池中执行同步验证，避免阻塞事件循环
+        return await asyncio.to_thread(self._validate_video_url_sync, url)
     
     async def search_videos(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
         """
@@ -114,9 +159,11 @@ class BilibiliSearchService:
                     else:
                         safe_print(f"  📹 单视频: {title}")
                     
+                    video_url = item.get('arcurl', '')
+                    
                     video_info = {
                         'title': title,
-                        'url': item.get('arcurl', ''),
+                        'url': video_url,
                         'cover': cover_url,  # 封面图（已添加协议）
                         'duration': duration_str,
                         'duration_seconds': duration_seconds,
@@ -133,6 +180,23 @@ class BilibiliSearchService:
                     
                     results.append(video_info)
                     safe_print(f"  ✓ {title} ({duration_str})")
+            
+            # 验证所有视频链接有效性（并行验证）
+            if results:
+                safe_print(f"\n🔍 验证 {len(results)} 个视频链接有效性...")
+                validation_tasks = [self._validate_video_url(video['url']) for video in results]
+                validation_results = await asyncio.gather(*validation_tasks, return_exceptions=True)
+                
+                # 过滤掉无效链接
+                valid_results = []
+                for video, is_valid in zip(results, validation_results):
+                    if isinstance(is_valid, Exception) or not is_valid:
+                        safe_print(f"  ❌ 跳过无效链接: {video['title'][:40]}... ({video['url'][:50]}...)")
+                    else:
+                        valid_results.append(video)
+                
+                results = valid_results
+                safe_print(f"✅ 验证完成，有效链接: {len(results)}/{len(validation_results)}")
             
             safe_print(f"✅ 找到 {len(results)} 个视频")
             return results

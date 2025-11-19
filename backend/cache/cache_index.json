@@ -52,5 +52,10 @@
     "video_url": "http://www.bilibili.com/video/av722314026",
     "cached_at": "2025-11-19T14:28:31.145751",
     "file": "cache\\1898a48f9248ffe709fd51fc228f38b1.json"
+  },
+  "21a850f9eb5c742f7ee8962c706cefd6": {
+    "video_url": "http://www.bilibili.com/video/av115548193101172",
+    "cached_at": "2025-11-19T15:20:57.659828",
+    "file": "cache\\21a850f9eb5c742f7ee8962c706cefd6.json"
   }
 }
