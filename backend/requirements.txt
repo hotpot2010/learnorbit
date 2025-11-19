@@ -143,3 +143,4 @@ urllib3==2.5.0
 watchfiles==1.1.0
 websockets==15.0.1
 yarl==1.22.0
+bilibili-api-python
