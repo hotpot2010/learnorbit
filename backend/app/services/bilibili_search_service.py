@@ -189,6 +189,16 @@ class BilibiliSearchService:
             safe_print(f"⚠️  百万+视频不足，扩展到50万播放量")
             million_plus = [v for v in results if v.get('play', 0) >= 500000]
         
+        # 如果50万+视频仍然不足，进一步降低标准或使用所有视频
+        if len(million_plus) < limit:
+            safe_print(f"⚠️  50万+视频不足（{len(million_plus)}个），扩展到10万播放量")
+            million_plus = [v for v in results if v.get('play', 0) >= 100000]
+        
+        # 如果10万+视频仍然不足，使用所有剩余视频（不再限制播放量）
+        if len(million_plus) < limit:
+            safe_print(f"⚠️  10万+视频不足（{len(million_plus)}个），使用所有视频（共{len(results)}个）")
+            million_plus = results
+        
         # 第三步：按时长分组（扩大范围以包含更多视频）
         groups = {'long': [], 'medium': [], 'short': [], 'other': []}
         

@@ -39,7 +39,18 @@
   },
   "9480052523409c551ed3a655406c4983": {
     "video_url": "http://www.bilibili.com/video/av586659692",
-    "cached_at": "2025-11-19T14:07:48.483200",
+    "cached_at": "2025-11-19T14:18:37.797359",
     "file": "cache\\9480052523409c551ed3a655406c4983.json"
+  },
+  "asr_78113b35df81c63ccddbfc650f8971ba": {
+    "type": "asr",
+    "video_url": "http://www.bilibili.com/video/av722314026",
+    "cached_at": "2025-11-19T14:27:01.717493",
+    "file": "cache\\asr_78113b35df81c63ccddbfc650f8971ba.json"
+  },
+  "1898a48f9248ffe709fd51fc228f38b1": {
+    "video_url": "http://www.bilibili.com/video/av722314026",
+    "cached_at": "2025-11-19T14:28:31.145751",
+    "file": "cache\\1898a48f9248ffe709fd51fc228f38b1.json"
   }
 }
