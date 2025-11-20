@@ -163,9 +163,10 @@ export default function MyCoursesPage() {
   // 点击课程卡片
   const handleCourseClick = (course: any) => {
     // 将课程数据存储到 sessionStorage
-    const learningPlan = {
-      plan: course.coursePlan.plan || course.coursePlan
-    };
+    // course.coursePlan.plan 已经是 LearningPlan 格式 { plan: [...], title, description }
+    // 或者 course.coursePlan 本身就是 LearningPlan（旧格式兼容）
+    // 直接使用，不要多包一层
+    const learningPlan = course.coursePlan.plan || course.coursePlan;
 
     // 如果有任务数据，也一并存储
     if (course.coursePlan.tasks) {
