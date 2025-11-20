@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Bot, Send, User } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 
 // 生成唯一ID的函数，避免冲突
 let messageIdCounter = 0;
@@ -78,8 +78,8 @@ export function AIChatInterface({
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // 获取字体样式函数
-  const getFontFamily = () => {
+  // 获取字体样式（直接缓存字符串值，而不是函数）
+  const fontFamily = React.useMemo(() => {
     if (isMobile && locale === 'en') {
       // 移动端英文模式使用正常字体
       return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
@@ -90,7 +90,7 @@ export function AIChatInterface({
       // 桌面端保持原有的卡通字体
       return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
     }
-  };
+  }, [isMobile, locale]);
   // 移除 isFirstMessage 状态，改用实时计算消息数量
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
@@ -1491,7 +1491,7 @@ export function AIChatInterface({
                       : 'bg-gray-100 text-gray-800'
                   }`}
                   style={{
-                    fontFamily: getFontFamily(),
+                    fontFamily: fontFamily,
                   }}
                 >
                   <p className="text-sm whitespace-pre-wrap">{message.content}</p>
@@ -1537,7 +1537,7 @@ export function AIChatInterface({
               onClick={() => handleRecommendationClick(question)}
               className="w-full text-left p-2 bg-red-100 hover:bg-red-200 border border-red-300 rounded-lg text-xs transition-colors transform hover:rotate-0.5"
               style={{
-                fontFamily: getFontFamily(),
+                fontFamily: fontFamily,
               }}
             >
               <span className="text-red-700 font-medium">Q{index + 1}:</span>{' '}
@@ -1571,7 +1571,7 @@ export function AIChatInterface({
               placeholder="Chat with AI Assistant..."
               disabled={isLoading}
               className="flex-1 text-gray-900 text-sm bg-transparent border-none outline-none placeholder-gray-500"
-              style={{ fontSize: '16px', fontFamily: getFontFamily() }}
+              style={{ fontSize: '16px', fontFamily: fontFamily }}
             />
             <button
               onClick={handleSend}
@@ -1592,7 +1592,7 @@ export function AIChatInterface({
               disabled={isLoading}
               className="flex-1 border-gray-300 rounded-lg"
               style={{
-                fontFamily: getFontFamily(),
+                fontFamily: fontFamily,
               }}
             />
             <Button

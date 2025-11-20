@@ -38,35 +38,126 @@ interface StudyPageProps {
   params: Promise<{ locale: string; id: string }>;
 }
 
-// 编辑 textarea 组件 - 使用 memo 避免不必要的重新渲染
+// 编辑 textarea 组件 - 简化版本，父组件直接从 DOM 读取值
+const NoteEditTextarea = React.memo<{
+  noteId: string;
+  initialText: string;
+  onSave: () => void;
+  onCancel: () => void;
+  noteType: 'video' | 'image' | 'drag' | 'text';
+  fontFamily: string;
+}>(({
+  noteId,
+  initialText,
+  onSave,
+  onCancel,
+  noteType,
+  fontFamily,
+}) => {
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+  const mountId = React.useRef(Math.random().toString(36).substr(2, 9));
+  
+  React.useEffect(() => {
+    console.log(`📝 [${mountId.current}] Textarea 挂载:`, {
+      noteId,
+      initialText,
+      hasRef: !!textareaRef.current,
+      currentValue: textareaRef.current?.value,
+    });
+    
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+      // 光标移到末尾
+      const length = textareaRef.current.value.length;
+      textareaRef.current.setSelectionRange(length, length);
+    }
+    
+    return () => {
+      console.log(`💀 [${mountId.current}] Textarea 卸载`);
+    };
+  }, []); // 只在挂载时执行一次
+  
+  const borderColorClass = 
+    noteType === 'video' ? 'border-purple-300 bg-purple-50 text-purple-800 focus:ring-purple-400' :
+    noteType === 'image' ? 'border-pink-300 bg-pink-50 text-pink-800 focus:ring-pink-400' :
+    noteType === 'drag' ? 'border-sky-300 bg-sky-50 text-sky-800 focus:ring-sky-400' :
+    'border-yellow-300 bg-yellow-50 text-yellow-800 focus:ring-yellow-400';
+  
+  return (
+    <textarea
+      data-note-id={noteId}
+      ref={(el) => {
+        if (el) {
+          // 如果之前有 textarea 且有内容，同步内容到新 textarea
+          if (textareaRef.current && textareaRef.current !== el) {
+            const oldValue = textareaRef.current.value;
+            if (oldValue) {
+              console.log(`🔄 [${mountId.current}] 同步内容到新 textarea:`, {
+                oldValue,
+                oldLength: oldValue.length,
+              });
+              el.value = oldValue;
+            }
+          }
+        }
+        textareaRef.current = el;
+      }}
+      defaultValue={initialText}
+      onInput={(e) => {
+        const currentValue = e.currentTarget.value;
+        console.log(`⌨️ [${mountId.current}] 用户输入:`, {
+          noteId,
+          currentValue,
+          valueLength: currentValue.length,
+        });
+      }}
+      className={`w-full p-3 border rounded-lg ${borderColorClass} resize-none focus:outline-none focus:ring-2`}
+      style={{
+        fontFamily,
+        fontSize: '16px',
+        lineHeight: '1.6',
+        minHeight: '80px',
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') {
+          onCancel();
+        } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+          console.log(`🎯 [${mountId.current}] Ctrl+Enter 保存`);
+          onSave();
+        }
+      }}
+      placeholder="输入便签内容..."
+    />
+  );
+});
+
+// 设置 displayName
+NoteEditTextarea.displayName = 'NoteEditTextarea';
+
+// 旧的组件定义（保留但不使用）
 const EditingTextarea = React.memo(({ 
   noteId, 
-  editingNoteText, 
-  setEditingNoteText, 
-  handleSaveEdit, 
+  value,
+  onTextChange,
+  handleSaveEdit,
   handleCancelEdit,
   noteType,
   fontFamily
 }: {
   noteId: string;
-  editingNoteText: string;
-  setEditingNoteText: (text: string) => void;
+  value: string;
+  onTextChange: (text: string) => void;
   handleSaveEdit: (noteId: string) => void;
   handleCancelEdit: () => void;
   noteType: 'video' | 'image' | 'drag' | 'text';
   fontFamily: string;
 }) => {
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
-  const isInitialMount = React.useRef(true);
 
-  // 只在首次挂载时将光标移到末尾
+  // 仅在首次挂载时聚焦
   React.useEffect(() => {
-    if (isInitialMount.current && textareaRef.current) {
-      const textarea = textareaRef.current;
-      textarea.focus();
-      const length = textarea.value.length;
-      textarea.setSelectionRange(length, length);
-      isInitialMount.current = false;
+    if (textareaRef.current) {
+      textareaRef.current.focus();
     }
   }, []);
 
@@ -80,8 +171,8 @@ const EditingTextarea = React.memo(({
     <div className="space-y-3">
       <textarea
         ref={textareaRef}
-        value={editingNoteText}
-        onChange={(e) => setEditingNoteText(e.target.value)}
+        value={value}
+        onChange={(e) => onTextChange(e.target.value)}
         className={`w-full p-3 border rounded-lg ${borderColorClass} resize-none focus:outline-none focus:ring-2`}
         style={{
           fontFamily: fontFamily,
@@ -100,9 +191,6 @@ const EditingTextarea = React.memo(({
       />
     </div>
   );
-}, (prevProps, nextProps) => {
-  // 自定义比较函数：只有 editingNoteText 变化时才重新渲染
-  return prevProps.editingNoteText === nextProps.editingNoteText;
 });
 
 EditingTextarea.displayName = 'EditingTextarea';
@@ -132,39 +220,18 @@ export default function StudyPage({ params }: StudyPageProps) {
     return id;
   });
   
-  // 🔍 组件渲染日志
-  console.log('🔄 StudyPage 组件重新渲染:', new Date().toLocaleTimeString());
-
   // 兼容性辅助函数：安全获取学习计划的步骤数组
-  const getLearningSteps = (plan: LearningPlan | null): any[] => {
+  // 保留函数形式以兼容旧代码（移除所有日志，提升性能）
+  const getLearningSteps = React.useCallback((plan: LearningPlan | null): any[] => {
     if (!plan) return [];
     
-    console.log('🔍 检查学习计划格式:', {
-      planType: typeof plan,
-      hasPlanProperty: 'plan' in plan,
-      planPropertyType: plan.plan ? typeof plan.plan : 'undefined',
-      isArrayPlan: Array.isArray(plan.plan),
-      isArraySelf: Array.isArray(plan),
-      planStructure: plan
-    });
-    
-    if (Array.isArray(plan.plan)) {
-      // 新格式或标准格式：plan.plan 是数组
-      console.log('✅ 识别为标准格式，plan.plan 是数组，长度:', plan.plan.length);
-      return plan.plan;
-    } else if (plan.plan && typeof plan.plan === 'object' && (plan.plan as any).plan && Array.isArray((plan.plan as any).plan)) {
-      // 嵌套格式：plan.plan.plan 是数组（可能的双重嵌套）
-      console.log('✅ 识别为嵌套格式，plan.plan.plan 是数组，长度:', (plan.plan as any).plan.length);
+    if (Array.isArray(plan.plan)) return plan.plan;
+    if (plan.plan && typeof plan.plan === 'object' && (plan.plan as any).plan && Array.isArray((plan.plan as any).plan)) {
       return (plan.plan as any).plan;
-    } else if (Array.isArray(plan)) {
-      // 极旧格式：plan 本身就是数组
-      console.log('✅ 识别为极旧格式，plan 本身是数组，长度:', plan.length);
-      return plan as any;
     }
-    
-    console.warn('⚠️ 无法识别的学习计划格式:', plan);
+    if (Array.isArray(plan)) return plan as any;
     return [];
-  };
+  }, []); // No external dependencies, only uses input parameter
 
   // 辅助函数：安全获取课程标题和描述
   const getCourseInfo = (plan: LearningPlan | null) => {
@@ -238,7 +305,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   const EXTERNAL_API_URL = (process.env.NEXT_PUBLIC_EXTERNAL_API_URL as string) || 'https://study-platform.zeabur.app';
 
   // 任务更新完成处理函数（预览模式）
-  const handleTaskUpdateComplete = (newTaskData: any) => {
+  const handleTaskUpdateComplete = React.useCallback((newTaskData: any) => {
     console.log('📝 收到任务更新数据（预览）:', newTaskData);
     
     // 直接更新当前任务状态
@@ -254,10 +321,10 @@ export default function StudyPage({ params }: StudyPageProps) {
     setHasSubmitted(false);
     
     console.log('✅ 任务数据更新完成（预览模式），新任务:', newTaskData);
-  };
+  }, []); // setState functions are stable, no dependencies needed
 
   // 任务更新保存处理函数（持久化）
-  const handleTaskUpdateSave = (newTaskData: any) => {
+  const handleTaskUpdateSave = React.useCallback((newTaskData: any) => {
     console.log('💾 用户确认保存任务更新:', newTaskData);
     
     // 获取当前步骤
@@ -276,7 +343,7 @@ export default function StudyPage({ params }: StudyPageProps) {
       // 这里可以添加保存到后端的逻辑
       // await saveTaskToDatabase(currentStep.step, newTaskData);
     }
-  };
+  }, [learningPlan, currentStepIndex]);
 
   // 笔记相关状态 - 插入式笔记
   interface Note {
@@ -298,7 +365,11 @@ export default function StudyPage({ params }: StudyPageProps) {
   }
   const [notes, setNotes] = useState<Note[]>([]);
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
-  const [editingNoteText, setEditingNoteText] = useState<string>(''); // 添加：编辑中的文本状态
+  
+  // 监控 notes 的变化
+  useEffect(() => {
+    console.log('📋 notes state 已更新:', notes);
+  }, [notes]);
   const [expandedNoteVideoIds, setExpandedNoteVideoIds] = useState<Record<string, boolean>>({});
   const [noteVideoIndices, setNoteVideoIndices] = useState<Record<string, number>>({});
   const [expandedNoteImageIds, setExpandedNoteImageIds] = useState<Record<string, boolean>>({});
@@ -306,6 +377,11 @@ export default function StudyPage({ params }: StudyPageProps) {
   
   // 便签编辑 - ref 用于聚焦
   const editingTextareaRef = useRef<HTMLTextAreaElement>(null);
+  
+  // 🔍 组件渲染日志（已禁用）
+  // const renderCount = React.useRef(0);
+  // renderCount.current++;
+  // console.log(`🔄 StudyPage 渲染 #${renderCount.current}`);
   
   // 图片上传相关
   const imageUploadRef = useRef<HTMLInputElement>(null);
@@ -414,48 +490,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   const renderContentWithInsertedNotes = (content: string) => {
     if (!content) return null;
     
-    // 🔍 调试日志 - 便签渲染
-    const renderState = {
-      timestamp: new Date().toLocaleTimeString(),
-      editingNoteId,
-      editingTextLength: editingTextareaRef.current?.value?.length || 0,
-      notesCount: notes.length,
-      currentStepIndex,
-      taskGenerationStatusKeys: Object.keys(taskGenerationStatus),
-      taskCacheKeys: Object.keys(taskCache),
-      currentVideoIndex,
-      isLoadingTask,
-      isVideoExpanded,
-      videoAreaHeight,
-      canPageUp,
-      canPageDown,
-      expandedNoteVideoIdsKeys: Object.keys(expandedNoteVideoIds),
-      noteVideoIndicesKeys: Object.keys(noteVideoIndices),
-      pollingInterval: !!pollingInterval,
-      externalMessage: externalMessage.length > 0 ? externalMessage.substring(0, 20) + '...' : '',
-      hasSubmitted,
-      wrongAnswersSize: wrongAnswers.size
-    };
-    
-    // 检测状态变化
-    if (window.lastRenderState) {
-      const changes = {};
-      Object.keys(renderState).forEach(key => {
-        if (JSON.stringify(renderState[key]) !== JSON.stringify(window.lastRenderState[key])) {
-          changes[key] = {
-            old: window.lastRenderState[key],
-            new: renderState[key]
-          };
-        }
-      });
-      
-      if (Object.keys(changes).length > 0) {
-        console.log('📝 便签重新渲染 - 状态变化:', changes);
-      }
-    }
-    
-    window.lastRenderState = renderState;
-    console.log('📝 便签组件重新渲染:', renderState);
+    // 移除调试代码，避免频繁重新渲染
     
     // 为可插入锚点生成连续索引
     let anchorIndexCounter = 0;
@@ -520,18 +555,13 @@ export default function StudyPage({ params }: StudyPageProps) {
                   <div className="flex-1 min-w-0">
                     {editingNoteId === note.id ? (
                       <div className="space-y-3">
-                        <EditingTextarea 
+                        <NoteEditTextarea
                           noteId={note.id}
-                          editingNoteText={editingNoteText}
-                          setEditingNoteText={setEditingNoteText}
-                          handleSaveEdit={handleSaveEdit}
-                          handleCancelEdit={handleCancelEdit}
+                          initialText={note.text}
+                          onSave={() => handleSaveEdit(note.id)}
+                          onCancel={() => setEditingNoteId(null)}
                           noteType={isVideo ? 'video' : isImage ? 'image' : isDrag ? 'drag' : 'text'}
-                          fontFamily={
-                            isMobile && routeParams?.locale === 'en'
-                              ? 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif'
-                              : '"Comic Sans MS", "Marker Felt", "Kalam", cursive'
-                          }
+                          fontFamily={fontFamily}
                         />
                         
                         {/* 编辑时的图片预览 */}
@@ -2362,39 +2392,41 @@ export default function StudyPage({ params }: StudyPageProps) {
   const handleStartEdit = useCallback((noteId: string, currentText: string) => {
     console.log('🖊️ 开始编辑便签:', { noteId, currentText, textLength: currentText?.length });
     setEditingNoteId(noteId);
-    setEditingNoteText(currentText || '');
+    // 不再设置 editingNoteText state，文本由 defaultValue 直接渲染到 DOM
   }, []);
 
   const handleSaveEdit = useCallback((noteId: string) => {
-    console.log('💾 保存便签:', {
-      noteId,
-      editingNoteText,
-      textLength: editingNoteText.length,
-    });
+    console.log('🔘 handleSaveEdit 被调用:', { noteId });
     
-    setNotes(prev => {
-      const updated = prev.map(note => 
-        note.id === noteId 
-          ? { ...note, text: editingNoteText.trim() }
-          : note
-      );
-      const savedNote = updated.find(n => n.id === noteId);
-      console.log('✅ 便签保存成功:', savedNote);
-      return updated;
-    });
+    // 直接从 DOM 中查找 textarea（通过 data-note-id）
+    const textarea = document.querySelector<HTMLTextAreaElement>(`textarea[data-note-id="${noteId}"]`);
     
-    setEditingNoteId(null);
-    setEditingNoteText('');
-  }, [editingNoteText]);
+    if (textarea) {
+      const text = textarea.value || '';
+      console.log('✅ 从 DOM 找到 textarea:', {
+        noteId,
+        text,
+        textLength: text.length,
+      });
+      
+      // 直接更新 notes
+      setNotes(prev => prev.map(n => 
+        n.id === noteId ? { ...n, text: text.trim() } : n
+      ));
+      
+      setEditingNoteId(null);
+    } else {
+      console.log('❌ 在 DOM 中找不到 textarea!');
+    }
+  }, []);
 
   const handleCancelEdit = useCallback(() => {
     console.log('❌ 取消编辑便签');
     setEditingNoteId(null);
-    setEditingNoteText('');
   }, []);
 
-  // 获取字体样式函数
-  const getFontFamily = useCallback(() => {
+  // 获取字体样式（缓存字符串值，不是函数）
+  const fontFamily = React.useMemo(() => {
     if (isMobile && routeParams?.locale === 'en') {
       // 移动端英文模式使用正常字体
       return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
@@ -2406,6 +2438,9 @@ export default function StudyPage({ params }: StudyPageProps) {
       return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
     }
   }, [isMobile, routeParams?.locale]);
+  
+  // 兼容函数调用方式（用于其他地方）
+  const getFontFamily = useCallback(() => fontFamily, [fontFamily]);
 
   // 处理答案选择
   const handleAnswerSelect = (questionIndex: number, answer: string) => {
@@ -2731,7 +2766,7 @@ export default function StudyPage({ params }: StudyPageProps) {
   ];
 
   // 获取当前使用的步骤数据
-  const getStepsData = () => {
+  const getStepsData = React.useCallback(() => {
     const welcomeStep = {
       id: 'step-0',
       title: 'Welcome',
@@ -2771,9 +2806,9 @@ export default function StudyPage({ params }: StudyPageProps) {
               index + 1 === currentStepIndex ? 'current' : 'pending'
     }));
     return [welcomeStep, ...adjustedDefaultSteps];
-  };
+  }, [learningPlan, currentStepIndex, getLearningSteps]);
 
-  const learningSteps = getStepsData();
+  const learningSteps = React.useMemo(() => getStepsData(), [learningPlan, currentStepIndex]);
   const currentStep = learningSteps[currentStepIndex];
 
   if (!routeParams) {
@@ -2995,15 +3030,23 @@ export default function StudyPage({ params }: StudyPageProps) {
       
       if (uploadedImages.length > 0) {
         // 更新便签，添加图片
-        setNotes(prev => prev.map(note => 
-          note.id === noteId 
-            ? { 
-                ...note, 
-                type: note.images ? 'image' : note.type,
-                images: [...(note.images || []), ...uploadedImages] 
-              }
-            : note
-        ));
+        // 如果便签正在编辑中，需要保留编辑中的文本（从 DOM 获取）
+        setNotes(prev => {
+          const isEditing = editingNoteId === noteId;
+          const currentEditingNoteText = isEditing ? editingTextareaRef.current?.value : undefined;
+          
+          return prev.map(note => 
+            note.id === noteId 
+              ? { 
+                  ...note, 
+                  type: note.images ? 'image' : note.type,
+                  images: [...(note.images || []), ...uploadedImages],
+                  // 如果正在编辑中，保留编辑中的文本；否则保留原有的文本
+                  text: isEditing && currentEditingNoteText !== undefined && currentEditingNoteText !== '' ? currentEditingNoteText : note.text
+                }
+              : note
+          );
+        });
       }
       
     } catch (error) {
@@ -3856,15 +3899,7 @@ export default function StudyPage({ params }: StudyPageProps) {
               isMobile={false}
               sessionId={sessionId}
               externalMessage={externalMessage}
-              currentTaskData={(() => {
-                console.log('📋 传递给聊天的任务数据:', {
-                  currentStepIndex,
-                  hasCurrentTask: !!currentTask,
-                  currentTaskData: currentTask,
-                  sessionId: sessionId
-                });
-                return currentTask;
-              })()}
+              currentTaskData={currentTask}
               onTaskUpdateComplete={handleTaskUpdateComplete}
               onTaskUpdateSave={handleTaskUpdateSave}
             />
@@ -4313,23 +4348,9 @@ export default function StudyPage({ params }: StudyPageProps) {
                     sessionId={sessionId}
                     useStudyAPI={true}
                     isMobile={isMobile}
-                    currentTaskData={{
-                      currentStepIndex,
-                      totalSteps: getStepsData().length - 1,
-                      hasTask: !!currentTask,
-                      taskData: currentTask
-                    }}
-                    onTaskUpdateComplete={(newTaskData) => {
-                      console.log('📝 任务更新完成，更新本地状态:', newTaskData);
-                      setCurrentTask(newTaskData);
-                      
-                      // 如果是quiz类型，重置答题状态
-                      if (newTaskData?.type === 'quiz') {
-                        setSelectedAnswers({});
-                        setWrongAnswers(new Set());
-                        setHasSubmitted(false);
-                      }
-                    }}
+                    currentTaskData={currentTask}
+                    onTaskUpdateComplete={handleTaskUpdateComplete}
+                    onTaskUpdateSave={handleTaskUpdateSave}
                     className="h-full mobile-chat-padding"
                   />
                 </div>
