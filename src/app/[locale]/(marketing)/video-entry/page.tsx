@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Play, Clock, Eye, ThumbsUp, Loader2, ExternalLink } from 'lucide-react';
 import { useLocaleRouter } from '@/i18n/navigation';
+import { useTranslations, useLocale } from 'next-intl';
 import { buildApiUrl, API_ENDPOINTS } from '@/config/api';
 
 interface VideoInfo {
@@ -22,6 +23,8 @@ interface VideoInfo {
 
 export default function VideoEntryPage() {
   const router = useLocaleRouter();
+  const locale = useLocale();
+  const t = useTranslations('LearningPlatform.videoEntry');
   const [searchQuery, setSearchQuery] = useState('');
   const [videos, setVideos] = useState<VideoInfo[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -31,7 +34,7 @@ export default function VideoEntryPage() {
   // 处理搜索
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
-      setError('请输入搜索关键词');
+      setError(t('searchError'));
       return;
     }
 
@@ -50,11 +53,12 @@ export default function VideoEntryPage() {
         body: JSON.stringify({
           query: searchQuery,
           limit: 10,
+          locale: locale,
         }),
       });
 
       if (!response.ok) {
-        throw new Error(`搜索失败: ${response.status}`);
+        throw new Error(`${t('searchFailed')}: ${response.status}`);
       }
 
       const data = await response.json();
@@ -72,12 +76,12 @@ export default function VideoEntryPage() {
         setVideos(videosArray);
         setHasSearched(true);
       } else {
-        setError(data.message || '搜索失败');
+        setError(data.message || t('searchFailed'));
         setVideos([]); // 确保失败时也是空数组
       }
     } catch (err: any) {
       console.error('❌ 搜索错误:', err);
-      setError(err.message || '搜索失败，请稍后重试');
+      setError(err.message || t('searchFailedRetry'));
     } finally {
       setIsSearching(false);
     }
@@ -99,8 +103,8 @@ export default function VideoEntryPage() {
     const encodedUrl = encodeURIComponent(videoUrl);
     console.log('🔐 编码后的URL:', encodedUrl);
     
-    // 使用完整路径直接跳转
-    const targetUrl = `/zh/video-notes-prototype?videoUrl=${encodedUrl}`;
+    // 使用当前 locale 动态构建路径
+    const targetUrl = `/${locale}/video-notes-prototype?videoUrl=${encodedUrl}`;
     console.log('🚀 准备跳转到:', targetUrl);
     console.log('🔍 当前 window.location.href:', window.location.href);
     
@@ -196,7 +200,7 @@ export default function VideoEntryPage() {
                     }}
                   >
                     <span className="bg-yellow-200 px-4 py-2 rounded-lg inline-block shadow-sm">
-                      🎬 从视频开始学习
+                      🎬 {t('title')}
                     </span>
                   </h1>
 
@@ -206,7 +210,7 @@ export default function VideoEntryPage() {
                       fontFamily: '"Comic Sans MS", "Marker Felt", "Kalam", cursive',
                     }}
                   >
-                    输入想学的主题，AI 帮你找到最适合的教学视频 ✨
+                    {t('subtitle')}
                   </p>
                 </div>
               )}
@@ -218,7 +222,7 @@ export default function VideoEntryPage() {
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input
                       type="text"
-                      placeholder="例如：Python 基础教程、前端开发入门..."
+                      placeholder={t('searchPlaceholder')}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onKeyPress={handleKeyPress}
@@ -234,12 +238,12 @@ export default function VideoEntryPage() {
                     {isSearching ? (
                       <>
                         <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                        搜索中...
+                        {t('searching')}
                       </>
                     ) : (
                       <>
                         <Search className="w-5 h-5 mr-2" />
-                        搜索视频
+                        {t('searchButton')}
                       </>
                     )}
                   </Button>
@@ -263,7 +267,7 @@ export default function VideoEntryPage() {
               <div className="max-w-6xl mx-auto space-y-6">
                 {/* 结果数量提示 */}
                 <div className="text-center text-gray-600 text-sm">
-                  为你找到 {videos.length} 个精选视频
+                  {t('foundVideos', { count: videos.length })}
                 </div>
 
                 {/* 视频卡片列表 */}
@@ -342,7 +346,7 @@ export default function VideoEntryPage() {
                             {/* 系列课标识 */}
                             {video.is_series && (
                               <div className="absolute top-2 right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded shadow-lg" style={{ zIndex: 3 }}>
-                                系列课 ({video.video_amount}P)
+                                {t('seriesCourse')} ({t('parts', { count: video.video_amount })})
                               </div>
                             )}
                           </div>
@@ -361,23 +365,23 @@ export default function VideoEntryPage() {
                             <div className="flex items-center gap-6 flex-wrap">
                               {/* 是否视频课 */}
                               <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium text-gray-500">类型</span>
+                                <span className="text-sm font-medium text-gray-500">{t('type')}</span>
                                 <span className={`px-4 py-1.5 rounded-full text-sm font-medium shadow-sm ${
                                   video.is_series 
                                     ? 'bg-purple-100 text-purple-700 border border-purple-300' 
                                     : 'bg-gray-100 text-gray-700 border border-gray-300'
                                 }`}>
-                                  {video.is_series ? `系列课 (${video.video_amount}P)` : '单视频'}
+                                  {video.is_series ? `${t('seriesCourse')} (${t('parts', { count: video.video_amount })})` : t('singleVideo')}
                                 </span>
                               </div>
 
                               {/* 适用人群 */}
                               <div className="flex items-center gap-2">
-                                <span className="text-sm font-medium text-gray-500">适用人群</span>
+                                <span className="text-sm font-medium text-gray-500">{t('targetAudience')}</span>
                                 <span className={`px-4 py-1.5 rounded-full text-sm font-medium shadow-sm ${
-                                  video.target_audience === '新手入门' ? 'bg-green-100 text-green-700 border border-green-300' :
-                                  video.target_audience === '备考考生' ? 'bg-blue-100 text-blue-700 border border-blue-300' :
-                                  video.target_audience === '职场进阶' ? 'bg-purple-100 text-purple-700 border border-purple-300' :
+                                  video.target_audience === '新手入门' || video.target_audience === 'Beginner' ? 'bg-green-100 text-green-700 border border-green-300' :
+                                  video.target_audience === '备考考生' || video.target_audience === 'Exam Preparation' ? 'bg-blue-100 text-blue-700 border border-blue-300' :
+                                  video.target_audience === '职场进阶' || video.target_audience === 'Career Advancement' ? 'bg-purple-100 text-purple-700 border border-purple-300' :
                                   'bg-gray-100 text-gray-700 border border-gray-300'
                                 }`}>
                                   {video.target_audience}
@@ -387,9 +391,9 @@ export default function VideoEntryPage() {
 
                             {/* 第二行：描述 */}
                             <div className="flex items-start gap-3">
-                              <span className="text-sm font-medium text-gray-500 pt-1">描述</span>
+                              <span className="text-sm font-medium text-gray-500 pt-1">{t('description')}</span>
                               <p className="text-sm text-gray-700 leading-relaxed flex-1">
-                                {video.description || '暂无描述'}
+                                {video.description || t('noDescription')}
                               </p>
                             </div>
                           </div>
@@ -406,7 +410,7 @@ export default function VideoEntryPage() {
                             className="w-full md:w-auto px-6 py-8 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 flex flex-col items-center justify-center space-y-2"
                           >
                             <Play className="w-8 h-8" />
-                            <span>开始学习</span>
+                            <span>{t('startLearning')}</span>
                           </Button>
                         </div>
                       </div>
@@ -424,8 +428,8 @@ export default function VideoEntryPage() {
             <div className="container mx-auto px-4">
               <div className="text-center text-gray-500">
                 <div className="text-6xl mb-4">🔍</div>
-                <p className="text-xl mb-2">未找到相关视频</p>
-                <p className="text-sm">尝试使用其他关键词搜索</p>
+                <p className="text-xl mb-2">{t('noResults')}</p>
+                <p className="text-sm">{t('noResultsSubtitle')}</p>
               </div>
             </div>
           </section>

@@ -115,7 +115,8 @@ class KnowledgePointExtractor:
     async def extract_knowledge_points_from_segment(
         self,
         segment: Dict[str, Any],
-        segment_index: int
+        segment_index: int,
+        locale: str = 'zh'
     ) -> List[Dict[str, Any]]:
         """
         从单个分段提取知识点
@@ -133,8 +134,46 @@ class KnowledgePointExtractor:
         print(f"   Time range: {start_time} - {end_time}")
         print(f"   Characters: {segment['char_count']}")
         
-        # 构建优化的 prompt
-        prompt = f"""请分析以下教学视频的逐字稿片段，提取其中的【知识点】。
+        # 根据语言环境构建 prompt
+        if locale == 'en':
+            prompt = f"""Please analyze the following educational video transcript segment and extract the 【knowledge points】.
+
+**Knowledge Point Definition**:
+A knowledge point is a complete concept, skill, or topic explained in the video, which should:
+- Be a relatively independent and complete learning unit
+- Have clear start and end, including concept introduction, explanation, and summary
+- Not be scattered details or transitional content
+- Usually correspond to a content module that can be learned and understood independently
+
+**Extraction Requirements**:
+1. Only extract clear and complete knowledge points, exclude casual talk, transitions, and repetitive content
+2. Each knowledge point must include accurate start and end times
+3. Knowledge point names should be concise and clear (within 10 words), summarizing the core content
+4. **Important: Each knowledge point should correspond to a video segment of at least 30 seconds**, avoid splitting knowledge points too finely
+5. If a concept is explained in a short time (less than 30 seconds), merge it into adjacent knowledge points or as a sub-part of a larger knowledge point
+6. Arrange in chronological order
+7. Output in JSON format
+
+Transcript Segment (Time Range: {start_time} - {end_time}):
+{segment['text']}
+
+Please output in the following JSON format:
+{{
+  "knowledge_points": [
+    {{
+      "name": "Knowledge Point Name",
+      "start_time": "MM:SS",
+      "end_time": "MM:SS"
+    }}
+  ]
+}}
+
+Note:
+- Output only JSON, no other explanatory text
+- If there are no clear knowledge points, return an empty array
+- Ensure each knowledge point duration (end_time - start_time) is at least 30 seconds"""
+        else:
+            prompt = f"""请分析以下教学视频的逐字稿片段，提取其中的【知识点】。
 
 **知识点定义**：
 知识点是指视频中讲解的一个完整概念、技能或主题，应该：
@@ -172,31 +211,81 @@ class KnowledgePointExtractor:
 - 确保每个知识点的时长（end_time - start_time）至少30秒"""
         
         try:
+            # 打印实际调用的 prompt（用于调试）
+            print(f"\n{'='*70}")
+            print(f"📋 Knowledge Point Extraction Prompt (Segment {segment_index + 1}, locale={locale})")
+            print(f"{'='*70}")
+            print(prompt)
+            print(f"{'='*70}\n")
+            
             # 调用火山引擎 LLM
             response = await self.llm_service.generate_outline(
                 transcript=segment['text'],
                 custom_prompt=prompt
             )
             
-            # 解析 JSON 响应
-            result = json.loads(response)
+            # 清理和解析 JSON 响应（处理可能的 markdown 代码块）
+            import re
+            cleaned_response = response.strip()
+            
+            # 移除 markdown 代码块标记
+            if '```json' in cleaned_response:
+                match = re.search(r'```json\s*(.*?)\s*```', cleaned_response, re.DOTALL)
+                if match:
+                    cleaned_response = match.group(1)
+            elif '```' in cleaned_response:
+                match = re.search(r'```\s*(.*?)\s*```', cleaned_response, re.DOTALL)
+                if match:
+                    cleaned_response = match.group(1)
+            
+            # 提取第一个完整的 JSON 对象（从 { 到对应的 }）
+            cleaned_response = cleaned_response.strip()
+            if cleaned_response.startswith('{'):
+                # 找到匹配的右花括号
+                brace_count = 0
+                json_end = -1
+                for i, char in enumerate(cleaned_response):
+                    if char == '{':
+                        brace_count += 1
+                    elif char == '}':
+                        brace_count -= 1
+                        if brace_count == 0:
+                            json_end = i + 1
+                            break
+                
+                if json_end > 0:
+                    cleaned_response = cleaned_response[:json_end]
+            
+            # 解析 JSON
+            result = json.loads(cleaned_response)
             knowledge_points = result.get('knowledge_points', [])
             
-            print(f"✅ Extracted {len(knowledge_points)} knowledge points from segment {segment_index + 1}")
+            # 验证知识点格式
+            valid_points = []
+            for point in knowledge_points:
+                if isinstance(point, dict) and 'name' in point and 'start_time' in point and 'end_time' in point:
+                    valid_points.append(point)
+                else:
+                    print(f"⚠️ Invalid knowledge point format: {point}")
             
-            return knowledge_points
+            print(f"✅ Extracted {len(valid_points)} knowledge points from segment {segment_index + 1} (locale={locale})")
+            
+            return valid_points
             
         except json.JSONDecodeError as e:
-            print(f"⚠️ JSON parse error in segment {segment_index + 1}: {e}")
-            print(f"   Response: {response[:200]}")
+            print(f"⚠️ JSON parse error in segment {segment_index + 1} (locale={locale}): {e}")
+            print(f"   Response (first 500 chars): {response[:500]}")
             return []
         except Exception as e:
-            print(f"❌ Error processing segment {segment_index + 1}: {e}")
+            print(f"❌ Error processing segment {segment_index + 1} (locale={locale}): {e}")
+            import traceback
+            traceback.print_exc()
             return []
     
     async def extract_knowledge_points(
         self,
-        transcript_with_timestamps: str
+        transcript_with_timestamps: str,
+        locale: str = 'zh'
     ) -> List[Dict[str, Any]]:
         """
         从完整逐字稿提取知识点（支持长文本分段和并行处理）
@@ -223,10 +312,10 @@ class KnowledgePointExtractor:
             return []
         
         # 2. 并行处理所有分段
-        print(f"\n🚀 Processing {len(segments)} segments in parallel...")
+        print(f"\n🚀 Processing {len(segments)} segments in parallel... (locale={locale})")
         
         tasks = [
-            self.extract_knowledge_points_from_segment(segment, i)
+            self.extract_knowledge_points_from_segment(segment, i, locale)
             for i, segment in enumerate(segments)
         ]
         

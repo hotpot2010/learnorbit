@@ -11,13 +11,27 @@ from pathlib import Path
 import time
 
 # 设置Windows控制台编码为UTF-8
-if sys.platform == 'win32':
-    try:
-        import io
-        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
-    except:
-        pass
+# 注意：在某些环境下重新包装 stdout/stderr 会导致 "I/O operation on closed file" 错误
+# 因此这里完全禁用该操作，使用系统默认编码
+# if sys.platform == 'win32':
+#     try:
+#         import io
+#         # 检查流是否已关闭，避免 "I/O operation on closed file" 错误
+#         if hasattr(sys.stdout, 'buffer'):
+#             try:
+#                 # 仅在流可用且未关闭时重新包装
+#                 if not getattr(sys.stdout.buffer, 'closed', True):
+#                     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+#             except (ValueError, AttributeError, OSError):
+#                 pass
+#         if hasattr(sys.stderr, 'buffer'):
+#             try:
+#                 if not getattr(sys.stderr.buffer, 'closed', True):
+#                     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+#             except (ValueError, AttributeError, OSError):
+#                 pass
+#     except Exception:
+#         pass
 
 from .series_cache_service import SeriesCacheService
 

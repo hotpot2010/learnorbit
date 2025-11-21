@@ -30,6 +30,7 @@ class CreateJobRequest(BaseModel):
     video_urls: List[str]
     prompt: str
     job_name: Optional[str] = None
+    locale: Optional[str] = 'zh'  # 语言环境，默认为中文
 
 
 class AnalyzePartRequest(BaseModel):
@@ -38,6 +39,7 @@ class AnalyzePartRequest(BaseModel):
     prompt: str
     part_number: int
     quality: Optional[str] = 'best'  # 视频清晰度: 'best', '1080p', '720p', '480p', '360p', 'audio'
+    locale: Optional[str] = 'zh'  # 语言环境，默认为中文
 
 
 class GetPlayUrlRequest(BaseModel):
@@ -227,27 +229,53 @@ async def create_job(request: CreateJobRequest, background_tasks: BackgroundTask
     Create a new batch analysis job
     """
     try:
+        print(f"📝 Creating job: video_urls={request.video_urls}, prompt={request.prompt[:50] if request.prompt else None}...")
+        
         # Validate video URLs
         if not request.video_urls:
-            raise ValueError("At least one video URL is required")
+            error_msg = "At least one video URL is required"
+            print(f"❌ Validation error: {error_msg}")
+            raise HTTPException(status_code=400, detail=error_msg)
         
         # Create job
-        job_id = batch_analyzer.create_job(
-            video_urls=request.video_urls,
-            prompt=request.prompt,
-            job_name=request.job_name,
-        )
+        try:
+            job_id = batch_analyzer.create_job(
+                video_urls=request.video_urls,
+                prompt=request.prompt,
+                job_name=request.job_name,
+                locale=request.locale or 'zh',  # 传递语言环境
+            )
+            print(f"✅ Job created: {job_id}")
+        except Exception as e:
+            error_msg = f"Failed to create job: {str(e)}"
+            print(f"❌ Job creation error: {error_msg}")
+            import traceback
+            traceback.print_exc()
+            raise HTTPException(status_code=500, detail=error_msg)
         
         # Start job in background
-        background_tasks.add_task(batch_analyzer.run_job, job_id)
+        try:
+            background_tasks.add_task(batch_analyzer.run_job, job_id)
+            print(f"✅ Job {job_id} added to background tasks")
+        except Exception as e:
+            error_msg = f"Failed to start job: {str(e)}"
+            print(f"❌ Background task error: {error_msg}")
+            # 即使后台任务启动失败，也返回成功（任务已创建）
         
         return {
             "success": True,
             "job_id": job_id,
             "message": "Job created and started"
         }
+    except HTTPException:
+        # 重新抛出 HTTPException
+        raise
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        error_msg = f"Unexpected error: {str(e)}"
+        print(f"❌ Unexpected error: {error_msg}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=error_msg)
 
 
 @router.post("/analyze-part")
@@ -261,6 +289,7 @@ async def analyze_part(request: AnalyzePartRequest) -> Dict[str, Any]:
             prompt=request.prompt,
             part_number=request.part_number,
             quality=request.quality,
+            locale=request.locale or 'zh',
         )
         
         return {

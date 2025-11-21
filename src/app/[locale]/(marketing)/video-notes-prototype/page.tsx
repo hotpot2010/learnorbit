@@ -41,6 +41,7 @@ import {
 } from 'lucide-react';
 import { useMobileLayout } from '@/hooks/use-mobile-layout';
 import { buildApiUrl, API_ENDPOINTS, API_BASE_URL } from '@/config/api';
+import { useTranslations, useLocale } from 'next-intl';
 
 // QA对类型定义
 interface QAPair {
@@ -276,7 +277,23 @@ function useUserData(userId) {
 
 export default function VideoNotesPrototypePage() {
   const { isMobile } = useMobileLayout();
+  const locale = useLocale();
+  const t = useTranslations('LearningPlatform.videoNotes');
   
+  // 加载YouTube iframe API（仅在英文模式下需要）
+  useEffect(() => {
+    if (locale === 'en' && !(window as any).YT) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+      
+      (window as any).onYouTubeIframeAPIReady = () => {
+        console.log('✅ YouTube iframe API loaded');
+      };
+    }
+  }, [locale]);
+
   // 视频相关状态
   const [videoUrl, setVideoUrl] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -291,9 +308,172 @@ export default function VideoNotesPrototypePage() {
   const [knowledgePoints, setKnowledgePoints] = useState<KnowledgePoint[]>([]);
   const [cdnVideoUrl, setCdnVideoUrl] = useState<string>('');
   const videoRef = useRef<HTMLVideoElement>(null);
+  const youtubePlayerRef = useRef<any>(null); // YouTube Player API实例
+  const youtubeVideoIdRef = useRef<string>(''); // 当前YouTube视频ID（用于截图）
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [currentTime, setCurrentTime] = useState(0);
   const [currentKnowledgeIndex, setCurrentKnowledgeIndex] = useState(0);
+
+  // 初始化YouTube播放器（必须在cdnVideoUrl定义之后）
+  useEffect(() => {
+    if (locale !== 'en' || !cdnVideoUrl) {
+      return;
+    }
+    
+    const isYouTube = cdnVideoUrl.includes('youtube.com') || cdnVideoUrl.includes('youtu.be');
+    if (!isYouTube) {
+      return;
+    }
+    
+    // 提取YouTube视频ID
+    const videoIdMatch = cdnVideoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : '';
+    
+    if (!videoId) {
+      return;
+    }
+    
+    // 保存videoId用于截图
+    youtubeVideoIdRef.current = videoId;
+    
+    // 先销毁旧的播放器实例（如果存在）
+    if (youtubePlayerRef.current && typeof youtubePlayerRef.current.destroy === 'function') {
+      try {
+        youtubePlayerRef.current.destroy();
+        console.log('🗑️ 已销毁旧的YouTube播放器');
+      } catch (error) {
+        console.error('❌ YouTube播放器销毁失败:', error);
+      }
+      youtubePlayerRef.current = null;
+    }
+    
+    const initYouTubePlayer = () => {
+      const playerElement = document.getElementById('youtube-player');
+      if (!playerElement) {
+        console.warn('⚠️ YouTube播放器DOM元素未找到，延迟重试...');
+        // 如果DOM元素还没渲染，延迟重试
+        setTimeout(initYouTubePlayer, 200);
+        return;
+      }
+      
+      if ((window as any).YT && (window as any).YT.Player) {
+        // YouTube API已加载，初始化播放器
+        if (!youtubePlayerRef.current) {
+          try {
+            youtubePlayerRef.current = new (window as any).YT.Player('youtube-player', {
+              videoId: videoId,
+              width: '100%',
+              height: '100%',
+              playerVars: {
+                enablejsapi: 1,
+                origin: window.location.origin,
+                controls: 1,
+                rel: 0,
+                modestbranding: 1,
+                playsinline: 1,
+              },
+              events: {
+                onReady: (event: any) => {
+                  console.log('✅ YouTube播放器就绪');
+                  youtubePlayerRef.current = event.target;
+                },
+                onStateChange: (event: any) => {
+                  // 更新播放状态
+                  const state = event.data;
+                  if (state === (window as any).YT.PlayerState.PLAYING) {
+                    setIsPlaying(true);
+                  } else if (state === (window as any).YT.PlayerState.PAUSED) {
+                    setIsPlaying(false);
+                  } else if (state === (window as any).YT.PlayerState.ENDED) {
+                    setIsPlaying(false);
+                    handleVideoEnded();
+                  }
+                },
+                onError: (event: any) => {
+                  console.error('❌ YouTube播放器错误:', event.data);
+                },
+              },
+            });
+            console.log('🎬 YouTube播放器初始化完成');
+          } catch (error) {
+            console.error('❌ YouTube播放器初始化失败:', error);
+          }
+        }
+      } else {
+        // YouTube API未加载，等待加载完成
+        let attempts = 0;
+        const maxAttempts = 100; // 最多等待10秒（100 * 100ms）
+        
+        const checkYT = setInterval(() => {
+          attempts++;
+          if ((window as any).YT && (window as any).YT.Player) {
+            clearInterval(checkYT);
+            const playerElement = document.getElementById('youtube-player');
+            if (playerElement && !youtubePlayerRef.current) {
+              try {
+                youtubePlayerRef.current = new (window as any).YT.Player('youtube-player', {
+                  videoId: videoId,
+                  width: '100%',
+                  height: '100%',
+                  playerVars: {
+                    enablejsapi: 1,
+                    origin: window.location.origin,
+                    controls: 1,
+                    rel: 0,
+                    modestbranding: 1,
+                    playsinline: 1,
+                  },
+                  events: {
+                    onReady: (event: any) => {
+                      console.log('✅ YouTube播放器就绪');
+                      youtubePlayerRef.current = event.target;
+                    },
+                    onStateChange: (event: any) => {
+                      const state = event.data;
+                      if (state === (window as any).YT.PlayerState.PLAYING) {
+                        setIsPlaying(true);
+                      } else if (state === (window as any).YT.PlayerState.PAUSED) {
+                        setIsPlaying(false);
+                      } else if (state === (window as any).YT.PlayerState.ENDED) {
+                        setIsPlaying(false);
+                        handleVideoEnded();
+                      }
+                    },
+                    onError: (event: any) => {
+                      console.error('❌ YouTube播放器错误:', event.data);
+                    },
+                  },
+                });
+                console.log('🎬 YouTube播放器初始化完成（延迟加载）');
+              } catch (error) {
+                console.error('❌ YouTube播放器初始化失败:', error);
+              }
+            }
+          } else if (attempts >= maxAttempts) {
+            clearInterval(checkYT);
+            console.error('❌ YouTube API加载超时');
+          }
+        }, 100);
+      }
+    };
+    
+    // 延迟初始化，确保DOM已渲染
+    const timer = setTimeout(initYouTubePlayer, 300);
+    
+    return () => {
+      clearTimeout(timer);
+      // 清理：销毁播放器实例
+      if (youtubePlayerRef.current && typeof youtubePlayerRef.current.destroy === 'function') {
+        try {
+          youtubePlayerRef.current.destroy();
+          console.log('🗑️ 清理YouTube播放器');
+        } catch (error) {
+          console.error('❌ YouTube播放器销毁失败:', error);
+        }
+        youtubePlayerRef.current = null;
+      }
+    };
+  }, [cdnVideoUrl, locale]);
   
   // 视频序列相关状态
   const [isSeries, setIsSeries] = useState(false);
@@ -321,6 +501,65 @@ export default function VideoNotesPrototypePage() {
   const previousKnowledgeIndexRef = useRef<number>(-1); // 上一次的知识点索引，用于避免重复滚动
   const [askingKnowledgeIndex, setAskingKnowledgeIndex] = useState<number | null>(null); // 正在提问的知识点索引
   const [questionInput, setQuestionInput] = useState<string>(''); // 问题输入
+
+  // 检查是否为YouTube视频（英文模式）- 必须在useEffect之前定义
+  const isYouTubeVideo = (): boolean => {
+    return !!(cdnVideoUrl && (cdnVideoUrl.includes('youtube.com') || cdnVideoUrl.includes('youtu.be')) && locale === 'en');
+  };
+
+  // YouTube播放器时间更新监听（使用setInterval）- 必须在cdnVideoUrl定义之后
+  useEffect(() => {
+    if (!isYouTubeVideo() || !youtubePlayerRef.current) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      try {
+        const player = youtubePlayerRef.current;
+        if (player && typeof player.getCurrentTime === 'function') {
+          const time = player.getCurrentTime();
+          setCurrentTime(time);
+          
+          // 查找当前时间对应的知识点（从后往前查找，找到最后一个匹配的）
+          if (knowledgePoints.length > 0) {
+            let matchedIndex = -1;
+            for (let i = knowledgePoints.length - 1; i >= 0; i--) {
+              const point = knowledgePoints[i];
+              const startSeconds = timeToSeconds(point.start_time);
+              const endSeconds = timeToSeconds(point.end_time);
+              
+              if (time >= startSeconds && time <= endSeconds) {
+                matchedIndex = i;
+                break;
+              }
+            }
+            
+            // 如果找到了匹配的知识点，且与当前不同，则更新
+            if (matchedIndex >= 0 && previousKnowledgeIndexRef.current !== matchedIndex) {
+              previousKnowledgeIndexRef.current = matchedIndex;
+              setCurrentKnowledgeIndex(matchedIndex);
+              
+              // 自动展开当前知识点
+              setExpandedKnowledgePoints(prev => {
+                const newSet = new Set(prev);
+                newSet.add(matchedIndex);
+                return newSet;
+              });
+              
+              // 延迟滚动，确保DOM更新完成
+              setTimeout(() => {
+                scrollToKnowledgePoint(matchedIndex);
+              }, 100);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('❌ YouTube时间更新错误:', error);
+      }
+    }, 500); // 每500ms更新一次
+
+    return () => clearInterval(interval);
+  }, [cdnVideoUrl, locale, knowledgePoints]); // 使用依赖值而不是函数调用
 
   // 从 URL 参数中读取 videoUrl（客户端）
   useEffect(() => {
@@ -374,6 +613,7 @@ export default function VideoNotesPrototypePage() {
           video_url: part.url,
           prompt: '提取视频中的知识点',
           part_number: part.part_number,
+          locale: locale,  // 传递语言环境
         }),
       });
       
@@ -404,21 +644,28 @@ export default function VideoNotesPrototypePage() {
         console.log('✅ 知识点已按时间排序');
         setKnowledgePoints(sortedPoints);
         
-        // 🎬 直接使用缓存的CDN URL（公司CDN，永久有效）
-        console.log('🎬 [loadPart] 检查缓存中的CDN URL...');
+        // 🎬 直接使用缓存的视频URL
+        console.log('🎬 [loadPart] 检查缓存中的视频URL...');
         
-        // 优先使用上传后的CDN URL（公司CDN，永久有效）
-        const cdnUrl = result.video_info?.url ||  // 顶层video_info中的CDN URL
-                      result.result?.video_info?.url ||  // result.video_info中的CDN URL
-                      result.analysis?.result?.video_info?.url ||  // analysis.result.video_info中的CDN URL
+        // 优先使用上传后的CDN URL（公司CDN，永久有效）或YouTube URL
+        const videoUrlFromResult = result.video_info?.url ||  // 顶层video_info中的URL
+                      result.result?.video_info?.url ||  // result.video_info中的URL
+                      result.analysis?.result?.video_info?.url ||  // analysis.result.video_info中的URL
                       '';
         
-        if (cdnUrl && (cdnUrl.startsWith('http://file.gsxservice.com') || cdnUrl.startsWith('https://file.gsxservice.com'))) {
-          console.log('✅ [loadPart] 找到CDN URL（公司CDN）:', cdnUrl.substring(0, 100) + '...');
-          setCdnVideoUrl(cdnUrl);
+        // 检查是否为YouTube URL（英文模式）
+        const isYouTubeUrl = videoUrlFromResult && (videoUrlFromResult.includes('youtube.com') || videoUrlFromResult.includes('youtu.be')) && locale === 'en';
+        
+        if (isYouTubeUrl) {
+          console.log('✅ [loadPart] 找到YouTube URL:', videoUrlFromResult.substring(0, 100) + '...');
+          setCdnVideoUrl(videoUrlFromResult);
+          console.log('✅ [loadPart] setCdnVideoUrl 已调用，使用YouTube URL');
+        } else if (videoUrlFromResult && (videoUrlFromResult.startsWith('http://file.gsxservice.com') || videoUrlFromResult.startsWith('https://file.gsxservice.com'))) {
+          console.log('✅ [loadPart] 找到CDN URL（公司CDN）:', videoUrlFromResult.substring(0, 100) + '...');
+          setCdnVideoUrl(videoUrlFromResult);
           console.log('✅ [loadPart] setCdnVideoUrl 已调用，使用公司CDN URL');
-        } else {
-          // 如果没有CDN URL，尝试获取B站播放URL（作为后备）
+        } else if (locale !== 'en') {
+          // 如果没有CDN URL，尝试获取B站播放URL（作为后备，仅中文模式）
           console.log('⚠️ [loadPart] 未找到CDN URL，尝试获取B站播放URL...');
           try {
             const playUrlResponse = await fetch(buildApiUrl(API_ENDPOINTS.batchGetPlayUrl), {
@@ -465,7 +712,15 @@ export default function VideoNotesPrototypePage() {
         previousKnowledgeIndexRef.current = -1; // 重置上一次索引
         
         // 重置视频播放状态
-        if (videoRef.current) {
+        if (isYouTubeVideo()) {
+          if (youtubePlayerRef.current) {
+            try {
+              youtubePlayerRef.current.seekTo(0, true);
+            } catch (error) {
+              console.error('❌ YouTube播放器重置失败:', error);
+            }
+          }
+        } else if (videoRef.current) {
           videoRef.current.currentTime = 0;
         }
         
@@ -473,11 +728,11 @@ export default function VideoNotesPrototypePage() {
         console.log(`✅ 状态更新完成 - 知识点: ${points.length}, 视频URL:已设置, 标题:已设置`);
       } else {
         console.error(`❌ P${part.part_number} 加载失败:`, data);
-        alert(`加载第${part.part_number}P失败: ${data.error || '未知错误'}`);
+        alert(`${t('loadingPart')} ${part.part_number} ${t('error')}: ${data.error || t('error')}`);
       }
     } catch (error) {
       console.error(`❌ P${part.part_number} 加载异常:`, error);
-      alert(`加载第${part.part_number}P失败: ${error}`);
+      alert(`${t('loadingPart')} ${part.part_number} ${t('error')}: ${error}`);
     } finally {
       setLoadingPartIndex(null);
     }
@@ -533,6 +788,32 @@ export default function VideoNotesPrototypePage() {
 
       console.log('📡 响应状态:', response.status, response.statusText);
       
+      // 检查响应状态
+      if (!response.ok) {
+        let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+        try {
+          const errorData = await response.json();
+          console.error('❌ 错误响应数据:', errorData);
+          errorMessage = errorData.detail || errorData.message || errorData.error || errorMessage;
+        } catch (e) {
+          const errorText = await response.text();
+          console.error('❌ 错误响应文本:', errorText);
+          errorMessage = errorText || errorMessage;
+        }
+        
+        console.error('❌ 创建任务失败:', errorMessage);
+        setAnalysisProgress({ 
+          stage: 'idle', 
+          message: '任务创建失败', 
+          progress: 0,
+          estimatedTime: '',
+          currentStep: ''
+        });
+        alert(`创建任务失败: ${errorMessage}\n\n请检查：\n1. 后端服务是否运行\n2. 视频URL是否正确\n3. 查看浏览器控制台了解详情`);
+        setIsAnalyzing(false);
+        return;
+      }
+      
       const data = await response.json();
       console.log('📦 响应数据:', data);
       
@@ -548,6 +829,7 @@ export default function VideoNotesPrototypePage() {
         // 轮询任务状态
         await pollJobStatus(data.job_id);
       } else {
+        const errorMsg = data.error || data.detail || data.message || '未知错误';
         console.error('❌ 创建任务失败:', data);
         setAnalysisProgress({ 
           stage: 'idle', 
@@ -556,7 +838,8 @@ export default function VideoNotesPrototypePage() {
           estimatedTime: '',
           currentStep: ''
         });
-        alert(`创建任务失败: ${data.error || '未知错误'}\n\n请检查：\n1. 后端服务是否运行\n2. 视频URL是否正确\n3. 查看浏览器控制台了解详情`);
+        alert(`创建任务失败: ${errorMsg}\n\n请检查：\n1. 后端服务是否运行\n2. 视频URL是否正确\n3. 查看浏览器控制台了解详情`);
+        setIsAnalyzing(false);
       }
     } catch (error) {
       console.error('❌ 解析视频异常:', error);
@@ -713,20 +996,27 @@ export default function VideoNotesPrototypePage() {
             console.log('✅ 知识点已按时间排序');
             setKnowledgePoints(sortedPoints);
             
-            // 🎬 直接使用缓存的CDN URL（公司CDN，永久有效）
-            console.log('🎬 [pollJobStatus] 检查缓存中的CDN URL...');
+            // 🎬 直接使用缓存的视频URL
+            console.log('🎬 [pollJobStatus] 检查缓存中的视频URL...');
             
-            // 优先使用上传后的CDN URL（公司CDN，永久有效）
-            const cdnUrl = result.video_info?.url ||  // 顶层video_info中的CDN URL
-                          result.analysis?.result?.video_info?.url ||  // analysis.result.video_info中的CDN URL
+            // 优先使用上传后的CDN URL（公司CDN，永久有效）或YouTube URL
+            const videoUrlFromResult = result.video_info?.url ||  // 顶层video_info中的URL
+                          result.analysis?.result?.video_info?.url ||  // analysis.result.video_info中的URL
                           '';
             
-            if (cdnUrl && (cdnUrl.startsWith('http://file.gsxservice.com') || cdnUrl.startsWith('https://file.gsxservice.com'))) {
-              console.log('✅ [pollJobStatus] 找到CDN URL（公司CDN）:', cdnUrl.substring(0, 100) + '...');
-              setCdnVideoUrl(cdnUrl);
+            // 检查是否为YouTube URL（英文模式）
+            const isYouTubeUrl = videoUrlFromResult && (videoUrlFromResult.includes('youtube.com') || videoUrlFromResult.includes('youtu.be')) && locale === 'en';
+            
+            if (isYouTubeUrl) {
+              console.log('✅ [pollJobStatus] 找到YouTube URL:', videoUrlFromResult.substring(0, 100) + '...');
+              setCdnVideoUrl(videoUrlFromResult);
+              console.log('✅ [pollJobStatus] setCdnVideoUrl 已调用，使用YouTube URL');
+            } else if (videoUrlFromResult && (videoUrlFromResult.startsWith('http://file.gsxservice.com') || videoUrlFromResult.startsWith('https://file.gsxservice.com'))) {
+              console.log('✅ [pollJobStatus] 找到CDN URL（公司CDN）:', videoUrlFromResult.substring(0, 100) + '...');
+              setCdnVideoUrl(videoUrlFromResult);
               console.log('✅ [pollJobStatus] setCdnVideoUrl 已调用，使用公司CDN URL');
-            } else {
-              // 如果没有CDN URL，尝试获取B站播放URL（作为后备）
+            } else if (locale !== 'en') {
+              // 如果没有CDN URL，尝试获取B站播放URL（作为后备，仅中文模式）
               console.log('⚠️ [pollJobStatus] 未找到CDN URL，尝试获取B站播放URL...');
               try {
                 const playUrlResponse = await fetch(buildApiUrl(API_ENDPOINTS.batchGetPlayUrl), {
@@ -807,6 +1097,9 @@ export default function VideoNotesPrototypePage() {
     if (parts.length === 2) {
       const [minutes, seconds] = parts.map(Number);
       return minutes * 60 + seconds;
+    } else if (parts.length === 3) {
+      const [hours, minutes, seconds] = parts.map(Number);
+      return hours * 3600 + minutes * 60 + seconds;
     }
     return 0;
   };
@@ -824,6 +1117,23 @@ export default function VideoNotesPrototypePage() {
   const handleTimeJump = (time: string) => {
     const seconds = timeToSeconds(time);
     
+    if (isYouTubeVideo()) {
+      // YouTube iframe播放器：使用YouTube API跳转
+      if (youtubePlayerRef.current) {
+        try {
+          youtubePlayerRef.current.seekTo(seconds, true);
+          youtubePlayerRef.current.playVideo();
+          setIsPlaying(true);
+          console.log('🎯 YouTube跳转到时间:', time, '(', seconds, '秒)');
+        } catch (error) {
+          console.error('❌ YouTube跳转失败:', error);
+        }
+      } else {
+        console.warn('⚠️ YouTube播放器未初始化，无法跳转时间');
+      }
+      return;
+    }
+    
     if (videoRef.current) {
       videoRef.current.currentTime = seconds;
       videoRef.current.play();
@@ -834,6 +1144,23 @@ export default function VideoNotesPrototypePage() {
   
   // 切换播放/暂停
   const togglePlay = () => {
+    if (isYouTubeVideo()) {
+      // YouTube iframe播放器：使用YouTube API控制播放
+      if (youtubePlayerRef.current) {
+        try {
+          if (isPlaying) {
+            youtubePlayerRef.current.pauseVideo();
+          } else {
+            youtubePlayerRef.current.playVideo();
+          }
+          setIsPlaying(!isPlaying);
+        } catch (error) {
+          console.error('❌ YouTube播放控制失败:', error);
+        }
+      }
+      return;
+    }
+    
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
@@ -846,6 +1173,20 @@ export default function VideoNotesPrototypePage() {
   
   // 改变播放速度
   const changePlaybackRate = (rate: number) => {
+    if (isYouTubeVideo()) {
+      // YouTube iframe播放器：使用YouTube API设置播放速度
+      if (youtubePlayerRef.current) {
+        try {
+          youtubePlayerRef.current.setPlaybackRate(rate);
+          setPlaybackRate(rate);
+          console.log('⚡ YouTube播放速度:', rate + 'x');
+        } catch (error) {
+          console.error('❌ YouTube播放速度设置失败:', error);
+        }
+      }
+      return;
+    }
+    
     if (videoRef.current) {
       videoRef.current.playbackRate = rate;
       setPlaybackRate(rate);
@@ -873,6 +1214,13 @@ export default function VideoNotesPrototypePage() {
   
   // 更新当前播放时间和高亮知识点
   const handleTimeUpdate = () => {
+    if (isYouTubeVideo()) {
+      // YouTube iframe播放器：使用YouTube API获取当前时间
+      // 注意：这需要YouTube iframe API，暂时跳过时间更新
+      // 知识点高亮功能在YouTube模式下可能受限
+      return;
+    }
+    
     if (videoRef.current && knowledgePoints.length > 0) {
       const time = videoRef.current.currentTime;
       setCurrentTime(time);
@@ -907,6 +1255,60 @@ export default function VideoNotesPrototypePage() {
     }
   };
   
+  // YouTube播放器时间更新监听（使用setInterval）- 必须在所有依赖函数定义之后
+  useEffect(() => {
+    if (!isYouTubeVideo() || !youtubePlayerRef.current) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      try {
+        const player = youtubePlayerRef.current;
+        if (player && typeof player.getCurrentTime === 'function') {
+          const time = player.getCurrentTime();
+          setCurrentTime(time);
+          
+          // 查找当前时间对应的知识点（从后往前查找，找到最后一个匹配的）
+          if (knowledgePoints.length > 0) {
+            let matchedIndex = -1;
+            for (let i = knowledgePoints.length - 1; i >= 0; i--) {
+              const point = knowledgePoints[i];
+              const startSeconds = timeToSeconds(point.start_time);
+              const endSeconds = timeToSeconds(point.end_time);
+              
+              if (time >= startSeconds && time <= endSeconds) {
+                matchedIndex = i;
+                break;
+              }
+            }
+            
+            // 如果找到了匹配的知识点，且与当前不同，则更新
+            if (matchedIndex >= 0 && previousKnowledgeIndexRef.current !== matchedIndex) {
+              previousKnowledgeIndexRef.current = matchedIndex;
+              setCurrentKnowledgeIndex(matchedIndex);
+              
+              // 自动展开当前知识点
+              setExpandedKnowledgePoints(prev => {
+                const newSet = new Set(prev);
+                newSet.add(matchedIndex);
+                return newSet;
+              });
+              
+              // 延迟滚动，确保DOM更新完成
+              setTimeout(() => {
+                scrollToKnowledgePoint(matchedIndex);
+              }, 100);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('❌ YouTube时间更新错误:', error);
+      }
+    }, 500); // 每500ms更新一次
+
+    return () => clearInterval(interval);
+  }, [cdnVideoUrl, locale, knowledgePoints]); // 使用依赖值而不是函数调用
+
   // 滚动到指定知识点（滚动到顶部）
   const scrollToKnowledgePoint = (index: number) => {
     if (knowledgeListRef.current && index >= 0 && index < knowledgePoints.length) {
@@ -926,6 +1328,60 @@ export default function VideoNotesPrototypePage() {
       });
     }
   };
+
+  // YouTube播放器时间更新监听（使用setInterval）- 必须在所有依赖函数定义之后
+  useEffect(() => {
+    if (!isYouTubeVideo() || !youtubePlayerRef.current) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      try {
+        const player = youtubePlayerRef.current;
+        if (player && typeof player.getCurrentTime === 'function') {
+          const time = player.getCurrentTime();
+          setCurrentTime(time);
+          
+          // 查找当前时间对应的知识点（从后往前查找，找到最后一个匹配的）
+          if (knowledgePoints.length > 0) {
+            let matchedIndex = -1;
+            for (let i = knowledgePoints.length - 1; i >= 0; i--) {
+              const point = knowledgePoints[i];
+              const startSeconds = timeToSeconds(point.start_time);
+              const endSeconds = timeToSeconds(point.end_time);
+              
+              if (time >= startSeconds && time <= endSeconds) {
+                matchedIndex = i;
+                break;
+              }
+            }
+            
+            // 如果找到了匹配的知识点，且与当前不同，则更新
+            if (matchedIndex >= 0 && previousKnowledgeIndexRef.current !== matchedIndex) {
+              previousKnowledgeIndexRef.current = matchedIndex;
+              setCurrentKnowledgeIndex(matchedIndex);
+              
+              // 自动展开当前知识点
+              setExpandedKnowledgePoints(prev => {
+                const newSet = new Set(prev);
+                newSet.add(matchedIndex);
+                return newSet;
+              });
+              
+              // 延迟滚动，确保DOM更新完成
+              setTimeout(() => {
+                scrollToKnowledgePoint(matchedIndex);
+              }, 100);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('❌ YouTube时间更新错误:', error);
+      }
+    }, 500); // 每500ms更新一次
+
+    return () => clearInterval(interval);
+  }, [cdnVideoUrl, locale, knowledgePoints]); // 使用依赖值而不是函数调用
   
   // 切换知识点展开/收起
   const toggleKnowledgePoint = (index: number) => {
@@ -964,6 +1420,29 @@ export default function VideoNotesPrototypePage() {
   
   // 捕获视频截图
   const captureVideoThumbnail = (): string => {
+    if (isYouTubeVideo()) {
+      // YouTube视频：使用YouTube缩略图API获取当前时间点的缩略图
+      // 注意：YouTube API不直接支持获取任意时间点的缩略图，我们使用默认缩略图
+      // 或者尝试从iframe截图（可能因CORS失败）
+      const videoId = youtubeVideoIdRef.current;
+      if (videoId) {
+        try {
+          // 方法1：尝试使用YouTube的maxresdefault缩略图（最高质量）
+          const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+          console.log('📸 YouTube缩略图URL:', thumbnailUrl);
+          
+          // 由于无法直接获取当前帧，我们返回缩略图URL
+          // 但前端需要base64，所以我们需要将图片转换为base64
+          // 这里先返回空字符串，后续可以通过fetch获取图片并转换为base64
+          return '';
+        } catch (error) {
+          console.error('❌ YouTube缩略图获取失败:', error);
+          return '';
+        }
+      }
+      return '';
+    }
+    
     if (!videoRef.current) {
       console.log('⚠️ Video ref not available');
       return '';
@@ -1002,13 +1481,56 @@ export default function VideoNotesPrototypePage() {
     
     return '';
   };
+
+  // 异步获取YouTube缩略图并转换为base64
+  const captureYouTubeThumbnail = async (videoId: string, timeSeconds: number): Promise<string> => {
+    try {
+      // YouTube不直接支持获取任意时间点的缩略图
+      // 我们使用默认的高质量缩略图
+      const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+      
+      // 尝试获取缩略图并转换为base64
+      const response = await fetch(thumbnailUrl);
+      if (response.ok) {
+        const blob = await response.blob();
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const base64data = reader.result as string;
+            resolve(base64data);
+          };
+          reader.onerror = () => {
+            console.error('❌ 读取YouTube缩略图失败');
+            resolve('');
+          };
+          reader.readAsDataURL(blob);
+        });
+      }
+    } catch (error) {
+      console.error('❌ YouTube缩略图获取失败:', error);
+    }
+    return '';
+  };
   
   // 生成知识点笔记
   const generateNote = async (index: number) => {
     const point = knowledgePoints[index];
     
     // 自动暂停视频
-    if (videoRef.current && !videoRef.current.paused) {
+    if (isYouTubeVideo()) {
+      if (youtubePlayerRef.current) {
+        try {
+          const playerState = youtubePlayerRef.current.getPlayerState();
+          if (playerState === (window as any).YT.PlayerState.PLAYING) {
+            youtubePlayerRef.current.pauseVideo();
+            setIsPlaying(false);
+            console.log('⏸️ YouTube video paused for note generation');
+          }
+        } catch (error) {
+          console.error('❌ YouTube播放器暂停失败:', error);
+        }
+      }
+    } else if (videoRef.current && !videoRef.current.paused) {
       videoRef.current.pause();
       setIsPlaying(false);
       console.log('⏸️ Video paused for note generation');
@@ -1021,9 +1543,39 @@ export default function VideoNotesPrototypePage() {
     
     try {
       // 捕获当前视频截图（可能因CORS失败，但不影响笔记生成）
-      const thumbnail = captureVideoThumbnail();
-      if (!thumbnail) {
-        console.log('⚠️ Screenshot not available (CORS issue), continuing without thumbnail');
+      let thumbnail = '';
+      if (isYouTubeVideo()) {
+        // YouTube视频：尝试从播放器获取当前帧截图
+        if (youtubePlayerRef.current) {
+          try {
+            // 跳转到知识点开始时间
+            const timeSeconds = timeToSeconds(point.start_time);
+            youtubePlayerRef.current.seekTo(timeSeconds, true);
+            
+            // 等待一帧后尝试截图（YouTube API不支持直接截图，使用缩略图API）
+            // 注意：YouTube不提供当前帧的API，我们使用知识点开始时间的缩略图
+            const videoId = youtubeVideoIdRef.current;
+            if (videoId) {
+              // 使用知识点开始时间对应的缩略图（虽然YouTube API不支持精确时间点，但比默认缩略图更相关）
+              thumbnail = await captureYouTubeThumbnail(videoId, timeSeconds);
+              if (!thumbnail) {
+                console.log('⚠️ YouTube缩略图获取失败，继续生成笔记（无缩略图）');
+              } else {
+                console.log(`📸 YouTube缩略图已获取（时间点：${point.start_time}）`);
+              }
+            }
+          } catch (error) {
+            console.error('❌ YouTube截图失败:', error);
+          }
+        }
+      } else {
+        // B站视频：使用Canvas截图当前播放帧
+        thumbnail = captureVideoThumbnail();
+        if (!thumbnail) {
+          console.log('⚠️ Screenshot not available (CORS issue), continuing without thumbnail');
+        } else {
+          console.log('📸 视频截图已捕获');
+        }
       }
       
       // 提取对应的逐字稿片段
@@ -1045,7 +1597,8 @@ export default function VideoNotesPrototypePage() {
           knowledge_point_name: point.name,
           transcript_segment: transcriptSegment,
           video_title: videoTitle,
-          video_url: videoUrl  // 传递视频URL用于缓存
+          video_url: videoUrl,  // 传递视频URL用于缓存
+          locale: locale,  // 传递语言环境
         }),
       });
       
@@ -1082,7 +1635,7 @@ export default function VideoNotesPrototypePage() {
         const errorMsg = data.error || 'Unknown error';
         console.error('❌ Failed to generate note:', errorMsg);
         console.error('Full response:', data);
-        alert(`生成笔记失败: ${errorMsg}`);
+        alert(`${t('generatingNotes')} ${t('error')}: ${errorMsg}`);
         setKnowledgePoints(prev => prev.map((p, i) => 
           i === index ? { ...p, isGeneratingNote: false } : p
         ));
@@ -1107,14 +1660,23 @@ export default function VideoNotesPrototypePage() {
   const handleAskQuestion = async (index: number) => {
     const question = questionInput.trim();
     if (!question) {
-      alert('请输入问题');
+      alert(t('questionPlaceholder'));
       return;
     }
     
     const point = knowledgePoints[index];
     
     // 暂停视频
-    if (videoRef.current && isPlaying) {
+    if (isYouTubeVideo()) {
+      if (youtubePlayerRef.current && isPlaying) {
+        try {
+          youtubePlayerRef.current.pauseVideo();
+          setIsPlaying(false);
+        } catch (error) {
+          console.error('❌ YouTube播放器暂停失败:', error);
+        }
+      }
+    } else if (videoRef.current && isPlaying) {
       videoRef.current.pause();
       setIsPlaying(false);
     }
@@ -1142,7 +1704,8 @@ export default function VideoNotesPrototypePage() {
           knowledge_point_name: point.name,
           transcript_segment: transcriptSegment,
           video_title: videoTitle,
-          video_url: currentVideoUrl
+          video_url: currentVideoUrl,
+          locale: locale,  // 传递语言环境
         }),
       });
       
@@ -1180,7 +1743,16 @@ export default function VideoNotesPrototypePage() {
         setAskingKnowledgeIndex(null);
         
         // 继续播放视频
-        if (videoRef.current) {
+        if (isYouTubeVideo()) {
+          if (youtubePlayerRef.current) {
+            try {
+              youtubePlayerRef.current.playVideo();
+              setIsPlaying(true);
+            } catch (error) {
+              console.error('❌ YouTube播放器播放失败:', error);
+            }
+          }
+        } else if (videoRef.current) {
           videoRef.current.play();
           setIsPlaying(true);
         }
@@ -1189,7 +1761,7 @@ export default function VideoNotesPrototypePage() {
       }
     } catch (error) {
       console.error('❌ Error asking question:', error);
-      alert(`提问失败: ${error}`);
+      alert(`${t('askQuestion')} ${t('error')}: ${error}`);
       setKnowledgePoints(prev => prev.map((p, i) => 
         i === index ? { ...p, isAsking: false } : p
       ));
@@ -1256,7 +1828,7 @@ export default function VideoNotesPrototypePage() {
       );
       
       if (pointsWithContent.length === 0) {
-        alert('没有可导出的笔记内容');
+        alert(t('noNotes'));
         return;
       }
       
@@ -1421,7 +1993,7 @@ export default function VideoNotesPrototypePage() {
           box-shadow: 0 6px 16px rgba(255,107,107,0.4);
           letter-spacing: 2px;
         `;
-        badge.textContent = `知识点 ${index + 1}`;
+        badge.textContent = `${t('knowledgePoints')} ${index + 1}`;
         pointContainer.appendChild(badge);
         
         // 知识点标题（大字体，确保清晰）
@@ -1503,7 +2075,7 @@ export default function VideoNotesPrototypePage() {
             font-weight: 900;
             box-shadow: 0 6px 16px rgba(255,169,77,0.5);
           `;
-          noteIcon.textContent = '📝 我的笔记';
+          noteIcon.textContent = `📝 ${t('notes')}`;
           noteSection.appendChild(noteIcon);
           
           const noteContent = document.createElement('div');
@@ -1674,7 +2246,7 @@ export default function VideoNotesPrototypePage() {
               font-weight: 700;
               color: ${point.validationResult.passed ? '#065f46' : '#991b1b'};
             `;
-            resultText.textContent = `${point.validationResult.passed ? '✓ 通过' : '✗ 未通过'} - 得分：${point.validationResult.score}分`;
+            resultText.textContent = `${point.validationResult.passed ? `✓ ${t('correct')}` : `✗ ${t('incorrect')}`} - ${t('score')}: ${point.validationResult.score}`;
             resultDiv.appendChild(resultText);
             
             exerciseSection.appendChild(resultDiv);
@@ -1692,11 +2264,11 @@ export default function VideoNotesPrototypePage() {
       }
       
       console.log('✅ 所有笔记图片导出完成！');
-      alert(`已导出 ${pointsWithContent.length + 1} 张图片（1张封面 + ${pointsWithContent.length}张知识点）`);
+      alert(`${t('exportSuccess')}: ${pointsWithContent.length + 1} ${t('image')} (1 ${t('exportFormat')} + ${pointsWithContent.length} ${t('knowledgePoints')})`);
       
     } catch (error) {
       console.error('❌ 导出笔记失败:', error);
-      alert(`导出失败: ${error}`);
+      alert(`${t('exportFailed')}: ${error}`);
     }
   };
   
@@ -1733,7 +2305,8 @@ export default function VideoNotesPrototypePage() {
           knowledge_point_name: point.name,
           transcript_segment: transcriptSegment,
           video_title: videoTitle,
-          video_url: currentVideoUrl
+          video_url: currentVideoUrl,
+          locale: locale,  // 传递语言环境
         }),
       });
       
@@ -1763,7 +2336,7 @@ export default function VideoNotesPrototypePage() {
       }
     } catch (error) {
       console.error('❌ Error generating exercise:', error);
-      alert(`生成练习失败: ${error}`);
+      alert(`${t('generateExercise')} ${t('error')}: ${error}`);
       setKnowledgePoints(prev => prev.map((p, i) => 
         i === index ? { ...p, isGeneratingExercise: false } : p
       ));
@@ -1774,7 +2347,7 @@ export default function VideoNotesPrototypePage() {
   const runCode = async (index: number) => {
     const point = knowledgePoints[index];
     if (!point.exercise || !point.userCode) {
-      alert('请先编写代码');
+      alert(t('writeCodeFirst'));
       return;
     }
     
@@ -1838,7 +2411,7 @@ export default function VideoNotesPrototypePage() {
   const validateAnswer = async (index: number) => {
     const point = knowledgePoints[index];
     if (!point.exercise || !point.userCode) {
-      alert('请先编写代码');
+      alert(t('writeCodeFirst'));
       return;
     }
     
@@ -1891,9 +2464,9 @@ export default function VideoNotesPrototypePage() {
         
         // 显示通知
         if (data.passed) {
-          alert(`🎉 恭喜通过！得分：${data.score}分`);
+          alert(`🎉 ${t('correct')}! ${t('score')}: ${data.score}`);
         } else {
-          alert(`继续加油！得分：${data.score}分\n查看反馈了解改进建议。`);
+          alert(`${t('incorrect')}! ${t('score')}: ${data.score}\n${t('feedback')}`);
         }
       } else {
         throw new Error(data.error || '验证失败');
@@ -1901,7 +2474,7 @@ export default function VideoNotesPrototypePage() {
       
     } catch (error) {
       console.error('❌ Error validating answer:', error);
-      alert(`验证失败: ${error}`);
+      alert(`${t('validate')} ${t('error')}: ${error}`);
       setKnowledgePoints(prev => prev.map((p, i) => 
         i === index ? { ...p, isValidating: false } : p
       ));
@@ -2082,7 +2655,7 @@ export default function VideoNotesPrototypePage() {
                         type="text"
                         value={videoUrl}
                         onChange={(e) => setVideoUrl(e.target.value)}
-                        placeholder="https://www.bilibili.com/video/BV..."
+                        placeholder={t('questionPlaceholder')}
                         className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 text-sm"
                         onKeyPress={(e) => {
                           if (e.key === 'Enter' && videoUrl.trim()) {
@@ -2172,20 +2745,45 @@ export default function VideoNotesPrototypePage() {
               </div>
             ) : cdnVideoUrl ? (
               <div className="relative aspect-video bg-black">
-                {/* HTML5 视频播放器 */}
-                <video
-                  ref={videoRef}
-                  src={cdnVideoUrl}
-                  className="w-full h-full"
-                  controls
-                  crossOrigin="anonymous"
-                  onPlay={() => setIsPlaying(true)}
-                  onPause={() => setIsPlaying(false)}
-                  onEnded={handleVideoEnded}
-                  onTimeUpdate={handleTimeUpdate}
-                >
-                  您的浏览器不支持 video 标签。
-                </video>
+                {/* 检测是否为YouTube视频 */}
+                {(() => {
+                  const isYouTube = cdnVideoUrl.includes('youtube.com') || cdnVideoUrl.includes('youtu.be');
+                  const isEnglish = locale === 'en';
+                  
+                  // 英文模式且为YouTube视频：使用YouTube Player API
+                  if (isYouTube && isEnglish) {
+                    // 提取YouTube视频ID
+                    const videoIdMatch = cdnVideoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+                    const videoId = videoIdMatch ? videoIdMatch[1] : '';
+                    
+                    if (videoId) {
+                      return (
+                        <div 
+                          id="youtube-player" 
+                          className="w-full h-full"
+                          style={{ minHeight: '400px' }}
+                        />
+                      );
+                    }
+                  }
+                  
+                  // B站视频或中文模式：使用HTML5 video标签
+                  return (
+                    <video
+                      ref={videoRef}
+                      src={cdnVideoUrl}
+                      className="w-full h-full"
+                      controls
+                      crossOrigin="anonymous"
+                      onPlay={() => setIsPlaying(true)}
+                      onPause={() => setIsPlaying(false)}
+                      onEnded={handleVideoEnded}
+                      onTimeUpdate={handleTimeUpdate}
+                    >
+                      您的浏览器不支持 video 标签。
+                    </video>
+                  );
+                })()}
                 
                 {/* 自定义播放速度控制 */}
                 <div className="absolute top-4 right-4 bg-black/70 rounded-lg p-2 flex gap-1">
@@ -2209,7 +2807,7 @@ export default function VideoNotesPrototypePage() {
                 <div className="text-center">
                   <div className="text-8xl mb-4">🎥</div>
                   <p className="text-white text-xl font-bold" style={{ fontFamily: getFontFamily() }}>
-                    等待视频加载...
+                    {t('loadingVideo')}
                   </p>
                 </div>
               </div>
@@ -2226,14 +2824,23 @@ export default function VideoNotesPrototypePage() {
               size="lg"
             >
               <SkipForward className="w-5 h-5 mr-2" />
-              Next 知识点
+              {t('next')} {t('knowledgePoints')}
             </Button>
             
             {/* 提问按钮 - 蓝色 */}
             <Button
               onClick={() => {
                 // 打开提问框时暂停视频
-                if (videoRef.current && isPlaying) {
+                if (isYouTubeVideo()) {
+                  if (youtubePlayerRef.current && isPlaying) {
+                    try {
+                      youtubePlayerRef.current.pauseVideo();
+                      setIsPlaying(false);
+                    } catch (error) {
+                      console.error('❌ YouTube播放器暂停失败:', error);
+                    }
+                  }
+                } else if (videoRef.current && isPlaying) {
                   videoRef.current.pause();
                   setIsPlaying(false);
                 }
@@ -2243,7 +2850,7 @@ export default function VideoNotesPrototypePage() {
               size="lg"
             >
               <MessageSquare className="w-5 h-5 mr-2" />
-              提问
+              {t('askQuestion')}
             </Button>
             
             {/* 笔记按钮 - 紫色 */}
@@ -2256,12 +2863,12 @@ export default function VideoNotesPrototypePage() {
               {knowledgePoints[currentKnowledgeIndex]?.isGeneratingNote ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  生成中...
+                  {t('generatingNotes')}
                 </>
               ) : (
                 <>
                   <StickyNote className="w-5 h-5 mr-2" />
-                  笔记
+                  {t('notes')}
                 </>
               )}
             </Button>
@@ -2276,12 +2883,12 @@ export default function VideoNotesPrototypePage() {
               {knowledgePoints[currentKnowledgeIndex]?.isGeneratingExercise ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  生成中...
+                  {t('generatingNotes')}
                 </>
               ) : (
                 <>
                   <CheckSquare className="w-5 h-5 mr-2" />
-                  练习
+                  {t('exercises')}
                 </>
               )}
             </Button>
@@ -2322,14 +2929,14 @@ export default function VideoNotesPrototypePage() {
                   {/* 当前阶段 - 简化显示，只保留步骤标题 */}
                   <div className="inline-block bg-indigo-50 border border-indigo-200 rounded-lg px-4 py-2">
                     <p className="text-indigo-700 text-xs font-medium">
-                      {analysisProgress.stage === 'creating_task' && '📋 创建任务'}
-                      {analysisProgress.stage === 'downloading_video' && '📥 下载视频'}
-                      {analysisProgress.stage === 'uploading_video' && '📤 上传视频'}
-                      {analysisProgress.stage === 'extracting_audio' && '🎵 提取音频'}
-                      {analysisProgress.stage === 'transcribing' && '✍️ 语音转录'}
-                      {analysisProgress.stage === 'analyzing_content' && '🧠 内容分析'}
-                      {analysisProgress.stage === 'extracting_knowledge' && '💡 提取知识点'}
-                      {analysisProgress.stage === 'completed' && '✅ 完成'}
+                      {analysisProgress.stage === 'creating_task' && `📋 ${t('loading')}`}
+                      {analysisProgress.stage === 'downloading_video' && `📥 ${t('loadingVideo')}`}
+                      {analysisProgress.stage === 'uploading_video' && `📤 ${t('loading')}`}
+                      {analysisProgress.stage === 'extracting_audio' && `🎵 ${t('loading')}`}
+                      {analysisProgress.stage === 'transcribing' && `✍️ ${t('loading')}`}
+                      {analysisProgress.stage === 'analyzing_content' && `🧠 ${t('analyzingVideo')}`}
+                      {analysisProgress.stage === 'extracting_knowledge' && `💡 ${t('extractingKnowledge')}`}
+                      {analysisProgress.stage === 'completed' && `✅ ${t('loading')}`}
                     </p>
                   </div>
                 </div>
@@ -2338,9 +2945,9 @@ export default function VideoNotesPrototypePage() {
               <div className="text-center py-12">
                 <div className="text-6xl mb-3">🎓</div>
                 <p className="text-gray-500 text-sm" style={{ fontFamily: getFontFamily() }}>
-                  暂无知识点
+                  {t('noKnowledgePoints')}
                   <br />
-                  等待视频解析完成
+                  {t('loadingVideo')}
                 </p>
               </div>
             ) : (
@@ -2448,7 +3055,7 @@ export default function VideoNotesPrototypePage() {
                                     className="flex items-center gap-1 px-3 py-1 bg-green-500 text-white rounded-md text-xs hover:bg-green-600"
                                   >
                                     <Check className="w-3 h-3" />
-                                    完成
+                                    {t('save')}
                                   </button>
                                   <button
                                     onClick={(e) => {
@@ -2457,7 +3064,7 @@ export default function VideoNotesPrototypePage() {
                                     }}
                                     className="px-3 py-1 bg-gray-300 text-gray-700 rounded-md text-xs hover:bg-gray-400"
                                   >
-                                    取消
+                                    {t('cancel')}
                                   </button>
                                 </div>
                               </div>
@@ -2472,7 +3079,7 @@ export default function VideoNotesPrototypePage() {
                                     setEditingNoteIndex(index);
                                   }}
                                   className="absolute top-0 right-0 opacity-0 group-hover/note:opacity-100 transition-opacity p-1 bg-purple-500 text-white rounded-md hover:bg-purple-600"
-                                  title="编辑笔记"
+                                  title={t('edit')}
                                 >
                                   <Edit2 className="w-3 h-3" />
                                 </button>
@@ -2520,19 +3127,19 @@ export default function VideoNotesPrototypePage() {
                                     point.exercise.type === 'code_choice' ? 'bg-purple-600' :
                                     'bg-red-600'
                                   }`}>
-                                    {point.exercise.type === 'fill_blank' ? '填空题' :
-                                     point.exercise.type === 'guided_steps' ? '分步引导' :
-                                     point.exercise.type === 'code_choice' ? '代码选择' :
-                                     '完整编程'}
+                                    {point.exercise.type === 'fill_blank' ? t('exercises') :
+                                     point.exercise.type === 'guided_steps' ? t('exercises') :
+                                     point.exercise.type === 'code_choice' ? t('exercises') :
+                                     t('exercises')}
                                   </span>
                                   <span className={`px-2 py-1 rounded ${
                                     point.exercise.difficulty === 'beginner' ? 'bg-green-600' :
                                     point.exercise.difficulty === 'intermediate' ? 'bg-yellow-600' :
                                     'bg-red-600'
                                   }`}>
-                                    {point.exercise.difficulty === 'beginner' ? '初级' :
-                                     point.exercise.difficulty === 'intermediate' ? '中级' :
-                                     '高级'}
+                                    {point.exercise.difficulty === 'beginner' ? t('loading') :
+                                     point.exercise.difficulty === 'intermediate' ? t('loading') :
+                                     t('loading')}
                                   </span>
                                   <span className="px-2 py-1 bg-purple-600 rounded">
                                     {point.exercise.language}
@@ -2564,8 +3171,8 @@ export default function VideoNotesPrototypePage() {
                                 {point.exercise.hints && point.exercise.hints.length > 0 && (
                                   <details className="group">
                                     <summary className="cursor-pointer text-yellow-400 hover:text-yellow-300 font-medium flex items-center gap-2">
-                                      💡 查看提示 ({point.exercise.hints.length})
-                                      <span className="text-xs text-gray-400">(点击展开)</span>
+                                      💡 {t('hint')} ({point.exercise.hints.length})
+                                      <span className="text-xs text-gray-400">({t('expand')})</span>
                                     </summary>
                                     <ul className="mt-2 space-y-1 text-sm pl-4">
                                       {point.exercise.hints.map((hint, i) => (
@@ -2587,12 +3194,12 @@ export default function VideoNotesPrototypePage() {
                                   {point.isValidating ? (
                                     <>
                                       <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                                      验证中...
+                                      {t('validate')}...
                                     </>
                                   ) : (
                                     <>
                                       <CheckCircle className="w-5 h-5 mr-2" />
-                                      提交答案
+                                      {t('submit')}
                                     </>
                                   )}
                                 </button>
@@ -2697,7 +3304,7 @@ export default function VideoNotesPrototypePage() {
                       d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" 
                     />
                   </svg>
-                  保存笔记
+                  {t('exportNotes')}
                 </button>
               </div>
             )}
@@ -2715,7 +3322,7 @@ export default function VideoNotesPrototypePage() {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <MessageSquare className="w-5 h-5 text-blue-500" />
-                <span className="font-bold text-gray-800">提问：</span>
+                <span className="font-bold text-gray-800">{t('askQuestion')}：</span>
                 <span className="text-sm text-gray-600">{knowledgePoints[askingKnowledgeIndex]?.name}</span>
               </div>
               <button
@@ -2723,7 +3330,17 @@ export default function VideoNotesPrototypePage() {
                   setAskingKnowledgeIndex(null);
                   setQuestionInput('');
                   // 继续播放视频
-                  if (videoRef.current && !isPlaying) {
+                  const isYouTube = cdnVideoUrl && (cdnVideoUrl.includes('youtube.com') || cdnVideoUrl.includes('youtu.be')) && locale === 'en';
+                  if (isYouTube) {
+                    if (youtubePlayerRef.current && !isPlaying) {
+                      try {
+                        youtubePlayerRef.current.playVideo();
+                        setIsPlaying(true);
+                      } catch (error) {
+                        console.error('❌ YouTube播放器播放失败:', error);
+                      }
+                    }
+                  } else if (videoRef.current && !isPlaying) {
                     videoRef.current.play();
                     setIsPlaying(true);
                   }
@@ -2744,7 +3361,7 @@ export default function VideoNotesPrototypePage() {
                     handleAskQuestion(askingKnowledgeIndex);
                   }
                 }}
-                placeholder="输入你的问题，按Enter提问..."
+                placeholder={t('questionPlaceholder')}
                 className="flex-1 px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors text-sm"
                 autoFocus
               />
@@ -2756,12 +3373,12 @@ export default function VideoNotesPrototypePage() {
                 {knowledgePoints[askingKnowledgeIndex]?.isAsking ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    思考中
+                    {t('loading')}
                   </>
                 ) : (
                   <>
                     <Sparkles className="w-4 h-4" />
-                    提问
+                    {t('askQuestion')}
                   </>
                 )}
               </button>

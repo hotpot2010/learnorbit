@@ -57,5 +57,15 @@
     "video_url": "http://www.bilibili.com/video/av115548193101172",
     "cached_at": "2025-11-19T15:20:57.659828",
     "file": "cache\\21a850f9eb5c742f7ee8962c706cefd6.json"
+  },
+  "d1c1ed5fb86ca6ead71ceeb008880661": {
+    "video_url": "http://www.bilibili.com/video/av115564819251851",
+    "cached_at": "2025-11-21T17:49:59.695047",
+    "file": "cache\\d1c1ed5fb86ca6ead71ceeb008880661.json"
+  },
+  "501b150cd078727ce6f897ae84a55e24": {
+    "video_url": "https://www.youtube.com/watch?v=mqgGTAe1AYc",
+    "cached_at": "2025-11-21T18:39:03.218487",
+    "file": "cache\\501b150cd078727ce6f897ae84a55e24.json"
   }
 }

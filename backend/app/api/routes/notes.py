@@ -12,7 +12,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspa
 
 from app.services.volcano_service import VolcanoService
 from app.services.doubao_service import DoubaoService
-from app.services.note_cache_service import NoteCacheService
 from dotenv import load_dotenv
 
 # 显式加载环境变量
@@ -29,8 +28,6 @@ if llm_provider == 'baijia':
 else:
     llm_service = VolcanoService()
 
-note_cache_service = NoteCacheService()
-
 
 class NoteGenerationRequest(BaseModel):
     """笔记生成请求模型"""
@@ -38,6 +35,7 @@ class NoteGenerationRequest(BaseModel):
     transcript_segment: str
     video_title: Optional[str] = None
     video_url: Optional[str] = None  # 用于缓存键
+    locale: Optional[str] = 'zh'  # 语言环境，默认为中文
 
 
 class NoteGenerationResponse(BaseModel):
@@ -55,6 +53,7 @@ class QuestionAnswerRequest(BaseModel):
     transcript_segment: str
     video_title: Optional[str] = None
     video_url: Optional[str] = None
+    locale: Optional[str] = 'zh'  # 语言环境，默认为中文
 
 
 class QuestionAnswerResponse(BaseModel):
@@ -70,6 +69,7 @@ class ExerciseGenerationRequest(BaseModel):
     transcript_segment: str
     video_title: Optional[str] = None
     video_url: Optional[str] = None
+    locale: Optional[str] = 'zh'  # 语言环境，默认为中文
 
 
 class ExerciseGenerationResponse(BaseModel):
@@ -95,24 +95,21 @@ async def generate_note(request: NoteGenerationRequest):
         print(f"📝 Generating note for knowledge point: {request.knowledge_point_name}")
         print(f"📄 Transcript segment length: {len(request.transcript_segment)} chars")
         
-        # 尝试从缓存获取笔记（如果提供了video_url）
-        if request.video_url:
-            cached_note = note_cache_service.get_cached_note(
-                video_url=request.video_url,
-                knowledge_point_name=request.knowledge_point_name,
-                max_age_hours=24 * 7  # 缓存7天
-            )
-            
-            if cached_note:
-                print(f"✅ Returning cached note")
-                return NoteGenerationResponse(
-                    success=True,
-                    note=cached_note,
-                    from_cache=True
-                )
-        
-        # 构建专门用于笔记生成的 prompt
-        prompt = f"""请为知识点「{request.knowledge_point_name}」生成一份简洁的学习笔记。
+        # 根据语言环境构建 prompt
+        locale = request.locale or 'zh'
+        if locale == 'en':
+            prompt = f"""Please generate a concise study note for the knowledge point "{request.knowledge_point_name}".
+
+Requirements:
+1. Use Markdown format
+2. Content should be concise and clear, within 100 words
+3. Highlight core points and key concepts
+4. You can use emojis to enhance readability
+5. Well-organized and easy to understand
+
+Please output the note content directly without any additional explanations."""
+        else:
+            prompt = f"""请为知识点「{request.knowledge_point_name}」生成一份简洁的学习笔记。
 
 要求：
 1. 使用 Markdown 格式
@@ -123,6 +120,13 @@ async def generate_note(request: NoteGenerationRequest):
 
 请直接输出笔记内容，不要包含任何额外说明。"""
 
+        # 打印实际使用的prompt（用于调试）
+        print(f"📋 Note Generation Prompt (locale={locale}):")
+        print("=" * 70)
+        print(prompt)
+        print("=" * 70)
+        print(f"📄 Transcript segment (first 200 chars): {request.transcript_segment[:200]}...")
+
         # 调用 LLM 生成笔记
         note_content = await llm_service.generate_outline(
             transcript=request.transcript_segment,
@@ -131,18 +135,6 @@ async def generate_note(request: NoteGenerationRequest):
         
         print(f"✅ Note generated successfully")
         print(f"📝 Note preview: {note_content[:100]}...")
-        
-        # 缓存笔记（如果提供了video_url）
-        if request.video_url:
-            note_cache_service.set_cached_note(
-                video_url=request.video_url,
-                knowledge_point_name=request.knowledge_point_name,
-                note=note_content,
-                metadata={
-                    'video_title': request.video_title,
-                    'transcript_length': len(request.transcript_segment)
-                }
-            )
         
         return NoteGenerationResponse(
             success=True,
@@ -178,8 +170,22 @@ async def answer_question(request: QuestionAnswerRequest):
         print(f"📚 Knowledge point: {request.knowledge_point_name}")
         print(f"📄 Context length: {len(request.transcript_segment)} chars")
         
-        # 构建问答 prompt（精简版）
-        prompt = f"""请用一句话简洁回答学生的问题。
+        # 根据语言环境构建 prompt
+        locale = request.locale or 'zh'
+        if locale == 'en':
+            prompt = f"""Please answer the student's question concisely in one sentence.
+
+Knowledge Point: {request.knowledge_point_name}
+Question: {request.question}
+
+Requirements:
+1. Answer should be 30-50 words
+2. Give the answer directly without explanatory prefixes
+3. Language should be concise and clear
+
+Output only the answer, nothing else."""
+        else:
+            prompt = f"""请用一句话简洁回答学生的问题。
 
 知识点：{request.knowledge_point_name}
 问题：{request.question}
@@ -228,30 +234,51 @@ async def generate_exercise(request: ExerciseGenerationRequest):
         AI生成的练习题（JSON格式，包含题型、题干、代码等）
     """
     try:
-        from app.services.exercise_cache_service import exercise_cache_service
-        
         print(f"💪 Generating exercise for: {request.knowledge_point_name}")
         print(f"📄 Context length: {len(request.transcript_segment)} chars")
         
-        # 1. 尝试从缓存获取
-        if request.video_url:
-            cached = exercise_cache_service.get_cached_exercise(
-                video_url=request.video_url,
-                knowledge_point_name=request.knowledge_point_name
-            )
-            
-            if cached and cached.get('exercise'):
-                print(f"💾 使用缓存的练习题")
-                return ExerciseGenerationResponse(
-                    success=True,
-                    exercise=cached['exercise'],
-                    from_cache=True
-                )
+        # 根据语言环境构建 prompt
+        locale = request.locale or 'zh'
+        if locale == 'en':
+            prompt = f"""You are a professional programming education expert. Please generate a programming exercise for the knowledge point based on the video content.
+
+Knowledge Point: {request.knowledge_point_name}
+Video Title: {request.video_title or 'Unknown'}
+
+Please choose an appropriate exercise type based on the difficulty of the knowledge point and generate the exercise. Must strictly follow the following JSON format:
+
+{{
+  "type": "Exercise type (one of: fill_blank/guided_steps/code_choice/complete)",
+  "title": "Exercise title",
+  "description": "Exercise description (within 50 words)",
+  "difficulty": "Difficulty (beginner/intermediate/advanced)",
+  "language": "Programming language (python/javascript/etc.)",
+  "starter_code": "Initial code template",
+  "solution": "Reference answer",
+  "hints": ["Hint 1", "Hint 2"]
+}}
+
+**Exercise Type Selection Rules**:
+1. fill_blank: Suitable for simple syntax and single concepts (e.g., variable assignment, basic operations)
+2. guided_steps: Suitable for tasks requiring complete function implementation (e.g., writing functions, implementing algorithms)
+3. code_choice: Suitable for comparing different implementations and understanding logic
+4. complete: Suitable for comprehensive applications and advanced tasks
+
+**Type-Specific Fields**:
+- fill_blank: Mark blank positions with "___" in starter_code, explain what to fill in each blank in hints
+- guided_steps: List 3-5 steps in hints, explain what to accomplish in each step
+- code_choice: Provide 3-4 code options in hints, mark the correct answer
+- complete: Provide a basic framework, hints give thinking guidance
+
+**Requirements**:
+1. The exercise must be directly related to the video content and knowledge point
+2. Moderate difficulty, suitable for beginners
+3. Code should be concise, no more than 20 lines
+4. Hints should be clear, help understanding without directly giving answers
+5. Output only JSON, no other content
+6. Ensure JSON format is correct and can be parsed"""
         else:
-            print(f"⚠️ 没有提供video_url，跳过缓存")
-        
-        # 构建练习生成 prompt
-        prompt = f"""你是一位专业的编程教学专家。请根据视频内容为知识点生成一道编程练习题。
+            prompt = f"""你是一位专业的编程教学专家。请根据视频内容为知识点生成一道编程练习题。
 
 知识点：{request.knowledge_point_name}
 视频标题：{request.video_title or '未知'}
@@ -289,6 +316,13 @@ async def generate_exercise(request: ExerciseGenerationRequest):
 5. 只输出JSON，不要其他内容
 6. 确保JSON格式正确，可以被解析"""
 
+        # 打印实际使用的prompt（用于调试）
+        print(f"📋 Exercise Generation Prompt (locale={locale}):")
+        print("=" * 70)
+        print(prompt)
+        print("=" * 70)
+        print(f"📄 Transcript segment (first 200 chars): {request.transcript_segment[:200]}...")
+
         # 调用 LLM 生成练习题
         exercise_json = await llm_service.generate_outline(
             transcript=request.transcript_segment,
@@ -305,18 +339,6 @@ async def generate_exercise(request: ExerciseGenerationRequest):
             print(f"✅ Exercise parsed successfully")
             print(f"📝 Type: {exercise_data.get('type')}")
             print(f"🎯 Title: {exercise_data.get('title')}")
-            
-            # 2. 保存到缓存
-            if request.video_url:
-                exercise_cache_service.set_cached_exercise(
-                    video_url=request.video_url,
-                    knowledge_point_name=request.knowledge_point_name,
-                    exercise=exercise_data,
-                    metadata={
-                        'video_title': request.video_title,
-                        'transcript_length': len(request.transcript_segment)
-                    }
-                )
             
             return ExerciseGenerationResponse(
                 success=True,
@@ -446,7 +468,7 @@ async def validate_answer(request: AnswerValidationRequest):
         # 使用LLM进行代码评估
         print(f"🤖 调用LLM进行代码评估...")
         
-        # 构建评估prompt
+        # 构建评估prompt（暂时保持中文，因为这是内部评估，用户看到的是前端翻译后的反馈）
         prompt = f"""你是一位专业的编程教学专家。请评估学生提交的代码答案。
 
 **练习题信息**：

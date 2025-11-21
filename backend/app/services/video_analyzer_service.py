@@ -39,7 +39,7 @@ class VideoAnalyzerService:
         
         safe_print(f"🤖 VideoAnalyzerService initialized ({llm_name})")
     
-    async def analyze_video(self, video_info: Dict[str, Any]) -> Dict[str, Any]:
+    async def analyze_video(self, video_info: Dict[str, Any], locale: str = 'zh') -> Dict[str, Any]:
         """
         分析单个视频，生成学习建议
         
@@ -63,16 +63,16 @@ class VideoAnalyzerService:
             
             safe_print(f"🤖 分析视频: {title}")
             
-            # 构建分析 prompt
-            prompt = self._build_analysis_prompt(title, description, author, duration, play)
+            # 构建分析 prompt（传递 locale）
+            prompt = self._build_analysis_prompt(title, description, author, duration, play, locale)
             
             # 调用 LLM 进行分析
             # 注意：generate_outline 需要 transcript 和 custom_prompt 两个参数
             # 对于视频搜索分析，我们用空字符串作为 transcript，custom_prompt 包含所有信息
             analysis_text = await self.llm.generate_outline(transcript="", custom_prompt=prompt)
             
-            # 解析LLM返回的结果
-            result = self._parse_analysis_result(analysis_text, video_info)
+            # 解析LLM返回的结果（传递 locale）
+            result = self._parse_analysis_result(analysis_text, video_info, locale)
             
             safe_print(f"  ✓ 分析完成")
             return result
@@ -83,20 +83,21 @@ class VideoAnalyzerService:
             traceback.print_exc()
             return self._get_fallback_analysis(video_info)
     
-    async def analyze_videos_batch(self, videos: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    async def analyze_videos_batch(self, videos: List[Dict[str, Any]], locale: str = 'zh') -> List[Dict[str, Any]]:
         """
         批量分析多个视频（并行）
         
         Args:
             videos: 视频列表
+            locale: 语言环境，默认为中文
             
         Returns:
             分析结果列表
         """
-        safe_print(f"🤖 批量分析 {len(videos)} 个视频...")
+        safe_print(f"🤖 批量分析 {len(videos)} 个视频... (locale={locale})")
         
-        # 并行调用
-        tasks = [self.analyze_video(video) for video in videos]
+        # 并行调用（传递 locale）
+        tasks = [self.analyze_video(video, locale=locale) for video in videos]
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
         # 处理异常情况
@@ -117,11 +118,42 @@ class VideoAnalyzerService:
         description: str, 
         author: str, 
         duration: str, 
-        play: int
+        play: int,
+        locale: str = 'zh'
     ) -> str:
         """构建LLM分析 prompt - 生成简化输出：适用人群和描述"""
         
-        prompt = f"""请分析以下B站视频，生成简洁的分析结果。
+        if locale == 'en':
+            prompt = f"""Please analyze the following Bilibili video and generate a concise analysis result.
+
+**Video Information:**
+- Title: {title}
+- Description: {description or 'None'}
+- Creator: {author}
+- Duration: {duration}
+- Views: {play:,}
+
+**Analysis Requirements:**
+- Output only JSON format, no analysis basis or explanation needed
+- Make judgments directly based on video information
+
+**Please Provide the Following Analysis:**
+
+1. **Target Audience** - Choose one from: Beginner, Exam Preparation, Career Advancement
+2. **Description** - Generate approximately 100 words video introduction, concisely summarizing video content, features, and value
+
+**Output Format Requirements:**
+Strictly follow the following JSON format:
+
+{{
+  "target_audience": "Beginner",
+  "description": "This is a Python programming basics tutorial that starts from scratch, explaining core concepts such as variables, functions, and object-oriented programming, suitable for programming beginners. The course content is systematic and comprehensive, with clear explanations and rich example demonstrations to help learners quickly master Python programming fundamentals."
+}}
+
+Please ensure the output is valid JSON format.
+"""
+        else:
+            prompt = f"""请分析以下B站视频，生成简洁的分析结果。
 
 **视频信息：**
 - 标题：{title}
@@ -151,7 +183,7 @@ class VideoAnalyzerService:
 """
         return prompt
     
-    def _parse_analysis_result(self, analysis_text: str, video_info: Dict[str, Any]) -> Dict[str, Any]:
+    def _parse_analysis_result(self, analysis_text: str, video_info: Dict[str, Any], locale: str = 'zh') -> Dict[str, Any]:
         """解析LLM返回的分析结果"""
         import json
         import re
@@ -203,9 +235,9 @@ class VideoAnalyzerService:
                 # 是否视频课（系列课）
                 'is_series': video_info.get('is_series', False),
                 'video_amount': video_info.get('video_amount', 1),
-                # LLM生成的分析结果
-                'target_audience': analysis.get('target_audience', '新手入门'),
-                'description': analysis.get('description', video_info.get('description', '暂无描述')),
+                # LLM生成的分析结果（保持原样，前端会根据 locale 显示）
+                'target_audience': analysis.get('target_audience', '新手入门' if locale != 'en' else 'Beginner'),
+                'description': analysis.get('description', video_info.get('description', '暂无描述' if locale != 'en' else 'No description available')),
             }
             
             return result
@@ -215,7 +247,7 @@ class VideoAnalyzerService:
             safe_print(f"原始返回: {analysis_text[:200]}")
             return self._get_fallback_analysis(video_info)
     
-    def _get_fallback_analysis(self, video_info: Dict[str, Any]) -> Dict[str, Any]:
+    def _get_fallback_analysis(self, video_info: Dict[str, Any], locale: str = 'zh') -> Dict[str, Any]:
         """获取备用分析结果（当LLM分析失败时）"""
         return {
             # 基础视频信息
@@ -230,8 +262,8 @@ class VideoAnalyzerService:
             'is_series': video_info.get('is_series', False),
             'video_amount': video_info.get('video_amount', 1),
             # 默认分析结果
-            'target_audience': '新手入门',
-            'description': video_info.get('description', '暂无描述'),
+            'target_audience': '新手入门' if locale != 'en' else 'Beginner',
+            'description': video_info.get('description', '暂无描述' if locale != 'en' else 'No description available'),
         }
 
 

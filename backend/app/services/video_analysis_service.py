@@ -73,7 +73,8 @@ class VideoAnalysisService:
         analysis_type: AnalysisType = AnalysisType.CUSTOM,
         custom_prompt: Optional[str] = None,
         method: Optional[AnalysisMethod] = None,
-        video_url_for_cache: Optional[str] = None
+        video_url_for_cache: Optional[str] = None,
+        locale: str = 'zh'
     ) -> Dict[str, Any]:
         """
         分析视频
@@ -101,7 +102,8 @@ class VideoAnalysisService:
                     video_path,
                     analysis_type,
                     custom_prompt,
-                    video_url_for_cache
+                    video_url_for_cache,
+                    locale
                 )
             elif method == AnalysisMethod.GEMINI:
                 result = self._analyze_with_gemini(
@@ -130,12 +132,106 @@ class VideoAnalysisService:
                 "processing_time": processing_time
             }
     
+    async def analyze_video_with_audio_url(
+        self,
+        audio_url: str,
+        analysis_type: AnalysisType = AnalysisType.CUSTOM,
+        custom_prompt: Optional[str] = None,
+        method: Optional[AnalysisMethod] = None,
+        video_url_for_cache: Optional[str] = None,
+        locale: str = 'en'
+    ) -> Dict[str, Any]:
+        """
+        使用音频URL直接分析视频（不下载文件，适用于YouTube等）
+        
+        Args:
+            audio_url: 音频URL（直接使用，不下载）
+            analysis_type: 分析类型
+            custom_prompt: 自定义提示词
+            method: 分析方法（None 则使用默认方法）
+            video_url_for_cache: 用于缓存的视频URL
+            locale: 语言环境
+            
+        Returns:
+            分析结果字典
+        """
+        method = method or self.default_method
+        
+        if method != AnalysisMethod.ASR_DOUBAO:
+            raise ValueError(f"YouTube videos only support ASR_DOUBAO method, got {method}")
+        
+        print(f"🎵 Analyzing video with audio URL (YouTube): {audio_url[:100]}...")
+        
+        cache_url = video_url_for_cache or audio_url
+        
+        # Step 1: 检查 ASR 缓存
+        transcript = None
+        from_cache = False
+        
+        if self.use_cache:
+            print(f"\n🔍 Checking ASR cache for: {cache_url}")
+            transcript = self.cache_service.get_asr_transcript(cache_url)
+            
+            if transcript:
+                print(f"✅ ASR cache hit! Skipping ASR recognition")
+                from_cache = True
+        
+        # Step 2: ASR 识别逐字稿（如果没有缓存）
+        if not transcript:
+            print(f"\n📝 Step 1: ASR Recognition")
+            asr_task = await self.asr_service.create_async_task(audio_url, biz_id="youtube")
+            asr_task_id = asr_task.id
+            print(f"✅ ASR task created: {asr_task_id}")
+            
+            # 等待 ASR 完成
+            asr_result = await self.asr_service.wait_for_completion(asr_task_id)
+            # 提取带时间戳的逐字稿
+            transcript = self.asr_service.extract_transcript(asr_result, with_timestamps=True)
+            print(f"✅ Transcript extracted ({len(transcript)} chars)")
+            
+            # Step 3: 保存 ASR 结果到缓存
+            if self.use_cache:
+                self.cache_service.set_asr_transcript(
+                    cache_url,
+                    transcript,
+                    metadata={
+                        'asr_task_id': asr_task_id,
+                        'audio_url': audio_url,
+                        'platform': 'youtube'
+                    }
+                )
+        
+        # Step 4: 知识点提取（传递 locale）
+        print(f"\n📚 Step 2: Knowledge Point Extraction (locale={locale})")
+        knowledge_points = await self.knowledge_point_extractor.extract_knowledge_points(transcript, locale=locale)
+        
+        print(f"✅ Knowledge points extracted: {len(knowledge_points)}")
+        
+        # 格式化为 JSON 字符串
+        import json
+        knowledge_points_json = json.dumps(
+            {"knowledge_points": knowledge_points},
+            ensure_ascii=False,
+            indent=2
+        )
+        
+        return {
+            "success": True,
+            "analysis_type": analysis_type,
+            "method": method,
+            "transcript": transcript,
+            "knowledge_points": knowledge_points,
+            "knowledge_points_json": knowledge_points_json,
+            "from_cache": from_cache
+        }
+    
     async def _analyze_with_asr_doubao(
         self,
         video_path: str,
         analysis_type: AnalysisType,
         custom_prompt: Optional[str],
-        video_url_for_cache: Optional[str] = None
+        video_url_for_cache: Optional[str] = None,
+        locale: str = 'zh'
     ) -> Dict[str, Any]:
         """
         使用 ASR + 火山引擎方案分析视频
@@ -165,7 +261,8 @@ class VideoAnalysisService:
                 chunks_info,
                 analysis_type,
                 custom_prompt,
-                cache_url
+                cache_url,
+                locale
             )
         else:
             print(f"✅ Audio is short enough, no splitting needed")
@@ -173,7 +270,8 @@ class VideoAnalysisService:
                 video_path,
                 analysis_type,
                 custom_prompt,
-                cache_url
+                cache_url,
+                locale
             )
     
     async def _analyze_single_chunk(
@@ -181,7 +279,8 @@ class VideoAnalysisService:
         video_path: str,
         analysis_type: AnalysisType,
         custom_prompt: Optional[str],
-        cache_url: str
+        cache_url: str,
+        locale: str = 'zh'
     ) -> Dict[str, Any]:
         """
         分析单个音频文件（不切分）
@@ -230,9 +329,9 @@ class VideoAnalysisService:
                     }
                 )
         
-        # Step 5: 知识点提取
-        print(f"\n📚 Step 3: Knowledge Point Extraction")
-        knowledge_points = await self.knowledge_point_extractor.extract_knowledge_points(transcript)
+        # Step 5: 知识点提取（传递 locale）
+        print(f"\n📚 Step 3: Knowledge Point Extraction (locale={locale})")
+        knowledge_points = await self.knowledge_point_extractor.extract_knowledge_points(transcript, locale=locale)
         
         print(f"✅ Knowledge points extracted: {len(knowledge_points)}")
         
@@ -267,7 +366,8 @@ class VideoAnalysisService:
         chunks_info: list,
         analysis_type: AnalysisType,
         custom_prompt: Optional[str],
-        cache_url: str
+        cache_url: str,
+        locale: str = 'zh'
     ) -> Dict[str, Any]:
         """
         并行分析多个音频切片
@@ -323,8 +423,8 @@ class VideoAnalysisService:
             transcript = asr_result['text']
             chunk_index = asr_result['chunk_index']
             
-            print(f"💡 Extracting knowledge points for chunk {chunk_index + 1}...")
-            knowledge_points = await self.knowledge_point_extractor.extract_knowledge_points(transcript)
+            print(f"💡 Extracting knowledge points for chunk {chunk_index + 1}... (locale={locale})")
+            knowledge_points = await self.knowledge_point_extractor.extract_knowledge_points(transcript, locale=locale)
             
             return {
                 'knowledge_points': knowledge_points,

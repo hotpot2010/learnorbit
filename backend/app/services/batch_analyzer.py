@@ -11,6 +11,7 @@ from typing import Dict, Any, List, Optional, Callable
 from datetime import datetime
 from pathlib import Path
 from .bilibili_service import BilibiliService
+from .youtube_service import YouTubeService
 from .gemini_service import GeminiService
 from .cache_service import CacheService
 from .video_analysis_service import VideoAnalysisService, AnalysisMethod
@@ -32,6 +33,7 @@ class BatchAnalyzer:
             auto_preload_next_part: Whether to automatically preload next part for multi-part videos (default False, disabled for testing)
         """
         self.bilibili_service = BilibiliService()
+        self.youtube_service = YouTubeService()
         self.gemini_service = GeminiService()  # 保留作为备选
         self.cache_service = CacheService(cache_dir="cache")
         self.video_analysis_service = VideoAnalysisService()  # 新的统一分析服务
@@ -164,6 +166,7 @@ class BatchAnalyzer:
         video_urls: List[str],
         prompt: str,
         job_name: Optional[str] = None,
+        locale: str = 'zh',
     ) -> str:
         """
         Create a new batch analysis job
@@ -172,6 +175,7 @@ class BatchAnalyzer:
             video_urls: List of Bilibili video URLs or BV numbers
             prompt: Custom prompt for analysis
             job_name: Optional job name
+            locale: Language locale (default: 'zh')
             
         Returns:
             Job ID
@@ -188,6 +192,7 @@ class BatchAnalyzer:
             'failed_videos': 0,
             'video_urls': video_urls,
             'prompt': prompt,
+            'locale': locale,  # 保存语言环境
             'results': [],
             'errors': [],
         }
@@ -278,12 +283,17 @@ class BatchAnalyzer:
         except Exception as e:
             print(f"⚠️  预加载检查失败: {e}")
     
+    def _is_youtube_url(self, url: str) -> bool:
+        """检查URL是否为YouTube URL"""
+        return 'youtube.com' in url or 'youtu.be' in url
+    
     def analyze_single_part(
         self,
         video_url: str,
         prompt: str,
         part_number: int,
         quality: str = 'best',
+        locale: str = 'zh',
     ) -> Dict[str, Any]:
         """
         Analyze a single part of a video series
@@ -335,6 +345,14 @@ class BatchAnalyzer:
                     **cached_result
                 }
         
+        # 检查是否为YouTube视频
+        is_youtube = self._is_youtube_url(video_url)
+        
+        if is_youtube:
+            # YouTube视频处理流程（不下载视频，只提取音频URL）
+            return self._analyze_youtube_video(video_url, prompt, locale)
+        
+        # B站视频处理流程（原有逻辑）
         video_file_path = None
         
         try:
@@ -631,21 +649,189 @@ class BatchAnalyzer:
                 'video_url': video_url,
             }
     
+    def _analyze_youtube_video(
+        self,
+        video_url: str,
+        prompt: str,
+        locale: str = 'en',
+    ) -> Dict[str, Any]:
+        """
+        分析YouTube视频（不下载视频文件，只提取音频URL进行ASR）
+        
+        Args:
+            video_url: YouTube视频URL
+            prompt: 自定义分析prompt
+            locale: 语言环境
+            
+        Returns:
+            分析结果字典
+        """
+        print(f"📺 分析YouTube视频: {video_url}")
+        
+        # 检查缓存
+        if self.use_cache:
+            cached_result = self.cache_service.get(
+                video_url=video_url,
+                prompt=prompt,
+                max_age_hours=24 * 7
+            )
+            
+            if cached_result:
+                print(f"✅ Using cached result for YouTube video")
+                return {
+                    'success': True,
+                    'from_cache': True,
+                    **cached_result
+                }
+        
+        try:
+            # 1. 提取视频信息
+            video_info = self.youtube_service.extract_video_info(video_url)
+            
+            # 2. 获取播放URL（YouTube URL本身）
+            play_url_result = self.youtube_service.get_video_play_url(video_url)
+            video_play_url = play_url_result['play_url']
+            
+            print(f"✅ YouTube播放URL: {video_play_url}")
+            
+            # 3. 下载音频文件（YouTube的音频URL是临时的，ASR服务无法访问）
+            import uuid
+            import asyncio
+            audio_filename = f"youtube_{uuid.uuid4().hex[:8]}"
+            audio_result = self.youtube_service.download_audio(video_url, audio_filename)
+            audio_file_path = audio_result['file_path']
+            print(f"✅ 音频文件已下载: {audio_file_path}")
+            
+            try:
+                # 4. 上传音频文件到CDN（ASR服务需要可访问的URL）
+                print(f"📤 Uploading audio file to CDN for ASR...")
+                loop = asyncio.get_event_loop()
+            except RuntimeError:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+            
+            # 上传音频文件
+            audio_cdn_url = loop.run_until_complete(
+                self.file_upload_service.upload_file_async(audio_file_path, file_key="file0")
+            )
+            
+            if not audio_cdn_url:
+                raise Exception("音频文件上传失败，无法进行ASR识别")
+            
+            print(f"✅ 音频文件已上传到CDN: {audio_cdn_url[:100]}...")
+            
+            # 验证上传后的URL是否可访问
+            async def verify_audio_url():
+                import aiohttp
+                try:
+                    async with aiohttp.ClientSession() as session:
+                        async with session.head(audio_cdn_url, timeout=aiohttp.ClientTimeout(total=10)) as resp:
+                            if resp.status == 200:
+                                content_length = resp.headers.get('Content-Length', 'unknown')
+                                print(f"✅ 音频URL验证成功: 状态码={resp.status}, 文件大小={content_length} bytes")
+                            else:
+                                print(f"⚠️ 音频URL验证警告: 状态码={resp.status}")
+                except Exception as e:
+                    print(f"⚠️ 音频URL验证失败（但继续尝试ASR）: {e}")
+            
+            try:
+                loop.run_until_complete(verify_audio_url())
+            except Exception as e:
+                print(f"⚠️ 音频URL验证异常（但继续尝试ASR）: {e}")
+            
+            # 5. 使用下载的音频文件进行分析（支持切片模式，与B站一致）
+            # 使用 analyze_video 方法，它会自动处理切片（如果音频>5分钟）
+            analysis_result = loop.run_until_complete(
+                self.video_analysis_service.analyze_video(
+                    video_path=audio_file_path,  # 使用本地音频文件路径
+                    analysis_type=AnalysisType.CUSTOM,
+                    custom_prompt=prompt,
+                    method=AnalysisMethod.ASR_DOUBAO if self.use_asr_doubao else AnalysisMethod.GEMINI,
+                    video_url_for_cache=video_url,  # 传递原始 URL 用于缓存
+                    locale=locale  # 传递语言环境
+                )
+            )
+            
+            # 6. 清理下载的音频文件
+            try:
+                if os.path.exists(audio_file_path):
+                    os.remove(audio_file_path)
+                    print(f"🗑️ 已清理临时音频文件: {audio_file_path}")
+                # 清理临时目录
+                audio_dir = os.path.dirname(audio_file_path)
+                if os.path.exists(audio_dir) and 'youtube_audio_' in audio_dir:
+                    try:
+                        os.rmdir(audio_dir)
+                        print(f"🗑️ 已清理临时目录: {audio_dir}")
+                    except:
+                        pass  # 目录可能不为空，忽略
+            except Exception as e:
+                print(f"⚠️ 清理临时文件失败: {e}")
+            
+            # 5. 构建结果（与B站格式保持一致）
+            # B站格式：{ 'success': True, 'video_info': {...}, 'analysis': {...} }
+            result = {
+                'success': True,
+                'part_number': 1,  # YouTube单个视频
+                'video_info': {
+                    **video_info,
+                    'url': video_play_url,  # 使用YouTube URL
+                    'platform': 'youtube',
+                },
+                'play_url': video_play_url,
+                'analysis': analysis_result,  # 使用与B站一致的格式
+            }
+            
+            # 6. 保存缓存
+            if self.use_cache:
+                self.cache_service.set(
+                    video_url=video_url,
+                    prompt=prompt,
+                    result=result,
+                    metadata={
+                        'platform': 'youtube',
+                        'locale': locale,
+                    }
+                )
+            
+            return result
+            
+        except Exception as e:
+            print(f"❌ Error analyzing YouTube video: {e}")
+            import traceback
+            traceback.print_exc()
+            return {
+                'success': False,
+                'error': str(e),
+                'video_url': video_url,
+            }
+    
     def analyze_video_with_prompt(
         self,
         video_url: str,
         prompt: str,
+        locale: str = 'zh',
     ) -> Dict[str, Any]:
         """
         Download and analyze a single video with custom prompt
         
         Args:
-            video_url: Bilibili video URL or BV number
+            video_url: Bilibili video URL or BV number, or YouTube URL
             prompt: Custom prompt for analysis
             
         Returns:
             Analysis result dictionary (for series, contains all parts)
         """
+        # 检查是否为YouTube视频
+        is_youtube = self._is_youtube_url(video_url)
+        
+        if is_youtube:
+            # YouTube视频：直接分析，不检查系列（YouTube单个视频不是系列）
+            # 根据 locale 决定：英文模式使用英文，其他使用中文
+            youtube_locale = 'en' if locale == 'en' else 'zh'
+            return self._analyze_youtube_video(video_url, prompt, locale=youtube_locale)
+        
+        # B站视频：原有逻辑
         # Step 0: Extract video info to check if it's a series
         print(f"📋 Extracting video info: {video_url}")
         
@@ -875,14 +1061,15 @@ class BatchAnalyzer:
                     loop = asyncio.new_event_loop()
                     asyncio.set_event_loop(loop)
                 
-                # 运行异步分析
+                # 运行异步分析（传递 locale）
                 analysis_result = loop.run_until_complete(
                     self.video_analysis_service.analyze_video(
                         video_file_path,
                         AnalysisType.CUSTOM,
                         prompt,
                         method=analysis_method,
-                        video_url_for_cache=video_url  # 传递原始 URL 用于缓存
+                        video_url_for_cache=video_url,  # 传递原始 URL 用于缓存
+                        locale=locale  # 传递语言环境
                     )
                 )
                 
@@ -1003,7 +1190,8 @@ class BatchAnalyzer:
             print(f"{'='*60}\n")
             
             # Analyze video
-            result = self.analyze_video_with_prompt(video_url, job['prompt'])
+            locale = job.get('locale', 'zh')  # 从 job 中获取 locale，默认为 'zh'
+            result = self.analyze_video_with_prompt(video_url, job['prompt'], locale=locale)
             
             if result['success']:
                 results.append(result)

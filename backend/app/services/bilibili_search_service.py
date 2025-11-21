@@ -235,12 +235,21 @@ class BilibiliSearchService:
         
         safe_print(f"\n📊 开始智能排序（多样化时长分布）...")
         
-        # 第一步：过滤掉大于5小时的视频（5小时 = 18000秒）
+        # 第一步：过滤掉大于5小时的视频和小于1分钟的视频
         MAX_DURATION_SECONDS = 18000  # 5小时
-        filtered_results = [v for v in results if v.get('duration_seconds', 0) <= MAX_DURATION_SECONDS]
+        MIN_DURATION_SECONDS = 60  # 1分钟
+        filtered_results = [
+            v for v in results 
+            if MIN_DURATION_SECONDS <= v.get('duration_seconds', 0) <= MAX_DURATION_SECONDS
+        ]
         filtered_count = len(results) - len(filtered_results)
         if filtered_count > 0:
-            safe_print(f"🚫 过滤掉 {filtered_count} 个大于5小时的视频")
+            too_short = len([v for v in results if v.get('duration_seconds', 0) < MIN_DURATION_SECONDS])
+            too_long = len([v for v in results if v.get('duration_seconds', 0) > MAX_DURATION_SECONDS])
+            if too_short > 0:
+                safe_print(f"🚫 过滤掉 {too_short} 个小于1分钟的视频")
+            if too_long > 0:
+                safe_print(f"🚫 过滤掉 {too_long} 个大于5小时的视频")
         results = filtered_results
         
         # 第二步：筛选百万播放量的视频
