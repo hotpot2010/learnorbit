@@ -183,8 +183,9 @@ export default function MyCoursesPage() {
 
     sessionStorage.setItem('learningPlan', JSON.stringify(learningPlan));
     sessionStorage.setItem('fromDatabase', 'true'); // 标记来源于数据库
+    sessionStorage.setItem('courseId', course.id); // 存储课程ID，用于更新
 
-    console.log('📖 加载数据库课程:', course);
+    console.log('📖 加载数据库课程:', { courseId: course.id, course });
 
     // 跳转到学习页面
     router.push('/study/custom');

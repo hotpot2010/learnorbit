@@ -857,8 +857,13 @@ export function CustomLearningPlan({ recommendedCourses, onSendMessage }: Custom
         console.log('💾 任务缓存和状态已保存到sessionStorage');
       }
       
-      // 3. 设置标记表示来自课程定制页面
+      // 3. 设置标记表示来自课程定制页面（新建课程）
       sessionStorage.setItem('fromCustomPage', 'true');
+      
+      // 4. 清除可能残留的课程ID和数据库标记，确保新建课程而不是更新
+      sessionStorage.removeItem('courseId');
+      sessionStorage.removeItem('fromDatabase');
+      console.log('🧹 已清除课程ID和数据库标记，确保创建新课程');
 
       setSaveStatus('success');
 

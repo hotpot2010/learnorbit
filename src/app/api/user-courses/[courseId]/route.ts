@@ -211,6 +211,119 @@ export async function DELETE(
   }
 }
 
+// 更新整个课程（包括 plan、tasks、notes、marks）
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ courseId: string }> }
+) {
+  try {
+    // 验证用户身份
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const userId = session.user.id;
+    const resolvedParams = await params;
+    const courseId = resolvedParams.courseId;
+    const requestData = await request.json();
+    
+    // 检查数据格式：新格式包含 plan 和 tasks，旧格式直接是 coursePlan
+    const learningPlanData = requestData.plan || requestData;
+    const taskData = requestData.tasks || {};
+    const notesData = requestData.notes || [];
+    const marksData = requestData.marks || [];
+    
+    console.log('📥 接收到课程更新数据:', {
+      courseId,
+      hasPlan: !!learningPlanData,
+      planType: Array.isArray(learningPlanData) ? 'array' : typeof learningPlanData,
+      hasTaskData: !!requestData.tasks,
+      taskCount: Object.keys(taskData).length,
+      hasNotes: Array.isArray(notesData),
+      notesCount: Array.isArray(notesData) ? notesData.length : 0,
+      hasMarks: Array.isArray(marksData),
+      marksCount: Array.isArray(marksData) ? marksData.length : 0
+    });
+
+    // 处理 learningPlan 数据格式（与 POST 方法相同的逻辑）
+    let planDataForDb: any;
+    
+    if (Array.isArray(learningPlanData)) {
+      planDataForDb = {
+        plan: learningPlanData
+      };
+    } else if (learningPlanData && typeof learningPlanData === 'object') {
+      if ('plan' in learningPlanData) {
+        if (Array.isArray(learningPlanData.plan)) {
+          planDataForDb = learningPlanData;
+        } else if (learningPlanData.plan && typeof learningPlanData.plan === 'object' && 'plan' in learningPlanData.plan) {
+          planDataForDb = {
+            ...learningPlanData.plan,
+            title: learningPlanData.title || learningPlanData.plan.title,
+            description: learningPlanData.description || learningPlanData.plan.description,
+          };
+        } else {
+          planDataForDb = learningPlanData;
+        }
+      } else {
+        planDataForDb = {
+          plan: learningPlanData
+        };
+      }
+    } else {
+      planDataForDb = {
+        plan: learningPlanData || []
+      };
+    }
+
+    // 更新课程信息到数据库
+    const db = await getDb();
+    
+    // 先检查课程是否存在且属于当前用户
+    const [existingCourse] = await db
+      .select()
+      .from(userCourses)
+      .where(and(eq(userCourses.id, courseId), eq(userCourses.userId, userId)))
+      .limit(1);
+
+    if (!existingCourse) {
+      return NextResponse.json({ error: 'Course not found' }, { status: 404 });
+    }
+
+    // 更新课程
+    const [updatedCourse] = await db
+      .update(userCourses)
+      .set({
+        coursePlan: {
+          plan: planDataForDb,
+          tasks: taskData,
+          notes: notesData,
+          marks: marksData,
+        },
+        updatedAt: new Date(),
+      })
+      .where(and(eq(userCourses.id, courseId), eq(userCourses.userId, userId)))
+      .returning();
+
+    console.log('✅ 课程更新成功:', { courseId: updatedCourse.id });
+
+    return NextResponse.json({ 
+      course: updatedCourse,
+      message: 'Course updated successfully'
+    }, { status: 200 });
+  } catch (error) {
+    console.error('Error updating course:', error);
+    return NextResponse.json(
+      { error: 'Failed to update course' },
+      { status: 500 }
+    );
+  }
+}
+
 export async function PATCH(request: NextRequest, { params }: { params: Promise<{ courseId: string }> }) {
 	try {
 		const session = await auth.api.getSession({ headers: request.headers });

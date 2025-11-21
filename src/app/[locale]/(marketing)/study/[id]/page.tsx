@@ -1603,6 +1603,13 @@ export default function StudyPage({ params }: StudyPageProps) {
               planStructure: typeof plan.plan
             });
             
+            // 如果来自课程定制页面（新建课程），清除可能残留的课程ID
+            if (fromCustomPage === 'true') {
+              sessionStorage.removeItem('courseId');
+              sessionStorage.removeItem('fromDatabase');
+              console.log('🧹 检测到新建课程，已清除课程ID和数据库标记');
+            }
+            
             // 如果来自数据库且有任务缓存，直接加载任务
             if (fromDatabase === 'true' && savedTaskCache) {
               console.log('📁 检测到数据库课程，准备加载任务缓存...');
@@ -2926,7 +2933,7 @@ export default function StudyPage({ params }: StudyPageProps) {
     return null;
   };
 
-  // 上传课程到数据库
+  // 上传课程到数据库（创建或更新）
   const handleUploadCourse = async () => {
     if (!learningPlan) {
       alert('学习计划不存在，无法上传。');
@@ -2935,7 +2942,15 @@ export default function StudyPage({ params }: StudyPageProps) {
 
     try {
       setIsUploading(true);
-      console.log('📤 开始上传课程到数据库...');
+      
+      // 检查是否有课程ID（从"我的课程"进入）
+      const courseId = sessionStorage.getItem('courseId');
+      const isUpdate = courseId && courseId !== 'null' && courseId !== 'undefined';
+      
+      console.log('📤 开始保存课程到数据库...', {
+        isUpdate,
+        courseId: courseId || '无',
+      });
       
       // 构造上传数据，包含课程计划、任务和便签
       const uploadData = {
@@ -2945,8 +2960,14 @@ export default function StudyPage({ params }: StudyPageProps) {
         marks: marks,
       };
 
-      const response = await fetch('/api/user-courses', {
-        method: 'POST',
+      // 如果有课程ID，使用 PUT 更新；否则使用 POST 创建
+      const url = isUpdate 
+        ? `/api/user-courses/${courseId}`
+        : '/api/user-courses';
+      const method = isUpdate ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -2954,17 +2975,23 @@ export default function StudyPage({ params }: StudyPageProps) {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
 
       const result = await response.json();
-      console.log('✅ 课程上传成功:', result);
+      console.log(`✅ 课程${isUpdate ? '更新' : '创建'}成功:`, result);
       
-      alert('🎉 课程已成功上传到【我的课程】！');
+      // 如果是更新，清除课程ID标记
+      if (isUpdate) {
+        sessionStorage.removeItem('courseId');
+      }
+      
+      alert(`🎉 课程已成功${isUpdate ? '更新' : '上传'}到【我的课程】！`);
       
     } catch (error) {
-      console.error('❌ 课程上传失败:', error);
-      alert('❌ 课程上传失败，请稍后重试。');
+      console.error('❌ 课程保存失败:', error);
+      alert(`❌ 课程保存失败：${error instanceof Error ? error.message : '请稍后重试'}`);
     } finally {
       setIsUploading(false);
     }
