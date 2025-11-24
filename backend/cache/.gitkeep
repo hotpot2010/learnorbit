@@ -1,0 +1,4 @@
+# This file ensures the cache directory is tracked by git
+# Cache files will be stored here but not committed to git
+# This prevents cache files from being overwritten when pulling from remote
+

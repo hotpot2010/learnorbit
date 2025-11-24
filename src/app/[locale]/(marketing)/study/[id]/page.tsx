@@ -77,6 +77,20 @@ const NoteEditTextarea = React.memo<{
     };
   }, []); // 只在挂载时执行一次
   
+  // 当 initialText 变化时，同步更新 textarea（但优先保留用户已输入的内容）
+  React.useEffect(() => {
+    if (textareaRef.current) {
+      const currentValue = textareaRef.current.value;
+      // 如果 textarea 为空或只有初始值，且 initialText 有变化，则更新
+      // 这样可以处理上传图片后 initialText 更新的情况，同时避免覆盖用户正在输入的内容
+      if (!currentValue || currentValue === initialText) {
+        if (initialText !== currentValue) {
+          textareaRef.current.value = initialText;
+        }
+      }
+    }
+  }, [initialText]);
+  
   const borderColorClass = 
     noteType === 'video' ? 'border-purple-300 bg-purple-50 text-purple-800 focus:ring-purple-400' :
     noteType === 'image' ? 'border-pink-300 bg-pink-50 text-pink-800 focus:ring-pink-400' :
@@ -3060,7 +3074,14 @@ export default function StudyPage({ params }: StudyPageProps) {
         // 如果便签正在编辑中，需要保留编辑中的文本（从 DOM 获取）
         setNotes(prev => {
           const isEditing = editingNoteId === noteId;
-          const currentEditingNoteText = isEditing ? editingTextareaRef.current?.value : undefined;
+          // 通过 DOM 查询获取正在编辑的 textarea 的值（使用 data-note-id 属性）
+          let currentEditingNoteText: string | undefined = undefined;
+          if (isEditing) {
+            const textareaElement = document.querySelector(`textarea[data-note-id="${noteId}"]`) as HTMLTextAreaElement;
+            if (textareaElement) {
+              currentEditingNoteText = textareaElement.value;
+            }
+          }
           
           return prev.map(note => 
             note.id === noteId 

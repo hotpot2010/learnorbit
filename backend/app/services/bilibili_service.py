@@ -224,13 +224,14 @@ class BilibiliService:
             print(f"⚠️ Failed to list formats: {str(e)}")
             return []
     
-    def extract_video_info(self, url: str, use_cache: bool = True) -> Dict[str, Any]:
+    def extract_video_info(self, url: str, use_cache: bool = True, max_retries: int = 3) -> Dict[str, Any]:
         """
         Extract video information without downloading
         
         Args:
             url: Bilibili video URL or BV number
             use_cache: Whether to use cached series info
+            max_retries: Maximum number of retries for HTTP 412 errors
             
         Returns:
             Video information dictionary
@@ -248,111 +249,151 @@ class BilibiliService:
         
         print(f"📋 Extracting video info: {url}")
         
-        ydl_opts = {
-            'quiet': True,
-            'no_warnings': True,
-            'extract_flat': False,
-            # B站特定配置
-            'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'referer': 'https://www.bilibili.com/',
-            'headers': {
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-            },
-            # 重试配置
-            'socket_timeout': 30,
-            'retries': 3,
-        }
+        # 重试配置
+        retry_delays = [2, 5, 10]  # 递增延迟：2秒、5秒、10秒
         
-        try:
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info = ydl.extract_info(url, download=False)
+        for attempt in range(max_retries):
+            try:
+                # 如果是重试，添加延迟
+                if attempt > 0:
+                    delay = retry_delays[min(attempt - 1, len(retry_delays) - 1)]
+                    print(f"🔄 Retry attempt {attempt}/{max_retries} after {delay}s delay...")
+                    time.sleep(delay)
                 
-                # 检查是否是多P视频
-                is_playlist = 'entries' in info
-                total_parts = len(info.get('entries', [])) if is_playlist else 1
+                ydl_opts = {
+                    'quiet': True,
+                    'no_warnings': True,
+                    'extract_flat': False,
+                    # B站特定配置 - 增强请求头以避免412错误
+                    'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                    'referer': 'https://www.bilibili.com/',
+                    'headers': {
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+                        'Accept-Encoding': 'gzip, deflate, br',
+                        'Connection': 'keep-alive',
+                        'Upgrade-Insecure-Requests': '1',
+                        'Sec-Fetch-Dest': 'document',
+                        'Sec-Fetch-Mode': 'navigate',
+                        'Sec-Fetch-Site': 'none',
+                        'Cache-Control': 'max-age=0',
+                    },
+                    # 重试配置
+                    'socket_timeout': 30,
+                    'retries': 1,  # yt-dlp内部重试设为1，我们手动控制重试
+                }
                 
-                # 如果是单视频，直接返回
-                if not is_playlist:
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    info = ydl.extract_info(url, download=False)
+                
+                    # 检查是否是多P视频
+                    is_playlist = 'entries' in info
+                    total_parts = len(info.get('entries', [])) if is_playlist else 1
+                    
+                    print(f"✅ Successfully extracted video info (attempt {attempt + 1}/{max_retries})")
+                    
+                    # 如果是单视频，直接返回
+                    if not is_playlist:
+                        result = {
+                            'bv_id': info.get('id', ''),
+                            'title': info.get('title', ''),
+                            'description': info.get('description', ''),
+                            'duration': info.get('duration', 0),
+                            'uploader': info.get('uploader', ''),
+                            'upload_date': info.get('upload_date', ''),
+                            'view_count': info.get('view_count', 0),
+                            'like_count': info.get('like_count', 0),
+                            'thumbnail': info.get('thumbnail', ''),
+                            'url': url,
+                            'is_series': False,
+                            'total_parts': 1,
+                            'part_number': 1,
+                        }
+                        
+                        # 缓存单视频信息
+                        if use_cache:
+                            self.series_cache.set_cached_series(url, result)
+                        
+                        return result
+                    
+                    # 多P视频：返回序列信息和所有分P信息
+                    series_title = info.get('title', '')
+                    parts_info = []
+                    
+                    for idx, entry in enumerate(info.get('entries', []), 1):
+                        full_title = entry.get('title', f'P{idx}')
+                        
+                        # 提取分P小标题（去除系列标题）
+                        # B站格式通常是: "系列标题 pXX 小标题" 或 "系列标题 小标题"
+                        part_title = full_title
+                        
+                        # 尝试按 " p" 分割（注意小写p，B站格式）
+                        if ' p' in full_title.lower():
+                            parts = full_title.split(' p', 1)
+                            if len(parts) > 1:
+                                # 取 "pXX 小标题" 部分，再去掉 "pXX "
+                                after_p = parts[1]
+                                # 去掉数字和空格，只保留小标题
+                                import re
+                                part_title = re.sub(r'^\d+\s+', '', after_p).strip()
+                        
+                        # 如果提取失败或为空，使用完整标题
+                        if not part_title:
+                            part_title = full_title
+                        
+                        parts_info.append({
+                            'part_number': idx,
+                            'part_title': part_title,
+                            'full_title': full_title,  # 保留完整标题供参考
+                            'duration': entry.get('duration', 0),
+                            'url': entry.get('url') or entry.get('webpage_url') or f"{url}?p={idx}",
+                            'bv_id': entry.get('id', ''),
+                        })
+                    
                     result = {
                         'bv_id': info.get('id', ''),
-                        'title': info.get('title', ''),
+                        'title': series_title,
                         'description': info.get('description', ''),
-                        'duration': info.get('duration', 0),
                         'uploader': info.get('uploader', ''),
                         'upload_date': info.get('upload_date', ''),
                         'view_count': info.get('view_count', 0),
                         'like_count': info.get('like_count', 0),
                         'thumbnail': info.get('thumbnail', ''),
                         'url': url,
-                        'is_series': False,
-                        'total_parts': 1,
-                        'part_number': 1,
+                        'is_series': True,
+                        'total_parts': total_parts,
+                        'series_title': series_title,
+                        'parts': parts_info,
                     }
                     
-                    # 缓存单视频信息
+                    # 缓存序列信息
                     if use_cache:
                         self.series_cache.set_cached_series(url, result)
                     
                     return result
-                
-                # 多P视频：返回序列信息和所有分P信息
-                series_title = info.get('title', '')
-                parts_info = []
-                
-                for idx, entry in enumerate(info.get('entries', []), 1):
-                    full_title = entry.get('title', f'P{idx}')
                     
-                    # 提取分P小标题（去除系列标题）
-                    # B站格式通常是: "系列标题 pXX 小标题" 或 "系列标题 小标题"
-                    part_title = full_title
-                    
-                    # 尝试按 " p" 分割（注意小写p，B站格式）
-                    if ' p' in full_title.lower():
-                        parts = full_title.split(' p', 1)
-                        if len(parts) > 1:
-                            # 取 "pXX 小标题" 部分，再去掉 "pXX "
-                            after_p = parts[1]
-                            # 去掉数字和空格，只保留小标题
-                            import re
-                            part_title = re.sub(r'^\d+\s+', '', after_p).strip()
-                    
-                    # 如果提取失败或为空，使用完整标题
-                    if not part_title:
-                        part_title = full_title
-                    
-                    parts_info.append({
-                        'part_number': idx,
-                        'part_title': part_title,
-                        'full_title': full_title,  # 保留完整标题供参考
-                        'duration': entry.get('duration', 0),
-                        'url': entry.get('url') or entry.get('webpage_url') or f"{url}?p={idx}",
-                        'bv_id': entry.get('id', ''),
-                    })
+            except Exception as e:
+                error_msg = str(e)
+                error_lower = error_msg.lower()
                 
-                result = {
-                    'bv_id': info.get('id', ''),
-                    'title': series_title,
-                    'description': info.get('description', ''),
-                    'uploader': info.get('uploader', ''),
-                    'upload_date': info.get('upload_date', ''),
-                    'view_count': info.get('view_count', 0),
-                    'like_count': info.get('like_count', 0),
-                    'thumbnail': info.get('thumbnail', ''),
-                    'url': url,
-                    'is_series': True,
-                    'total_parts': total_parts,
-                    'series_title': series_title,
-                    'parts': parts_info,
-                }
+                # 检查是否是 HTTP 412 错误或其他可重试的错误
+                is_retryable_error = (
+                    '412' in error_msg or 
+                    'precondition failed' in error_lower or
+                    'http error' in error_lower or
+                    'temporary failure' in error_lower or
+                    'connection' in error_lower
+                )
                 
-                # 缓存序列信息
-                if use_cache:
-                    self.series_cache.set_cached_series(url, result)
+                print(f"❌ Attempt {attempt + 1}/{max_retries} failed: {error_msg}")
                 
-                return result
-        except Exception as e:
-            raise Exception(f"Failed to extract video info: {str(e)}")
+                # 如果是最后一次尝试，或者不是可重试的错误，抛出异常
+                if attempt == max_retries - 1 or not is_retryable_error:
+                    print(f"❌ Failed to extract video info after {attempt + 1} attempts")
+                    raise Exception(f"Failed to extract video info: {error_msg}")
+                
+                # 如果是可重试的错误且还有重试机会，继续循环
+                print(f"⚠️  Retryable error detected, will retry...")
     
     def download_audio(self, url: str, output_filename: Optional[str] = None) -> Dict[str, Any]:
         """
