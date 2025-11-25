@@ -48,9 +48,32 @@ export const containsMath = (content: string): boolean => {
 /**
  * 预处理数学公式内容，确保正确的格式
  */
-export const preprocessMathContent = (content: string): string => {
+export const preprocessMathContent = (content: string | null | undefined | any): string => {
+  // 确保 content 是字符串类型
+  // 处理 null、undefined、数字、对象等非字符串类型
+  let str: string;
+  if (typeof content === 'string') {
+    str = content;
+  } else if (content == null) {
+    // null 或 undefined
+    str = '';
+  } else if (typeof content === 'number' || typeof content === 'boolean') {
+    // 数字或布尔值转换为字符串
+    str = String(content);
+  } else if (typeof content === 'object') {
+    // 对象或数组，尝试 JSON 序列化，如果失败则使用空字符串
+    try {
+      str = JSON.stringify(content);
+    } catch {
+      str = '';
+    }
+  } else {
+    // 其他类型，强制转换为字符串
+    str = String(content || '');
+  }
+  
   // 处理常见的LaTeX语法问题
-  return content
+  return str
     // 确保块级公式周围有换行
     .replace(/([^$])\$\$([^$])/g, '$1\n\n$$\n$2')
     .replace(/([^$])\$\$$/g, '$1\n\n$$')

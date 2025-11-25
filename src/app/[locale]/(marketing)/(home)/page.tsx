@@ -83,11 +83,15 @@ export default async function HomePage(props: HomePageProps) {
   const t = await getTranslations({ locale, namespace: 'LearningPlatform' });
   const preloadedCourses = await getPublicCoursesCached();
   
-  // 移动端英文模式使用正常字体，其他情况使用卡通字体
+  // 字体配置：移动端英文使用 Times New Roman，中文统一使用卡通字体
   const getFontFamily = (isEnglish: boolean) => {
-    return isEnglish 
-      ? 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif'
-      : '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+    if (isEnglish) {
+      // 移动端英文使用 Times New Roman
+      return '"Times New Roman", Times, serif';
+    } else {
+      // 中文统一使用卡通字体
+      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+    }
   };
 
   return (

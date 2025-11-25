@@ -81,13 +81,13 @@ export function AIChatInterface({
   // 获取字体样式（直接缓存字符串值，而不是函数）
   const fontFamily = React.useMemo(() => {
     if (isMobile && locale === 'en') {
-      // 移动端英文模式使用正常字体
-      return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
-    } else if (isMobile) {
-      // 移动端中文模式保持卡通字体
-      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+      // 移动端英文模式使用 Times New Roman
+      return '"Times New Roman", Times, serif';
+    } else if (locale === 'en') {
+      // 桌面端英文也使用 Times New Roman
+      return '"Times New Roman", Times, serif';
     } else {
-      // 桌面端保持原有的卡通字体
+      // 中文统一使用卡通字体（移动端和桌面端）
       return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
     }
   }, [isMobile, locale]);

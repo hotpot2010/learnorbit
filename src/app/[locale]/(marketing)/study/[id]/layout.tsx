@@ -41,32 +41,23 @@ export async function generateMetadata({ params }: StudyLayoutProps): Promise<Me
   // 获取翻译
   const t = await getTranslations({ locale, namespace: 'LearningPlatform.study' });
   const tCommon = await getTranslations({ locale, namespace: 'Common' });
+  const tMeta = await getTranslations({ locale, namespace: 'LearningPlatform.meta' });
 
-  // 获取课程信息
-  const courseData = await getCourseInfo(id);
-
-  if (!courseData) {
-    return {
-      title: t('notFound.title'),
-      description: t('notFound.description'),
-    };
-  }
-
-  const { course } = courseData;
-  const title = course.title || t('defaultTitle');
-  const description = course.description || t('defaultDescription');
+  // 统一使用固定的页标文案，不依赖课程信息
   const siteName = tCommon('siteName');
+  // 优先使用 meta.title，如果没有则使用 defaultTitle
+  const unifiedTitle = tMeta('title') || t('defaultTitle');
+  const unifiedDescription = tMeta('description') || t('defaultDescription');
 
   // 构建完整的URL
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://aitutorly.ai';
   const fullUrl = `${baseUrl}/${locale}/study/${id}`;
-  const imageUrl = course.coverImage ? `${baseUrl}${course.coverImage}` : `${baseUrl}/logo.png`;
+  const imageUrl = `${baseUrl}/logo.png`;
 
   return {
-    title: `${title} - ${siteName}`,
-    description: description,
+    title: `${unifiedTitle} - ${siteName}`,
+    description: unifiedDescription,
     keywords: [
-      title,
       'AI学习',
       '在线课程',
       '人工智能教育',
@@ -74,12 +65,12 @@ export async function generateMetadata({ params }: StudyLayoutProps): Promise<Me
       'online learning',
       'artificial intelligence'
     ].join(', '),
-    authors: [{ name: course.ownerName || siteName }],
-    creator: course.ownerName || siteName,
+    authors: [{ name: siteName }],
+    creator: siteName,
     publisher: siteName,
     openGraph: {
-      title: `${title} - ${siteName}`,
-      description: description,
+      title: `${unifiedTitle} - ${siteName}`,
+      description: unifiedDescription,
       url: fullUrl,
       siteName: siteName,
       images: [
@@ -87,7 +78,7 @@ export async function generateMetadata({ params }: StudyLayoutProps): Promise<Me
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: unifiedTitle,
         }
       ],
       locale: locale,
@@ -95,8 +86,8 @@ export async function generateMetadata({ params }: StudyLayoutProps): Promise<Me
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${title} - ${siteName}`,
-      description: description,
+      title: `${unifiedTitle} - ${siteName}`,
+      description: unifiedDescription,
       images: [imageUrl],
       creator: '@aitutorly',
     },

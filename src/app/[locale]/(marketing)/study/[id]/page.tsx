@@ -501,8 +501,10 @@ export default function StudyPage({ params }: StudyPageProps) {
   };
 
   // 将正文内容按段落分割并插入笔记
-  const renderContentWithInsertedNotes = (content: string) => {
-    if (!content) return null;
+  const renderContentWithInsertedNotes = (content: string | null | undefined | any) => {
+    // 确保 content 是字符串类型
+    const strContent = typeof content === 'string' ? content : (content == null ? '' : String(content));
+    if (!strContent) return null;
     
     // 移除调试代码，避免频繁重新渲染
     
@@ -1026,7 +1028,7 @@ export default function StudyPage({ params }: StudyPageProps) {
     };
     
     // 预处理内容，确保数学公式正确格式化
-    const processedContent = preprocessMathContent(content);
+    const processedContent = preprocessMathContent(strContent);
     
     // 按段落分割内容
     const paragraphs = processedContent.split('\n\n').filter(p => p.trim());
@@ -2449,13 +2451,13 @@ export default function StudyPage({ params }: StudyPageProps) {
   // 获取字体样式（缓存字符串值，不是函数）
   const fontFamily = React.useMemo(() => {
     if (isMobile && routeParams?.locale === 'en') {
-      // 移动端英文模式使用正常字体
-      return 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif';
-    } else if (isMobile) {
-      // 移动端中文模式保持卡通字体
-      return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
+      // 移动端英文模式使用 Times New Roman
+      return '"Times New Roman", Times, serif';
+    } else if (routeParams?.locale === 'en') {
+      // 桌面端英文也使用 Times New Roman
+      return '"Times New Roman", Times, serif';
     } else {
-      // 桌面端保持原有的卡通字体
+      // 中文统一使用卡通字体（移动端和桌面端）
       return '"Comic Sans MS", "Marker Felt", "Kalam", cursive';
     }
   }, [isMobile, routeParams?.locale]);
