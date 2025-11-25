@@ -55,6 +55,44 @@ class ProxyService:
         safe_print(f"📍 Proxy API: {self.proxy_api_url}")
         safe_print(f"🔑 CDK: {self.proxy_cdk[:10]}...")
     
+    def _is_private_ip(self, ip: str) -> bool:
+        """
+        检查IP是否为内网IP
+        
+        Args:
+            ip: IP地址字符串
+            
+        Returns:
+            True if IP is private, False otherwise
+        """
+        try:
+            parts = ip.split('.')
+            if len(parts) != 4:
+                return False
+            
+            first_octet = int(parts[0])
+            second_octet = int(parts[1])
+            
+            # 10.0.0.0/8
+            if first_octet == 10:
+                return True
+            
+            # 172.16.0.0/12
+            if first_octet == 172 and 16 <= second_octet <= 31:
+                return True
+            
+            # 192.168.0.0/16
+            if first_octet == 192 and second_octet == 168:
+                return True
+            
+            # 127.0.0.0/8 (localhost)
+            if first_octet == 127:
+                return True
+            
+            return False
+        except (ValueError, IndexError):
+            return False
+    
     def _build_proxy_api_url(self) -> str:
         """构建代理IP获取接口URL"""
         params = {
@@ -111,6 +149,11 @@ class ProxyService:
                                     port = port.split('/')[0]
                                 
                                 if ip and port:
+                                    # 过滤掉内网IP（在服务器上无法访问）
+                                    if self._is_private_ip(ip):
+                                        safe_print(f"  ⚠️  Skipping private IP: {ip}:{port}")
+                                        continue
+                                    
                                     proxies.append({
                                         'ip': ip,
                                         'port': port,
@@ -173,12 +216,41 @@ class ProxyService:
         
         return available_proxies
     
-    async def get_next_proxy(self, mark_failed: bool = False) -> Optional[str]:
+    async def test_proxy_connection(self, proxy_url: str, timeout: int = 5) -> bool:
+        """
+        测试代理连接是否可用
+        
+        Args:
+            proxy_url: 代理URL（如 http://1.2.3.4:8080）
+            timeout: 连接超时时间（秒）
+            
+        Returns:
+            True if proxy is available, False otherwise
+        """
+        try:
+            import aiohttp
+            test_url = "https://www.bilibili.com"  # 测试连接到B站
+            
+            async with aiohttp.ClientSession() as session:
+                async with session.get(
+                    test_url,
+                    proxy=proxy_url,
+                    timeout=aiohttp.ClientTimeout(total=timeout, connect=timeout),
+                    ssl=False  # 禁用SSL验证以加快测试
+                ) as response:
+                    # 只要能够连接就认为代理可用
+                    return response.status < 500
+        except Exception as e:
+            safe_print(f"  ⚠️  Proxy test failed for {proxy_url}: {str(e)[:100]}")
+            return False
+    
+    async def get_next_proxy(self, mark_failed: bool = False, test_connection: bool = True) -> Optional[str]:
         """
         获取下一个可用的代理IP（轮换）
         
         Args:
             mark_failed: 是否标记当前代理为失败
+            test_connection: 是否测试代理连接（默认True，但可以禁用以加快速度）
             
         Returns:
             代理URL（如 http://1.2.3.4:8080），如果没有可用代理则返回None
@@ -197,12 +269,31 @@ class ProxyService:
             safe_print("⚠️  No available proxies")
             return None
         
-        # 轮换到下一个代理
-        self.current_proxy_index = (self.current_proxy_index + 1) % len(available_proxies)
-        proxy = available_proxies[self.current_proxy_index]
+        # 尝试找到可用的代理（最多尝试所有代理一次）
+        max_attempts = len(available_proxies)
+        for attempt in range(max_attempts):
+            # 轮换到下一个代理
+            self.current_proxy_index = (self.current_proxy_index + 1) % len(available_proxies)
+            proxy = available_proxies[self.current_proxy_index]
+            proxy_url = proxy['proxy_url']
+            
+            # 如果启用连接测试，先测试代理是否可用
+            if test_connection:
+                safe_print(f"🔍 Testing proxy {attempt + 1}/{max_attempts}: {proxy['ip']}:{proxy['port']}")
+                is_available = await self.test_proxy_connection(proxy_url, timeout=3)
+                if not is_available:
+                    # 标记为失败并继续尝试下一个
+                    proxy_key = f"{proxy['ip']}:{proxy['port']}"
+                    self.failed_proxies[proxy_key] = datetime.now()
+                    safe_print(f"  ❌ Proxy {proxy['ip']}:{proxy['port']} is not available, trying next...")
+                    continue
+            
+            safe_print(f"✅ Using proxy {self.current_proxy_index + 1}/{len(available_proxies)}: {proxy['ip']}:{proxy['port']}")
+            return proxy_url
         
-        safe_print(f"🔄 Using proxy {self.current_proxy_index + 1}/{len(available_proxies)}: {proxy['ip']}:{proxy['port']}")
-        return proxy['proxy_url']
+        # 所有代理都不可用
+        safe_print("⚠️  All proxies failed connection test")
+        return None
     
     def get_current_proxy(self) -> Optional[str]:
         """

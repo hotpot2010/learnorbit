@@ -290,31 +290,47 @@ class BilibiliService:
                                     new_loop = asyncio.new_event_loop()
                                     asyncio.set_event_loop(new_loop)
                                     try:
+                                        # 第一次尝试时测试连接，重试时不测试以加快速度
+                                        test_conn = (attempt == 0)
                                         return new_loop.run_until_complete(
-                                            proxy_service.get_next_proxy(mark_failed=(attempt > 0))
+                                            proxy_service.get_next_proxy(
+                                                mark_failed=(attempt > 0),
+                                                test_connection=test_conn
+                                            )
                                         )
                                     finally:
                                         new_loop.close()
                                 
                                 with concurrent.futures.ThreadPoolExecutor() as executor:
                                     future = executor.submit(get_proxy_sync)
-                                    proxy_url = future.result(timeout=5)
+                                    proxy_url = future.result(timeout=30)  # 增加超时时间以允许代理测试
                             else:
+                                # 第一次尝试时测试连接，重试时不测试以加快速度
+                                test_conn = (attempt == 0)
                                 proxy_url = loop.run_until_complete(
-                                    proxy_service.get_next_proxy(mark_failed=(attempt > 0))
+                                    proxy_service.get_next_proxy(
+                                        mark_failed=(attempt > 0),
+                                        test_connection=test_conn
+                                    )
                                 )
                         except RuntimeError:
                             # 没有事件循环，创建新的
+                            test_conn = (attempt == 0)
                             proxy_url = asyncio.run(
-                                proxy_service.get_next_proxy(mark_failed=(attempt > 0))
+                                proxy_service.get_next_proxy(
+                                    mark_failed=(attempt > 0),
+                                    test_connection=test_conn
+                                )
                             )
                     except Exception as e:
                         # 如果获取代理失败，使用当前代理或直接连接
-                        print(f"⚠️  Failed to get proxy: {e}, using direct connection")
-                        proxy_url = proxy_service.get_current_proxy() if proxy_service else None
+                        print(f"⚠️  Failed to get proxy: {e}, trying direct connection")
+                        proxy_url = None  # 不使用代理，直接连接
                     
                     if proxy_url:
                         print(f"🌐 Using proxy: {proxy_url}")
+                    else:
+                        print(f"⚠️  No proxy available, using direct connection")
                 
                 ydl_opts = {
                     'quiet': True,
@@ -438,7 +454,7 @@ class BilibiliService:
                 error_msg = str(e)
                 error_lower = error_msg.lower()
                 
-                # 检查是否是 HTTP 412 错误、SSL错误或其他可重试的错误
+                # 检查是否是 HTTP 412 错误、SSL错误、代理连接错误或其他可重试的错误
                 is_retryable_error = (
                     '412' in error_msg or 
                     'precondition failed' in error_lower or
@@ -447,7 +463,11 @@ class BilibiliService:
                     'connection' in error_lower or
                     'ssl' in error_lower or
                     'decryption' in error_lower or
-                    'bad record mac' in error_lower
+                    'bad record mac' in error_lower or
+                    'proxy' in error_lower or
+                    'timeout' in error_lower or
+                    'connect' in error_lower or
+                    'unable to connect' in error_lower
                 )
                 
                 print(f"❌ Attempt {attempt + 1}/{max_retries} failed: {error_msg}")

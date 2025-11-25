@@ -122,7 +122,12 @@ class BilibiliSearchService:
                 # 如果使用代理，获取代理IP
                 proxy_url = None
                 if self.use_proxy:
-                    proxy_url = await proxy_service.get_next_proxy(mark_failed=(attempt > 0))
+                    # 第一次尝试时测试连接，重试时不测试以加快速度
+                    test_conn = (attempt == 0)
+                    proxy_url = await proxy_service.get_next_proxy(
+                        mark_failed=(attempt > 0),
+                        test_connection=test_conn
+                    )
                     if proxy_url:
                         safe_print(f"🌐 Using proxy: {proxy_url}")
                     else:
@@ -243,14 +248,17 @@ class BilibiliSearchService:
                 error_msg = str(e)
                 error_lower = error_msg.lower()
                 
-                # 检查是否是网络错误或可重试的错误
+                # 检查是否是网络错误、代理错误或可重试的错误
                 is_retryable = (
                     '412' in error_msg or
                     'precondition failed' in error_lower or
                     'http error' in error_lower or
                     'connection' in error_lower or
                     'timeout' in error_lower or
-                    'network' in error_lower
+                    'network' in error_lower or
+                    'proxy' in error_lower or
+                    'connect' in error_lower or
+                    'unable to connect' in error_lower
                 )
                 
                 safe_print(f"❌ Attempt {attempt + 1}/{max_retries} failed: {error_msg}")
