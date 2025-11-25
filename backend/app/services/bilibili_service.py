@@ -35,6 +35,14 @@ import time
 
 from .series_cache_service import SeriesCacheService
 
+# 导入代理服务
+try:
+    from .proxy_service import proxy_service
+    PROXY_SERVICE_AVAILABLE = True
+except ImportError:
+    PROXY_SERVICE_AVAILABLE = False
+    proxy_service = None
+
 
 class BilibiliService:
     """Service for downloading and managing Bilibili videos"""
@@ -58,7 +66,12 @@ class BilibiliService:
         # Initialize series cache service
         self.series_cache = SeriesCacheService()
         
+        # 代理服务支持
+        self.use_proxy = PROXY_SERVICE_AVAILABLE
+        
         print(f"📁 Download directory: {self.download_dir}")
+        if self.use_proxy:
+            print(f"✅ Proxy service enabled for Bilibili requests")
     
     def get_video_play_url(self, url: str, quality: str = 'best') -> Dict[str, Any]:
         """
@@ -260,6 +273,49 @@ class BilibiliService:
                     print(f"🔄 Retry attempt {attempt}/{max_retries} after {delay}s delay...")
                     time.sleep(delay)
                 
+                # 如果使用代理，获取代理IP（同步方式）
+                proxy_url = None
+                if self.use_proxy and proxy_service:
+                    try:
+                        import asyncio
+                        # 尝试获取当前事件循环
+                        try:
+                            loop = asyncio.get_event_loop()
+                            if loop.is_running():
+                                # 如果事件循环正在运行，创建新的事件循环在后台线程中运行
+                                import concurrent.futures
+                                import threading
+                                
+                                def get_proxy_sync():
+                                    new_loop = asyncio.new_event_loop()
+                                    asyncio.set_event_loop(new_loop)
+                                    try:
+                                        return new_loop.run_until_complete(
+                                            proxy_service.get_next_proxy(mark_failed=(attempt > 0))
+                                        )
+                                    finally:
+                                        new_loop.close()
+                                
+                                with concurrent.futures.ThreadPoolExecutor() as executor:
+                                    future = executor.submit(get_proxy_sync)
+                                    proxy_url = future.result(timeout=5)
+                            else:
+                                proxy_url = loop.run_until_complete(
+                                    proxy_service.get_next_proxy(mark_failed=(attempt > 0))
+                                )
+                        except RuntimeError:
+                            # 没有事件循环，创建新的
+                            proxy_url = asyncio.run(
+                                proxy_service.get_next_proxy(mark_failed=(attempt > 0))
+                            )
+                    except Exception as e:
+                        # 如果获取代理失败，使用当前代理或直接连接
+                        print(f"⚠️  Failed to get proxy: {e}, using direct connection")
+                        proxy_url = proxy_service.get_current_proxy() if proxy_service else None
+                    
+                    if proxy_url:
+                        print(f"🌐 Using proxy: {proxy_url}")
+                
                 ydl_opts = {
                     'quiet': True,
                     'no_warnings': True,
@@ -282,6 +338,12 @@ class BilibiliService:
                     'socket_timeout': 30,
                     'retries': 1,  # yt-dlp内部重试设为1，我们手动控制重试
                 }
+                
+                # 如果提供了代理，添加到配置中并禁用SSL验证（代理可能导致SSL错误）
+                if proxy_url:
+                    ydl_opts['proxy'] = proxy_url
+                    ydl_opts['nocheckcertificate'] = True  # 禁用SSL证书验证，避免代理导致的SSL错误
+                    print(f"⚠️  SSL certificate verification disabled for proxy connection")
                 
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                     info = ydl.extract_info(url, download=False)
@@ -376,16 +438,31 @@ class BilibiliService:
                 error_msg = str(e)
                 error_lower = error_msg.lower()
                 
-                # 检查是否是 HTTP 412 错误或其他可重试的错误
+                # 检查是否是 HTTP 412 错误、SSL错误或其他可重试的错误
                 is_retryable_error = (
                     '412' in error_msg or 
                     'precondition failed' in error_lower or
                     'http error' in error_lower or
                     'temporary failure' in error_lower or
-                    'connection' in error_lower
+                    'connection' in error_lower or
+                    'ssl' in error_lower or
+                    'decryption' in error_lower or
+                    'bad record mac' in error_lower
                 )
                 
                 print(f"❌ Attempt {attempt + 1}/{max_retries} failed: {error_msg}")
+                
+                # 如果是SSL错误，记录详细信息
+                if 'ssl' in error_lower or 'decryption' in error_lower:
+                    print(f"🔒 SSL error detected, this may be caused by proxy incompatibility")
+                    if proxy_url:
+                        print(f"   Current proxy: {proxy_url}")
+                        print(f"   Suggestion: Try disabling proxy or use a different proxy")
+                
+                # 如果使用代理且失败，标记代理为失败并切换
+                if self.use_proxy and proxy_service and proxy_url:
+                    proxy_service.mark_proxy_failed(proxy_url)
+                    print(f"🔄 Marked proxy as failed, will try next proxy on retry")
                 
                 # 如果是最后一次尝试，或者不是可重试的错误，抛出异常
                 if attempt == max_retries - 1 or not is_retryable_error:

@@ -18,18 +18,30 @@ def safe_print(msg: str):
         import logging
         logging.info(msg)
 
+# 导入代理服务
+try:
+    from .proxy_service import proxy_service
+    PROXY_SERVICE_AVAILABLE = True
+except ImportError:
+    PROXY_SERVICE_AVAILABLE = False
+    safe_print("⚠️  Proxy service not available, will use direct connection")
+
 class BilibiliSearchService:
     """B站视频搜索服务"""
     
     def __init__(self):
         safe_print("🔍 BilibiliSearchService initialized")
+        self.use_proxy = PROXY_SERVICE_AVAILABLE
+        if self.use_proxy:
+            safe_print("✅ Proxy service enabled")
     
-    def _validate_video_url_sync(self, url: str) -> bool:
+    def _validate_video_url_sync(self, url: str, proxy_url: Optional[str] = None) -> bool:
         """
         同步验证B站视频链接是否有效（在线程中执行）
         
         Args:
             url: B站视频URL
+            proxy_url: 代理URL（可选）
             
         Returns:
             True if URL is valid, False otherwise
@@ -48,6 +60,12 @@ class BilibiliSearchService:
                 'retries': 1,  # 只重试1次
             }
             
+            # 如果提供了代理，添加到配置中并禁用SSL验证（代理可能导致SSL错误）
+            if proxy_url:
+                ydl_opts['proxy'] = proxy_url
+                ydl_opts['nocheckcertificate'] = True  # 禁用SSL证书验证，避免代理导致的SSL错误
+                safe_print(f"  🌐 Using proxy for validation: {proxy_url} (SSL verification disabled)")
+            
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.extract_info(url, download=False)
             return True
@@ -57,7 +75,7 @@ class BilibiliSearchService:
     
     async def _validate_video_url(self, url: str) -> bool:
         """
-        异步验证B站视频链接是否有效
+        异步验证B站视频链接是否有效（支持代理）
         
         Args:
             url: B站视频URL
@@ -65,16 +83,22 @@ class BilibiliSearchService:
         Returns:
             True if URL is valid, False otherwise
         """
+        # 如果使用代理，获取代理IP
+        proxy_url = None
+        if self.use_proxy:
+            proxy_url = proxy_service.get_current_proxy()
+        
         # 在线程池中执行同步验证，避免阻塞事件循环
-        return await asyncio.to_thread(self._validate_video_url_sync, url)
+        return await asyncio.to_thread(self._validate_video_url_sync, url, proxy_url)
     
-    async def search_videos(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
+    async def search_videos(self, query: str, limit: int = 5, max_retries: int = 3) -> List[Dict[str, Any]]:
         """
-        搜索B站视频
+        搜索B站视频（支持代理IP）
         
         Args:
             query: 搜索关键词
             limit: 返回结果数量，默认5个
+            max_retries: 最大重试次数（每次失败会切换代理）
             
         Returns:
             视频列表，每个视频包含:
@@ -89,123 +113,166 @@ class BilibiliSearchService:
             - favorites: 收藏数
             - description: 视频描述
         """
-        try:
-            safe_print(f"🔍 搜索B站视频: {query}")
-            
-            # 搜索视频，按综合排序
-            search_result = await search.search_by_type(
-                query, 
-                search.SearchObjectType.VIDEO,
-                search.OrderVideo.TOTALRANK  # 综合排序
-            )
-            
-            results = []
-            
-            # 解析搜索结果
-            for item in search_result.get('result', [])[:limit]:
-                if item.get('type') == 'video':
-                    # 调试：打印第一个视频的关键字段（用于排查问题）
-                    if len(results) == 0:
-                        safe_print(f"  🔍 第一个视频的关键字段:")
-                        safe_print(f"    episode_count_text: {item.get('episode_count_text', 'NOT_FOUND')}")
-                        safe_print(f"    bvid: {item.get('bvid', 'NOT_FOUND')}")
-                        safe_print(f"    aid: {item.get('aid', 'NOT_FOUND')}")
-                    
-                    # 清理标题中的高亮标签
-                    title = item['title'].replace('<em class="keyword">', '').replace('</em>', '')
-                    
-                    # 解析时长为秒数
-                    duration_str = item.get('duration', '0:00')
-                    duration_seconds = self._parse_duration(duration_str)
-                    
-                    # 处理封面URL - B站返回的URL可能缺少协议
-                    cover_url = item.get('pic', '')
-                    if cover_url and not cover_url.startswith('http'):
-                        cover_url = 'https:' + cover_url
-                    
-                    # 判断是否为系列课（多P视频）
-                    # 方法1：尝试从 episode_count_text 字段解析（如 "共3P"）
-                    video_amount = 1
-                    episode_text = item.get('episode_count_text', '')
-                    if episode_text:
-                        try:
-                            # 尝试从文本中提取数字，如 "共3P" -> 3
-                            import re
-                            match = re.search(r'(\d+)', str(episode_text))
-                            if match:
-                                video_amount = int(match.group(1))
-                                safe_print(f"  📚 从episode_count_text解析到: {title} ({video_amount}P)")
-                        except Exception:
-                            pass
-                    
-                    # 方法2：如果方法1失败，通过BV号查询视频详情
-                    if video_amount == 1:
-                        bvid = item.get('bvid', '')
-                        if bvid:
+        retry_delays = [1, 2, 3]  # 重试延迟
+        
+        for attempt in range(max_retries):
+            try:
+                safe_print(f"🔍 搜索B站视频: {query} (attempt {attempt + 1}/{max_retries})")
+                
+                # 如果使用代理，获取代理IP
+                proxy_url = None
+                if self.use_proxy:
+                    proxy_url = await proxy_service.get_next_proxy(mark_failed=(attempt > 0))
+                    if proxy_url:
+                        safe_print(f"🌐 Using proxy: {proxy_url}")
+                    else:
+                        safe_print("⚠️  No proxy available, using direct connection")
+                
+                # 搜索视频，按综合排序
+                # 注意：bilibili_api库可能不支持直接设置代理，需要通过环境变量或全局配置
+                # 这里我们先尝试直接调用，如果失败再考虑其他方案
+                search_result = await search.search_by_type(
+                    query, 
+                    search.SearchObjectType.VIDEO,
+                    search.OrderVideo.TOTALRANK  # 综合排序
+                )
+                
+                results = []
+                
+                # 解析搜索结果
+                for item in search_result.get('result', [])[:limit]:
+                    if item.get('type') == 'video':
+                        # 调试：打印第一个视频的关键字段（用于排查问题）
+                        if len(results) == 0:
+                            safe_print(f"  🔍 第一个视频的关键字段:")
+                            safe_print(f"    episode_count_text: {item.get('episode_count_text', 'NOT_FOUND')}")
+                            safe_print(f"    bvid: {item.get('bvid', 'NOT_FOUND')}")
+                            safe_print(f"    aid: {item.get('aid', 'NOT_FOUND')}")
+                        
+                        # 清理标题中的高亮标签
+                        title = item['title'].replace('<em class="keyword">', '').replace('</em>', '')
+                        
+                        # 解析时长为秒数
+                        duration_str = item.get('duration', '0:00')
+                        duration_seconds = self._parse_duration(duration_str)
+                        
+                        # 处理封面URL - B站返回的URL可能缺少协议
+                        cover_url = item.get('pic', '')
+                        if cover_url and not cover_url.startswith('http'):
+                            cover_url = 'https:' + cover_url
+                        
+                        # 判断是否为系列课（多P视频）
+                        # 方法1：尝试从 episode_count_text 字段解析（如 "共3P"）
+                        video_amount = 1
+                        episode_text = item.get('episode_count_text', '')
+                        if episode_text:
                             try:
-                                video_amount = await self._get_video_pages_count(bvid)
-                                if video_amount > 1:
-                                    safe_print(f"  📚 通过视频API检测到系列课: {title} ({video_amount}P)")
-                            except Exception as e:
-                                # 如果获取失败，保持默认值1
-                                safe_print(f"  ⚠️ 获取视频分P信息失败 ({bvid}): {e}")
+                                # 尝试从文本中提取数字，如 "共3P" -> 3
+                                import re
+                                match = re.search(r'(\d+)', str(episode_text))
+                                if match:
+                                    video_amount = int(match.group(1))
+                                    safe_print(f"  📚 从episode_count_text解析到: {title} ({video_amount}P)")
+                            except Exception:
                                 pass
-                    
-                    is_series = video_amount > 1
-                    
-                    # 调试日志
-                    if is_series:
-                        safe_print(f"  ✅ 最终判断为系列课: {title} ({video_amount}P)")
-                    else:
-                        safe_print(f"  📹 单视频: {title}")
-                    
-                    video_url = item.get('arcurl', '')
-                    
-                    video_info = {
-                        'title': title,
-                        'url': video_url,
-                        'cover': cover_url,  # 封面图（已添加协议）
-                        'duration': duration_str,
-                        'duration_seconds': duration_seconds,
-                        'author': item.get('author', ''),  # UP主
-                        'play': item.get('play', 0),  # 播放量
-                        'video_review': item.get('video_review', 0),  # 弹幕数
-                        'favorites': item.get('favorites', 0),  # 收藏数
-                        'description': item.get('description', ''),  # 视频描述
-                        'mid': item.get('mid', 0),  # UP主ID
-                        'pubdate': item.get('pubdate', 0),  # 发布时间戳
-                        'video_amount': video_amount,  # 视频数量
-                        'is_series': is_series,  # 是否为系列课
-                    }
-                    
-                    results.append(video_info)
-                    safe_print(f"  ✓ {title} ({duration_str})")
-            
-            # 验证所有视频链接有效性（并行验证）
-            if results:
-                safe_print(f"\n🔍 验证 {len(results)} 个视频链接有效性...")
-                validation_tasks = [self._validate_video_url(video['url']) for video in results]
-                validation_results = await asyncio.gather(*validation_tasks, return_exceptions=True)
+                        
+                        # 方法2：如果方法1失败，通过BV号查询视频详情
+                        if video_amount == 1:
+                            bvid = item.get('bvid', '')
+                            if bvid:
+                                try:
+                                    video_amount = await self._get_video_pages_count(bvid)
+                                    if video_amount > 1:
+                                        safe_print(f"  📚 通过视频API检测到系列课: {title} ({video_amount}P)")
+                                except Exception as e:
+                                    # 如果获取失败，保持默认值1
+                                    safe_print(f"  ⚠️ 获取视频分P信息失败 ({bvid}): {e}")
+                                    pass
+                        
+                        is_series = video_amount > 1
+                        
+                        # 调试日志
+                        if is_series:
+                            safe_print(f"  ✅ 最终判断为系列课: {title} ({video_amount}P)")
+                        else:
+                            safe_print(f"  📹 单视频: {title}")
+                        
+                        video_url = item.get('arcurl', '')
+                        
+                        video_info = {
+                            'title': title,
+                            'url': video_url,
+                            'cover': cover_url,  # 封面图（已添加协议）
+                            'duration': duration_str,
+                            'duration_seconds': duration_seconds,
+                            'author': item.get('author', ''),  # UP主
+                            'play': item.get('play', 0),  # 播放量
+                            'video_review': item.get('video_review', 0),  # 弹幕数
+                            'favorites': item.get('favorites', 0),  # 收藏数
+                            'description': item.get('description', ''),  # 视频描述
+                            'mid': item.get('mid', 0),  # UP主ID
+                            'pubdate': item.get('pubdate', 0),  # 发布时间戳
+                            'video_amount': video_amount,  # 视频数量
+                            'is_series': is_series,  # 是否为系列课
+                        }
+                        
+                        results.append(video_info)
+                        safe_print(f"  ✓ {title} ({duration_str})")
                 
-                # 过滤掉无效链接
-                valid_results = []
-                for video, is_valid in zip(results, validation_results):
-                    if isinstance(is_valid, Exception) or not is_valid:
-                        safe_print(f"  ❌ 跳过无效链接: {video['title'][:40]}... ({video['url'][:50]}...)")
-                    else:
-                        valid_results.append(video)
+                # 验证所有视频链接有效性（并行验证）
+                if results:
+                    safe_print(f"\n🔍 验证 {len(results)} 个视频链接有效性...")
+                    validation_tasks = [self._validate_video_url(video['url']) for video in results]
+                    validation_results = await asyncio.gather(*validation_tasks, return_exceptions=True)
+                    
+                    # 过滤掉无效链接
+                    valid_results = []
+                    for video, is_valid in zip(results, validation_results):
+                        if isinstance(is_valid, Exception) or not is_valid:
+                            safe_print(f"  ❌ 跳过无效链接: {video['title'][:40]}... ({video['url'][:50]}...)")
+                        else:
+                            valid_results.append(video)
+                    
+                    results = valid_results
+                    safe_print(f"✅ 验证完成，有效链接: {len(results)}/{len(validation_results)}")
                 
-                results = valid_results
-                safe_print(f"✅ 验证完成，有效链接: {len(results)}/{len(validation_results)}")
-            
-            safe_print(f"✅ 找到 {len(results)} 个视频")
-            return results
-            
-        except Exception as e:
-            safe_print(f"❌ B站视频搜索失败: {e}")
-            import traceback
-            traceback.print_exc()
-            return []
+                safe_print(f"✅ 找到 {len(results)} 个视频")
+                return results
+                
+            except Exception as e:
+                error_msg = str(e)
+                error_lower = error_msg.lower()
+                
+                # 检查是否是网络错误或可重试的错误
+                is_retryable = (
+                    '412' in error_msg or
+                    'precondition failed' in error_lower or
+                    'http error' in error_lower or
+                    'connection' in error_lower or
+                    'timeout' in error_lower or
+                    'network' in error_lower
+                )
+                
+                safe_print(f"❌ Attempt {attempt + 1}/{max_retries} failed: {error_msg}")
+                
+                # 如果使用代理且失败，标记代理为失败
+                if self.use_proxy and proxy_url:
+                    proxy_service.mark_proxy_failed(proxy_url)
+                
+                # 如果是最后一次尝试或不可重试的错误，抛出异常
+                if attempt == max_retries - 1 or not is_retryable:
+                    safe_print(f"❌ B站视频搜索失败，已重试 {attempt + 1} 次")
+                    import traceback
+                    traceback.print_exc()
+                    return []
+                
+                # 等待后重试
+                if attempt < max_retries - 1:
+                    delay = retry_delays[min(attempt, len(retry_delays) - 1)]
+                    safe_print(f"🔄 Retrying after {delay}s...")
+                    await asyncio.sleep(delay)
+        
+        return []
     
     async def search_videos_with_rerank(self, query: str, limit: int = 3) -> List[Dict[str, Any]]:
         """
