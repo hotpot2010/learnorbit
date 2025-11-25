@@ -518,48 +518,54 @@ class BatchAnalyzer:
             method = AnalysisMethod.ASR_DOUBAO if self.use_asr_doubao else AnalysisMethod.GEMINI
             
             # 调用统一的视频分析服务
-            # 由于FastAPI已经在事件循环中，直接使用 asyncio.create_task 或在同步上下文中使用 run_coroutine_threadsafe
+            # 由于FastAPI已经在事件循环中（可能是uvloop），需要在新线程中运行异步代码
             import asyncio
+            
+            def run_analysis_in_new_loop():
+                """在新线程中创建新的事件循环来运行异步代码"""
+                # 创建新的事件循环（避免uvloop兼容性问题）
+                new_loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(new_loop)
+                try:
+                    return new_loop.run_until_complete(
+                        self.video_analysis_service.analyze_video(
+                            video_path=video_file_path,
+                            analysis_type=AnalysisType.CUSTOM,
+                            custom_prompt=prompt,
+                            method=method,
+                            video_url_for_cache=video_url,
+                            locale=locale
+                        )
+                    )
+                finally:
+                    new_loop.close()
+            
             try:
                 # 尝试获取当前事件循环
                 loop = asyncio.get_event_loop()
                 if loop.is_running():
-                    # 如果循环正在运行，使用 nest_asyncio 或创建任务
-                    import nest_asyncio
-                    nest_asyncio.apply()
-                    result = loop.run_until_complete(
-                        self.video_analysis_service.analyze_video(
-                            video_path=video_file_path,
-                            custom_prompt=prompt,
-                            method=method,
-                            video_url_for_cache=video_url
-                        )
-                    )
+                    # 如果循环正在运行（uvloop或其他），在新线程中运行
+                    # 使用已有的 executor 在新线程中创建新的事件循环
+                    print(f"🔄 Event loop is running, executing analysis in new thread...")
+                    future = self.executor.submit(run_analysis_in_new_loop)
+                    result = future.result(timeout=1800)  # 30分钟超时
                 else:
                     # 如果循环未运行，直接运行
                     result = loop.run_until_complete(
                         self.video_analysis_service.analyze_video(
                             video_path=video_file_path,
+                            analysis_type=AnalysisType.CUSTOM,
                             custom_prompt=prompt,
                             method=method,
-                            video_url_for_cache=video_url
+                            video_url_for_cache=video_url,
+                            locale=locale
                         )
                     )
             except RuntimeError:
-                # 如果没有事件循环，创建新的
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-                try:
-                    result = loop.run_until_complete(
-                        self.video_analysis_service.analyze_video(
-                            video_path=video_file_path,
-                            custom_prompt=prompt,
-                            method=method,
-                            video_url_for_cache=video_url
-                        )
-                    )
-                finally:
-                    loop.close()
+                # 如果没有事件循环，在新线程中运行
+                print(f"🔄 No event loop found, executing analysis in new thread...")
+                future = self.executor.submit(run_analysis_in_new_loop)
+                result = future.result(timeout=1800)  # 30分钟超时
             
             # 🧹 立即清理下载的音频文件（不再需要）
             self.cleanup_service.cleanup_file(video_file_path)
@@ -702,18 +708,36 @@ class BatchAnalyzer:
             audio_file_path = audio_result['file_path']
             print(f"✅ 音频文件已下载: {audio_file_path}")
             
-            try:
-                # 4. 上传音频文件到CDN（ASR服务需要可访问的URL）
-                print(f"📤 Uploading audio file to CDN for ASR...")
-                loop = asyncio.get_event_loop()
-            except RuntimeError:
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
+            # 4. 上传音频文件到CDN（ASR服务需要可访问的URL）
+            print(f"📤 Uploading audio file to CDN for ASR...")
             
-            # 上传音频文件
-            audio_cdn_url = loop.run_until_complete(
-                self.file_upload_service.upload_file_async(audio_file_path, file_key="file0")
-            )
+            def upload_audio_in_new_loop():
+                """在新线程中创建新的事件循环来上传文件"""
+                new_loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(new_loop)
+                try:
+                    return new_loop.run_until_complete(
+                        self.file_upload_service.upload_file_async(audio_file_path, file_key="file0")
+                    )
+                finally:
+                    new_loop.close()
+            
+            try:
+                # 尝试获取当前事件循环
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    # 如果循环正在运行，在新线程中运行
+                    future = self.executor.submit(upload_audio_in_new_loop)
+                    audio_cdn_url = future.result(timeout=300)  # 5分钟超时
+                else:
+                    # 如果循环未运行，直接运行
+                    audio_cdn_url = loop.run_until_complete(
+                        self.file_upload_service.upload_file_async(audio_file_path, file_key="file0")
+                    )
+            except RuntimeError:
+                # 如果没有事件循环，在新线程中运行
+                future = self.executor.submit(upload_audio_in_new_loop)
+                audio_cdn_url = future.result(timeout=300)  # 5分钟超时
             
             if not audio_cdn_url:
                 raise Exception("音频文件上传失败，无法进行ASR识别")
@@ -734,23 +758,61 @@ class BatchAnalyzer:
                 except Exception as e:
                     print(f"⚠️ 音频URL验证失败（但继续尝试ASR）: {e}")
             
-            try:
-                loop.run_until_complete(verify_audio_url())
-            except Exception as e:
-                print(f"⚠️ 音频URL验证异常（但继续尝试ASR）: {e}")
+            def verify_and_analyze_in_new_loop():
+                """在新线程中创建新的事件循环来验证URL和分析视频"""
+                new_loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(new_loop)
+                try:
+                    # 验证URL
+                    try:
+                        new_loop.run_until_complete(verify_audio_url())
+                    except Exception as e:
+                        print(f"⚠️ 音频URL验证异常（但继续尝试ASR）: {e}")
+                    
+                    # 分析视频
+                    return new_loop.run_until_complete(
+                        self.video_analysis_service.analyze_video(
+                            video_path=audio_file_path,  # 使用本地音频文件路径
+                            analysis_type=AnalysisType.CUSTOM,
+                            custom_prompt=prompt,
+                            method=AnalysisMethod.ASR_DOUBAO if self.use_asr_doubao else AnalysisMethod.GEMINI,
+                            video_url_for_cache=video_url,  # 传递原始 URL 用于缓存
+                            locale=locale  # 传递语言环境
+                        )
+                    )
+                finally:
+                    new_loop.close()
             
             # 5. 使用下载的音频文件进行分析（支持切片模式，与B站一致）
             # 使用 analyze_video 方法，它会自动处理切片（如果音频>5分钟）
-            analysis_result = loop.run_until_complete(
-                self.video_analysis_service.analyze_video(
-                    video_path=audio_file_path,  # 使用本地音频文件路径
-                    analysis_type=AnalysisType.CUSTOM,
-                    custom_prompt=prompt,
-                    method=AnalysisMethod.ASR_DOUBAO if self.use_asr_doubao else AnalysisMethod.GEMINI,
-                    video_url_for_cache=video_url,  # 传递原始 URL 用于缓存
-                    locale=locale  # 传递语言环境
-                )
-            )
+            try:
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    # 如果循环正在运行，在新线程中运行
+                    print(f"🔄 Event loop is running, executing YouTube analysis in new thread...")
+                    future = self.executor.submit(verify_and_analyze_in_new_loop)
+                    analysis_result = future.result(timeout=1800)  # 30分钟超时
+                else:
+                    # 如果循环未运行，直接运行
+                    try:
+                        new_loop.run_until_complete(verify_audio_url())
+                    except Exception as e:
+                        print(f"⚠️ 音频URL验证异常（但继续尝试ASR）: {e}")
+                    analysis_result = loop.run_until_complete(
+                        self.video_analysis_service.analyze_video(
+                            video_path=audio_file_path,
+                            analysis_type=AnalysisType.CUSTOM,
+                            custom_prompt=prompt,
+                            method=AnalysisMethod.ASR_DOUBAO if self.use_asr_doubao else AnalysisMethod.GEMINI,
+                            video_url_for_cache=video_url,
+                            locale=locale
+                        )
+                    )
+            except RuntimeError:
+                # 如果没有事件循环，在新线程中运行
+                print(f"🔄 No event loop found, executing YouTube analysis in new thread...")
+                future = self.executor.submit(verify_and_analyze_in_new_loop)
+                analysis_result = future.result(timeout=1800)  # 30分钟超时
             
             # 6. 清理下载的音频文件
             try:
@@ -1051,28 +1113,51 @@ class BatchAnalyzer:
             analysis_method = AnalysisMethod.ASR_DOUBAO if self.use_asr_doubao else AnalysisMethod.GEMINI
             print(f"🔧 Analysis method: {analysis_method}")
             
+            def analyze_in_new_loop():
+                """在新线程中创建新的事件循环来分析视频"""
+                new_loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(new_loop)
+                try:
+                    return new_loop.run_until_complete(
+                        self.video_analysis_service.analyze_video(
+                            video_file_path,
+                            AnalysisType.CUSTOM,
+                            prompt,
+                            method=analysis_method,
+                            video_url_for_cache=video_url,  # 传递原始 URL 用于缓存
+                            locale=locale  # 传递语言环境
+                        )
+                    )
+                finally:
+                    new_loop.close()
+            
             # 使用异步分析（需要在 async 上下文中运行）
             import asyncio
             try:
-                # 如果当前不在 event loop 中，创建一个新的
-                try:
-                    loop = asyncio.get_event_loop()
-                except RuntimeError:
-                    loop = asyncio.new_event_loop()
-                    asyncio.set_event_loop(loop)
-                
-                # 运行异步分析（传递 locale）
-                analysis_result = loop.run_until_complete(
-                    self.video_analysis_service.analyze_video(
-                        video_file_path,
-                        AnalysisType.CUSTOM,
-                        prompt,
-                        method=analysis_method,
-                        video_url_for_cache=video_url,  # 传递原始 URL 用于缓存
-                        locale=locale  # 传递语言环境
+                # 尝试获取当前事件循环
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    # 如果循环正在运行（uvloop或其他），在新线程中运行
+                    print(f"🔄 Event loop is running, executing analysis in new thread...")
+                    future = self.executor.submit(analyze_in_new_loop)
+                    analysis_result = future.result(timeout=1800)  # 30分钟超时
+                else:
+                    # 如果循环未运行，直接运行
+                    analysis_result = loop.run_until_complete(
+                        self.video_analysis_service.analyze_video(
+                            video_file_path,
+                            AnalysisType.CUSTOM,
+                            prompt,
+                            method=analysis_method,
+                            video_url_for_cache=video_url,
+                            locale=locale
+                        )
                     )
-                )
-                
+            except RuntimeError:
+                # 如果没有事件循环，在新线程中运行
+                print(f"🔄 No event loop found, executing analysis in new thread...")
+                future = self.executor.submit(analyze_in_new_loop)
+                analysis_result = future.result(timeout=1800)  # 30分钟超时
             except Exception as e:
                 if "timeout" in str(e).lower():
                     raise Exception("视频分析超时。建议：1)使用更短的视频 2)简化Prompt 3)使用?p=N指定单集")
