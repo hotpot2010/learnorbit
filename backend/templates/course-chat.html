@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 学习助手 - 课程定制</title>
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/static/css/course-chat.css">
+</head>
+<body>
+    <div class="chat-container" id="chatContainer">
+        <!-- Header -->
+        <header class="chat-header">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <span class="material-icons-outlined">psychology</span>
+                </div>
+                <div class="logo-text">
+                    <h1>AI 学习助手</h1>
+                    <p>让我们一起定制您的专属学习计划</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Course Recommendations Section (Left side, hidden initially) -->
+        <div class="course-recommendations" id="courseRecommendations">
+            <div class="recommendations-header">
+                <h3>推荐课程</h3>
+                <p>基于您的学习需求，我们为您推荐以下相关课程</p>
+            </div>
+            <div class="course-recommendation-list" id="courseRecommendationList">
+                <!-- Course recommendations with same content as main page -->
+                <div class="course-recommendation-item" data-topic="我想学习强化学习算法，特别是Q-Learning">
+                    <div class="course-rec-header">
+                        <span class="material-icons-outlined course-rec-icon">psychology</span>
+                        <div class="course-rec-title">强化学习</div>
+                    </div>
+                    <div class="course-rec-description">学习Q-Learning算法和智能体训练</div>
+                </div>
+                <div class="course-recommendation-item" data-topic="我想学习Web前端开发，从HTML基础开始">
+                    <div class="course-rec-header">
+                        <span class="material-icons-outlined course-rec-icon">web</span>
+                        <div class="course-rec-title">Web开发</div>
+                    </div>
+                    <div class="course-rec-description">从HTML、CSS到现代前端框架</div>
+                </div>
+                <div class="course-recommendation-item" data-topic="我想学习Python数据分析，包括pandas和numpy">
+                    <div class="course-rec-header">
+                        <span class="material-icons-outlined course-rec-icon">analytics</span>
+                        <div class="course-rec-title">数据分析</div>
+                    </div>
+                    <div class="course-rec-description">掌握Python数据科学技能</div>
+                </div>
+                <div class="course-recommendation-item" data-topic="我想学习移动应用开发，使用React Native">
+                    <div class="course-rec-header">
+                        <span class="material-icons-outlined course-rec-icon">phone_android</span>
+                        <div class="course-rec-title">移动开发</div>
+                    </div>
+                    <div class="course-rec-description">React Native跨平台开发</div>
+                </div>
+                <div class="course-recommendation-item" data-topic="我想学习机器学习，从基础算法开始">
+                    <div class="course-rec-header">
+                        <span class="material-icons-outlined course-rec-icon">smart_toy</span>
+                        <div class="course-rec-title">机器学习</div>
+                    </div>
+                    <div class="course-rec-description">掌握监督学习、无监督学习算法</div>
+                </div>
+                <div class="course-recommendation-item" data-topic="我想学习区块链技术和智能合约开发">
+                    <div class="course-rec-header">
+                        <span class="material-icons-outlined course-rec-icon">link</span>
+                        <div class="course-rec-title">区块链</div>
+                    </div>
+                    <div class="course-rec-description">学习以太坊和Solidity开发</div>
+                </div>
+                <div class="course-recommendation-item" data-topic="我想学习云计算，特别是AWS服务">
+                    <div class="course-rec-header">
+                        <span class="material-icons-outlined course-rec-icon">cloud</span>
+                        <div class="course-rec-title">云计算</div>
+                    </div>
+                    <div class="course-rec-description">掌握AWS云服务和架构设计</div>
+                </div>
+                <div class="course-recommendation-item" data-topic="我想学习网络安全和渗透测试">
+                    <div class="course-rec-header">
+                        <span class="material-icons-outlined course-rec-icon">security</span>
+                        <div class="course-rec-title">网络安全</div>
+                    </div>
+                    <div class="course-rec-description">学习安全防护和漏洞检测</div>
+                </div>
+                <div class="course-recommendation-item" data-topic="我想学习游戏开发，使用Unity引擎">
+                    <div class="course-rec-header">
+                        <span class="material-icons-outlined course-rec-icon">videogame_asset</span>
+                        <div class="course-rec-title">游戏开发</div>
+                    </div>
+                    <div class="course-rec-description">Unity 3D游戏制作与发布</div>
+                </div>
+                <div class="course-recommendation-item" data-topic="我想学习UI/UX设计，从用户体验开始">
+                    <div class="course-rec-header">
+                        <span class="material-icons-outlined course-rec-icon">design_services</span>
+                        <div class="course-rec-title">UI/UX设计</div>
+                    </div>
+                    <div class="course-rec-description">学习用户界面和体验设计</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chat Area (Right side) -->
+        <main class="chat-main">
+            <!-- Chat Input - Initially positioned above welcome section -->
+            <div class="chat-input-container" id="chatInputContainer">
+                <div class="chat-input-wrapper">
+                    <div class="input-container">
+                        <textarea 
+                            id="chatInput" 
+                            placeholder="告诉我您想学习的内容，越详细越好..."
+                            rows="1"
+                        ></textarea>
+                        <button id="sendButton" class="send-button" disabled>
+                            <span class="material-icons-outlined">send</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-hint">
+                    <p>💡 提示：描述您的学习目标、当前水平、期望达到的效果等</p>
+                </div>
+            </div>
+
+            <!-- Welcome Section -->
+            <div class="welcome-section" id="welcomeSection">
+                <div class="welcome-content">
+                    <!-- Suggested Starting Points -->
+                    <div class="suggested-topics">
+                        <h3>推荐课程</h3>
+                        <div class="topic-cards">
+                            <div class="topic-card" data-topic="我想学习强化学习算法，特别是Q-Learning">
+                                <span class="material-icons-outlined">psychology</span>
+                                <div class="topic-content">
+                                    <h4>强化学习</h4>
+                                    <p>学习Q-Learning算法和智能体训练</p>
+                                </div>
+                            </div>
+                            <div class="topic-card" data-topic="我想学习Web前端开发，从HTML基础开始">
+                                <span class="material-icons-outlined">web</span>
+                                <div class="topic-content">
+                                    <h4>Web开发</h4>
+                                    <p>从HTML、CSS到现代前端框架</p>
+                                </div>
+                            </div>
+                            <div class="topic-card" data-topic="我想学习Python数据分析，包括pandas和numpy">
+                                <span class="material-icons-outlined">analytics</span>
+                                <div class="topic-content">
+                                    <h4>数据分析</h4>
+                                    <p>掌握Python数据科学技能</p>
+                                </div>
+                            </div>
+                            <div class="topic-card" data-topic="我想学习移动应用开发，使用React Native">
+                                <span class="material-icons-outlined">phone_android</span>
+                                <div class="topic-content">
+                                    <h4>移动开发</h4>
+                                    <p>React Native跨平台开发</p>
+                                </div>
+                            </div>
+                            <div class="topic-card" data-topic="我想学习机器学习，从基础算法开始">
+                                <span class="material-icons-outlined">smart_toy</span>
+                                <div class="topic-content">
+                                    <h4>机器学习</h4>
+                                    <p>掌握监督学习、无监督学习算法</p>
+                                </div>
+                            </div>
+                            <div class="topic-card" data-topic="我想学习区块链技术和智能合约开发">
+                                <span class="material-icons-outlined">link</span>
+                                <div class="topic-content">
+                                    <h4>区块链</h4>
+                                    <p>学习以太坊和Solidity开发</p>
+                                </div>
+                            </div>
+                            <div class="topic-card" data-topic="我想学习云计算，特别是AWS服务">
+                                <span class="material-icons-outlined">cloud</span>
+                                <div class="topic-content">
+                                    <h4>云计算</h4>
+                                    <p>掌握AWS云服务和架构设计</p>
+                                </div>
+                            </div>
+                            <div class="topic-card" data-topic="我想学习网络安全和渗透测试">
+                                <span class="material-icons-outlined">security</span>
+                                <div class="topic-content">
+                                    <h4>网络安全</h4>
+                                    <p>学习安全防护和漏洞检测</p>
+                                </div>
+                            </div>
+                            <div class="topic-card" data-topic="我想学习游戏开发，使用Unity引擎">
+                                <span class="material-icons-outlined">videogame_asset</span>
+                                <div class="topic-content">
+                                    <h4>游戏开发</h4>
+                                    <p>Unity 3D游戏制作与发布</p>
+                                </div>
+                            </div>
+                            <div class="topic-card" data-topic="我想学习UI/UX设计，从用户体验开始">
+                                <span class="material-icons-outlined">design_services</span>
+                                <div class="topic-content">
+                                    <h4>UI/UX设计</h4>
+                                    <p>学习用户界面和体验设计</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be added here dynamically -->
+            </div>
+        </main>
+
+        <!-- Generate Course Button (Hidden initially) -->
+        <div class="action-container" id="actionContainer" style="display: none;">
+            <button id="generateCourseBtn" class="generate-course-btn">
+                <span class="material-icons-outlined">auto_awesome</span>
+                生成学习计划
+            </button>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <p>正在生成您的专属学习计划...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Summary Modal -->
+    <div class="modal-overlay" id="courseSummaryModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>学习计划确认</h3>
+                <button class="modal-close" id="modalCloseBtn">
+                    <span class="material-icons-outlined">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="course-summary" id="courseSummary">
+                    <!-- Course summary will be populated here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="editCourseBtn">修改需求</button>
+                <button class="btn btn-primary" id="confirmCourseBtn">开始学习</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/course-chat.js"></script>
+</body>
+</html> 

@@ -3040,6 +3040,18 @@ export default function StudyPage({ params }: StudyPageProps) {
   const handleImageUpload = async (noteId: string, files: FileList) => {
     if (!files || files.length === 0) return;
     
+    // 🔑 关键：在任何状态更新之前，先保存当前编辑中的文本
+    // 因为 setUploadingImages 会触发重新渲染，可能导致 textarea 被替换
+    const isCurrentlyEditing = editingNoteId === noteId;
+    let savedEditingText: string | undefined = undefined;
+    if (isCurrentlyEditing) {
+      const textareaElement = document.querySelector(`textarea[data-note-id="${noteId}"]`) as HTMLTextAreaElement;
+      if (textareaElement) {
+        savedEditingText = textareaElement.value;
+        console.log('📝 保存编辑中的文本:', savedEditingText);
+      }
+    }
+    
     setUploadingImages(prev => ({ ...prev, [noteId]: true }));
     
     try {
@@ -3060,39 +3072,35 @@ export default function StudyPage({ params }: StudyPageProps) {
           continue;
         }
         
-        // 创建预览URL (使用 URL.createObjectURL)
-        const imageUrl = URL.createObjectURL(file);
-        
-        uploadedImages.push({
-          url: imageUrl,
-          name: file.name,
-          size: file.size,
-          type: file.type
-        });
+        try {
+          // 上传图片到 OSS（使用与视频上传相同的存储服务）
+          const { uploadFileFromBrowser } = await import('@/storage/client');
+          const uploadResult = await uploadFileFromBrowser(file, 'note-images');
+          
+          uploadedImages.push({
+            url: uploadResult.url, // 使用 OSS URL，而不是本地 blob URL
+            name: file.name,
+            size: file.size,
+            type: file.type
+          });
+        } catch (uploadError) {
+          console.error(`上传图片 ${file.name} 失败:`, uploadError);
+          alert(`上传图片 ${file.name} 失败，请重试`);
+          continue;
+        }
       }
       
       if (uploadedImages.length > 0) {
         // 更新便签，添加图片
-        // 如果便签正在编辑中，需要保留编辑中的文本（从 DOM 获取）
         setNotes(prev => {
-          const isEditing = editingNoteId === noteId;
-          // 通过 DOM 查询获取正在编辑的 textarea 的值（使用 data-note-id 属性）
-          let currentEditingNoteText: string | undefined = undefined;
-          if (isEditing) {
-            const textareaElement = document.querySelector(`textarea[data-note-id="${noteId}"]`) as HTMLTextAreaElement;
-            if (textareaElement) {
-              currentEditingNoteText = textareaElement.value;
-            }
-          }
-          
           return prev.map(note => 
             note.id === noteId 
               ? { 
                   ...note, 
                   type: note.images ? 'image' : note.type,
                   images: [...(note.images || []), ...uploadedImages],
-                  // 如果正在编辑中，保留编辑中的文本；否则保留原有的文本
-                  text: isEditing && currentEditingNoteText !== undefined && currentEditingNoteText !== '' ? currentEditingNoteText : note.text
+                  // 使用之前保存的文本（如果有），否则保留原有的文本
+                  text: isCurrentlyEditing && savedEditingText !== undefined ? savedEditingText : note.text
                 }
               : note
           );
@@ -3112,11 +3120,8 @@ export default function StudyPage({ params }: StudyPageProps) {
     setNotes(prev => prev.map(note => {
       if (note.id === noteId && note.images) {
         const newImages = note.images.filter((_, index) => index !== imageIndex);
-        // 释放 URL.createObjectURL 创建的URL
-        const removedImage = note.images[imageIndex];
-        if (removedImage?.url.startsWith('blob:')) {
-          URL.revokeObjectURL(removedImage.url);
-        }
+        // 注意：现在使用 OSS URL，不需要释放 blob URL
+        // 如果将来需要从 OSS 删除文件，可以在这里添加删除逻辑
         
         return {
           ...note,

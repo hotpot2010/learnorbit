@@ -19,6 +19,8 @@
     "test-creator": "tsx scripts/test-creator-feature.ts",
     "fix-db": "tsx scripts/fix-database-schema.ts",
     "list-contacts": "tsx scripts/list-contacts.ts",
+    "create-feishu-tables": "tsx scripts/create-feishu-tables.ts",
+    "migrate-feishu": "tsx scripts/migrate-to-feishu.ts",
     "content": "fumadocs-mdx",
     "email": "email dev --dir src/mail/templates --port 3333",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
@@ -152,17 +154,19 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@tailwindcss/postcss": "^4.0.14",
+    "@types/form-data": "^2.2.1",
     "@types/mdx": "^2.0.13",
     "@types/node": "^20.19.0",
     "@types/pg": "^8.11.11",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "drizzle-kit": "^0.30.4",
+    "form-data": "^4.0.5",
     "knip": "^5.61.2",
     "postcss": "^8",
     "react-email": "3.0.7",
     "tailwindcss": "^4.0.14",
-    "tsx": "^4.19.3",
+    "tsx": "^4.20.6",
     "typescript": "^5.8.3"
   }
 }

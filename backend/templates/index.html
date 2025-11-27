@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Learning Platform</title>
+    <!-- 防止缓存 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+    <link rel="stylesheet" href="/static/css/style.css?v={{ range(1, 10000) | random }}">
+    <link rel="stylesheet" href="/static/css/task-interaction.css?v={{ range(1, 10000) | random }}">
+    
+    <!-- 先加载Chart.js库 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <!-- Main Platform Container -->
+    <div class="platform-container">
+        <!-- Left Section: Mentor -->
+        <div class="mentor-section">
+            <div class="section-header">
+                <h3>AI 学习导师</h3>
+                <div class="mentor-profile-actions">
+                    <button class="icon-button" id="courseSettingsBtn">
+                        <span class="material-icons-outlined">settings</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="section-content scrollable">
+                <!-- Learning Goal Input Area -->
+                <div class="learning-goal-area">
+                    <h3 class="block-title">设定学习目标</h3>
+                    <div class="goal-input-container">
+                        <div class="input-group">
+                            <div class="goal-input-wrapper">
+                                <textarea class="goal-input" id="learningGoal" placeholder="请描述你想学习的内容或实现的项目..."></textarea>
+                                <button class="input-action-btn" id="uploadBtn">
+                                    <span class="material-icons-outlined">upload_file</span>
+                                </button>
+                            </div>
+                            <button id="createPlanBtn" class="create-plan-btn">
+                                <span class="material-icons-outlined btn-icon">psychology</span>
+                                生成计划
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Learning Plan Section -->
+                <div class="learning-plan-section">
+                    <div class="learning-plan-content">
+                        <h3 class="block-title">学习计划</h3>
+                        <div class="example-content">
+                            <div class="example-badge">示例</div>
+                            <div class="learning-timeline">
+                                <div class="timeline-node">
+                                    <div class="node-marker">1</div>
+                                    <div class="node-content">
+                                        <h4 class="node-title">理解强化学习基础概念</h4>
+                                        <div class="node-status">当前进行 • 预计 2 小时</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-node">
+                                    <div class="node-marker">2</div>
+                                    <div class="node-content">
+                                        <h4 class="node-title">Q-learning算法实现</h4>
+                                        <div class="node-status">待完成 • 预计 3 小时</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-node">
+                                    <div class="node-marker">3</div>
+                                    <div class="node-content">
+                                        <h4 class="node-title">设计迷宫环境</h4>
+                                        <div class="node-status">待完成 • 预计 2 小时</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-node">
+                                    <div class="node-marker">4</div>
+                                    <div class="node-content">
+                                        <h4 class="node-title">训练智能体在迷宫中寻找最优路径</h4>
+                                        <div class="node-status">待完成 • 预计 4 小时</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Skill Radar Chart Section -->
+            <div class="skill-radar-section">
+                <div class="example-content">
+                    <!-- <div class="example-badge">示例</div> -->
+                    <div class="radar-header">
+                        <h3 class="radar-title">学习能力分析</h3>
+                    </div>
+                    <div class="skill-radar-chart" id="skillRadarChart" style="display:block; position:relative;">
+                        <!-- Radar Chart will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Middle Section: Workspace -->
+        <div class="workspace-section">
+            <div class="section-header">
+                <h3>工作区</h3>
+                <div class="workspace-actions">
+                    <button class="icon-button" id="refreshTaskBtn" title="刷新当前任务">
+                        <span class="material-icons-outlined">refresh</span>
+                    </button>
+                    <button class="icon-button" id="cacheTaskBtn" title="缓存当前任务">
+                        <span class="material-icons-outlined">save</span>
+                    </button>
+                    <button class="icon-button">
+                        <span class="material-icons-outlined">more_vert</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Current Task Area -->
+            <!-- 已删除：步骤题目区 -->
+            
+            <div class="dashboard-header">
+                <div id="taskGanttChart">
+                    <!-- Gantt chart for task scheduling -->
+                </div>
+            </div>
+            
+            <div class="workspace-tabs" style="display: none;">
+                <button class="tab-button" id="quizTabBtn" data-tab="quiz">
+                    <span class="material-icons-outlined">quiz</span> 选择/填空题
+                </button>
+                <button class="tab-button active" id="codeTabBtn" data-tab="code">
+                    <span class="material-icons-outlined">code</span> 代码编辑器
+                </button>
+                <button class="tab-button" id="webTabBtn" data-tab="web">
+                    <span class="material-icons-outlined">language</span> 网页编辑区
+                </button>
+                <button class="tab-button" id="notesTabBtn" data-tab="notes">
+                    <span class="material-icons-outlined">note</span> 学习笔记
+                </button>
+                <button class="tab-button" id="geometryTabBtn" data-tab="geometry">
+                    <span class="material-icons-outlined">gesture</span> 几何画板
+                </button>
+            </div>
+            
+            <div class="workspace-main">
+                <!-- 选择/填空题编辑区 -->
+                <div class="tab-content" id="quizTab">
+                    <div class="quiz-container">
+                        <!-- PPT知识展示区域 -->
+                        <div id="pptSlideContainer" class="ppt-slide-container" style="display: none;">
+                            <div class="ppt-slide">
+                                <h3 id="pptSlideTitle" class="ppt-slide-title">知识点</h3>
+                                <div id="pptSlideContent" class="ppt-slide-content">
+                                    <!-- PPT内容将在这里动态生成 -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-content">
+                            <div id="quizQuestion" class="quiz-question">
+                                <!-- 这里将显示选择/填空题内容 -->
+                                <p>请选择正确的选项：</p>
+                            </div>
+                            <div id="quizOptions" class="quiz-options">
+                                <!-- 选项或填空将在这里动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- 代码编辑区 -->
+                <div class="tab-content active" id="codeTab">
+                    <!-- PPT知识展示区域 -->
+                    <div id="codePptSlideContainer" class="ppt-slide-container" style="display: none;">
+                        <div class="ppt-slide">
+                            <h3 id="codePptSlideTitle" class="ppt-slide-title">知识点</h3>
+                            <div id="codePptSlideContent" class="ppt-slide-content">
+                                <!-- PPT内容将在这里动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="codeEditorWrapper" class="code-editor-wrapper">
+                        <!-- 任务描述区域 -->
+                        <div id="taskDescriptionArea" class="task-description-area" style="display: none;">
+                            <!-- 任务描述内容将在这里动态生成 -->
+                        </div>
+                        
+                        <div id="codeEditorContainer"></div>
+                        
+                        <!-- 提示信息区域 -->
+                        <div id="hintContainer" class="hint-container" style="display: none;">
+                            <!-- 提示信息将在这里显示 -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 网页编辑区 -->
+                <div class="tab-content" id="webTab">
+                    <div class="web-browser-container">
+                        <div class="browser-control-bar">
+                            <div class="url-input-container">
+                                <input type="text" id="urlInput" class="url-input" placeholder="输入网址..." value="https://www.example.com">
+                                <button id="goButton" class="go-button">
+                                    <span class="material-icons-outlined">arrow_forward</span>
+                                </button>
+                            </div>
+                            <div class="browser-controls">
+                                <button id="refreshButton" class="browser-button" title="刷新">
+                                    <span class="material-icons-outlined">refresh</span>
+                                </button>
+                                <button id="backButton" class="browser-button" title="后退">
+                                    <span class="material-icons-outlined">arrow_back</span>
+                                </button>
+                                <button id="forwardButton" class="browser-button" title="前进">
+                                    <span class="material-icons-outlined">arrow_forward</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="browser-frame-container">
+                            <iframe id="webBrowser" class="web-browser-frame" src="" sandbox="allow-same-origin allow-scripts allow-forms"></iframe>
+                            <div class="browser-overlay" id="browserOverlay">
+                                <div class="browser-message">加载中...</div>
+                                <div class="browser-spinner"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="notesTab">
+                    <h3>学习笔记</h3>
+                    <p class="placeholder-text">在这里添加你的学习笔记和理解...</p>
+                </div>
+                
+                <!-- Geometry Drawing Board Tab -->
+                <div class="tab-content" id="geometryTab">
+                    <div class="geometry-toolbar">
+                        <button class="tool-button active" data-tool="point" title="点">
+                            <span class="material-icons-outlined">radio_button_checked</span>
+                        </button>
+                        <button class="tool-button" data-tool="line" title="直线">
+                             <span class="material-icons-outlined">horizontal_rule</span>
+                        </button>
+                        <button class="tool-button" data-tool="circle" title="圆">
+                             <span class="material-icons-outlined">radio_button_unchecked</span>
+                        </button>
+                        <button class="tool-button" data-tool="triangle" title="三角形 (拖动定义底边)">
+                             <span class="material-icons-outlined">change_history</span> 
+                        </button>
+                        <button class="tool-button clear-button" id="clearGeometryCanvas" title="清空画布">
+                            <span class="material-icons-outlined">delete_sweep</span>
+                        </button>
+                    </div>
+                    <div class="geometry-canvas-container">
+                        <canvas id="geometryCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-footer workspace-footer">
+                <div class="status-indicators">
+                    <span>Python • 行: 0, 列: 0</span>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-primary btn-small" id="submitTaskBtn">提交</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Section: AI Assistant -->
+        <div class="assistant-section">
+            <div class="section-header">
+                <h3>AI 学习助手</h3>
+                <div class="input-modes">
+                    <button class="icon-button active">
+                        <span class="material-icons-outlined">chat</span>
+                    </button>
+                    <button class="icon-button">
+                        <span class="material-icons-outlined">mic</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="section-content scrollable" id="chatHistory">
+                <!-- Chat messages go here -->
+                <div class="message ai">
+                    你好！我是你的AI学习助手。你可以向我提问关于当前学习任务的任何问题，或者寻求现方面的帮助。
+                </div>
+            </div>
+            
+            <!-- Suggested Questions Container -->
+            <div id="suggestedQuestionsContainer" class="suggested-questions-container" style="display: none;">
+                <h4 class="suggested-questions-title">💡 推荐问题：</h4>
+                <div class="suggested-questions-list">
+                    <!-- Suggested question buttons will be added here by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="section-footer">
+                <div class="chat-input-area">
+                    <textarea id="chatInput" placeholder="输入你的问题..."></textarea>
+                    <button class="btn btn-primary" id="sendChatMessage">
+                        <span class="material-icons-outlined">send</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 标签页切换脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 标签页切换功能
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetTab = button.dataset.tab;
+                    
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    tabContents.forEach(content => {
+                        if (content.id === `${targetTab}Tab`) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // 文件上传处理
+            const fileUpload = document.getElementById('goalFileUpload');
+            const fileName = document.getElementById('uploadFileName');
+            
+            if (fileUpload && fileName) {
+                fileUpload.addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        fileName.textContent = this.files[0].name;
+                    } else {
+                        fileName.textContent = '';
+                    }
+                });
+            }
+        });
+    </script>
+    
+    <!-- 雷达图脚本 -->
+    <script>
+        // 等待页面完全加载
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('正在初始化雷达图...');
+            
+            // 显示调试信息
+            function showDebugInfo(message, isError = false) {
+                const debugEl = document.createElement('div');
+                debugEl.style.position = 'fixed';
+                debugEl.style.top = '60px';
+                debugEl.style.left = '10px';
+                debugEl.style.backgroundColor = isError ? 'rgba(255,0,0,0.7)' : 'rgba(0,0,0,0.7)';
+                debugEl.style.color = 'white';
+                debugEl.style.padding = '5px 10px';
+                debugEl.style.borderRadius = '3px';
+                debugEl.style.zIndex = '9999';
+                debugEl.style.fontSize = '12px';
+                debugEl.textContent = message;
+                document.body.appendChild(debugEl);
+                
+                // 3秒后移除
+                setTimeout(() => debugEl.remove(), 3000);
+            }
+            
+            // 延迟初始化雷达图，确保DOM已完全加载
+            setTimeout(function() {
+                try {
+                    const ctx = document.getElementById('skillRadarChart');
+                    if (!ctx) {
+                        showDebugInfo('雷达图容器未找到', true);
+                        return;
+                    }
+                    
+                    // 确保Chart全局对象存在
+                    if (typeof Chart === 'undefined') {
+                        showDebugInfo('Chart.js未加载', true);
+                        return;
+                    }
+                    
+                    showDebugInfo('准备创建雷达图');
+                    
+                    // 创建canvas元素
+                    const canvas = document.createElement('canvas');
+                    canvas.width = ctx.clientWidth;
+                    canvas.height = ctx.clientHeight;
+                    ctx.innerHTML = ''; // 清空容器
+                    ctx.appendChild(canvas);
+                    
+                    // 创建雷达图
+                    const radarChart = new Chart(canvas, {
+                        type: 'radar',
+                        data: {
+                            labels: ['理论知识', '实践能力', '编程技巧', '算法优化', '问题解决'],
+                            datasets: [{
+                                label: '能力水平',
+                                data: [10, 10, 10, 10, 10],
+                                backgroundColor: 'rgba(66, 133, 244, 0.2)',
+                                borderColor: 'rgba(66, 133, 244, 1)',
+                                pointBackgroundColor: 'rgba(66, 133, 244, 1)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgba(66, 133, 244, 1)'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                r: {
+                                    angleLines: {
+                                        display: true
+                                    },
+                                    suggestedMin: 0,
+                                    suggestedMax: 100,
+                                    ticks: {
+                                        stepSize: 20,
+                                        showLabelBackdrop: false,
+                                        font: {
+                                            size: 10
+                                        }
+                                    },
+                                    pointLabels: {
+                                        font: {
+                                            size: 12
+                                        }
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
+                    });
+                    
+                    showDebugInfo('雷达图创建成功');
+                    console.log('雷达图创建成功');
+                } catch (err) {
+                    showDebugInfo('创建雷达图时出错: ' + err.message, true);
+                    console.error('创建雷达图时出错:', err);
+                }
+            }, 500);
+        });
+    </script>
+    
+    <!-- 雷达图初始化 -->
+    <script>
+        initializeRadarChart();
+    </script>
+    
+    <!-- 添加核心功能脚本 -->
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/code-editor.js"></script>
+    <script src="/static/js/simple-chat.js"></script>
+    <script src="/static/js/learning-plan.js"></script>
+    <script src="/static/js/task-progress.js"></script>
+    <script src="/static/js/web-editor.js"></script>
+    <script src="/static/js/task-interaction.js"></script>
+    <script src="/static/js/geometry-board.js"></script>
+    <script src="/static/js/animation-engine.js"></script>
+    <script src="/static/js/course-selector.js"></script>
+    <script src="/static/js/task-queue-manager.js"></script>
+
+    <!-- 课程选择模态弹窗 -->
+    <div class="course-modal-overlay" id="courseModalOverlay">
+        <div class="course-modal">
+            <div class="course-modal-header">
+                <h2 class="course-modal-title">选择预设课程</h2>
+                <button class="course-modal-close" id="courseModalClose">
+                    <span class="material-icons-outlined">close</span>
+                </button>
+            </div>
+            <div class="course-modal-content">
+                <div class="course-list" id="courseList">
+                    <!-- 课程列表将在这里动态生成 -->
+                </div>
+            </div>
+            <div class="course-modal-footer">
+                <button class="course-modal-btn course-modal-btn-cancel" id="courseModalCancel">取消</button>
+                <button class="course-modal-btn course-modal-btn-confirm" id="courseModalConfirm" disabled>确认选择</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
