@@ -24,7 +24,6 @@ export async function POST(request: NextRequest) {
 				coursePlan: userCourses.coursePlan,
 				userName: user.name,
 				userEmail: user.email,
-				isCreator: user.isCreator,
 			})
 			.from(userCourses)
 			.innerJoin(user, eq(userCourses.userId, user.id))
@@ -38,7 +37,7 @@ export async function POST(request: NextRequest) {
 		const course = courseData[0];
 
 		// 检查是否为创作者
-		const isCreatorAccount = course.isCreator || isCreatorEmail(course.userEmail || '');
+		const isCreatorAccount = isCreatorEmail(course.userEmail || '');
 		if (!isCreatorAccount) {
 			return NextResponse.json({ error: 'Only creators can create clean URLs' }, { status: 403 });
 		}

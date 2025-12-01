@@ -43,42 +43,6 @@ export const userCourses = pgTable('user_courses', {
     .$onUpdate(() => new Date()),
 });
 
-// 新增：存储课程任务内容
-export const courseTasks = pgTable('course_tasks', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => `task_${crypto.randomUUID()}`),
-  courseId: text('course_id')
-    .notNull()
-    .references(() => userCourses.id, { onDelete: 'cascade' }),
-  stepNumber: integer('step_number').notNull(),
-  taskContent: jsonb('task_content').notNull(), // 存储TaskContent对象
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at')
-    .defaultNow()
-    .notNull()
-    .$onUpdate(() => new Date()),
-}, (table) => ({
-  courseStepUnique: uniqueIndex('course_step_unique').on(table.courseId, table.stepNumber),
-}));
-
-// 新增：存储聊天记录
-export const courseChatHistory = pgTable('course_chat_history', {
-  id: text('id')
-    .primaryKey()
-    .$defaultFn(() => `chat_${crypto.randomUUID()}`),
-  courseId: text('course_id')
-    .notNull()
-    .references(() => userCourses.id, { onDelete: 'cascade' }),
-  sessionId: text('session_id').notNull(),
-  messages: jsonb('messages').notNull(), // 存储消息数组
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at')
-    .defaultNow()
-    .notNull()
-    .$onUpdate(() => new Date()),
-});
-
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
 	name: text('name').notNull(),
@@ -88,11 +52,7 @@ export const user = pgTable("user", {
 	createdAt: timestamp('created_at').notNull(),
 	updatedAt: timestamp('updated_at').notNull(),
 	role: text('role'),
-	banned: boolean('banned'),
-	banReason: text('ban_reason'),
-	banExpires: timestamp('ban_expires'),
 	customerId: text('customer_id'),
-	isCreator: boolean('is_creator').default(false), // 新增：标记是否为创作者
 });
 
 export const session = pgTable("session", {
@@ -104,7 +64,6 @@ export const session = pgTable("session", {
 	ipAddress: text('ip_address'),
 	userAgent: text('user_agent'),
 	userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
-	impersonatedBy: text('impersonated_by')
 });
 
 export const account = pgTable("account", {
@@ -173,22 +132,10 @@ export const creatorCourses = pgTable('creator_courses', {
 });
 
 // 定义关系
-export const userCoursesRelations = relations(userCourses, ({ many }) => ({
-  tasks: many(courseTasks),
-  chatHistory: many(courseChatHistory),
-}));
-
-export const courseTasksRelations = relations(courseTasks, ({ one }) => ({
-  course: one(userCourses, {
-    fields: [courseTasks.courseId],
-    references: [userCourses.id],
-  }),
-}));
-
-export const courseChatHistoryRelations = relations(courseChatHistory, ({ one }) => ({
-  course: one(userCourses, {
-    fields: [courseChatHistory.courseId],
-    references: [userCourses.id],
+export const userCoursesRelations = relations(userCourses, ({ one }) => ({
+  user: one(user, {
+    fields: [userCourses.userId],
+    references: [user.id],
   }),
 }));
 

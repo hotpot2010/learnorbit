@@ -1,6 +1,6 @@
 {
-  "id": "acc6e157-4ecb-4ad6-bb45-f0a0f4561771",
-  "prevId": "b028605d-0d3d-469d-b658-af088e47d960",
+  "id": "c18d0272-cd9c-4d47-988a-c105439bf393",
+  "prevId": "b811038d-1fda-4273-afe6-947ab6c7e12a",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -109,8 +109,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.course_chat_history": {
-      "name": "course_chat_history",
+    "public.creator_courses": {
+      "name": "creator_courses",
       "schema": "",
       "columns": {
         "id": {
@@ -119,23 +119,43 @@
           "primaryKey": true,
           "notNull": true
         },
+        "slug": {
+          "name": "slug",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
         "course_id": {
           "name": "course_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "session_id": {
-          "name": "session_id",
+        "creator_id": {
+          "name": "creator_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "messages": {
-          "name": "messages",
-          "type": "jsonb",
+        "title": {
+          "name": "title",
+          "type": "varchar(200)",
           "primaryKey": false,
           "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
         },
         "created_at": {
           "name": "created_at",
@@ -154,9 +174,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "course_chat_history_course_id_user_courses_id_fk": {
-          "name": "course_chat_history_course_id_user_courses_id_fk",
-          "tableFrom": "course_chat_history",
+        "creator_courses_course_id_user_courses_id_fk": {
+          "name": "creator_courses_course_id_user_courses_id_fk",
+          "tableFrom": "creator_courses",
           "tableTo": "user_courses",
           "columnsFrom": [
             "course_id"
@@ -166,97 +186,31 @@
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
+        },
+        "creator_courses_creator_id_user_id_fk": {
+          "name": "creator_courses_creator_id_user_id_fk",
+          "tableFrom": "creator_courses",
+          "tableTo": "user",
+          "columnsFrom": [
+            "creator_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.course_tasks": {
-      "name": "course_tasks",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "course_id": {
-          "name": "course_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "step_number": {
-          "name": "step_number",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "task_content": {
-          "name": "task_content",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "course_step_unique": {
-          "name": "course_step_unique",
+      "uniqueConstraints": {
+        "creator_courses_slug_unique": {
+          "name": "creator_courses_slug_unique",
+          "nullsNotDistinct": false,
           "columns": [
-            {
-              "expression": "course_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "step_number",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
+            "slug"
+          ]
         }
       },
-      "foreignKeys": {
-        "course_tasks_course_id_user_courses_id_fk": {
-          "name": "course_tasks_course_id_user_courses_id_fk",
-          "tableFrom": "course_tasks",
-          "tableTo": "user_courses",
-          "columnsFrom": [
-            "course_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -538,12 +492,6 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
-        },
-        "impersonated_by": {
-          "name": "impersonated_by",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {},
@@ -625,24 +573,6 @@
         "role": {
           "name": "role",
           "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "banned": {
-          "name": "banned",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "ban_reason": {
-          "name": "ban_reason",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "ban_expires": {
-          "name": "ban_expires",
-          "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         },

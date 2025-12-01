@@ -26,14 +26,25 @@ if (typeof process !== 'undefined') {
   process.on('SIGTERM', closeDb);
 }
 
-// 连接健康检查函数
+  // 连接健康检查函数
 async function checkConnection(client: ReturnType<typeof postgres>): Promise<boolean> {
   try {
     await client`SELECT 1`;
     return true;
   } catch (error: any) {
-    // 检查是否是连接关闭错误
-    if (error?.code === 'CONNECTION_CLOSED' || error?.message?.includes('CONNECTION_CLOSED')) {
+    // 检查是否是连接关闭/终止错误
+    const errorCode = error?.code || '';
+    const errorMessage = error?.message || '';
+    const errorString = String(error).toLowerCase();
+    
+    if (
+      errorCode === 'CONNECTION_CLOSED' || 
+      errorCode === 'CONNECTION_ENDED' ||
+      errorMessage.includes('CONNECTION_CLOSED') ||
+      errorMessage.includes('CONNECTION_ENDED') ||
+      errorString.includes('connection_closed') ||
+      errorString.includes('connection_ended')
+    ) {
       return false;
     }
     // 其他错误也认为连接不可用
@@ -44,19 +55,45 @@ async function checkConnection(client: ReturnType<typeof postgres>): Promise<boo
 export async function getDb() {
   // 如果已有连接，先检查连接是否健康
   if (db && client) {
-    const isHealthy = await checkConnection(client);
-    if (isHealthy) {
-      return db;
-    } else {
-      // 连接已关闭，清理并重新创建
-      console.log('⚠️ Database connection closed, recreating...');
-      try {
-        client.end();
-      } catch (e) {
-        // 忽略清理错误
+    try {
+      const isHealthy = await checkConnection(client);
+      if (isHealthy) {
+        return db;
+      } else {
+        // 连接已关闭，清理并重新创建
+        console.log('⚠️ Database connection closed, recreating...');
+        try {
+          await client.end({ timeout: 5 });
+        } catch (e) {
+          // 忽略清理错误
+        }
+        db = null;
+        client = null;
       }
-      db = null;
-      client = null;
+    } catch (error: any) {
+      // 检查连接时出错，可能是连接已终止
+      const errorCode = error?.code || '';
+      const errorMessage = error?.message || '';
+      if (
+        errorCode === 'CONNECTION_ENDED' || 
+        errorCode === 'CONNECTION_CLOSED' ||
+        errorMessage.includes('CONNECTION_ENDED') ||
+        errorMessage.includes('CONNECTION_CLOSED')
+      ) {
+        console.log('⚠️ Database connection ended, recreating...');
+        try {
+          if (client) {
+            await client.end({ timeout: 5 });
+          }
+        } catch (e) {
+          // 忽略清理错误
+        }
+        db = null;
+        client = null;
+      } else {
+        // 其他错误，重新抛出
+        throw error;
+      }
     }
   }
 
@@ -66,20 +103,24 @@ export async function getDb() {
     throw new Error('DATABASE_URL environment variable is not set');
   }
 
-  // 如果是Supabase连接池URL，尝试使用直连端口
-  if (connectionString.includes('pooler.supabase.com:6543')) {
+  // Supabase 连接配置优化
+  // Supabase pooler 使用 :6543 (transaction mode) 或 :5432 (session mode)
+  // 我们优先使用 session mode (:5432) 以获得更好的连接稳定性
+  const isPooler = connectionString.includes('pooler.supabase.com');
+  if (isPooler && connectionString.includes(':6543')) {
+    // 如果使用 transaction mode pooler，切换到 session mode pooler
     connectionString = connectionString.replace(':6543', ':5432');
-    console.log('🔄 Using direct connection instead of pooler');
+    console.log('🔄 Using session mode pooler instead of transaction mode');
   }
 
-  // 配置postgres客户端 - 修复连接泄漏
+  // 配置postgres客户端 - 优化连接稳定性
   client = postgres(connectionString, {
     prepare: false,
-    // 连接配置 - 更严格的限制防止连接泄漏
-    max: 5, // 严格限制最大连接数
-    idle_timeout: 20, // 20秒空闲超时（增加以避免过早关闭）
-    connect_timeout: 10, // 10秒连接超时
-    max_lifetime: 60 * 30, // 30分钟连接生命周期（增加以避免频繁重连）
+    // 连接配置 - 优化连接稳定性
+    max: 5, // 最大连接数
+    idle_timeout: 30, // 30秒空闲超时（增加以避免过早关闭）
+    connect_timeout: 15, // 15秒连接超时（增加以应对网络延迟）
+    max_lifetime: 60 * 60, // 1小时连接生命周期（增加以避免频繁重连）
     // SSL配置
     ssl: { rejectUnauthorized: false },
     // 错误处理
@@ -88,11 +129,16 @@ export async function getDb() {
     transform: {
       undefined: null
     },
+    // 连接错误重试配置
+    connection: {
+      // 自动重连配置
+      application_name: 'learnorbit-app',
+    },
     // 开发环境特殊配置
     ...(process.env.NODE_ENV === 'development' && {
       max: 3, // 开发环境更严格限制
-      idle_timeout: 15, // 15秒空闲超时
-      max_lifetime: 60 * 15, // 15分钟生命周期
+      idle_timeout: 20, // 20秒空闲超时
+      max_lifetime: 60 * 30, // 30分钟生命周期
     })
   });
 

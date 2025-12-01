@@ -33,11 +33,9 @@ const TABLE_DEFINITIONS: TableDefinition[] = [
       { field_name: 'created_at', type: FEISHU_FIELD_TYPES.CREATED_TIME },
       { field_name: 'updated_at', type: FEISHU_FIELD_TYPES.MODIFIED_TIME },
       { field_name: 'role', type: FEISHU_FIELD_TYPES.TEXT },
-      { field_name: 'banned', type: FEISHU_FIELD_TYPES.CHECKBOX },
-      { field_name: 'ban_reason', type: FEISHU_FIELD_TYPES.TEXT },
-      { field_name: 'ban_expires', type: FEISHU_FIELD_TYPES.DATE },
       { field_name: 'customer_id', type: FEISHU_FIELD_TYPES.TEXT },
-      { field_name: 'is_creator', type: FEISHU_FIELD_TYPES.CHECKBOX },
+      // 注意：banned, ban_reason, ban_expires, is_creator 字段已从数据库架构中删除
+      // 判断是否为创作者现在通过 isCreatorEmail() 函数基于邮箱地址判断
     ],
   },
   {
@@ -53,28 +51,6 @@ const TABLE_DEFINITIONS: TableDefinition[] = [
         { name: 'completed', color: 1 },
       ] } },
       { field_name: 'tasks_generated', type: FEISHU_FIELD_TYPES.CHECKBOX },
-      { field_name: 'created_at', type: FEISHU_FIELD_TYPES.CREATED_TIME },
-      { field_name: 'updated_at', type: FEISHU_FIELD_TYPES.MODIFIED_TIME },
-    ],
-  },
-  {
-    name: 'course_tasks',
-    fields: [
-      { field_name: 'id', type: FEISHU_FIELD_TYPES.TEXT },
-      { field_name: 'course_id', type: FEISHU_FIELD_TYPES.LINK, property: { table_id: 'user_courses', multiple: false } },
-      { field_name: 'step_number', type: FEISHU_FIELD_TYPES.NUMBER },
-      { field_name: 'task_content', type: FEISHU_FIELD_TYPES.TEXT }, // JSON 存储为文本
-      { field_name: 'created_at', type: FEISHU_FIELD_TYPES.CREATED_TIME },
-      { field_name: 'updated_at', type: FEISHU_FIELD_TYPES.MODIFIED_TIME },
-    ],
-  },
-  {
-    name: 'course_chat_history',
-    fields: [
-      { field_name: 'id', type: FEISHU_FIELD_TYPES.TEXT },
-      { field_name: 'course_id', type: FEISHU_FIELD_TYPES.LINK, property: { table_id: 'user_courses', multiple: false } },
-      { field_name: 'session_id', type: FEISHU_FIELD_TYPES.TEXT },
-      { field_name: 'messages', type: FEISHU_FIELD_TYPES.TEXT }, // JSON 存储为文本
       { field_name: 'created_at', type: FEISHU_FIELD_TYPES.CREATED_TIME },
       { field_name: 'updated_at', type: FEISHU_FIELD_TYPES.MODIFIED_TIME },
     ],
@@ -122,7 +98,6 @@ const TABLE_DEFINITIONS: TableDefinition[] = [
       { field_name: 'ip_address', type: FEISHU_FIELD_TYPES.TEXT },
       { field_name: 'user_agent', type: FEISHU_FIELD_TYPES.TEXT },
       { field_name: 'user_id', type: FEISHU_FIELD_TYPES.LINK, property: { table_id: 'user', multiple: false } },
-      { field_name: 'impersonated_by', type: FEISHU_FIELD_TYPES.TEXT },
     ],
   },
   {

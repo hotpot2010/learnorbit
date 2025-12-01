@@ -31,10 +31,7 @@ const sortFieldMap = {
   email: user.email,
   createdAt: user.createdAt,
   role: user.role,
-  banned: user.banned,
   customerId: user.customerId,
-  banReason: user.banReason,
-  banExpires: user.banExpires,
 } as const;
 
 // Create a safe action for getting users

@@ -1,5 +1,5 @@
 import { getDb } from '@/db';
-import { courseTasks, userCourses } from '@/db/schema';
+import { userCourses } from '@/db/schema';
 import { auth } from '@/lib/auth';
 import { and, eq } from 'drizzle-orm';
 import type { NextRequest } from 'next/server';
@@ -36,18 +36,8 @@ export async function GET(
       return NextResponse.json({ error: 'Course not found' }, { status: 404 });
     }
 
-    // 获取所有任务
-    const tasks = await db
-      .select()
-      .from(courseTasks)
-      .where(eq(courseTasks.courseId, courseId))
-      .orderBy(courseTasks.stepNumber);
-
-    // 转换为任务缓存格式
-    const taskCache: Record<number, any> = {};
-    tasks.forEach((task) => {
-      taskCache[task.stepNumber] = task.taskContent;
-    });
+    // 从 coursePlan.tasks 获取任务数据
+    const taskCache = course.coursePlan?.tasks || {};
 
     return NextResponse.json(
       {
@@ -97,28 +87,22 @@ export async function POST(
       return NextResponse.json({ error: 'Course not found' }, { status: 404 });
     }
 
-    // 保存任务 - 使用upsert逻辑
-    try {
-      await db.insert(courseTasks).values({
-        courseId,
-        stepNumber,
-        taskContent,
-      });
-    } catch (error) {
-      // 如果存在冲突，更新现有记录
-      await db
-        .update(courseTasks)
-        .set({
-          taskContent,
-          updatedAt: new Date(),
-        })
-        .where(
-          and(
-            eq(courseTasks.courseId, courseId),
-            eq(courseTasks.stepNumber, stepNumber)
-          )
-        );
-    }
+    // 保存任务到 coursePlan.tasks
+    const updatedCoursePlan = {
+      ...course.coursePlan,
+      tasks: {
+        ...(course.coursePlan?.tasks || {}),
+        [stepNumber]: taskContent,
+      },
+    };
+
+    await db
+      .update(userCourses)
+      .set({
+        coursePlan: updatedCoursePlan,
+        updatedAt: new Date(),
+      })
+      .where(eq(userCourses.id, courseId));
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {

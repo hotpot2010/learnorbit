@@ -18,8 +18,6 @@ import { eq } from 'drizzle-orm';
 const TABLE_MAPPING: Record<string, string> = {
   user: 'user',
   user_courses: 'user_courses',
-  course_tasks: 'course_tasks',
-  course_chat_history: 'course_chat_history',
   creator_courses: 'creator_courses',
   key_actions: 'key_actions',
   session: 'session',
@@ -131,14 +129,9 @@ function convertToFeishuFields(
       // 注意：created_at 和 updated_at 如果是 CREATED_TIME/MODIFIED_TIME 类型，飞书会自动管理，不需要设置
       // 跳过这些字段，让飞书自动填充
       fields.role = record.role || '';
-      fields.banned = record.banned || false;
-      fields.ban_reason = record.banReason || '';
-      // 日期字段：使用时间戳（毫秒），null 值不设置
-      if (record.banExpires) {
-        fields.ban_expires = new Date(record.banExpires).getTime();
-      }
       fields.customer_id = record.customerId || '';
-      fields.is_creator = record.isCreator || false;
+      // 注意：banned, banReason, banExpires, isCreator 字段已从数据库架构中删除
+      // 判断是否为创作者现在通过 isCreatorEmail() 函数基于邮箱地址判断
       break;
 
     case 'user_courses':
@@ -180,40 +173,6 @@ function convertToFeishuFields(
         fields.status = 'in-progress';
       }
       fields.tasks_generated = record.tasksGenerated || false;
-      // created_at 和 updated_at 如果是 CREATED_TIME/MODIFIED_TIME 类型，飞书会自动管理
-      break;
-
-    case 'course_tasks':
-      fields.id = record.id;
-      // 关联字段：将 course_id 转换为飞书记录ID
-      const courseIdMap = recordIdMaps.get('user_courses');
-      if (courseIdMap && record.courseId) {
-        const feishuCourseId = courseIdMap.get(record.courseId);
-        if (feishuCourseId) {
-          fields.course_id = [feishuCourseId];
-        } else {
-          console.warn(`⚠️  警告: 找不到 course_id ${record.courseId} 对应的飞书记录，跳过该字段`);
-        }
-      }
-      fields.step_number = record.stepNumber;
-      fields.task_content = safeJsonStringify(record.taskContent);
-      // created_at 和 updated_at 如果是 CREATED_TIME/MODIFIED_TIME 类型，飞书会自动管理
-      break;
-
-    case 'course_chat_history':
-      fields.id = record.id;
-      // 关联字段：将 course_id 转换为飞书记录ID
-      const chatCourseIdMap = recordIdMaps.get('user_courses');
-      if (chatCourseIdMap && record.courseId) {
-        const feishuCourseId = chatCourseIdMap.get(record.courseId);
-        if (feishuCourseId) {
-          fields.course_id = [feishuCourseId];
-        } else {
-          console.warn(`⚠️  警告: 找不到 course_id ${record.courseId} 对应的飞书记录，跳过该字段`);
-        }
-      }
-      fields.session_id = record.sessionId;
-      fields.messages = safeJsonStringify(record.messages);
       // created_at 和 updated_at 如果是 CREATED_TIME/MODIFIED_TIME 类型，飞书会自动管理
       break;
 
@@ -280,7 +239,6 @@ function convertToFeishuFields(
           fields.user_id = [feishuUserId];
         }
       }
-      fields.impersonated_by = record.impersonatedBy || '';
       break;
 
     case 'account':
@@ -363,12 +321,6 @@ async function migrateTable(db: any, feishuClient: any, tableName: string) {
       case 'user_courses':
         records = await db.select().from(schema.userCourses);
         break;
-      case 'course_tasks':
-        records = await db.select().from(schema.courseTasks);
-        break;
-      case 'course_chat_history':
-        records = await db.select().from(schema.courseChatHistory);
-        break;
       case 'creator_courses':
         records = await db.select().from(schema.creatorCourses);
         break;
@@ -401,8 +353,8 @@ async function migrateTable(db: any, feishuClient: any, tableName: string) {
 
     // 获取关联表的记录ID映射
     let relatedRecordIdMap: Map<string, string> | undefined;
-    if (tableName === 'user_courses' || tableName === 'course_tasks' || 
-        tableName === 'course_chat_history' || tableName === 'creator_courses' ||
+    if (tableName === 'user_courses' || 
+        tableName === 'creator_courses' ||
         tableName === 'key_actions' || tableName === 'session' || 
         tableName === 'account' || tableName === 'payment') {
       relatedRecordIdMap = recordIdMaps.get('user');
@@ -524,9 +476,7 @@ async function main() {
     // 先迁移被关联的表，再迁移依赖它们的表
     const migrationOrder = [
       'user',              // 基础表，其他表会关联它
-      'user_courses',      // 依赖 user
-      'course_tasks',      // 依赖 user_courses
-      'course_chat_history', // 依赖 user_courses
+      'user_courses',      // 依赖 user（任务数据存储在 coursePlan.tasks 中）
       'creator_courses',   // 依赖 user 和 user_courses
       'key_actions',       // 依赖 user
       'session',           // 依赖 user

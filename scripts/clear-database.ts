@@ -2,7 +2,7 @@
 
 import 'dotenv/config';
 import { getDb } from '../src/db/index';
-import { userCourses, courseTasks, courseChatHistory } from '../src/db/schema';
+import { userCourses } from '../src/db/schema';
 
 async function clearDatabase() {
   try {
@@ -10,15 +10,7 @@ async function clearDatabase() {
     
     const db = await getDb();
     
-    // 清理聊天记录
-    const deletedChatHistory = await db.delete(courseChatHistory);
-    console.log('✅ 清理聊天记录:', deletedChatHistory);
-    
-    // 清理课程任务
-    const deletedTasks = await db.delete(courseTasks);
-    console.log('✅ 清理课程任务:', deletedTasks);
-    
-    // 清理用户课程
+    // 清理用户课程（任务数据现在存储在 userCourses.coursePlan.tasks 中，会随课程一起删除）
     const deletedCourses = await db.delete(userCourses);
     console.log('✅ 清理用户课程:', deletedCourses);
     

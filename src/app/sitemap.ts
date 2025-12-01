@@ -87,7 +87,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           updatedAt: userCourses.updatedAt,
           userName: user.name,
           userEmail: user.email,
-          isCreator: user.isCreator,
         })
         .from(userCourses)
         .innerJoin(user, eq(userCourses.userId, user.id));
@@ -113,7 +112,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
 
         const title = coursePlan.title || planSteps[0]?.title || 'Untitled Course';
-        const isCreatorAccount = course.isCreator || (course.userEmail && ['zhouletao20@gmail.com', 'ritafeng1234@gmail.com'].includes(course.userEmail.toLowerCase()));
+        const isCreatorAccount = course.userEmail && ['zhouletao20@gmail.com', 'ritafeng1234@gmail.com'].includes(course.userEmail.toLowerCase());
 
         // 生成课程slug
         const courseSlug = generateCourseSlug(title, course.userId, isCreatorAccount);
@@ -131,7 +130,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
       });
 
-      console.log(`✅ Added ${activeCreatorCourses.length} creator courses and ${filteredPublicCourses.filter((c: any) => !c.isCreator).length} regular public courses to sitemap`);
+      console.log(`✅ Added ${activeCreatorCourses.length} creator courses and ${filteredPublicCourses.length} regular public courses to sitemap`);
     } catch (error) {
       console.error('❌ Failed to add courses to sitemap:', error);
     }

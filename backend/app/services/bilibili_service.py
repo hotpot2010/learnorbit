@@ -637,13 +637,23 @@ class BilibiliService:
             'retries': 3,
             'merge_output_format': 'mp4',  # 如果合并，输出 mp4
             # 错误处理和重试
-            'retries': 3,
             'fragment_retries': 3,
             'skip_unavailable_fragments': True,
-            # 网络设置
-            'socket_timeout': 30,
             # Cookie 支持（某些视频可能需要）
             'cookiefile': None,  # 如果需要可以指定 cookie 文件
+            # 🔧 修复 FFmpeg 合并错误：强制重新编码音频为 AAC 格式
+            # 这可以解决 "Could not write header for output file" 错误
+            'postprocessors': [{
+                'key': 'FFmpegVideoConvertor',
+                'preferedformat': 'mp4',
+            }, {
+                'key': 'FFmpegAudioConvertor',
+                'preferedcodec': 'aac',
+            }],
+            # 或者使用 postprocessor_args 传递 FFmpeg 参数
+            'postprocessor_args': {
+                'ffmpeg': ['-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k'],  # 视频流复制，音频重新编码为 AAC
+            },
         }
         
         try:
@@ -723,6 +733,18 @@ class BilibiliService:
                         'fragment_retries': 3,
                         'skip_unavailable_fragments': True,
                         'socket_timeout': 30,
+                        'merge_output_format': 'mp4',
+                        # 🔧 修复 FFmpeg 合并错误：强制重新编码音频为 AAC 格式
+                        'postprocessors': [{
+                            'key': 'FFmpegVideoConvertor',
+                            'preferedformat': 'mp4',
+                        }, {
+                            'key': 'FFmpegAudioConvertor',
+                            'preferedcodec': 'aac',
+                        }],
+                        'postprocessor_args': {
+                            'ffmpeg': ['-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k'],
+                        },
                     }
                     
                     # Add format if specified

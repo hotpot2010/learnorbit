@@ -121,6 +121,7 @@ export const auth = betterAuth({
     // support user management, ban/unban user, etc.
     admin({
       // https://www.better-auth.com/docs/plugins/admin#default-ban-reason
+      // Note: User ban functionality has been removed from the database schema
       // defaultBanReason: 'Spamming',
       defaultBanExpiresIn: undefined,
       bannedUserMessage:

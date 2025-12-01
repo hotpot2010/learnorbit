@@ -37,8 +37,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
 			.innerJoin(user, eq(creatorCourses.creatorId, user.id))
 			.where(and(
 				eq(creatorCourses.slug, slug),
-				eq(creatorCourses.isActive, true),
-				eq(user.isCreator, true)
+				eq(creatorCourses.isActive, true)
 			))
 			.limit(1);
 

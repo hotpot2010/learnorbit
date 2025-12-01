@@ -1,5 +1,5 @@
 import { getDb } from '@/db';
-import { courseTasks, userCourses } from '@/db/schema';
+import { userCourses } from '@/db/schema';
 import { auth } from '@/lib/auth';
 import type { TaskGenerateRequest } from '@/types/learning-plan';
 import { and, eq } from 'drizzle-orm';
@@ -98,30 +98,8 @@ export async function POST(
         if (response.ok) {
           const result = await response.json();
           if (result.success && result.task) {
-            // 保存任务到数据库
-            try {
-              await db.insert(courseTasks).values({
-                courseId,
-                stepNumber: step.step,
-                taskContent: result.task,
-              });
-            } catch (insertError) {
-              // 如果存在冲突，更新现有记录
-              await db
-                .update(courseTasks)
-                .set({
-                  taskContent: result.task,
-                  updatedAt: new Date(),
-                })
-                .where(
-                  and(
-                    eq(courseTasks.courseId, courseId),
-                    eq(courseTasks.stepNumber, step.step)
-                  )
-                );
-            }
-
-            console.log(`✅ 步骤 ${step.step} 任务生成并保存成功`);
+            // 任务数据会在最后统一保存到 coursePlan.tasks
+            console.log(`✅ 步骤 ${step.step} 任务生成成功`);
             return { step: step.step, success: true, task: result.task };
           }
         }
@@ -144,11 +122,31 @@ export async function POST(
 
     console.log(`📊 任务生成完成: ${successCount}/${taskResults.length} 成功`);
 
-    // 如果大部分任务成功生成，标记为已生成
+    // 如果大部分任务成功生成，保存到 coursePlan.tasks 并标记为已生成
     if (successCount >= taskResults.length * 0.7) {
+      // 构建任务数据对象
+      const tasks: Record<number, any> = {};
+      taskResults.forEach((result) => {
+        if (result.success && result.task) {
+          tasks[result.step] = result.task;
+        }
+      });
+
+      // 更新课程，保存任务数据到 coursePlan.tasks
+      const updatedCoursePlan = {
+        ...coursePlan,
+        tasks: {
+          ...(coursePlan?.tasks || {}),
+          ...tasks,
+        },
+      };
+
       await db
         .update(userCourses)
-        .set({ tasksGenerated: true })
+        .set({
+          coursePlan: updatedCoursePlan,
+          tasksGenerated: true,
+        })
         .where(eq(userCourses.id, courseId));
     }
 

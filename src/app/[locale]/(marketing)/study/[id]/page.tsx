@@ -389,6 +389,9 @@ export default function StudyPage({ params }: StudyPageProps) {
   const [expandedNoteImageIds, setExpandedNoteImageIds] = useState<Record<string, boolean>>({});
   const [noteImageIndices, setNoteImageIndices] = useState<Record<string, number>>({});
   
+  // 图片名编辑状态：{ noteId: { imageIndex: editingName } }
+  const [editingImageNames, setEditingImageNames] = useState<Record<string, Record<number, string>>>({});
+  
   // 便签编辑 - ref 用于聚焦
   const editingTextareaRef = useRef<HTMLTextAreaElement>(null);
   
@@ -595,6 +598,16 @@ export default function StudyPage({ params }: StudyPageProps) {
                                     src={image.url}
                                     alt={image.name || `Image ${index + 1}`}
                                     className="w-full h-16 object-cover rounded border"
+                                    onLoad={() => {
+                                      // 调试：确认 alt 标签已设置
+                                      if (process.env.NODE_ENV === 'development') {
+                                        console.log('🖼️ 图片 alt 标签:', {
+                                          url: image.url.substring(0, 50),
+                                          alt: image.name || `Image ${index + 1}`,
+                                          name: image.name
+                                        });
+                                      }
+                                    }}
                                   />
                                   <button
                                     onClick={() => handleRemoveImage(note.id, index)}
@@ -807,9 +820,19 @@ export default function StudyPage({ params }: StudyPageProps) {
                                           return (
                                             <img
                                               src={currentImage.url}
-                                              alt={currentImage.name || '图片'}
+                                              alt={currentImage.name || `图片 ${currentImageIndex + 1}`}
                                               className="w-full h-full object-contain cursor-pointer"
                                               onClick={() => window.open(currentImage.url, '_blank')}
+                                              onLoad={() => {
+                                                // 调试：确认 alt 标签已设置
+                                                if (process.env.NODE_ENV === 'development') {
+                                                  console.log('🖼️ 图片 alt 标签:', {
+                                                    url: currentImage.url.substring(0, 50),
+                                                    alt: currentImage.name || `图片 ${currentImageIndex + 1}`,
+                                                    name: currentImage.name
+                                                  });
+                                                }
+                                              }}
                                               onError={(e) => {
                                                 const target = e.target as HTMLImageElement;
                                                 target.src = '/images/blog/post-1.png';
@@ -832,13 +855,70 @@ export default function StudyPage({ params }: StudyPageProps) {
                                         </button>
                                       </div>
                                       
-                                      {/* 图片标题 */}
+                                      {/* 图片标题 - 可编辑 */}
                                       <div className="mt-2 px-1">
-                                        <p className={`text-xs font-medium ${timestampColor} truncate`} style={{
-                                          fontFamily: getFontFamily()
-                                        }}>
-                                          {note.images[(note.selectedImageIndex ?? noteImageIndices[note.id] ?? 0)]?.name || '无标题'}
-                                        </p>
+                                        {(() => {
+                                          const currentImageIndex = (note.selectedImageIndex ?? noteImageIndices[note.id] ?? 0);
+                                          const currentImage = note.images[currentImageIndex];
+                                          const isEditing = editingImageNames[note.id]?.[currentImageIndex] !== undefined;
+                                          
+                                          if (isEditing) {
+                                            return (
+                                              <div className="flex items-center gap-1">
+                                                <input
+                                                  type="text"
+                                                  value={editingImageNames[note.id][currentImageIndex]}
+                                                  onChange={(e) => {
+                                                    setEditingImageNames(prev => ({
+                                                      ...prev,
+                                                      [note.id]: {
+                                                        ...prev[note.id],
+                                                        [currentImageIndex]: e.target.value
+                                                      }
+                                                    }));
+                                                  }}
+                                                  onBlur={() => handleSaveImageName(note.id, currentImageIndex)}
+                                                  onKeyDown={(e) => {
+                                                    if (e.key === 'Enter') {
+                                                      e.preventDefault();
+                                                      handleSaveImageName(note.id, currentImageIndex);
+                                                    } else if (e.key === 'Escape') {
+                                                      handleCancelEditImageName(note.id, currentImageIndex);
+                                                    }
+                                                  }}
+                                                  className="flex-1 text-xs px-1 py-0.5 border border-yellow-400 rounded bg-white focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                                                  style={{ fontFamily: getFontFamily() }}
+                                                  autoFocus
+                                                />
+                                                <button
+                                                  onClick={() => handleSaveImageName(note.id, currentImageIndex)}
+                                                  className="text-xs px-1 py-0.5 bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200"
+                                                  title="保存"
+                                                >
+                                                  ✓
+                                                </button>
+                                                <button
+                                                  onClick={() => handleCancelEditImageName(note.id, currentImageIndex)}
+                                                  className="text-xs px-1 py-0.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+                                                  title="取消"
+                                                >
+                                                  ✕
+                                                </button>
+                                              </div>
+                                            );
+                                          }
+                                          
+                                          return (
+                                            <p 
+                                              className={`text-xs font-medium ${timestampColor} truncate cursor-pointer hover:text-yellow-600 transition-colors`} 
+                                              style={{ fontFamily: getFontFamily() }}
+                                              onDoubleClick={() => handleStartEditImageName(note.id, currentImageIndex)}
+                                              title="双击编辑图片名"
+                                            >
+                                              {currentImage?.name || '无标题（双击编辑）'}
+                                            </p>
+                                          );
+                                        })()}
                                       </div>
                                     </div>
                                   </div>
@@ -851,27 +931,93 @@ export default function StudyPage({ params }: StudyPageProps) {
                                           {note.images.map((image, idx) => {
                                             const active = idx === (note.selectedImageIndex ?? noteImageIndices[note.id] ?? 0);
                                             return (
-                                              <button
-                                                key={idx}
-                                                onClick={() => {
-                                                  setNoteImageIndices(prev => ({ ...prev, [note.id]: idx }));
-                                                  setNotes(prevNotes => prevNotes.map(n => 
-                                                    n.id === note.id ? { ...n, selectedImageIndex: idx } : n
-                                                  ));
-                                                }}
-                                                className={`w-full flex items-start gap-2 p-2 text-left transition-colors rounded ${
-                                                  active ? 'bg-yellow-100 rotate-1' : 'hover:bg-yellow-50'
-                                                }`}
-                                                aria-pressed={active}
-                                              >
-                                                <div className="min-w-0 flex-1">
-                                                  <div className={`text-xs font-bold ${timestampColor} truncate`} style={{
-                                                    fontFamily: getFontFamily()
-                                                  }}>
-                                                    {image.name || '无标题'}
-                                                  </div>
-                                                </div>
-                                              </button>
+                                              <div key={idx} className={`w-full flex items-start gap-2 p-2 transition-colors rounded ${
+                                                active ? 'bg-yellow-100 rotate-1' : 'hover:bg-yellow-50'
+                                              }`}>
+                                                {(() => {
+                                                  const isEditing = editingImageNames[note.id]?.[idx] !== undefined;
+                                                  
+                                                  if (isEditing) {
+                                                    return (
+                                                      <div className="flex-1 flex items-center gap-1">
+                                                        <input
+                                                          type="text"
+                                                          value={editingImageNames[note.id][idx]}
+                                                          onChange={(e) => {
+                                                            setEditingImageNames(prev => ({
+                                                              ...prev,
+                                                              [note.id]: {
+                                                                ...prev[note.id],
+                                                                [idx]: e.target.value
+                                                              }
+                                                            }));
+                                                          }}
+                                                          onBlur={() => handleSaveImageName(note.id, idx)}
+                                                          onKeyDown={(e) => {
+                                                            if (e.key === 'Enter') {
+                                                              e.preventDefault();
+                                                              handleSaveImageName(note.id, idx);
+                                                            } else if (e.key === 'Escape') {
+                                                              handleCancelEditImageName(note.id, idx);
+                                                            }
+                                                          }}
+                                                          className="flex-1 text-xs px-1 py-0.5 border border-yellow-400 rounded bg-white focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                                                          style={{ fontFamily: getFontFamily() }}
+                                                          autoFocus
+                                                          onClick={(e) => e.stopPropagation()}
+                                                        />
+                                                        <button
+                                                          onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleSaveImageName(note.id, idx);
+                                                          }}
+                                                          className="text-xs px-1 py-0.5 bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200"
+                                                          title="保存"
+                                                        >
+                                                          ✓
+                                                        </button>
+                                                        <button
+                                                          onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleCancelEditImageName(note.id, idx);
+                                                          }}
+                                                          className="text-xs px-1 py-0.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+                                                          title="取消"
+                                                        >
+                                                          ✕
+                                                        </button>
+                                                      </div>
+                                                    );
+                                                  }
+                                                  
+                                                  return (
+                                                    <button
+                                                      onClick={() => {
+                                                        setNoteImageIndices(prev => ({ ...prev, [note.id]: idx }));
+                                                        setNotes(prevNotes => prevNotes.map(n => 
+                                                          n.id === note.id ? { ...n, selectedImageIndex: idx } : n
+                                                        ));
+                                                      }}
+                                                      className="w-full flex items-start gap-2 text-left"
+                                                      aria-pressed={active}
+                                                    >
+                                                      <div className="min-w-0 flex-1">
+                                                        <div 
+                                                          className={`text-xs font-bold ${timestampColor} truncate cursor-pointer hover:text-yellow-600 transition-colors`} 
+                                                          style={{ fontFamily: getFontFamily() }}
+                                                          onDoubleClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleStartEditImageName(note.id, idx);
+                                                          }}
+                                                          title="双击编辑图片名"
+                                                        >
+                                                          {image.name || '无标题（双击编辑）'}
+                                                        </div>
+                                                      </div>
+                                                    </button>
+                                                  );
+                                                })()}
+                                              </div>
                                             );
                                           })}
                                         </div>
@@ -954,7 +1100,14 @@ export default function StudyPage({ params }: StudyPageProps) {
                                               height: 'auto'
                                             }}
                                             onLoad={() => {
-                                              // 图片加载成功，无需处理
+                                              // 调试：确认 alt 标签已设置
+                                              if (process.env.NODE_ENV === 'development') {
+                                                console.log('🖼️ 图片 alt 标签:', {
+                                                  url: image.url.substring(0, 50),
+                                                  alt: image.name || `Image ${index + 1}`,
+                                                  name: image.name
+                                                });
+                                              }
                                             }}
                                             onError={(e) => {
                                               // 静默处理图片加载失败
@@ -977,16 +1130,80 @@ export default function StudyPage({ params }: StudyPageProps) {
                                           </button>
                                         )}
                                         
-                                        {image.name && (
-                                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent text-white text-xs p-2 rounded-b-lg">
-                                            <div className="truncate">{image.name}</div>
-                                            {image.size && (
-                                              <div className="text-xs opacity-75">
-                                                {(image.size / 1024 / 1024).toFixed(1)} MB
-                                              </div>
-                                            )}
-                                          </div>
-                                        )}
+                                        {(() => {
+                                          const isEditing = editingImageNames[note.id]?.[index] !== undefined;
+                                          
+                                          return (
+                                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent text-white text-xs p-2 rounded-b-lg">
+                                              {isEditing ? (
+                                                <div className="flex items-center gap-1">
+                                                  <input
+                                                    type="text"
+                                                    value={editingImageNames[note.id][index]}
+                                                    onChange={(e) => {
+                                                      setEditingImageNames(prev => ({
+                                                        ...prev,
+                                                        [note.id]: {
+                                                          ...prev[note.id],
+                                                          [index]: e.target.value
+                                                        }
+                                                      }));
+                                                    }}
+                                                    onBlur={() => handleSaveImageName(note.id, index)}
+                                                    onKeyDown={(e) => {
+                                                      if (e.key === 'Enter') {
+                                                        e.preventDefault();
+                                                        handleSaveImageName(note.id, index);
+                                                      } else if (e.key === 'Escape') {
+                                                        handleCancelEditImageName(note.id, index);
+                                                      }
+                                                    }}
+                                                    className="flex-1 text-xs px-1 py-0.5 border border-yellow-400 rounded bg-white text-gray-900 focus:outline-none focus:ring-1 focus:ring-yellow-400"
+                                                    style={{ fontFamily: getFontFamily() }}
+                                                    autoFocus
+                                                    onClick={(e) => e.stopPropagation()}
+                                                  />
+                                                  <button
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      handleSaveImageName(note.id, index);
+                                                    }}
+                                                    className="text-xs px-1 py-0.5 bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200"
+                                                    title="保存"
+                                                  >
+                                                    ✓
+                                                  </button>
+                                                  <button
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      handleCancelEditImageName(note.id, index);
+                                                    }}
+                                                    className="text-xs px-1 py-0.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+                                                    title="取消"
+                                                  >
+                                                    ✕
+                                                  </button>
+                                                </div>
+                                              ) : (
+                                                <div 
+                                                  className="truncate cursor-pointer hover:text-yellow-200 transition-colors"
+                                                  onDoubleClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleStartEditImageName(note.id, index);
+                                                  }}
+                                                  title="双击编辑图片名"
+                                                >
+                                                  {image.name || '无标题（双击编辑）'}
+                                                </div>
+                                              )}
+                                              {image.size && !isEditing && (
+                                                <div className="text-xs opacity-75 mt-1">
+                                                  {(image.size / 1024 / 1024).toFixed(1)} MB
+                                                </div>
+                                              )}
+                                            </div>
+                                          );
+                                        })()}
                                         
                                         {/* 图片类型标识 */}
                                         {image.type?.includes('gif') && (
@@ -3113,6 +3330,69 @@ export default function StudyPage({ params }: StudyPageProps) {
     } finally {
       setUploadingImages(prev => ({ ...prev, [noteId]: false }));
     }
+  };
+
+  // 开始编辑图片名
+  const handleStartEditImageName = (noteId: string, imageIndex: number) => {
+    const note = notes.find(n => n.id === noteId);
+    if (!note || !note.images || !note.images[imageIndex]) return;
+    
+    const currentName = note.images[imageIndex].name || '';
+    setEditingImageNames(prev => ({
+      ...prev,
+      [noteId]: {
+        ...prev[noteId],
+        [imageIndex]: currentName
+      }
+    }));
+  };
+
+  // 保存图片名
+  const handleSaveImageName = (noteId: string, imageIndex: number) => {
+    const editingName = editingImageNames[noteId]?.[imageIndex];
+    if (editingName === undefined) return;
+    
+    setNotes(prev => prev.map(note => {
+      if (note.id === noteId && note.images && note.images[imageIndex]) {
+        const updatedImages = [...note.images];
+        updatedImages[imageIndex] = {
+          ...updatedImages[imageIndex],
+          name: editingName.trim() || undefined // 如果为空则设为 undefined
+        };
+        return { ...note, images: updatedImages };
+      }
+      return note;
+    }));
+    
+    // 清除编辑状态
+    setEditingImageNames(prev => {
+      const newState = { ...prev };
+      if (newState[noteId]) {
+        const { [imageIndex]: _, ...rest } = newState[noteId];
+        if (Object.keys(rest).length === 0) {
+          delete newState[noteId];
+        } else {
+          newState[noteId] = rest;
+        }
+      }
+      return newState;
+    });
+  };
+
+  // 取消编辑图片名
+  const handleCancelEditImageName = (noteId: string, imageIndex: number) => {
+    setEditingImageNames(prev => {
+      const newState = { ...prev };
+      if (newState[noteId]) {
+        const { [imageIndex]: _, ...rest } = newState[noteId];
+        if (Object.keys(rest).length === 0) {
+          delete newState[noteId];
+        } else {
+          newState[noteId] = rest;
+        }
+      }
+      return newState;
+    });
   };
 
   // 删除图片
