@@ -3,6 +3,7 @@ import { userCourses } from '@/db/schema';
 import { auth } from '@/lib/auth';
 import { desc, eq } from 'drizzle-orm';
 import { type NextRequest, NextResponse } from 'next/server';
+import { uploadJsonToCDN, downloadJsonFromCDN } from '@/lib/cdn-utils';
 
 // 创建新课程
 export async function POST(request: NextRequest) {
@@ -111,18 +112,29 @@ export async function POST(request: NextRequest) {
       structurePreview: JSON.stringify(planDataForDb).substring(0, 200)
     });
 
-    // 保存课程信息到数据库
+    // 构建完整的 coursePlan 对象（包含 plan、tasks、notes、marks）
+    const fullCoursePlan = {
+      plan: planDataForDb,
+      tasks: taskData,
+      notes: notesData,
+      marks: marksData,
+    };
+
+    // 上传整个 coursePlan 对象到 CDN
+    const jsonContent = JSON.stringify(fullCoursePlan, null, 2);
+    const filename = `course_plan_${Date.now()}_${Math.random().toString(36).substring(7)}.json`;
+    const planUrl = await uploadJsonToCDN(jsonContent, filename);
+    
+    console.log('✅ 整个 coursePlan 已上传到 CDN:', planUrl);
+
+    // 保存课程信息到数据库（coursePlan 字段设为空对象，因为数据已存储在 CDN）
     const db = await getDb();
     const [newCourse] = await db
       .insert(userCourses)
       .values({
         userId: userId,
-        coursePlan: {
-          plan: planDataForDb, // LearningPlan 格式：{ plan: [...], title, description } 或旧格式：{ plan: [...] }
-          tasks: taskData, // 存储生成的任务数据
-          notes: notesData, // 存储便签
-          marks: marksData, // 存储彩笔标记
-        },
+        planUrl: planUrl, // 存储 CDN URL
+        coursePlan: {}, // 不再存储 coursePlan，所有数据都在 CDN
         currentStep: 0,
         status: 'in-progress',
       })
@@ -165,7 +177,31 @@ export async function GET(request: NextRequest) {
       .where(eq(userCourses.userId, userId))
       .orderBy(desc(userCourses.createdAt));
 
-    return NextResponse.json({ courses }, { status: 200 });
+    // 为每个有 planUrl 的课程下载完整的 coursePlan 数据
+    const enrichedCourses = await Promise.all(
+      courses.map(async (course) => {
+        if (course.planUrl) {
+          try {
+            console.log(`📥 为课程 ${course.id} 从 CDN 下载完整的 coursePlan:`, course.planUrl);
+            const coursePlanData = await downloadJsonFromCDN(course.planUrl);
+            
+            // 直接使用下载的完整 coursePlan 数据替换
+            return {
+              ...course,
+              coursePlan: coursePlanData, // 使用从 CDN 下载的完整 coursePlan
+            };
+          } catch (error) {
+            console.error(`❌ 为课程 ${course.id} 从 CDN 下载 coursePlan 失败:`, error);
+            // 如果下载失败，返回原始课程数据（可能包含旧的 coursePlan）
+            return course;
+          }
+        }
+        // 没有 planUrl，返回原始课程数据（兼容旧数据）
+        return course;
+      })
+    );
+
+    return NextResponse.json({ courses: enrichedCourses }, { status: 200 });
   } catch (error) {
     console.error('Error fetching courses:', error);
     return NextResponse.json(

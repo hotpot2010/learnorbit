@@ -4,6 +4,7 @@ import { auth } from '@/lib/auth';
 import { and, eq } from 'drizzle-orm';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import { uploadJsonToCDN, downloadJsonFromCDN } from '@/lib/cdn-utils';
 
 // 重试函数
 async function withRetry<T>(
@@ -117,7 +118,29 @@ export async function GET(
         return NextResponse.json({ error: 'Course not found' }, { status: 404 });
       }
 
-      console.log('✅ 课程获取成功');
+      // 如果有 planUrl，从 CDN 下载完整的 coursePlan 数据
+      if (course.planUrl) {
+        try {
+          console.log('📥 从 CDN 下载完整的 coursePlan:', course.planUrl);
+          const coursePlanData = await downloadJsonFromCDN(course.planUrl);
+          
+          // 直接使用下载的完整 coursePlan 数据替换
+          const enrichedCourse = {
+            ...course,
+            coursePlan: coursePlanData, // 使用从 CDN 下载的完整 coursePlan
+          };
+          
+          console.log('✅ 课程获取成功（已从 CDN 加载完整 coursePlan）');
+          return NextResponse.json({ course: enrichedCourse }, { status: 200 });
+        } catch (error) {
+          console.error('❌ 从 CDN 下载 coursePlan 失败:', error);
+          // 如果下载失败，返回原始课程数据（可能包含旧的 coursePlan）
+          console.log('⚠️ 返回原始课程数据（CDN 下载失败）');
+          return NextResponse.json({ course }, { status: 200 });
+        }
+      }
+
+      console.log('✅ 课程获取成功（无 planUrl，使用旧数据）');
       return NextResponse.json({ course }, { status: 200 });
 
     } catch (dbError) {
@@ -294,16 +317,27 @@ export async function PUT(
       return NextResponse.json({ error: 'Course not found' }, { status: 404 });
     }
 
-    // 更新课程
+    // 构建完整的 coursePlan 对象（包含 plan、tasks、notes、marks）
+    const fullCoursePlan = {
+      plan: planDataForDb,
+      tasks: taskData,
+      notes: notesData,
+      marks: marksData,
+    };
+
+    // 上传整个 coursePlan 对象到 CDN
+    const jsonContent = JSON.stringify(fullCoursePlan, null, 2);
+    const filename = `course_plan_${courseId}_${Date.now()}_${Math.random().toString(36).substring(7)}.json`;
+    const planUrl = await uploadJsonToCDN(jsonContent, filename);
+    
+    console.log('✅ 整个 coursePlan 已上传到 CDN:', planUrl);
+
+    // 更新课程（coursePlan 字段设为空对象，因为数据已存储在 CDN）
     const [updatedCourse] = await db
       .update(userCourses)
       .set({
-        coursePlan: {
-          plan: planDataForDb,
-          tasks: taskData,
-          notes: notesData,
-          marks: marksData,
-        },
+        planUrl: planUrl, // 更新 CDN URL
+        coursePlan: {}, // 不再存储 coursePlan，所有数据都在 CDN
         updatedAt: new Date(),
       })
       .where(and(eq(userCourses.id, courseId), eq(userCourses.userId, userId)))
@@ -345,26 +379,37 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 		const course = rows[0];
 		if (course.userId !== userId) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 
-		// 更新 JSONB: 复制 coursePlan 并应用变更
-		const updatedPlan: any = { ...(course.coursePlan as any) };
-		if (hasIsPublic) {
-			updatedPlan.isPublic = isPublic;
-		}
+		// 如果需要更新 title 或 description，需要从 CDN 下载完整的 coursePlan，更新后重新上传
 		if (newTitle || newDescription) {
-			const rawPlan = updatedPlan.plan;
+			let coursePlanData: any;
 			
-			// 兼容新旧格式更新
-			if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && 
-			    (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
+			// 如果有 planUrl，从 CDN 下载完整的 coursePlan
+			if (course.planUrl) {
+				try {
+					coursePlanData = await downloadJsonFromCDN(course.planUrl);
+				} catch (error) {
+					console.error('❌ 从 CDN 下载 coursePlan 失败:', error);
+					// 如果下载失败，尝试从 coursePlan 获取（兼容旧数据）
+					coursePlanData = course.coursePlan as any;
+				}
+			} else {
+				// 没有 planUrl，从 coursePlan 获取（兼容旧数据）
+				coursePlanData = course.coursePlan as any;
+			}
+			
+			// 更新 plan 数据中的 title 和 description
+			const planData = coursePlanData?.plan;
+			if (planData && typeof planData === 'object' && !Array.isArray(planData) && 
+			    (planData.title || planData.description || planData.introduction || planData.plan)) {
 				// 新格式：更新 instruction 级别的 title 和 description
-				updatedPlan.plan = {
-					...rawPlan,
+				coursePlanData.plan = {
+					...planData,
 					...(newTitle ? { title: newTitle } : {}),
 					...(newDescription ? { description: newDescription } : {}),
 				};
-			} else if (Array.isArray(rawPlan) && rawPlan.length > 0) {
+			} else if (Array.isArray(planData) && planData.length > 0) {
 				// 旧格式：更新第一步的 title 和 description
-				updatedPlan.plan = rawPlan.map((s: any, idx: number) => {
+				coursePlanData.plan = planData.map((s: any, idx: number) => {
 					if (idx !== 0) return s;
 					return {
 						...s,
@@ -373,9 +418,50 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 					};
 				});
 			}
+			
+			// 更新 isPublic（如果提供）
+			if (hasIsPublic) {
+				coursePlanData.isPublic = isPublic;
+			}
+			
+			// 上传更新后的完整 coursePlan 到 CDN
+			const jsonContent = JSON.stringify(coursePlanData, null, 2);
+			const filename = `course_plan_${courseId}_${Date.now()}_${Math.random().toString(36).substring(7)}.json`;
+			const planUrl = await uploadJsonToCDN(jsonContent, filename);
+			
+			// 更新数据库
+			await db.update(userCourses).set({ 
+				planUrl: planUrl,
+				coursePlan: {} // 不再存储 coursePlan，所有数据都在 CDN
+			}).where(eq(userCourses.id, courseId));
+		} else if (hasIsPublic) {
+			// 只更新 isPublic，需要从 CDN 下载完整的 coursePlan，更新后重新上传
+			let coursePlanData: any;
+			
+			if (course.planUrl) {
+				try {
+					coursePlanData = await downloadJsonFromCDN(course.planUrl);
+				} catch (error) {
+					console.error('❌ 从 CDN 下载 coursePlan 失败:', error);
+					coursePlanData = course.coursePlan as any;
+				}
+			} else {
+				coursePlanData = course.coursePlan as any;
+			}
+			
+			coursePlanData.isPublic = isPublic;
+			
+			// 上传更新后的完整 coursePlan 到 CDN
+			const jsonContent = JSON.stringify(coursePlanData, null, 2);
+			const filename = `course_plan_${courseId}_${Date.now()}_${Math.random().toString(36).substring(7)}.json`;
+			const planUrl = await uploadJsonToCDN(jsonContent, filename);
+			
+			// 更新数据库
+			await db.update(userCourses).set({ 
+				planUrl: planUrl,
+				coursePlan: {} // 不再存储 coursePlan，所有数据都在 CDN
+			}).where(eq(userCourses.id, courseId));
 		}
-
-		await db.update(userCourses).set({ coursePlan: updatedPlan }).where(eq(userCourses.id, courseId));
 
 		return NextResponse.json({ success: true, isPublic: updatedPlan.isPublic, title: newTitle, description: newDescription });
 	} catch (e) {

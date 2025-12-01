@@ -16,11 +16,12 @@ import { LearningPlan } from '@/types/learning-plan';
 
 // 扩展的课程计划类型，包含任务数据
 export interface ExtendedCoursePlan {
-  plan: LearningPlan | any[];  // 兼容旧格式和新格式
+  plan?: LearningPlan | any[];  // 兼容旧格式和新格式（可选，如果使用 planUrl）
   tasks?: Record<string, any>; // 生成的任务数据
   notes?: any[]; // 页面便签数据
   marks?: any[]; // 文本彩笔标记数据
   isPublic?: boolean; // 是否公开课程
+  // 注意：planUrl 现在是独立的数据库列，不再存储在 coursePlan JSONB 中
 }
 
 export const userCourses = pgTable('user_courses', {
@@ -31,6 +32,7 @@ export const userCourses = pgTable('user_courses', {
     .notNull()
     .references(() => user.id, { onDelete: 'cascade' }),
   coursePlan: jsonb('course_plan').notNull().$type<ExtendedCoursePlan>(),
+  planUrl: text('plan_url'), // CDN URL，存储课程计划的 JSON 文件（独立列）
   currentStep: integer('current_step').default(0).notNull(),
   status: text('status', { enum: ['in-progress', 'completed'] })
     .default('in-progress')
