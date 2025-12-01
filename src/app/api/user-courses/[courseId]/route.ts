@@ -434,6 +434,14 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 				planUrl: planUrl,
 				coursePlan: {} // 不再存储 coursePlan，所有数据都在 CDN
 			}).where(eq(userCourses.id, courseId));
+
+			// 返回更新后的值
+			return NextResponse.json({ 
+				success: true, 
+				isPublic: coursePlanData.isPublic, 
+				title: newTitle, 
+				description: newDescription 
+			});
 		} else if (hasIsPublic) {
 			// 只更新 isPublic，需要从 CDN 下载完整的 coursePlan，更新后重新上传
 			let coursePlanData: any;
@@ -461,9 +469,23 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 				planUrl: planUrl,
 				coursePlan: {} // 不再存储 coursePlan，所有数据都在 CDN
 			}).where(eq(userCourses.id, courseId));
+
+			// 返回更新后的值
+			return NextResponse.json({ 
+				success: true, 
+				isPublic: coursePlanData.isPublic, 
+				title: newTitle, 
+				description: newDescription 
+			});
 		}
 
-		return NextResponse.json({ success: true, isPublic: updatedPlan.isPublic, title: newTitle, description: newDescription });
+		// 如果没有更新任何内容，返回成功
+		return NextResponse.json({ 
+			success: true, 
+			isPublic: undefined, 
+			title: newTitle, 
+			description: newDescription 
+		});
 	} catch (e) {
 		return NextResponse.json({ error: 'Failed to update course visibility' }, { status: 500 });
 	}

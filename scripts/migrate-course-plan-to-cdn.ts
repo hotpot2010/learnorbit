@@ -94,11 +94,11 @@ async function uploadJsonToCDN(jsonContent: string, filename: string): Promise<s
                 // 格式1: files 数组格式
                 if (result.files && Array.isArray(result.files) && result.files.length > 0) {
                   const fileInfo = result.files[0];
-                  fileUrl = fileInfo.url || fileInfo.path;
+                  fileUrl = fileInfo.url || fileInfo.path || null;
                 }
                 // 格式2: data 对象格式
                 else if (result.code === 0 && result.data) {
-                  fileUrl = result.data.url || result.data.path;
+                  fileUrl = result.data.url || result.data.path || null;
                 }
                 // 格式3: 直接返回 URL
                 else if (result.url) {
