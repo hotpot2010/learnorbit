@@ -33,6 +33,7 @@ import { TextSelectionPopup } from '@/components/learning/text-selection-popup';
 import { WelcomePage } from '@/components/learning/welcome-page';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { useMobileLayout } from '@/hooks/use-mobile-layout';
+import { buildApiUrl, API_ENDPOINTS } from '@/config/api';
 
 interface StudyPageProps {
   params: Promise<{ locale: string; id: string }>;
@@ -3290,19 +3291,95 @@ export default function StudyPage({ params }: StudyPageProps) {
         }
         
         try {
-          // 上传图片到 OSS（使用与视频上传相同的存储服务）
-          const { uploadFileFromBrowser } = await import('@/storage/client');
-          const uploadResult = await uploadFileFromBrowser(file, 'note-images');
+          // 上传图片到 backend（透传到 api-proxy）
+          const formData = new FormData();
+          formData.append(`file${i}`, file);
+          
+          const uploadUrl = buildApiUrl(API_ENDPOINTS.fileUpload);
+          console.log(`📤 上传图片到: ${uploadUrl}`);
+          
+          const response = await fetch(uploadUrl, {
+            method: 'POST',
+            body: formData,
+          });
+          
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ detail: '上传失败' }));
+            throw new Error(errorData.detail || `HTTP ${response.status}`);
+          }
+          
+          const result = await response.json();
+          console.log(`✅ 上传响应 (完整):`, JSON.stringify(result, null, 2));
+          
+          // 解析 api-proxy 返回的响应格式
+          // 实际格式: { "total": 1, "ok": 1, "fail": 0, "files": [{ "key": "file0", "url": "3340823424_ux72pyzp.png", ... }] }
+          // 其他可能的格式:
+          // 1. { "code": 0, "files": [{ "key": "file0", "url": "..." }] }
+          // 2. { "code": 0, "data": { "url": "...", "path": "..." } }
+          // 3. { "url": "..." } (直接返回URL)
+          let imageUrl: string | null = null;
+          
+          // 格式1: files 数组格式（支持有 code 和没有 code 的情况）
+          if (result.files && Array.isArray(result.files) && result.files.length > 0) {
+            // 查找对应的文件（使用 file${i} 作为 key）
+            const fileInfo = result.files.find((f: any) => f.key === `file${i}`) || result.files[0];
+            const relativeUrl = fileInfo?.url || fileInfo?.path;
+            
+            if (relativeUrl) {
+              imageUrl = relativeUrl;
+              console.log(`📎 从 files 数组中找到URL: ${imageUrl}`);
+            } else {
+              console.warn('文件信息中缺少URL:', fileInfo);
+            }
+          } 
+          // 格式2: data 对象格式（需要 code === 0）
+          else if (result.code === 0 && result.data) {
+            imageUrl = result.data.url || result.data.path;
+            console.log(`📎 从 data 对象中找到URL: ${imageUrl}`);
+          }
+          // 格式3: 直接返回 URL
+          else if (result.url) {
+            imageUrl = result.url;
+            console.log(`📎 从根对象中找到URL: ${imageUrl}`);
+          }
+          // 格式4: 尝试从其他可能的字段获取
+          else if (result.path) {
+            imageUrl = result.path;
+            console.log(`📎 从 path 字段找到URL: ${imageUrl}`);
+          }
+          // 格式5: 检查是否有单个文件信息
+          else if (result.file?.url || result.file?.path) {
+            imageUrl = result.file.url || result.file.path;
+            console.log(`📎 从 file 对象中找到URL: ${imageUrl}`);
+          }
+          
+          if (!imageUrl) {
+            console.error('无法从响应中提取URL，响应内容:', result);
+            throw new Error(`响应格式错误：缺少文件URL。响应: ${JSON.stringify(result)}`);
+          }
+          
+          // 处理相对路径：如果返回的是相对路径，添加基础URL
+          if (!imageUrl.startsWith('http')) {
+            // 确保路径以 / 开头
+            const normalizedPath = imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+            imageUrl = `http://file.gsxservice.com${normalizedPath}`;
+            console.log(`🔗 拼接完整URL: ${imageUrl}`);
+          }
+          
+          console.log(`📎 最终图片URL: ${imageUrl}`);
           
           uploadedImages.push({
-            url: uploadResult.url, // 使用 OSS URL，而不是本地 blob URL
+            url: imageUrl,
             name: file.name,
             size: file.size,
             type: file.type
           });
         } catch (uploadError) {
           console.error(`上传图片 ${file.name} 失败:`, uploadError);
-          alert(`上传图片 ${file.name} 失败，请重试`);
+          const errorMessage = uploadError instanceof Error 
+            ? uploadError.message 
+            : '未知错误';
+          alert(`上传图片 ${file.name} 失败: ${errorMessage}`);
           continue;
         }
       }

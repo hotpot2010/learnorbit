@@ -60,6 +60,14 @@ except Exception as e:
     print("💡 视频搜索功能不可用")
     VIDEO_SEARCH_ROUTES_AVAILABLE = False
 
+try:
+    from app.api.routes import file_upload
+    FILE_UPLOAD_ROUTES_AVAILABLE = True
+except Exception as e:
+    print(f"⚠️ 文件上传路由模块导入失败: {e}")
+    print("💡 文件上传功能不可用")
+    FILE_UPLOAD_ROUTES_AVAILABLE = False
+
 # Create FastAPI application
 app = FastAPI(
     title="Video Analysis API",
@@ -110,6 +118,12 @@ if VIDEO_SEARCH_ROUTES_AVAILABLE:
     print("✅ 视频搜索功能已启用 (/open-api/video-search)")
 else:
     print("⚠️ 视频搜索功能不可用")
+
+if FILE_UPLOAD_ROUTES_AVAILABLE:
+    app.include_router(file_upload.router, prefix="/open-api", tags=["file-upload"])
+    print("✅ 文件上传功能已启用 (/open-api/upload)")
+else:
+    print("⚠️ 文件上传功能不可用")
 
 # 自定义OpenAPI规范
 def custom_openapi():

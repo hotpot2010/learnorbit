@@ -53,6 +53,9 @@ export const API_ENDPOINTS = {
   
   // 视频搜索
   videoSearch: '/open-api/video-search/search',
+  
+  // 文件上传
+  fileUpload: '/open-api/upload',
 } as const;
 
 /**
