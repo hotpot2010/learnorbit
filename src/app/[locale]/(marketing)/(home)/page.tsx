@@ -9,7 +9,9 @@ import { getTranslations } from 'next-intl/server';
 import { headers } from 'next/headers';
 import { unstable_cache } from 'next/cache';
 import { getDb } from '@/db';
-import { userCourses } from '@/db/schema';
+import { userCourses, creatorCourses } from '@/db/schema';
+import { downloadJsonFromCDN } from '@/lib/cdn-utils';
+import { eq, inArray } from 'drizzle-orm';
 
 type PublicCourseCard = {
   id: string;
@@ -24,35 +26,77 @@ type PublicCourseCard = {
 
 const getPublicCoursesCached = unstable_cache(async (): Promise<PublicCourseCard[]> => {
   const db = await getDb();
-  const rows = await db.select().from(userCourses);
-  const publicCourses = rows.filter((r: any) => r.coursePlan && (r.coursePlan as any).isPublic === true);
+  
+  // 优化：先从 creator_courses 表获取所有活跃的课程 ID
+  // 这些课程肯定是公开的（因为创建 creator_courses 时会检查 isPublic）
+  const activeCreatorCourses = await db
+    .select({ courseId: creatorCourses.courseId })
+    .from(creatorCourses)
+    .where(eq(creatorCourses.isActive, true));
+  
+  const courseIds = activeCreatorCourses.map(cc => cc.courseId);
+  
+  if (courseIds.length === 0) {
+    return [];
+  }
+  
+  // 只查询这些课程 ID 对应的课程
+  const rows = await db
+    .select()
+    .from(userCourses)
+    .where(inArray(userCourses.id, courseIds));
+  
+  // 从 CDN 下载 coursePlan 数据（这些课程肯定在 creator_courses 中，所以肯定是公开的）
+  // 但我们仍然需要下载 coursePlan 来获取标题、描述等信息
+  const publicCourses = await Promise.all(
+    rows.map(async (r: any) => {
+      // 如果有 planUrl，从 CDN 下载
+      if (r.planUrl) {
+        try {
+          const coursePlanData = await downloadJsonFromCDN(r.planUrl);
+          return { ...r, coursePlanData };
+        } catch (error) {
+          console.error(`❌ 从 CDN 下载课程 ${r.id} 的 coursePlan 失败:`, error);
+          // 如果下载失败，使用数据库数据
+          return r;
+        }
+      }
+      
+      // 没有 planUrl，使用数据库数据
+      return r;
+    })
+  );
+  
+  // 映射为卡片数据
   return publicCourses.map((c: any) => {
-    const rawPlan = c.coursePlan?.plan;
-    let coursePlan: any;
-    let planSteps: any[];
-    
-    // 兼容新旧格式
-    if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
-      // 新格式：rawPlan 是包含 title、description、plan 的对象
-      coursePlan = rawPlan;
-      planSteps = rawPlan.plan || [];
-    } else {
-      // 旧格式：rawPlan 直接是步骤数组
-      coursePlan = {};
-      planSteps = Array.isArray(rawPlan) ? rawPlan : [];
-    }
-    
-    // 优先使用 instruction 中的标题和描述，回退到第一步的信息
-    const title = coursePlan.title || planSteps[0]?.title || 'Untitled Course';
-    const description = coursePlan.description || planSteps[0]?.description || 'No description';
-    
-    const firstVideo = planSteps[0]?.videos?.[0];
-    const coverImage = firstVideo?.cover || '/images/blog/post-1.png';
-    const rating = 4; // 默认4星评级
-    const type = planSteps[0]?.type || 'theory';
-    const difficulty = (type === 'coding' ? 'intermediate' : 'beginner') as 'beginner'|'intermediate'|'advanced';
-    return { id: c.id, title, description, coverImage, rating, difficulty, ownerId: c.userId, createdAt: c.createdAt };
-  });
+      // 优先使用从 CDN 下载的数据，否则使用数据库数据
+      const coursePlanData = c.coursePlanData || c.coursePlan;
+      const rawPlan = coursePlanData?.plan;
+      let coursePlan: any;
+      let planSteps: any[];
+      
+      // 兼容新旧格式
+      if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
+        // 新格式：rawPlan 是包含 title、description、plan 的对象
+        coursePlan = rawPlan;
+        planSteps = rawPlan.plan || [];
+      } else {
+        // 旧格式：rawPlan 直接是步骤数组
+        coursePlan = {};
+        planSteps = Array.isArray(rawPlan) ? rawPlan : [];
+      }
+      
+      // 优先使用 instruction 中的标题和描述，回退到第一步的信息
+      const title = coursePlan.title || planSteps[0]?.title || 'Untitled Course';
+      const description = coursePlan.description || planSteps[0]?.description || 'No description';
+      
+      const firstVideo = planSteps[0]?.videos?.[0];
+      const coverImage = firstVideo?.cover || '/images/blog/post-1.png';
+      const rating = 4; // 默认4星评级
+      const type = planSteps[0]?.type || 'theory';
+      const difficulty = (type === 'coding' ? 'intermediate' : 'beginner') as 'beginner'|'intermediate'|'advanced';
+      return { id: c.id, title, description, coverImage, rating, difficulty, ownerId: c.userId, createdAt: c.createdAt };
+    });
 }, ['public-courses'], { revalidate: 300, tags: ['public-courses'] });
 
 /**

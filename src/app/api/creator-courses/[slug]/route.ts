@@ -2,6 +2,7 @@ import { getDb } from '@/db';
 import { creatorCourses, userCourses, user } from '@/db/schema';
 import { NextResponse } from 'next/server';
 import { eq, and } from 'drizzle-orm';
+import { downloadJsonFromCDN } from '@/lib/cdn-utils';
 
 export async function GET(_: Request, { params }: { params: Promise<{ slug: string }> }) {
 	try {
@@ -25,6 +26,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
 				updatedAt: creatorCourses.updatedAt,
 				// 关联课程数据
 				coursePlan: userCourses.coursePlan,
+				planUrl: userCourses.planUrl,
 				currentStep: userCourses.currentStep,
 				status: userCourses.status,
 				// 关联创作者信息
@@ -48,8 +50,19 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
 
 		const course = creatorCourse[0];
 
-		// 确保课程是公开的
-		const isPublic = course.coursePlan?.isPublic === true;
+		// 确保课程是公开的（需要从 CDN 或数据库检查 isPublic）
+		let coursePlanData: any = course.coursePlan;
+		if (course.planUrl) {
+			try {
+				coursePlanData = await downloadJsonFromCDN(course.planUrl);
+			} catch (error) {
+				console.error(`❌ 从 CDN 下载课程 ${course.courseId} 的 coursePlan 失败:`, error);
+				// 如果下载失败，使用数据库数据
+				coursePlanData = course.coursePlan;
+			}
+		}
+		
+		const isPublic = coursePlanData?.isPublic === true;
 		if (!isPublic) {
 			console.log('❌ Creator course is not public:', { slug });
 			return NextResponse.json({ error: 'Course not available' }, { status: 404 });
@@ -66,7 +79,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
 			course: {
 				id: course.courseId,
 				userId: course.creatorId,
-				coursePlan: course.coursePlan,
+				coursePlan: coursePlanData, // 使用从 CDN 下载的数据或数据库数据
 				currentStep: course.currentStep,
 				status: course.status,
 				createdAt: course.createdAt,

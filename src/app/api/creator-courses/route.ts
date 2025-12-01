@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { eq, and } from 'drizzle-orm';
 import { isCreatorEmail, generateCourseSlug } from '@/lib/creator-utils';
+import { downloadJsonFromCDN } from '@/lib/cdn-utils';
 
 // 创建创作者课程映射
 export async function POST(request: NextRequest) {
@@ -22,6 +23,7 @@ export async function POST(request: NextRequest) {
 				courseId: userCourses.id,
 				userId: userCourses.userId,
 				coursePlan: userCourses.coursePlan,
+				planUrl: userCourses.planUrl,
 				userName: user.name,
 				userEmail: user.email,
 			})
@@ -42,8 +44,19 @@ export async function POST(request: NextRequest) {
 			return NextResponse.json({ error: 'Only creators can create clean URLs' }, { status: 403 });
 		}
 
-		// 检查课程是否已公开
-		const isPublic = course.coursePlan?.isPublic === true;
+		// 检查课程是否已公开（需要从 CDN 或数据库检查 isPublic）
+		let coursePlanData: any = course.coursePlan;
+		if (course.planUrl) {
+			try {
+				coursePlanData = await downloadJsonFromCDN(course.planUrl);
+			} catch (error) {
+				console.error(`❌ 从 CDN 下载课程 ${courseId} 的 coursePlan 失败:`, error);
+				// 如果下载失败，使用数据库数据
+				coursePlanData = course.coursePlan;
+			}
+		}
+		
+		const isPublic = coursePlanData?.isPublic === true;
 		if (!isPublic) {
 			return NextResponse.json({ error: 'Course must be public' }, { status: 400 });
 		}

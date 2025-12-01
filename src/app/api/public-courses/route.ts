@@ -1,6 +1,8 @@
 import { getDb } from '@/db';
-import { userCourses } from '@/db/schema';
+import { userCourses, creatorCourses } from '@/db/schema';
 import { NextRequest, NextResponse } from 'next/server';
+import { downloadJsonFromCDN } from '@/lib/cdn-utils';
+import { eq, and, inArray } from 'drizzle-orm';
 
 export async function GET(request: NextRequest) {
 	try {
@@ -15,8 +17,27 @@ export async function GET(request: NextRequest) {
 		while (retries > 0) {
 			try {
 				db = await getDb();
-				// 获取全部课程，再在内存中过滤 isPublic（coursePlan 为 JSONB，避免复杂 where 语句）
-				rows = await db.select().from(userCourses);
+				
+				// 优化：先从 creator_courses 表获取所有活跃的课程 ID
+				// 这些课程肯定是公开的（因为创建 creator_courses 时会检查 isPublic）
+				const activeCreatorCourses = await db
+					.select({ courseId: creatorCourses.courseId })
+					.from(creatorCourses)
+					.where(eq(creatorCourses.isActive, true));
+				
+				const courseIds = activeCreatorCourses.map(cc => cc.courseId);
+				
+				if (courseIds.length === 0) {
+					rows = [];
+					break;
+				}
+				
+				// 只查询这些课程 ID 对应的课程
+				rows = await db
+					.select()
+					.from(userCourses)
+					.where(inArray(userCourses.id, courseIds));
+				
 				break; // 成功则退出循环
 			} catch (error: any) {
 				retries--;
@@ -31,11 +52,36 @@ export async function GET(request: NextRequest) {
 				throw error; // 非连接关闭错误或重试次数用完，抛出错误
 			}
 		}
-		let publicCourses = rows.filter((r: any) => r.coursePlan && (r.coursePlan as any).isPublic === true);
+		
+		// 从 CDN 下载 coursePlan 数据（这些课程肯定在 creator_courses 中，所以肯定是公开的）
+		// 但我们仍然需要下载 coursePlan 来获取标题、描述等信息
+		const publicCourses = await Promise.all(
+			rows.map(async (r: any) => {
+				// 如果有 planUrl，从 CDN 下载
+				if (r.planUrl) {
+					try {
+						const coursePlanData = await downloadJsonFromCDN(r.planUrl);
+						return { ...r, coursePlanData };
+					} catch (error) {
+						console.error(`❌ 从 CDN 下载课程 ${r.id} 的 coursePlan 失败:`, error);
+						// 如果下载失败，使用数据库数据
+						return r;
+					}
+				}
+				
+				// 没有 planUrl，使用数据库数据
+				return r;
+			})
+		);
+		
+		// 所有课程都是有效的（因为来自 creator_courses）
+		const validPublicCourses = publicCourses;
 
 		// 规范化输出，供首页卡片使用
-		const normalized = publicCourses.map((c: any) => {
-			const rawPlan = c.coursePlan?.plan;
+		const normalized = validPublicCourses.map((c: any) => {
+			// 优先使用从 CDN 下载的数据，否则使用数据库数据
+			const coursePlanData = c.coursePlanData || c.coursePlan;
+			const rawPlan = coursePlanData?.plan;
 			let coursePlan: any;
 			let planSteps: any[];
 			
