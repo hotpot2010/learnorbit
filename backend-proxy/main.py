@@ -148,13 +148,18 @@ async def proxy_request(path: str, request: Request):
                             boundary = None
                             
                             # 方法1: 从 body 开头直接提取 boundary（最准确）
-                            # multipart body 格式: ------boundary\r\nContent-Disposition...
-                            if body_str.startswith('------'):
+                            # multipart body 格式: --boundary\r\nContent-Disposition...
+                            # 注意：body 中可能有多个短横线，但 boundary 值本身不包含前导的 --
+                            if body_str.startswith('--'):
                                 # 提取第一个 boundary（去掉前导的 --）
                                 match = re.match(r'^--+([^\r\n]+)', body_str)
                                 if match:
                                     boundary = match.group(1).strip()
+                                    # 验证 boundary 格式（不应该包含前导的 --）
+                                    if boundary.startswith('--'):
+                                        boundary = boundary.lstrip('-')
                                     print(f"📌 从 body 开头提取 boundary: {boundary}")
+                                    print(f"📋 Body 开头预览: {body_str[:100]}")
                             
                             # 方法2: 从 Content-Disposition 中查找 boundary
                             if not boundary:
