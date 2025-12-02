@@ -133,6 +133,11 @@ async def proxy_request(path: str, request: Request):
                     
                     # 如果 Content-Type 已经是 multipart/form-data，直接使用（不要修改）
                     if 'multipart/form-data' in content_type:
+                        # 删除所有可能的 content-type 变体（不区分大小写）
+                        headers_to_remove = [k for k in headers.keys() if k.lower() == 'content-type']
+                        for k in headers_to_remove:
+                            del headers[k]
+                        
                         # 使用原始的 Content-Type，确保 boundary 完全匹配
                         headers["Content-Type"] = request.headers.get("content-type", content_type)
                         print(f"✅ 使用原始 Content-Type: {headers['Content-Type']}")
@@ -189,6 +194,13 @@ async def proxy_request(path: str, request: Request):
                                     print(f"📌 从 body 中提取 boundary: {boundary}")
                             
                             if boundary:
+                                # 删除所有可能的 content-type 变体（不区分大小写）
+                                # 确保不会有两个 Content-Type header
+                                headers_to_remove = [k for k in headers.keys() if k.lower() == 'content-type']
+                                for k in headers_to_remove:
+                                    del headers[k]
+                                    print(f"🗑️  删除旧的 Content-Type header: {k}")
+                                
                                 headers["Content-Type"] = f"multipart/form-data; boundary={boundary}"
                                 print(f"✅ 修复 Content-Type: {headers['Content-Type']}")
                                 
@@ -233,9 +245,22 @@ async def proxy_request(path: str, request: Request):
                             headers["Content-Type"] = request.headers.get("content-type", content_type)
                             print(f"📋 未检测到 multipart，保持原始 Content-Type: {headers['Content-Type']}")
                     
-                    # 确保 content-type 头存在
-                    if "Content-Type" not in headers:
+                    # 确保 content-type 头存在且唯一（不区分大小写）
+                    # 先收集所有 content-type 变体
+                    content_type_variants = {k: v for k, v in headers.items() if k.lower() == 'content-type'}
+                    
+                    if not content_type_variants:
+                        # 如果没有，设置默认值
                         headers["Content-Type"] = request.headers.get("content-type", "multipart/form-data")
+                    else:
+                        # 如果有，删除所有变体，只保留一个标准格式
+                        for k in content_type_variants.keys():
+                            del headers[k]
+                        # 使用第一个找到的值（优先使用 Content-Type，否则使用第一个）
+                        if 'Content-Type' in content_type_variants:
+                            headers['Content-Type'] = content_type_variants['Content-Type']
+                        else:
+                            headers['Content-Type'] = list(content_type_variants.values())[0]
                     
                     print(f"📤 转发请求，Content-Type: {headers.get('Content-Type', 'N/A')}")
                     
