@@ -112,6 +112,32 @@ export async function POST(request: NextRequest) {
 
     const result: UploadResponse = await response.json();
     
+    // 记录完整的响应（用于调试）
+    console.log(`📥 上传响应:`, JSON.stringify(result, null, 2));
+    
+    // 如果上传失败（ok=0 或 fail>0），记录详细信息
+    if (result.ok === 0 || (result.fail && result.fail > 0)) {
+      console.warn(`⚠️  上传失败: total=${result.total}, ok=${result.ok}, fail=${result.fail}`);
+      console.warn(`   响应详情:`, JSON.stringify(result, null, 2));
+      
+      // 检查是否有错误信息字段
+      const errorInfo = (result as any).errors || (result as any).message || (result as any).error || (result as any).detail;
+      if (errorInfo) {
+        console.warn(`   错误信息:`, errorInfo);
+      }
+      
+      // 如果 files 数组为空，说明文件上传失败
+      if (!result.files || result.files.length === 0) {
+        const errorMsg = errorInfo 
+          ? `文件上传失败: ${typeof errorInfo === 'string' ? errorInfo : JSON.stringify(errorInfo)}`
+          : `文件上传失败: 后端返回 ok=0, fail=${result.fail}，但没有提供详细错误信息`;
+        return NextResponse.json(
+          { error: errorMsg },
+          { status: 500 }
+        );
+      }
+    }
+    
     // 解析响应获取 URL
     let fileUrl: string | null = null;
 

@@ -281,6 +281,20 @@ async def proxy_request(path: str, request: Request):
                     )
                     
                     print(f"📥 响应状态: {response.status_code}")
+                    
+                    # 记录响应内容（用于调试）
+                    try:
+                        response_content = response.text
+                        # 尝试解析为 JSON 以便更好地显示
+                        try:
+                            import json
+                            response_json = json.loads(response_content)
+                            print(f"📥 响应内容 (JSON): {json.dumps(response_json, indent=2, ensure_ascii=False)[:1000]}")
+                        except:
+                            print(f"📥 响应内容 (文本): {response_content[:500]}")
+                    except Exception as e:
+                        print(f"📥 无法读取响应内容: {e}")
+                    
                     if response.status_code != 200:
                         # 尝试读取错误响应内容
                         try:
