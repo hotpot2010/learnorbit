@@ -53,9 +53,6 @@ export async function POST(request: NextRequest) {
     // 获取 headers（包含 boundary）
     const headers = formData.getHeaders() as Record<string, string>;
     
-    // 确保 Content-Type 包含 boundary
-    console.log(`📋 FormData headers:`, JSON.stringify(headers, null, 2));
-    
     // 将 form-data 转换为 Buffer（在 Serverless 环境下更可靠）
     const formDataBuffer = await new Promise<Buffer>((resolve, reject) => {
       const chunks: Buffer[] = [];
@@ -66,39 +63,12 @@ export async function POST(request: NextRequest) {
     });
 
     console.log(`📦 Form data size: ${formDataBuffer.length} bytes`);
-    
-    // 验证 Content-Type header
-    if (!headers['content-type'] && !headers['Content-Type']) {
-      console.warn(`⚠️  Warning: Content-Type header missing from formData.getHeaders()`);
-    } else {
-      const contentType = headers['content-type'] || headers['Content-Type'];
-      console.log(`✅ Content-Type header: ${contentType}`);
-    }
 
     // 使用 fetch 发送请求
-    // 将 Buffer 转换为 Uint8Array 以符合 fetch body 的类型要求
-    // 注意：确保 Content-Type header 被正确传递，不要被 fetch 自动修改
-    const fetchHeaders = new Headers();
-    for (const [key, value] of Object.entries(headers)) {
-      fetchHeaders.set(key, value);
-    }
-    
-    // 确保 Content-Type 被正确设置
-    const contentType = headers['content-type'] || headers['Content-Type'];
-    if (contentType) {
-      fetchHeaders.set('Content-Type', contentType);
-      console.log(`✅ 设置 Content-Type header: ${contentType}`);
-    } else {
-      console.warn(`⚠️  Content-Type header 缺失`);
-    }
-    
-    console.log(`📤 发送请求到: ${UPLOAD_ENDPOINT}`);
-    console.log(`📋 请求 Headers:`, Object.fromEntries(fetchHeaders.entries()));
-    
     const response = await fetch(UPLOAD_ENDPOINT, {
       method: 'POST',
-      headers: fetchHeaders,
-      body: new Uint8Array(formDataBuffer),
+      headers: headers,
+      body: formDataBuffer,
     });
 
     if (!response.ok) {
@@ -111,32 +81,6 @@ export async function POST(request: NextRequest) {
     }
 
     const result: UploadResponse = await response.json();
-    
-    // 记录完整的响应（用于调试）
-    console.log(`📥 上传响应:`, JSON.stringify(result, null, 2));
-    
-    // 如果上传失败（ok=0 或 fail>0），记录详细信息
-    if (result.ok === 0 || (result.fail && result.fail > 0)) {
-      console.warn(`⚠️  上传失败: total=${result.total}, ok=${result.ok}, fail=${result.fail}`);
-      console.warn(`   响应详情:`, JSON.stringify(result, null, 2));
-      
-      // 检查是否有错误信息字段
-      const errorInfo = (result as any).errors || (result as any).message || (result as any).error || (result as any).detail;
-      if (errorInfo) {
-        console.warn(`   错误信息:`, errorInfo);
-      }
-      
-      // 如果 files 数组为空，说明文件上传失败
-      if (!result.files || result.files.length === 0) {
-        const errorMsg = errorInfo 
-          ? `文件上传失败: ${typeof errorInfo === 'string' ? errorInfo : JSON.stringify(errorInfo)}`
-          : `文件上传失败: 后端返回 ok=0, fail=${result.fail}，但没有提供详细错误信息`;
-        return NextResponse.json(
-          { error: errorMsg },
-          { status: 500 }
-        );
-      }
-    }
     
     // 解析响应获取 URL
     let fileUrl: string | null = null;

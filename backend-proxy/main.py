@@ -131,191 +131,49 @@ async def proxy_request(path: str, request: Request):
                     print(f"📦 Body size: {len(body)} bytes")
                     print(f"📋 Original Content-Type: {content_type}")
                     
-                    # 记录 body 的哈希值（用于验证 body 是否一致）
-                    import hashlib
-                    body_hash = hashlib.md5(body).hexdigest()
-                    print(f"🔐 Body MD5 hash: {body_hash}")
+                    # 检查 body 是否包含 multipart boundary（即使 content-type 被错误设置为 application/json）
+                    body_str = body[:200].decode('utf-8', errors='ignore') if len(body) > 0 else ''
+                    has_multipart_boundary = 'Content-Disposition' in body_str or 'multipart' in body_str.lower()
                     
-                    # 记录 body 的前100个字节（用于调试）
-                    body_preview = body[:100] if len(body) > 100 else body
-                    print(f"📋 Body preview (first 100 bytes): {body_preview.hex()}")
-                    try:
-                        body_preview_str = body_preview.decode('utf-8', errors='ignore')
-                        print(f"📋 Body preview (text): {body_preview_str[:100]}")
-                    except:
-                        pass
-                    
-                    # 如果 Content-Type 已经是 multipart/form-data，直接使用（不要修改）
-                    if 'multipart/form-data' in content_type:
-                        # 删除所有可能的 content-type 变体（不区分大小写）
-                        headers_to_remove = [k for k in headers.keys() if k.lower() == 'content-type']
-                        for k in headers_to_remove:
-                            del headers[k]
-                        
-                        # 使用原始的 Content-Type，确保 boundary 完全匹配
-                        headers["Content-Type"] = request.headers.get("content-type", content_type)
-                        print(f"✅ 使用原始 Content-Type: {headers['Content-Type']}")
-                    else:
-                        # Content-Type 不是 multipart，需要检测并修复
-                        # 检查 body 是否包含 multipart boundary
-                        body_str = body[:500].decode('utf-8', errors='ignore') if len(body) > 0 else ''
-                        has_multipart_boundary = 'Content-Disposition' in body_str or body_str.startswith('------')
-                        
-                        if has_multipart_boundary:
-                            print(f"⚠️  检测到 multipart 数据但 Content-Type 错误，尝试修复")
+                    # 如果检测到 multipart 数据但 content-type 不对，修复它
+                    if has_multipart_boundary and 'multipart/form-data' not in content_type:
+                        print(f"⚠️  检测到 multipart 数据但 Content-Type 错误，尝试修复")
+                        # 尝试从 body 中提取 boundary
+                        boundary_match = None
+                        if body_str:
+                            # 查找 boundary（通常在 Content-Disposition 或开头）
                             import re
-                            boundary = None
-                            
-                            # 方法1: 从 body 开头直接提取 boundary（最准确）
-                            # multipart body 格式: ------boundary\r\nContent-Disposition...
-                            # 注意：body 中的分隔符格式是 --boundary（标准前缀 -- + boundary值）
-                            # 成功的案例显示 boundary 值包含前导的 ----（4个短横线）
-                            # 例如：Content-Type: boundary=----webkitformboundary...
-                            # Body 开头：------webkitformboundary...（6个短横线）
-                            # 应该提取：----webkitformboundary...（去掉前2个标准前缀，保留4个+值）
-                            if body_str.startswith('--'):
-                                # 匹配 body 开头的完整分隔符（包括所有短横线）
-                                match = re.match(r'^--+([^\r\n]+)', body_str)
-                                if match:
-                                    full_match = match.group(0)  # 完整的匹配：------boundary
-                                    
-                                    # 去掉前2个标准前缀（--），保留后面的作为 boundary 值
-                                    # 例如：------boundary -> ----boundary
-                                    if len(full_match) >= 2:
-                                        boundary = full_match[2:].strip()  # 从第3个字符开始
-                                    else:
-                                        boundary = match.group(1).strip()
-                                    
-                                    print(f"📌 从 body 开头提取 boundary: {boundary}")
-                                    print(f"📋 Body 开头预览: {body_str[:100]}")
-                                    print(f"📋 完整匹配长度: {len(full_match)}, 内容: {full_match[:60]}")
-                            
-                            # 方法2: 从 Content-Disposition 中查找 boundary
-                            if not boundary:
-                                boundary_pattern = r'boundary=([^\s;,\r\n]+)'
-                                match = re.search(boundary_pattern, body_str)
-                                if match:
-                                    boundary = match.group(1).strip('"\'')
-                                    print(f"📌 从 Content-Disposition 提取 boundary: {boundary}")
-                            
-                            # 方法3: 从 body 中查找所有可能的 boundary 标记
-                            if not boundary:
-                                # 查找所有 --boundary 模式
-                                matches = re.findall(r'^--+([^\r\n]+)', body_str, re.MULTILINE)
-                                if matches:
-                                    # 使用第一个匹配的 boundary
-                                    boundary = matches[0].strip()
-                                    print(f"📌 从 body 中提取 boundary: {boundary}")
-                            
-                            if boundary:
-                                # 删除所有可能的 content-type 变体（不区分大小写）
-                                # 确保不会有两个 Content-Type header
-                                headers_to_remove = [k for k in headers.keys() if k.lower() == 'content-type']
-                                for k in headers_to_remove:
-                                    del headers[k]
-                                    print(f"🗑️  删除旧的 Content-Type header: {k}")
-                                
-                                headers["Content-Type"] = f"multipart/form-data; boundary={boundary}"
-                                print(f"✅ 修复 Content-Type: {headers['Content-Type']}")
-                                
-                                # 验证 body 中的分隔符是否与 boundary 匹配
-                                # body 中的分隔符格式应该是：--boundary（2个短横线 + boundary值）
-                                expected_separator = f"--{boundary}"
-                                body_separator_check = body_str[:len(expected_separator) + 10]
-                                print(f"🔍 验证分隔符匹配:")
-                                print(f"   期望的分隔符: --{boundary[:30]}...")
-                                print(f"   Body 实际开头: {body_separator_check[:50]}")
-                                if body_str.startswith(expected_separator):
-                                    print(f"   ✅ 分隔符匹配正确")
-                                else:
-                                    print(f"   ⚠️  分隔符可能不匹配，检查是否需要调整")
-                                
-                                # 验证 body 结尾是否有正确的结束标记
-                                body_end = body[-100:].decode('utf-8', errors='ignore') if len(body) > 100 else body.decode('utf-8', errors='ignore')
-                                expected_end = f"--{boundary}--"
-                                if expected_end in body_end:
-                                    print(f"   ✅ Body 结尾标记正确")
-                                else:
-                                    print(f"   ⚠️  Body 结尾可能缺少结束标记")
-                                    print(f"   期望的结尾: --{boundary}--")
-                                    print(f"   实际结尾: {body_end[-50:]}")
-                                
-                                # 检查 body 中是否包含文件内容
-                                if 'Content-Disposition' in body_str and 'filename=' in body_str:
-                                    print(f"   ✅ Body 包含文件字段")
-                                else:
-                                    print(f"   ⚠️  Body 可能不包含文件字段")
-                            else:
-                                # 如果找不到 boundary，尝试使用原始 Content-Type（如果存在）
-                                original_ct = request.headers.get("content-type", "")
-                                if 'multipart' in original_ct.lower():
-                                    headers["Content-Type"] = original_ct
-                                    print(f"⚠️  无法提取 boundary，使用原始 Content-Type: {original_ct}")
-                                else:
-                                    headers["Content-Type"] = "multipart/form-data"
-                                    print(f"⚠️  无法提取 boundary，使用默认 Content-Type")
+                            boundary_pattern = r'boundary=([^\s;]+)'
+                            boundary_match = re.search(boundary_pattern, body_str)
+                            if not boundary_match:
+                                # 尝试从 body 开头查找
+                                boundary_pattern2 = r'--([^\r\n]+)'
+                                boundary_match = re.search(boundary_pattern2, body_str)
+                        
+                        if boundary_match:
+                            boundary = boundary_match.group(1).strip('"\'')
+                            headers["Content-Type"] = f"multipart/form-data; boundary={boundary}"
+                            print(f"✅ 修复 Content-Type: {headers['Content-Type']}")
                         else:
-                            # 没有检测到 multipart，保持原始 Content-Type
-                            headers["Content-Type"] = request.headers.get("content-type", content_type)
-                            print(f"📋 未检测到 multipart，保持原始 Content-Type: {headers['Content-Type']}")
-                    
-                    # 确保 content-type 头存在且唯一（不区分大小写）
-                    # 先收集所有 content-type 变体
-                    content_type_variants = {k: v for k, v in headers.items() if k.lower() == 'content-type'}
-                    
-                    if not content_type_variants:
-                        # 如果没有，设置默认值
+                            # 如果找不到 boundary，使用默认值
+                            headers["Content-Type"] = "multipart/form-data"
+                            print(f"⚠️  无法提取 boundary，使用默认 Content-Type")
+                    elif 'multipart/form-data' not in content_type:
+                        # 如果没有检测到 multipart，但路径是 upload，仍然尝试设置为 multipart
                         headers["Content-Type"] = request.headers.get("content-type", "multipart/form-data")
-                    else:
-                        # 如果有，删除所有变体，只保留一个标准格式
-                        for k in content_type_variants.keys():
-                            del headers[k]
-                        # 使用第一个找到的值（优先使用 Content-Type，否则使用第一个）
-                        if 'Content-Type' in content_type_variants:
-                            headers['Content-Type'] = content_type_variants['Content-Type']
-                        else:
-                            headers['Content-Type'] = list(content_type_variants.values())[0]
+                    
+                    # 确保 content-type 头正确传递
+                    if "Content-Type" not in headers:
+                        headers["Content-Type"] = request.headers.get("content-type", "multipart/form-data")
                     
                     print(f"📤 转发请求，Content-Type: {headers.get('Content-Type', 'N/A')}")
                     
-                    # 确保 Content-Length header 正确设置（如果不存在）
-                    if "Content-Length" not in headers and body:
-                        headers["Content-Length"] = str(len(body))
-                        print(f"📏 设置 Content-Length: {len(body)}")
-                    
-                    # 打印所有要转发的 headers（用于调试）
-                    print(f"📋 转发 Headers: {[(k, v[:100] if len(str(v)) > 100 else v) for k, v in headers.items()]}")
-                    
-                    # 使用 content=body 直接传递原始 body，避免 httpx 自动处理 multipart
                     response = await client.request(
                         method=request.method,
                         url=target_url,
                         headers=headers,
                         content=body
                     )
-                    
-                    print(f"📥 响应状态: {response.status_code}")
-                    
-                    # 记录响应内容（用于调试）
-                    try:
-                        response_content = response.text
-                        # 尝试解析为 JSON 以便更好地显示
-                        try:
-                            import json
-                            response_json = json.loads(response_content)
-                            print(f"📥 响应内容 (JSON): {json.dumps(response_json, indent=2, ensure_ascii=False)[:1000]}")
-                        except:
-                            print(f"📥 响应内容 (文本): {response_content[:500]}")
-                    except Exception as e:
-                        print(f"📥 无法读取响应内容: {e}")
-                    
-                    if response.status_code != 200:
-                        # 尝试读取错误响应内容
-                        try:
-                            error_content = response.text[:500]
-                            print(f"📥 错误响应内容: {error_content}")
-                        except:
-                            pass
                 except Exception as e:
                     print(f"❌ Error forwarding upload request: {e}")
                     import traceback
