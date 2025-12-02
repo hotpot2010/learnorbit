@@ -191,6 +191,18 @@ async def proxy_request(path: str, request: Request):
                             if boundary:
                                 headers["Content-Type"] = f"multipart/form-data; boundary={boundary}"
                                 print(f"✅ 修复 Content-Type: {headers['Content-Type']}")
+                                
+                                # 验证 body 中的分隔符是否与 boundary 匹配
+                                # body 中的分隔符格式应该是：--boundary（2个短横线 + boundary值）
+                                expected_separator = f"--{boundary}"
+                                body_separator_check = body_str[:len(expected_separator) + 10]
+                                print(f"🔍 验证分隔符匹配:")
+                                print(f"   期望的分隔符: --{boundary[:30]}...")
+                                print(f"   Body 实际开头: {body_separator_check[:50]}")
+                                if body_str.startswith(expected_separator):
+                                    print(f"   ✅ 分隔符匹配正确")
+                                else:
+                                    print(f"   ⚠️  分隔符可能不匹配，检查是否需要调整")
                             else:
                                 # 如果找不到 boundary，尝试使用原始 Content-Type（如果存在）
                                 original_ct = request.headers.get("content-type", "")
@@ -217,6 +229,15 @@ async def proxy_request(path: str, request: Request):
                         headers=headers,
                         content=body
                     )
+                    
+                    print(f"📥 响应状态: {response.status_code}")
+                    if response.status_code != 200:
+                        # 尝试读取错误响应内容
+                        try:
+                            error_content = response.text[:500]
+                            print(f"📥 错误响应内容: {error_content}")
+                        except:
+                            pass
                 except Exception as e:
                     print(f"❌ Error forwarding upload request: {e}")
                     import traceback
