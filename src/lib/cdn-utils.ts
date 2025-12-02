@@ -41,8 +41,15 @@ export async function uploadJsonToCDN(jsonContent: string, filename: string): Pr
     if (isVercel) {
       console.error(`[cdn-utils] 🌐 Vercel 环境：使用 API 路由上传`);
       
-      // 使用 Next.js API 路由处理文件上传
-      const apiUrl = '/api/upload-to-cdn';
+      // 构建内部 API 的绝对 URL
+      // 在 Vercel Serverless 中，使用 VERCEL_URL 环境变量或 localhost
+      const baseUrl = process.env.VERCEL_URL 
+        ? `https://${process.env.VERCEL_URL}`
+        : process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+      const apiUrl = `${baseUrl}/api/upload-to-cdn`;
+      
+      console.error(`[cdn-utils] 📍 内部 API URL: ${apiUrl}`);
+      
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
