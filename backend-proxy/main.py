@@ -148,18 +148,28 @@ async def proxy_request(path: str, request: Request):
                             boundary = None
                             
                             # 方法1: 从 body 开头直接提取 boundary（最准确）
-                            # multipart body 格式: --boundary\r\nContent-Disposition...
-                            # 注意：body 中可能有多个短横线，但 boundary 值本身不包含前导的 --
+                            # multipart body 格式: ------boundary\r\nContent-Disposition...
+                            # 注意：body 中的分隔符格式是 --boundary（标准前缀 -- + boundary值）
+                            # 成功的案例显示 boundary 值包含前导的 ----（4个短横线）
+                            # 例如：Content-Type: boundary=----webkitformboundary...
+                            # Body 开头：------webkitformboundary...（6个短横线）
+                            # 应该提取：----webkitformboundary...（去掉前2个标准前缀，保留4个+值）
                             if body_str.startswith('--'):
-                                # 提取第一个 boundary（去掉前导的 --）
+                                # 匹配 body 开头的完整分隔符（包括所有短横线）
                                 match = re.match(r'^--+([^\r\n]+)', body_str)
                                 if match:
-                                    boundary = match.group(1).strip()
-                                    # 验证 boundary 格式（不应该包含前导的 --）
-                                    if boundary.startswith('--'):
-                                        boundary = boundary.lstrip('-')
+                                    full_match = match.group(0)  # 完整的匹配：------boundary
+                                    
+                                    # 去掉前2个标准前缀（--），保留后面的作为 boundary 值
+                                    # 例如：------boundary -> ----boundary
+                                    if len(full_match) >= 2:
+                                        boundary = full_match[2:].strip()  # 从第3个字符开始
+                                    else:
+                                        boundary = match.group(1).strip()
+                                    
                                     print(f"📌 从 body 开头提取 boundary: {boundary}")
                                     print(f"📋 Body 开头预览: {body_str[:100]}")
+                                    print(f"📋 完整匹配长度: {len(full_match)}, 内容: {full_match[:60]}")
                             
                             # 方法2: 从 Content-Disposition 中查找 boundary
                             if not boundary:
