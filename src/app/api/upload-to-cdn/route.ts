@@ -37,8 +37,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log(`📤 API Route: 上传文件到 CDN: ${filename} (${jsonContent.length} 字符)`);
-    console.log(`📍 Upload endpoint: ${UPLOAD_ENDPOINT}`);
+    console.error(`[upload-to-cdn] 📤 API Route: 上传文件到 CDN: ${filename} (${jsonContent.length} 字符)`);
+    console.error(`[upload-to-cdn] 📍 Upload endpoint: ${UPLOAD_ENDPOINT}`);
 
     // 使用 form-data 库创建 multipart/form-data
     const FormData = (await import('form-data')).default;
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
       formData.resume();
     });
 
-    console.log(`📦 Form data size: ${formDataBuffer.length} bytes`);
+    console.error(`[upload-to-cdn] 📦 Form data size: ${formDataBuffer.length} bytes`);
 
     // 使用 fetch 发送请求
     // 将 Buffer 转换为 Uint8Array 以符合 fetch body 的类型要求
@@ -74,9 +74,14 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text().catch(() => 'Unknown error');
-      console.error(`❌ 上传失败 (${response.status}): ${errorText}`);
+      console.error(`[upload-to-cdn] ❌ 上传失败 (${response.status}): ${errorText}`);
+      console.error(`[upload-to-cdn] 📍 请求 URL: ${UPLOAD_ENDPOINT}`);
       return NextResponse.json(
-        { error: `Upload failed: ${errorText}` },
+        { 
+          error: `Upload failed: ${errorText}`,
+          status: response.status,
+          endpoint: UPLOAD_ENDPOINT
+        },
         { status: response.status }
       );
     }
@@ -113,12 +118,24 @@ export async function POST(request: NextRequest) {
       fileUrl = `${CDN_BASE_URL}${normalizedPath}`;
     }
 
-    console.log(`✅ 上传成功，CDN URL: ${fileUrl}`);
+    console.error(`[upload-to-cdn] ✅ 上传成功，CDN URL: ${fileUrl}`);
     return NextResponse.json({ url: fileUrl });
   } catch (error) {
-    console.error(`❌ 上传失败:`, error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    
+    console.error(`[upload-to-cdn] ❌ 上传失败:`, {
+      error: errorMessage,
+      stack: errorStack,
+      endpoint: UPLOAD_ENDPOINT
+    });
+    
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Upload failed' },
+      { 
+        error: errorMessage,
+        stack: process.env.NODE_ENV === 'development' ? errorStack : undefined,
+        endpoint: UPLOAD_ENDPOINT
+      },
       { status: 500 }
     );
   }
