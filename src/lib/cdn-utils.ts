@@ -31,7 +31,7 @@ interface UploadResponse {
  */
 export async function uploadJsonToCDN(jsonContent: string, filename: string): Promise<string> {
   try {
-    console.error(`[cdn-utils] 📤 上传文件到 CDN: ${filename} (${jsonContent.length} 字符)`);
+    console.log(`📤 上传文件到 CDN: ${filename} (${jsonContent.length} 字符)`);
 
     // 检测运行环境：Vercel Serverless Functions
     const isVercel = typeof process !== 'undefined' && process.env.VERCEL === '1';
@@ -39,17 +39,10 @@ export async function uploadJsonToCDN(jsonContent: string, filename: string): Pr
     // 在 Vercel Serverless 环境下，使用专门的 API 路由
     // 这样可以避免在 Serverless 环境下直接使用 form-data 和 http/https 模块的问题
     if (isVercel) {
-      console.error(`[cdn-utils] 🌐 Vercel 环境：使用 API 路由上传`);
+      console.log(`🌐 Vercel 环境：使用 API 路由上传`);
       
-      // 构建内部 API 的绝对 URL
-      // 在 Vercel Serverless 中，使用 VERCEL_URL 环境变量或 localhost
-      const baseUrl = process.env.VERCEL_URL 
-        ? `https://${process.env.VERCEL_URL}`
-        : process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-      const apiUrl = `${baseUrl}/api/upload-to-cdn`;
-      
-      console.error(`[cdn-utils] 📍 内部 API URL: ${apiUrl}`);
-      
+      // 使用 Next.js API 路由处理文件上传
+      const apiUrl = '/api/upload-to-cdn';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -73,12 +66,12 @@ export async function uploadJsonToCDN(jsonContent: string, filename: string): Pr
         throw new Error(`无法从响应中提取URL: ${JSON.stringify(result)}`);
       }
 
-      console.error(`[cdn-utils] ✅ 上传成功，CDN URL: ${fileUrl}`);
+      console.log(`✅ 上传成功，CDN URL: ${fileUrl}`);
       return fileUrl;
     }
 
     // 回退方案：Node.js 环境使用 form-data 和 http/https 模块
-    console.error(`[cdn-utils] 🔄 回退到 Node.js http/https 模块`);
+    console.log(`🔄 回退到 Node.js http/https 模块`);
     const FormData = (await import('form-data')).default;
     const formData = new FormData();
     
@@ -145,7 +138,7 @@ export async function uploadJsonToCDN(jsonContent: string, filename: string): Pr
                   fileUrl = `${CDN_BASE_URL}${normalizedPath}`;
                 }
 
-                console.error(`[cdn-utils] ✅ 上传成功，CDN URL: ${fileUrl}`);
+                console.log(`✅ 上传成功，CDN URL: ${fileUrl}`);
                 resolve(fileUrl);
               } catch (parseError) {
                 reject(new Error(`解析响应失败: ${parseError}\n响应内容: ${responseData}`));
@@ -178,7 +171,7 @@ export async function uploadJsonToCDN(jsonContent: string, filename: string): Pr
  */
 export async function downloadJsonFromCDN(url: string): Promise<any> {
   try {
-    console.error(`[cdn-utils] 📥 从 CDN 下载 JSON: ${url}`);
+    console.log(`📥 从 CDN 下载 JSON: ${url}`);
     
     const response = await fetch(url, {
       method: 'GET',
@@ -192,10 +185,10 @@ export async function downloadJsonFromCDN(url: string): Promise<any> {
     }
 
     const jsonData = await response.json();
-    console.error(`[cdn-utils] ✅ 下载成功，数据大小: ${JSON.stringify(jsonData).length} 字符`);
+    console.log(`✅ 下载成功，数据大小: ${JSON.stringify(jsonData).length} 字符`);
     return jsonData;
   } catch (error) {
-    console.error(`[cdn-utils] ❌ 下载失败:`, error);
+    console.error(`❌ 下载失败:`, error);
     throw error;
   }
 }

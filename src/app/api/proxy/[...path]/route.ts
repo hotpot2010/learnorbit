@@ -52,23 +52,52 @@ async function proxyRequest(
 
     console.log(`[Proxy] ${method} ${targetUrl}`);
 
-    // 准备请求头
-    const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-    };
+    // 检查是否是文件上传请求（multipart/form-data）
+    const contentType = request.headers.get('content-type') || '';
+    const isMultipart = contentType.includes('multipart/form-data');
+    const isFormData = contentType.includes('application/x-www-form-urlencoded');
 
     // 准备请求选项
     const options: RequestInit = {
       method,
-      headers,
     };
 
-    // 对于有 body 的请求，添加请求体
+    // 处理请求体和请求头
     if (method !== 'GET' && method !== 'DELETE') {
-      const body = await request.text();
-      if (body) {
+      if (isMultipart || isFormData) {
+        // 文件上传或表单数据：直接转发请求体和 Content-Type
+        const body = await request.arrayBuffer();
         options.body = body;
+        
+        // 复制所有请求头（排除 host）
+        const headers: HeadersInit = {};
+        request.headers.forEach((value, key) => {
+          if (key.toLowerCase() !== 'host') {
+            headers[key] = value;
+          }
+        });
+        options.headers = headers;
+      } else {
+        // JSON 请求
+        const headers: HeadersInit = {
+          'Content-Type': 'application/json',
+        };
+        options.headers = headers;
+        
+        const body = await request.text();
+        if (body) {
+          options.body = body;
+        }
       }
+    } else {
+      // GET/DELETE 请求：复制请求头
+      const headers: HeadersInit = {};
+      request.headers.forEach((value, key) => {
+        if (key.toLowerCase() !== 'host') {
+          headers[key] = value;
+        }
+      });
+      options.headers = headers;
     }
 
     // 发送请求到后端
@@ -77,11 +106,14 @@ async function proxyRequest(
     // 获取响应数据
     const data = await response.text();
 
+    // 获取响应 Content-Type
+    const responseContentType = response.headers.get('content-type') || 'application/json';
+
     // 返回响应，包含 CORS 头
     return new NextResponse(data, {
       status: response.status,
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': responseContentType,
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',

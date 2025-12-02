@@ -260,7 +260,7 @@ export async function PUT(
     const notesData = requestData.notes || [];
     const marksData = requestData.marks || [];
     
-    console.error('[PUT] 📥 接收到课程更新数据:', {
+    console.log('📥 接收到课程更新数据:', {
       courseId,
       hasPlan: !!learningPlanData,
       planType: Array.isArray(learningPlanData) ? 'array' : typeof learningPlanData,
@@ -328,10 +328,9 @@ export async function PUT(
     // 上传整个 coursePlan 对象到 CDN
     const jsonContent = JSON.stringify(fullCoursePlan, null, 2);
     const filename = `course_plan_${courseId}_${Date.now()}_${Math.random().toString(36).substring(7)}.json`;
-    console.error('[PUT] 📤 开始上传到 CDN:', { filename, contentLength: jsonContent.length });
     const planUrl = await uploadJsonToCDN(jsonContent, filename);
     
-    console.error('[PUT] ✅ 整个 coursePlan 已上传到 CDN:', planUrl);
+    console.log('✅ 整个 coursePlan 已上传到 CDN:', planUrl);
 
     // 更新课程（coursePlan 字段设为空对象，因为数据已存储在 CDN）
     const [updatedCourse] = await db
@@ -344,28 +343,16 @@ export async function PUT(
       .where(and(eq(userCourses.id, courseId), eq(userCourses.userId, userId)))
       .returning();
 
-    console.error('[PUT] ✅ 课程更新成功:', { courseId: updatedCourse.id });
+    console.log('✅ 课程更新成功:', { courseId: updatedCourse.id });
 
     return NextResponse.json({ 
       course: updatedCourse,
       message: 'Course updated successfully'
     }, { status: 200 });
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    const errorStack = error instanceof Error ? error.stack : undefined;
-    
-    console.error('[PUT] ❌ Error updating course:', {
-      error: errorMessage,
-      stack: errorStack,
-      courseId: (await params).courseId
-    });
-    
+    console.error('Error updating course:', error);
     return NextResponse.json(
-      { 
-        error: 'Failed to update course',
-        details: process.env.NODE_ENV === 'development' ? errorMessage : undefined,
-        stack: process.env.NODE_ENV === 'development' ? errorStack : undefined
-      },
+      { error: 'Failed to update course' },
       { status: 500 }
     );
   }
