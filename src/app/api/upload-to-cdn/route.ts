@@ -53,6 +53,9 @@ export async function POST(request: NextRequest) {
     // 获取 headers（包含 boundary）
     const headers = formData.getHeaders() as Record<string, string>;
     
+    // 确保 Content-Type 包含 boundary
+    console.log(`📋 FormData headers:`, JSON.stringify(headers, null, 2));
+    
     // 将 form-data 转换为 Buffer（在 Serverless 环境下更可靠）
     const formDataBuffer = await new Promise<Buffer>((resolve, reject) => {
       const chunks: Buffer[] = [];
@@ -63,9 +66,18 @@ export async function POST(request: NextRequest) {
     });
 
     console.log(`📦 Form data size: ${formDataBuffer.length} bytes`);
+    
+    // 验证 Content-Type header
+    if (!headers['content-type'] && !headers['Content-Type']) {
+      console.warn(`⚠️  Warning: Content-Type header missing from formData.getHeaders()`);
+    } else {
+      const contentType = headers['content-type'] || headers['Content-Type'];
+      console.log(`✅ Content-Type header: ${contentType}`);
+    }
 
     // 使用 fetch 发送请求
     // 将 Buffer 转换为 Uint8Array 以符合 fetch body 的类型要求
+    // 注意：不要手动设置 Content-Type，让 formData.getHeaders() 返回的 header 自动处理
     const response = await fetch(UPLOAD_ENDPOINT, {
       method: 'POST',
       headers: headers,
