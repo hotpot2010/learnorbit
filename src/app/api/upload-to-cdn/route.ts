@@ -5,7 +5,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+// 在 Serverless 函数中，NEXT_PUBLIC_ 前缀的环境变量可能不可用
+// 优先使用普通环境变量，回退到 NEXT_PUBLIC_API_URL
+const API_BASE_URL = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const UPLOAD_ENDPOINT = `${API_BASE_URL}/open-api/upload`;
 const CDN_BASE_URL = 'http://file.gsxservice.com';
 
@@ -39,6 +41,12 @@ export async function POST(request: NextRequest) {
 
     console.error(`[upload-to-cdn] 📤 API Route: 上传文件到 CDN: ${filename} (${jsonContent.length} 字符)`);
     console.error(`[upload-to-cdn] 📍 Upload endpoint: ${UPLOAD_ENDPOINT}`);
+    console.error(`[upload-to-cdn] 🔧 环境变量检查:`, {
+      API_URL: process.env.API_URL,
+      NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+      API_BASE_URL,
+      UPLOAD_ENDPOINT
+    });
 
     // 使用 form-data 库创建 multipart/form-data
     const FormData = (await import('form-data')).default;
@@ -66,11 +74,30 @@ export async function POST(request: NextRequest) {
 
     // 使用 fetch 发送请求
     // 将 Buffer 转换为 Uint8Array 以符合 fetch body 的类型要求
-    const response = await fetch(UPLOAD_ENDPOINT, {
-      method: 'POST',
-      headers: headers,
-      body: new Uint8Array(formDataBuffer),
-    });
+    console.error(`[upload-to-cdn] 🚀 开始发送请求到后端 API...`);
+    
+    let response: Response;
+    try {
+      response = await fetch(UPLOAD_ENDPOINT, {
+        method: 'POST',
+        headers: headers,
+        body: new Uint8Array(formDataBuffer),
+      });
+      
+      console.error(`[upload-to-cdn] 📥 收到响应:`, {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok
+      });
+    } catch (fetchError) {
+      const errorMessage = fetchError instanceof Error ? fetchError.message : String(fetchError);
+      console.error(`[upload-to-cdn] ❌ Fetch 请求失败:`, {
+        error: errorMessage,
+        endpoint: UPLOAD_ENDPOINT,
+        stack: fetchError instanceof Error ? fetchError.stack : undefined
+      });
+      throw new Error(`无法连接到后端 API (${UPLOAD_ENDPOINT}): ${errorMessage}`);
+    }
 
     if (!response.ok) {
       const errorText = await response.text().catch(() => 'Unknown error');
