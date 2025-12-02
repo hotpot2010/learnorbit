@@ -31,7 +31,47 @@ interface UploadResponse {
  */
 export async function uploadJsonToCDN(jsonContent: string, filename: string): Promise<string> {
   try {
-    // 创建 FormData（Node.js 环境）
+    console.log(`📤 上传文件到 CDN: ${filename} (${jsonContent.length} 字符)`);
+
+    // 检测运行环境：Vercel Serverless Functions
+    const isVercel = typeof process !== 'undefined' && process.env.VERCEL === '1';
+    
+    // 在 Vercel Serverless 环境下，使用专门的 API 路由
+    // 这样可以避免在 Serverless 环境下直接使用 form-data 和 http/https 模块的问题
+    if (isVercel) {
+      console.log(`🌐 Vercel 环境：使用 API 路由上传`);
+      
+      // 使用 Next.js API 路由处理文件上传
+      const apiUrl = '/api/upload-to-cdn';
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          jsonContent,
+          filename,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        throw new Error(`上传失败 (${response.status}): ${errorData.error || 'Unknown error'}`);
+      }
+
+      const result = await response.json();
+      const fileUrl = result.url;
+
+      if (!fileUrl) {
+        throw new Error(`无法从响应中提取URL: ${JSON.stringify(result)}`);
+      }
+
+      console.log(`✅ 上传成功，CDN URL: ${fileUrl}`);
+      return fileUrl;
+    }
+
+    // 回退方案：Node.js 环境使用 form-data 和 http/https 模块
+    console.log(`🔄 回退到 Node.js http/https 模块`);
     const FormData = (await import('form-data')).default;
     const formData = new FormData();
     
@@ -42,12 +82,10 @@ export async function uploadJsonToCDN(jsonContent: string, filename: string): Pr
       contentType: 'application/json',
     });
 
-    console.log(`📤 上传文件到 CDN: ${filename} (${buffer.length} bytes)`);
-
     // 获取 headers（包含 boundary）
     const headers = formData.getHeaders();
     
-    // 使用 Node.js 的 http/https 模块发送请求（更好的 form-data 支持）
+    // 使用 Node.js 的 http/https 模块发送请求
     const url = new URL(UPLOAD_ENDPOINT);
     const httpModule = url.protocol === 'https:' ? await import('https') : await import('http');
     

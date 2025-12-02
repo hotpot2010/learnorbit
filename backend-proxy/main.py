@@ -129,9 +129,45 @@ async def proxy_request(path: str, request: Request):
                 try:
                     body = await request.body()
                     print(f"📦 Body size: {len(body)} bytes")
-                    # 确保 content-type 头正确传递
-                    if "content-type" not in headers:
+                    print(f"📋 Original Content-Type: {content_type}")
+                    
+                    # 检查 body 是否包含 multipart boundary（即使 content-type 被错误设置为 application/json）
+                    body_str = body[:200].decode('utf-8', errors='ignore') if len(body) > 0 else ''
+                    has_multipart_boundary = 'Content-Disposition' in body_str or 'multipart' in body_str.lower()
+                    
+                    # 如果检测到 multipart 数据但 content-type 不对，修复它
+                    if has_multipart_boundary and 'multipart/form-data' not in content_type:
+                        print(f"⚠️  检测到 multipart 数据但 Content-Type 错误，尝试修复")
+                        # 尝试从 body 中提取 boundary
+                        boundary_match = None
+                        if body_str:
+                            # 查找 boundary（通常在 Content-Disposition 或开头）
+                            import re
+                            boundary_pattern = r'boundary=([^\s;]+)'
+                            boundary_match = re.search(boundary_pattern, body_str)
+                            if not boundary_match:
+                                # 尝试从 body 开头查找
+                                boundary_pattern2 = r'--([^\r\n]+)'
+                                boundary_match = re.search(boundary_pattern2, body_str)
+                        
+                        if boundary_match:
+                            boundary = boundary_match.group(1).strip('"\'')
+                            headers["Content-Type"] = f"multipart/form-data; boundary={boundary}"
+                            print(f"✅ 修复 Content-Type: {headers['Content-Type']}")
+                        else:
+                            # 如果找不到 boundary，使用默认值
+                            headers["Content-Type"] = "multipart/form-data"
+                            print(f"⚠️  无法提取 boundary，使用默认 Content-Type")
+                    elif 'multipart/form-data' not in content_type:
+                        # 如果没有检测到 multipart，但路径是 upload，仍然尝试设置为 multipart
                         headers["Content-Type"] = request.headers.get("content-type", "multipart/form-data")
+                    
+                    # 确保 content-type 头正确传递
+                    if "Content-Type" not in headers:
+                        headers["Content-Type"] = request.headers.get("content-type", "multipart/form-data")
+                    
+                    print(f"📤 转发请求，Content-Type: {headers.get('Content-Type', 'N/A')}")
+                    
                     response = await client.request(
                         method=request.method,
                         url=target_url,
