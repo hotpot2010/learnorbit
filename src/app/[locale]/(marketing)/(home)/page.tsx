@@ -72,31 +72,31 @@ const getPublicCoursesCached = unstable_cache(async (): Promise<PublicCourseCard
       // 优先使用从 CDN 下载的数据，否则使用数据库数据
       const coursePlanData = c.coursePlanData || c.coursePlan;
       const rawPlan = coursePlanData?.plan;
-      let coursePlan: any;
-      let planSteps: any[];
-      
-      // 兼容新旧格式
-      if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
-        // 新格式：rawPlan 是包含 title、description、plan 的对象
-        coursePlan = rawPlan;
-        planSteps = rawPlan.plan || [];
-      } else {
-        // 旧格式：rawPlan 直接是步骤数组
-        coursePlan = {};
-        planSteps = Array.isArray(rawPlan) ? rawPlan : [];
-      }
-      
-      // 优先使用 instruction 中的标题和描述，回退到第一步的信息
-      const title = coursePlan.title || planSteps[0]?.title || 'Untitled Course';
-      const description = coursePlan.description || planSteps[0]?.description || 'No description';
-      
-      const firstVideo = planSteps[0]?.videos?.[0];
-      const coverImage = firstVideo?.cover || '/images/blog/post-1.png';
-      const rating = 4; // 默认4星评级
-      const type = planSteps[0]?.type || 'theory';
-      const difficulty = (type === 'coding' ? 'intermediate' : 'beginner') as 'beginner'|'intermediate'|'advanced';
-      return { id: c.id, title, description, coverImage, rating, difficulty, ownerId: c.userId, createdAt: c.createdAt };
-    });
+    let coursePlan: any;
+    let planSteps: any[];
+    
+    // 兼容新旧格式
+    if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
+      // 新格式：rawPlan 是包含 title、description、plan 的对象
+      coursePlan = rawPlan;
+      planSteps = rawPlan.plan || [];
+    } else {
+      // 旧格式：rawPlan 直接是步骤数组
+      coursePlan = {};
+      planSteps = Array.isArray(rawPlan) ? rawPlan : [];
+    }
+    
+    // 优先使用 instruction 中的标题和描述，回退到第一步的信息
+    const title = coursePlan.title || planSteps[0]?.title || 'Untitled Course';
+    const description = coursePlan.description || planSteps[0]?.description || 'No description';
+    
+    const firstVideo = planSteps[0]?.videos?.[0];
+    const coverImage = firstVideo?.cover || '/images/blog/post-1.png';
+    const rating = 4; // 默认4星评级
+    const type = planSteps[0]?.type || 'theory';
+    const difficulty = (type === 'coding' ? 'intermediate' : 'beginner') as 'beginner'|'intermediate'|'advanced';
+    return { id: c.id, title, description, coverImage, rating, difficulty, ownerId: c.userId, createdAt: c.createdAt };
+  });
 }, ['public-courses'], { revalidate: 300, tags: ['public-courses'] });
 
 /**

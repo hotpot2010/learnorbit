@@ -51,35 +51,35 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
 				}
 				
 				const rawPlan = coursePlanData?.plan;
-				let coursePlan: any;
-				let planSteps: any[];
-				
-				// 兼容新旧格式
-				if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
-					// 新格式：rawPlan 是包含 title、description、plan 的对象
-					coursePlan = rawPlan;
-					planSteps = rawPlan.plan || [];
-				} else {
-					// 旧格式：rawPlan 直接是步骤数组
-					coursePlan = {};
-					planSteps = Array.isArray(rawPlan) ? rawPlan : [];
-				}
-				
-				// 优先使用 instruction 中的标题，回退到第一步的标题
-				const titleInDb = coursePlan.title || planSteps[0]?.title || '';
-				const slugifiedTitle = slugifyTitle(titleInDb);
+			let coursePlan: any;
+			let planSteps: any[];
+			
+			// 兼容新旧格式
+			if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
+				// 新格式：rawPlan 是包含 title、description、plan 的对象
+				coursePlan = rawPlan;
+				planSteps = rawPlan.plan || [];
+			} else {
+				// 旧格式：rawPlan 直接是步骤数组
+				coursePlan = {};
+				planSteps = Array.isArray(rawPlan) ? rawPlan : [];
+			}
+			
+			// 优先使用 instruction 中的标题，回退到第一步的标题
+			const titleInDb = coursePlan.title || planSteps[0]?.title || '';
+			const slugifiedTitle = slugifyTitle(titleInDb);
 				const isPublic = coursePlanData?.isPublic === true;
-				const titleMatches = slugifiedTitle === titlePart;
-				
-				console.log('🔍 检查课程:', {
-					id: r.id,
-					format: Array.isArray(rawPlan) ? '旧格式' : '新格式',
-					title: titleInDb,
+			const titleMatches = slugifiedTitle === titlePart;
+			
+			console.log('🔍 检查课程:', {
+				id: r.id,
+				format: Array.isArray(rawPlan) ? '旧格式' : '新格式',
+				title: titleInDb,
 					isPublic,
 					titleMatches,
-					match: isPublic && titleMatches
-				});
-				
+				match: isPublic && titleMatches
+			});
+			
 				return isPublic && titleMatches ? { ...r, coursePlanData } : null;
 			})
 		);
@@ -107,24 +107,24 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
 					}
 					
 					if (!(coursePlanData?.isPublic === true)) return null;
-					
+				
 					const rawPlan = coursePlanData?.plan;
-					let coursePlan: any;
-					let planSteps: any[];
-					
-					// 兼容新旧格式
-					if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
-						// 新格式：rawPlan 是包含 title、description、plan 的对象
-						coursePlan = rawPlan;
-						planSteps = rawPlan.plan || [];
-					} else {
-						// 旧格式：rawPlan 直接是步骤数组
-						coursePlan = {};
-						planSteps = Array.isArray(rawPlan) ? rawPlan : [];
-					}
-					
-					// 优先使用 instruction 中的标题，回退到第一步的标题
-					const titleInDb = coursePlan.title || planSteps[0]?.title || '';
+				let coursePlan: any;
+				let planSteps: any[];
+				
+				// 兼容新旧格式
+				if (rawPlan && typeof rawPlan === 'object' && !Array.isArray(rawPlan) && (rawPlan.title || rawPlan.description || rawPlan.introduction || rawPlan.plan)) {
+					// 新格式：rawPlan 是包含 title、description、plan 的对象
+					coursePlan = rawPlan;
+					planSteps = rawPlan.plan || [];
+				} else {
+					// 旧格式：rawPlan 直接是步骤数组
+					coursePlan = {};
+					planSteps = Array.isArray(rawPlan) ? rawPlan : [];
+				}
+				
+				// 优先使用 instruction 中的标题，回退到第一步的标题
+				const titleInDb = coursePlan.title || planSteps[0]?.title || '';
 					const titleMatches = slugifyTitle(titleInDb) === titlePart;
 					
 					return titleMatches ? { ...r, coursePlanData } : null;

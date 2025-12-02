@@ -114,44 +114,112 @@ async def proxy_request(path: str, request: Request):
             )
         elif request.method in ["POST", "PUT", "PATCH"]:
             # 需要处理请求体的请求
-            content_type = request.headers.get("content-type", "")
+            content_type = request.headers.get("content-type", "").lower()
             
-            if "multipart/form-data" in content_type:
-                # 处理文件上传
-                form_data = await request.form()
-                files = []
-                data = {}
-                
-                for key, value in form_data.items():
-                    if isinstance(value, UploadFile):
-                        files.append((key, (value.filename, await value.read(), value.content_type)))
-                    else:
-                        data[key] = value
-                
-                if files:
+            print(f"📋 Request Content-Type: {content_type}")
+            print(f"📋 Request path: {path}")
+            
+            # 对于 /upload 路径，直接转发原始 body，避免解析错误
+            # 这样可以确保文件上传请求能够正确转发
+            is_upload_path = path.endswith("/upload") or "/upload" in path
+            
+            if is_upload_path:
+                # 对于上传路径，直接读取原始 body 并转发，不进行解析
+                print(f"📤 Processing upload path: forwarding raw body")
+                try:
+                    body = await request.body()
+                    print(f"📦 Body size: {len(body)} bytes")
+                    # 确保 content-type 头正确传递
+                    if "content-type" not in headers:
+                        headers["Content-Type"] = request.headers.get("content-type", "multipart/form-data")
                     response = await client.request(
                         method=request.method,
                         url=target_url,
                         headers=headers,
-                        files=files,
-                        data=data
+                        content=body
                     )
-                else:
-                    response = await client.request(
-                        method=request.method,
-                        url=target_url,
-                        headers=headers,
-                        data=data
+                except Exception as e:
+                    print(f"❌ Error forwarding upload request: {e}")
+                    import traceback
+                    traceback.print_exc()
+                    raise HTTPException(
+                        status_code=500,
+                        detail=f"Error forwarding file upload: {str(e)}"
+                    )
+            elif "multipart/form-data" in content_type:
+                # 处理其他 multipart/form-data 请求（非上传路径）
+                print(f"📤 Processing as multipart/form-data")
+                try:
+                    form_data = await request.form()
+                    files = []
+                    data = {}
+                    
+                    print(f"📦 Form fields count: {len(form_data)}")
+                    for key, value in form_data.items():
+                        if isinstance(value, UploadFile):
+                            # 读取文件内容
+                            file_content = await value.read()
+                            files.append((key, (value.filename, file_content, value.content_type)))
+                            print(f"   📎 File: {key} = {value.filename} ({len(file_content)} bytes)")
+                        else:
+                            data[key] = value
+                            print(f"   📝 Data: {key} = {str(value)[:100]}")
+                    
+                    print(f"📤 Forwarding: {len(files)} file(s), {len(data)} data field(s)")
+                    
+                    if files:
+                        response = await client.request(
+                            method=request.method,
+                            url=target_url,
+                            headers=headers,
+                            files=files,
+                            data=data
+                        )
+                    else:
+                        response = await client.request(
+                            method=request.method,
+                            url=target_url,
+                            headers=headers,
+                            data=data
+                        )
+                except Exception as e:
+                    print(f"❌ Error processing multipart/form-data: {e}")
+                    import traceback
+                    traceback.print_exc()
+                    raise HTTPException(
+                        status_code=400,
+                        detail=f"Error processing multipart/form-data: {str(e)}"
                     )
             elif "application/json" in content_type:
                 # JSON 请求
-                body = await request.json()
-                response = await client.request(
-                    method=request.method,
-                    url=target_url,
-                    headers=headers,
-                    json=body
-                )
+                print(f"📋 Processing as JSON request")
+                try:
+                    body = await request.json()
+                    response = await client.request(
+                        method=request.method,
+                        url=target_url,
+                        headers=headers,
+                        json=body
+                    )
+                except Exception as e:
+                    print(f"❌ Error parsing JSON: {e}")
+                    import traceback
+                    traceback.print_exc()
+                    # 如果 JSON 解析失败，尝试作为原始内容发送
+                    try:
+                        body = await request.body()
+                        response = await client.request(
+                            method=request.method,
+                            url=target_url,
+                            headers=headers,
+                            content=body
+                        )
+                    except Exception as e2:
+                        print(f"❌ Error sending raw body: {e2}")
+                        raise HTTPException(
+                            status_code=400,
+                            detail=f"Error processing request body: {str(e)}"
+                        )
             else:
                 # 其他类型（如 application/x-www-form-urlencoded）
                 body = await request.body()
