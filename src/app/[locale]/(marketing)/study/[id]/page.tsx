@@ -3297,10 +3297,15 @@ export default function StudyPage({ params }: StudyPageProps) {
           
           const uploadUrl = buildApiUrl(API_ENDPOINTS.fileUpload);
           console.log(`📤 上传图片到: ${uploadUrl}`);
+          console.log(`📋 文件信息: name=${file.name}, size=${file.size}, type=${file.type}`);
           
+          // 注意：不要手动设置 Content-Type，让浏览器自动设置 multipart/form-data 和 boundary
+          // 如果手动设置 Content-Type，会导致 boundary 不匹配
           const response = await fetch(uploadUrl, {
             method: 'POST',
             body: formData,
+            // 显式不设置 Content-Type，让浏览器自动处理
+            // headers 中不应该包含 Content-Type，否则会覆盖 FormData 自动生成的 Content-Type
           });
           
           if (!response.ok) {
