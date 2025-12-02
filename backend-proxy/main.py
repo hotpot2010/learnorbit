@@ -131,6 +131,20 @@ async def proxy_request(path: str, request: Request):
                     print(f"📦 Body size: {len(body)} bytes")
                     print(f"📋 Original Content-Type: {content_type}")
                     
+                    # 记录 body 的哈希值（用于验证 body 是否一致）
+                    import hashlib
+                    body_hash = hashlib.md5(body).hexdigest()
+                    print(f"🔐 Body MD5 hash: {body_hash}")
+                    
+                    # 记录 body 的前100个字节（用于调试）
+                    body_preview = body[:100] if len(body) > 100 else body
+                    print(f"📋 Body preview (first 100 bytes): {body_preview.hex()}")
+                    try:
+                        body_preview_str = body_preview.decode('utf-8', errors='ignore')
+                        print(f"📋 Body preview (text): {body_preview_str[:100]}")
+                    except:
+                        pass
+                    
                     # 如果 Content-Type 已经是 multipart/form-data，直接使用（不要修改）
                     if 'multipart/form-data' in content_type:
                         # 删除所有可能的 content-type 变体（不区分大小写）
