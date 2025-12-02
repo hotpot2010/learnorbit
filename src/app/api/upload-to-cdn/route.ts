@@ -4,30 +4,10 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { API_ENDPOINTS } from '@/config/api';
 
-const BACKEND_URL = 'https://learnorbit.gaotu.cn';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const UPLOAD_ENDPOINT = `${API_BASE_URL}/open-api/upload`;
 const CDN_BASE_URL = 'http://file.gsxservice.com';
-
-/**
- * 获取上传端点 URL
- * 在生产环境（Vercel）使用内部代理，开发环境直接调用后端
- */
-function getUploadEndpoint(request: NextRequest): string {
-  // 检查是否是 Vercel 生产环境
-  const isVercel = process.env.VERCEL === '1';
-  const isProduction = process.env.NODE_ENV === 'production';
-  
-  // 在 Vercel 生产环境，使用内部代理路由
-  if (isVercel || isProduction) {
-    // 使用当前请求的 origin 构建内部 API 调用 URL
-    const origin = request.nextUrl.origin;
-    return `${origin}/api/proxy${API_ENDPOINTS.fileUpload}`;
-  }
-  
-  // 开发环境：直接使用后端 URL
-  return `${BACKEND_URL}${API_ENDPOINTS.fileUpload}`;
-}
 
 interface UploadResponse {
   total?: number;
@@ -57,9 +37,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const uploadEndpoint = getUploadEndpoint(request);
     console.log(`📤 API Route: 上传文件到 CDN: ${filename} (${jsonContent.length} 字符)`);
-    console.log(`📍 Upload endpoint: ${uploadEndpoint}`);
+    console.log(`📍 Upload endpoint: ${UPLOAD_ENDPOINT}`);
 
     // 使用 form-data 库创建 multipart/form-data
     const FormData = (await import('form-data')).default;
@@ -87,7 +66,7 @@ export async function POST(request: NextRequest) {
 
     // 使用 fetch 发送请求
     // 将 Buffer 转换为 Uint8Array 以符合 fetch body 的类型要求
-    const response = await fetch(uploadEndpoint, {
+    const response = await fetch(UPLOAD_ENDPOINT, {
       method: 'POST',
       headers: headers,
       body: new Uint8Array(formDataBuffer),
