@@ -65,10 +65,11 @@ export async function POST(request: NextRequest) {
     console.log(`📦 Form data size: ${formDataBuffer.length} bytes`);
 
     // 使用 fetch 发送请求
+    // 将 Buffer 转换为 Uint8Array 以符合 fetch body 的类型要求
     const response = await fetch(UPLOAD_ENDPOINT, {
       method: 'POST',
       headers: headers,
-      body: formDataBuffer,
+      body: new Uint8Array(formDataBuffer),
     });
 
     if (!response.ok) {
