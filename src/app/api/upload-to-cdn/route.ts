@@ -77,10 +77,27 @@ export async function POST(request: NextRequest) {
 
     // 使用 fetch 发送请求
     // 将 Buffer 转换为 Uint8Array 以符合 fetch body 的类型要求
-    // 注意：不要手动设置 Content-Type，让 formData.getHeaders() 返回的 header 自动处理
+    // 注意：确保 Content-Type header 被正确传递，不要被 fetch 自动修改
+    const fetchHeaders = new Headers();
+    for (const [key, value] of Object.entries(headers)) {
+      fetchHeaders.set(key, value);
+    }
+    
+    // 确保 Content-Type 被正确设置
+    const contentType = headers['content-type'] || headers['Content-Type'];
+    if (contentType) {
+      fetchHeaders.set('Content-Type', contentType);
+      console.log(`✅ 设置 Content-Type header: ${contentType}`);
+    } else {
+      console.warn(`⚠️  Content-Type header 缺失`);
+    }
+    
+    console.log(`📤 发送请求到: ${UPLOAD_ENDPOINT}`);
+    console.log(`📋 请求 Headers:`, Object.fromEntries(fetchHeaders.entries()));
+    
     const response = await fetch(UPLOAD_ENDPOINT, {
       method: 'POST',
-      headers: headers,
+      headers: fetchHeaders,
       body: new Uint8Array(formDataBuffer),
     });
 

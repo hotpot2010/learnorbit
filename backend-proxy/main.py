@@ -203,6 +203,22 @@ async def proxy_request(path: str, request: Request):
                                     print(f"   ✅ 分隔符匹配正确")
                                 else:
                                     print(f"   ⚠️  分隔符可能不匹配，检查是否需要调整")
+                                
+                                # 验证 body 结尾是否有正确的结束标记
+                                body_end = body[-100:].decode('utf-8', errors='ignore') if len(body) > 100 else body.decode('utf-8', errors='ignore')
+                                expected_end = f"--{boundary}--"
+                                if expected_end in body_end:
+                                    print(f"   ✅ Body 结尾标记正确")
+                                else:
+                                    print(f"   ⚠️  Body 结尾可能缺少结束标记")
+                                    print(f"   期望的结尾: --{boundary}--")
+                                    print(f"   实际结尾: {body_end[-50:]}")
+                                
+                                # 检查 body 中是否包含文件内容
+                                if 'Content-Disposition' in body_str and 'filename=' in body_str:
+                                    print(f"   ✅ Body 包含文件字段")
+                                else:
+                                    print(f"   ⚠️  Body 可能不包含文件字段")
                             else:
                                 # 如果找不到 boundary，尝试使用原始 Content-Type（如果存在）
                                 original_ct = request.headers.get("content-type", "")
@@ -223,6 +239,15 @@ async def proxy_request(path: str, request: Request):
                     
                     print(f"📤 转发请求，Content-Type: {headers.get('Content-Type', 'N/A')}")
                     
+                    # 确保 Content-Length header 正确设置（如果不存在）
+                    if "Content-Length" not in headers and body:
+                        headers["Content-Length"] = str(len(body))
+                        print(f"📏 设置 Content-Length: {len(body)}")
+                    
+                    # 打印所有要转发的 headers（用于调试）
+                    print(f"📋 转发 Headers: {[(k, v[:100] if len(str(v)) > 100 else v) for k, v in headers.items()]}")
+                    
+                    # 使用 content=body 直接传递原始 body，避免 httpx 自动处理 multipart
                     response = await client.request(
                         method=request.method,
                         url=target_url,
