@@ -253,14 +253,19 @@ class BilibiliService:
         if url.startswith('BV'):
             url = f'https://www.bilibili.com/video/{url}'
         
-        # 尝试从缓存加载序列信息
+        # 🔧 移除URL中的?p=参数，确保获取整个系列的信息
+        # 如果URL包含?p=参数，yt-dlp可能只返回单个分P的信息，导致total_parts为0或1
+        base_url = url.split('?')[0] if '?' in url else url
+        original_url = url  # 保留原始URL用于缓存键
+        
+        # 尝试从缓存加载序列信息（使用基础URL作为缓存键）
         if use_cache:
-            cached_series = self.series_cache.get_cached_series(url)
+            cached_series = self.series_cache.get_cached_series(base_url)
             if cached_series:
                 print(f"✅ 使用缓存的序列信息: {cached_series.get('title', '')[:50]}...")
                 return cached_series
         
-        print(f"📋 Extracting video info: {url}")
+        print(f"📋 Extracting video info: {base_url}")
         
         # 重试配置
         retry_delays = [2, 5, 10]  # 递增延迟：2秒、5秒、10秒
@@ -273,9 +278,18 @@ class BilibiliService:
                     print(f"🔄 Retry attempt {attempt}/{max_retries} after {delay}s delay...")
                     time.sleep(delay)
                 
-                # 如果使用代理，获取代理IP（同步方式）
+                # 🔧 优化：优先使用直接连接，失败后再使用代理
+                # 第一次尝试：不使用代理，直接连接
+                # 后续重试：如果配置了代理且第一次失败，使用代理
                 proxy_url = None
-                if self.use_proxy and proxy_service:
+                use_proxy_this_attempt = False
+                
+                # 只有在重试时才考虑使用代理（第一次尝试直接连接）
+                if attempt > 0 and self.use_proxy and proxy_service:
+                    use_proxy_this_attempt = True
+                    print(f"📡 直接连接失败，尝试使用代理...")
+                
+                if use_proxy_this_attempt:
                     try:
                         import asyncio
                         # 尝试获取当前事件循环
@@ -331,6 +345,9 @@ class BilibiliService:
                         print(f"🌐 Using proxy: {proxy_url}")
                     else:
                         print(f"⚠️  No proxy available, using direct connection")
+                else:
+                    # 第一次尝试，使用直接连接
+                    print(f"🌐 Using direct connection (no proxy)")
                 
                 ydl_opts = {
                     'quiet': True,
@@ -350,8 +367,8 @@ class BilibiliService:
                         'Sec-Fetch-Site': 'none',
                         'Cache-Control': 'max-age=0',
                     },
-                    # 重试配置
-                    'socket_timeout': 30,
+                    # 超时配置 - 使用代理时增加超时时间
+                    'socket_timeout': 60 if proxy_url else 30,  # 代理连接需要更长时间
                     'retries': 1,  # yt-dlp内部重试设为1，我们手动控制重试
                 }
                 
@@ -361,72 +378,186 @@ class BilibiliService:
                     ydl_opts['nocheckcertificate'] = True  # 禁用SSL证书验证，避免代理导致的SSL错误
                     print(f"⚠️  SSL certificate verification disabled for proxy connection")
                 
-                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                    info = ydl.extract_info(url, download=False)
+                # 🔧 添加进度日志和超时提示
+                print(f"⏳ 开始提取视频信息（超时时间: {ydl_opts['socket_timeout']}秒）...")
+                if proxy_url:
+                    print(f"📡 通过代理连接中，可能需要较长时间...")
                 
-                    # 检查是否是多P视频
-                    is_playlist = 'entries' in info
-                    total_parts = len(info.get('entries', [])) if is_playlist else 1
+                start_time = time.time()
+                progress_printed = False
+                
+                # 使用后台线程定期打印进度
+                import threading
+                stop_progress = threading.Event()
+                
+                def print_progress():
+                    """每10秒打印一次进度"""
+                    interval = 10
+                    while not stop_progress.is_set():
+                        if stop_progress.wait(timeout=interval):
+                            break
+                        elapsed = time.time() - start_time
+                        if elapsed > interval:
+                            print(f"⏳ 仍在处理中...（已用时 {int(elapsed)}秒）")
+                            nonlocal progress_printed
+                            progress_printed = True
+                
+                progress_thread = threading.Thread(target=print_progress, daemon=True)
+                progress_thread.start()
+                
+                try:
+                    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                        info = ydl.extract_info(base_url, download=False)  # 使用基础URL
                     
-                    print(f"✅ Successfully extracted video info (attempt {attempt + 1}/{max_retries})")
+                    stop_progress.set()
+                    elapsed_time = time.time() - start_time
+                    print(f"✅ 视频信息提取完成（耗时 {elapsed_time:.1f}秒）")
+                except Exception as e:
+                    stop_progress.set()
+                    elapsed_time = time.time() - start_time
+                    if elapsed_time > ydl_opts['socket_timeout']:
+                        print(f"⏱️  提取超时（耗时 {elapsed_time:.1f}秒，超过 {ydl_opts['socket_timeout']}秒）")
+                    raise
+                
+                # 检查是否是多P视频
+                is_playlist = 'entries' in info
+                entries = info.get('entries', [])
+                total_parts = len(entries) if is_playlist else 1
+                
+                # 🔧 修复：如果entries为空但is_playlist为True，可能是单视频被误判
+                # 或者URL包含?p=参数导致只返回单个分P
+                if is_playlist and total_parts == 0:
+                    print(f"⚠️  检测到entries为空，可能是单视频或URL参数问题，尝试重新提取...")
+                    # 尝试使用原始URL重新提取（如果原始URL包含?p=参数）
+                    if original_url != base_url:
+                        try:
+                            info_with_p = ydl.extract_info(original_url, download=False)
+                            if info_with_p is None:
+                                print(f"⚠️  重新提取返回None，跳过")
+                            # 如果原始URL返回的是单视频，检查是否有n_entries字段
+                            elif 'n_entries' in info_with_p and info_with_p['n_entries'] > 1:
+                                total_parts = info_with_p['n_entries']
+                                print(f"✅ 从n_entries字段获取到分P数: {total_parts}")
+                                # 重新使用基础URL提取完整系列信息
+                                new_info = ydl.extract_info(base_url, download=False)
+                                if new_info is not None:
+                                    info = new_info  # 只在成功时更新info
+                                    entries = info.get('entries', [])
+                                    total_parts = len(entries) if entries else info_with_p['n_entries']
+                                else:
+                                    print(f"⚠️  重新提取基础URL返回None，使用n_entries值")
+                        except Exception as e:
+                            print(f"⚠️  重新提取失败: {e}，继续使用原始info")
+                
+                # 🔧 额外检查：如果total_parts为0但应该是多P视频，尝试从n_entries获取
+                if total_parts == 0 and info is not None and 'n_entries' in info and info['n_entries'] > 1:
+                    total_parts = info['n_entries']
+                    print(f"✅ 从n_entries字段获取到分P数: {total_parts}")
+                    # 如果entries为空，尝试重新提取完整系列
+                    if not entries:
+                        try:
+                            # 强制提取完整播放列表
+                            ydl_opts_playlist = ydl_opts.copy()
+                            ydl_opts_playlist['noplaylist'] = False
+                            with yt_dlp.YoutubeDL(ydl_opts_playlist) as ydl_playlist:
+                                new_info = ydl_playlist.extract_info(base_url, download=False)
+                            if new_info is not None:
+                                info = new_info  # 只在成功时更新info
+                                entries = info.get('entries', [])
+                                total_parts = len(entries) if entries else total_parts
+                            else:
+                                print(f"⚠️  强制提取播放列表返回None")
+                        except Exception as e:
+                            print(f"⚠️  强制提取播放列表失败: {e}，继续使用原始info")
+                
+                print(f"✅ Successfully extracted video info (attempt {attempt + 1}/{max_retries})")
+                print(f"📊 视频信息: is_playlist={is_playlist}, total_parts={total_parts}, entries数量={len(entries)}")
+                
+                # 🔧 确保info不为None
+                if info is None:
+                    raise Exception("提取视频信息失败：返回结果为None")
+                
+                # 如果是单视频，直接返回
+                if not is_playlist and total_parts <= 1:
+                    result = {
+                        'bv_id': info.get('id', ''),
+                        'title': info.get('title', ''),
+                        'description': info.get('description', ''),
+                        'duration': info.get('duration', 0),
+                        'uploader': info.get('uploader', ''),
+                        'upload_date': info.get('upload_date', ''),
+                        'view_count': info.get('view_count', 0),
+                        'like_count': info.get('like_count', 0),
+                        'thumbnail': info.get('thumbnail', ''),
+                        'url': base_url,  # 使用基础URL
+                        'is_series': False,
+                        'total_parts': 1,
+                        'part_number': 1,
+                    }
                     
-                    # 如果是单视频，直接返回
-                    if not is_playlist:
-                        result = {
-                            'bv_id': info.get('id', ''),
-                            'title': info.get('title', ''),
-                            'description': info.get('description', ''),
-                            'duration': info.get('duration', 0),
-                            'uploader': info.get('uploader', ''),
-                            'upload_date': info.get('upload_date', ''),
-                            'view_count': info.get('view_count', 0),
-                            'like_count': info.get('like_count', 0),
-                            'thumbnail': info.get('thumbnail', ''),
-                            'url': url,
-                            'is_series': False,
-                            'total_parts': 1,
-                            'part_number': 1,
-                        }
-                        
-                        # 缓存单视频信息
-                        if use_cache:
-                            self.series_cache.set_cached_series(url, result)
-                        
-                        return result
+                    # 缓存单视频信息（使用基础URL作为缓存键）
+                    if use_cache:
+                        self.series_cache.set_cached_series(base_url, result)
                     
-                    # 多P视频：返回序列信息和所有分P信息
-                    series_title = info.get('title', '')
-                    parts_info = []
-                    
-                    for idx, entry in enumerate(info.get('entries', []), 1):
-                        full_title = entry.get('title', f'P{idx}')
-                        
-                        # 提取分P小标题（去除系列标题）
-                        # B站格式通常是: "系列标题 pXX 小标题" 或 "系列标题 小标题"
-                        part_title = full_title
-                        
-                        # 尝试按 " p" 分割（注意小写p，B站格式）
-                        if ' p' in full_title.lower():
-                            parts = full_title.split(' p', 1)
-                            if len(parts) > 1:
-                                # 取 "pXX 小标题" 部分，再去掉 "pXX "
-                                after_p = parts[1]
-                                # 去掉数字和空格，只保留小标题
-                                import re
-                                part_title = re.sub(r'^\d+\s+', '', after_p).strip()
-                        
-                        # 如果提取失败或为空，使用完整标题
-                        if not part_title:
-                            part_title = full_title
-                        
+                    return result
+                
+                # 多P视频：返回序列信息和所有分P信息
+                series_title = info.get('title', '')
+                parts_info = []
+                
+                # 🔧 修复：确保entries不为空，如果为空但有total_parts，尝试手动构建
+                entries_list = info.get('entries', [])
+                if not entries_list and total_parts > 0:
+                    print(f"⚠️  entries为空但total_parts={total_parts}，尝试手动构建分P信息...")
+                    # 手动构建分P信息（基于total_parts）
+                    for idx in range(1, total_parts + 1):
                         parts_info.append({
                             'part_number': idx,
-                            'part_title': part_title,
-                            'full_title': full_title,  # 保留完整标题供参考
-                            'duration': entry.get('duration', 0),
-                            'url': entry.get('url') or entry.get('webpage_url') or f"{url}?p={idx}",
-                            'bv_id': entry.get('id', ''),
+                            'part_title': f'P{idx}',
+                            'full_title': f'{series_title} P{idx}',
+                            'duration': 0,
+                            'url': f"{base_url}?p={idx}",
+                            'bv_id': info.get('id', ''),
                         })
+                    print(f"✅ 手动构建了 {len(parts_info)} 个分P信息")
+                else:
+                    # 正常情况：遍历entries
+                    for idx, entry in enumerate(entries_list, 1):
+                            full_title = entry.get('title', f'P{idx}')
+                            
+                            # 提取分P小标题（去除系列标题）
+                            # B站格式通常是: "系列标题 pXX 小标题" 或 "系列标题 小标题"
+                            part_title = full_title
+                            
+                            # 尝试按 " p" 分割（注意小写p，B站格式）
+                            if ' p' in full_title.lower():
+                                parts = full_title.split(' p', 1)
+                                if len(parts) > 1:
+                                    # 取 "pXX 小标题" 部分，再去掉 "pXX "
+                                    after_p = parts[1]
+                                    # 去掉数字和空格，只保留小标题
+                                    import re
+                                    part_title = re.sub(r'^\d+\s+', '', after_p).strip()
+                            
+                            # 如果提取失败或为空，使用完整标题
+                            if not part_title:
+                                part_title = full_title
+                            
+                            parts_info.append({
+                                'part_number': idx,
+                                'part_title': part_title,
+                                'full_title': full_title,  # 保留完整标题供参考
+                                'duration': entry.get('duration', 0),
+                                'url': entry.get('url') or entry.get('webpage_url') or f"{base_url}?p={idx}",
+                                'bv_id': entry.get('id', ''),
+                            })
+                    
+                    # 🔧 修复：确保total_parts和parts_info一致
+                    if total_parts > 0 and len(parts_info) == 0:
+                        print(f"⚠️  total_parts={total_parts} 但parts_info为空，使用total_parts作为分P数")
+                    elif len(parts_info) > 0 and total_parts != len(parts_info):
+                        print(f"⚠️  total_parts={total_parts} 与parts_info长度={len(parts_info)}不一致，使用parts_info长度")
+                        total_parts = len(parts_info)
                     
                     result = {
                         'bv_id': info.get('id', ''),
@@ -437,16 +568,16 @@ class BilibiliService:
                         'view_count': info.get('view_count', 0),
                         'like_count': info.get('like_count', 0),
                         'thumbnail': info.get('thumbnail', ''),
-                        'url': url,
+                        'url': base_url,  # 使用基础URL（不包含?p=参数）
                         'is_series': True,
                         'total_parts': total_parts,
                         'series_title': series_title,
                         'parts': parts_info,
                     }
                     
-                    # 缓存序列信息
+                    # 缓存序列信息（使用基础URL作为缓存键）
                     if use_cache:
-                        self.series_cache.set_cached_series(url, result)
+                        self.series_cache.set_cached_series(base_url, result)
                     
                     return result
                     
@@ -470,27 +601,34 @@ class BilibiliService:
                     'unable to connect' in error_lower
                 )
                 
-                print(f"❌ Attempt {attempt + 1}/{max_retries} failed: {error_msg}")
+                connection_method = "代理" if proxy_url else "直接连接"
+                print(f"❌ Attempt {attempt + 1}/{max_retries} failed ({connection_method}): {error_msg[:200]}")
                 
                 # 如果是SSL错误，记录详细信息
                 if 'ssl' in error_lower or 'decryption' in error_lower:
-                    print(f"🔒 SSL error detected, this may be caused by proxy incompatibility")
+                    print(f"🔒 SSL error detected")
                     if proxy_url:
-                        print(f"   Current proxy: {proxy_url}")
-                        print(f"   Suggestion: Try disabling proxy or use a different proxy")
+                        print(f"   当前使用代理: {proxy_url}")
+                        print(f"   建议：尝试不同的代理或禁用代理")
+                    else:
+                        print(f"   直接连接SSL错误，重试时将尝试使用代理")
                 
                 # 如果使用代理且失败，标记代理为失败并切换
-                if self.use_proxy and proxy_service and proxy_url:
+                if proxy_url and self.use_proxy and proxy_service:
                     proxy_service.mark_proxy_failed(proxy_url)
-                    print(f"🔄 Marked proxy as failed, will try next proxy on retry")
+                    print(f"🔄 标记代理为失败，下次重试将尝试下一个代理")
+                
+                # 如果是直接连接失败且配置了代理，提示下次将使用代理
+                if not proxy_url and attempt == 0 and self.use_proxy and is_retryable_error:
+                    print(f"💡 直接连接失败，下次重试将尝试使用代理")
                 
                 # 如果是最后一次尝试，或者不是可重试的错误，抛出异常
                 if attempt == max_retries - 1 or not is_retryable_error:
-                    print(f"❌ Failed to extract video info after {attempt + 1} attempts")
+                    print(f"❌ 提取视频信息失败（已尝试 {attempt + 1} 次）")
                     raise Exception(f"Failed to extract video info: {error_msg}")
                 
                 # 如果是可重试的错误且还有重试机会，继续循环
-                print(f"⚠️  Retryable error detected, will retry...")
+                print(f"⚠️  检测到可重试错误，将继续重试...")
     
     def download_audio(self, url: str, output_filename: Optional[str] = None) -> Dict[str, Any]:
         """
@@ -641,20 +779,28 @@ class BilibiliService:
             'skip_unavailable_fragments': True,
             # Cookie 支持（某些视频可能需要）
             'cookiefile': None,  # 如果需要可以指定 cookie 文件
-            # 🔧 修复 FFmpeg 合并错误：强制重新编码音频为 AAC 格式
-            # 这可以解决 "Could not write header for output file" 错误
-            'postprocessors': [{
-                'key': 'FFmpegVideoConvertor',
-                'preferedformat': 'mp4',
-            }, {
-                'key': 'FFmpegAudioConvertor',
-                'preferedcodec': 'aac',
-            }],
-            # 或者使用 postprocessor_args 传递 FFmpeg 参数
+            # 🔧 修复 FFmpeg 合并错误：使用正确的后处理器配置
+            # 注意：只在需要时使用后处理器，避免版本兼容性问题
+            'postprocessors': [],
+            # 使用 postprocessor_args 传递 FFmpeg 参数（更兼容的方式）
             'postprocessor_args': {
-                'ffmpeg': ['-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k'],  # 视频流复制，音频重新编码为 AAC
+                'ffmpeg': ['-c:v', 'copy', '-c:a', 'copy'],  # 直接复制流，不重新编码
             },
+            # 🎬 多P视频处理：如果URL包含?p=参数，只下载指定的分P
+            # 如果URL不包含?p=参数，但检测到是playlist，只下载第一个
+            'noplaylist': False,  # 允许playlist，但通过URL参数控制
         }
+        
+        # 如果URL包含?p=参数，确保只下载指定的分P
+        if '?p=' in url or '&p=' in url:
+            # 提取p参数值
+            import re
+            p_match = re.search(r'[?&]p=(\d+)', url)
+            if p_match:
+                p_number = int(p_match.group(1))
+                # 使用playlist_items只下载指定的分P
+                ydl_opts['playlist_items'] = str(p_number)
+                print(f"🎯 检测到?p={p_number}参数，只下载第{p_number}个分P")
         
         try:
             print(f"📥 Downloading video from: {url}")
@@ -734,16 +880,10 @@ class BilibiliService:
                         'skip_unavailable_fragments': True,
                         'socket_timeout': 30,
                         'merge_output_format': 'mp4',
-                        # 🔧 修复 FFmpeg 合并错误：强制重新编码音频为 AAC 格式
-                        'postprocessors': [{
-                            'key': 'FFmpegVideoConvertor',
-                            'preferedformat': 'mp4',
-                        }, {
-                            'key': 'FFmpegAudioConvertor',
-                            'preferedcodec': 'aac',
-                        }],
+                        # 🔧 修复 FFmpeg 合并错误：使用更兼容的配置
+                        'postprocessors': [],
                         'postprocessor_args': {
-                            'ffmpeg': ['-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k'],
+                            'ffmpeg': ['-c:v', 'copy', '-c:a', 'copy'],  # 直接复制流
                         },
                     }
                     

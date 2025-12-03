@@ -4,7 +4,7 @@ Main application entry point
 """
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, HTMLResponse
+from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from fastapi.openapi.docs import (
     get_redoc_html,
     get_swagger_ui_html,
@@ -68,6 +68,14 @@ except Exception as e:
     print("💡 文件上传功能不可用")
     FILE_UPLOAD_ROUTES_AVAILABLE = False
 
+try:
+    from app.api.routes import offline_video
+    OFFLINE_VIDEO_ROUTES_AVAILABLE = True
+except Exception as e:
+    print(f"⚠️ 离线视频处理路由模块导入失败: {e}")
+    print("💡 离线视频处理功能不可用")
+    OFFLINE_VIDEO_ROUTES_AVAILABLE = False
+
 # Create FastAPI application
 app = FastAPI(
     title="Video Analysis API",
@@ -86,6 +94,37 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# 添加中间件过滤轮询请求的访问日志
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request as StarletteRequest
+import logging
+
+class PollingLogFilterMiddleware(BaseHTTPMiddleware):
+    """过滤轮询请求的访问日志"""
+    
+    async def dispatch(self, request: StarletteRequest, call_next):
+        # 检查是否是轮询请求
+        is_polling = (
+            request.url.path == "/open-api/offline-video/tasks" and
+            request.query_params.get("poll") == "true"
+        )
+        
+        if is_polling:
+            # 临时禁用访问日志
+            access_logger = logging.getLogger("uvicorn.access")
+            original_level = access_logger.level
+            access_logger.setLevel(logging.WARNING)  # 只记录警告及以上级别
+        
+        try:
+            response = await call_next(request)
+            return response
+        finally:
+            if is_polling:
+                # 恢复日志级别
+                access_logger.setLevel(original_level)
+
+app.add_middleware(PollingLogFilterMiddleware)
 
 # Mount static files for CDN service
 import os
@@ -124,6 +163,27 @@ if FILE_UPLOAD_ROUTES_AVAILABLE:
     print("✅ 文件上传功能已启用 (/open-api/upload)")
 else:
     print("⚠️ 文件上传功能不可用")
+
+if OFFLINE_VIDEO_ROUTES_AVAILABLE:
+    try:
+        app.include_router(offline_video.router, prefix="/open-api", tags=["offline-video"])
+        print("✅ 离线视频处理功能已启用 (/open-api/offline-video)")
+        
+        # 添加数据库查看器路由
+        try:
+            from app.api.routes import db_viewer
+            app.include_router(db_viewer.router, prefix="/open-api", tags=["db-viewer"])
+            print("✅ 数据库查看器已启用 (/open-api/db-viewer)")
+        except Exception as e:
+            print(f"⚠️ 数据库查看器模块导入失败: {e}")
+            import traceback
+            traceback.print_exc()
+    except Exception as e:
+        print(f"❌ 离线视频处理路由注册失败: {e}")
+        import traceback
+        traceback.print_exc()
+else:
+    print("⚠️ 离线视频处理功能不可用")
 
 # 自定义OpenAPI规范
 def custom_openapi():
@@ -165,6 +225,28 @@ def custom_openapi():
 app.openapi = custom_openapi
 
 # Root endpoint - HTML welcome page
+@app.get("/offline-video", response_class=HTMLResponse)
+async def offline_video_page():
+    """离线视频处理页面"""
+    import os
+    template_path = os.path.join(os.path.dirname(__file__), "templates", "offline-video.html")
+    if os.path.exists(template_path):
+        with open(template_path, 'r', encoding='utf-8') as f:
+            return HTMLResponse(content=f.read())
+    else:
+        return HTMLResponse(content="<h1>页面未找到</h1>", status_code=404)
+
+@app.get("/db-viewer", response_class=HTMLResponse)
+async def db_viewer_page():
+    """数据库查看器页面"""
+    import os
+    template_path = os.path.join(os.path.dirname(__file__), "templates", "db-viewer.html")
+    if os.path.exists(template_path):
+        with open(template_path, 'r', encoding='utf-8') as f:
+            return HTMLResponse(content=f.read())
+    else:
+        return HTMLResponse(content="<h1>页面未找到</h1>", status_code=404)
+
 @app.get("/", response_class=HTMLResponse)
 async def root():
     """Root endpoint with HTML welcome page"""

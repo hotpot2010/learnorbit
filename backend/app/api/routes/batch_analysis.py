@@ -279,22 +279,38 @@ async def create_job(request: CreateJobRequest, background_tasks: BackgroundTask
 
 
 @router.post("/analyze-part")
-async def analyze_part(request: AnalyzePartRequest) -> Dict[str, Any]:
+async def analyze_part(request: AnalyzePartRequest, background_tasks: BackgroundTasks) -> Dict[str, Any]:
     """
-    Analyze a single part of a video series
+    Analyze a single part of a video series (后台执行，不阻塞)
     """
     try:
-        result = batch_analyzer.analyze_single_part(
-            video_url=request.video_url,
-            prompt=request.prompt,
-            part_number=request.part_number,
-            quality=request.quality,
-            locale=request.locale or 'zh',
-        )
+        # 创建一个临时任务ID用于跟踪
+        import uuid
+        temp_job_id = f"part_analysis_{uuid.uuid4().hex[:8]}"
+        
+        # 在后台执行分析
+        def run_analysis():
+            try:
+                return batch_analyzer.analyze_single_part(
+                    video_url=request.video_url,
+                    prompt=request.prompt,
+                    part_number=request.part_number,
+                    quality=request.quality,
+                    locale=request.locale or 'zh',
+                )
+            except Exception as e:
+                print(f"❌ 后台分析失败: {e}")
+                import traceback
+                traceback.print_exc()
+                return {"success": False, "error": str(e)}
+        
+        # 添加到后台任务
+        background_tasks.add_task(run_analysis)
         
         return {
-            "success": result.get('success', False),
-            "data": result
+            "success": True,
+            "message": "分析任务已启动，正在后台处理中",
+            "job_id": temp_job_id
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

@@ -53,13 +53,14 @@ class FileUploadService:
         # 不超过最大超时时间
         return min(calculated_timeout, self.max_timeout)
     
-    def upload_file(self, file_path: str, file_key: str = "file0") -> Optional[str]:
+    def upload_file(self, file_path: str, file_key: str = "file0", content_type: Optional[str] = None) -> Optional[str]:
         """
         上传文件到内部存储服务（带重试机制）
         
         Args:
             file_path: 本地文件路径
             file_key: 文件字段名，默认为 "file0"
+            content_type: 文件MIME类型，如果不指定则根据文件扩展名自动检测
             
         Returns:
             上传成功返回公网URL，失败返回None
@@ -71,8 +72,21 @@ class FileUploadService:
         file_size_mb = os.path.getsize(file_path) / (1024*1024)
         timeout = self._calculate_timeout(file_size_mb)
         
+        # 根据文件扩展名自动检测content-type
+        if not content_type:
+            file_ext = os.path.splitext(file_path)[1].lower()
+            content_type_map = {
+                '.txt': 'text/plain; charset=utf-8',
+                '.json': 'application/json; charset=utf-8',
+                '.mp4': 'video/mp4',
+                '.mp3': 'audio/mpeg',
+                '.pdf': 'application/pdf',
+            }
+            content_type = content_type_map.get(file_ext, 'application/octet-stream')
+        
         print(f"📤 Uploading file: {os.path.basename(file_path)}")
         print(f"   File size: {file_size_mb:.2f} MB")
+        print(f"   Content-Type: {content_type}")
         print(f"   Upload URL: {self.upload_url}")
         print(f"   Timeout: {timeout}s ({timeout//60}min {timeout%60}s)")
         print(f"   Max retries: {self.max_retries}")
@@ -91,7 +105,7 @@ class FileUploadService:
                 
                 # 打开文件并上传
                 with open(file_path, 'rb') as f:
-                    files = {file_key: (os.path.basename(file_path), f, 'video/mp4')}
+                    files = {file_key: (os.path.basename(file_path), f, content_type)}
                     
                     start_time = time.time()
                     
@@ -206,11 +220,22 @@ class FileUploadService:
                 with open(file_path, 'rb') as f:
                     file_content = f.read()
                 
+                # 根据文件扩展名自动检测content-type
+                file_ext = os.path.splitext(file_path)[1].lower()
+                content_type_map = {
+                    '.txt': 'text/plain; charset=utf-8',
+                    '.json': 'application/json; charset=utf-8',
+                    '.mp4': 'video/mp4',
+                    '.mp3': 'audio/mpeg',
+                    '.pdf': 'application/pdf',
+                }
+                detected_content_type = content_type_map.get(file_ext, 'application/octet-stream')
+                
                 form_data.add_field(
                     file_key,
                     file_content,
                     filename=os.path.basename(file_path),
-                    content_type='video/mp4'
+                    content_type=detected_content_type
                 )
                 
                 client_timeout = aiohttp.ClientTimeout(

@@ -1,0 +1,549 @@
+"""
+离线视频处理API路由
+"""
+from fastapi import APIRouter, HTTPException, BackgroundTasks, Request
+from pydantic import BaseModel
+from typing import Optional, List
+import asyncio
+
+from ...services.offline_video_service import (
+    offline_video_service,
+    TaskStatus,
+    StepType
+)
+
+router = APIRouter(prefix="/offline-video", tags=["offline-video"])
+
+
+class CreateTaskRequest(BaseModel):
+    """创建任务请求"""
+    bilibili_url: str
+
+
+class RetryStepRequest(BaseModel):
+    """重试步骤请求"""
+    task_id: str
+    step: str
+
+
+class ExecuteStepRequest(BaseModel):
+    """执行步骤请求"""
+    task_id: str
+    step: str
+
+
+@router.post("/tasks")
+async def create_task(request: CreateTaskRequest):
+    """
+    创建新的离线视频处理任务
+    
+    Args:
+        request: 包含B站链接的请求
+        
+    Returns:
+        任务ID和基本信息
+    """
+    try:
+        task_id = offline_video_service.create_task(request.bilibili_url)
+        task = offline_video_service.get_task(task_id)
+        
+        return {
+            "success": True,
+            "task_id": task_id,
+            "task": task
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/tasks")
+async def list_tasks(limit: Optional[int] = None, offset: int = 0):
+    """
+    列出所有任务（支持分页）
+    
+    Args:
+        limit: 每页任务数量，默认返回所有任务
+        offset: 跳过的任务数量（用于分页）
+        
+    Returns:
+        任务列表和总数
+    """
+    try:
+        all_tasks = offline_video_service.list_tasks()
+        
+        # 按创建时间倒序排序（最新的在前）
+        sorted_tasks = sorted(
+            all_tasks,
+            key=lambda x: x.get('created_at', ''),
+            reverse=True
+        )
+        
+        total = len(sorted_tasks)
+        
+        # 如果指定了limit，进行分页
+        if limit is not None:
+            tasks = sorted_tasks[offset:offset + limit]
+        else:
+            tasks = sorted_tasks
+        
+        return {
+            "success": True,
+            "tasks": tasks,
+            "total": total,
+            "limit": limit,
+            "offset": offset
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/tasks/{task_id}")
+async def get_task(task_id: str):
+    """
+    获取任务详情
+    
+    Args:
+        task_id: 任务ID
+        
+    Returns:
+        任务详情
+    """
+    try:
+        task = offline_video_service.get_task(task_id)
+        if not task:
+            raise HTTPException(status_code=404, detail="任务不存在")
+        
+        return {
+            "success": True,
+            "task": task
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/tasks/{task_id}/steps/{step}/execute")
+async def execute_step(
+    task_id: str,
+    step: str,
+    background_tasks: BackgroundTasks
+):
+    """
+    执行指定步骤（后台执行）
+    
+    Args:
+        task_id: 任务ID
+        step: 步骤名称 (download, asr, knowledge_points, summary)
+        background_tasks: FastAPI后台任务
+        
+    Returns:
+        执行状态
+    """
+    try:
+        task = offline_video_service.get_task(task_id)
+        if not task:
+            raise HTTPException(status_code=404, detail="任务不存在")
+        
+        if step not in task["steps"]:
+            raise HTTPException(status_code=400, detail=f"无效的步骤: {step}")
+        
+        # 检查步骤状态
+        step_info = task["steps"][step]
+        if step_info["status"] == TaskStatus.RUNNING:
+            return {
+                "success": False,
+                "message": "步骤正在执行中"
+            }
+        
+        # 检查依赖关系
+        if step == "asr":
+            # ASR需要下载步骤完成且有视频URL
+            if task["steps"]["download"]["status"] != TaskStatus.SUCCESS:
+                raise HTTPException(status_code=400, detail="请先完成下载步骤")
+            if not task.get("video_url"):
+                raise HTTPException(status_code=400, detail="视频URL不存在，请先完成下载并上传")
+        
+        elif step == "knowledge_points":
+            # LLM步骤需要ASR步骤完成且有ASR结果URL
+            if task["steps"]["asr"]["status"] != TaskStatus.SUCCESS:
+                raise HTTPException(status_code=400, detail="请先完成ASR步骤")
+            if not task.get("asr_result_url"):
+                raise HTTPException(status_code=400, detail="ASR结果URL不存在，请先完成ASR步骤")
+        
+        # 立即更新步骤状态为RUNNING，让前端立即看到执行中状态
+        offline_video_service._update_step_status(
+            task_id, step,
+            TaskStatus.RUNNING, 5,
+            "步骤已开始执行..."
+        )
+        
+        # 在后台执行步骤（使用异步包装函数确保非阻塞）
+        async def run_step_async():
+            """异步包装函数，确保步骤在后台非阻塞执行"""
+            try:
+                if step == "download":
+                    await offline_video_service.execute_step_download(task_id)
+                elif step == "asr":
+                    await offline_video_service.execute_step_asr(task_id)
+                elif step == "knowledge_points":
+                    await offline_video_service.execute_step_knowledge_points(task_id)
+            except Exception as e:
+                print(f"❌ 后台步骤执行失败: {step}, task_id: {task_id}, error: {e}")
+                import traceback
+                traceback.print_exc()
+                # 更新步骤状态为失败
+                offline_video_service._update_step_status(
+                    task_id, step,
+                    TaskStatus.FAILED, 0,
+                    f"执行失败: {str(e)}",
+                    error=str(e)
+                )
+        
+        background_tasks.add_task(run_step_async)
+        
+        return {
+            "success": True,
+            "message": f"步骤 {step} 已开始执行"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/tasks/{task_id}/steps/{step}/retry")
+async def retry_step(task_id: str, step: str):
+    """
+    重试指定步骤
+    
+    Args:
+        task_id: 任务ID
+        step: 步骤名称
+        
+    Returns:
+        重试状态
+    """
+    try:
+        offline_video_service.retry_step(task_id, step)
+        
+        return {
+            "success": True,
+            "message": f"步骤 {step} 已重置，可以重新执行"
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/tasks/{task_id}/results/{result_type}")
+async def get_result(task_id: str, result_type: str, part_number: Optional[int] = None):
+    """
+    获取任务结果（文档内容）
+    
+    Args:
+        task_id: 任务ID
+        result_type: 结果类型 (asr, knowledge_points)
+        part_number: 分P编号（可选，多P视频时指定）
+        
+    Returns:
+        结果内容（多P视频返回列表，单P视频返回单个内容）
+    """
+    try:
+        task = offline_video_service.get_task(task_id)
+        if not task:
+            raise HTTPException(status_code=404, detail="任务不存在")
+        
+        is_series = task.get("is_series", False)
+        
+        if result_type == "asr":
+            # 从URL获取内容（不再从本地文件读取）
+            asr_result_url_data = task.get("asr_result_url")
+            if not asr_result_url_data:
+                raise HTTPException(status_code=404, detail="ASR结果URL不存在")
+            
+            # 解析URL（可能是字符串或JSON数组）
+            import json
+            try:
+                if isinstance(asr_result_url_data, str) and asr_result_url_data.startswith('['):
+                    asr_result_urls = json.loads(asr_result_url_data)
+                elif isinstance(asr_result_url_data, list):
+                    asr_result_urls = asr_result_url_data
+                else:
+                    asr_result_urls = [asr_result_url_data]
+            except:
+                asr_result_urls = [asr_result_url_data]
+            
+            # 如果是多P视频，返回所有分P的内容
+            if is_series and len(asr_result_urls) > 1:
+                import requests
+                contents = []
+                for idx, asr_result_url in enumerate(asr_result_urls, 1):
+                    # 如果指定了part_number，只返回指定的分P
+                    if part_number is not None and idx != part_number:
+                        continue
+                    
+                    try:
+                        response = requests.get(asr_result_url, timeout=30)
+                        response.raise_for_status()
+                        contents.append({
+                            "part_number": idx,
+                            "content": response.text
+                        })
+                    except Exception as e:
+                        contents.append({
+                            "part_number": idx,
+                            "error": f"获取内容失败: {str(e)}"
+                        })
+                
+                return {
+                    "success": True,
+                    "type": "asr",
+                    "is_series": True,
+                    "total_parts": len(asr_result_urls),
+                    "contents": contents if part_number is None else (contents[0] if contents else None)
+                }
+            else:
+                # 单P视频
+                import requests
+                try:
+                    response = requests.get(asr_result_urls[0], timeout=30)
+                    response.raise_for_status()
+                    content = response.text
+                except Exception as e:
+                    raise HTTPException(status_code=500, detail=f"从URL获取ASR内容失败: {e}")
+                
+                return {
+                    "success": True,
+                    "type": "asr",
+                    "is_series": False,
+                    "content": content
+                }
+        
+        elif result_type == "knowledge_points":
+            # 从URL获取内容（不再从本地文件读取）
+            knowledge_points_result_url_data = task.get("knowledge_points_result_url")
+            if not knowledge_points_result_url_data:
+                raise HTTPException(status_code=404, detail="知识点结果URL不存在")
+            
+            # 解析URL（可能是字符串或JSON数组）
+            import json
+            try:
+                if isinstance(knowledge_points_result_url_data, str) and knowledge_points_result_url_data.startswith('['):
+                    knowledge_points_result_urls = json.loads(knowledge_points_result_url_data)
+                elif isinstance(knowledge_points_result_url_data, list):
+                    knowledge_points_result_urls = knowledge_points_result_url_data
+                else:
+                    knowledge_points_result_urls = [knowledge_points_result_url_data]
+            except:
+                knowledge_points_result_urls = [knowledge_points_result_url_data]
+            
+            # 如果是多P视频，返回所有分P的内容
+            if is_series and len(knowledge_points_result_urls) > 1:
+                import requests
+                contents = []
+                for idx, knowledge_points_result_url in enumerate(knowledge_points_result_urls, 1):
+                    # 如果指定了part_number，只返回指定的分P
+                    if part_number is not None and idx != part_number:
+                        continue
+                    
+                    try:
+                        response = requests.get(knowledge_points_result_url, timeout=30)
+                        response.raise_for_status()
+                        contents.append({
+                            "part_number": idx,
+                            "content": response.json()
+                        })
+                    except Exception as e:
+                        contents.append({
+                            "part_number": idx,
+                            "error": f"获取内容失败: {str(e)}"
+                        })
+                
+                return {
+                    "success": True,
+                    "type": "knowledge_points",
+                    "is_series": True,
+                    "total_parts": len(knowledge_points_result_urls),
+                    "contents": contents if part_number is None else (contents[0] if contents else None)
+                }
+            else:
+                # 单P视频
+                import requests
+                try:
+                    response = requests.get(knowledge_points_result_urls[0], timeout=30)
+                    response.raise_for_status()
+                    content = response.json()
+                except Exception as e:
+                    raise HTTPException(status_code=500, detail=f"从URL获取知识点内容失败: {e}")
+                
+                return {
+                    "success": True,
+                    "type": "knowledge_points",
+                    "is_series": False,
+                    "content": content
+                }
+        
+        else:
+            raise HTTPException(status_code=400, detail=f"不支持的结果类型: {result_type}")
+            
+    except HTTPException:
+        raise
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="文件不存在")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class UpdateResultUrlRequest(BaseModel):
+    """更新结果URL请求"""
+    result_url: str
+    part_number: Optional[int] = None  # 多P任务时指定分P编号（从1开始）
+
+
+def parse_urls(url_data):
+    """解析URL数据（可能是字符串、JSON字符串或列表）"""
+    import json
+    if not url_data:
+        return []
+    if isinstance(url_data, str):
+        try:
+            if url_data.startswith('['):
+                return json.loads(url_data)
+            return [url_data]
+        except:
+            return [url_data]
+    if isinstance(url_data, list):
+        return url_data
+    return []
+
+
+@router.post("/tasks/{task_id}/results/{result_type}/update-url")
+async def update_result_url(
+    task_id: str,
+    result_type: str,
+    request: UpdateResultUrlRequest
+):
+    """
+    更新任务结果URL（用于编辑后重新上传）
+    支持多P任务：如果指定了part_number，则更新对应分P的URL
+    
+    Args:
+        task_id: 任务ID
+        result_type: 结果类型 (asr, knowledge_points)
+        request: 包含新URL的请求，可选part_number（多P任务时）
+        
+    Returns:
+        更新状态
+    """
+    try:
+        task = offline_video_service.get_task(task_id)
+        if not task:
+            raise HTTPException(status_code=404, detail="任务不存在")
+        
+        import json
+        
+        if result_type == "asr":
+            if request.part_number and task.get("is_series"):
+                # 多P任务：更新指定分P的URL
+                asr_urls = parse_urls(task.get("asr_result_url"))
+                part_index = request.part_number - 1
+                if 0 <= part_index < len(asr_urls):
+                    asr_urls[part_index] = request.result_url
+                    task["asr_result_url"] = json.dumps(asr_urls) if len(asr_urls) > 1 else asr_urls[0]
+                else:
+                    raise HTTPException(status_code=400, detail=f"无效的分P编号: {request.part_number}")
+            else:
+                # 单P任务：直接更新
+                task["asr_result_url"] = request.result_url
+        elif result_type == "knowledge_points":
+            if request.part_number and task.get("is_series"):
+                # 多P任务：更新指定分P的URL
+                knowledge_points_urls = parse_urls(task.get("knowledge_points_result_url"))
+                part_index = request.part_number - 1
+                if 0 <= part_index < len(knowledge_points_urls):
+                    knowledge_points_urls[part_index] = request.result_url
+                    task["knowledge_points_result_url"] = json.dumps(knowledge_points_urls) if len(knowledge_points_urls) > 1 else knowledge_points_urls[0]
+                else:
+                    raise HTTPException(status_code=400, detail=f"无效的分P编号: {request.part_number}")
+            else:
+                # 单P任务：直接更新
+                task["knowledge_points_result_url"] = request.result_url
+        else:
+            raise HTTPException(status_code=400, detail=f"不支持的结果类型: {result_type}")
+        
+        # 保存任务
+        offline_video_service._save_task_to_db(task)
+        
+        return {
+            "success": True,
+            "message": f"{result_type}结果URL已更新"
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"更新URL失败: {str(e)}")
+
+
+def parse_urls(url_data):
+    """解析URL数据（可能是字符串、JSON字符串或列表）"""
+    import json
+    if not url_data:
+        return []
+    if isinstance(url_data, str):
+        try:
+            if url_data.startswith('['):
+                return json.loads(url_data)
+            return [url_data]
+        except:
+            return [url_data]
+    if isinstance(url_data, list):
+        return url_data
+    return []
+
+
+@router.post("/sync-from-files")
+async def sync_from_files():
+    """
+    从 results 目录同步 JSON 文件到数据库
+    
+    Returns:
+        同步结果统计
+    """
+    try:
+        result = offline_video_service.sync_from_files()
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"同步失败: {str(e)}")
+
+
+@router.delete("/tasks/{task_id}")
+async def delete_task(task_id: str):
+    """
+    删除任务（从数据库）
+    
+    Args:
+        task_id: 任务ID
+        
+    Returns:
+        删除结果
+    """
+    try:
+        task = offline_video_service.get_task(task_id)
+        if not task:
+            raise HTTPException(status_code=404, detail="任务不存在")
+        
+        # 从数据库删除
+        offline_video_service.delete_task(task_id)
+        
+        return {
+            "success": True,
+            "message": "任务已删除"
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"删除任务失败: {str(e)}")
+

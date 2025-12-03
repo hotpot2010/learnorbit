@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>离线视频处理系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        h1 {
+            margin-bottom: 30px;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #229954;
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+        
+        .btn-delete:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .tasks-section {
+            margin-top: 30px;
+        }
+        
+        .task-card {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: white;
+        }
+        
+        .task-card.collapsed .task-steps {
+            display: none;
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        
+        .task-header:hover {
+            background: #f8f9fa;
+            margin: -20px -20px 15px -20px;
+            padding: 20px;
+            border-radius: 6px 6px 0 0;
+        }
+        
+        .task-toggle {
+            font-size: 20px;
+            color: #7f8c8d;
+            transition: transform 0.3s;
+        }
+        
+        .task-card.collapsed .task-toggle {
+            transform: rotate(-90deg);
+        }
+        
+        .series-info {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f4f8;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .series-parts {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        
+        .series-part {
+            padding: 5px 0;
+            color: #555;
+        }
+        
+        /* 多P任务tags切换样式 */
+        .part-tabs-container {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        
+        .part-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: thin; /* Firefox */
+            scrollbar-color: #3498db #f8f9fa; /* Firefox */
+        }
+        
+        .part-tabs::-webkit-scrollbar {
+            height: 6px; /* Chrome, Safari, Opera */
+        }
+        
+        .part-tabs::-webkit-scrollbar-track {
+            background: #f8f9fa;
+            border-radius: 3px;
+        }
+        
+        .part-tabs::-webkit-scrollbar-thumb {
+            background: #3498db;
+            border-radius: 3px;
+        }
+        
+        .part-tabs::-webkit-scrollbar-thumb:hover {
+            background: #2980b9;
+        }
+        
+        .part-tab {
+            padding: 8px 16px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+            transition: all 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .part-tab:hover {
+            border-color: #3498db;
+            color: #3498db;
+        }
+        
+        .part-tab.active {
+            border-color: #3498db;
+            background: #3498db;
+            color: white;
+        }
+        
+        .part-content {
+            display: none;
+        }
+        
+        .part-content.active {
+            display: block;
+        }
+        
+        .task-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .task-url {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .task-steps {
+            margin-top: 20px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #ddd;
+        }
+        
+        .step.pending {
+            border-left-color: #95a5a6;
+        }
+        
+        .step.running {
+            border-left-color: #3498db;
+            background: #ebf5fb;
+        }
+        
+        .step.success {
+            border-left-color: #27ae60;
+            background: #eafaf1;
+        }
+        
+        .step.failed {
+            border-left-color: #e74c3c;
+            background: #fdedec;
+        }
+        
+        .step-info {
+            flex: 1;
+        }
+        
+        .step-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .step-message {
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+        
+        .step-progress {
+            width: 200px;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 15px;
+        }
+        
+        .step-progress-bar {
+            height: 100%;
+            background: #3498db;
+            transition: width 0.3s;
+        }
+        
+        .step-progress-bar.success {
+            background: #27ae60;
+        }
+        
+        .step-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .step-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background: #ecf0f1;
+            color: #7f8c8d;
+        }
+        
+        .status-running {
+            background: #ebf5fb;
+            color: #3498db;
+        }
+        
+        .status-success {
+            background: #eafaf1;
+            color: #27ae60;
+        }
+        
+        .status-failed {
+            background: #fdedec;
+            color: #e74c3c;
+        }
+        
+        .preview-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .preview-section.show {
+            display: block;
+        }
+        
+        .preview-content {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .preview-content.json {
+            white-space: pre;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #3498db;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+        
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 离线视频处理系统</h1>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <input type="text" id="bilibiliUrl" placeholder="请输入B站视频链接（例如：https://www.bilibili.com/video/BVxxxxx）">
+                <button class="btn-primary" onclick="createTask()">创建任务</button>
+            </div>
+        </div>
+        
+        <div class="tasks-section">
+            <div id="tasksContainer">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📋</div>
+                    <p>暂无任务，请创建新任务</p>
+                </div>
+            </div>
+            <div id="pagination"></div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = '/open-api/offline-video';
+        let refreshInterval = null;
+        
+        // 分页配置
+        const TASKS_PER_PAGE = 10; // 每页显示10个任务
+        let currentPage = 1;
+        let totalTasks = 0;
+        
+        // 创建任务
+        async function createTask() {
+            const urlInput = document.getElementById('bilibiliUrl');
+            const createBtn = document.querySelector('.input-group .btn-primary');
+            const url = urlInput.value.trim();
+            
+            if (!url) {
+                alert('请输入B站视频链接');
+                return;
+            }
+            
+            // 禁用输入和按钮，显示"创建中"状态
+            urlInput.disabled = true;
+            createBtn.disabled = true;
+            const originalText = createBtn.textContent;
+            createBtn.textContent = '创建中...';
+            createBtn.style.opacity = '0.6';
+            createBtn.style.cursor = 'not-allowed';
+            
+            try {
+                const response = await fetch(`${API_BASE}/tasks`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ bilibili_url: url })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    urlInput.value = '';
+                    // 创建新任务后，跳转到第一页显示最新任务
+                    await loadTasks(1);
+                } else {
+                    alert('创建任务失败: ' + (data.message || '未知错误'));
+                }
+            } catch (error) {
+                alert('创建任务失败: ' + error.message);
+            } finally {
+                // 恢复按钮状态
+                urlInput.disabled = false;
+                createBtn.disabled = false;
+                createBtn.textContent = originalText;
+                createBtn.style.opacity = '1';
+                createBtn.style.cursor = 'pointer';
+            }
+        }
+        
+        // 加载任务列表
+        async function loadTasks(page = currentPage) {
+            try {
+                const offset = (page - 1) * TASKS_PER_PAGE;
+                const response = await fetch(`${API_BASE}/tasks?limit=${TASKS_PER_PAGE}&offset=${offset}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    totalTasks = data.total || 0;
+                    currentPage = page;
+                    renderTasks(data.tasks);
+                    renderPagination();
+                }
+                return data.success;
+            } catch (error) {
+                console.error('加载任务失败:', error);
+                return false;
+            }
+        }
+        
+        // 保存展开状态的Map（默认所有任务都折叠）
+        const expandedTasks = new Set();
+        
+        // 渲染任务列表
+        function renderTasks(tasks) {
+            const container = document.getElementById('tasksContainer');
+            
+            // 保存当前折叠状态
+            saveCollapsedState();
+            
+            if (tasks.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📋</div>
+                        <p>暂无任务，请创建新任务</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = tasks.map(task => renderTask(task)).join('');
+            
+            // 恢复折叠状态
+            restoreCollapsedState();
+        }
+        
+        // 渲染分页控件
+        function renderPagination() {
+            const totalPages = Math.ceil(totalTasks / TASKS_PER_PAGE);
+            
+            // 如果只有一页或没有任务，不显示分页
+            if (totalPages <= 1) {
+                const paginationEl = document.getElementById('pagination');
+                if (paginationEl) {
+                    paginationEl.innerHTML = '';
+                }
+                return;
+            }
+            
+            const paginationEl = document.getElementById('pagination');
+            if (!paginationEl) {
+                // 创建分页容器
+                const container = document.querySelector('.tasks-section');
+                const paginationDiv = document.createElement('div');
+                paginationDiv.id = 'pagination';
+                paginationDiv.style.cssText = 'margin-top: 20px; text-align: center; padding: 20px;';
+                container.appendChild(paginationDiv);
+            }
+            
+            let paginationHTML = `
+                <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    <button class="btn-secondary" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} style="padding: 8px 16px;">
+                        上一页
+                    </button>
+                    <span style="padding: 8px 16px; color: #2c3e50;">
+                        第 ${currentPage} / ${totalPages} 页（共 ${totalTasks} 个任务）
+                    </span>
+                    <button class="btn-secondary" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} style="padding: 8px 16px;">
+                        下一页
+                    </button>
+                </div>
+            `;
+            
+            paginationEl.innerHTML = paginationHTML;
+        }
+        
+        // 跳转到指定页面
+        function goToPage(page) {
+            const totalPages = Math.ceil(totalTasks / TASKS_PER_PAGE);
+            if (page < 1 || page > totalPages) {
+                return;
+            }
+            loadTasks(page);
+        }
+        
+        // 保存展开状态
+        function saveCollapsedState() {
+            expandedTasks.clear();
+            const taskCards = document.querySelectorAll('.task-card');
+            taskCards.forEach(card => {
+                // 保存展开的任务（没有collapsed类的任务）
+                if (!card.classList.contains('collapsed')) {
+                    const taskId = card.id.replace('task-', '');
+                    expandedTasks.add(taskId);
+                }
+            });
+        }
+        
+        // 恢复折叠状态（默认所有任务都折叠）
+        function restoreCollapsedState() {
+            const allTaskCards = document.querySelectorAll('.task-card');
+            allTaskCards.forEach(card => {
+                const taskId = card.id.replace('task-', '');
+                if (expandedTasks.has(taskId)) {
+                    // 在集合中的任务保持展开（移除collapsed类）
+                    card.classList.remove('collapsed');
+                } else {
+                    // 不在集合中的任务折叠（添加collapsed类）
+                    card.classList.add('collapsed');
+                }
+            });
+        }
+        
+        // 解析多P任务的URL数组
+        function parseUrls(urlData) {
+            if (!urlData) return [];
+            if (typeof urlData === 'string') {
+                try {
+                    // 尝试解析JSON数组
+                    if (urlData.startsWith('[')) {
+                        return JSON.parse(urlData);
+                    }
+                    // 单个URL字符串
+                    return [urlData];
+                } catch (e) {
+                    return [urlData];
+                }
+            }
+            if (Array.isArray(urlData)) {
+                return urlData;
+            }
+            return [];
+        }
+        
+        // 渲染单个任务
+        function renderTask(task, index = 0) {
+            const steps = [
+                { key: 'download', name: '1. 下载视频并上传', description: '下载B站视频，合并音视频流，上传到CDN' },
+                { key: 'asr', name: '2. ASR识别', description: '语音识别，生成逐字稿' },
+                { key: 'knowledge_points', name: '3. 生成知识点', description: '调用LLM生成知识点文档' }
+            ];
+            
+            const isSeries = task.is_series || false;
+            const seriesParts = task.series_parts || [];
+            const videoTitle = task.video_title || '';
+            
+            const taskId = task.task_id;
+            
+            // 解析多P任务的URL数组
+            const videoUrls = parseUrls(task.video_url);
+            const asrResultUrls = parseUrls(task.asr_result_url);
+            const knowledgePointsResultUrls = parseUrls(task.knowledge_points_result_url);
+            
+            // 如果是多P任务，渲染tags切换UI
+            let partTabsHtml = '';
+            let partContentsHtml = '';
+            
+            if (isSeries && seriesParts.length > 0) {
+                // 生成tags（只显示P1, P2, ... Pn）
+                partTabsHtml = `
+                    <div class="part-tabs-container">
+                        <div class="part-tabs" id="part-tabs-${taskId}">
+                            ${seriesParts.map((part, idx) => `
+                                <div class="part-tab ${idx === 0 ? 'active' : ''}" 
+                                     onclick="switchPart('${taskId}', ${idx})"
+                                     data-part-index="${idx}">
+                                    P${idx + 1}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                // 生成每个分P的内容
+                partContentsHtml = seriesParts.map((part, idx) => {
+                    const partNumber = idx + 1;
+                    const videoUrl = videoUrls[idx] || null;
+                    const asrUrl = asrResultUrls[idx] || null;
+                    const knowledgePointsUrl = knowledgePointsResultUrls[idx] || null;
+                    
+                    const stepsHtml = steps.map(step => {
+                        const stepInfo = task.steps[step.key];
+                        const status = stepInfo.status;
+                        const progress = stepInfo.progress || 0;
+                        const message = stepInfo.message || '';
+                        const error = stepInfo.error;
+                        const result = stepInfo.result || {};
+                        
+                        const canExecute = status === 'pending' || status === 'failed';
+                        const canRetry = status === 'failed';
+                        
+                        // 获取当前分P的结果URL
+                        let resultUrl = null;
+                        if (step.key === 'download') {
+                            resultUrl = videoUrl;
+                        } else if (step.key === 'asr') {
+                            resultUrl = asrUrl;
+                        } else if (step.key === 'knowledge_points') {
+                            resultUrl = knowledgePointsUrl;
+                        }
+                        
+                        const canPreview = status === 'success' && resultUrl;
+                        
+                        // 显示执行中状态
+                        const isRunning = status === 'running';
+                        const statusIcon = isRunning ? '<span class="loading"></span>' : '';
+                        
+                        return `
+                            <div class="step ${status}">
+                                <div class="step-info">
+                                    <div class="step-name">${step.name} ${statusIcon}</div>
+                                    <div class="step-message">${message}</div>
+                                    ${error ? `<div class="error-message">错误: ${error}</div>` : ''}
+                                    ${resultUrl ? `<div class="result-url" style="margin-top: 8px; padding: 8px; background: #f8f9fa; border-radius: 4px; font-size: 12px;">
+                                        <strong>📎 结果URL:</strong> 
+                                        <a href="${resultUrl}" target="_blank" style="color: #3498db; word-break: break-all;">${resultUrl}</a>
+                                    </div>` : ''}
+                                </div>
+                                <div class="step-progress">
+                                    <div class="step-progress-bar ${status === 'success' ? 'success' : ''}" style="width: ${progress}%"></div>
+                                </div>
+                                <span class="step-status status-${status}">${getStatusText(status)}</span>
+                                <div class="step-actions">
+                                    ${canExecute ? `<button class="btn-success" onclick="executeStep('${taskId}', '${step.key}')">执行</button>` : ''}
+                                    ${canRetry ? `<button class="btn-secondary" onclick="retryStep('${taskId}', '${step.key}')">重试</button>` : ''}
+                                    ${canPreview ? `<button class="btn-primary" onclick="previewResult('${taskId}', '${step.key}', ${partNumber})">预览</button>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    return `
+                        <div class="part-content ${idx === 0 ? 'active' : ''}" id="part-content-${taskId}-${idx}">
+                            ${stepsHtml}
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                // 单P视频：原有逻辑
+                const stepsHtml = steps.map(step => {
+                    const stepInfo = task.steps[step.key];
+                    const status = stepInfo.status;
+                    const progress = stepInfo.progress || 0;
+                    const message = stepInfo.message || '';
+                    const error = stepInfo.error;
+                    const result = stepInfo.result || {};
+                    
+                    const canExecute = status === 'pending' || status === 'failed';
+                    const canRetry = status === 'failed';
+                    const canPreview = status === 'success' && (stepInfo.result || resultUrl);
+                    
+                    // 获取结果URL
+                    let resultUrl = null;
+                    if (step.key === 'download' && task.video_url) {
+                        resultUrl = typeof task.video_url === 'string' && task.video_url.startsWith('[') 
+                            ? JSON.parse(task.video_url)[0] 
+                            : task.video_url;
+                    } else if (step.key === 'asr' && task.asr_result_url) {
+                        resultUrl = typeof task.asr_result_url === 'string' && task.asr_result_url.startsWith('[') 
+                            ? JSON.parse(task.asr_result_url)[0] 
+                            : task.asr_result_url;
+                    } else if (step.key === 'knowledge_points' && task.knowledge_points_result_url) {
+                        resultUrl = typeof task.knowledge_points_result_url === 'string' && task.knowledge_points_result_url.startsWith('[') 
+                            ? JSON.parse(task.knowledge_points_result_url)[0] 
+                            : task.knowledge_points_result_url;
+                    } else if (result.result_url) {
+                        resultUrl = result.result_url;
+                    }
+                    
+                    // 显示执行中状态
+                    const isRunning = status === 'running';
+                    const statusIcon = isRunning ? '<span class="loading"></span>' : '';
+                    
+                    return `
+                        <div class="step ${status}">
+                            <div class="step-info">
+                                <div class="step-name">${step.name} ${statusIcon}</div>
+                                <div class="step-message">${message}</div>
+                                ${error ? `<div class="error-message">错误: ${error}</div>` : ''}
+                                ${resultUrl ? `<div class="result-url" style="margin-top: 8px; padding: 8px; background: #f8f9fa; border-radius: 4px; font-size: 12px;">
+                                    <strong>📎 结果URL:</strong> 
+                                    <a href="${resultUrl}" target="_blank" style="color: #3498db; word-break: break-all;">${resultUrl}</a>
+                                </div>` : ''}
+                            </div>
+                            <div class="step-progress">
+                                <div class="step-progress-bar ${status === 'success' ? 'success' : ''}" style="width: ${progress}%"></div>
+                            </div>
+                            <span class="step-status status-${status}">${getStatusText(status)}</span>
+                            <div class="step-actions">
+                                ${canExecute ? `<button class="btn-success" onclick="executeStep('${taskId}', '${step.key}')">执行</button>` : ''}
+                                ${canRetry ? `<button class="btn-secondary" onclick="retryStep('${taskId}', '${step.key}')">重试</button>` : ''}
+                                ${canPreview ? `<button class="btn-primary" onclick="previewResult('${taskId}', '${step.key}')">预览</button>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                partContentsHtml = `
+                    <div class="part-content active" id="part-content-${taskId}-0">
+                        ${stepsHtml}
+                    </div>
+                `;
+            }
+            
+            const seriesInfoHtml = isSeries ? `
+                <div class="series-info">
+                    <strong>📚 系列视频 (共${seriesParts.length}个分P)</strong>
+                </div>
+            ` : '';
+            
+            // 使用视频标题作为任务标题
+            const taskTitle = task.video_title || taskId;
+            
+            // 默认折叠（除非在expandedTasks集合中标记为展开）
+            const shouldCollapse = !expandedTasks.has(taskId);
+            
+            return `
+                <div class="task-card ${shouldCollapse ? 'collapsed' : ''}" id="task-${taskId}">
+                    <div class="task-header" onclick="toggleTask('${taskId}')">
+                        <div style="flex: 1;">
+                            <div class="task-title">${taskTitle}</div>
+                            <div class="task-url">${task.bilibili_url}</div>
+                            ${seriesInfoHtml}
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <span style="color: #7f8c8d; font-size: 13px;">创建时间: ${new Date(task.created_at).toLocaleString('zh-CN')}</span>
+                            <button class="btn-delete" onclick="event.stopPropagation(); deleteTask('${taskId}')" title="删除任务">🗑️</button>
+                            <span class="task-toggle">▼</span>
+                        </div>
+                    </div>
+                    <div class="task-steps">
+                        ${partTabsHtml}
+                        ${partContentsHtml}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 切换分P
+        function switchPart(taskId, partIndex) {
+            const taskCard = document.getElementById(`task-${taskId}`);
+            if (!taskCard) return;
+            
+            // 更新tags状态
+            const tabs = taskCard.querySelectorAll('.part-tab');
+            tabs.forEach((tab, idx) => {
+                if (idx === partIndex) {
+                    tab.classList.add('active');
+                    // 滚动到当前选中的标签
+                    tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            // 更新内容显示
+            const contents = taskCard.querySelectorAll('.part-content');
+            contents.forEach((content, idx) => {
+                if (idx === partIndex) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        }
+        
+        // 获取状态文本
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': '等待执行',
+                'running': '执行中',
+                'success': '成功',
+                'failed': '失败',
+                'retrying': '重试中'
+            };
+            return statusMap[status] || status;
+        }
+        
+        // 执行步骤
+        async function executeStep(taskId, step) {
+            try {
+                // 立即更新UI状态为执行中（乐观更新）
+                updateStepStatusOptimistic(taskId, step, 'running', 5, '步骤已开始执行...');
+                
+                const response = await fetch(`${API_BASE}/tasks/${taskId}/steps/${step}/execute`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // 立即刷新任务列表以获取真实状态
+                    await loadTasks(currentPage);
+                    // 开始轮询更新状态
+                    startPolling();
+                } else {
+                    // 如果失败，恢复状态
+                    await loadTasks(currentPage);
+                    alert('执行失败: ' + (data.message || '未知错误'));
+                }
+            } catch (error) {
+                // 如果出错，恢复状态
+                await loadTasks(currentPage);
+                alert('执行失败: ' + error.message);
+            }
+        }
+        
+        // 乐观更新步骤状态（立即更新UI，不等待服务器响应）
+        function updateStepStatusOptimistic(taskId, stepKey, status, progress, message) {
+            const taskCard = document.getElementById(`task-${taskId}`);
+            if (!taskCard) return;
+            
+            // 步骤映射：key -> 步骤索引
+            const stepIndexMap = {
+                'download': 0,
+                'asr': 1,
+                'knowledge_points': 2
+            };
+            
+            const stepIndex = stepIndexMap[stepKey];
+            if (stepIndex === undefined) return;
+            
+            // 找到对应的步骤元素（按顺序）
+            const stepElements = taskCard.querySelectorAll('.step');
+            const stepEl = stepElements[stepIndex];
+            if (!stepEl) return;
+            
+            // 更新状态类
+            stepEl.className = `step ${status}`;
+            
+            // 更新进度条
+            const progressBar = stepEl.querySelector('.step-progress-bar');
+            if (progressBar) {
+                progressBar.style.width = `${progress}%`;
+                if (status === 'success') {
+                    progressBar.classList.add('success');
+                } else {
+                    progressBar.classList.remove('success');
+                }
+            }
+            
+            // 更新状态文本
+            const statusEl = stepEl.querySelector('.step-status');
+            if (statusEl) {
+                statusEl.className = `step-status status-${status}`;
+                statusEl.textContent = status === 'running' ? '执行中' : 
+                                       status === 'success' ? '成功' : 
+                                       status === 'failed' ? '失败' : '等待执行';
+            }
+            
+            // 更新消息
+            const messageEl = stepEl.querySelector('.step-message');
+            if (messageEl) {
+                messageEl.textContent = message;
+            }
+            
+            // 更新按钮状态
+            const actionsEl = stepEl.querySelector('.step-actions');
+            if (actionsEl) {
+                if (status === 'running') {
+                    actionsEl.innerHTML = ''; // 执行中时不显示按钮
+                } else if (status === 'pending' || status === 'failed') {
+                    const canExecute = status === 'pending' || status === 'failed';
+                    const canRetry = status === 'failed';
+                    let html = '';
+                    if (canExecute) {
+                        html += `<button class="btn-success" onclick="executeStep('${taskId}', '${stepKey}')">执行</button>`;
+                    }
+                    if (canRetry) {
+                        html += `<button class="btn-secondary" onclick="retryStep('${taskId}', '${stepKey}')">重试</button>`;
+                    }
+                    actionsEl.innerHTML = html;
+                }
+            }
+            
+            // 添加loading图标
+            const stepNameEl = stepEl.querySelector('.step-name');
+            if (status === 'running') {
+                if (stepNameEl && !stepNameEl.querySelector('.loading')) {
+                    stepNameEl.innerHTML += '<span class="loading"></span>';
+                }
+            } else {
+                const loadingEl = stepEl.querySelector('.loading');
+                if (loadingEl) {
+                    loadingEl.remove();
+                }
+            }
+        }
+        
+        // 重试步骤
+        async function retryStep(taskId, step) {
+            if (!confirm('确定要重试此步骤吗？')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/tasks/${taskId}/steps/${step}/retry`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    loadTasks(currentPage);
+                } else {
+                    alert('重试失败: ' + (data.message || '未知错误'));
+                }
+            } catch (error) {
+                alert('重试失败: ' + error.message);
+            }
+        }
+        
+        // 删除任务
+        async function deleteTask(taskId) {
+            if (!confirm('确定要删除此任务吗？此操作不可恢复！')) {
+                return;
+            }
+            
+            // 找到删除按钮并禁用
+            const taskCard = document.getElementById(`task-${taskId}`);
+            const deleteBtn = taskCard?.querySelector('.btn-delete');
+            if (deleteBtn) {
+                deleteBtn.disabled = true;
+                deleteBtn.textContent = '删除中...';
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/tasks/${taskId}`, {
+                    method: 'DELETE'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // 删除成功后，重新加载任务列表
+                    await loadTasks(currentPage);
+                } else {
+                    alert('删除任务失败: ' + (data.message || '未知错误'));
+                    if (deleteBtn) {
+                        deleteBtn.disabled = false;
+                        deleteBtn.textContent = '🗑️';
+                    }
+                }
+            } catch (error) {
+                alert('删除任务失败: ' + error.message);
+                if (deleteBtn) {
+                    deleteBtn.disabled = false;
+                    deleteBtn.textContent = '🗑️';
+                }
+            }
+        }
+        
+        // 显示预览
+        function showPreview(content, type) {
+            // 创建预览弹窗
+            const previewDiv = document.createElement('div');
+            previewDiv.className = 'preview-section show';
+            previewDiv.style.position = 'fixed';
+            previewDiv.style.top = '50%';
+            previewDiv.style.left = '50%';
+            previewDiv.style.transform = 'translate(-50%, -50%)';
+            previewDiv.style.width = '80%';
+            previewDiv.style.maxWidth = '800px';
+            previewDiv.style.zIndex = '1000';
+            previewDiv.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+            
+            const contentText = type === 'knowledge_points' 
+                ? JSON.stringify(content, null, 2)
+                : content;
+            
+            const typeNames = {
+                'asr': 'ASR逐字稿',
+                'knowledge_points': '知识点',
+                'summary': '摘要'
+            };
+            
+            previewDiv.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3>预览结果 (${typeNames[type] || type})</h3>
+                    <button class="btn-secondary" onclick="this.parentElement.parentElement.remove()">关闭</button>
+                </div>
+                <div class="preview-content ${type === 'knowledge_points' ? 'json' : ''}">${escapeHtml(contentText)}</div>
+            `;
+            
+            document.body.appendChild(previewDiv);
+        }
+        
+        // HTML转义
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // 开始轮询
+        function startPolling() {
+            if (refreshInterval) {
+                return;
+            }
+            
+            // 智能轮询：有运行中的任务时频繁刷新，否则降低频率或停止
+            function poll() {
+                // 轮询时保持当前页面
+                loadTasks(currentPage).then(() => {
+                    // 检查是否有运行中的任务（检查status为running的步骤）
+                    const hasRunningTasks = Array.from(document.querySelectorAll('.step')).some(step => {
+                        const statusEl = step.querySelector('.step-status');
+                        return statusEl && statusEl.textContent.includes('执行中');
+                    });
+                    
+                    // 检查是否有待执行的任务（pending状态）
+                    const hasPendingTasks = Array.from(document.querySelectorAll('.step')).some(step => {
+                        const statusEl = step.querySelector('.step-status');
+                        return statusEl && statusEl.textContent.includes('等待执行');
+                    });
+                    
+                    // 如果所有任务都完成了（没有运行中也没有待执行），停止轮询
+                    if (!hasRunningTasks && !hasPendingTasks) {
+                        console.log('✅ 所有任务已完成，停止轮询');
+                        stopPolling();
+                        return;
+                    }
+                    
+                    // 如果有运行中的任务，2秒后刷新；否则30秒后刷新（降低频率）
+                    const delay = hasRunningTasks ? 2000 : 30000;
+                    
+                    refreshInterval = setTimeout(() => {
+                        poll();
+                    }, delay);
+                }).catch(() => {
+                    // 出错时也继续轮询，但间隔更长
+                    refreshInterval = setTimeout(() => {
+                        poll();
+                    }, 10000);
+                });
+            }
+            
+            poll();
+        }
+        
+        // 停止轮询
+        function stopPolling() {
+            if (refreshInterval) {
+                clearTimeout(refreshInterval);
+                refreshInterval = null;
+            }
+        }
+        
+        // 页面加载时加载任务列表
+        window.addEventListener('load', () => {
+            loadTasks(1); // 初始加载第一页
+            startPolling();
+        });
+        
+        // 页面卸载时停止轮询
+        window.addEventListener('beforeunload', () => {
+            stopPolling();
+        });
+        
+        // 支持回车键创建任务
+        document.getElementById('bilibiliUrl').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                createTask();
+            }
+        });
+        
+        // 切换任务折叠/展开
+        function toggleTask(taskId) {
+            const taskCard = document.getElementById(`task-${taskId}`);
+            if (!taskCard) return;
+            
+            // 检查当前任务是否已折叠
+            const isCurrentlyCollapsed = taskCard.classList.contains('collapsed');
+            
+            // 如果当前任务是折叠的（即将展开），则折叠所有其他任务
+            if (isCurrentlyCollapsed) {
+                // 折叠所有其他任务
+                const allTaskCards = document.querySelectorAll('.task-card');
+                allTaskCards.forEach(card => {
+                    if (card.id !== `task-${taskId}`) {
+                        card.classList.add('collapsed');
+                        const otherTaskId = card.id.replace('task-', '');
+                        expandedTasks.delete(otherTaskId);
+                    }
+                });
+            }
+            
+            // 切换当前任务的状态
+            taskCard.classList.toggle('collapsed');
+            
+            // 更新展开状态集合
+            if (taskCard.classList.contains('collapsed')) {
+                expandedTasks.delete(taskId);
+            } else {
+                expandedTasks.add(taskId);
+            }
+        }
+        
+        // 预览结果
+        async function previewResult(taskId, step, partNumber = null) {
+            // 获取任务信息以获取结果URL
+            try {
+                const taskResponse = await fetch(`${API_BASE}/tasks/${taskId}`);
+                const taskData = await taskResponse.json();
+                
+                if (!taskData.success) {
+                    alert('获取任务信息失败: ' + (taskData.message || '未知错误'));
+                    return;
+                }
+                
+                const task = taskData.task;
+                let resultUrl = null;
+                
+                // 解析多P任务的URL数组
+                const videoUrls = parseUrls(task.video_url);
+                const asrResultUrls = parseUrls(task.asr_result_url);
+                const knowledgePointsResultUrls = parseUrls(task.knowledge_points_result_url);
+                
+                // 如果是多P任务且指定了partNumber，使用对应的URL
+                if (partNumber && task.is_series) {
+                    const partIndex = partNumber - 1;
+                    if (step === 'download' && videoUrls[partIndex]) {
+                        // 视频类型：直接打开链接
+                        window.open(videoUrls[partIndex], '_blank');
+                        return;
+                    } else if (step === 'asr' && asrResultUrls[partIndex]) {
+                        resultUrl = asrResultUrls[partIndex];
+                    } else if (step === 'knowledge_points' && knowledgePointsResultUrls[partIndex]) {
+                        resultUrl = knowledgePointsResultUrls[partIndex];
+                    }
+                } else {
+                    // 单P任务或未指定partNumber
+                    if (step === 'download' && task.video_url) {
+                        // 视频类型：直接打开链接
+                        const url = typeof task.video_url === 'string' && task.video_url.startsWith('[') 
+                            ? JSON.parse(task.video_url)[0] 
+                            : task.video_url;
+                        window.open(url, '_blank');
+                        return;
+                    } else if (step === 'asr' && task.asr_result_url) {
+                        resultUrl = typeof task.asr_result_url === 'string' && task.asr_result_url.startsWith('[') 
+                            ? JSON.parse(task.asr_result_url)[0] 
+                            : task.asr_result_url;
+                    } else if (step === 'knowledge_points' && task.knowledge_points_result_url) {
+                        resultUrl = typeof task.knowledge_points_result_url === 'string' && task.knowledge_points_result_url.startsWith('[') 
+                            ? JSON.parse(task.knowledge_points_result_url)[0] 
+                            : task.knowledge_points_result_url;
+                    }
+                }
+                
+                if (!resultUrl) {
+                    alert('结果URL不存在');
+                    return;
+                }
+                
+                // 文本类型：显示可编辑预览
+                showEditablePreview(taskId, step, resultUrl, partNumber);
+                
+            } catch (error) {
+                alert('获取结果失败: ' + error.message);
+            }
+        }
+        
+        // 显示可编辑预览（ASR和知识点）
+        async function showEditablePreview(taskId, step, resultUrl, partNumber = null) {
+            try {
+                // 从URL加载内容
+                const response = await fetch(resultUrl);
+                if (!response.ok) {
+                    throw new Error('加载内容失败');
+                }
+                
+                const contentType = response.headers.get('content-type') || '';
+                let content = await response.text();
+                let isJson = false;
+                
+                // 如果是JSON，格式化显示
+                if (contentType.includes('json') || step === 'knowledge_points') {
+                    try {
+                        const jsonContent = JSON.parse(content);
+                        content = JSON.stringify(jsonContent, null, 2);
+                        isJson = true;
+                    } catch (e) {
+                        // 不是JSON，保持原样
+                    }
+                }
+                
+                // 创建预览弹窗
+                const previewDiv = document.createElement('div');
+                previewDiv.className = 'preview-section show';
+                previewDiv.style.position = 'fixed';
+                previewDiv.style.top = '50%';
+                previewDiv.style.left = '50%';
+                previewDiv.style.transform = 'translate(-50%, -50%)';
+                previewDiv.style.width = '90%';
+                previewDiv.style.maxWidth = '1000px';
+                previewDiv.style.maxHeight = '90vh';
+                previewDiv.style.zIndex = '1000';
+                previewDiv.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+                previewDiv.style.backgroundColor = 'white';
+                previewDiv.style.borderRadius = '8px';
+                previewDiv.style.display = 'flex';
+                previewDiv.style.flexDirection = 'column';
+                
+                const typeNames = {
+                    'asr': 'ASR逐字稿',
+                    'knowledge_points': '知识点'
+                };
+                
+                const partInfo = partNumber ? ` (P${partNumber})` : '';
+                previewDiv.innerHTML = `
+                    <div style="padding: 20px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="margin: 0;">预览/编辑 ${typeNames[step] || step}${partInfo}</h3>
+                        <button class="btn-secondary" onclick="this.closest('.preview-section').remove()" style="padding: 8px 16px;">关闭</button>
+                    </div>
+                    <div style="flex: 1; overflow: auto; padding: 20px;">
+                        <div style="margin-bottom: 10px; color: #666; font-size: 12px;">
+                            来源URL: <a href="${resultUrl}" target="_blank" style="color: #3498db;">${resultUrl}</a>
+                        </div>
+                        <textarea id="previewContent" style="width: 100%; height: 60vh; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 13px; resize: vertical;" spellcheck="false">${escapeHtml(content)}</textarea>
+                    </div>
+                    <div style="padding: 20px; border-top: 1px solid #e0e0e0; display: flex; justify-content: flex-end; gap: 10px;">
+                        <button class="btn-secondary" onclick="this.closest('.preview-section').remove()">取消</button>
+                        <button class="btn-primary" onclick="uploadEditedContent('${taskId}', '${step}', ${isJson}, ${partNumber || 'null'})">保存并上传</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(previewDiv);
+                
+            } catch (error) {
+                alert('加载内容失败: ' + error.message);
+            }
+        }
+        
+        // 上传编辑后的内容
+        async function uploadEditedContent(taskId, step, isJson, partNumber = null) {
+            const previewDiv = document.querySelector('.preview-section');
+            const textarea = document.getElementById('previewContent');
+            if (!textarea || !previewDiv) return;
+            
+            const content = textarea.value;
+            if (!content.trim()) {
+                alert('内容不能为空');
+                return;
+            }
+            
+            try {
+                // 创建Blob
+                const blob = new Blob([content], { 
+                    type: isJson ? 'application/json; charset=utf-8' : 'text/plain; charset=utf-8' 
+                });
+                
+                // 创建FormData
+                const formData = new FormData();
+                const fileName = partNumber 
+                    ? `${taskId}_${step}_p${partNumber}.${isJson ? 'json' : 'txt'}`
+                    : `${taskId}_${step}.${isJson ? 'json' : 'txt'}`;
+                formData.append('file0', blob, fileName);
+                
+                // 显示上传中状态
+                const saveBtn = previewDiv.querySelector('.btn-primary');
+                const originalText = saveBtn.textContent;
+                saveBtn.disabled = true;
+                saveBtn.textContent = '上传中...';
+                
+                // 上传文件
+                const uploadResponse = await fetch('/open-api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!uploadResponse.ok) {
+                    throw new Error('上传失败');
+                }
+                
+                const uploadData = await uploadResponse.json();
+                
+                // 获取上传后的URL
+                let newUrl = null;
+                if (uploadData.files && uploadData.files.length > 0) {
+                    const fileInfo = uploadData.files[0];
+                    newUrl = fileInfo.url;
+                    if (!newUrl.startsWith('http')) {
+                        newUrl = 'http://file.gsxservice.com/' + newUrl;
+                    }
+                }
+                
+                if (!newUrl) {
+                    throw new Error('获取上传URL失败');
+                }
+                
+                // 更新任务的结果URL（如果是多P任务，传递part_number）
+                const updateBody = { result_url: newUrl };
+                if (partNumber) {
+                    updateBody.part_number = partNumber;
+                }
+                
+                const updateResponse = await fetch(`${API_BASE}/tasks/${taskId}/results/${step}/update-url`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updateBody)
+                });
+                
+                const updateData = await updateResponse.json();
+                
+                if (updateData.success) {
+                    alert('保存成功！');
+                    previewDiv.remove();
+                    // 刷新任务列表
+                    await loadTasks(currentPage);
+                } else {
+                    throw new Error(updateData.message || '更新任务URL失败');
+                }
+                
+            } catch (error) {
+                alert('保存失败: ' + error.message);
+                const saveBtn = previewDiv.querySelector('.btn-primary');
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = '保存并上传';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+

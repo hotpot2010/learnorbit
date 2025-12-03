@@ -154,6 +154,15 @@ A knowledge point is a complete concept, skill, or topic explained in the video,
 6. Arrange in chronological order
 7. Output in JSON format
 
+**Note Field Requirements**:
+For each knowledge point, generate a concise study note with the following requirements:
+1. Use Markdown format
+2. Content should be concise and clear, within 100 words
+3. Highlight core points and key concepts
+4. You can use emojis to enhance readability
+5. Well-organized and easy to understand
+6. The note should be directly related to the transcript segment corresponding to this knowledge point
+
 Transcript Segment (Time Range: {start_time} - {end_time}):
 {segment['text']}
 
@@ -163,7 +172,8 @@ Please output in the following JSON format:
     {{
       "name": "Knowledge Point Name",
       "start_time": "MM:SS",
-      "end_time": "MM:SS"
+      "end_time": "MM:SS",
+      "note": "Concise study note in Markdown format (within 100 words, highlighting core points and key concepts)"
     }}
   ]
 }}
@@ -171,7 +181,8 @@ Please output in the following JSON format:
 Note:
 - Output only JSON, no other explanatory text
 - If there are no clear knowledge points, return an empty array
-- Ensure each knowledge point duration (end_time - start_time) is at least 30 seconds"""
+- Ensure each knowledge point duration (end_time - start_time) is at least 30 seconds
+- Each note should be a complete, well-formatted Markdown text"""
         else:
             prompt = f"""请分析以下教学视频的逐字稿片段，提取其中的【知识点】。
 
@@ -191,6 +202,15 @@ Note:
 6. 按时间顺序排列
 7. 以 JSON 格式输出
 
+**笔记字段要求**：
+为每个知识点生成一份简洁的学习笔记，要求如下：
+1. 使用 Markdown 格式
+2. 内容简洁清晰，100字以内
+3. 突出核心要点和关键概念
+4. 可以使用 emoji 增强可读性
+5. 条理清晰，易于理解
+6. 笔记内容应与该知识点对应的逐字稿片段直接相关
+
 逐字稿片段（时间范围：{start_time} - {end_time}）：
 {segment['text']}
 
@@ -200,7 +220,8 @@ Note:
     {{
       "name": "知识点名称",
       "start_time": "MM:SS",
-      "end_time": "MM:SS"
+      "end_time": "MM:SS",
+      "note": "简洁的学习笔记（Markdown格式，100字以内，突出核心要点和关键概念）"
     }}
   ]
 }}
@@ -208,7 +229,8 @@ Note:
 注意：
 - 只输出 JSON，不要其他说明文字
 - 如果没有明确的知识点，返回空数组
-- 确保每个知识点的时长（end_time - start_time）至少30秒"""
+- 确保每个知识点的时长（end_time - start_time）至少30秒
+- 每个笔记应该是完整、格式良好的 Markdown 文本"""
         
         try:
             # 打印实际调用的 prompt（用于调试）
@@ -264,6 +286,9 @@ Note:
             valid_points = []
             for point in knowledge_points:
                 if isinstance(point, dict) and 'name' in point and 'start_time' in point and 'end_time' in point:
+                    # 确保 note 字段存在，如果不存在则设置为空字符串
+                    if 'note' not in point:
+                        point['note'] = ''
                     valid_points.append(point)
                 else:
                     print(f"⚠️ Invalid knowledge point format: {point}")

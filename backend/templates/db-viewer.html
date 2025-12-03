@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据库查看器 - 离线视频任务</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        
+        .table-section {
+            margin-top: 30px;
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .table-header h2 {
+            color: #2c3e50;
+        }
+        
+        .table-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+            overflow-y: visible;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            -webkit-overflow-scrolling: touch; /* iOS 平滑滚动 */
+        }
+        
+        .table-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        table {
+            width: 100%;
+            min-width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            white-space: nowrap; /* 表头不换行 */
+        }
+        
+        /* 普通单元格：设置最小宽度，允许换行 */
+        td {
+            min-width: 100px;
+            word-wrap: break-word;
+            white-space: normal;
+            position: relative;
+        }
+        
+        /* 长文本单元格：默认截断，悬停时显示完整内容 */
+        td.long-text {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .json-cell {
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .json-cell:hover {
+            white-space: normal;
+            overflow: visible;
+            z-index: 20;
+            position: absolute;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            padding: 8px;
+            border-radius: 4px;
+            min-width: 200px;
+            max-width: 500px;
+            word-wrap: break-word;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-running {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .status-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .pagination button {
+            min-width: 40px;
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+        
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 数据库查看器</h1>
+        <p class="subtitle">离线视频任务表 (offline_video_tasks)</p>
+        
+        <div id="statsSection" class="stats-section">
+            <div class="stat-card">
+                <h3>总任务数</h3>
+                <div class="value" id="totalTasks">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>等待中</h3>
+                <div class="value" id="pendingTasks">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>执行中</h3>
+                <div class="value" id="runningTasks">-</div>
+            </div>
+            <div class="stat-card">
+                <h3>已完成</h3>
+                <div class="value" id="completedTasks">-</div>
+            </div>
+        </div>
+        
+        <div class="table-section">
+            <div class="table-header">
+                <h2>数据库表</h2>
+                <div class="table-controls">
+                    <select id="tableSelector" onchange="changeTable()" style="padding: 8px 16px; border-radius: 4px; border: 1px solid #ddd;">
+                        <option value="offline_video_tasks">offline_video_tasks</option>
+                    </select>
+                    <button class="btn-secondary" onclick="loadData()">刷新</button>
+                    <button class="btn-primary" onclick="showTableStructure()">查看表结构</button>
+                </div>
+            </div>
+            
+            <div id="errorMessage"></div>
+            
+            <div id="loadingMessage" class="loading">加载中...</div>
+            
+            <div id="tableContainer" style="display: none;">
+                <div class="table-wrapper">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>任务ID</th>
+                                <th>视频标题</th>
+                                <th>B站链接</th>
+                                <th>下载状态</th>
+                                <th>ASR状态</th>
+                                <th>知识点状态</th>
+                                <th>视频URL</th>
+                                <th>ASR结果URL</th>
+                                <th>知识点URL</th>
+                                <th>创建时间</th>
+                                <th>更新时间</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="pagination">
+                    <button class="btn-secondary" onclick="previousPage()" id="prevBtn">上一页</button>
+                    <span id="pageInfo">第 1 页</span>
+                    <button class="btn-secondary" onclick="nextPage()" id="nextBtn">下一页</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = '/open-api/db-viewer';
+        let currentPage = 1;
+        const pageSize = 20;
+        let totalRecords = 0;
+        let currentTable = 'offline_video_tasks';
+        
+        // 加载表列表
+        async function loadTables() {
+            try {
+                const response = await fetch(`${API_BASE}/tables`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const selector = document.getElementById('tableSelector');
+                    selector.innerHTML = data.tables.map(table => 
+                        `<option value="${table}" ${table === currentTable ? 'selected' : ''}>${table}</option>`
+                    ).join('');
+                }
+            } catch (error) {
+                console.error('加载表列表失败:', error);
+            }
+        }
+        
+        // 切换表
+        function changeTable() {
+            const selector = document.getElementById('tableSelector');
+            currentTable = selector.value;
+            currentPage = 1;
+            loadData();
+        }
+        
+        // 加载统计数据
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_BASE}/stats`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('totalTasks').textContent = data.stats.total_tasks;
+                    document.getElementById('pendingTasks').textContent = data.stats.pending_tasks;
+                    document.getElementById('runningTasks').textContent = data.stats.running_tasks;
+                    document.getElementById('completedTasks').textContent = data.stats.completed_tasks;
+                }
+            } catch (error) {
+                console.error('加载统计失败:', error);
+            }
+        }
+        
+        // 加载表数据
+        async function loadData() {
+            const loadingEl = document.getElementById('loadingMessage');
+            const tableContainer = document.getElementById('tableContainer');
+            const errorEl = document.getElementById('errorMessage');
+            
+            loadingEl.style.display = 'block';
+            tableContainer.style.display = 'none';
+            errorEl.innerHTML = '';
+            
+            try {
+                const offset = (currentPage - 1) * pageSize;
+                const response = await fetch(`${API_BASE}/tables/${currentTable}/data?limit=${pageSize}&offset=${offset}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    totalRecords = data.total;
+                    renderTable(data.data);
+                    updatePagination();
+                    
+                    loadingEl.style.display = 'none';
+                    tableContainer.style.display = 'block';
+                } else {
+                    throw new Error(data.message || '加载失败');
+                }
+            } catch (error) {
+                loadingEl.style.display = 'none';
+                errorEl.innerHTML = `<div class="error">加载失败: ${error.message}</div>`;
+            }
+        }
+        
+        // 渲染表格
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="100%" style="text-align: center; padding: 40px;">暂无数据</td></tr>';
+                return;
+            }
+            
+            // 获取所有字段名
+            const columns = Object.keys(data[0]);
+            
+            // 如果是offline_video_tasks表，使用特殊渲染
+            if (currentTable === 'offline_video_tasks') {
+                tbody.innerHTML = data.map(task => {
+                    const steps = task.steps || {};
+                    const downloadStatus = steps.download?.status || 'unknown';
+                    const asrStatus = steps.asr?.status || 'unknown';
+                    const knowledgeStatus = steps.knowledge_points?.status || 'unknown';
+                    
+                    return `
+                        <tr>
+                            <td>${task.task_id}</td>
+                            <td>${task.video_title || '-'}</td>
+                            <td><a href="${task.bilibili_url}" target="_blank" style="color: #3498db;">${task.bilibili_url.substring(0, 50)}...</a></td>
+                            <td><span class="status-badge status-${downloadStatus}">${downloadStatus}</span></td>
+                            <td><span class="status-badge status-${asrStatus}">${asrStatus}</span></td>
+                            <td><span class="status-badge status-${knowledgeStatus}">${knowledgeStatus}</span></td>
+                            <td>${task.video_url ? `<a href="${task.video_url}" target="_blank">查看</a>` : '-'}</td>
+                            <td>${task.asr_result_url ? `<a href="${task.asr_result_url}" target="_blank">查看</a>` : '-'}</td>
+                            <td>${task.knowledge_points_result_url ? `<a href="${task.knowledge_points_result_url}" target="_blank">查看</a>` : '-'}</td>
+                            <td>${task.created_at ? new Date(task.created_at).toLocaleString('zh-CN') : '-'}</td>
+                            <td>${task.updated_at ? new Date(task.updated_at).toLocaleString('zh-CN') : '-'}</td>
+                        </tr>
+                    `;
+                }).join('');
+            } else {
+                // 其他表：动态渲染所有字段
+                // 先更新表头
+                const thead = document.querySelector('#dataTable thead tr');
+                thead.innerHTML = columns.map(col => `<th>${col}</th>`).join('');
+                
+                // 渲染数据
+                tbody.innerHTML = data.map(row => {
+                    return `<tr>${columns.map(col => {
+                        let value = row[col];
+                        if (value === null || value === undefined) {
+                            value = '-';
+                        } else if (typeof value === 'object') {
+                            value = JSON.stringify(value);
+                        } else if (typeof value === 'string' && value.match(/^\d{4}-\d{2}-\d{2}/)) {
+                            // 尝试解析为日期
+                            try {
+                                value = new Date(value).toLocaleString('zh-CN');
+                            } catch (e) {
+                                // 不是日期，保持原样
+                            }
+                        }
+                        return `<td class="json-cell" title="${value}">${value}</td>`;
+                    }).join('')}</tr>`;
+                }).join('');
+            }
+        }
+        
+        // 更新分页
+        function updatePagination() {
+            const totalPages = Math.ceil(totalRecords / pageSize);
+            document.getElementById('pageInfo').textContent = `第 ${currentPage} / ${totalPages} 页（共 ${totalRecords} 条）`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage >= totalPages;
+        }
+        
+        // 上一页
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                loadData();
+            }
+        }
+        
+        // 下一页
+        function nextPage() {
+            const totalPages = Math.ceil(totalRecords / pageSize);
+            if (currentPage < totalPages) {
+                currentPage++;
+                loadData();
+            }
+        }
+        
+        // 查看表结构
+        async function showTableStructure() {
+            try {
+                const response = await fetch(`${API_BASE}/tables/${currentTable}/structure`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    let structureHtml = `
+                        <h3>表结构: ${data.table_name}</h3>
+                        <table style="margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th>字段名</th>
+                                    <th>类型</th>
+                                    <th>可空</th>
+                                    <th>默认值</th>
+                                    <th>注释</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+                    
+                    data.columns.forEach(col => {
+                        structureHtml += `
+                            <tr>
+                                <td><strong>${col.name}</strong></td>
+                                <td>${col.type}</td>
+                                <td>${col.nullable ? '是' : '否'}</td>
+                                <td>${col.default || '-'}</td>
+                                <td>${col.comment || '-'}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    structureHtml += `
+                            </tbody>
+                        </table>
+                        <p style="margin-top: 10px;"><strong>主键:</strong> ${data.primary_keys.join(', ')}</p>
+                    `;
+                    
+                    alert(structureHtml.replace(/<[^>]*>/g, '\n').replace(/\n+/g, '\n'));
+                }
+            } catch (error) {
+                alert('获取表结构失败: ' + error.message);
+            }
+        }
+        
+        // 页面加载时初始化
+        window.addEventListener('load', () => {
+            loadTables();
+            loadStats();
+            loadData();
+        });
+    </script>
+</body>
+</html>
+
