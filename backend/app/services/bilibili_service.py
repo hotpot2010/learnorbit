@@ -779,16 +779,13 @@ class BilibiliService:
             'skip_unavailable_fragments': True,
             # Cookie 支持（某些视频可能需要）
             'cookiefile': None,  # 如果需要可以指定 cookie 文件
-            # 🔧 修复 FFmpeg 合并错误：尝试多种策略
-            # 策略1：先尝试不合并，让 yt-dlp 自动处理
+            # 🔧 修复 FFmpeg 合并错误：优先使用 copy 模式（不重新编码，最快最兼容）
             'postprocessors': [],
-            # 如果合并失败，使用更宽松的 FFmpeg 参数
+            # 优先尝试直接复制流（不重新编码），如果失败再尝试重新编码
             'postprocessor_args': {
                 'ffmpeg': [
-                    '-c:v', 'libx264',  # 使用 libx264 编码器（更兼容）
-                    '-c:a', 'aac',     # 使用 aac 音频编码器
-                    '-preset', 'fast',  # 快速预设
-                    '-crf', '23',      # 质量参数
+                    '-c:v', 'copy',    # 直接复制视频流（不重新编码，最快）
+                    '-c:a', 'copy',   # 直接复制音频流（不重新编码，最快）
                 ],
             },
             # 如果合并失败，允许使用单独的视频或音频文件
@@ -982,11 +979,25 @@ class BilibiliService:
                 if 'merge_output_format' in strategy_opts:
                     fallback_opts['merge_output_format'] = strategy_opts['merge_output_format']
                 else:
-                    # 默认尝试合并，但如果失败会保留单独文件
+                    # 默认尝试合并，使用 copy 模式（最兼容）
                     fallback_opts['merge_output_format'] = 'mp4'
-                    fallback_opts['postprocessor_args'] = {
-                        'ffmpeg': ['-c:v', 'libx264', '-c:a', 'aac', '-preset', 'fast', '-crf', '23'],
-                    }
+                    # 尝试多种编码器策略
+                    if 'aac' in error_msg.lower() or 'libfdk_aac' in error_msg.lower():
+                        # 如果 aac 有问题，尝试其他编码器
+                        fallback_opts['postprocessor_args'] = {
+                            'ffmpeg': [
+                                '-c:v', 'copy',      # 视频直接复制
+                                '-c:a', 'libmp3lame',  # 使用 mp3 编码器（更兼容）
+                                '-b:a', '192k',      # 音频比特率
+                            ],
+                        }
+                        # 如果使用 mp3，需要改变输出格式
+                        fallback_opts['merge_output_format'] = 'mkv'  # mkv 支持 mp3
+                    else:
+                        # 默认使用 copy 模式
+                        fallback_opts['postprocessor_args'] = {
+                            'ffmpeg': ['-c:v', 'copy', '-c:a', 'copy'],
+                        }
                     
                     try:
                         with yt_dlp.YoutubeDL(fallback_opts) as ydl:
