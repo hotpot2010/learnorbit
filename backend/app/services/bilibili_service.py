@@ -6,8 +6,7 @@ import sys
 import json
 import yt_dlp
 import tempfile
-import subprocess
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Dict, Any, List, Optional
 from pathlib import Path
 import time
 
@@ -197,269 +196,6 @@ class BilibiliService:
         }
         
         return quality_formats.get(quality, quality_formats['best'])
-    
-    def _find_separate_video_audio_files(self, base_name: str, download_dir: str) -> Tuple[Optional[str], Optional[str]]:
-        """
-        查找分离的视频和音频文件
-        
-        Args:
-            base_name: 文件基础名称（不含扩展名）
-            download_dir: 下载目录
-            
-        Returns:
-            (video_file_path, audio_file_path) 元组，如果找不到则为 None
-        """
-        video_extensions = ['.mp4', '.flv', '.webm', '.mkv', '.avi', '.mov']
-        audio_extensions = ['.m4a', '.mp3', '.aac', '.ogg', '.opus', '.flac', '.wav']
-        
-        video_file = None
-        audio_file = None
-        
-        if not os.path.exists(download_dir):
-            return None, None
-        
-        for file in os.listdir(download_dir):
-            if base_name not in file or file.endswith('.part'):
-                continue
-            
-            file_path = os.path.join(download_dir, file)
-            file_lower = file.lower()
-            
-            # 检查是否是视频文件
-            if any(file_lower.endswith(ext) for ext in video_extensions):
-                # 使用ffprobe检查是否包含音频流
-                try:
-                    cmd = [
-                        'ffprobe',
-                        '-v', 'error',
-                        '-select_streams', 'a:0',
-                        '-show_entries', 'stream=codec_type',
-                        '-of', 'default=noprint_wrappers=1:nokey=1',
-                        file_path
-                    ]
-                    result = subprocess.run(cmd, capture_output=True, text=True, timeout=5)
-                    # 如果没有音频流，这是一个纯视频文件
-                    if result.returncode == 0 and 'audio' not in result.stdout:
-                        video_file = file_path
-                        print(f"📹 找到视频文件（无音频）: {file}")
-                    elif result.returncode == 0 and 'audio' in result.stdout:
-                        # 文件已包含音频，不需要合并
-                        print(f"✅ 找到完整视频文件（已包含音频）: {file}")
-                    else:
-                        # ffprobe检查失败，可能是视频文件，但不确定是否有音频
-                        # 先假设是视频文件，后续合并时会再次检查
-                        video_file = file_path
-                        print(f"📹 找到可能的视频文件: {file}")
-                except Exception as e:
-                    # 如果ffprobe失败，假设可能是视频文件
-                    video_file = file_path
-                    print(f"📹 找到可能的视频文件（ffprobe检查失败: {e}）: {file}")
-            
-            # 检查是否是音频文件
-            elif any(file_lower.endswith(ext) for ext in audio_extensions):
-                audio_file = file_path
-                print(f"🎵 找到音频文件: {file}")
-        
-        return video_file, audio_file
-    
-    def _merge_video_audio_with_ffmpeg(
-        self, 
-        video_path: str, 
-        audio_path: str, 
-        output_path: str
-    ) -> Tuple[bool, str]:
-        """
-        使用ffmpeg手动合并视频和音频文件
-        
-        Args:
-            video_path: 视频文件路径
-            audio_path: 音频文件路径
-            output_path: 输出文件路径（期望的格式，可能是.mp4）
-            
-        Returns:
-            (是否成功, 实际输出文件路径) 元组
-            注意：实际文件路径可能与output_path不同（例如可能是.mkv格式）
-        """
-        print(f"🔧 使用ffmpeg合并视频和音频...")
-        print(f"   视频: {video_path}")
-        print(f"   音频: {audio_path}")
-        print(f"   输出: {output_path}")
-        
-        try:
-            # 策略1: 最简单的参数（最兼容，适合旧版本ffmpeg）
-            # 不使用-strict experimental，使用基础的aac编码
-            print(f"🔄 策略1: 尝试使用基础AAC编码（最兼容）...")
-            cmd1 = [
-                'ffmpeg',
-                '-i', video_path,
-                '-i', audio_path,
-                '-c:v', 'copy',           # 视频流直接复制
-                '-c:a', 'aac',            # 音频使用aac编码
-                '-b:a', '128k',           # 使用较低的比特率（更兼容）
-                '-map', '0:v:0',
-                '-map', '1:a:0',
-                '-shortest',
-                '-y',
-                output_path
-            ]
-            
-            print(f"   执行命令: {' '.join(cmd1)}")
-            result1 = subprocess.run(
-                cmd1,
-                capture_output=True,
-                text=True,
-                timeout=300
-            )
-            
-            if result1.returncode == 0 and os.path.exists(output_path) and os.path.getsize(output_path) > 1024:
-                print(f"✅ 策略1成功: {output_path}")
-                print(f"   文件大小: {os.path.getsize(output_path) / 1024 / 1024:.2f} MB")
-                return True, output_path
-            else:
-                if result1.returncode != 0:
-                    print(f"❌ 策略1失败 (返回码: {result1.returncode})")
-                    print(f"   错误输出: {result1.stderr[:300]}")
-            
-            # 策略2: 使用-strict experimental（某些ffmpeg版本需要）
-            print(f"🔄 策略2: 尝试使用experimental模式...")
-            cmd2 = [
-                'ffmpeg',
-                '-i', video_path,
-                '-i', audio_path,
-                '-c:v', 'copy',
-                '-c:a', 'aac',
-                '-b:a', '192k',
-                '-strict', 'experimental',
-                '-map', '0:v:0',
-                '-map', '1:a:0',
-                '-shortest',
-                '-y',
-                output_path
-            ]
-            
-            result2 = subprocess.run(
-                cmd2,
-                capture_output=True,
-                text=True,
-                timeout=300
-            )
-            
-            if result2.returncode == 0 and os.path.exists(output_path) and os.path.getsize(output_path) > 1024:
-                print(f"✅ 策略2成功: {output_path}")
-                return True, output_path
-            else:
-                if result2.returncode != 0:
-                    print(f"❌ 策略2失败 (返回码: {result2.returncode})")
-                    print(f"   错误输出: {result2.stderr[:300]}")
-            
-            # 策略3: 尝试使用libfdk_aac（如果可用）
-            print(f"🔄 策略3: 尝试使用libfdk_aac编码器...")
-            cmd3 = [
-                'ffmpeg',
-                '-i', video_path,
-                '-i', audio_path,
-                '-c:v', 'copy',
-                '-c:a', 'libfdk_aac',
-                '-b:a', '192k',
-                '-map', '0:v:0',
-                '-map', '1:a:0',
-                '-shortest',
-                '-y',
-                output_path
-            ]
-            
-            result3 = subprocess.run(
-                cmd3,
-                capture_output=True,
-                text=True,
-                timeout=300
-            )
-            
-            if result3.returncode == 0 and os.path.exists(output_path) and os.path.getsize(output_path) > 1024:
-                print(f"✅ 策略3成功: {output_path}")
-                return True, output_path
-            else:
-                if result3.returncode != 0:
-                    print(f"❌ 策略3失败 (返回码: {result3.returncode})")
-                    print(f"   错误输出: {result3.stderr[:300]}")
-            
-            # 策略4: 使用MKV容器 + MP3编码（最兼容）
-            print(f"🔄 策略4: 尝试使用MKV容器 + MP3编码（最兼容）...")
-            output_path_mkv = output_path.replace('.mp4', '.mkv')
-            cmd4 = [
-                'ffmpeg',
-                '-i', video_path,
-                '-i', audio_path,
-                '-c:v', 'copy',
-                '-c:a', 'libmp3lame',
-                '-b:a', '192k',
-                '-map', '0:v:0',
-                '-map', '1:a:0',
-                '-shortest',
-                '-y',
-                output_path_mkv
-            ]
-            
-            result4 = subprocess.run(
-                cmd4,
-                capture_output=True,
-                text=True,
-                timeout=300
-            )
-            
-            if result4.returncode == 0 and os.path.exists(output_path_mkv) and os.path.getsize(output_path_mkv) > 1024:
-                print(f"✅ 策略4成功（MKV格式）: {output_path_mkv}")
-                # 如果原mp4文件存在，删除它
-                if os.path.exists(output_path):
-                    os.remove(output_path)
-                return True, output_path_mkv
-            else:
-                if result4.returncode != 0:
-                    print(f"❌ 策略4失败 (返回码: {result4.returncode})")
-                    print(f"   错误输出: {result4.stderr[:300]}")
-            
-            # 策略5: 完全重新编码（最慢但最兼容）
-            print(f"🔄 策略5: 尝试完全重新编码（最慢但最兼容）...")
-            cmd5 = [
-                'ffmpeg',
-                '-i', video_path,
-                '-i', audio_path,
-                '-c:v', 'libx264',
-                '-preset', 'ultrafast',    # 最快预设
-                '-crf', '23',
-                '-c:a', 'aac',
-                '-b:a', '128k',
-                '-map', '0:v:0',
-                '-map', '1:a:0',
-                '-shortest',
-                '-y',
-                output_path
-            ]
-            
-            result5 = subprocess.run(
-                cmd5,
-                capture_output=True,
-                text=True,
-                timeout=600  # 重新编码可能需要更长时间
-            )
-            
-            if result5.returncode == 0 and os.path.exists(output_path) and os.path.getsize(output_path) > 1024:
-                print(f"✅ 策略5成功: {output_path}")
-                return True, output_path
-            else:
-                print(f"❌ 所有策略都失败了")
-                if result5.returncode != 0:
-                    print(f"   最后错误: {result5.stderr[:500]}")
-                return False, output_path
-                
-        except subprocess.TimeoutExpired:
-            print(f"❌ ffmpeg合并超时（超过5分钟）")
-            return False
-        except Exception as e:
-            print(f"❌ ffmpeg合并异常: {str(e)}")
-            import traceback
-            traceback.print_exc()
-            return False
     
     def list_available_formats(self, url: str) -> List[Dict[str, Any]]:
         """
@@ -1179,88 +915,6 @@ class BilibiliService:
                     print(f"✅ 找到已下载的文件: {best_file}")
                     print(f"   文件大小: {os.path.getsize(best_file) / 1024 / 1024:.2f} MB")
                     
-                    # 🔧 检查文件是否有音频流，如果没有则尝试合并分离的音频文件
-                    final_file = best_file
-                    try:
-                        cmd_check = [
-                            'ffprobe',
-                            '-v', 'error',
-                            '-select_streams', 'a:0',
-                            '-show_entries', 'stream=codec_type',
-                            '-of', 'default=noprint_wrappers=1:nokey=1',
-                            best_file
-                        ]
-                        result_check = subprocess.run(
-                            cmd_check,
-                            capture_output=True,
-                            text=True,
-                            timeout=5
-                        )
-                        has_audio = result_check.returncode == 0 and 'audio' in result_check.stdout
-                        
-                        if not has_audio:
-                            print(f"⚠️  检测到视频文件没有音频流，尝试查找并合并音频文件...")
-                            # 查找可能的音频文件（文件名可能包含格式ID，如.f100026）
-                            file_base = os.path.splitext(os.path.basename(best_file))[0]
-                            # 移除格式ID后缀（如.f100026）
-                            if '.' in file_base:
-                                base_name = file_base.rsplit('.', 1)[0] if file_base.count('.') > 1 else file_base.split('.')[0]
-                            else:
-                                base_name = file_base
-                            
-                            # 也尝试使用原始base_name
-                            original_base = os.path.splitext(output_filename)[0]
-                            
-                            video_file, audio_file = self._find_separate_video_audio_files(
-                                base_name, 
-                                download_dir
-                            )
-                            
-                            # 如果没找到，尝试用原始base_name
-                            if not audio_file:
-                                video_file2, audio_file2 = self._find_separate_video_audio_files(
-                                    original_base,
-                                    download_dir
-                                )
-                                if audio_file2:
-                                    video_file = video_file or video_file2
-                                    audio_file = audio_file2
-                            
-                            if video_file and audio_file:
-                                # 生成合并后的输出文件名
-                                output_merged = os.path.join(
-                                    download_dir,
-                                    f"{original_base}_merged.mp4"
-                                )
-                                
-                                print(f"🔧 找到分离的视频和音频文件，尝试合并...")
-                                print(f"   视频: {video_file}")
-                                print(f"   音频: {audio_file}")
-                                
-                                merge_success, merged_file = self._merge_video_audio_with_ffmpeg(
-                                    video_file, 
-                                    audio_file, 
-                                    output_merged
-                                )
-                                if merge_success:
-                                    # 合并成功，使用合并后的文件（可能是mp4或mkv）
-                                    final_file = merged_file
-                                    print(f"✅ 合并成功，使用合并后的文件: {final_file}")
-                                else:
-                                    print(f"⚠️  合并失败，使用原始视频文件（无音频）")
-                            else:
-                                print(f"⚠️  未找到分离的音频文件")
-                                print(f"   搜索的base_name: {base_name}, {original_base}")
-                                if os.path.exists(download_dir):
-                                    print(f"   下载目录中的文件:")
-                                    for f in os.listdir(download_dir):
-                                        if original_base in f or base_name in f:
-                                            print(f"     - {f}")
-                        else:
-                            print(f"✅ 视频文件已包含音频流")
-                    except Exception as check_error:
-                        print(f"⚠️  检查音频流时出错: {check_error}，假设文件正常")
-                    
                     try:
                         # 尝试获取视频信息
                         with yt_dlp.YoutubeDL({
@@ -1273,60 +927,54 @@ class BilibiliService:
                         
                         return {
                             'success': True,
-                            'file_path': final_file,
-                            'file_size': os.path.getsize(final_file),
+                            'file_path': best_file,
+                            'file_size': os.path.getsize(best_file),
                             'bv_id': info.get('id', ''),
                             'title': info.get('title', ''),
                             'duration': info.get('duration', 0),
                             'url': url,
-                            'note': '使用已下载的文件（合并失败但文件可用）' + ('（已手动合并音频）' if final_file != best_file else ''),
+                            'note': '使用已下载的文件（合并失败但文件可用）',
                         }
                     except Exception as info_error:
                         print(f"⚠️ 无法获取视频信息，但文件存在: {info_error}")
                         # 即使无法获取信息，也返回文件路径
                         return {
                             'success': True,
-                            'file_path': final_file,
-                            'file_size': os.path.getsize(final_file),
+                            'file_path': best_file,
+                            'file_size': os.path.getsize(best_file),
                             'bv_id': '',
                             'title': '',
                             'duration': 0,
                             'url': url,
-                            'note': '使用已下载的文件（合并失败但文件可用，无法获取元数据）' + ('（已手动合并音频）' if final_file != best_file else ''),
+                            'note': '使用已下载的文件（合并失败但文件可用，无法获取元数据）',
                         }
                 else:
                     print(f"⚠️ 未找到已下载的文件，将尝试降级策略...")
             
             # 尝试多种降级策略（根据诊断结果调整顺序）
-            # 注意：优先使用包含音频的策略，避免下载无声视频
             fallback_strategies = [
-                ('Strategy 1: Disable merge but keep both (will merge manually)', {
+                ('Strategy 1: Disable merge (separate files)', {
                     'format': format_str,
-                    'merge_output_format': None,  # 禁用自动合并，但保留视频和音频文件
+                    'merge_output_format': None,  # 禁用合并
                     'keepvideo': True,
                     'keepaudio': True,
                 }),
-                ('Strategy 2: Simple best (no merge, will check audio)', {
+                ('Strategy 2: Best video only (no merge)', {
+                    'format': 'bestvideo',
+                    'merge_output_format': None,
+                }),
+                ('Strategy 3: Simple best (no merge)', {
                     'format': 'best',
                     'merge_output_format': None,
-                    'keepvideo': True,
-                    'keepaudio': True,
                 }),
-                ('Strategy 3: Best video + audio separately', {
-                    'format': 'bestvideo+bestaudio',
-                    'merge_output_format': None,
-                    'keepvideo': True,
-                    'keepaudio': True,
+                ('Strategy 4: Best audio only', {
+                    'format': 'bestaudio',
                 }),
-                ('Strategy 4: Worst quality (with audio)', {
+                ('Strategy 5: Worst quality', {
                     'format': 'worst',
-                    'keepvideo': True,
-                    'keepaudio': True,
                 }),
-                ('Strategy 5: Any format (let yt-dlp decide)', {
+                ('Strategy 6: Any format', {
                     'format': None,  # Let yt-dlp decide
-                    'keepvideo': True,
-                    'keepaudio': True,
                 }),
             ]
             
@@ -1425,57 +1073,6 @@ class BilibiliService:
                             if os.path.exists(downloaded_file):
                                 print(f"✅ Download succeeded with {strategy_name}")
                                 
-                                # 🔧 检查文件是否有音频流，如果没有则尝试合并分离的音频文件
-                                try:
-                                    cmd_check = [
-                                        'ffprobe',
-                                        '-v', 'error',
-                                        '-select_streams', 'a:0',
-                                        '-show_entries', 'stream=codec_type',
-                                        '-of', 'default=noprint_wrappers=1:nokey=1',
-                                        downloaded_file
-                                    ]
-                                    result_check = subprocess.run(
-                                        cmd_check,
-                                        capture_output=True,
-                                        text=True,
-                                        timeout=5
-                                    )
-                                    has_audio = 'audio' in result_check.stdout
-                                    
-                                    if not has_audio:
-                                        print(f"⚠️  检测到视频文件没有音频流，尝试查找并合并音频文件...")
-                                        base_name = os.path.splitext(os.path.basename(downloaded_file))[0]
-                                        video_file, audio_file = self._find_separate_video_audio_files(
-                                            base_name, 
-                                            self.download_dir
-                                        )
-                                        
-                                        if video_file and audio_file:
-                                            # 生成合并后的输出文件名
-                                            output_merged = os.path.join(
-                                                self.download_dir,
-                                                f"{base_name}_merged.mp4"
-                                            )
-                                            
-                                            merge_success, merged_file = self._merge_video_audio_with_ffmpeg(
-                                                video_file, 
-                                                audio_file, 
-                                                output_merged
-                                            )
-                                            if merge_success:
-                                                # 合并成功，使用合并后的文件（可能是mp4或mkv）
-                                                downloaded_file = merged_file
-                                                print(f"✅ 使用合并后的文件: {downloaded_file}")
-                                            else:
-                                                print(f"⚠️  合并失败，使用原始视频文件（无音频）")
-                                        else:
-                                            print(f"⚠️  未找到分离的音频文件，使用原始视频文件（无音频）")
-                                    else:
-                                        print(f"✅ 视频文件已包含音频流")
-                                except Exception as check_error:
-                                    print(f"⚠️  检查音频流时出错: {check_error}，假设文件正常")
-                                
                                 return {
                                     'success': True,
                                     'file_path': downloaded_file,
@@ -1487,59 +1084,6 @@ class BilibiliService:
                                     'download_strategy': strategy_name,
                                 }
                             else:
-                                # 🔧 如果找不到文件，尝试查找分离的视频和音频文件并合并
-                                print(f"⚠️  File not found after download, checking for separate video/audio files...")
-                                base_name = os.path.splitext(os.path.basename(downloaded_file))[0]
-                                video_file, audio_file = self._find_separate_video_audio_files(
-                                    base_name,
-                                    self.download_dir
-                                )
-                                
-                                if video_file and audio_file:
-                                    print(f"🔧 找到分离的视频和音频文件，尝试合并...")
-                                    output_merged = os.path.join(
-                                        self.download_dir,
-                                        f"{base_name}_merged.mp4"
-                                    )
-                                    
-                                    merge_success, merged_file = self._merge_video_audio_with_ffmpeg(
-                                        video_file,
-                                        audio_file,
-                                        output_merged
-                                    )
-                                    if merge_success:
-                                        try:
-                                            with yt_dlp.YoutubeDL({
-                                                'quiet': True,
-                                                'no_warnings': True,
-                                                'user_agent': ydl_opts.get('user_agent'),
-                                                'referer': ydl_opts.get('referer'),
-                                            }) as ydl:
-                                                info = ydl.extract_info(url, download=False)
-                                            
-                                            return {
-                                                'success': True,
-                                                'file_path': merged_file,  # 使用实际合并后的文件路径（可能是mkv）
-                                                'file_size': os.path.getsize(merged_file),
-                                                'bv_id': info.get('id', ''),
-                                                'title': info.get('title', ''),
-                                                'duration': info.get('duration', 0),
-                                                'url': url,
-                                                'download_strategy': f"{strategy_name} (manual merge)",
-                                            }
-                                        except:
-                                            # 即使无法获取info，也返回合并后的文件
-                                            return {
-                                                'success': True,
-                                                'file_path': merged_file,  # 使用实际合并后的文件路径（可能是mkv）
-                                                'file_size': os.path.getsize(merged_file),
-                                                'bv_id': '',
-                                                'title': '',
-                                                'duration': 0,
-                                                'url': url,
-                                                'download_strategy': f"{strategy_name} (manual merge)",
-                                            }
-                                
                                 print(f"❌ File not found after download (searched: {downloaded_file})")
                                 continue
                                 
