@@ -779,13 +779,21 @@ class BilibiliService:
             'skip_unavailable_fragments': True,
             # Cookie 支持（某些视频可能需要）
             'cookiefile': None,  # 如果需要可以指定 cookie 文件
-            # 🔧 修复 FFmpeg 合并错误：使用正确的后处理器配置
-            # 注意：只在需要时使用后处理器，避免版本兼容性问题
+            # 🔧 修复 FFmpeg 合并错误：尝试多种策略
+            # 策略1：先尝试不合并，让 yt-dlp 自动处理
             'postprocessors': [],
-            # 使用 postprocessor_args 传递 FFmpeg 参数（更兼容的方式）
+            # 如果合并失败，使用更宽松的 FFmpeg 参数
             'postprocessor_args': {
-                'ffmpeg': ['-c:v', 'copy', '-c:a', 'copy'],  # 直接复制流，不重新编码
+                'ffmpeg': [
+                    '-c:v', 'libx264',  # 使用 libx264 编码器（更兼容）
+                    '-c:a', 'aac',     # 使用 aac 音频编码器
+                    '-preset', 'fast',  # 快速预设
+                    '-crf', '23',      # 质量参数
+                ],
             },
+            # 如果合并失败，允许使用单独的视频或音频文件
+            'keepvideo': True,  # 保留原始视频文件
+            'keepaudio': True,  # 保留原始音频文件
             # 🎬 多P视频处理：如果URL包含?p=参数，只下载指定的分P
             # 如果URL不包含?p=参数，但检测到是playlist，只下载第一个
             'noplaylist': False,  # 允许playlist，但通过URL参数控制
@@ -858,38 +866,127 @@ class BilibiliService:
             error_msg = str(e)
             print(f"❌ Download failed with primary format: {error_msg}")
             
+            # 🔧 检查是否是 FFmpeg 合并错误，如果是，尝试使用已下载的文件
+            if 'Postprocessing' in error_msg or 'FFmpeg' in error_msg or 'merge' in error_msg.lower():
+                print(f"🔍 检测到 FFmpeg 合并错误，尝试查找已下载的文件...")
+                
+                # 查找可能已下载的视频或音频文件
+                base_name = os.path.splitext(output_filename)[0]
+                download_dir = self.download_dir
+                
+                # 查找可能的文件
+                potential_files = []
+                if os.path.exists(download_dir):
+                    for file in os.listdir(download_dir):
+                        if base_name in file and not file.endswith('.part'):
+                            file_path = os.path.join(download_dir, file)
+                            # 检查文件大小（确保不是空文件）
+                            if os.path.getsize(file_path) > 1024:  # 至少 1KB
+                                potential_files.append(file_path)
+                
+                if potential_files:
+                    # 优先选择 .mp4 文件
+                    mp4_files = [f for f in potential_files if f.endswith('.mp4')]
+                    if mp4_files:
+                        print(f"✅ 找到已下载的 MP4 文件: {mp4_files[0]}")
+                        try:
+                            # 尝试获取视频信息
+                            with yt_dlp.YoutubeDL({'quiet': True, 'no_warnings': True}) as ydl:
+                                info = ydl.extract_info(url, download=False)
+                            
+                            return {
+                                'success': True,
+                                'file_path': mp4_files[0],
+                                'file_size': os.path.getsize(mp4_files[0]),
+                                'bv_id': info.get('id', ''),
+                                'title': info.get('title', ''),
+                                'duration': info.get('duration', 0),
+                                'url': url,
+                                'note': '使用已下载的文件（合并失败但文件可用）',
+                            }
+                        except Exception as info_error:
+                            print(f"⚠️ 无法获取视频信息，但文件存在: {info_error}")
+                            # 即使无法获取信息，也返回文件路径
+                            return {
+                                'success': True,
+                                'file_path': mp4_files[0],
+                                'file_size': os.path.getsize(mp4_files[0]),
+                                'bv_id': '',
+                                'title': '',
+                                'duration': 0,
+                                'url': url,
+                                'note': '使用已下载的文件（合并失败但文件可用，无法获取元数据）',
+                            }
+                    else:
+                        # 使用第一个找到的文件
+                        print(f"✅ 找到已下载的文件: {potential_files[0]}")
+                        return {
+                            'success': True,
+                            'file_path': potential_files[0],
+                            'file_size': os.path.getsize(potential_files[0]),
+                            'bv_id': '',
+                            'title': '',
+                            'duration': 0,
+                            'url': url,
+                            'note': '使用已下载的文件（合并失败但文件可用）',
+                        }
+            
             # 尝试多种降级策略（根据诊断结果调整顺序）
             fallback_strategies = [
-                ('Strategy 1: Best video only', {'format': 'bestvideo'}),  # 某些视频只有这个
-                ('Strategy 2: Simple best', {'format': 'best'}),
-                ('Strategy 3: Best audio only', {'format': 'bestaudio'}),
-                ('Strategy 4: Worst quality', {'format': 'worst'}),
-                ('Strategy 5: Any format', {'format': None}),  # Let yt-dlp decide
+                ('Strategy 1: Disable merge (separate files)', {
+                    'format': format_str,
+                    'merge_output_format': None,  # 禁用合并
+                    'keepvideo': True,
+                    'keepaudio': True,
+                }),
+                ('Strategy 2: Best video only (no merge)', {
+                    'format': 'bestvideo',
+                    'merge_output_format': None,
+                }),
+                ('Strategy 3: Simple best (no merge)', {
+                    'format': 'best',
+                    'merge_output_format': None,
+                }),
+                ('Strategy 4: Best audio only', {
+                    'format': 'bestaudio',
+                }),
+                ('Strategy 5: Worst quality', {
+                    'format': 'worst',
+                }),
+                ('Strategy 6: Any format', {
+                    'format': None,  # Let yt-dlp decide
+                }),
             ]
             
-            for strategy_name, format_opts in fallback_strategies:
-                if 'Requested format is not available' in error_msg or 'format' in error_msg.lower():
-                    print(f"🔄 Trying {strategy_name}...")
-                    
-                    fallback_opts = {
-                        'outtmpl': ydl_opts['outtmpl'],
-                        'quiet': False,
-                        'no_warnings': False,
-                        'retries': 3,
-                        'fragment_retries': 3,
-                        'skip_unavailable_fragments': True,
-                        'socket_timeout': 30,
-                        'merge_output_format': 'mp4',
-                        # 🔧 修复 FFmpeg 合并错误：使用更兼容的配置
-                        'postprocessors': [],
-                        'postprocessor_args': {
-                            'ffmpeg': ['-c:v', 'copy', '-c:a', 'copy'],  # 直接复制流
-                        },
+            for strategy_name, strategy_opts in fallback_strategies:
+                print(f"🔄 Trying {strategy_name}...")
+                
+                fallback_opts = {
+                    'outtmpl': ydl_opts['outtmpl'],
+                    'quiet': False,
+                    'no_warnings': False,
+                    'retries': 3,
+                    'fragment_retries': 3,
+                    'skip_unavailable_fragments': True,
+                    'socket_timeout': 30,
+                    'user_agent': ydl_opts.get('user_agent'),
+                    'referer': ydl_opts.get('referer'),
+                    'headers': ydl_opts.get('headers'),
+                    'keepvideo': True,  # 保留原始文件
+                    'keepaudio': True,  # 保留原始文件
+                }
+                
+                # 应用策略选项
+                if 'format' in strategy_opts:
+                    fallback_opts['format'] = strategy_opts['format']
+                if 'merge_output_format' in strategy_opts:
+                    fallback_opts['merge_output_format'] = strategy_opts['merge_output_format']
+                else:
+                    # 默认尝试合并，但如果失败会保留单独文件
+                    fallback_opts['merge_output_format'] = 'mp4'
+                    fallback_opts['postprocessor_args'] = {
+                        'ffmpeg': ['-c:v', 'libx264', '-c:a', 'aac', '-preset', 'fast', '-crf', '23'],
                     }
-                    
-                    # Add format if specified
-                    if format_opts.get('format'):
-                        fallback_opts['format'] = format_opts['format']
                     
                     try:
                         with yt_dlp.YoutubeDL(fallback_opts) as ydl:
