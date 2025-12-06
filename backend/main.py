@@ -558,5 +558,6 @@ if __name__ == "__main__":
         port=settings.PORT,
         reload=False,  # 禁用自动重载避免multiprocessing
         workers=1,     # 单进程模式
-        log_level="info"
+        log_level="info",
+        access_log=False  # 禁用访问日志
     )

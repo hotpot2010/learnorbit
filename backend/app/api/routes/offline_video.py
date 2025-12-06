@@ -127,7 +127,8 @@ async def get_task(task_id: str):
 async def execute_step(
     task_id: str,
     step: str,
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    mode: Optional[str] = None  # "continue": 只执行失败的分P, "retry": 重新执行成功的分P
 ):
     """
     执行指定步骤（后台执行）
@@ -136,6 +137,7 @@ async def execute_step(
         task_id: 任务ID
         step: 步骤名称 (download, asr, knowledge_points, summary)
         background_tasks: FastAPI后台任务
+        mode: 执行模式 (None: 正常执行, "continue": 只执行失败的分P, "retry": 重新执行成功的分P)
         
     Returns:
         执行状态
@@ -150,32 +152,57 @@ async def execute_step(
         
         # 检查步骤状态
         step_info = task["steps"][step]
-        if step_info["status"] == TaskStatus.RUNNING:
+        step_status = step_info["status"]
+        step_message = step_info.get("message", "")
+        
+        # 智能判断状态：如果状态是running但消息包含"失败"，则认为实际状态是partial_success
+        if step_status == TaskStatus.RUNNING and "失败" in step_message:
+            step_status = TaskStatus.PARTIAL_SUCCESS
+        
+        if step_status == TaskStatus.RUNNING:
             return {
                 "success": False,
                 "message": "步骤正在执行中"
             }
         
+        # 辅助函数：智能判断步骤实际状态
+        def get_actual_status(step_key):
+            s = task["steps"][step_key]
+            status = s["status"]
+            message = s.get("message", "")
+            # 如果状态是running但消息包含"失败"，则认为实际状态是partial_success
+            if status == TaskStatus.RUNNING and "失败" in message:
+                return TaskStatus.PARTIAL_SUCCESS
+            return status
+        
         # 检查依赖关系
         if step == "asr":
-            # ASR需要下载步骤完成且有视频URL
-            if task["steps"]["download"]["status"] != TaskStatus.SUCCESS:
+            # ASR需要下载步骤完成或有部分成功
+            download_status = get_actual_status("download")
+            if download_status not in [TaskStatus.SUCCESS, TaskStatus.PARTIAL_SUCCESS]:
                 raise HTTPException(status_code=400, detail="请先完成下载步骤")
             if not task.get("video_url"):
                 raise HTTPException(status_code=400, detail="视频URL不存在，请先完成下载并上传")
         
         elif step == "knowledge_points":
-            # LLM步骤需要ASR步骤完成且有ASR结果URL
-            if task["steps"]["asr"]["status"] != TaskStatus.SUCCESS:
+            # LLM步骤需要ASR步骤完成或有部分成功
+            asr_status = get_actual_status("asr")
+            if asr_status not in [TaskStatus.SUCCESS, TaskStatus.PARTIAL_SUCCESS]:
                 raise HTTPException(status_code=400, detail="请先完成ASR步骤")
             if not task.get("asr_result_url"):
                 raise HTTPException(status_code=400, detail="ASR结果URL不存在，请先完成ASR步骤")
         
         # 立即更新步骤状态为RUNNING，让前端立即看到执行中状态
+        message = "步骤已开始执行..."
+        if mode == "continue":
+            message = "继续执行失败的分P..."
+        elif mode == "retry":
+            message = "重新执行成功的分P..."
+        
         offline_video_service._update_step_status(
             task_id, step,
             TaskStatus.RUNNING, 5,
-            "步骤已开始执行..."
+            message
         )
         
         # 在后台执行步骤（使用异步包装函数确保非阻塞）
@@ -183,11 +210,11 @@ async def execute_step(
             """异步包装函数，确保步骤在后台非阻塞执行"""
             try:
                 if step == "download":
-                    await offline_video_service.execute_step_download(task_id)
+                    await offline_video_service.execute_step_download(task_id, mode=mode)
                 elif step == "asr":
-                    await offline_video_service.execute_step_asr(task_id)
+                    await offline_video_service.execute_step_asr(task_id, mode=mode)
                 elif step == "knowledge_points":
-                    await offline_video_service.execute_step_knowledge_points(task_id)
+                    await offline_video_service.execute_step_knowledge_points(task_id, mode=mode)
             except Exception as e:
                 print(f"❌ 后台步骤执行失败: {step}, task_id: {task_id}, error: {e}")
                 import traceback

@@ -93,7 +93,6 @@ def test_connection():
         from sqlalchemy import text
         with engine.connect() as connection:
             connection.execute(text("SELECT 1"))
-            print("✅ 数据库连接成功")
             return True
     except Exception as e:
         print(f"❌ 数据库连接失败: {e}")

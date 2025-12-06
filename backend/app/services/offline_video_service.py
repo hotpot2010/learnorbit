@@ -28,6 +28,7 @@ class TaskStatus(str, Enum):
     SUCCESS = "success"  # 成功
     FAILED = "failed"  # 失败
     RETRYING = "retrying"  # 重试中
+    PARTIAL_SUCCESS = "partial_success"  # 部分成功（多P任务中部分分P失败）
 
 
 class StepType(str, Enum):
@@ -268,6 +269,21 @@ class OfflineVideoService:
                 self._save_task_to_file(task)
                 return
             
+            # 辅助函数：将URL字段转换为字符串（如果是列表则转为JSON字符串）
+            def serialize_url_field(url_field):
+                """将URL字段序列化为字符串"""
+                if url_field is None:
+                    return None
+                if isinstance(url_field, list):
+                    # 多P视频：列表转为JSON字符串
+                    return json.dumps(url_field, ensure_ascii=False)
+                elif isinstance(url_field, str):
+                    # 单P视频：已经是字符串，直接返回
+                    return url_field
+                else:
+                    # 其他类型：转为字符串
+                    return str(url_field)
+            
             with get_db_session() as db:
                 task_id = task.get('task_id')
                 if not task_id:
@@ -276,14 +292,19 @@ class OfflineVideoService:
                 # 查询是否存在
                 db_task = db.query(OfflineVideoTask).filter(OfflineVideoTask.task_id == task_id).first()
                 
+                # 序列化URL字段
+                video_url = serialize_url_field(task.get('video_url'))
+                asr_result_url = serialize_url_field(task.get('asr_result_url'))
+                knowledge_points_result_url = serialize_url_field(task.get('knowledge_points_result_url'))
+                
                 if db_task:
                     # 更新现有任务
                     db_task.bilibili_url = task.get('bilibili_url')
                     db_task.video_title = task.get('video_title')
                     db_task.steps = task.get('steps', {})
-                    db_task.video_url = task.get('video_url')
-                    db_task.asr_result_url = task.get('asr_result_url')
-                    db_task.knowledge_points_result_url = task.get('knowledge_points_result_url')
+                    db_task.video_url = video_url
+                    db_task.asr_result_url = asr_result_url
+                    db_task.knowledge_points_result_url = knowledge_points_result_url
                     db_task.video_info = task.get('video_info', {})
                     db_task.is_series = 1 if task.get('is_series') else 0
                     db_task.series_parts = task.get('series_parts', [])
@@ -295,9 +316,9 @@ class OfflineVideoService:
                         bilibili_url=task.get('bilibili_url'),
                         video_title=task.get('video_title'),
                         steps=task.get('steps', {}),
-                        video_url=task.get('video_url'),
-                        asr_result_url=task.get('asr_result_url'),
-                        knowledge_points_result_url=task.get('knowledge_points_result_url'),
+                        video_url=video_url,
+                        asr_result_url=asr_result_url,
+                        knowledge_points_result_url=knowledge_points_result_url,
                         video_info=task.get('video_info', {}),
                         is_series=1 if task.get('is_series') else 0,
                         series_parts=task.get('series_parts', []),
@@ -403,12 +424,13 @@ class OfflineVideoService:
             print(f"⚠️ 读取任务文件失败 {task_file}: {e}")
             return None
     
-    async def execute_step_download(self, task_id: str) -> Dict[str, Any]:
+    async def execute_step_download(self, task_id: str, mode: Optional[str] = None) -> Dict[str, Any]:
         """
         执行步骤1: 下载视频并上传（支持多P视频）
         
         Args:
             task_id: 任务ID
+            mode: 执行模式 (None: 正常执行, "continue": 只执行失败的分P, "retry": 重新执行成功的分P)
             
         Returns:
             执行结果
@@ -448,17 +470,54 @@ class OfflineVideoService:
                 # 移除URL中的?p=参数，获取基础URL
                 base_url = bilibili_url.split('?')[0] if '?' in bilibili_url else bilibili_url
                 
-                print(f"📋 开始遍历 {total_parts} 个分P...")
+                # 根据mode参数决定处理哪些分P
+                part_results_existing = existing_result.get("part_results", []) if existing_result else []
+                
+                # 构建分P编号到结果的映射（用于快速查找）
+                part_results_map = {r.get("part_number"): r for r in part_results_existing if r.get("part_number")}
+                
+                print(f"📋 开始遍历 {total_parts} 个分P... (mode={mode})")
+                print(f"   已有 {len(part_results_existing)} 个分P结果记录")
+                
                 for idx, part_info in enumerate(series_parts, 1):
-                    # 检查是否已完成
-                    if idx <= len(completed_urls):
-                        print(f"⏭️ 跳过已完成的分P {idx}/{total_parts}: {part_info.get('part_title', '')}")
-                        video_urls.append(completed_urls[idx - 1])
-                        part_results.append({
-                            "part_number": idx,
-                            "status": "completed",
-                            "video_url": completed_urls[idx - 1]
-                        })
+                    # 查找该分P的已有结果
+                    existing_part = part_results_map.get(idx)
+                    existing_url = existing_part.get("video_url") if existing_part else None
+                    existing_status = existing_part.get("status") if existing_part else None
+                    
+                    # 判断是否需要执行该分P
+                    should_skip = False
+                    
+                    if mode == "continue":
+                        # 继续执行模式：只执行失败的或没有URL的分P
+                        if existing_status == "success" and existing_url:
+                            print(f"⏭️ [continue] 跳过已成功的分P {idx}/{total_parts}: {part_info.get('part_title', '')}")
+                            video_urls.append(existing_url)
+                            part_results.append(existing_part)
+                            should_skip = True
+                        elif existing_status == "completed" and existing_url:
+                            print(f"⏭️ [continue] 跳过已完成的分P {idx}/{total_parts}: {part_info.get('part_title', '')}")
+                            video_urls.append(existing_url)
+                            part_results.append(existing_part)
+                            should_skip = True
+                        else:
+                            print(f"🔄 [continue] 需要执行分P {idx}/{total_parts}: status={existing_status}, url={existing_url}")
+                    elif mode == "retry":
+                        # 重新执行模式：重新执行所有分P
+                        print(f"🔄 [retry] 重新执行分P {idx}/{total_parts}: {part_info.get('part_title', '')}")
+                    else:
+                        # 正常模式：跳过已有URL的分P
+                        if existing_url:
+                            print(f"⏭️ 跳过已有URL的分P {idx}/{total_parts}: {part_info.get('part_title', '')}")
+                            video_urls.append(existing_url)
+                            part_results.append(existing_part if existing_part else {
+                                "part_number": idx,
+                                "status": "completed",
+                                "video_url": existing_url
+                            })
+                            should_skip = True
+                    
+                    if should_skip:
                         continue
                     
                     part_url = part_info.get('url', f"{base_url}?p={idx}")
@@ -578,9 +637,17 @@ class OfflineVideoService:
                 if failed_count > 0:
                     status_msg += f"，{failed_count} 个失败"
                 
+                # 根据成功和失败数量确定状态
+                if failed_count == 0:
+                    step_status = TaskStatus.SUCCESS
+                elif success_count == 0:
+                    step_status = TaskStatus.FAILED
+                else:
+                    step_status = TaskStatus.PARTIAL_SUCCESS
+                
                 self._update_step_status(
                     task_id, "download",
-                    TaskStatus.SUCCESS if failed_count == 0 else TaskStatus.RUNNING,
+                    step_status,
                     100,
                     status_msg,
                     result={
@@ -718,12 +785,13 @@ class OfflineVideoService:
             )
             raise
     
-    async def execute_step_asr(self, task_id: str) -> Dict[str, Any]:
+    async def execute_step_asr(self, task_id: str, mode: Optional[str] = None) -> Dict[str, Any]:
         """
         执行步骤2: ASR识别（支持多P视频）
         
         Args:
             task_id: 任务ID
+            mode: 执行模式 (None: 正常执行, "continue": 只执行失败的分P, "retry": 重新执行成功的分P)
             
         Returns:
             执行结果
@@ -733,7 +801,7 @@ class OfflineVideoService:
             raise ValueError(f"任务不存在: {task_id}")
         
         # 检查上一步是否完成（必须有上传的视频URL）
-        if task["steps"]["download"]["status"] != TaskStatus.SUCCESS:
+        if task["steps"]["download"]["status"] not in [TaskStatus.SUCCESS, TaskStatus.PARTIAL_SUCCESS]:
             raise ValueError("请先完成下载步骤")
         
         is_series = task.get("is_series", False)
@@ -778,16 +846,54 @@ class OfflineVideoService:
                     f"开始ASR识别（共{total_parts}个分P）..."
                 )
                 
+                # 根据mode参数决定处理哪些分P
+                part_results_existing = existing_result.get("part_results", []) if existing_result else []
+                
+                # 构建分P编号到结果的映射（用于快速查找）
+                part_results_map = {r.get("part_number"): r for r in part_results_existing if r.get("part_number")}
+                
+                print(f"📋 开始遍历 {total_parts} 个分P的ASR... (mode={mode})")
+                print(f"   已有 {len(part_results_existing)} 个分P结果记录")
+                
                 for idx, video_url in enumerate(video_urls, 1):
-                    # 检查是否已完成
-                    if idx <= len(completed_urls):
-                        print(f"⏭️ 跳过已完成的分P {idx}/{total_parts} ASR")
-                        asr_result_urls.append(completed_urls[idx - 1])
-                        part_results.append({
-                            "part_number": idx,
-                            "status": "completed",
-                            "result_url": completed_urls[idx - 1]
-                        })
+                    # 查找该分P的已有结果
+                    existing_part = part_results_map.get(idx)
+                    existing_url = existing_part.get("result_url") if existing_part else None
+                    existing_status = existing_part.get("status") if existing_part else None
+                    
+                    # 判断是否需要执行该分P
+                    should_skip = False
+                    
+                    if mode == "continue":
+                        # 继续执行模式：只执行失败的或没有URL的分P
+                        if existing_status == "success" and existing_url:
+                            print(f"⏭️ [continue] 跳过已成功的分P {idx}/{total_parts} ASR")
+                            asr_result_urls.append(existing_url)
+                            part_results.append(existing_part)
+                            should_skip = True
+                        elif existing_status == "completed" and existing_url:
+                            print(f"⏭️ [continue] 跳过已完成的分P {idx}/{total_parts} ASR")
+                            asr_result_urls.append(existing_url)
+                            part_results.append(existing_part)
+                            should_skip = True
+                        else:
+                            print(f"🔄 [continue] 需要执行分P {idx}/{total_parts} ASR: status={existing_status}, url={existing_url}")
+                    elif mode == "retry":
+                        # 重新执行模式：重新执行所有分P
+                        print(f"🔄 [retry] 重新执行分P {idx}/{total_parts} ASR")
+                    else:
+                        # 正常模式：跳过已有URL的分P
+                        if existing_url:
+                            print(f"⏭️ 跳过已有URL的分P {idx}/{total_parts} ASR")
+                            asr_result_urls.append(existing_url)
+                            part_results.append(existing_part if existing_part else {
+                                "part_number": idx,
+                                "status": "completed",
+                                "result_url": existing_url
+                            })
+                            should_skip = True
+                    
+                    if should_skip:
                         continue
                     
                     part_title = series_parts[idx - 1].get('part_title', f'P{idx}') if idx <= len(series_parts) else f'P{idx}'
@@ -881,9 +987,17 @@ class OfflineVideoService:
                 if failed_count > 0:
                     status_msg += f"，{failed_count} 个失败"
                 
+                # 根据成功和失败数量确定状态
+                if failed_count == 0:
+                    step_status = TaskStatus.SUCCESS
+                elif success_count == 0:
+                    step_status = TaskStatus.FAILED
+                else:
+                    step_status = TaskStatus.PARTIAL_SUCCESS
+                
                 self._update_step_status(
                     task_id, "asr",
-                    TaskStatus.SUCCESS if failed_count == 0 else TaskStatus.RUNNING,
+                    step_status,
                     100,
                     status_msg,
                     result={
@@ -1033,12 +1147,13 @@ class OfflineVideoService:
             )
             raise
     
-    async def execute_step_knowledge_points(self, task_id: str) -> Dict[str, Any]:
+    async def execute_step_knowledge_points(self, task_id: str, mode: Optional[str] = None) -> Dict[str, Any]:
         """
         执行步骤3: 生成知识点（支持多P视频）
         
         Args:
             task_id: 任务ID
+            mode: 执行模式 (None: 正常执行, "continue": 只执行失败的分P, "retry": 重新执行成功的分P)
             
         Returns:
             执行结果
@@ -1048,11 +1163,14 @@ class OfflineVideoService:
             raise ValueError(f"任务不存在: {task_id}")
         
         # 检查上一步是否完成（必须有ASR结果URL）
-        if task["steps"]["asr"]["status"] != TaskStatus.SUCCESS:
+        if task["steps"]["asr"]["status"] not in [TaskStatus.SUCCESS, TaskStatus.PARTIAL_SUCCESS]:
             raise ValueError("请先完成ASR步骤")
         
         is_series = task.get("is_series", False)
         series_parts = task.get("series_parts", [])
+        
+        # 获取locale参数（从任务中获取，默认为'zh'）
+        locale = task.get("locale", "zh")
         
         # 获取ASR结果URL列表
         asr_result_url_data = task.get("asr_result_url")
@@ -1094,16 +1212,54 @@ class OfflineVideoService:
                     f"开始生成知识点（共{total_parts}个分P）..."
                 )
                 
+                # 根据mode参数决定处理哪些分P
+                part_results_existing = existing_result.get("part_results", []) if existing_result else []
+                
+                # 构建分P编号到结果的映射（用于快速查找）
+                part_results_map = {r.get("part_number"): r for r in part_results_existing if r.get("part_number")}
+                
+                print(f"📋 开始遍历 {total_parts} 个分P的知识点生成... (mode={mode})")
+                print(f"   已有 {len(part_results_existing)} 个分P结果记录")
+                
                 for idx, asr_result_url in enumerate(asr_result_urls, 1):
-                    # 检查是否已完成
-                    if idx <= len(completed_urls):
-                        print(f"⏭️ 跳过已完成的分P {idx}/{total_parts} 知识点生成")
-                        knowledge_points_result_urls.append(completed_urls[idx - 1])
-                        part_results.append({
-                            "part_number": idx,
-                            "status": "completed",
-                            "result_url": completed_urls[idx - 1]
-                        })
+                    # 查找该分P的已有结果
+                    existing_part = part_results_map.get(idx)
+                    existing_url = existing_part.get("result_url") if existing_part else None
+                    existing_status = existing_part.get("status") if existing_part else None
+                    
+                    # 判断是否需要执行该分P
+                    should_skip = False
+                    
+                    if mode == "continue":
+                        # 继续执行模式：只执行失败的或没有URL的分P
+                        if existing_status == "success" and existing_url:
+                            print(f"⏭️ [continue] 跳过已成功的分P {idx}/{total_parts} 知识点生成")
+                            knowledge_points_result_urls.append(existing_url)
+                            part_results.append(existing_part)
+                            should_skip = True
+                        elif existing_status == "completed" and existing_url:
+                            print(f"⏭️ [continue] 跳过已完成的分P {idx}/{total_parts} 知识点生成")
+                            knowledge_points_result_urls.append(existing_url)
+                            part_results.append(existing_part)
+                            should_skip = True
+                        else:
+                            print(f"🔄 [continue] 需要执行分P {idx}/{total_parts} 知识点生成: status={existing_status}, url={existing_url}")
+                    elif mode == "retry":
+                        # 重新执行模式：重新执行所有分P
+                        print(f"🔄 [retry] 重新执行分P {idx}/{total_parts} 知识点生成")
+                    else:
+                        # 正常模式：跳过已有URL的分P
+                        if existing_url:
+                            print(f"⏭️ 跳过已有URL的分P {idx}/{total_parts} 知识点生成")
+                            knowledge_points_result_urls.append(existing_url)
+                            part_results.append(existing_part if existing_part else {
+                                "part_number": idx,
+                                "status": "completed",
+                                "result_url": existing_url
+                            })
+                            should_skip = True
+                    
+                    if should_skip:
                         continue
                     
                     part_title = series_parts[idx - 1].get('part_title', f'P{idx}') if idx <= len(series_parts) else f'P{idx}'
@@ -1134,11 +1290,11 @@ class OfflineVideoService:
                         )
                         print(f"✅ ASR结果下载成功，长度: {len(transcript)} 字符")
                         
-                        # 生成知识点
-                        print(f"📚 生成知识点，逐字稿长度: {len(transcript)} 字符")
+                        # 生成知识点（使用从任务中获取的locale参数）
+                        print(f"📚 生成知识点，逐字稿长度: {len(transcript)} 字符 (locale={locale})")
                         knowledge_points = await self.knowledge_point_extractor.extract_knowledge_points(
                             transcript,
-                            locale='zh'
+                            locale=locale
                         )
                         
                         print(f"✅ 分P {idx} 知识点生成完成，共 {len(knowledge_points)} 个知识点")
@@ -1183,6 +1339,38 @@ class OfflineVideoService:
                             "knowledge_points_count": len(knowledge_points)
                         })
                         
+                        print(f"✅ 分P {idx}/{total_parts} 知识点处理完成: {knowledge_points_result_url}")
+                        print(f"📊 当前已处理: {len(knowledge_points_result_urls)}/{total_parts} 个分P")
+                        
+                        # 🔧 每处理完一个分P就更新数据库，避免最后一起写入导致字段过长
+                        try:
+                            task = self.get_task(task_id)
+                            if task:
+                                # knowledge_points_result_url 字段只存储URL列表（多P为JSON字符串，单P为普通字符串）
+                                # 多P视频：存储JSON字符串数组，如 '["url1", "url2", ...]'
+                                # 单P视频：存储单个URL字符串，如 'url1'
+                                if len(knowledge_points_result_urls) > 1:
+                                    task["knowledge_points_result_url"] = json.dumps(knowledge_points_result_urls)  # 多P：JSON字符串
+                                elif len(knowledge_points_result_urls) == 1:
+                                    task["knowledge_points_result_url"] = knowledge_points_result_urls[0]  # 单P：普通字符串
+                                else:
+                                    task["knowledge_points_result_url"] = None  # 空列表：None
+                                
+                                # 更新步骤结果（包含详细信息和统计）
+                                task["steps"]["knowledge_points"]["result"] = {
+                                    "result_urls": knowledge_points_result_urls,
+                                    "part_results": part_results,
+                                    "total_parts": total_parts,
+                                    "success_count": len(knowledge_points_result_urls),
+                                    "failed_count": len(part_results) - len(knowledge_points_result_urls),
+                                    "total_knowledge_points": len(all_knowledge_points)
+                                }
+                                self.tasks_cache[task_id] = task
+                                self._save_task_to_db(task)
+                                print(f"💾 已更新数据库：{len(knowledge_points_result_urls)}/{total_parts} 个分P")
+                        except Exception as e:
+                            print(f"⚠️ 更新数据库失败: {e}，将继续处理下一个分P")
+                        
                         # 删除本地文件
                         try:
                             if os.path.exists(knowledge_points_doc_path):
@@ -1191,11 +1379,11 @@ class OfflineVideoService:
                         except Exception as e:
                             print(f"⚠️ 删除本地知识点文件失败: {e}")
                         
-                        print(f"✅ 分P {idx} 知识点处理完成: {knowledge_points_result_url}")
-                        
                     except Exception as e:
                         error_msg = str(e)
                         print(f"❌ 分P {idx} 知识点生成失败: {error_msg}")
+                        import traceback
+                        traceback.print_exc()
                         part_results.append({
                             "part_number": idx,
                             "status": "failed",
@@ -1216,9 +1404,17 @@ class OfflineVideoService:
                 if failed_count > 0:
                     status_msg += f"，{failed_count} 个失败"
                 
+                # 根据成功和失败数量确定状态
+                if failed_count == 0:
+                    step_status = TaskStatus.SUCCESS
+                elif success_count == 0:
+                    step_status = TaskStatus.FAILED
+                else:
+                    step_status = TaskStatus.PARTIAL_SUCCESS
+                
                 self._update_step_status(
                     task_id, "knowledge_points",
-                    TaskStatus.SUCCESS if failed_count == 0 else TaskStatus.RUNNING,
+                    step_status,
                     100,
                     status_msg,
                     result={
@@ -1231,7 +1427,7 @@ class OfflineVideoService:
                     }
                 )
                 
-                # 更新任务信息
+                # 更新任务信息（最终确认）
                 task = self.get_task(task_id)
                 if task:
                     task["knowledge_points_result_url"] = json.dumps(knowledge_points_result_urls) if len(knowledge_points_result_urls) > 1 else (knowledge_points_result_urls[0] if knowledge_points_result_urls else None)
@@ -1299,11 +1495,14 @@ class OfflineVideoService:
                     "开始生成知识点..."
                 )
                 
+                # 获取locale参数（从任务中获取，默认为'zh'）
+                locale = task.get("locale", "zh")
+                
                 # 生成知识点
-                print(f"📚 生成知识点，逐字稿长度: {len(transcript)} 字符")
+                print(f"📚 生成知识点，逐字稿长度: {len(transcript)} 字符 (locale={locale})")
                 knowledge_points = await self.knowledge_point_extractor.extract_knowledge_points(
                     transcript,
-                    locale='zh'
+                    locale=locale
                 )
                 
                 self._update_step_status(

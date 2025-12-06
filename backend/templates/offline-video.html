@@ -300,6 +300,11 @@
             background: #eafaf1;
         }
         
+        .step.partial_success {
+            border-left-color: #f39c12;
+            background: #fef5e7;
+        }
+        
         .step.failed {
             border-left-color: #e74c3c;
             background: #fdedec;
@@ -363,6 +368,11 @@
         .status-success {
             background: #eafaf1;
             color: #27ae60;
+        }
+        
+        .status-partial_success {
+            background: #fef5e7;
+            color: #f39c12;
         }
         
         .status-failed {
@@ -703,14 +713,21 @@
                     
                     const stepsHtml = steps.map(step => {
                         const stepInfo = task.steps[step.key];
-                        const status = stepInfo.status;
+                        let status = stepInfo.status;
                         const progress = stepInfo.progress || 0;
                         const message = stepInfo.message || '';
                         const error = stepInfo.error;
                         const result = stepInfo.result || {};
                         
+                        // 智能判断状态：如果状态是running但消息包含"失败"，则认为是partial_success
+                        if (status === 'running' && message.includes('失败')) {
+                            status = 'partial_success';
+                        }
+                        
                         const canExecute = status === 'pending' || status === 'failed';
                         const canRetry = status === 'failed';
+                        const canContinue = status === 'partial_success'; // 部分成功时显示继续执行
+                        const canRetrySuccess = status === 'partial_success' || status === 'success'; // 部分成功或完全成功时显示重新执行
                         
                         // 获取当前分P的结果URL
                         let resultUrl = null;
@@ -722,7 +739,7 @@
                             resultUrl = knowledgePointsUrl;
                         }
                         
-                        const canPreview = status === 'success' && resultUrl;
+                        const canPreview = (status === 'success' || status === 'partial_success') && resultUrl;
                         
                         // 显示执行中状态
                         const isRunning = status === 'running';
@@ -740,12 +757,14 @@
                                     </div>` : ''}
                                 </div>
                                 <div class="step-progress">
-                                    <div class="step-progress-bar ${status === 'success' ? 'success' : ''}" style="width: ${progress}%"></div>
+                                    <div class="step-progress-bar ${(status === 'success' || status === 'partial_success') ? 'success' : ''}" style="width: ${progress}%"></div>
                                 </div>
                                 <span class="step-status status-${status}">${getStatusText(status)}</span>
                                 <div class="step-actions">
                                     ${canExecute ? `<button class="btn-success" onclick="executeStep('${taskId}', '${step.key}')">执行</button>` : ''}
                                     ${canRetry ? `<button class="btn-secondary" onclick="retryStep('${taskId}', '${step.key}')">重试</button>` : ''}
+                                    ${canContinue ? `<button class="btn-success" onclick="executeStepContinue('${taskId}', '${step.key}')">继续执行</button>` : ''}
+                                    ${canRetrySuccess ? `<button class="btn-secondary" onclick="executeStepRetry('${taskId}', '${step.key}')">重新执行</button>` : ''}
                                     ${canPreview ? `<button class="btn-primary" onclick="previewResult('${taskId}', '${step.key}', ${partNumber})">预览</button>` : ''}
                                 </div>
                             </div>
@@ -762,15 +781,22 @@
                 // 单P视频：原有逻辑
                 const stepsHtml = steps.map(step => {
                     const stepInfo = task.steps[step.key];
-                    const status = stepInfo.status;
+                    let status = stepInfo.status;
                     const progress = stepInfo.progress || 0;
                     const message = stepInfo.message || '';
                     const error = stepInfo.error;
                     const result = stepInfo.result || {};
                     
+                    // 智能判断状态：如果状态是running但消息包含"失败"，则认为是partial_success
+                    if (status === 'running' && message.includes('失败')) {
+                        status = 'partial_success';
+                    }
+                    
                     const canExecute = status === 'pending' || status === 'failed';
                     const canRetry = status === 'failed';
-                    const canPreview = status === 'success' && (stepInfo.result || resultUrl);
+                    const canContinue = status === 'partial_success'; // 部分成功时显示继续执行
+                    const canRetrySuccess = status === 'partial_success' || status === 'success'; // 部分成功或完全成功时显示重新执行
+                    const canPreview = (status === 'success' || status === 'partial_success') && (stepInfo.result || resultUrl);
                     
                     // 获取结果URL
                     let resultUrl = null;
@@ -806,12 +832,14 @@
                                 </div>` : ''}
                             </div>
                             <div class="step-progress">
-                                <div class="step-progress-bar ${status === 'success' ? 'success' : ''}" style="width: ${progress}%"></div>
+                                <div class="step-progress-bar ${(status === 'success' || status === 'partial_success') ? 'success' : ''}" style="width: ${progress}%"></div>
                             </div>
                             <span class="step-status status-${status}">${getStatusText(status)}</span>
                             <div class="step-actions">
                                 ${canExecute ? `<button class="btn-success" onclick="executeStep('${taskId}', '${step.key}')">执行</button>` : ''}
                                 ${canRetry ? `<button class="btn-secondary" onclick="retryStep('${taskId}', '${step.key}')">重试</button>` : ''}
+                                ${canContinue ? `<button class="btn-success" onclick="executeStepContinue('${taskId}', '${step.key}')">继续执行</button>` : ''}
+                                ${canRetrySuccess ? `<button class="btn-secondary" onclick="executeStepRetry('${taskId}', '${step.key}')">重新执行</button>` : ''}
                                 ${canPreview ? `<button class="btn-primary" onclick="previewResult('${taskId}', '${step.key}')">预览</button>` : ''}
                             </div>
                         </div>
@@ -894,7 +922,8 @@
                 'running': '执行中',
                 'success': '成功',
                 'failed': '失败',
-                'retrying': '重试中'
+                'retrying': '重试中',
+                'partial_success': '部分成功'
             };
             return statusMap[status] || status;
         }
@@ -966,9 +995,7 @@
             const statusEl = stepEl.querySelector('.step-status');
             if (statusEl) {
                 statusEl.className = `step-status status-${status}`;
-                statusEl.textContent = status === 'running' ? '执行中' : 
-                                       status === 'success' ? '成功' : 
-                                       status === 'failed' ? '失败' : '等待执行';
+                statusEl.textContent = getStatusText(status);
             }
             
             // 更新消息
@@ -992,6 +1019,14 @@
                     if (canRetry) {
                         html += `<button class="btn-secondary" onclick="retryStep('${taskId}', '${stepKey}')">重试</button>`;
                     }
+                    actionsEl.innerHTML = html;
+                } else if (status === 'partial_success' || status === 'success') {
+                    // 部分成功或完全成功时显示继续执行和重新执行按钮
+                    let html = '';
+                    if (status === 'partial_success') {
+                        html += `<button class="btn-success" onclick="executeStepContinue('${taskId}', '${stepKey}')">继续执行</button>`;
+                    }
+                    html += `<button class="btn-secondary" onclick="executeStepRetry('${taskId}', '${stepKey}')">重新执行</button>`;
                     actionsEl.innerHTML = html;
                 }
             }
@@ -1030,6 +1065,54 @@
                 }
             } catch (error) {
                 alert('重试失败: ' + error.message);
+            }
+        }
+        
+        // 继续执行步骤（只执行失败的分P）
+        async function executeStepContinue(taskId, step) {
+            if (!confirm('确定要继续执行失败的分P吗？')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/tasks/${taskId}/steps/${step}/execute?mode=continue`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('继续执行已开始');
+                    loadTasks(currentPage);
+                } else {
+                    alert('继续执行失败: ' + (data.message || '未知错误'));
+                }
+            } catch (error) {
+                alert('继续执行失败: ' + error.message);
+            }
+        }
+        
+        // 重新执行步骤（重新执行成功的分P）
+        async function executeStepRetry(taskId, step) {
+            if (!confirm('确定要重新执行成功的分P吗？这将覆盖已有的结果。')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/tasks/${taskId}/steps/${step}/execute?mode=retry`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('重新执行已开始');
+                    loadTasks(currentPage);
+                } else {
+                    alert('重新执行失败: ' + (data.message || '未知错误'));
+                }
+            } catch (error) {
+                alert('重新执行失败: ' + error.message);
             }
         }
         
