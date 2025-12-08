@@ -31,6 +31,11 @@ interface VideoInfo {
   is_series: boolean;
   target_audience: string;
   description: string;
+  processed?: boolean;
+  task_id?: string;
+  video_url?: string | string[];
+  asr_result_url?: string | string[];
+  knowledge_points_result_url?: string | string[];
 }
 
 // 待处理视频接口
@@ -55,6 +60,7 @@ export default function VideoEntryPage() {
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [error, setError] = useState('');
+  const [searchSource, setSearchSource] = useState<'bilibili' | 'database'>('bilibili');
 
   // 待处理列表状态
   const [pendingVideos, setPendingVideos] = useState<PendingVideo[]>([]);
@@ -95,21 +101,33 @@ export default function VideoEntryPage() {
     setIsSearching(true);
     setError('');
     setHasSearched(false);
+    setVideos([]);
 
     try {
       console.log('🔍 搜索视频:', searchQuery);
 
-      const response = await fetch(buildApiUrl(API_ENDPOINTS.videoSearch), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: searchQuery,
-          limit: 10,
-          locale: locale,
-        }),
-      });
+      const isMathQuery = searchQuery.includes('数学') || searchQuery.toLowerCase().includes('math');
+      
+      let response;
+      if (isMathQuery) {
+        console.log('📚 从数据库加载数学相关视频');
+        setSearchSource('database');
+        response = await fetch(`/api/processed-videos?keyword=${encodeURIComponent(searchQuery)}`);
+      } else {
+        console.log('🔍 从B站搜索视频');
+        setSearchSource('bilibili');
+        response = await fetch(buildApiUrl(API_ENDPOINTS.videoSearch), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: searchQuery,
+            limit: 10,
+            locale: locale,
+          }),
+        });
+      }
 
       if (!response.ok) {
         throw new Error(`${t('searchFailed')}: ${response.status}`);
@@ -264,11 +282,19 @@ export default function VideoEntryPage() {
   };
 
   // 跳转到学习页面
-  const handleStartLearning = (video: PendingVideo) => {
-    if (video.status !== 'completed') return;
+  const handleStartLearning = (video: VideoInfo | PendingVideo) => {
+    const params = new URLSearchParams({
+      videoUrl: video.url,
+    });
 
-    const encodedUrl = encodeURIComponent(video.url);
-    const targetUrl = `/${locale}/video-notes-prototype?videoUrl=${encodedUrl}`;
+    // 如果是已处理的视频，只传递taskId
+    if ('processed' in video && video.processed && video.task_id) {
+      params.append('taskId', video.task_id);
+      params.append('processed', 'true');
+      // 不再传递完整的URL数组，改为在video-notes-prototype页面通过API获取
+    }
+
+    const targetUrl = `/${locale}/video-notes-prototype?${params.toString()}`;
     window.location.href = targetUrl;
   };
 
@@ -395,15 +421,26 @@ export default function VideoEntryPage() {
                         </span>
                       </div>
                       
-                      <Button 
-                        size="sm" 
-                        variant="ghost"
-                        className="text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 -mr-2"
-                        onClick={() => handleAddToWaitlist(video)}
-                      >
-                        <Plus className="w-4 h-4 mr-1" />
-                        加入列表
-                      </Button>
+                      {video.processed ? (
+                        <Button 
+                          size="sm" 
+                          className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+                          onClick={() => handleStartLearning(video)}
+                        >
+                          <Play className="w-4 h-4 mr-1" />
+                          开始学习
+                        </Button>
+                      ) : (
+                        <Button 
+                          size="sm" 
+                          variant="ghost"
+                          className="text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 -mr-2"
+                          onClick={() => handleAddToWaitlist(video)}
+                        >
+                          <Plus className="w-4 h-4 mr-1" />
+                          加入列表
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>

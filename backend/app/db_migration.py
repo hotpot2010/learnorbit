@@ -20,3 +20,4 @@ if __name__ == "__main__":
         print(f"❌ 数据库迁移失败: {e}")
         exit(1)
 
+

@@ -313,6 +313,156 @@ export default function VideoNotesPrototypePage() {
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [currentTime, setCurrentTime] = useState(0);
   const [currentKnowledgeIndex, setCurrentKnowledgeIndex] = useState(0);
+  
+  // 已处理视频的相关状态
+  const [isProcessedVideo, setIsProcessedVideo] = useState(false);
+  const [processedTaskData, setProcessedTaskData] = useState<any>(null);
+  // 使用 ref 来存储，确保在异步操作中也能访问到最新值
+  const processedTaskDataRef = useRef<any>(null);
+  const isProcessedVideoRef = useRef<boolean>(false);
+
+  // 检查URL参数，加载已处理视频数据
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlVideoUrl = urlParams.get('videoUrl');
+    const isProcessed = urlParams.get('processed') === 'true';
+    const taskId = urlParams.get('taskId');
+
+    if (urlVideoUrl) {
+      setVideoUrl(decodeURIComponent(urlVideoUrl));
+      
+      // 如果是已处理的视频，从后端API获取完整数据
+      if (isProcessed && taskId) {
+        console.log('📚 加载已处理视频数据, taskId:', taskId);
+        setIsProcessedVideo(true); // 🔥 立即标记为已处理视频
+        isProcessedVideoRef.current = true; // 同时设置 ref
+        
+        const loadProcessedData = async () => {
+          try {
+            setIsAnalyzing(true);
+            setAnalysisProgress({
+              stage: 'extracting_knowledge',
+              message: '正在加载已处理的视频数据...',
+              progress: 30,
+              estimatedTime: '',
+              currentStep: '从后端获取任务信息',
+            });
+
+            // 从后端API获取任务详情
+            const BACKEND_API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+            const response = await fetch(`${BACKEND_API_URL}/open-api/offline-video/tasks/${taskId}`);
+            
+            if (!response.ok) {
+              throw new Error(`获取任务详情失败: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('✅ 获取任务数据:', data);
+
+            if (!data.success || !data.task) {
+              throw new Error('任务数据格式错误');
+            }
+
+            const task = data.task;
+            setProcessedTaskData(task); // 保存任务数据
+            processedTaskDataRef.current = task; // 同时设置 ref
+            console.log('🔥 已保存任务数据到state和ref');
+            console.log('🔥 isProcessedVideoRef.current=', isProcessedVideoRef.current);
+            console.log('🔥 processedTaskDataRef.current=', !!processedTaskDataRef.current);
+            
+            // 检查是否是多P视频
+            const seriesParts = task.series_parts;
+            if (seriesParts && Array.isArray(seriesParts) && seriesParts.length > 1) {
+              setIsSeries(true);
+              setSeriesTitle(task.title || task.video_title || '未知标题');
+              setAllParts(seriesParts);
+              setCurrentPartIndex(0); // 设置当前分P索引
+              console.log(`✅ 多P视频，共 ${seriesParts.length} 个分P`);
+              
+              // 设置分析结果，模拟已完成的分析（避免触发新的分析流程）
+              setAnalysisResult({
+                success: true,
+                is_series: true,
+                series_title: task.title || task.video_title,
+                total_parts: seriesParts.length,
+                parts: seriesParts,
+              });
+            }
+            
+            // 设置视频URL（取第一个分P）
+            const videoUrls = task.video_url;
+            if (videoUrls) {
+              const videoUrlArray = typeof videoUrls === 'string' 
+                ? (videoUrls.startsWith('[') ? JSON.parse(videoUrls) : [videoUrls])
+                : videoUrls;
+              const firstVideoUrl = Array.isArray(videoUrlArray) ? videoUrlArray[0] : videoUrlArray;
+              setCdnVideoUrl(firstVideoUrl);
+              console.log('✅ 设置CDN视频URL:', firstVideoUrl);
+            }
+
+            setAnalysisProgress({
+              stage: 'extracting_knowledge',
+              message: '正在加载知识点数据...',
+              progress: 60,
+              estimatedTime: '',
+              currentStep: '从CDN加载',
+            });
+
+            // 加载知识点JSON
+            const kpUrls = task.knowledge_points_result_url;
+            if (kpUrls) {
+              const kpUrlArray = typeof kpUrls === 'string'
+                ? (kpUrls.startsWith('[') ? JSON.parse(kpUrls) : [kpUrls])
+                : kpUrls;
+              const firstKpUrl = Array.isArray(kpUrlArray) ? kpUrlArray[0] : kpUrlArray;
+              
+              const kpResponse = await fetch(firstKpUrl);
+              const kpData = await kpResponse.json();
+              
+              console.log('✅ 加载知识点数据:', kpData);
+              
+              // 支持两种格式：直接数组 或 {knowledge_points: [...]}
+              let kpArray = kpData;
+              if (!Array.isArray(kpData) && kpData.knowledge_points) {
+                kpArray = kpData.knowledge_points;
+              }
+              
+              if (Array.isArray(kpArray) && kpArray.length > 0) {
+                setKnowledgePoints(kpArray);
+                console.log(`✅ 设置 ${kpArray.length} 个知识点`);
+              } else {
+                console.warn(`⚠️ 知识点数据为空`);
+              }
+            }
+
+            setAnalysisProgress({
+              stage: 'completed',
+              message: '已处理视频加载完成！',
+              progress: 100,
+              estimatedTime: '',
+              currentStep: '完成',
+            });
+            
+            setTimeout(() => {
+              setIsAnalyzing(false);
+            }, 1000);
+          } catch (error) {
+            console.error('❌ 加载已处理数据失败:', error);
+            setIsAnalyzing(false);
+            setAnalysisProgress({
+              stage: 'idle',
+              message: '加载失败',
+              progress: 0,
+              estimatedTime: '',
+              currentStep: '',
+            });
+          }
+        };
+
+        loadProcessedData();
+      }
+    }
+  }, []); // 只在组件挂载时执行一次
 
   // 初始化YouTube播放器（必须在cdnVideoUrl定义之后）
   useEffect(() => {
@@ -603,7 +753,63 @@ export default function VideoNotesPrototypePage() {
     
     try {
       console.log(`📺 加载第 ${part.part_number} P:`, part.part_title);
+      console.log(`🔥 [DEBUG] isProcessedVideo=${isProcessedVideo}, processedTaskData=${!!processedTaskData}`);
+      console.log(`🔥 [DEBUG] isProcessedVideoRef=${isProcessedVideoRef.current}, processedTaskDataRef=${!!processedTaskDataRef.current}`);
       
+      // 如果是已处理的视频，直接从保存的数据中加载（使用ref确保获取到最新值）
+      if (isProcessedVideoRef.current && processedTaskDataRef.current) {
+        console.log(`✅ 从已处理数据中加载第 ${partIndex + 1} P`);
+        
+        // 获取视频URL
+        const videoUrls = processedTaskDataRef.current.video_url;
+        if (videoUrls) {
+          const videoUrlArray = typeof videoUrls === 'string' 
+            ? (videoUrls.startsWith('[') ? JSON.parse(videoUrls) : [videoUrls])
+            : videoUrls;
+          const videoUrl = Array.isArray(videoUrlArray) ? videoUrlArray[partIndex] : videoUrlArray;
+          if (videoUrl) {
+            setCdnVideoUrl(videoUrl);
+            console.log(`✅ 设置视频URL (P${partIndex + 1}):`, videoUrl);
+          }
+        }
+        
+        // 获取知识点数据
+        const kpUrls = processedTaskDataRef.current.knowledge_points_result_url;
+        if (kpUrls) {
+          const kpUrlArray = typeof kpUrls === 'string'
+            ? (kpUrls.startsWith('[') ? JSON.parse(kpUrls) : [kpUrls])
+            : kpUrls;
+          const kpUrl = Array.isArray(kpUrlArray) ? kpUrlArray[partIndex] : kpUrlArray;
+          
+          if (kpUrl) {
+            console.log(`📥 [DEBUG] 正在获取知识点URL (P${partIndex + 1}):`, kpUrl);
+            const kpResponse = await fetch(kpUrl);
+            const kpData = await kpResponse.json();
+            
+            console.log(`✅ 加载知识点数据 (P${partIndex + 1}):`, kpData);
+            console.log(`🔍 [DEBUG] 完整JSON内容:`, JSON.stringify(kpData, null, 2));
+            
+            // 支持两种格式：直接数组 或 {knowledge_points: [...]}
+            let kpArray = kpData;
+            if (!Array.isArray(kpData) && kpData.knowledge_points) {
+              kpArray = kpData.knowledge_points;
+            }
+            
+            if (Array.isArray(kpArray) && kpArray.length > 0) {
+              setKnowledgePoints(kpArray);
+              console.log(`✅ 设置 ${kpArray.length} 个知识点`);
+            } else {
+              console.error(`❌ 知识点数据为空！请手动访问URL检查: ${kpUrl}`);
+            }
+          }
+        }
+        
+        setLoadingPartIndex(null);
+        return;
+      }
+      
+      // 否则，正常调用API分析（原有逻辑）
+      console.log(`⚠️ 未检测到已处理视频标记，将调用API分析`);
       const response = await fetch(buildApiUrl(API_ENDPOINTS.batchAnalyzePart), {
         method: 'POST',
         headers: {

@@ -511,10 +511,10 @@ class OfflineVideoService:
                             print(f"⏭️ 跳过已有URL的分P {idx}/{total_parts}: {part_info.get('part_title', '')}")
                             video_urls.append(existing_url)
                             part_results.append(existing_part if existing_part else {
-                                "part_number": idx,
-                                "status": "completed",
+                            "part_number": idx,
+                            "status": "completed",
                                 "video_url": existing_url
-                            })
+                        })
                             should_skip = True
                     
                     if should_skip:
@@ -887,10 +887,10 @@ class OfflineVideoService:
                             print(f"⏭️ 跳过已有URL的分P {idx}/{total_parts} ASR")
                             asr_result_urls.append(existing_url)
                             part_results.append(existing_part if existing_part else {
-                                "part_number": idx,
-                                "status": "completed",
+                            "part_number": idx,
+                            "status": "completed",
                                 "result_url": existing_url
-                            })
+                        })
                             should_skip = True
                     
                     if should_skip:
@@ -1253,10 +1253,10 @@ class OfflineVideoService:
                             print(f"⏭️ 跳过已有URL的分P {idx}/{total_parts} 知识点生成")
                             knowledge_points_result_urls.append(existing_url)
                             part_results.append(existing_part if existing_part else {
-                                "part_number": idx,
-                                "status": "completed",
+                            "part_number": idx,
+                            "status": "completed",
                                 "result_url": existing_url
-                            })
+                        })
                             should_skip = True
                     
                     if should_skip:
