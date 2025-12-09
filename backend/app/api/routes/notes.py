@@ -70,6 +70,7 @@ class ExerciseGenerationRequest(BaseModel):
     video_title: Optional[str] = None
     video_url: Optional[str] = None
     locale: Optional[str] = 'zh'  # 语言环境，默认为中文
+    custom_prompt: Optional[str] = None  # 自定义 prompt
 
 
 class ExerciseGenerationResponse(BaseModel):
@@ -237,10 +238,15 @@ async def generate_exercise(request: ExerciseGenerationRequest):
         print(f"💪 Generating exercise for: {request.knowledge_point_name}")
         print(f"📄 Context length: {len(request.transcript_segment)} chars")
         
-        # 根据语言环境构建 prompt
-        locale = request.locale or 'zh'
-        if locale == 'en':
-            prompt = f"""You are a professional programming education expert. Please generate a programming exercise for the knowledge point based on the video content.
+        # 如果提供了自定义 prompt，直接使用
+        if request.custom_prompt:
+            prompt = request.custom_prompt
+            print(f"✅ Using custom prompt from request")
+        else:
+            # 根据语言环境构建默认 prompt
+            locale = request.locale or 'zh'
+            if locale == 'en':
+                prompt = f"""You are a professional programming education expert. Please generate a programming exercise for the knowledge point based on the video content.
 
 Knowledge Point: {request.knowledge_point_name}
 Video Title: {request.video_title or 'Unknown'}
@@ -277,8 +283,8 @@ Please choose an appropriate exercise type based on the difficulty of the knowle
 4. Hints should be clear, help understanding without directly giving answers
 5. Output only JSON, no other content
 6. Ensure JSON format is correct and can be parsed"""
-        else:
-            prompt = f"""你是一位专业的编程教学专家。请根据视频内容为知识点生成一道编程练习题。
+            else:
+                prompt = f"""你是一位专业的编程教学专家。请根据视频内容为知识点生成一道编程练习题。
 
 知识点：{request.knowledge_point_name}
 视频标题：{request.video_title or '未知'}
@@ -317,9 +323,9 @@ Please choose an appropriate exercise type based on the difficulty of the knowle
 6. 确保JSON格式正确，可以被解析"""
 
         # 打印实际使用的prompt（用于调试）
-        print(f"📋 Exercise Generation Prompt (locale={locale}):")
+        print(f"📋 Exercise Generation Prompt:")
         print("=" * 70)
-        print(prompt)
+        print(prompt[:500])  # 只打印前500字符
         print("=" * 70)
         print(f"📄 Transcript segment (first 200 chars): {request.transcript_segment[:200]}...")
 

@@ -53,7 +53,7 @@ export const NoteEditor = ({ content, onChange, editable = true }: NoteEditorPro
       Typography,
       MathExtension,
       Underline,
-      Highlight.configure({ multipart: true }),
+      Highlight.configure({ multicolor: true }),
     ],
     editorProps: {
       attributes: {
