@@ -518,8 +518,11 @@ export default function VideoNotesPrototypePage() {
                 ? (videoUrls.startsWith('[') ? JSON.parse(videoUrls) : [videoUrls])
                 : videoUrls;
               const firstVideoUrl = Array.isArray(videoUrlArray) ? videoUrlArray[0] : videoUrlArray;
-              setCdnVideoUrl(firstVideoUrl);
-              console.log('✅ 设置CDN视频URL:', firstVideoUrl);
+              
+              // 确保使用 HTTPS
+              const secureVideoUrl = ensureHttps(firstVideoUrl) as string;
+              setCdnVideoUrl(secureVideoUrl);
+              console.log('✅ 设置CDN视频URL:', secureVideoUrl);
             }
 
             setAnalysisProgress({
@@ -538,7 +541,10 @@ export default function VideoNotesPrototypePage() {
                 : kpUrls;
               const firstKpUrl = Array.isArray(kpUrlArray) ? kpUrlArray[0] : kpUrlArray;
               
-              const kpResponse = await fetch(firstKpUrl);
+              // 确保使用 HTTPS
+              const secureKpUrl = ensureHttps(firstKpUrl) as string;
+              
+              const kpResponse = await fetch(secureKpUrl);
               const kpData = await kpResponse.json();
               
               console.log('✅ 加载知识点数据:', kpData);
@@ -784,6 +790,23 @@ export default function VideoNotesPrototypePage() {
     return !!(cdnVideoUrl && (cdnVideoUrl.includes('youtube.com') || cdnVideoUrl.includes('youtu.be')) && locale === 'en');
   };
 
+  // 工具函数：确保 URL 使用 HTTPS（修复 Mixed Content 错误）
+  const ensureHttps = (url: string | string[] | null | undefined): string | string[] => {
+    if (!url) return '';
+    
+    // 处理数组
+    if (Array.isArray(url)) {
+      return url.map(u => ensureHttps(u) as string);
+    }
+    
+    // 处理单个 URL：将 http://file.gsxservice.com 替换为 https://
+    if (typeof url === 'string' && url.startsWith('http://file.gsxservice.com')) {
+      return url.replace('http://file.gsxservice.com', 'https://file.gsxservice.com');
+    }
+    
+    return url;
+  };
+
   // YouTube播放器时间更新监听（使用setInterval）- 必须在cdnVideoUrl定义之后
   useEffect(() => {
     if (!isYouTubeVideo() || !youtubePlayerRef.current) {
@@ -910,7 +933,11 @@ export default function VideoNotesPrototypePage() {
           
           if (kpUrl) {
             console.log(`📥 [DEBUG] 正在获取知识点URL (P${partIndex + 1}):`, kpUrl);
-            const kpResponse = await fetch(kpUrl);
+            
+            // 确保使用 HTTPS
+            const secureKpUrl = ensureHttps(kpUrl) as string;
+            
+            const kpResponse = await fetch(secureKpUrl);
             const kpData = await kpResponse.json();
             
             console.log(`✅ 加载知识点数据 (P${partIndex + 1}):`, kpData);
