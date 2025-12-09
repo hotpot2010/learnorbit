@@ -260,7 +260,7 @@ class OfflineVideoService:
             
             if cdn_url:
                 if not cdn_url.startswith('http'):
-                    cdn_url = f"http://file.gsxservice.com/{cdn_url}"
+                    cdn_url = f"https://file.gsxservice.com/{cdn_url}"
                 print(f"✅ 封面已上传到CDN: {cdn_url}")
                 
                 # 清理临时文件
@@ -661,7 +661,7 @@ class OfflineVideoService:
                         
                         video_url = upload_result
                         if not video_url.startswith('http'):
-                            video_url = f"http://file.gsxservice.com/{video_url}"
+                            video_url = f"https://file.gsxservice.com/{video_url}"
                         
                         video_urls.append(video_url)
                         part_results.append({
@@ -1041,7 +1041,7 @@ class OfflineVideoService:
                             raise Exception("ASR结果文件上传失败")
                         
                         if not asr_result_url.startswith('http'):
-                            asr_result_url = f"http://file.gsxservice.com/{asr_result_url}"
+                            asr_result_url = f"https://file.gsxservice.com/{asr_result_url}"
                         
                         asr_result_urls.append(asr_result_url)
                         part_results.append({
@@ -1426,7 +1426,7 @@ class OfflineVideoService:
                             raise Exception("知识点结果文件上传失败")
                         
                         if not knowledge_points_result_url.startswith('http'):
-                            knowledge_points_result_url = f"http://file.gsxservice.com/{knowledge_points_result_url}"
+                            knowledge_points_result_url = f"https://file.gsxservice.com/{knowledge_points_result_url}"
                         
                         knowledge_points_result_urls.append(knowledge_points_result_url)
                         part_results.append({

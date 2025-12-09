@@ -25,7 +25,7 @@ class FileUploadService:
         self.upload_url = f"{proxy_base_url}/open-api/upload"
         
         # 文件访问基础URL（内部存储服务返回相对路径时使用）
-        self.base_url = "http://file.gsxservice.com/"
+        self.base_url = "https://file.gsxservice.com/"
         self.uid = "20210716"
         
         # 上传配置
