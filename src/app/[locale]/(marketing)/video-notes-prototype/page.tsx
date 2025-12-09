@@ -918,8 +918,10 @@ export default function VideoNotesPrototypePage() {
             : videoUrls;
           const videoUrl = Array.isArray(videoUrlArray) ? videoUrlArray[partIndex] : videoUrlArray;
           if (videoUrl) {
-            setCdnVideoUrl(videoUrl);
-            console.log(`✅ 设置视频URL (P${partIndex + 1}):`, videoUrl);
+            // 确保使用 HTTPS
+            const secureVideoUrl = ensureHttps(videoUrl) as string;
+            setCdnVideoUrl(secureVideoUrl);
+            console.log(`✅ 设置视频URL (P${partIndex + 1}):`, secureVideoUrl);
           }
         }
         
@@ -1020,15 +1022,17 @@ export default function VideoNotesPrototypePage() {
         // 检查是否为YouTube URL（英文模式）
         const isYouTubeUrl = videoUrlFromResult && (videoUrlFromResult.includes('youtube.com') || videoUrlFromResult.includes('youtu.be')) && locale === 'en';
         
-        if (isYouTubeUrl) {
-          console.log('✅ [loadPart] 找到YouTube URL:', videoUrlFromResult.substring(0, 100) + '...');
-          setCdnVideoUrl(videoUrlFromResult);
-          console.log('✅ [loadPart] setCdnVideoUrl 已调用，使用YouTube URL');
-        } else if (videoUrlFromResult && (videoUrlFromResult.startsWith('http://file.gsxservice.com') || videoUrlFromResult.startsWith('https://file.gsxservice.com'))) {
-          console.log('✅ [loadPart] 找到CDN URL（公司CDN）:', videoUrlFromResult.substring(0, 100) + '...');
-          setCdnVideoUrl(videoUrlFromResult);
-          console.log('✅ [loadPart] setCdnVideoUrl 已调用，使用公司CDN URL');
-        } else if (locale !== 'en') {
+            if (isYouTubeUrl) {
+              console.log('✅ [loadPart] 找到YouTube URL:', videoUrlFromResult.substring(0, 100) + '...');
+              setCdnVideoUrl(videoUrlFromResult);
+              console.log('✅ [loadPart] setCdnVideoUrl 已调用，使用YouTube URL');
+            } else if (videoUrlFromResult && (videoUrlFromResult.startsWith('http://file.gsxservice.com') || videoUrlFromResult.startsWith('https://file.gsxservice.com'))) {
+              console.log('✅ [loadPart] 找到CDN URL（公司CDN）:', videoUrlFromResult.substring(0, 100) + '...');
+              // 确保使用 HTTPS
+              const secureVideoUrl = ensureHttps(videoUrlFromResult) as string;
+              setCdnVideoUrl(secureVideoUrl);
+              console.log('✅ [loadPart] setCdnVideoUrl 已调用，使用公司CDN URL (HTTPS)');
+            } else if (locale !== 'en') {
           // 如果没有CDN URL，尝试获取B站播放URL（作为后备，仅中文模式）
           console.log('⚠️ [loadPart] 未找到CDN URL，尝试获取B站播放URL...');
           try {
@@ -1377,8 +1381,10 @@ export default function VideoNotesPrototypePage() {
               console.log('✅ [pollJobStatus] setCdnVideoUrl 已调用，使用YouTube URL');
             } else if (videoUrlFromResult && (videoUrlFromResult.startsWith('http://file.gsxservice.com') || videoUrlFromResult.startsWith('https://file.gsxservice.com'))) {
               console.log('✅ [pollJobStatus] 找到CDN URL（公司CDN）:', videoUrlFromResult.substring(0, 100) + '...');
-              setCdnVideoUrl(videoUrlFromResult);
-              console.log('✅ [pollJobStatus] setCdnVideoUrl 已调用，使用公司CDN URL');
+              // 确保使用 HTTPS
+              const secureVideoUrl = ensureHttps(videoUrlFromResult) as string;
+              setCdnVideoUrl(secureVideoUrl);
+              console.log('✅ [pollJobStatus] setCdnVideoUrl 已调用，使用公司CDN URL (HTTPS)');
             } else if (locale !== 'en') {
               // 如果没有CDN URL，尝试获取B站播放URL（作为后备，仅中文模式）
               console.log('⚠️ [pollJobStatus] 未找到CDN URL，尝试获取B站播放URL...');
