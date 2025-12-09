@@ -42,6 +42,7 @@ import {
 import { useMobileLayout } from '@/hooks/use-mobile-layout';
 import { buildApiUrl, API_ENDPOINTS, API_BASE_URL } from '@/config/api';
 import { useTranslations, useLocale } from 'next-intl';
+import { NoteEditor } from '@/components/learning/tiptap/note-editor';
 
 // QA对类型定义
 interface QAPair {
@@ -274,6 +275,115 @@ function useUserData(userId) {
     relatedClip: 'Hooks 最佳实践'
   },
 ];
+
+// 视频缩略图组件
+const VideoThumbnail = ({ videoUrl, time, fallbackUrl, onClick }: { videoUrl: string, time: string, fallbackUrl: string, onClick?: (e: React.MouseEvent) => void }) => {
+  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    if (!videoUrl || !time) return;
+    
+    // 切换视频或时间点时，先重置状态
+    setThumbnailUrl(null); 
+    setIsLoading(true);
+
+    let isMounted = true;
+
+    const generateThumbnail = async () => {
+      try {
+        const video = document.createElement('video');
+        video.crossOrigin = 'anonymous'; // 关键：允许跨域
+        video.src = videoUrl;
+        video.muted = true;
+        
+        // 将时间字符串转换为秒
+        const [minutes, seconds] = time.split(':').map(Number);
+        const timeInSeconds = minutes * 60 + seconds;
+        
+        video.currentTime = timeInSeconds;
+        
+        // 等待 seek 完成
+        await new Promise((resolve, reject) => {
+          video.onseeked = resolve;
+          video.onerror = reject;
+          // 设置超时，避免一直挂起
+          setTimeout(() => reject(new Error('Timeout')), 10000); // 增加超时时间到10秒
+        });
+
+        if (!isMounted) return;
+
+        // 截图
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth / 4; // 缩小尺寸以提升性能
+        canvas.height = video.videoHeight / 4;
+        const ctx = canvas.getContext('2d');
+        
+        if (ctx) {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          try {
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
+            if (isMounted) {
+              setThumbnailUrl(dataUrl);
+              setIsLoading(false);
+            }
+          } catch (e) {
+            console.warn('📸 Canvas导出失败 (CORS限制):', e);
+            if (isMounted) setIsLoading(false);
+          }
+        }
+      } catch (error) {
+        // console.warn('📸 生成缩略图失败:', error);
+        if (isMounted) setIsLoading(false);
+      }
+    };
+
+    // 使用 requestIdleCallback 在空闲时生成，避免卡顿
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => generateThumbnail());
+    } else {
+      setTimeout(generateThumbnail, 1000); // 降级方案
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [videoUrl, time]);
+
+  return (
+    <div 
+      className="relative aspect-video rounded-md overflow-hidden bg-gray-100 shadow-sm border border-gray-200 cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all group/thumb"
+      onClick={onClick}
+    >
+      <img 
+        src={thumbnailUrl || fallbackUrl} 
+        alt="视频截图" 
+        className={`w-full h-full object-cover transition-opacity duration-500 ${thumbnailUrl ? 'opacity-100' : 'opacity-90'}`}
+      />
+      
+      {isLoading && !thumbnailUrl && (
+        <div className="absolute top-1 left-1">
+          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+        </div>
+      )}
+      
+      {/* 时间戳覆盖层 */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 group-hover/thumb:opacity-40 transition-opacity" />
+      <div className="absolute bottom-1 right-1 bg-black/70 text-white text-[10px] px-1.5 py-0.5 rounded font-mono flex items-center gap-1">
+        <Play className="w-2 h-2" />
+        {time}
+      </div>
+    </div>
+  );
+};
+
+// 格式化笔记内容，优化换行
+const formatNoteContent = (content?: string) => {
+  if (!content) return '';
+  // 在句号、分号、冒号后添加换行
+  return content.replace(/([。；：])/g, '$1\n\n');
+};
 
 export default function VideoNotesPrototypePage() {
   const { isMobile } = useMobileLayout();
@@ -2490,6 +2600,443 @@ export default function VideoNotesPrototypePage() {
     }
   };
   
+  // 保存笔记为一张长图（所有知识点拼接）
+  const saveNotesAsLongImage = async () => {
+    try {
+      console.log('📸 开始导出长图笔记...');
+      
+      // 筛选有内容的知识点
+      const pointsWithContent = knowledgePoints.filter(point => 
+        point.note || 
+        (point.qaList && point.qaList.length > 0) || 
+        point.exercise
+      );
+      
+      if (pointsWithContent.length === 0) {
+        alert(t('noNotes'));
+        return;
+      }
+      
+      console.log(`📝 找到 ${pointsWithContent.length} 个有内容的知识点`);
+      
+      // 生成封面标题
+      const coverTitleText = generateCoverTitle();
+      console.log(`✅ 封面标题: ${coverTitleText}`);
+      
+      // 图片尺寸
+      const IMAGE_WIDTH = 900;
+      const SCALE = 2;
+      
+      // 创建主容器
+      const mainContainer = document.createElement('div');
+      mainContainer.style.position = 'absolute';
+      mainContainer.style.left = '-9999px';
+      mainContainer.style.top = '0';
+      mainContainer.style.width = `${IMAGE_WIDTH}px`;
+      mainContainer.style.background = 'linear-gradient(135deg, #fef3e2 0%, #fce8d6 50%, #f9e8d7 100%)';
+      mainContainer.style.padding = '60px 50px';
+      mainContainer.style.fontFamily = '"Comic Sans MS", "Apple Color Emoji", "Segoe UI Emoji", sans-serif';
+      mainContainer.style.color = '#2d2d2d';
+      mainContainer.style.boxShadow = '0 0 100px rgba(0,0,0,0.05)';
+      mainContainer.style.boxSizing = 'border-box';
+      document.body.appendChild(mainContainer);
+      
+      // 1. 添加首图内容到主容器
+      console.log('🎨 生成首图部分...');
+      
+      // 顶部装饰条
+      const topDecor = document.createElement('div');
+      topDecor.style.cssText = `
+        height: 12px;
+        background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
+        border-radius: 50px;
+        margin-bottom: 50px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      `;
+      mainContainer.appendChild(topDecor);
+      
+      // 大字报标题
+      const coverTitle = document.createElement('div');
+      coverTitle.style.cssText = `
+        font-size: 72px;
+        font-weight: 900;
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+        text-shadow: 4px 4px 0px rgba(255, 200, 124, 0.4);
+        letter-spacing: 4px;
+        font-family: '"Comic Sans MS", "Marker Felt", cursive';
+        line-height: 1.2;
+        padding: 0 20px;
+      `;
+      coverTitle.textContent = coverTitleText;
+      mainContainer.appendChild(coverTitle);
+      
+      // 统计信息卡片
+      const statsCard = document.createElement('div');
+      statsCard.style.cssText = `
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 30px;
+        margin: 40px 0 60px 0;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+        text-align: center;
+      `;
+      
+      const statsContent = document.createElement('div');
+      statsContent.style.cssText = `
+        font-size: 28px;
+        color: #333;
+        line-height: 2;
+        font-weight: 600;
+      `;
+      statsContent.innerHTML = `
+        <div style="margin-bottom: 20px;">📝 知识点数量：<span style="color: #ff6b6b; font-weight: 900;">${pointsWithContent.length}</span></div>
+        <div style="margin-bottom: 20px;">📅 创建日期：${new Date().toLocaleDateString('zh-CN')}</div>
+        <div>🎬 来自 LearnOrbit AI学习平台</div>
+      `;
+      statsCard.appendChild(statsContent);
+      mainContainer.appendChild(statsCard);
+      
+      // 分隔线
+      const divider = document.createElement('div');
+      divider.style.cssText = `
+        height: 4px;
+        background: linear-gradient(90deg, transparent, #ddd, transparent);
+        margin: 60px 0;
+      `;
+      mainContainer.appendChild(divider);
+      
+      // 2. 逐个添加知识点内容
+      for (let index = 0; index < pointsWithContent.length; index++) {
+        const point = pointsWithContent[index];
+        console.log(`🎨 添加知识点 ${index + 1}/${pointsWithContent.length}...`);
+        
+        // 知识点容器
+        const pointSection = document.createElement('div');
+        pointSection.style.cssText = `
+          margin-bottom: 80px;
+        `;
+        
+        // 知识点序号标签
+        const badge = document.createElement('div');
+        badge.style.cssText = `
+          display: inline-block;
+          background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+          color: white;
+          font-size: 24px;
+          font-weight: 900;
+          padding: 12px 28px;
+          border-radius: 50px;
+          margin-bottom: 30px;
+          box-shadow: 0 6px 16px rgba(255,107,107,0.4);
+          letter-spacing: 2px;
+        `;
+        badge.textContent = `${t('knowledgePoints')} ${index + 1}`;
+        pointSection.appendChild(badge);
+        
+        // 知识点标题
+        const pointTitle = document.createElement('div');
+        pointTitle.style.cssText = `
+          font-size: 42px;
+          font-weight: 900;
+          color: #222;
+          margin-bottom: 20px;
+          line-height: 1.3;
+          font-family: '"Comic Sans MS", "Marker Felt", cursive';
+          letter-spacing: 1px;
+        `;
+        pointTitle.textContent = point.name;
+        pointSection.appendChild(pointTitle);
+        
+        // 时间戳
+        const timestamp = document.createElement('div');
+        timestamp.style.cssText = `
+          font-size: 22px;
+          color: #666;
+          margin-bottom: 30px;
+          padding: 12px 24px;
+          background: rgba(107,114,128,0.1);
+          border-radius: 50px;
+          display: inline-block;
+          font-weight: 700;
+        `;
+        timestamp.textContent = `⏱️ ${point.start_time} - ${point.end_time}`;
+        pointSection.appendChild(timestamp);
+        
+        // 知识点卡片容器
+        const card = document.createElement('div');
+        card.style.cssText = `
+          padding: 30px;
+          border-radius: 30px;
+          background: #ffffff;
+          box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+          position: relative;
+          overflow: hidden;
+        `;
+        
+        // 卡片装饰
+        const cornerDecor = document.createElement('div');
+        cornerDecor.style.cssText = `
+          position: absolute;
+          top: -30px;
+          right: -30px;
+          width: 150px;
+          height: 150px;
+          background: linear-gradient(135deg, rgba(255,107,107,0.15), rgba(255,217,61,0.15));
+          border-radius: 50%;
+        `;
+        card.appendChild(cornerDecor);
+        
+        // 笔记内容
+        if (point.note) {
+          const noteSection = document.createElement('div');
+          noteSection.style.cssText = `
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #fff5eb 0%, #fff8f0 100%);
+            border-radius: 24px;
+            border: 4px dashed #ffa94d;
+            position: relative;
+          `;
+          
+          const noteIcon = document.createElement('div');
+          noteIcon.style.cssText = `
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            background: linear-gradient(135deg, #ffd93d, #ffa94d);
+            color: white;
+            font-size: 20px;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 900;
+            box-shadow: 0 6px 16px rgba(255,169,77,0.5);
+          `;
+          noteIcon.textContent = `📝 ${t('notes')}`;
+          noteSection.appendChild(noteIcon);
+          
+          const noteContent = document.createElement('div');
+          noteContent.style.cssText = `
+            font-size: 28px;
+            color: #4a4a4a;
+            line-height: 2;
+            margin-top: 30px;
+            font-family: '"Comic Sans MS", "Apple Color Emoji", sans-serif';
+            letter-spacing: 0.5px;
+            white-space: pre-wrap;
+            font-weight: 500;
+          `;
+          noteContent.textContent = point.note;
+          noteSection.appendChild(noteContent);
+          
+          card.appendChild(noteSection);
+        }
+        
+        // Q&A内容
+        if (point.qaList && point.qaList.length > 0) {
+          const qaSection = document.createElement('div');
+          qaSection.style.cssText = `
+            margin-top: 30px;
+          `;
+          
+          point.qaList.forEach((qa, qaIndex) => {
+            const qaItem = document.createElement('div');
+            qaItem.style.cssText = `
+              padding: 28px;
+              background: linear-gradient(135deg, #e0f2fe 0%, #ecfeff 100%);
+              border-radius: 24px;
+              margin-bottom: 24px;
+              border: 4px solid #7dd3fc;
+              box-shadow: 0 6px 16px rgba(125,211,252,0.3);
+              position: relative;
+            `;
+            
+            const qaBadge = document.createElement('div');
+            qaBadge.style.cssText = `
+              position: absolute;
+              top: -18px;
+              left: 24px;
+              background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+              color: white;
+              font-size: 18px;
+              padding: 8px 20px;
+              border-radius: 50px;
+              font-weight: 900;
+              box-shadow: 0 4px 12px rgba(14,165,233,0.4);
+            `;
+            qaBadge.textContent = `💬 Q&A ${qaIndex + 1}`;
+            qaItem.appendChild(qaBadge);
+            
+            const question = document.createElement('div');
+            question.style.cssText = `
+              font-size: 26px;
+              color: #0c4a6e;
+              margin-bottom: 20px;
+              margin-top: 24px;
+              font-weight: 900;
+              font-family: '"Comic Sans MS", cursive';
+              letter-spacing: 0.5px;
+            `;
+            question.textContent = `Q: ${qa.question}`;
+            qaItem.appendChild(question);
+            
+            const answer = document.createElement('div');
+            answer.style.cssText = `
+              font-size: 24px;
+              color: #374151;
+              line-height: 2;
+              padding-left: 24px;
+              border-left: 6px solid #0ea5e9;
+              font-family: '"Comic Sans MS", sans-serif';
+              font-weight: 500;
+            `;
+            answer.textContent = `A: ${qa.answer}`;
+            qaItem.appendChild(answer);
+            
+            qaSection.appendChild(qaItem);
+          });
+          
+          card.appendChild(qaSection);
+        }
+        
+        // 练习内容
+        if (point.exercise) {
+          const exerciseSection = document.createElement('div');
+          exerciseSection.style.cssText = `
+            margin-top: 30px;
+            padding: 28px;
+            background: #fef3c7;
+            border-radius: 20px;
+            border: 4px solid #fbbf24;
+          `;
+          
+          const exerciseLabel = document.createElement('div');
+          exerciseLabel.style.cssText = `
+            font-size: 24px;
+            font-weight: 800;
+            color: #92400e;
+            margin-bottom: 16px;
+          `;
+          exerciseLabel.textContent = `💻 练习：${point.exercise.title}`;
+          exerciseSection.appendChild(exerciseLabel);
+          
+          const exerciseDesc = document.createElement('div');
+          exerciseDesc.style.cssText = `
+            font-size: 22px;
+            color: #78350f;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-weight: 500;
+          `;
+          exerciseDesc.textContent = point.exercise.description;
+          exerciseSection.appendChild(exerciseDesc);
+          
+          if (point.userCode) {
+            const codeBlock = document.createElement('pre');
+            codeBlock.style.cssText = `
+              background: #1f2937;
+              color: #f9fafb;
+              padding: 20px;
+              border-radius: 12px;
+              font-size: 18px;
+              overflow-x: auto;
+              font-family: 'Courier New', monospace;
+              white-space: pre-wrap;
+              word-wrap: break-word;
+              line-height: 1.6;
+            `;
+            codeBlock.textContent = point.userCode;
+            exerciseSection.appendChild(codeBlock);
+          }
+          
+          if (point.validationResult) {
+            const resultDiv = document.createElement('div');
+            resultDiv.style.cssText = `
+              margin-top: 20px;
+              padding: 20px;
+              background: ${point.validationResult.passed ? '#d1fae5' : '#fee2e2'};
+              border-radius: 16px;
+              border: 3px solid ${point.validationResult.passed ? '#10b981' : '#f87171'};
+            `;
+            
+            const resultText = document.createElement('div');
+            resultText.style.cssText = `
+              font-size: 22px;
+              font-weight: 700;
+              color: ${point.validationResult.passed ? '#065f46' : '#991b1b'};
+            `;
+            resultText.textContent = `${point.validationResult.passed ? `✓ ${t('correct')}` : `✗ ${t('incorrect')}`} - ${t('score')}: ${point.validationResult.score}`;
+            resultDiv.appendChild(resultText);
+            
+            exerciseSection.appendChild(resultDiv);
+          }
+          
+          card.appendChild(exerciseSection);
+        }
+        
+        pointSection.appendChild(card);
+        
+        // 知识点之间的分隔
+        if (index < pointsWithContent.length - 1) {
+          const pointDivider = document.createElement('div');
+          pointDivider.style.cssText = `
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+            margin-top: 60px;
+          `;
+          pointSection.appendChild(pointDivider);
+        }
+        
+        mainContainer.appendChild(pointSection);
+      }
+      
+      // 底部装饰
+      const footer = document.createElement('div');
+      footer.style.cssText = `
+        margin-top: 60px;
+        text-align: center;
+        font-size: 48px;
+      `;
+      footer.textContent = '✨📚✨';
+      mainContainer.appendChild(footer);
+      
+      // 生成并下载长图
+      console.log('📸 正在生成长图...');
+      const canvas = await html2canvas(mainContainer, {
+        backgroundColor: '#ffffff',
+        scale: SCALE,
+        width: IMAGE_WIDTH,
+        height: mainContainer.scrollHeight,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+      });
+      
+      const fileName = `${videoTitle || '视频笔记'}_完整笔记_${new Date().getTime()}.png`;
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.download = fileName;
+          link.href = url;
+          link.click();
+          URL.revokeObjectURL(url);
+          console.log(`✅ ${fileName} 导出成功`);
+        }
+      }, 'image/png');
+      
+      document.body.removeChild(mainContainer);
+      
+      console.log('✅ 长图笔记导出完成！');
+      alert(`${t('exportSuccess')}: 1 ${t('image')}`);
+      
+    } catch (error) {
+      console.error('❌ 导出长图失败:', error);
+      alert(`${t('exportFailed')}: ${error}`);
+    }
+  };
+  
   // 生成练习题
   const generateExercise = async (index: number) => {
     const point = knowledgePoints[index];
@@ -3253,70 +3800,33 @@ export default function VideoNotesPrototypePage() {
                         {/* 笔记内容区域 - 只在展开时显示 */}
                         {hasNote && isExpanded && (
                           <div className="mt-3 pt-3 border-t border-green-200">
-                            {/* 缩略图 */}
-                            {point.thumbnail && (
-                              <div className="mb-2">
-                                <img 
-                                  src={point.thumbnail} 
-                                  alt="视频截图" 
-                                  className="w-full rounded-md shadow-sm"
-                                />
-                              </div>
-                            )}
-                            
-                            {/* 笔记文本 */}
-                            {editingNoteIndex === index ? (
-                              <div className="space-y-2">
-                                <textarea
-                                  value={point.note}
-                                  onChange={(e) => {
+                            <div className="flex gap-4">
+                              {/* 左侧：笔记内容 */}
+                              <div className="flex-1 min-w-0">
+                                <NoteEditor 
+                                  key={`${index}-${point.start_time}-${currentPartIndex}`}
+                                  content={point.note || ''}
+                                  onChange={(newMarkdown) => {
                                     setKnowledgePoints(prev => prev.map((p, i) => 
-                                      i === index ? { ...p, note: e.target.value } : p
+                                      i === index ? { ...p, note: newMarkdown } : p
                                     ));
                                   }}
-                                  className="w-full p-2 border border-gray-300 rounded-md text-sm resize-none"
-                                  rows={4}
-                                  onClick={(e) => e.stopPropagation()}
                                 />
-                                <div className="flex gap-2">
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setEditingNoteIndex(null);
-                                    }}
-                                    className="flex items-center gap-1 px-3 py-1 bg-green-500 text-white rounded-md text-xs hover:bg-green-600"
-                                  >
-                                    <Check className="w-3 h-3" />
-                                    {t('save')}
-                                  </button>
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setEditingNoteIndex(null);
-                                    }}
-                                    className="px-3 py-1 bg-gray-300 text-gray-700 rounded-md text-xs hover:bg-gray-400"
-                                  >
-                                    {t('cancel')}
-                                  </button>
-                                </div>
                               </div>
-                            ) : (
-                              <div className="relative group/note">
-                                <div className="prose prose-sm max-w-none text-gray-700">
-                                  <ReactMarkdown>{point.note}</ReactMarkdown>
-                                </div>
-                                <button
+
+                              {/* 右侧：视频缩略图 */}
+                              <div className="flex-shrink-0 w-32 hidden sm:block">
+                                <VideoThumbnail 
+                                  videoUrl={cdnVideoUrl || ''} 
+                                  time={point.start_time}
+                                  fallbackUrl={processedTaskData?.video_info?.thumbnail_cdn || processedTaskData?.video_info?.thumbnail || ''}
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    setEditingNoteIndex(index);
+                                    handleTimeJump(point.start_time);
                                   }}
-                                  className="absolute top-0 right-0 opacity-0 group-hover/note:opacity-100 transition-opacity p-1 bg-purple-500 text-white rounded-md hover:bg-purple-600"
-                                  title={t('edit')}
-                                >
-                                  <Edit2 className="w-3 h-3" />
-                                </button>
+                                />
                               </div>
-                            )}
+                            </div>
                           </div>
                         )}
                         
@@ -3521,7 +4031,7 @@ export default function VideoNotesPrototypePage() {
             {knowledgePoints.length > 0 && (
               <div className="mt-4 px-4">
                 <button
-                  onClick={saveNotesAsImage}
+                  onClick={saveNotesAsLongImage}
                   className="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium rounded-lg shadow-md hover:shadow-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 flex items-center justify-center gap-2"
                 >
                   <svg 
