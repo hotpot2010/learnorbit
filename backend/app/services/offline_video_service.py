@@ -120,6 +120,11 @@ class OfflineVideoService:
         # 使用视频标题作为任务标题
         video_title = video_info.get('title', '未知视频')
         
+        # 🖼️ 处理封面图：下载并上传到CDN
+        thumbnail_cdn_url = self._process_thumbnail(video_info.get('thumbnail', ''), video_info.get('bv_id', ''), task_id)
+        if thumbnail_cdn_url:
+            print(f"✅ 封面图已上传到CDN: {thumbnail_cdn_url}")
+        
         task = {
             "task_id": task_id,
             "bilibili_url": bilibili_url,
@@ -167,6 +172,7 @@ class OfflineVideoService:
                 "view_count": video_info.get('view_count', 0),
                 "like_count": video_info.get('like_count', 0),
                 "thumbnail": video_info.get('thumbnail', ''),
+                "thumbnail_cdn": thumbnail_cdn_url or '',  # CDN封面URL
                 "upload_date": video_info.get('upload_date', ''),
                 "bv_id": video_info.get('bv_id', '')
             }
@@ -180,6 +186,97 @@ class OfflineVideoService:
         
         print(f"✅ 创建任务: {task_id} - {video_title}")
         return task_id
+    
+    def _process_thumbnail(self, thumbnail_url: str, bv_id: str, task_id: str) -> Optional[str]:
+        """
+        处理封面图：从B站获取、下载、上传到CDN
+        
+        Args:
+            thumbnail_url: B站封面URL（可能为空）
+            bv_id: BV号
+            task_id: 任务ID
+            
+        Returns:
+            CDN URL 或 None
+        """
+        import requests
+        import tempfile
+        
+        # 如果没有缩略图URL，尝试从B站API获取
+        if not thumbnail_url and bv_id:
+            try:
+                print(f"🔍 从B站API获取封面 (BV={bv_id})...")
+                api_url = f"https://api.bilibili.com/x/web-interface/view?bvid={bv_id}"
+                
+                # 使用更完整的请求头，模拟浏览器
+                headers = {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                    'Referer': 'https://www.bilibili.com/',
+                    'Accept': 'application/json, text/plain, */*',
+                    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+                }
+                
+                response = requests.get(api_url, headers=headers, timeout=10)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get('code') == 0 and data.get('data') and data['data'].get('pic'):
+                        thumbnail_url = data['data']['pic']
+                        # 确保使用HTTPS
+                        if thumbnail_url.startswith('http://'):
+                            thumbnail_url = thumbnail_url.replace('http://', 'https://')
+                        print(f"✅ 从API获取到封面: {thumbnail_url}")
+                else:
+                    print(f"⚠️ API返回状态码: {response.status_code}")
+            except Exception as e:
+                print(f"⚠️ 从API获取封面失败: {e}")
+        
+        if not thumbnail_url:
+            print(f"⚠️ 无封面URL，跳过封面处理")
+            return None
+        
+        try:
+            # 下载封面图
+            print(f"📥 下载封面图: {thumbnail_url}")
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                'Referer': 'https://www.bilibili.com/'
+            }
+            response = requests.get(thumbnail_url, headers=headers, timeout=30)
+            response.raise_for_status()
+            
+            # 保存到临时文件
+            temp_dir = tempfile.gettempdir()
+            temp_file = os.path.join(temp_dir, f"{task_id}_cover.jpg")
+            
+            with open(temp_file, 'wb') as f:
+                f.write(response.content)
+            
+            print(f"✅ 封面下载成功: {temp_file} ({len(response.content)} bytes)")
+            
+            # 上传到CDN
+            print(f"📤 上传封面到CDN...")
+            cdn_url = self.file_upload_service.upload_file(temp_file, file_key="file0")
+            
+            if cdn_url:
+                if not cdn_url.startswith('http'):
+                    cdn_url = f"http://file.gsxservice.com/{cdn_url}"
+                print(f"✅ 封面已上传到CDN: {cdn_url}")
+                
+                # 清理临时文件
+                try:
+                    os.remove(temp_file)
+                except:
+                    pass
+                
+                return cdn_url
+            else:
+                print(f"❌ 封面上传CDN失败")
+                return None
+                
+        except Exception as e:
+            print(f"❌ 处理封面图失败: {e}")
+            return None
     
     def get_task(self, task_id: str) -> Optional[Dict[str, Any]]:
         """获取任务信息"""

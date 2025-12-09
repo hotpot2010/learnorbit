@@ -9,6 +9,7 @@ from typing import List, Dict, Any
 from dotenv import load_dotenv
 from .volcano_service import VolcanoService
 from .doubao_service import DoubaoService
+from .prompt_config_service import prompt_config_service
 
 # 显式加载环境变量
 load_dotenv()
@@ -134,110 +135,27 @@ class KnowledgePointExtractor:
         print(f"   Time range: {start_time} - {end_time}")
         print(f"   Characters: {segment['char_count']}")
         
-        # 根据语言环境构建 prompt
-        if locale == 'en':
-            prompt = f"""Please analyze the following educational video transcript segment and extract the 【knowledge points】.
-
-**Knowledge Point Definition**:
-A knowledge point is a complete concept, skill, or topic explained in the video, which should:
-- Be a relatively independent and complete learning unit
-- Have clear start and end, including concept introduction, explanation, and summary
-- Not be scattered details or transitional content
-- Usually correspond to a content module that can be learned and understood independently
-
-**Extraction Requirements**:
-1. Only extract clear and complete knowledge points, exclude casual talk, transitions, and repetitive content
-2. Each knowledge point must include accurate start and end times
-3. Knowledge point names should be concise and clear (within 10 words), summarizing the core content
-4. **Important: Each knowledge point should correspond to a video segment of at least 30 seconds**, avoid splitting knowledge points too finely
-5. If a concept is explained in a short time (less than 30 seconds), merge it into adjacent knowledge points or as a sub-part of a larger knowledge point
-6. Arrange in chronological order
-7. Output in JSON format
-
-**Note Field Requirements**:
-For each knowledge point, generate a concise study note with the following requirements:
-1. Use Markdown format
-2. Content should be concise and clear, within 100 words
-3. Highlight core points and key concepts
-4. You can use emojis to enhance readability
-5. Well-organized and easy to understand
-6. The note should be directly related to the transcript segment corresponding to this knowledge point
-
-Transcript Segment (Time Range: {start_time} - {end_time}):
-{segment['text']}
-
-Please output in the following JSON format:
-{{
-  "knowledge_points": [
-    {{
-      "name": "Knowledge Point Name",
-      "start_time": "MM:SS",
-      "end_time": "MM:SS",
-      "note": "Concise study note in Markdown format (within 100 words, highlighting core points and key concepts)"
-    }}
-  ]
-}}
-
-Note:
-- Output only JSON, no other explanatory text
-- If there are no clear knowledge points, return an empty array
-- Ensure each knowledge point duration (end_time - start_time) is at least 30 seconds
-- Each note should be a complete, well-formatted Markdown text"""
-        else:
-            prompt = f"""请分析以下教学视频的逐字稿片段，提取其中的【知识点】。
-
-**知识点定义**：
-知识点是指视频中讲解的一个完整概念、技能或主题，应该：
-- 是一个相对独立、完整的学习单元
-- 有明确的开始和结束，包含概念介绍、讲解和总结
-- 不是零散的细节或过渡性内容
-- 通常对应一个可以单独学习和理解的内容模块
-
-**提取要求**：
-1. 只提取明确、完整的知识点，不要包含闲聊、过渡语、重复内容
-2. 每个知识点必须包含准确的开始和结束时间
-3. 知识点名称要简洁明确（10字以内），能概括该知识点的核心内容
-4. **重要：每个知识点对应的视频片段时长应不少于30秒**，避免将知识点拆分过细
-5. 如果某个概念讲解时间很短（少于30秒），应将其合并到相邻的知识点中，或作为更大知识点的子部分
-6. 按时间顺序排列
-7. 以 JSON 格式输出
-
-**笔记字段要求**：
-为每个知识点生成一份简洁的学习笔记，要求如下：
-1. 使用 Markdown 格式
-2. 内容简洁清晰，100字以内
-3. 突出核心要点和关键概念
-4. 可以使用 emoji 增强可读性
-5. 条理清晰，易于理解
-6. 笔记内容应与该知识点对应的逐字稿片段直接相关
-
-逐字稿片段（时间范围：{start_time} - {end_time}）：
-{segment['text']}
-
-请以以下 JSON 格式输出：
-{{
-  "knowledge_points": [
-    {{
-      "name": "知识点名称",
-      "start_time": "MM:SS",
-      "end_time": "MM:SS",
-      "note": "简洁的学习笔记（Markdown格式，100字以内，突出核心要点和关键概念）"
-    }}
-  ]
-}}
-
-注意：
-- 只输出 JSON，不要其他说明文字
-- 如果没有明确的知识点，返回空数组
-- 确保每个知识点的时长（end_time - start_time）至少30秒
-- 每个笔记应该是完整、格式良好的 Markdown 文本"""
+        # 🔧 使用自定义 prompt（从配置文件读取）
+        custom_prompt_template = prompt_config_service.get_prompt()
         
+        #将逐字稿内容插入到 prompt 中
+        transcript_content = f"""时间范围: {start_time} - {end_time}
+
+逐字稿内容:
+{segment['text']}"""
+        
+        # 组合完整 prompt
+        prompt = f"{custom_prompt_template}\n\n{transcript_content}"
+        
+        print(f"📝 使用自定义 Prompt (前100字符): {custom_prompt_template[:100]}...")
+        
+        # 调用 LLM 提取知识点
         try:
             # 打印实际调用的 prompt（用于调试）
             print(f"\n{'='*70}")
             print(f"📋 Knowledge Point Extraction Prompt (Segment {segment_index + 1}, locale={locale})")
             print(f"{'='*70}")
-            print(prompt)
+            print(prompt[:500])  # 只打印前500字符
             print(f"{'='*70}\n")
             
             # 调用火山引擎 LLM

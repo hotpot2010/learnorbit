@@ -164,6 +164,75 @@
             border-radius: 6px 6px 0 0;
         }
         
+        .task-thumbnail {
+            width: 120px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            background: #f0f0f0;
+        }
+        
+        .task-thumbnail-placeholder {
+            width: 120px;
+            height: 75px;
+            border-radius: 4px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+        }
+        
+        .task-info-container {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        
+        /* Tab导航样式 */
+        .tab-navigation {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0;
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            border-bottom: 3px solid transparent;
+            background: transparent;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn:hover {
+            color: #3498db;
+            background: #f8f9fa;
+        }
+        
+        .tab-btn.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
         .task-toggle {
             font-size: 20px;
             color: #7f8c8d;
@@ -452,7 +521,14 @@
             </div>
         </div>
         
-        <div class="tasks-section">
+        <!-- Tab导航 -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="switchTab('tasks')">📋 任务列表</button>
+            <button class="tab-btn" onclick="switchTab('prompt')">⚙️ Prompt配置</button>
+        </div>
+        
+        <!-- 任务列表Tab -->
+        <div class="tasks-section tab-content" id="tasksTab" style="display: block;">
             <div id="tasksContainer">
                 <div class="empty-state">
                     <div class="empty-state-icon">📋</div>
@@ -460,6 +536,31 @@
                 </div>
             </div>
             <div id="pagination"></div>
+        </div>
+        
+        <!-- Prompt配置Tab -->
+        <div class="tab-content" id="promptTab" style="display: none;">
+            <div style="margin-bottom: 20px;">
+                <h3 style="margin-bottom: 10px;">📝 知识点生成 Prompt</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 15px;">
+                    自定义知识点提取的 Prompt，修改后保存即可生效。系统会在提取知识点时使用此 Prompt。
+                </p>
+                <textarea id="promptEditor" rows="20" style="
+                    width: 100%;
+                    padding: 15px;
+                    border: 2px solid #ddd;
+                    border-radius: 4px;
+                    font-family: 'Consolas', 'Monaco', monospace;
+                    font-size: 14px;
+                    line-height: 1.6;
+                    resize: vertical;
+                "></textarea>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-success" onclick="savePrompt()">💾 保存配置</button>
+                <button class="btn-secondary" onclick="resetPrompt()">🔄 重置为默认</button>
+                <button class="btn-primary" onclick="loadPrompt()">📥 重新加载</button>
+            </div>
         </div>
     </div>
     
@@ -665,6 +766,23 @@
             return [];
         }
         
+        // 获取缩略图HTML
+        function getThumbnailHtml(task) {
+            const videoInfo = task.video_info || {};
+            // 优先使用CDN封面，其次使用原始thumbnail
+            const thumbnail = videoInfo.thumbnail_cdn || videoInfo.thumbnail || '';
+            
+            console.log(`🖼️ Task ${task.task_id} thumbnail:`, thumbnail);
+            console.log(`📋 Task ${task.task_id} video_info:`, videoInfo);
+            
+            if (thumbnail) {
+                return `<img src="${thumbnail}" alt="封面" class="task-thumbnail" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="task-thumbnail-placeholder" style="display:none;">📺</div>`;
+            } else {
+                return `<div class="task-thumbnail-placeholder">📺</div>`;
+            }
+        }
+        
         // 渲染单个任务
         function renderTask(task, index = 0) {
             const steps = [
@@ -868,10 +986,13 @@
             return `
                 <div class="task-card ${shouldCollapse ? 'collapsed' : ''}" id="task-${taskId}">
                     <div class="task-header" onclick="toggleTask('${taskId}')">
-                        <div style="flex: 1;">
-                            <div class="task-title">${taskTitle}</div>
-                            <div class="task-url">${task.bilibili_url}</div>
-                            ${seriesInfoHtml}
+                        <div class="task-info-container">
+                            ${getThumbnailHtml(task)}
+                            <div style="flex: 1;">
+                                <div class="task-title">${taskTitle}</div>
+                                <div class="task-url">${task.bilibili_url}</div>
+                                ${seriesInfoHtml}
+                            </div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 15px;">
                             <span style="color: #7f8c8d; font-size: 13px;">创建时间: ${new Date(task.created_at).toLocaleString('zh-CN')}</span>
@@ -1527,6 +1648,99 @@
                     saveBtn.disabled = false;
                     saveBtn.textContent = '保存并上传';
                 }
+            }
+        }
+        
+        // ==================== Tab切换 ====================
+        function switchTab(tabName) {
+            // 更新Tab按钮状态
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // 显示对应Tab内容
+            document.getElementById('tasksTab').style.display = 'none';
+            document.getElementById('promptTab').style.display = 'none';
+            
+            if (tabName === 'tasks') {
+                document.getElementById('tasksTab').style.display = 'block';
+            } else if (tabName === 'prompt') {
+                document.getElementById('promptTab').style.display = 'block';
+                // 首次打开时加载 Prompt
+                if (!document.getElementById('promptEditor').value) {
+                    loadPrompt();
+                }
+            }
+        }
+        
+        // ==================== Prompt配置管理 ====================
+        async function loadPrompt() {
+            try {
+                const response = await fetch(`${API_BASE}/prompt`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('promptEditor').value = data.prompt;
+                    console.log('✅ Prompt 加载成功');
+                } else {
+                    alert('加载 Prompt 失败');
+                }
+            } catch (error) {
+                console.error('加载 Prompt 失败:', error);
+                alert('加载 Prompt 失败: ' + error.message);
+            }
+        }
+        
+        async function savePrompt() {
+            const prompt = document.getElementById('promptEditor').value;
+            
+            if (!prompt.trim()) {
+                alert('Prompt 不能为空');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/prompt`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('✅ Prompt 保存成功！\n\n后续知识点生成将使用新的 Prompt。');
+                } else {
+                    alert('保存失败: ' + data.message);
+                }
+            } catch (error) {
+                console.error('保存 Prompt 失败:', error);
+                alert('保存 Prompt 失败: ' + error.message);
+            }
+        }
+        
+        async function resetPrompt() {
+            if (!confirm('确定要重置为默认 Prompt 吗？')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/prompt/reset`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('promptEditor').value = data.prompt;
+                    alert('✅ 已重置为默认 Prompt');
+                } else {
+                    alert('重置失败: ' + data.message);
+                }
+            } catch (error) {
+                console.error('重置 Prompt 失败:', error);
+                alert('重置 Prompt 失败: ' + error.message);
             }
         }
     </script>

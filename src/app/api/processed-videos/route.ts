@@ -68,24 +68,33 @@ export async function GET(request: NextRequest) {
     }
 
     // 转换为前端需要的格式
-    const videos = filteredTasks.map((task: any) => ({
-      title: task.title || task.video_title || '未知标题',
-      url: task.bilibili_url,
-      cover: task.cover_url || '',
-      duration: task.duration || '00:00:00',
-      author: task.author || '未知',
-      play: task.play_count || 0,
-      video_amount: task.series_parts?.length || 1,
-      is_series: Array.isArray(task.series_parts) && task.series_parts.length > 1,
-      target_audience: task.target_audience || '全部',
-      description: task.description || '',
-      // 额外字段：已处理数据
-      task_id: task.task_id,
-      video_url: task.video_url,
-      asr_result_url: task.asr_result_url,
-      knowledge_points_result_url: task.knowledge_points_result_url,
-      processed: true, // 标记为已处理
-    }));
+    const videos = filteredTasks.map((task: any) => {
+      // 从 video_info 获取封面URL（优先使用CDN）
+      const videoInfo = task.video_info || {};
+      const thumbnailCdn = videoInfo.thumbnail_cdn || '';
+      const thumbnail = videoInfo.thumbnail || '';
+      const coverUrl = thumbnailCdn || thumbnail;
+
+      return {
+        title: task.title || task.video_title || '未知标题',
+        url: task.bilibili_url,
+        cover: coverUrl, // 使用 video_info 中的封面
+        thumbnail_cdn: thumbnailCdn, // 额外提供 CDN URL
+        duration: task.duration || '00:00:00',
+        author: task.author || videoInfo.uploader || '未知',
+        play: task.play_count || videoInfo.view_count || 0,
+        video_amount: task.series_parts?.length || 1,
+        is_series: Array.isArray(task.series_parts) && task.series_parts.length > 1,
+        target_audience: task.target_audience || '全部',
+        description: task.description || videoInfo.description || '',
+        // 额外字段：已处理数据
+        task_id: task.task_id,
+        video_url: task.video_url,
+        asr_result_url: task.asr_result_url,
+        knowledge_points_result_url: task.knowledge_points_result_url,
+        processed: true, // 标记为已处理
+      };
+    });
 
     console.log('✅ 返回已处理视频:', {
       totalCompleted: completedTasks.length,

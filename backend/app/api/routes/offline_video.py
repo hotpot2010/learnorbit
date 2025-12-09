@@ -11,6 +11,7 @@ from ...services.offline_video_service import (
     TaskStatus,
     StepType
 )
+from ...services.prompt_config_service import prompt_config_service
 
 router = APIRouter(prefix="/offline-video", tags=["offline-video"])
 
@@ -573,4 +574,77 @@ async def delete_task(task_id: str):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"删除任务失败: {str(e)}")
+
+
+# ==================== Prompt 配置管理 ====================
+
+class SavePromptRequest(BaseModel):
+    """保存 Prompt 请求"""
+    prompt: str
+
+
+@router.get("/prompt")
+async def get_prompt():
+    """
+    获取当前的知识点生成 Prompt
+    
+    Returns:
+        当前 prompt 配置
+    """
+    try:
+        prompt = prompt_config_service.get_prompt()
+        return {
+            "success": True,
+            "prompt": prompt
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"获取 Prompt 失败: {str(e)}")
+
+
+@router.post("/prompt")
+async def save_prompt(request: SavePromptRequest):
+    """
+    保存知识点生成 Prompt
+    
+    Args:
+        request: 包含新 prompt 的请求
+        
+    Returns:
+        保存结果
+    """
+    try:
+        success = prompt_config_service.save_prompt(request.prompt)
+        
+        if success:
+            return {
+                "success": True,
+                "message": "Prompt 已保存"
+            }
+        else:
+            raise HTTPException(status_code=500, detail="保存失败")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"保存 Prompt 失败: {str(e)}")
+
+
+@router.post("/prompt/reset")
+async def reset_prompt():
+    """
+    重置 Prompt 为默认值
+    
+    Returns:
+        重置结果
+    """
+    try:
+        success = prompt_config_service.reset_to_default()
+        
+        if success:
+            return {
+                "success": True,
+                "message": "Prompt 已重置为默认值",
+                "prompt": prompt_config_service.get_prompt()
+            }
+        else:
+            raise HTTPException(status_code=500, detail="重置失败")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"重置 Prompt 失败: {str(e)}")
 

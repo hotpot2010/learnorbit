@@ -430,8 +430,12 @@ export default function VideoNotesPrototypePage() {
               if (Array.isArray(kpArray) && kpArray.length > 0) {
                 setKnowledgePoints(kpArray);
                 console.log(`✅ 设置 ${kpArray.length} 个知识点`);
+                // 自动全部展开
+                const allIndexes = kpArray.map((_, idx) => idx);
+                setExpandedKnowledgePoints(new Set(allIndexes));
+                setIsAllExpanded(true);
               } else {
-                console.warn(`⚠️ 知识点数据为空`);
+                console.log(`ℹ️ 知识点数据为空（可能视频内容较少或无教学内容）`);
               }
             }
 
@@ -646,7 +650,8 @@ export default function VideoNotesPrototypePage() {
   const [fullTranscript, setFullTranscript] = useState<string>(''); // 完整逐字稿
   const [editingNoteIndex, setEditingNoteIndex] = useState<number | null>(null); // 正在编辑的笔记索引
   const [currentVideoUrl, setCurrentVideoUrl] = useState<string>(''); // 当前视频URL（用于缓存）
-  const [expandedKnowledgePoints, setExpandedKnowledgePoints] = useState<Set<number>>(new Set([0])); // 展开的知识点索引
+  const [expandedKnowledgePoints, setExpandedKnowledgePoints] = useState<Set<number>>(new Set()); // 展开的知识点索引（默认空，加载后全部展开）
+  const [isAllExpanded, setIsAllExpanded] = useState(true); // 全部展开/折叠状态
   const knowledgeListRef = useRef<HTMLDivElement>(null); // 知识点列表引用
   const previousKnowledgeIndexRef = useRef<number>(-1); // 上一次的知识点索引，用于避免重复滚动
   const [askingKnowledgeIndex, setAskingKnowledgeIndex] = useState<number | null>(null); // 正在提问的知识点索引
@@ -798,8 +803,12 @@ export default function VideoNotesPrototypePage() {
             if (Array.isArray(kpArray) && kpArray.length > 0) {
               setKnowledgePoints(kpArray);
               console.log(`✅ 设置 ${kpArray.length} 个知识点`);
+              // 自动全部展开
+              const allIndexes = kpArray.map((_, idx) => idx);
+              setExpandedKnowledgePoints(new Set(allIndexes));
+              setIsAllExpanded(true);
             } else {
-              console.error(`❌ 知识点数据为空！请手动访问URL检查: ${kpUrl}`);
+              console.log(`ℹ️ P${partIndex + 1} 知识点数据为空（可能视频内容较少或无教学内容）`);
             }
           }
         }
@@ -1408,12 +1417,6 @@ export default function VideoNotesPrototypePage() {
       handleTimeJump(nextPoint.start_time);
       setCurrentKnowledgeIndex(nextIndex);
       
-      // ✅ 自动展开当前知识点，收起其他
-      setExpandedKnowledgePoints(new Set([nextIndex]));
-      
-      // ✅ 滚动到顶部
-      scrollToKnowledgePoint(nextIndex);
-      
       console.log('⏭️ 跳转到下一个知识点:', nextPoint.name);
     }
   };
@@ -1448,12 +1451,7 @@ export default function VideoNotesPrototypePage() {
       if (matchedIndex >= 0 && previousKnowledgeIndexRef.current !== matchedIndex) {
         previousKnowledgeIndexRef.current = matchedIndex;
         setCurrentKnowledgeIndex(matchedIndex);
-        // 自动展开当前知识点，收起其他
-        setExpandedKnowledgePoints(new Set([matchedIndex]));
-        // 延迟滚动，确保 DOM 更新完成
-        setTimeout(() => {
-          scrollToKnowledgePoint(matchedIndex);
-        }, 100);
+        // 移除自动展开
       } else if (matchedIndex < 0 && previousKnowledgeIndexRef.current >= 0) {
         // 如果不在任何知识点范围内，清除之前的索引（但不改变当前显示的知识点）
         // 这样可以保持最后一个知识点的显示
@@ -1600,6 +1598,20 @@ export default function VideoNotesPrototypePage() {
       }
       return newSet;
     });
+  };
+  
+  // 全部展开/折叠
+  const toggleAllKnowledgePoints = () => {
+    if (isAllExpanded) {
+      // 全部折叠
+      setExpandedKnowledgePoints(new Set());
+      setIsAllExpanded(false);
+    } else {
+      // 全部展开
+      const allIndexes = knowledgePoints.map((_, index) => index);
+      setExpandedKnowledgePoints(new Set(allIndexes));
+      setIsAllExpanded(true);
+    }
   };
   
   // 提取知识点对应的逐字稿片段
@@ -3157,7 +3169,24 @@ export default function VideoNotesPrototypePage() {
                 </p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <>
+                {/* 顶部：全部展开/折叠按钮 */}
+                <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-gray-200">
+                  <h3 className="text-sm font-bold text-gray-700" style={{ fontFamily: getFontFamily() }}>
+                    📚 知识点笔记 ({knowledgePoints.length})
+                  </h3>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={toggleAllKnowledgePoints}
+                    className="text-xs text-blue-600 hover:text-blue-700 hover:bg-blue-50 h-7"
+                  >
+                    {isAllExpanded ? '📕 全部折叠' : '📖 全部展开'}
+                  </Button>
+                </div>
+
+                {/* 知识点列表 */}
+                <div className="space-y-3">
                 {knowledgePoints.map((point, index) => {
                   const isActive = index === currentKnowledgeIndex;
                   const hasNote = !!point.note;
@@ -3179,10 +3208,7 @@ export default function VideoNotesPrototypePage() {
                           onClick={() => {
                             handleTimeJump(point.start_time);
                             setCurrentKnowledgeIndex(index);
-                            // 自动展开当前知识点
-                            setExpandedKnowledgePoints(new Set([index]));
-                            // 滚动到顶部
-                            scrollToKnowledgePoint(index);
+                            // 不再自动滚动和展开
                           }}
                         >
                           <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -3488,6 +3514,7 @@ export default function VideoNotesPrototypePage() {
                   );
                 })}
               </div>
+            </>
             )}
             
             {/* 保存笔记按钮 */}
