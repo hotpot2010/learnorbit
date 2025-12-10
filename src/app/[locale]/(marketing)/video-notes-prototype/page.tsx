@@ -40,6 +40,7 @@ import {
   ChevronRight,
   Eye,
   PlayCircle,
+  ArrowLeft,
 } from 'lucide-react';
 import { useMobileLayout } from '@/hooks/use-mobile-layout';
 import { buildApiUrl, API_ENDPOINTS, API_BASE_URL } from '@/config/api';
@@ -63,6 +64,7 @@ interface SearchResult {
   endTime: string;
   thumbnail?: string;  // 视频缩略图
   note?: string;  // 笔记内容
+  videoUrl?: string; // 视频URL
 }
 
 // 练习题类型
@@ -107,6 +109,7 @@ interface KnowledgePoint {
   userAnswer?: string;  // 用户的答案（选择题/填空题）
   validationResult?: ValidationResult;  // 答案验证结果
   isValidating?: boolean;  // 是否正在验证答案
+  searchResults?: SearchResult[];  // 搜索结果引用列表
 }
 
 // 答案验证结果类型
@@ -302,6 +305,75 @@ function useUserData(userId) {
     relatedClip: 'Hooks 最佳实践'
   },
 ];
+
+// 视频兼容性检测组件
+const VideoCompatibilityChecker = ({ videoRef }: { videoRef: React.RefObject<HTMLVideoElement> }) => {
+  const [showWarning, setShowWarning] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const checkVideo = () => {
+      // 如果已经有警告，就不再检测
+      if (showWarning) return;
+
+      // 检测是否有画面（HEVC在Chrome下可能只有声音无画面）
+      // readyState >= 1 表示 metadata 已加载
+      // videoWidth === 0 表示没有画面尺寸，或者解码失败
+      if (video.readyState >= 1) {
+        // 部分浏览器（如Chrome）在不支持HEVC时，可能videoWidth为0，也可能正常显示尺寸但不渲染画面
+        // 另一种检测方法是 webkitVideoDecodedByteCount (仅Chrome)
+        const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+        
+        if (video.videoWidth === 0 || video.videoHeight === 0) {
+          setShowWarning(true);
+        } else if (isChrome) {
+          // 在Chrome中，如果解码字节数一直为0，说明硬解码失败
+          // 延时检测，给它一点缓冲时间
+          setTimeout(() => {
+            if (video.paused) return; // 没播放就不检测
+            
+            // @ts-ignore
+            if (video.webkitVideoDecodedByteCount === 0 && video.currentTime > 0.5) {
+              setShowWarning(true);
+            }
+          }, 2000);
+        }
+      }
+    };
+
+    video.addEventListener('loadeddata', checkVideo);
+    video.addEventListener('timeupdate', checkVideo);
+    
+    return () => {
+      video.removeEventListener('loadeddata', checkVideo);
+      video.removeEventListener('timeupdate', checkVideo);
+    };
+  }, [videoRef, showWarning]);
+
+  if (!showWarning) return null;
+
+  return (
+    <div className="absolute top-0 left-0 right-0 bg-yellow-100 border-b border-yellow-300 p-3 flex items-center justify-between z-20 animate-in slide-in-from-top duration-300">
+      <div className="flex items-center gap-2 text-yellow-800 text-sm">
+        <span className="text-lg">⚠️</span>
+        <div>
+          <p className="font-bold">视频画面无法显示</p>
+          <p className="text-xs">检测到只有声音，可能是浏览器不支持此视频格式 (HEVC/H.265)。</p>
+        </div>
+      </div>
+      <div className="flex gap-2">
+        <button 
+          onClick={() => setShowWarning(false)}
+          className="px-3 py-1 bg-white border border-yellow-300 rounded text-xs text-yellow-700 hover:bg-yellow-50"
+        >
+          忽略
+        </button>
+      </div>
+    </div>
+  );
+};
 
 // 视频缩略图组件
 const VideoThumbnail = ({ videoUrl, time, screenshotUrl, fallbackUrl, onClick }: { videoUrl: string, time: string, screenshotUrl?: string, fallbackUrl: string, onClick?: (e: React.MouseEvent) => void }) => {
@@ -833,6 +905,7 @@ export default function VideoNotesPrototypePage() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]); // 搜索结果
   const [isSearching, setIsSearching] = useState(false); // 是否正在搜索
   const [currentSearchResult, setCurrentSearchResult] = useState<SearchResult | null>(null); // 当前查看的搜索结果
+  const [isPlayingResultVideo, setIsPlayingResultVideo] = useState(false); // 是否正在播放搜索结果视频
 
   // 检查是否为YouTube视频（英文模式）- 必须在useEffect之前定义
   const isYouTubeVideo = (): boolean => {
@@ -1678,38 +1751,45 @@ export default function VideoNotesPrototypePage() {
       const results: SearchResult[] = [];
       
       console.log('🔍 开始搜索...');
-      console.log('  - 搜索关键词:', searchKeyword);
-      console.log('  - isSeries:', isSeries);
-      console.log('  - allParts.length:', allParts.length);
-      console.log('  - knowledgePoints.length:', knowledgePoints.length);
-      console.log('  - processedTaskData存在:', !!processedTaskData);
+      
+      // 辅助函数：解析URL字段
+      const parseUrlField = (field: any): string[] | string | null => {
+        if (!field) return null;
+        if (Array.isArray(field)) return field as string[];
+        if (typeof field === 'string') {
+          if (field.startsWith('[')) {
+            try {
+              return JSON.parse(field);
+            } catch (e) {
+              return field; // 解析失败当作普通字符串
+            }
+          }
+          return field;
+        }
+        return null;
+      };
+
+      // 获取截图URL数组和视频URL数组
+      const screenshotsResultUrls = processedTaskData?.screenshots_result_url;
+      const screenshotsUrlArray = parseUrlField(screenshotsResultUrls);
+      
+      const videoUrls = processedTaskData?.video_url;
+      const videoUrlArray = parseUrlField(videoUrls);
       
       // 如果是多P视频，搜索所有分P的知识点
       if (isSeries && allParts.length > 0) {
-        console.log(`🔍 搜索关键词: "${searchKeyword}"，共 ${allParts.length} 个分P`);
-        
-        // 获取知识点URL数组（与loadPart逻辑一致）
+        // 获取知识点URL数组
         const kpUrls = processedTaskData?.knowledge_points_result_url;
-        console.log('📥 知识点URL数组:', kpUrls);
+        const kpUrlArray = parseUrlField(kpUrls);
         
-        if (kpUrls) {
-          // 处理可能是字符串或数组的情况
-          const kpUrlArray = typeof kpUrls === 'string'
-            ? (kpUrls.startsWith('[') ? JSON.parse(kpUrls) : [kpUrls])
-            : kpUrls;
-          
-          console.log('📥 解析后的知识点URL数组:', kpUrlArray);
-          
+        if (kpUrlArray) {
           for (let partIndex = 0; partIndex < allParts.length; partIndex++) {
             const part = allParts[partIndex];
-            console.log(`  📂 处理 P${partIndex + 1}:`, part.part_title);
-            
             const kpUrl = Array.isArray(kpUrlArray) ? kpUrlArray[partIndex] : kpUrlArray;
             
             if (kpUrl) {
               try {
-                const secureKpUrl = ensureHttps(kpUrl) as string;
-                console.log(`    - 正在获取知识点数据: ${secureKpUrl}`);
+                const secureKpUrl = ensureHttps(kpUrl as string) as string;
                 const response = await fetch(secureKpUrl);
                 const kpData = await response.json();
                 
@@ -1718,77 +1798,113 @@ export default function VideoNotesPrototypePage() {
                   kpArray = kpData.knowledge_points;
                 }
                 
-                console.log(`    - 知识点数组长度:`, Array.isArray(kpArray) ? kpArray.length : '不是数组');
-                if (Array.isArray(kpArray) && kpArray.length > 0) {
-                  console.log(`    - 第一个知识点示例:`, kpArray[0]);
-                }
-                
-                // 搜索匹配的知识点
                 if (Array.isArray(kpArray)) {
-                  kpArray.forEach((kp: any, kpIndex: number) => {
-                    const matched = kp.name && kp.name.toLowerCase().includes(searchKeyword.toLowerCase());
-                    if (matched) {
-                      console.log(`    ✅ 匹配到: ${kp.name}`);
+                  // 过滤匹配的知识点
+                  const matchedKPs = kpArray.filter((kp: any) => 
+                    kp.name && kp.name.toLowerCase().includes(searchKeyword.toLowerCase())
+                  );
+
+                  if (matchedKPs.length > 0) {
+                    // 如果有匹配，加载该分P的截图（如果存在）
+                    let screenshots: string[] = [];
+                    const screenshotsUrl = Array.isArray(screenshotsUrlArray) ? screenshotsUrlArray[partIndex] : screenshotsUrlArray;
+                    
+                    if (screenshotsUrl) {
+                      try {
+                        const sResponse = await fetch(ensureHttps(screenshotsUrl as string) as string);
+                        const sData = await sResponse.json();
+                        screenshots = sData.screenshots || [];
+                      } catch (e) {
+                        console.error('加载截图失败:', e);
+                      }
+                    }
+
+                    // 获取该分P的视频URL
+                    let partVideoUrl = '';
+                    const vUrl = Array.isArray(videoUrlArray) ? videoUrlArray[partIndex] : videoUrlArray;
+                    if (vUrl) partVideoUrl = ensureHttps(vUrl as string) as string;
+
+                    matchedKPs.forEach((kp: any) => {
+                      // 找到原始索引以匹配截图
+                      const originalIndex = kpArray.indexOf(kp);
                       results.push({
                         knowledgePointName: kp.name,
                         partIndex: partIndex,
                         partTitle: part.part_title || `P${partIndex + 1}`,
-                        knowledgePointIndex: kpIndex,
+                        knowledgePointIndex: originalIndex,
                         startTime: kp.start_time || '00:00',
                         endTime: kp.end_time || '00:00',
-                        thumbnail: kp.thumbnail,
-                        note: kp.note
+                        thumbnail: screenshots[originalIndex] || kp.thumbnail,
+                        note: kp.note,
+                        videoUrl: partVideoUrl
                       });
-                    }
-                  });
+                    });
+                  }
                 }
               } catch (error) {
                 console.error(`❌ 获取 P${partIndex + 1} 知识点失败:`, error);
               }
-            } else {
-              console.log(`    ⚠️ P${partIndex + 1} 没有知识点数据URL`);
             }
           }
-        } else {
-          console.log('⚠️ 未找到知识点URL数组');
         }
       } else {
-        // 单P视频，搜索当前知识点
-        console.log(`🔍 搜索关键词: "${searchKeyword}"，单P视频，当前知识点数: ${knowledgePoints.length}`);
-        
-        if (knowledgePoints.length > 0) {
-          console.log('  - 第一个知识点示例:', knowledgePoints[0]);
+        // 单P视频
+        const matchedKPs = knowledgePoints.filter(kp => 
+          kp.name.toLowerCase().includes(searchKeyword.toLowerCase())
+        );
+
+        if (matchedKPs.length > 0) {
+           const vUrl = Array.isArray(videoUrlArray) ? videoUrlArray[0] : videoUrlArray;
+           const partVideoUrl = vUrl ? (ensureHttps(vUrl as string) as string) : cdnVideoUrl;
+
+           matchedKPs.forEach(kp => {
+             const originalIndex = knowledgePoints.indexOf(kp);
+             results.push({
+               knowledgePointName: kp.name,
+               partIndex: 0,
+               partTitle: videoTitle || '当前视频',
+               knowledgePointIndex: originalIndex,
+               startTime: kp.start_time,
+               endTime: kp.end_time,
+               thumbnail: kp.thumbnail,
+               note: kp.note,
+               videoUrl: partVideoUrl || undefined
+             });
+           });
         }
-        
-        knowledgePoints.forEach((kp, kpIndex) => {
-          const matched = kp.name.toLowerCase().includes(searchKeyword.toLowerCase());
-          console.log(`  - 检查知识点 ${kpIndex + 1}: "${kp.name}" - 匹配: ${matched}`);
-          if (matched) {
-            console.log(`  ✅ 匹配到: ${kp.name}`);
-            results.push({
-              knowledgePointName: kp.name,
-              partIndex: 0,
-              partTitle: videoTitle || '当前视频',
-              knowledgePointIndex: kpIndex,
-              startTime: kp.start_time,
-              endTime: kp.end_time,
-              thumbnail: kp.thumbnail,
-              note: kp.note
-            });
-          }
-        });
       }
       
-      console.log(`✅ 搜索完成，找到 ${results.length} 个相关知识点`);
-      console.log('  - 结果:', results);
-      setSearchResults(results);
+      console.log(`✅ 搜索完成，找到 ${results.length} 个结果`);
       
-      if (results.length === 0) {
+      if (results.length > 0) {
+        // 排序：优先当前分P，其次离当前时间最近（如果是同分P）
+        // 这里简化为：如果是同分P，算时间差绝对值
+        const currentSeconds = isYouTubeVideo() && youtubePlayerRef.current 
+            ? youtubePlayerRef.current.getCurrentTime() 
+            : (videoRef.current?.currentTime || 0);
+
+        results.sort((a, b) => {
+           if (a.partIndex === currentPartIndex && b.partIndex !== currentPartIndex) return -1;
+           if (a.partIndex !== currentPartIndex && b.partIndex === currentPartIndex) return 1;
+           
+           if (a.partIndex === currentPartIndex) {
+             const timeA = timeToSeconds(a.startTime);
+             const timeB = timeToSeconds(b.startTime);
+             return Math.abs(timeA - currentSeconds) - Math.abs(timeB - currentSeconds);
+           }
+           return 0;
+        });
+
+        setCurrentSearchResult(results[0]);
+        setSearchResults([]); // 清空列表
+      } else {
+        setCurrentSearchResult(null);
         alert('未找到相关知识点');
       }
+      
     } catch (error) {
       console.error('❌ 搜索失败:', error);
-      alert('搜索失败：' + error);
+      alert('搜索失败，请重试');
     } finally {
       setIsSearching(false);
     }
@@ -2485,6 +2601,29 @@ export default function VideoNotesPrototypePage() {
         i === index ? { ...p, isAsking: false } : p
       ));
     }
+  };
+  
+  // 将搜索结果添加到当前知识点
+  const addSearchResultToKnowledgePoint = () => {
+    if (!currentSearchResult || currentKnowledgeIndex === null) return;
+    
+    setKnowledgePoints(prev => prev.map((p, i) => {
+      if (i === currentKnowledgeIndex) {
+        const searchResults = p.searchResults || [];
+        return {
+          ...p,
+          searchResults: [...searchResults, currentSearchResult],
+        };
+      }
+      return p;
+    }));
+    
+    // 关闭搜索对话框
+    setShowSearchDialog(false);
+    setCurrentSearchResult(null);
+    setIsPlayingResultVideo(false);
+    
+    console.log('✅ 搜索结果已添加到当前知识点笔记');
   };
   
   // 将QA卡片添加到当前知识点
@@ -4267,19 +4406,34 @@ export default function VideoNotesPrototypePage() {
                   
                   // B站视频或中文模式：使用HTML5 video标签
                   return (
-                    <video
-                      ref={videoRef}
-                      src={cdnVideoUrl}
-                      className="w-full h-full"
-                      controls
-                      crossOrigin="anonymous"
-                      onPlay={() => setIsPlaying(true)}
-                      onPause={() => setIsPlaying(false)}
-                      onEnded={handleVideoEnded}
-                      onTimeUpdate={handleTimeUpdate}
-                    >
-                      您的浏览器不支持 video 标签。
-                    </video>
+                    <div className="relative w-full h-full group">
+                      <video
+                        ref={videoRef}
+                        src={cdnVideoUrl}
+                        className="w-full h-full bg-black"
+                        controls
+                        playsInline
+                        webkit-playsinline="true"
+                        x5-playsinline="true"
+                        x5-video-player-type="h5-page"
+                        crossOrigin="anonymous"
+                        onPlay={() => setIsPlaying(true)}
+                        onPause={() => setIsPlaying(false)}
+                        onEnded={handleVideoEnded}
+                        onTimeUpdate={handleTimeUpdate}
+                        onError={(e) => {
+                          console.error('播放出错:', e);
+                          const error = (e.target as HTMLVideoElement).error;
+                          if (error && error.code === 4) {
+                            // 格式不支持
+                            console.warn('视频格式不支持');
+                          }
+                        }}
+                      >
+                        您的浏览器不支持 video 标签。
+                      </video>
+                      <VideoCompatibilityChecker videoRef={videoRef} />
+                    </div>
                   );
                 })()}
                 
@@ -4558,180 +4712,264 @@ export default function VideoNotesPrototypePage() {
                           </div>
                         )}
                         
-                        {/* Q&A 卡片集卡槽 */}
-                        {point.qaList && point.qaList.length > 0 && isExpanded && (
-                          <div className="mt-4 pt-4 border-t border-green-200">
-                            <div className="flex items-center gap-2 mb-3">
-                              <MessageSquare className="w-4 h-4 text-yellow-600" />
-                              <h5 className="text-xs font-bold text-gray-700">💭 问答记录 ({point.qaList.length})</h5>
-                            </div>
-                            
-                            {/* 卡片缩略图网格 - 减小一半尺寸 */}
-                            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
-                              {point.qaList.map((qa, qaIndex) => (
-                                <div
-                                  key={qaIndex}
-                                  className="group relative bg-gradient-to-br from-yellow-50 via-white to-green-50 rounded-lg border-2 border-yellow-200 hover:border-yellow-400 hover:shadow-lg hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer"
-                                  style={{ aspectRatio: '3/4' }}
-                                  onClick={() => {
-                                    setCurrentQACard(qa);
-                                    setCurrentKnowledgeIndex(index);
-                                  }}
-                                >
-                                  {/* 装饰性背景图案 */}
-                                  <div className="absolute inset-0 opacity-5">
-                                    <div className="absolute top-0 right-0 w-12 h-12 bg-yellow-400 rounded-full -translate-y-6 translate-x-6"></div>
-                                    <div className="absolute bottom-0 left-0 w-8 h-8 bg-green-400 rounded-full translate-y-4 -translate-x-4"></div>
-                                  </div>
-                                  
-                                  {/* 删除按钮 */}
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      if (confirm('确定要删除这张问答卡片吗？')) {
-                                        setKnowledgePoints(prev => prev.map((p, i) => {
-                                          if (i === index) {
-                                            const qaList = p.qaList || [];
-                                            return {
-                                              ...p,
-                                              qaList: qaList.filter((_, qIdx) => qIdx !== qaIndex)
-                                            };
-                                          }
-                                          return p;
-                                        }));
-                                      }
+                        {/* 统一卡片集卡槽 - 包含 Q&A、截图、搜索结果 */}
+                        {isExpanded && (() => {
+                          const qaCount = point.qaList?.length || 0;
+                          const screenshotCount = point.screenshots?.length || 0;
+                          const searchResultCount = point.searchResults?.length || 0;
+                          const totalCards = qaCount + screenshotCount + searchResultCount;
+                          
+                          if (totalCards === 0) return null;
+                          
+                          return (
+                            <div className="mt-4 pt-4 border-t border-green-200">
+                              <div className="flex items-center gap-2 mb-3">
+                                <div className="flex items-center gap-1">
+                                  <MessageSquare className="w-4 h-4 text-yellow-600" />
+                                  <ImageIcon className="w-4 h-4 text-blue-600" />
+                                  <Search className="w-4 h-4 text-green-600" />
+                                </div>
+                                <h5 className="text-xs font-bold text-gray-700">📚 笔记卡片 ({totalCards})</h5>
+                              </div>
+                              
+                              {/* 统一卡片网格 */}
+                              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                                {/* Q&A 卡片 */}
+                                {point.qaList?.map((qa, qaIndex) => (
+                                  <div
+                                    key={`qa-${qaIndex}`}
+                                    className="group relative bg-gradient-to-br from-yellow-50 via-white to-green-50 rounded-lg border-2 border-yellow-200 hover:border-yellow-400 hover:shadow-lg hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer"
+                                    style={{ aspectRatio: '3/4' }}
+                                    onClick={() => {
+                                      setCurrentQACard(qa);
+                                      setCurrentKnowledgeIndex(index);
                                     }}
-                                    className="absolute top-1 right-1 z-10 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
                                   >
-                                    <X className="w-2.5 h-2.5" />
-                                  </button>
-                                  
-                                  {/* 卡片编号徽章 */}
-                                  <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-yellow-500 text-white rounded text-[9px] font-bold shadow-sm">
-                                    #{qaIndex + 1}
+                                    {/* 装饰性背景图案 */}
+                                    <div className="absolute inset-0 opacity-5">
+                                      <div className="absolute top-0 right-0 w-12 h-12 bg-yellow-400 rounded-full -translate-y-6 translate-x-6"></div>
+                                      <div className="absolute bottom-0 left-0 w-8 h-8 bg-green-400 rounded-full translate-y-4 -translate-x-4"></div>
+                                    </div>
+                                    
+                                    {/* 删除按钮 */}
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        if (confirm('确定要删除这张问答卡片吗？')) {
+                                          setKnowledgePoints(prev => prev.map((p, i) => {
+                                            if (i === index) {
+                                              const qaList = p.qaList || [];
+                                              return {
+                                                ...p,
+                                                qaList: qaList.filter((_, qIdx) => qIdx !== qaIndex)
+                                              };
+                                            }
+                                            return p;
+                                          }));
+                                        }
+                                      }}
+                                      className="absolute top-1 right-1 z-10 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+                                    >
+                                      <X className="w-2.5 h-2.5" />
+                                    </button>
+                                    
+                                    {/* 卡片类型标识 */}
+                                    <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-yellow-500 text-white rounded text-[9px] font-bold shadow-sm">
+                                      💭
+                                    </div>
+                                    
+                                    {/* 卡片内容 */}
+                                    <div className="relative h-full p-2 pt-6 flex flex-col text-left">
+                                      {/* 问题部分 */}
+                                      <div className="mb-2">
+                                        <div className="flex items-center gap-1 mb-1">
+                                          <div className="w-3 h-3 rounded-sm bg-yellow-400 flex items-center justify-center flex-shrink-0">
+                                            <span className="text-[8px] font-bold text-gray-800">Q</span>
+                                          </div>
+                                          <div className="text-[9px] font-bold text-yellow-700 uppercase tracking-wide">问题</div>
+                                        </div>
+                                        <p className="text-[10px] leading-snug text-gray-700 line-clamp-3 pl-1">
+                                          {qa.question}
+                                        </p>
+                                      </div>
+                                      
+                                      {/* 分隔线 */}
+                                      <div className="w-full border-t border-dashed border-gray-200 my-1"></div>
+                                      
+                                      {/* 答案部分 */}
+                                      <div className="flex-1 overflow-hidden">
+                                        <div className="flex items-center gap-1 mb-1">
+                                          <div className="w-3 h-3 rounded-sm bg-green-500 flex items-center justify-center flex-shrink-0">
+                                            <span className="text-[8px] font-bold text-white">A</span>
+                                          </div>
+                                          <div className="text-[9px] font-bold text-green-700 uppercase tracking-wide">解答</div>
+                                        </div>
+                                        <p className="text-[10px] leading-snug text-gray-600 line-clamp-4 pl-1">
+                                          {qa.answer}
+                                        </p>
+                                      </div>
+                                      
+                                      {/* 底部查看提示 */}
+                                      <div className="absolute bottom-1 left-0 right-0 flex items-center justify-center">
+                                        <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full shadow-sm border border-yellow-200">
+                                          <span className="text-[9px] text-yellow-600 font-medium flex items-center gap-1">
+                                            <Eye className="w-2.5 h-2.5" />
+                                            点击放大
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
                                   </div>
-                                  
-                                  {/* 卡片内容 */}
-                                  <div className="relative h-full p-2 pt-6 flex flex-col text-left">
-                                    {/* 问题部分 */}
-                                    <div className="mb-2">
-                                      <div className="flex items-center gap-1 mb-1">
-                                        <div className="w-3 h-3 rounded-sm bg-yellow-400 flex items-center justify-center flex-shrink-0">
-                                          <span className="text-[8px] font-bold text-gray-800">Q</span>
-                                        </div>
-                                        <div className="text-[9px] font-bold text-yellow-700 uppercase tracking-wide">问题</div>
-                                      </div>
-                                      <p className="text-[10px] leading-snug text-gray-700 line-clamp-3 pl-1">
-                                        {qa.question}
-                                      </p>
+                                ))}
+                                
+                                {/* 截图卡片 */}
+                                {point.screenshots?.map((screenshot, screenshotIndex) => (
+                                  <div
+                                    key={`screenshot-${screenshotIndex}`}
+                                    className="group relative bg-gradient-to-br from-blue-50 via-white to-purple-50 rounded-lg border-2 border-blue-200 hover:border-blue-400 hover:shadow-lg hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer"
+                                    style={{ aspectRatio: '3/4' }}
+                                    onClick={() => {
+                                      setCurrentScreenshot(screenshot);
+                                      setCurrentKnowledgeIndex(index);
+                                    }}
+                                  >
+                                    {/* 装饰性背景图案 */}
+                                    <div className="absolute inset-0 opacity-5">
+                                      <div className="absolute top-0 right-0 w-12 h-12 bg-blue-400 rounded-full -translate-y-6 translate-x-6"></div>
+                                      <div className="absolute bottom-0 left-0 w-8 h-8 bg-purple-400 rounded-full translate-y-4 -translate-x-4"></div>
                                     </div>
                                     
-                                    {/* 分隔线 */}
-                                    <div className="w-full border-t border-dashed border-gray-200 my-1"></div>
+                                    {/* 删除按钮 */}
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        if (confirm('确定要删除这张截图卡片吗？')) {
+                                          setKnowledgePoints(prev => prev.map((p, i) => {
+                                            if (i === index) {
+                                              const screenshots = p.screenshots || [];
+                                              return {
+                                                ...p,
+                                                screenshots: screenshots.filter((_, sIdx) => sIdx !== screenshotIndex)
+                                              };
+                                            }
+                                            return p;
+                                          }));
+                                        }
+                                      }}
+                                      className="absolute top-1 right-1 z-10 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+                                    >
+                                      <X className="w-2.5 h-2.5" />
+                                    </button>
                                     
-                                    {/* 答案部分 */}
-                                    <div className="flex-1 overflow-hidden">
-                                      <div className="flex items-center gap-1 mb-1">
-                                        <div className="w-3 h-3 rounded-sm bg-green-500 flex items-center justify-center flex-shrink-0">
-                                          <span className="text-[8px] font-bold text-white">A</span>
-                                        </div>
-                                        <div className="text-[9px] font-bold text-green-700 uppercase tracking-wide">解答</div>
-                                      </div>
-                                      <p className="text-[10px] leading-snug text-gray-600 line-clamp-4 pl-1">
-                                        {qa.answer}
-                                      </p>
+                                    {/* 卡片类型标识 */}
+                                    <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-blue-500 text-white rounded text-[9px] font-bold shadow-sm">
+                                      📸
                                     </div>
+                                    
+                                    {/* 截图预览 */}
+                                    <img 
+                                      src={screenshot} 
+                                      alt={`截图 ${screenshotIndex + 1}`}
+                                      className="absolute inset-0 w-full h-full object-cover"
+                                    />
                                     
                                     {/* 底部查看提示 */}
                                     <div className="absolute bottom-1 left-0 right-0 flex items-center justify-center">
-                                      <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full shadow-sm border border-yellow-200">
-                                        <span className="text-[9px] text-yellow-600 font-medium flex items-center gap-1">
+                                      <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full shadow-sm border border-blue-200">
+                                        <span className="text-[9px] text-blue-600 font-medium flex items-center gap-1">
                                           <Eye className="w-2.5 h-2.5" />
                                           点击放大
                                         </span>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                        
-                        {/* 截图卡片集卡槽 */}
-                        {point.screenshots && point.screenshots.length > 0 && isExpanded && (
-                          <div className="mt-4 pt-4 border-t border-green-200">
-                            <div className="flex items-center gap-2 mb-3">
-                              <ImageIcon className="w-4 h-4 text-blue-600" />
-                              <h5 className="text-xs font-bold text-gray-700">📸 视频截图 ({point.screenshots.length})</h5>
-                            </div>
-                            
-                            {/* 截图缩略图网格 - 4:3 比例 */}
-                            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
-                              {point.screenshots.map((screenshot, screenshotIndex) => (
-                                <div
-                                  key={screenshotIndex}
-                                  className="group relative bg-gradient-to-br from-blue-50 via-white to-purple-50 rounded-lg border-2 border-blue-200 hover:border-blue-400 hover:shadow-lg hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer"
-                                  style={{ aspectRatio: '3/4' }}
-                                  onClick={() => {
-                                    setCurrentScreenshot(screenshot);
-                                    setCurrentKnowledgeIndex(index);
-                                  }}
-                                >
-                                  {/* 装饰性背景图案 */}
-                                  <div className="absolute inset-0 opacity-5">
-                                    <div className="absolute top-0 right-0 w-12 h-12 bg-blue-400 rounded-full -translate-y-6 translate-x-6"></div>
-                                    <div className="absolute bottom-0 left-0 w-8 h-8 bg-purple-400 rounded-full translate-y-4 -translate-x-4"></div>
-                                  </div>
-                                  
-                                  {/* 删除按钮 */}
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      if (confirm('确定要删除这张截图卡片吗？')) {
+                                ))}
+                                
+                                {/* 搜索结果卡片 */}
+                                {point.searchResults?.map((result, resultIndex) => (
+                                  <div
+                                    key={`search-${resultIndex}`}
+                                    className="group relative bg-gradient-to-br from-green-50 via-white to-emerald-50 rounded-lg border-2 border-green-200 hover:border-green-400 hover:shadow-lg hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer"
+                                    style={{ aspectRatio: '3/4' }}
+                                    onClick={() => {
+                                      setCurrentSearchResult(result);
+                                      setShowSearchDialog(true);
+                                    }}
+                                  >
+                                    {/* 装饰性背景图案 */}
+                                    <div className="absolute inset-0 opacity-5">
+                                      <div className="absolute top-0 right-0 w-12 h-12 bg-green-400 rounded-full -translate-y-6 translate-x-6"></div>
+                                      <div className="absolute bottom-0 left-0 w-8 h-8 bg-emerald-400 rounded-full translate-y-4 -translate-x-4"></div>
+                                    </div>
+                                    
+                                    {/* 删除按钮 */}
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
                                         setKnowledgePoints(prev => prev.map((p, i) => {
                                           if (i === index) {
-                                            const screenshots = p.screenshots || [];
                                             return {
                                               ...p,
-                                              screenshots: screenshots.filter((_, sIdx) => sIdx !== screenshotIndex)
+                                              searchResults: (p.searchResults || []).filter((_, rIdx) => rIdx !== resultIndex)
                                             };
                                           }
                                           return p;
                                         }));
-                                      }
-                                    }}
-                                    className="absolute top-1 right-1 z-10 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
-                                  >
-                                    <X className="w-2.5 h-2.5" />
-                                  </button>
-                                  
-                                  {/* 卡片编号徽章 */}
-                                  <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-blue-500 text-white rounded text-[9px] font-bold shadow-sm">
-                                    #{screenshotIndex + 1}
-                                  </div>
-                                  
-                                  {/* 截图预览 */}
-                                  <img 
-                                    src={screenshot} 
-                                    alt={`截图 ${screenshotIndex + 1}`}
-                                    className="absolute inset-0 w-full h-full object-cover"
-                                  />
-                                  
-                                  {/* 底部查看提示 */}
-                                  <div className="absolute bottom-1 left-0 right-0 flex items-center justify-center">
-                                    <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full shadow-sm border border-blue-200">
-                                      <span className="text-[9px] text-blue-600 font-medium flex items-center gap-1">
-                                        <Eye className="w-2.5 h-2.5" />
-                                        点击放大
-                                      </span>
+                                      }}
+                                      className="absolute top-1 right-1 z-10 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+                                    >
+                                      <X className="w-2.5 h-2.5" />
+                                    </button>
+                                    
+                                    {/* 卡片类型标识 */}
+                                    <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-green-500 text-white rounded text-[9px] font-bold shadow-sm">
+                                      🔗
+                                    </div>
+                                    
+                                    {/* 缩略图或占位图 */}
+                                    {result.thumbnail ? (
+                                      <img 
+                                        src={result.thumbnail} 
+                                        alt={result.knowledgePointName}
+                                        className="absolute inset-0 w-full h-full object-cover opacity-30"
+                                      />
+                                    ) : (
+                                      <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-20">
+                                        🔍
+                                      </div>
+                                    )}
+                                    
+                                    {/* 卡片内容 */}
+                                    <div className="relative h-full p-2 pt-6 flex flex-col text-left">
+                                      {/* 知识点名称 */}
+                                      <div className="flex-1">
+                                        <h4 className="text-[11px] font-bold text-gray-800 leading-tight line-clamp-3 mb-1">
+                                          {result.knowledgePointName}
+                                        </h4>
+                                        <p className="text-[9px] text-gray-600">
+                                          {result.partTitle}
+                                        </p>
+                                        <p className="text-[9px] text-gray-500 mt-1">
+                                          ⏱️ {result.startTime}
+                                        </p>
+                                      </div>
+                                      
+                                      {/* 底部查看提示 */}
+                                      <div className="absolute bottom-1 left-0 right-0 flex items-center justify-center">
+                                        <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full shadow-sm border border-green-200">
+                                          <span className="text-[9px] text-green-600 font-medium flex items-center gap-1">
+                                            <Eye className="w-2.5 h-2.5" />
+                                            点击查看
+                                          </span>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
+                              </div>
                             </div>
-                          </div>
-                        )}
+                          );
+                        })()}
                         
                         {/* 练习题 */}
                         {point.exercise && isExpanded && (
@@ -4936,7 +5174,7 @@ export default function VideoNotesPrototypePage() {
         </div>
       </div>
       
-      {/* 提问输入框 - 浮动在视频中心 - 单行输入 */}
+      {/* 提问输入框 - 浮动在视频中心 - 卡片样式 */}
       {askingKnowledgeIndex !== null && (
         <div 
           className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200 p-4"
@@ -4946,19 +5184,25 @@ export default function VideoNotesPrototypePage() {
           }}
         >
           <div 
-            className="bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 duration-300"
-            style={{ width: '500px' }}
+            className="bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col relative overflow-hidden"
+            style={{ width: '480px', height: '640px' }}
             onClick={(e) => e.stopPropagation()}
           >
+            {/* 装饰性背景 */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-yellow-200 rounded-full opacity-10 -translate-y-20 translate-x-20"></div>
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-orange-200 rounded-full opacity-10 translate-y-16 -translate-x-16"></div>
+            </div>
+
             {/* 标题栏 */}
-            <div className="flex items-center justify-between p-5 pb-4 border-b border-gray-200">
+            <div className="flex-shrink-0 flex items-center justify-between p-5 border-b border-gray-200 relative z-10">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-yellow-400 flex items-center justify-center">
                   <MessageSquare className="w-4 h-4 text-gray-800" />
                 </div>
                 <div>
                   <h3 className="font-bold text-base text-gray-900">向 AI 提问</h3>
-                  <p className="text-xs text-gray-500">{knowledgePoints[askingKnowledgeIndex]?.name}</p>
+                  <p className="text-xs text-gray-500 line-clamp-1">{knowledgePoints[askingKnowledgeIndex]?.name}</p>
                 </div>
               </div>
               <button
@@ -4972,53 +5216,58 @@ export default function VideoNotesPrototypePage() {
               </button>
             </div>
             
-            {/* 单行输入框 */}
-            <div className="p-5">
-              <input
-                type="text"
-                value={questionInput}
-                onChange={(e) => setQuestionInput(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter' && questionInput.trim() && !knowledgePoints[askingKnowledgeIndex]?.isAsking) {
-                    e.preventDefault();
-                    handleAskQuestion(askingKnowledgeIndex);
-                  }
-                }}
-                placeholder="输入你的问题..."
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-yellow-400 focus:outline-none transition-colors text-base"
-                autoFocus
-              />
-              <p className="text-xs text-gray-400 mt-2">💡 按 Enter 发送问题</p>
-            </div>
-            
-            {/* 按钮 */}
-            <div className="flex gap-3 p-5 pt-0">
-              <button
-                onClick={() => {
-                  setAskingKnowledgeIndex(null);
-                  setQuestionInput('');
-                }}
-                className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-medium"
-              >
-                取消
-              </button>
-              <button
-                onClick={() => handleAskQuestion(askingKnowledgeIndex)}
-                disabled={!questionInput.trim() || knowledgePoints[askingKnowledgeIndex]?.isAsking}
-                className="flex-1 px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-xl disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed transition-all font-bold flex items-center justify-center gap-2 shadow-lg"
-              >
-                {knowledgePoints[askingKnowledgeIndex]?.isAsking ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    思考中...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="w-5 h-5" />
-                    提问
-                  </>
-                )}
-              </button>
+            {/* 输入区域 */}
+            <div className="flex-1 p-6 flex flex-col items-center justify-center relative z-10">
+              <div className="w-full">
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-3xl">🤔</span>
+                  </div>
+                  <h4 className="text-lg font-bold text-gray-800 mb-1">有什么疑问吗？</h4>
+                  <p className="text-sm text-gray-500">AI 助教随时为你解答，基于视频内容回答。</p>
+                </div>
+
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={questionInput}
+                    onChange={(e) => setQuestionInput(e.target.value)}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter' && questionInput.trim() && !knowledgePoints[askingKnowledgeIndex]?.isAsking) {
+                        e.preventDefault();
+                        handleAskQuestion(askingKnowledgeIndex);
+                      }
+                    }}
+                    placeholder="输入你的问题..."
+                    className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-yellow-400 focus:outline-none transition-colors text-lg shadow-sm pr-12"
+                    autoFocus
+                  />
+                  <button
+                    onClick={() => handleAskQuestion(askingKnowledgeIndex)}
+                    disabled={!questionInput.trim() || knowledgePoints[askingKnowledgeIndex]?.isAsking}
+                    className="absolute right-2 top-2 bottom-2 aspect-square bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-all flex items-center justify-center shadow-sm"
+                  >
+                    {knowledgePoints[askingKnowledgeIndex]?.isAsking ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <Sparkles className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+                
+                <div className="mt-4 flex flex-wrap justify-center gap-2">
+                  <span className="text-xs text-gray-400">💡 试着问：</span>
+                  {['举个例子', '解释一下原理', '总结要点'].map((hint) => (
+                    <button
+                      key={hint}
+                      onClick={() => setQuestionInput(hint)}
+                      className="px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-xs text-gray-600 transition-colors"
+                    >
+                      {hint}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -5185,163 +5434,16 @@ export default function VideoNotesPrototypePage() {
       )}
       
       {/* 搜索知识点对话框 */}
-      {showSearchDialog && (
+      {/* 搜索对话框 & 结果卡片 */}
+      {(showSearchDialog || currentSearchResult) && (
         <div 
           className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200 p-4"
           onClick={() => {
             setShowSearchDialog(false);
+            setCurrentSearchResult(null);
+            setIsPlayingResultVideo(false);
             setSearchKeyword('');
-            setSearchResults([]);
           }}
-        >
-          <div 
-            className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* 标题栏 */}
-            <div className="flex-shrink-0 flex items-center justify-between p-5 border-b border-gray-200">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center">
-                  <Search className="w-4 h-4 text-white" />
-                </div>
-                <h3 className="font-bold text-base text-gray-900">🔍 搜索知识点</h3>
-              </div>
-              <button
-                onClick={() => {
-                  setShowSearchDialog(false);
-                  setSearchKeyword('');
-                  setSearchResults([]);
-                }}
-                className="text-gray-400 hover:text-gray-600 transition-colors p-1 hover:bg-gray-100 rounded-lg"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            
-            {/* 搜索输入框 */}
-            <div className="flex-shrink-0 p-5">
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={searchKeyword}
-                  onChange={(e) => setSearchKeyword(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter' && searchKeyword.trim() && !isSearching) {
-                      searchKnowledgePoints();
-                    }
-                  }}
-                  placeholder="输入关键词搜索知识点..."
-                  className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-400 focus:outline-none transition-colors text-base"
-                  autoFocus
-                />
-                <button
-                  onClick={searchKnowledgePoints}
-                  disabled={!searchKeyword.trim() || isSearching}
-                  className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl disabled:bg-gray-300 disabled:cursor-not-allowed transition-all font-bold flex items-center gap-2"
-                >
-                  {isSearching ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      搜索中...
-                    </>
-                  ) : (
-                    <>
-                      <Search className="w-5 h-5" />
-                      搜索
-                    </>
-                  )}
-                </button>
-              </div>
-              <p className="text-xs text-gray-400 mt-2">💡 按 Enter 快速搜索</p>
-            </div>
-            
-            {/* 搜索结果列表 */}
-            <div className="flex-1 overflow-y-auto p-5 pt-0">
-              {searchResults.length > 0 ? (
-                <>
-                  <p className="text-sm text-gray-600 mb-4">找到 {searchResults.length} 个相关知识点：</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                    {searchResults.map((result, index) => (
-                      <div
-                        key={index}
-                        className="group relative bg-gradient-to-br from-green-50 via-white to-emerald-50 rounded-lg border-2 border-green-200 hover:border-green-400 hover:shadow-lg hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer"
-                        style={{ aspectRatio: '3/4' }}
-                        onClick={() => setCurrentSearchResult(result)}
-                      >
-                        {/* 装饰性背景图案 */}
-                        <div className="absolute inset-0 opacity-5">
-                          <div className="absolute top-0 right-0 w-12 h-12 bg-green-400 rounded-full -translate-y-6 translate-x-6"></div>
-                          <div className="absolute bottom-0 left-0 w-8 h-8 bg-emerald-400 rounded-full translate-y-4 -translate-x-4"></div>
-                        </div>
-                        
-                        {/* 卡片编号徽章 */}
-                        <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-green-500 text-white rounded text-[9px] font-bold shadow-sm">
-                          #{index + 1}
-                        </div>
-                        
-                        {/* 视频缩略图或占位图 */}
-                        {result.thumbnail ? (
-                          <img 
-                            src={result.thumbnail} 
-                            alt={result.knowledgePointName}
-                            className="absolute inset-0 w-full h-full object-cover opacity-30"
-                          />
-                        ) : (
-                          <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-20">
-                            🎬
-                          </div>
-                        )}
-                        
-                        {/* 卡片内容 */}
-                        <div className="relative h-full p-2 pt-6 flex flex-col text-left">
-                          {/* 知识点名称 */}
-                          <div className="flex-1">
-                            <h4 className="text-[11px] font-bold text-gray-800 leading-tight line-clamp-3 mb-1">
-                              {result.knowledgePointName}
-                            </h4>
-                            <p className="text-[9px] text-gray-600">
-                              {result.partTitle}
-                            </p>
-                            <p className="text-[9px] text-gray-500 mt-1">
-                              ⏱️ {result.startTime} - {result.endTime}
-                            </p>
-                          </div>
-                          
-                          {/* 底部提示 */}
-                          <div className="absolute bottom-1 left-0 right-0 flex items-center justify-center">
-                            <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full shadow-sm border border-green-200">
-                              <span className="text-[9px] text-green-600 font-medium flex items-center gap-1">
-                                <PlayCircle className="w-2.5 h-2.5" />
-                                点击查看
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              ) : searchKeyword && !isSearching ? (
-                <div className="text-center py-12">
-                  <div className="text-6xl mb-4">🔍</div>
-                  <p className="text-gray-500">未找到相关知识点</p>
-                </div>
-              ) : (
-                <div className="text-center py-12">
-                  <div className="text-6xl mb-4">💡</div>
-                  <p className="text-gray-500">输入关键词开始搜索</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-      
-      {/* 搜索结果详情卡片 */}
-      {currentSearchResult && (
-        <div 
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200 p-4"
-          onClick={() => setCurrentSearchResult(null)}
         >
           <div 
             className="bg-white rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col relative"
@@ -5353,85 +5455,194 @@ export default function VideoNotesPrototypePage() {
               <div className="absolute top-0 right-0 w-40 h-40 bg-green-200 rounded-full opacity-10 -translate-y-20 translate-x-20"></div>
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-200 rounded-full opacity-10 translate-y-16 -translate-x-16"></div>
             </div>
-            
-            {/* 卡片头部 */}
-            <div className="flex-shrink-0 bg-gradient-to-r from-green-100 to-emerald-100 border-b-2 border-green-300 p-5 flex items-center justify-between relative z-10">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-green-500 flex items-center justify-center shadow-md">
-                  <Search className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900">🎯 知识点详情</h3>
-                  <p className="text-xs text-gray-600">{currentSearchResult.partTitle}</p>
-                </div>
-              </div>
-              <button
-                onClick={() => setCurrentSearchResult(null)}
-                className="text-gray-500 hover:text-gray-700 transition-colors p-1 hover:bg-white/50 rounded-lg"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-            
-            {/* 卡片内容 */}
-            <div className="flex-1 overflow-y-auto p-6 relative z-10">
-              {/* 知识点名称 */}
-              <div className="mb-4">
-                <h4 className="font-bold text-xl text-gray-900 mb-2">
-                  {currentSearchResult.knowledgePointName}
-                </h4>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Clock className="w-4 h-4" />
-                  <span>{currentSearchResult.startTime} - {currentSearchResult.endTime}</span>
-                </div>
-              </div>
-              
-              {/* 视频缩略图 */}
-              <div className="mb-4">
-                {currentSearchResult.thumbnail ? (
-                  <img 
-                    src={currentSearchResult.thumbnail} 
-                    alt={currentSearchResult.knowledgePointName}
-                    className="w-full rounded-lg shadow-md border-2 border-gray-200"
-                  />
-                ) : (
-                  <div className="w-full aspect-video bg-gray-100 rounded-lg flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="text-6xl mb-2">🎬</div>
-                      <p className="text-gray-500 text-sm">暂无缩略图</p>
+
+            {currentSearchResult ? (
+              // ------------------- 结果展示模式 -------------------
+              <>
+                {/* 标题栏 */}
+                <div className="flex-shrink-0 bg-gradient-to-r from-green-100 to-emerald-100 border-b-2 border-green-300 p-5 flex items-center justify-between relative z-10">
+                  <div className="flex items-center gap-3">
+                    <button 
+                      onClick={() => {
+                        setCurrentSearchResult(null); // 返回搜索
+                        setIsPlayingResultVideo(false);
+                      }}
+                      className="w-9 h-9 rounded-lg bg-white/80 flex items-center justify-center shadow-sm hover:bg-white transition-colors"
+                      title="返回搜索"
+                    >
+                      <ArrowLeft className="w-5 h-5 text-gray-700" />
+                    </button>
+                    <div>
+                      <h3 className="font-bold text-lg text-gray-900">🎯 搜索结果</h3>
+                      <p className="text-xs text-gray-600">{currentSearchResult.partTitle}</p>
                     </div>
                   </div>
-                )}
-              </div>
-              
-              {/* 笔记内容 */}
-              {currentSearchResult.note && (
-                <div className="mb-4">
-                  <h5 className="font-bold text-sm text-gray-700 mb-2">📝 笔记内容</h5>
-                  <div className="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 leading-relaxed">
-                    <ReactMarkdown>{currentSearchResult.note}</ReactMarkdown>
+                  <button
+                    onClick={() => {
+                      setShowSearchDialog(false);
+                      setCurrentSearchResult(null);
+                      setIsPlayingResultVideo(false);
+                    }}
+                    className="text-gray-500 hover:text-gray-700 transition-colors p-1 hover:bg-white/50 rounded-lg"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+
+                {/* 内容区域 */}
+                <div className="flex-1 overflow-y-auto p-6 relative z-10">
+                  <h4 className="font-bold text-xl text-gray-900 mb-2">
+                    {currentSearchResult.knowledgePointName}
+                  </h4>
+                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+                    <Clock className="w-4 h-4" />
+                    <span>{currentSearchResult.startTime} - {currentSearchResult.endTime}</span>
+                  </div>
+
+                  {/* 视频/缩略图区域 */}
+                  <div className="mb-4 bg-black rounded-lg overflow-hidden shadow-lg border-2 border-gray-200" style={{ aspectRatio: '16/9' }}>
+                    {isPlayingResultVideo && currentSearchResult.videoUrl ? (
+                      <video
+                        src={`${currentSearchResult.videoUrl}#t=${timeToSeconds(currentSearchResult.startTime)},${timeToSeconds(currentSearchResult.endTime)}`}
+                        className="w-full h-full"
+                        controls
+                        autoPlay
+                        playsInline
+                        webkit-playsinline="true"
+                        crossOrigin="anonymous"
+                      />
+                    ) : (
+                      <div 
+                        className="w-full h-full relative group cursor-pointer"
+                        onClick={() => {
+                          if (currentSearchResult.videoUrl) {
+                            setIsPlayingResultVideo(true);
+                          } else {
+                            alert('无法播放：未找到视频链接');
+                          }
+                        }}
+                      >
+                        <img 
+                          src={currentSearchResult.thumbnail || processedTaskData?.video_info?.thumbnail || ''} 
+                          alt="缩略图" 
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                          <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <Play className="w-5 h-5 text-green-600 ml-1" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 笔记内容 */}
+                  {currentSearchResult.note && (
+                    <div className="mb-4">
+                      <h5 className="font-bold text-sm text-gray-700 mb-2">📝 笔记内容</h5>
+                      <div className="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 leading-relaxed border border-gray-200">
+                        <ReactMarkdown>{currentSearchResult.note}</ReactMarkdown>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* 底部按钮 */}
+                <div className="flex-shrink-0 bg-gray-50 border-t border-gray-200 p-5 flex gap-3 relative z-10">
+                  <button
+                    onClick={() => {
+                      setShowSearchDialog(false);
+                      setCurrentSearchResult(null);
+                      setIsPlayingResultVideo(false);
+                    }}
+                    className="flex-1 px-5 py-3 bg-white border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-all font-bold shadow-sm"
+                  >
+                    关闭
+                  </button>
+                  <button
+                    onClick={() => {
+                      // 将搜索结果添加到当前正在播放的知识点笔记中
+                      addSearchResultToKnowledgePoint();
+                    }}
+                    className="flex-1 px-5 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl transition-all font-bold shadow-md flex items-center justify-center gap-2"
+                  >
+                    <Plus className="w-5 h-5" />
+                    加入笔记
+                  </button>
+                </div>
+              </>
+            ) : (
+              // ------------------- 搜索输入模式 -------------------
+              <>
+                {/* 标题栏 */}
+                <div className="flex-shrink-0 flex items-center justify-between p-5 border-b border-gray-200 relative z-10">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center">
+                      <Search className="w-4 h-4 text-white" />
+                    </div>
+                    <h3 className="font-bold text-base text-gray-900">🔍 搜索知识点</h3>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setShowSearchDialog(false);
+                      setSearchKeyword('');
+                    }}
+                    className="text-gray-400 hover:text-gray-600 transition-colors p-1 hover:bg-gray-100 rounded-lg"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* 搜索输入区域 */}
+                <div className="flex-1 p-6 flex flex-col items-center justify-center relative z-10">
+                  <div className="w-full">
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span className="text-3xl">🔍</span>
+                      </div>
+                      <h4 className="text-lg font-bold text-gray-800 mb-1">搜索知识点</h4>
+                      <p className="text-sm text-gray-500">输入关键词，快速找到相关知识点</p>
+                    </div>
+
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={searchKeyword}
+                        onChange={(e) => setSearchKeyword(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter' && searchKeyword.trim() && !isSearching) {
+                            searchKnowledgePoints();
+                          }
+                        }}
+                        placeholder="输入关键词..."
+                        className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-green-400 focus:outline-none transition-colors text-lg shadow-sm pr-12"
+                        autoFocus
+                      />
+                      <button
+                        onClick={searchKnowledgePoints}
+                        disabled={!searchKeyword.trim() || isSearching}
+                        className="absolute right-2 top-2 bottom-2 aspect-square bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors flex items-center justify-center disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed shadow-sm"
+                      >
+                        {isSearching ? <Loader2 className="w-5 h-5 animate-spin" /> : <Search className="w-5 h-5" />}
+                      </button>
+                    </div>
+                    
+                    <div className="mt-4 flex flex-wrap justify-center gap-2">
+                      <span className="text-xs text-gray-400">💡 试试搜索：</span>
+                      {['函数', '极限', '导数'].map((hint) => (
+                        <button
+                          key={hint}
+                          onClick={() => setSearchKeyword(hint)}
+                          className="px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-xs text-gray-600 transition-colors"
+                        >
+                          {hint}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              )}
-            </div>
-            
-            {/* 卡片底部按钮 */}
-            <div className="flex-shrink-0 bg-gradient-to-r from-gray-50 to-white border-t-2 border-gray-200 p-5 flex gap-3 relative z-10">
-              <button
-                onClick={() => setCurrentSearchResult(null)}
-                className="flex-1 px-5 py-3 bg-white border-2 border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all font-medium flex items-center justify-center gap-2 shadow-sm"
-              >
-                <X className="w-4 h-4" />
-                关闭
-              </button>
-              <button
-                onClick={() => playSearchResult(currentSearchResult)}
-                className="flex-1 px-5 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-xl transition-all font-bold flex items-center justify-center gap-2 shadow-lg"
-              >
-                <PlayCircle className="w-4 h-4" />
-                播放片段 ▶️
-              </button>
-            </div>
+              </>
+            )}
           </div>
         </div>
       )}
