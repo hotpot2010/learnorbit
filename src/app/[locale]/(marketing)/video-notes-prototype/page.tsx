@@ -310,7 +310,7 @@ function useUserData(userId) {
 ];
 
 // 视频兼容性检测组件
-const VideoCompatibilityChecker = ({ videoRef }: { videoRef: React.RefObject<HTMLVideoElement> }) => {
+const VideoCompatibilityChecker = ({ videoRef }: { videoRef: React.RefObject<HTMLVideoElement | null> }) => {
   const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
@@ -921,6 +921,12 @@ export default function VideoNotesPrototypePage() {
   const [generatedExerciseSubmitted, setGeneratedExerciseSubmitted] = useState<boolean>(false); // 是否已提交答案（生成对话框）
   const [generatedExerciseShowHints, setGeneratedExerciseShowHints] = useState<boolean>(false); // 是否显示提示（生成对话框反转）
 
+  // 保存笔记相关状态
+  const [isSavingNote, setIsSavingNote] = useState(false); // 是否正在保存笔记
+  const [savedNoteId, setSavedNoteId] = useState<string | null>(null); // 已保存的笔记ID
+  const [saveStatus, setSaveStatus] = useState<'unsaved' | 'saving' | 'saved' | 'error'>('unsaved'); // 保存状态
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null); // 最后保存时间
+
   // 检查是否为YouTube视频（英文模式）- 必须在useEffect之前定义
   const isYouTubeVideo = (): boolean => {
     return !!(cdnVideoUrl && (cdnVideoUrl.includes('youtube.com') || cdnVideoUrl.includes('youtu.be')) && locale === 'en');
@@ -1054,6 +1060,13 @@ export default function VideoNotesPrototypePage() {
       }
     }
   }, []); // 只在组件挂载时执行一次
+
+  // 加载已保存的笔记（当知识点加载完成后）
+  useEffect(() => {
+    if (knowledgePoints.length > 0 && processedTaskData?.task_id && saveStatus === 'unsaved') {
+      loadSavedNote(processedTaskData.task_id);
+    }
+  }, [knowledgePoints.length, processedTaskData?.task_id]); // 当知识点加载完成时执行
 
   const getFontFamily = () => {
     if (isMobile) {
@@ -1929,13 +1942,18 @@ export default function VideoNotesPrototypePage() {
     // 如果是多P视频且不是当前分P，需要切换分P
     if (isSeries && result.partIndex !== currentPartIndex) {
       console.log(`📺 切换到 P${result.partIndex + 1}: ${result.partTitle}`);
-      loadPart(result.partIndex);
       
-      // 等待分P加载完成后跳转到知识点
-      setTimeout(() => {
-        handleTimeJump(result.startTime);
-        setCurrentKnowledgeIndex(result.knowledgePointIndex);
-      }, 1000);
+      // 从 allParts 中找到对应的 part 对象
+      const targetPart = allParts[result.partIndex];
+      if (targetPart) {
+        loadPart(targetPart, result.partIndex);
+        
+        // 等待分P加载完成后跳转到知识点
+        setTimeout(() => {
+          handleTimeJump(result.startTime);
+          setCurrentKnowledgeIndex(result.knowledgePointIndex);
+        }, 1000);
+      }
     } else {
       // 同一分P，直接跳转
       handleTimeJump(result.startTime);
@@ -3936,6 +3954,122 @@ export default function VideoNotesPrototypePage() {
     return null;
   };
 
+  // 保存视频笔记到数据库
+  const saveVideoNote = async () => {
+    // 检查用户是否登录
+    if (typeof window === 'undefined') return;
+    
+    // 简单检查：如果没有 task_id，无法保存
+    if (!processedTaskData?.task_id) {
+      alert('无法保存：缺少视频任务ID。只有已处理的视频才能保存笔记。');
+      return;
+    }
+    
+    setIsSavingNote(true);
+    setSaveStatus('saving');
+    
+    try {
+      // 准备用户笔记数据
+      const userNotesData = {
+        knowledgePointNotes: knowledgePoints.map(kp => ({
+          knowledgePointName: kp.name,
+          startTime: kp.start_time,
+          endTime: kp.end_time,
+          qaList: kp.qaList || [],
+          screenshots: kp.screenshots || [],
+          exercises: kp.exercises || [],
+          searchResults: kp.searchResults || [],
+          customNote: kp.note, // 如果用户修改了笔记
+        })),
+      };
+      
+      const response = await fetch('/api/video-notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          taskId: processedTaskData.task_id,
+          videoUrl: videoUrl,
+          bvId: processedTaskData.video_info?.bv_id,
+          videoTitle: processedTaskData.video_title,
+          videoPlatform: 'bilibili',
+          userNotesData,
+          title: null, // 可以让用户输入
+          description: null,
+        }),
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        setSavedNoteId(result.noteId);
+        setSaveStatus('saved');
+        setLastSavedAt(new Date());
+        alert(`笔记${result.isNew ? '保存' : '更新'}成功！ 💾`);
+      } else {
+        throw new Error(result.error || '保存失败');
+      }
+    } catch (error) {
+      console.error('保存笔记失败:', error);
+      setSaveStatus('error');
+      alert(`保存笔记失败：${error instanceof Error ? error.message : '未知错误'}。请确保已登录。`);
+    } finally {
+      setIsSavingNote(false);
+    }
+  };
+
+  // 加载已保存的笔记
+  const loadSavedNote = async (taskId: string) => {
+    try {
+      const response = await fetch(`/api/video-notes?taskId=${taskId}`);
+      const data = await response.json();
+      
+      if (data.success && data.notes.length > 0) {
+        const userNote = data.notes[0];
+        setSavedNoteId(userNote.id);
+        setSaveStatus('saved');
+        setLastSavedAt(new Date(userNote.updatedAt));
+        
+        console.log('✅ 加载已保存的笔记:', userNote.id);
+        
+        // 合并用户笔记数据到知识点
+        const userNoteData = userNote.userNotesData;
+        if (userNoteData && userNoteData.knowledgePointNotes) {
+          setKnowledgePoints(prev => prev.map(kp => {
+            // 查找匹配的用户笔记
+            const userKP = userNoteData.knowledgePointNotes.find(
+              (un: any) => un.knowledgePointName === kp.name &&
+                          un.startTime === kp.start_time &&
+                          un.endTime === kp.end_time
+            );
+            
+            if (userKP) {
+              // 合并用户数据
+              return {
+                ...kp,
+                qaList: userKP.qaList || kp.qaList,
+                screenshots: [
+                  ...(kp.screenshots || []),
+                  ...(userKP.screenshots || [])
+                ],
+                exercises: userKP.exercises || kp.exercises,
+                searchResults: userKP.searchResults || kp.searchResults,
+                note: userKP.customNote || kp.note,
+              };
+            }
+            
+            return kp;
+          }));
+        }
+      } else {
+        setSaveStatus('unsaved');
+      }
+    } catch (error) {
+      console.error('加载已保存笔记失败:', error);
+    }
+  };
+
   // 关闭练习卡片（不添加到笔记）
   const closeExerciseCard = () => {
     setCurrentExerciseCard(null);
@@ -5295,24 +5429,50 @@ export default function VideoNotesPrototypePage() {
             {knowledgePoints.length > 0 && (
               <div className="mt-4 px-4">
                 <button
-                  onClick={saveNotesAsLongImage}
-                  className="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium rounded-lg shadow-md hover:shadow-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 flex items-center justify-center gap-2"
+                  onClick={saveVideoNote}
+                  disabled={isSavingNote || !processedTaskData}
+                  className={`w-full py-3 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 ${
+                    isSavingNote
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : saveStatus === 'saved'
+                      ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600'
+                      : 'bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600'
+                  }`}
                 >
-                  <svg 
-                    className="w-5 h-5" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" 
-                    />
-                  </svg>
-                  {t('exportNotes')}
+                  {isSavingNote ? (
+                    <>
+                      <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      保存中...
+                    </>
+                  ) : saveStatus === 'saved' ? (
+                    <>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      已保存 ✓
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                      </svg>
+                      保存笔记 💾
+                    </>
+                  )}
                 </button>
+                {saveStatus === 'saved' && lastSavedAt && (
+                  <p className="text-xs text-gray-500 text-center mt-2">
+                    上次保存: {lastSavedAt.toLocaleTimeString()}
+                  </p>
+                )}
+                {!processedTaskData && (
+                  <p className="text-xs text-orange-600 text-center mt-2">
+                    ⚠️ 只有已处理的视频才能保存笔记
+                  </p>
+                )}
               </div>
             )}
           </div>

@@ -177,3 +177,125 @@ export const creatorCoursesRelations = relations(creatorCourses, ({ one }) => ({
     references: [user.id],
   }),
 }));
+
+// ==================== 视频笔记相关表 ====================
+
+// 视频笔记数据类型定义
+export interface VideoNoteData {
+  knowledgePointNotes: Array<{
+    // 匹配原始知识点
+    knowledgePointName: string;
+    startTime: string;
+    endTime: string;
+    
+    // 用户添加的内容
+    qaList?: Array<{
+      question: string;
+      answer: string;
+      timestamp: string;
+    }>;
+    screenshots?: string[];
+    exercises?: Array<{
+      type: string;
+      question: string;
+      choices?: any[];
+      solution?: string;
+      hints?: string[];
+    }>;
+    searchResults?: Array<{
+      title: string;
+      url: string;
+      description: string;
+    }>;
+    
+    // 用户修改的笔记
+    customNote?: string;
+  }>;
+  
+  // 全局设置
+  customTitle?: string;
+  customDescription?: string;
+  tags?: string[];
+}
+
+// 用户视频笔记表
+export const userVideoNotes = pgTable('user_video_notes', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => `note_${crypto.randomUUID()}`),
+  userId: text('user_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  
+  // 关联原始视频数据（通过 task_id 关联到后端 MySQL 的 offline_video_tasks）
+  taskId: text('task_id').notNull(),
+  videoUrl: text('video_url').notNull(),
+  bvId: text('bv_id'),
+  videoTitle: text('video_title'),
+  videoPlatform: text('video_platform', { enum: ['bilibili', 'youtube', 'custom'] }).default('bilibili'),
+  
+  // 用户笔记数据
+  userNotesData: jsonb('user_notes_data').notNull().$type<VideoNoteData>(),
+  
+  // 元数据
+  title: text('title'), // 用户自定义标题
+  description: text('description'),
+  isFavorite: boolean('is_favorite').default(false),
+  
+  // 统计信息
+  totalKnowledgePoints: integer('total_knowledge_points').default(0),
+  totalQAs: integer('total_qas').default(0),
+  totalExercises: integer('total_exercises').default(0),
+  
+  // 时间戳
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .notNull()
+    .$onUpdate(() => new Date()),
+  lastViewedAt: timestamp('last_viewed_at'),
+});
+
+// 笔记标签表
+export const videoNoteTags = pgTable('video_note_tags', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => `tag_${crypto.randomUUID()}`),
+  userId: text('user_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  name: text('name').notNull(),
+  color: text('color'), // 标签颜色 hex
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+// 笔记-标签关联表
+export const videoNoteTagRelations = pgTable(
+  'video_note_tag_relations',
+  {
+    noteId: text('note_id')
+      .notNull()
+      .references(() => userVideoNotes.id, { onDelete: 'cascade' }),
+    tagId: text('tag_id')
+      .notNull()
+      .references(() => videoNoteTags.id, { onDelete: 'cascade' }),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.noteId, table.tagId] }),
+  })
+);
+
+// 定义关系
+export const userVideoNotesRelations = relations(userVideoNotes, ({ one }) => ({
+  user: one(user, {
+    fields: [userVideoNotes.userId],
+    references: [user.id],
+  }),
+}));
+
+export const videoNoteTagsRelations = relations(videoNoteTags, ({ one }) => ({
+  user: one(user, {
+    fields: [videoNoteTags.userId],
+    references: [user.id],
+  }),
+}));
