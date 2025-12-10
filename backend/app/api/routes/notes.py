@@ -436,10 +436,31 @@ Return only JSON, no other explanatory text."""
         print(f"✅ Exercise generated")
         print(f"💻 Exercise preview: {exercise_json[:200]}...")
         
+        # 修复 LaTeX 转义问题
+        def fix_latex_in_json(json_str: str) -> str:
+            """修复 JSON 中的 LaTeX 单反斜杠问题"""
+            import re
+            # 将 \( 替换为 \\(
+            json_str = json_str.replace(r'\(', r'\\(')
+            # 将 \) 替换为 \\)
+            json_str = json_str.replace(r'\)', r'\\)')
+            # 将 LaTeX 命令的单反斜杠替换为双反斜杠
+            latex_commands = ['frac', 'sqrt', 'lim', 'to', 'neq', 'sin', 'cos', 'tan', 'log', 'ln', 'infty', 'sum', 'prod', 'int', 'cdot', 'times', 'div']
+            for cmd in latex_commands:
+                # 使用负向后顾断言，确保前面不是反斜杠
+                pattern = r'(?<!\\)\\' + cmd + r'\b'
+                replacement = r'\\\\' + cmd
+                json_str = re.sub(pattern, replacement, json_str)
+            return json_str
+        
         # 解析JSON
         try:
             import json
-            exercise_data = json.loads(exercise_json)
+            # 先尝试修复 LaTeX 转义
+            fixed_json = fix_latex_in_json(exercise_json)
+            print(f"🔧 Fixed JSON preview: {fixed_json[:200]}...")
+            
+            exercise_data = json.loads(fixed_json)
             print(f"✅ Exercise parsed successfully")
             print(f"📝 Type: {exercise_data.get('type')}")
             print(f"🎯 Title: {exercise_data.get('title')}")
