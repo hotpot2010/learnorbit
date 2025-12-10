@@ -70,7 +70,8 @@ class ExerciseGenerationRequest(BaseModel):
     video_title: Optional[str] = None
     video_url: Optional[str] = None
     locale: Optional[str] = 'zh'  # 语言环境，默认为中文
-    custom_prompt: Optional[str] = None  # 自定义 prompt
+    subject: Optional[str] = 'math'  # 学科类型，默认为数学（math/programming）
+    custom_prompt: Optional[str] = None  # 自定义 prompt（优先级最高）
 
 
 class ExerciseGenerationResponse(BaseModel):
@@ -237,16 +238,129 @@ async def generate_exercise(request: ExerciseGenerationRequest):
     try:
         print(f"💪 Generating exercise for: {request.knowledge_point_name}")
         print(f"📄 Context length: {len(request.transcript_segment)} chars")
+        print(f"📚 Subject: {request.subject or 'math'}")
         
         # 如果提供了自定义 prompt，直接使用
         if request.custom_prompt:
             prompt = request.custom_prompt
             print(f"✅ Using custom prompt from request")
         else:
-            # 根据语言环境构建默认 prompt
+            # 根据学科和语言环境构建 prompt
             locale = request.locale or 'zh'
-            if locale == 'en':
-                prompt = f"""You are a professional programming education expert. Please generate a programming exercise for the knowledge point based on the video content.
+            subject = request.subject or 'math'
+            
+            if subject == 'math':
+                # 数学题型 prompt
+                if locale == 'en':
+                    prompt = f"""You are an experienced mathematics teacher. Please generate a math exercise based on the following video knowledge point.
+
+Knowledge Point Name: {request.knowledge_point_name}
+Knowledge Point Content: {request.transcript_segment}
+
+Please generate an exercise with the following requirements:
+1. Exercise Type: Randomly choose either [Multiple Choice] or [Fill in the Blank]
+2. Difficulty: Suitable for middle/high school level with appropriate differentiation
+3. The question should be directly related to the specific knowledge point explained in the video
+4. The question should have practical application value, not too simple
+5. If there are formulas, use LaTeX format (wrapped with $), **Note: In JSON, backslashes must be escaped, written as double backslashes \\\\, e.g., \\\\frac, \\\\sin**
+6. Provide detailed analysis and solution steps
+
+Please return in JSON format as follows:
+
+**Multiple Choice Format:**
+{{
+  "type": "multiple_choice",
+  "title": "Knowledge Point Practice: [Knowledge Point Name]",
+  "description": "Complete the following exercise based on the video content",
+  "difficulty": "intermediate",
+  "question": "Question content (LaTeX formula example: $\\\\frac{{1}}{{2}}$ or $\\\\sin x$)",
+  "choices": [
+    {{"label": "A", "content": "Option A content"}},
+    {{"label": "B", "content": "Option B content"}},
+    {{"label": "C", "content": "Option C content"}},
+    {{"label": "D", "content": "Option D content"}}
+  ],
+  "answer_type": "single",
+  "solution": "B",
+  "hints": ["Hint 1: Think from which angle", "Hint 2: Key formulas or theorems", "Hint 3: Specific solution steps"]
+}}
+
+**Fill in the Blank Format:**
+{{
+  "type": "fill_blank",
+  "title": "Knowledge Point Practice: [Knowledge Point Name]",
+  "description": "Complete the following exercise based on the video content",
+  "difficulty": "intermediate",
+  "question": "Question content, use ___ to indicate blank positions (LaTeX example: $\\\\frac{{1}}{{2}}$)",
+  "blanks": 2,
+  "answer_type": "text",
+  "solution": "Answer1;Answer2 (multiple answers separated by semicolons)",
+  "hints": ["Hint 1: Think from which angle", "Hint 2: Key formulas or theorems", "Hint 3: Specific solution steps"]
+}}
+
+**Important Reminder**:
+- All backslashes in JSON must be escaped as double backslashes \\\\
+- For example: \\\\frac{{1}}{{2}} instead of \\frac{{1}}{{2}}
+- For example: \\\\sin x instead of \\sin x
+
+Return only JSON, no other explanatory text."""
+                else:
+                    prompt = f"""你是一位资深的数学教师，需要根据以下视频知识点生成一道练习题。
+
+知识点名称：{request.knowledge_point_name}
+知识点内容：{request.transcript_segment}
+
+请生成一道练习题，要求：
+1. 题型：随机选择【选择题】或【填空题】其中之一
+2. 难度：适配中考/高考水平，有一定区分度
+3. 题目要结合视频中讲解的具体知识点
+4. 题目要有实际应用价值，不要过于简单
+5. 如果有公式，使用 LaTeX 格式（用 $ 包裹），**注意：JSON中反斜杠必须转义，写成双反斜杠 \\\\ 例如 \\\\frac、\\\\sin**
+6. 提供详细的解析和解题步骤
+
+请以 JSON 格式返回，格式如下：
+
+**选择题格式：**
+{{
+  "type": "multiple_choice",
+  "title": "知识点练习：[知识点名称]",
+  "description": "根据视频内容，完成以下练习题",
+  "difficulty": "intermediate",
+  "question": "题目内容（LaTeX公式示例：$\\\\frac{{1}}{{2}}$ 或 $\\\\sin x$）",
+  "choices": [
+    {{"label": "A", "content": "选项A内容"}},
+    {{"label": "B", "content": "选项B内容"}},
+    {{"label": "C", "content": "选项C内容"}},
+    {{"label": "D", "content": "选项D内容"}}
+  ],
+  "answer_type": "single",
+  "solution": "B",
+  "hints": ["提示1：从哪个角度思考", "提示2：关键公式或定理", "提示3：具体解题步骤"]
+}}
+
+**填空题格式：**
+{{
+  "type": "fill_blank",
+  "title": "知识点练习：[知识点名称]",
+  "description": "根据视频内容，完成以下练习题",
+  "difficulty": "intermediate",
+  "question": "题目内容，用 ___ 表示填空位置（LaTeX示例：$\\\\frac{{1}}{{2}}$）",
+  "blanks": 2,
+  "answer_type": "text",
+  "solution": "答案1;答案2（多个答案用分号分隔）",
+  "hints": ["提示1：从哪个角度思考", "提示2：关键公式或定理", "提示3：具体解题步骤"]
+}}
+
+**重要提醒**：
+- JSON 中所有反斜杠都必须转义为双反斜杠 \\\\
+- 例如：\\\\frac{{1}}{{2}} 而不是 \\frac{{1}}{{2}}
+- 例如：\\\\sin x 而不是 \\sin x
+
+只返回 JSON，不要其他说明文字。"""
+            else:
+                # 编程题型 prompt（默认）
+                if locale == 'en':
+                    prompt = f"""You are a professional programming education expert. Please generate a programming exercise for the knowledge point based on the video content.
 
 **Exercise Type Selection Rules**:
 1. fill_blank: Suitable for simple syntax and single concepts (e.g., variable assignment, basic operations)
@@ -267,8 +381,8 @@ async def generate_exercise(request: ExerciseGenerationRequest):
 4. Hints should be clear, help understanding without directly giving answers
 5. Output only JSON, no other content
 6. Ensure JSON format is correct and can be parsed"""
-            else:
-                prompt = f"""你是一位专业的编程教学专家。请根据视频内容为知识点生成一道编程练习题。
+                else:
+                    prompt = f"""你是一位专业的编程教学专家。请根据视频内容为知识点生成一道编程练习题。
 
 知识点：{request.knowledge_point_name}
 视频标题：{request.video_title or '未知'}

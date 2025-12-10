@@ -84,6 +84,71 @@ export const preprocessMathContent = (content: string | null | undefined | any):
 };
 
 /**
+ * 自动检测并包裹LaTeX公式
+ * 检测包含LaTeX命令但未被$包裹的内容，自动添加$包裹
+ */
+export const autoWrapLatex = (content: string): string => {
+  if (!content || typeof content !== 'string') return content;
+  
+  // 如果内容已经包含$包裹的公式，直接返回
+  if (/\$[^$]+\$/.test(content) || /\$\$[\s\S]*?\$\$/.test(content)) {
+    return content;
+  }
+  
+  // 匹配LaTeX命令模式：\command{...} 或 \command 或 \command{...}{...}
+  // 包括常见的数学符号和命令
+  const latexPattern = /\\[a-zA-Z]+\*?(?:\{[^}]*\})*(?:\{[^}]*\})*/g;
+  
+  let result = content;
+  const matches: Array<{ start: number; end: number; text: string }> = [];
+  
+  let match;
+  while ((match = latexPattern.exec(content)) !== null) {
+    // 检查是否已经被$包裹
+    const before = content.substring(Math.max(0, match.index - 1), match.index);
+    const after = content.substring(match.index + match[0].length, match.index + match[0].length + 1);
+    
+    if (before !== '$' && after !== '$') {
+      // 尝试找到完整的公式（包括后续的数学符号）
+      let formulaEnd = match.index + match[0].length;
+      
+      // 向后查找，找到公式结束（遇到空格、标点或换行）
+      for (let i = formulaEnd; i < content.length; i++) {
+        const char = content[i];
+        // 如果遇到数学符号或字母数字，继续
+        if (/[a-zA-Z0-9_^{}\\]/.test(char)) {
+          formulaEnd = i + 1;
+        } 
+        // 如果遇到空格、标点或换行，且不在大括号内，停止
+        else if (/[\s\n\r,.;:!?)]/.test(char)) {
+          break;
+        } else {
+          formulaEnd = i + 1;
+        }
+      }
+      
+      const formulaText = content.substring(match.index, formulaEnd);
+      // 避免重复添加
+      if (!matches.some(m => m.start <= match.index && m.end >= formulaEnd)) {
+        matches.push({ start: match.index, end: formulaEnd, text: formulaText });
+      }
+    }
+  }
+  
+  // 按位置排序并合并重叠的匹配
+  matches.sort((a, b) => b.start - a.start); // 从后向前排序，避免索引变化
+  
+  // 从后向前替换
+  for (const match of matches) {
+    result = result.substring(0, match.start) + 
+             `$${match.text}$` + 
+             result.substring(match.end);
+  }
+  
+  return result;
+};
+
+/**
  * 数学公式组件的样式类
  */
 export const mathStyles = {

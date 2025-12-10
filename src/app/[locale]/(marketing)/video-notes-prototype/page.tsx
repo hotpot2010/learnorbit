@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import ReactMarkdown from 'react-markdown';
 import Editor from '@monaco-editor/react';
 import html2canvas from 'html2canvas';
+import { mathMarkdownPlugins, autoWrapLatex } from '@/lib/math-renderer';
 import { 
   Play, 
   Pause, 
@@ -41,6 +42,7 @@ import {
   Eye,
   PlayCircle,
   ArrowLeft,
+  RotateCcw,
 } from 'lucide-react';
 import { useMobileLayout } from '@/hooks/use-mobile-layout';
 import { buildApiUrl, API_ENDPOINTS, API_BASE_URL } from '@/config/api';
@@ -103,7 +105,8 @@ interface KnowledgePoint {
   qaList?: QAPair[];  // Q&A列表
   isAsking?: boolean;  // 是否正在提问
   screenshots?: string[];  // 截图列表（base64或URL）
-  exercise?: Exercise;  // 练习题
+  exercise?: Exercise;  // 练习题（已废弃，保留用于兼容）
+  exercises?: Exercise[];  // 练习题卡片列表（卡槽）
   isGeneratingExercise?: boolean;  // 是否正在生成练习
   userCode?: string;  // 用户编写的代码（代码题）
   userAnswer?: string;  // 用户的答案（选择题/填空题）
@@ -906,6 +909,17 @@ export default function VideoNotesPrototypePage() {
   const [isSearching, setIsSearching] = useState(false); // 是否正在搜索
   const [currentSearchResult, setCurrentSearchResult] = useState<SearchResult | null>(null); // 当前查看的搜索结果
   const [isPlayingResultVideo, setIsPlayingResultVideo] = useState(false); // 是否正在播放搜索结果视频
+  const [showExerciseDialog, setShowExerciseDialog] = useState(false); // 显示练习生成对话框
+  const [generatedExercise, setGeneratedExercise] = useState<Exercise | null>(null); // 生成的练习
+  const [isGeneratingExercise, setIsGeneratingExercise] = useState(false); // 是否正在生成练习
+  const [exerciseKnowledgePointIndex, setExerciseKnowledgePointIndex] = useState<number | null>(null); // 生成练习的知识点索引
+  const [currentExerciseCard, setCurrentExerciseCard] = useState<Exercise | null>(null); // 当前查看的练习卡片
+  const [exerciseUserAnswer, setExerciseUserAnswer] = useState<string>(''); // 用户选择的答案（卡槽中的卡片）
+  const [exerciseSubmitted, setExerciseSubmitted] = useState<boolean>(false); // 是否已提交答案（卡槽中的卡片）
+  const [exerciseShowHints, setExerciseShowHints] = useState<boolean>(false); // 是否显示提示（卡槽中的卡片反转）
+  const [generatedExerciseUserAnswer, setGeneratedExerciseUserAnswer] = useState<string>(''); // 用户选择的答案（生成对话框）
+  const [generatedExerciseSubmitted, setGeneratedExerciseSubmitted] = useState<boolean>(false); // 是否已提交答案（生成对话框）
+  const [generatedExerciseShowHints, setGeneratedExerciseShowHints] = useState<boolean>(false); // 是否显示提示（生成对话框反转）
 
   // 检查是否为YouTube视频（英文模式）- 必须在useEffect之前定义
   const isYouTubeVideo = (): boolean => {
@@ -1196,17 +1210,17 @@ export default function VideoNotesPrototypePage() {
         // 检查是否为YouTube URL（英文模式）
         const isYouTubeUrl = videoUrlFromResult && (videoUrlFromResult.includes('youtube.com') || videoUrlFromResult.includes('youtu.be')) && locale === 'en';
         
-            if (isYouTubeUrl) {
-              console.log('✅ [loadPart] 找到YouTube URL:', videoUrlFromResult.substring(0, 100) + '...');
-              setCdnVideoUrl(videoUrlFromResult);
-              console.log('✅ [loadPart] setCdnVideoUrl 已调用，使用YouTube URL');
-            } else if (videoUrlFromResult && (videoUrlFromResult.startsWith('http://file.gsxservice.com') || videoUrlFromResult.startsWith('https://file.gsxservice.com'))) {
-              console.log('✅ [loadPart] 找到CDN URL（公司CDN）:', videoUrlFromResult.substring(0, 100) + '...');
+        if (isYouTubeUrl) {
+          console.log('✅ [loadPart] 找到YouTube URL:', videoUrlFromResult.substring(0, 100) + '...');
+          setCdnVideoUrl(videoUrlFromResult);
+          console.log('✅ [loadPart] setCdnVideoUrl 已调用，使用YouTube URL');
+        } else if (videoUrlFromResult && (videoUrlFromResult.startsWith('http://file.gsxservice.com') || videoUrlFromResult.startsWith('https://file.gsxservice.com'))) {
+          console.log('✅ [loadPart] 找到CDN URL（公司CDN）:', videoUrlFromResult.substring(0, 100) + '...');
               // 确保使用 HTTPS
               const secureVideoUrl = ensureHttps(videoUrlFromResult) as string;
               setCdnVideoUrl(secureVideoUrl);
               console.log('✅ [loadPart] setCdnVideoUrl 已调用，使用公司CDN URL (HTTPS)');
-            } else if (locale !== 'en') {
+        } else if (locale !== 'en') {
           // 如果没有CDN URL，尝试获取B站播放URL（作为后备，仅中文模式）
           console.log('⚠️ [loadPart] 未找到CDN URL，尝试获取B站播放URL...');
           try {
@@ -2607,17 +2621,17 @@ export default function VideoNotesPrototypePage() {
   const addSearchResultToKnowledgePoint = () => {
     if (!currentSearchResult || currentKnowledgeIndex === null) return;
     
-    setKnowledgePoints(prev => prev.map((p, i) => {
+        setKnowledgePoints(prev => prev.map((p, i) => {
       if (i === currentKnowledgeIndex) {
         const searchResults = p.searchResults || [];
-        return {
-          ...p,
+            return {
+              ...p,
           searchResults: [...searchResults, currentSearchResult],
-        };
-      }
-      return p;
-    }));
-    
+            };
+          }
+          return p;
+        }));
+        
     // 关闭搜索对话框
     setShowSearchDialog(false);
     setCurrentSearchResult(null);
@@ -2640,22 +2654,22 @@ export default function VideoNotesPrototypePage() {
       }
       return p;
     }));
-    
+        
     // 关闭浮动卡片，继续播放视频
     setCurrentQACard(null);
-    if (isYouTubeVideo()) {
-      if (youtubePlayerRef.current) {
-        try {
-          youtubePlayerRef.current.playVideo();
+        if (isYouTubeVideo()) {
+          if (youtubePlayerRef.current) {
+            try {
+              youtubePlayerRef.current.playVideo();
+              setIsPlaying(true);
+            } catch (error) {
+              console.error('❌ YouTube播放器播放失败:', error);
+            }
+          }
+        } else if (videoRef.current) {
+          videoRef.current.play();
           setIsPlaying(true);
-        } catch (error) {
-          console.error('❌ YouTube播放器播放失败:', error);
         }
-      }
-    } else if (videoRef.current) {
-      videoRef.current.play();
-      setIsPlaying(true);
-    }
     
     console.log('✅ QA卡片已添加到知识点');
   };
@@ -2669,7 +2683,7 @@ export default function VideoNotesPrototypePage() {
         try {
           youtubePlayerRef.current.playVideo();
           setIsPlaying(true);
-        } catch (error) {
+    } catch (error) {
           console.error('❌ YouTube播放器播放失败:', error);
         }
       }
@@ -3828,10 +3842,11 @@ export default function VideoNotesPrototypePage() {
       console.log('⏸️ 视频已暂停，开始生成练习');
     }
     
-    // 标记为正在生成
-    setKnowledgePoints(prev => prev.map((p, i) => 
-      i === index ? { ...p, isGeneratingExercise: true } : p
-    ));
+    // 打开对话框并开始生成
+    setShowExerciseDialog(true);
+    setIsGeneratingExercise(true);
+    setGeneratedExercise(null);
+    setExerciseKnowledgePointIndex(index);
     
     try {
       // 提取对应的逐字稿片段作为上下文
@@ -3839,60 +3854,6 @@ export default function VideoNotesPrototypePage() {
       
       console.log('💪 Generating exercise for:', point.name);
       console.log('📄 Context:', transcriptSegment.substring(0, 100), '...');
-      
-      // 数学题型 prompt（默认使用）
-      const mathPrompt = `你是一位资深的数学教师，需要根据以下视频知识点生成一道练习题。
-
-知识点名称：${point.name}
-知识点内容：${transcriptSegment}
-
-请生成一道练习题，要求：
-1. 题型：随机选择【选择题】或【填空题】其中之一
-2. 难度：适配中考/高考水平，有一定区分度
-3. 题目要结合视频中讲解的具体知识点
-4. 题目要有实际应用价值，不要过于简单
-5. 如果有公式，使用 LaTeX 格式（用 $ 包裹），**注意：JSON中反斜杠必须转义，写成双反斜杠 \\\\ 例如 \\\\frac、\\\\sin**
-6. 提供详细的解析和解题步骤
-
-请以 JSON 格式返回，格式如下：
-
-**选择题格式：**
-{
-  "type": "multiple_choice",
-  "title": "知识点练习：[知识点名称]",
-  "description": "根据视频内容，完成以下练习题",
-  "difficulty": "intermediate",
-  "question": "题目内容（LaTeX公式示例：$\\\\frac{1}{2}$ 或 $\\\\sin x$）",
-  "choices": [
-    {"label": "A", "content": "选项A内容"},
-    {"label": "B", "content": "选项B内容"},
-    {"label": "C", "content": "选项C内容"},
-    {"label": "D", "content": "选项D内容"}
-  ],
-  "answer_type": "single",
-  "solution": "B",
-  "hints": ["提示1：从哪个角度思考", "提示2：关键公式或定理", "提示3：具体解题步骤"]
-}
-
-**填空题格式：**
-{
-  "type": "fill_blank",
-  "title": "知识点练习：[知识点名称]",
-  "description": "根据视频内容，完成以下练习题",
-  "difficulty": "intermediate",
-  "question": "题目内容，用 ___ 表示填空位置（LaTeX示例：$\\\\frac{1}{2}$）",
-  "blanks": 2,
-  "answer_type": "text",
-  "solution": "答案1;答案2（多个答案用分号分隔）",
-  "hints": ["提示1：从哪个角度思考", "提示2：关键公式或定理", "提示3：具体解题步骤"]
-}
-
-**重要提醒**：
-- JSON 中所有反斜杠都必须转义为双反斜杠 \\\\
-- 例如：\\\\frac{1}{2} 而不是 \\frac{1}{2}
-- 例如：\\\\sin x 而不是 \\sin x
-
-只返回 JSON，不要其他说明文字。`;
       
       // 调用LLM API生成练习
       const response = await fetch(buildApiUrl(API_ENDPOINTS.notesGenerateExercise), {
@@ -3906,7 +3867,7 @@ export default function VideoNotesPrototypePage() {
           video_title: videoTitle,
           video_url: currentVideoUrl,
           locale: locale,
-          custom_prompt: mathPrompt, // 传递自定义 prompt
+          subject: 'math', // 学科类型，默认为数学
         }),
       });
       
@@ -3917,31 +3878,85 @@ export default function VideoNotesPrototypePage() {
       const data = await response.json();
       
       if (data.success && data.exercise) {
-        // 更新知识点，添加练习题
-        setKnowledgePoints(prev => prev.map((p, i) => {
-          if (i === index) {
-            return {
-              ...p,
-              exercise: data.exercise,
-              userCode: data.exercise.type === 'code_choice' ? data.exercise.starter_code : undefined,
-              userAnswer: '', // 用户的答案（选择题/填空题）
-              isGeneratingExercise: false
-            };
-          }
-          return p;
-        }));
-        
+        // 将生成的练习存储到状态中，在对话框中展示
+        setGeneratedExercise(data.exercise);
+        setIsGeneratingExercise(false);
         console.log('✅ Exercise generated:', data.exercise);
       } else {
         throw new Error(data.error || '练习生成失败');
       }
     } catch (error) {
       console.error('❌ Error generating exercise:', error);
+      setIsGeneratingExercise(false);
       alert(`${t('generateExercise')} ${t('error')}: ${error}`);
-      setKnowledgePoints(prev => prev.map((p, i) => 
-        i === index ? { ...p, isGeneratingExercise: false } : p
-      ));
     }
+  };
+
+  // 将生成的练习添加到知识点卡槽中
+  const addExerciseToKnowledgePoint = () => {
+    if (exerciseKnowledgePointIndex === null || !generatedExercise) {
+      return;
+    }
+    
+    setKnowledgePoints(prev => prev.map((p, i) => {
+      if (i === exerciseKnowledgePointIndex) {
+        const exercises = p.exercises || [];
+        return {
+          ...p,
+          exercises: [...exercises, generatedExercise],
+        };
+      }
+      return p;
+    }));
+    
+    // 关闭对话框并重置状态
+    setShowExerciseDialog(false);
+    setGeneratedExercise(null);
+    setExerciseKnowledgePointIndex(null);
+    setIsGeneratingExercise(false);
+    setGeneratedExerciseUserAnswer('');
+    setGeneratedExerciseSubmitted(false);
+    setGeneratedExerciseShowHints(false);
+    
+    console.log('✅ 练习卡片已添加到知识点卡槽');
+  };
+
+  // 提交生成对话框中的练习答案
+  const submitGeneratedExerciseAnswer = () => {
+    if (!generatedExercise || !generatedExerciseUserAnswer) return;
+    setGeneratedExerciseSubmitted(true);
+  };
+
+  // 检查生成对话框中的答案是否正确
+  const isGeneratedAnswerCorrect = (choiceLabel: string): boolean | null => {
+    if (!generatedExercise || !generatedExerciseSubmitted) return null;
+    if (generatedExercise.type === 'multiple_choice') {
+      return choiceLabel === generatedExercise.solution;
+    }
+    return null;
+  };
+
+  // 关闭练习卡片（不添加到笔记）
+  const closeExerciseCard = () => {
+    setCurrentExerciseCard(null);
+    setExerciseUserAnswer('');
+    setExerciseSubmitted(false);
+    setExerciseShowHints(false);
+  };
+
+  // 提交练习答案
+  const submitExerciseAnswer = () => {
+    if (!currentExerciseCard || !exerciseUserAnswer) return;
+    setExerciseSubmitted(true);
+  };
+
+  // 检查答案是否正确
+  const isAnswerCorrect = (choiceLabel: string): boolean | null => {
+    if (!currentExerciseCard || !exerciseSubmitted) return null;
+    if (currentExerciseCard.type === 'multiple_choice') {
+      return choiceLabel === currentExerciseCard.solution;
+    }
+    return null;
   };
   
   // 运行代码
@@ -4106,15 +4121,15 @@ export default function VideoNotesPrototypePage() {
           console.log('🎉 回答正确！');
         } else {
           console.log('❌ 回答错误，请查看反馈');
-        }
-        
-      } catch (error) {
-        console.error('❌ Error validating answer:', error);
-        alert(`验证失败: ${error}`);
-        setKnowledgePoints(prev => prev.map((p, i) => 
-          i === index ? { ...p, isValidating: false } : p
-        ));
       }
+      
+    } catch (error) {
+      console.error('❌ Error validating answer:', error);
+        alert(`验证失败: ${error}`);
+      setKnowledgePoints(prev => prev.map((p, i) => 
+        i === index ? { ...p, isValidating: false } : p
+      ));
+    }
     }, 500); // 延迟500ms，让用户看到验证动画
   };
 
@@ -4407,20 +4422,20 @@ export default function VideoNotesPrototypePage() {
                   // B站视频或中文模式：使用HTML5 video标签
                   return (
                     <div className="relative w-full h-full group">
-                      <video
-                        ref={videoRef}
-                        src={cdnVideoUrl}
+                    <video
+                      ref={videoRef}
+                      src={cdnVideoUrl}
                         className="w-full h-full bg-black"
-                        controls
+                      controls
                         playsInline
                         webkit-playsinline="true"
                         x5-playsinline="true"
                         x5-video-player-type="h5-page"
-                        crossOrigin="anonymous"
-                        onPlay={() => setIsPlaying(true)}
-                        onPause={() => setIsPlaying(false)}
-                        onEnded={handleVideoEnded}
-                        onTimeUpdate={handleTimeUpdate}
+                      crossOrigin="anonymous"
+                      onPlay={() => setIsPlaying(true)}
+                      onPause={() => setIsPlaying(false)}
+                      onEnded={handleVideoEnded}
+                      onTimeUpdate={handleTimeUpdate}
                         onError={(e) => {
                           console.error('播放出错:', e);
                           const error = (e.target as HTMLVideoElement).error;
@@ -4429,9 +4444,9 @@ export default function VideoNotesPrototypePage() {
                             console.warn('视频格式不支持');
                           }
                         }}
-                      >
-                        您的浏览器不支持 video 标签。
-                      </video>
+                    >
+                      您的浏览器不支持 video 标签。
+                    </video>
                       <VideoCompatibilityChecker videoRef={videoRef} />
                     </div>
                   );
@@ -4470,7 +4485,23 @@ export default function VideoNotesPrototypePage() {
             <div className="flex gap-4 justify-center flex-shrink-0">
             {/* 搜索知识点按钮 - 绿色 */}
             <Button
-              onClick={() => setShowSearchDialog(true)}
+              onClick={() => {
+                // 打开搜索对话框时暂停视频
+                if (isYouTubeVideo()) {
+                  if (youtubePlayerRef.current && isPlaying) {
+                    try {
+                      youtubePlayerRef.current.pauseVideo();
+                      setIsPlaying(false);
+                    } catch (error) {
+                      console.error('❌ YouTube播放器暂停失败:', error);
+                    }
+                  }
+                } else if (videoRef.current && isPlaying) {
+                  videoRef.current.pause();
+                  setIsPlaying(false);
+                }
+                setShowSearchDialog(true);
+              }}
               disabled={!knowledgePoints || knowledgePoints.length === 0}
               className="flex-1 max-w-xs py-6 text-lg font-bold bg-green-500 hover:bg-green-600 text-white shadow-lg disabled:bg-green-500/50"
               size="lg"
@@ -4520,11 +4551,11 @@ export default function VideoNotesPrototypePage() {
             {/* 练习按钮 - 橙色 */}
             <Button
               onClick={() => generateExercise(currentKnowledgeIndex)}
-              disabled={!knowledgePoints[currentKnowledgeIndex] || knowledgePoints[currentKnowledgeIndex]?.isGeneratingExercise}
+              disabled={!knowledgePoints[currentKnowledgeIndex] || isGeneratingExercise}
               className="flex-1 max-w-xs py-6 text-lg font-bold bg-orange-500 text-white shadow-lg hover:bg-orange-600 transition-colors disabled:bg-orange-500/50 disabled:cursor-not-allowed"
               size="lg"
             >
-              {knowledgePoints[currentKnowledgeIndex]?.isGeneratingExercise ? (
+              {isGeneratingExercise ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
                   {t('generatingNotes')}
@@ -4612,7 +4643,7 @@ export default function VideoNotesPrototypePage() {
                 </div>
 
                 {/* 知识点列表 */}
-                <div className="space-y-3">
+              <div className="space-y-3">
                 {knowledgePoints.map((point, index) => {
                   const isActive = index === currentKnowledgeIndex;
                   const hasNote = !!point.note;
@@ -4694,7 +4725,7 @@ export default function VideoNotesPrototypePage() {
                                 
                                 {/* 截图显示区域 - 已移除，改用右侧 VideoThumbnail 显示 */}
                               </div>
-
+                            
                               {/* 右侧：视频缩略图 */}
                               <div className="flex-shrink-0 w-48 hidden sm:block">
                                 <VideoThumbnail 
@@ -4712,12 +4743,13 @@ export default function VideoNotesPrototypePage() {
                           </div>
                         )}
                         
-                        {/* 统一卡片集卡槽 - 包含 Q&A、截图、搜索结果 */}
+                        {/* 统一卡片集卡槽 - 包含 Q&A、截图、搜索结果、练习 */}
                         {isExpanded && (() => {
                           const qaCount = point.qaList?.length || 0;
                           const screenshotCount = point.screenshots?.length || 0;
                           const searchResultCount = point.searchResults?.length || 0;
-                          const totalCards = qaCount + screenshotCount + searchResultCount;
+                          const exerciseCount = point.exercises?.length || 0;
+                          const totalCards = qaCount + screenshotCount + searchResultCount + exerciseCount;
                           
                           if (totalCards === 0) return null;
                           
@@ -4728,6 +4760,7 @@ export default function VideoNotesPrototypePage() {
                                   <MessageSquare className="w-4 h-4 text-yellow-600" />
                                   <ImageIcon className="w-4 h-4 text-blue-600" />
                                   <Search className="w-4 h-4 text-green-600" />
+                                  <CheckSquare className="w-4 h-4 text-orange-600" />
                                 </div>
                                 <h5 className="text-xs font-bold text-gray-700">📚 笔记卡片 ({totalCards})</h5>
                               </div>
@@ -4752,9 +4785,9 @@ export default function VideoNotesPrototypePage() {
                                     </div>
                                     
                                     {/* 删除按钮 */}
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
                                         if (confirm('确定要删除这张问答卡片吗？')) {
                                           setKnowledgePoints(prev => prev.map((p, i) => {
                                             if (i === index) {
@@ -4767,11 +4800,11 @@ export default function VideoNotesPrototypePage() {
                                             return p;
                                           }));
                                         }
-                                      }}
+                                    }}
                                       className="absolute top-1 right-1 z-10 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
-                                    >
+                                  >
                                       <X className="w-2.5 h-2.5" />
-                                    </button>
+                                  </button>
                                     
                                     {/* 卡片类型标识 */}
                                     <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-yellow-500 text-white rounded text-[9px] font-bold shadow-sm">
@@ -4840,9 +4873,9 @@ export default function VideoNotesPrototypePage() {
                                     </div>
                                     
                                     {/* 删除按钮 */}
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
                                         if (confirm('确定要删除这张截图卡片吗？')) {
                                           setKnowledgePoints(prev => prev.map((p, i) => {
                                             if (i === index) {
@@ -4855,16 +4888,16 @@ export default function VideoNotesPrototypePage() {
                                             return p;
                                           }));
                                         }
-                                      }}
+                                    }}
                                       className="absolute top-1 right-1 z-10 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
-                                    >
+                                  >
                                       <X className="w-2.5 h-2.5" />
-                                    </button>
+                                  </button>
                                     
                                     {/* 卡片类型标识 */}
                                     <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-blue-500 text-white rounded text-[9px] font-bold shadow-sm">
                                       📸
-                                    </div>
+                                </div>
                                     
                                     {/* 截图预览 */}
                                     <img 
@@ -4880,8 +4913,8 @@ export default function VideoNotesPrototypePage() {
                                           <Eye className="w-2.5 h-2.5" />
                                           点击放大
                                         </span>
-                                      </div>
-                                    </div>
+                              </div>
+                                </div>
                                   </div>
                                 ))}
                                 
@@ -4892,6 +4925,20 @@ export default function VideoNotesPrototypePage() {
                                     className="group relative bg-gradient-to-br from-green-50 via-white to-emerald-50 rounded-lg border-2 border-green-200 hover:border-green-400 hover:shadow-lg hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer"
                                     style={{ aspectRatio: '3/4' }}
                                     onClick={() => {
+                                      // 打开搜索对话框时暂停视频
+                                      if (isYouTubeVideo()) {
+                                        if (youtubePlayerRef.current && isPlaying) {
+                                          try {
+                                            youtubePlayerRef.current.pauseVideo();
+                                            setIsPlaying(false);
+                                          } catch (error) {
+                                            console.error('❌ YouTube播放器暂停失败:', error);
+                                          }
+                                        }
+                                      } else if (videoRef.current && isPlaying) {
+                                        videoRef.current.pause();
+                                        setIsPlaying(false);
+                                      }
                                       setCurrentSearchResult(result);
                                       setShowSearchDialog(true);
                                     }}
@@ -4903,9 +4950,9 @@ export default function VideoNotesPrototypePage() {
                                     </div>
                                     
                                     {/* 删除按钮 */}
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
                                         setKnowledgePoints(prev => prev.map((p, i) => {
                                           if (i === index) {
                                             return {
@@ -4915,16 +4962,16 @@ export default function VideoNotesPrototypePage() {
                                           }
                                           return p;
                                         }));
-                                      }}
+                                  }}
                                       className="absolute top-1 right-1 z-10 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
-                                    >
+                                >
                                       <X className="w-2.5 h-2.5" />
-                                    </button>
+                                </button>
                                     
                                     {/* 卡片类型标识 */}
                                     <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-green-500 text-white rounded text-[9px] font-bold shadow-sm">
                                       🔗
-                                    </div>
+                              </div>
                                     
                                     {/* 缩略图或占位图 */}
                                     {result.thumbnail ? (
@@ -4936,9 +4983,9 @@ export default function VideoNotesPrototypePage() {
                                     ) : (
                                       <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-20">
                                         🔍
-                                      </div>
-                                    )}
-                                    
+                          </div>
+                        )}
+                        
                                     {/* 卡片内容 */}
                                     <div className="relative h-full p-2 pt-6 flex flex-col text-left">
                                       {/* 知识点名称 */}
@@ -4952,7 +4999,7 @@ export default function VideoNotesPrototypePage() {
                                         <p className="text-[9px] text-gray-500 mt-1">
                                           ⏱️ {result.startTime}
                                         </p>
-                                      </div>
+                                </div>
                                       
                                       {/* 底部查看提示 */}
                                       <div className="absolute bottom-1 left-0 right-0 flex items-center justify-center">
@@ -4963,10 +5010,108 @@ export default function VideoNotesPrototypePage() {
                                           </span>
                                         </div>
                                       </div>
+                                </div>
+                              </div>
+                            ))}
+                            
+                            {/* 练习卡片 */}
+                            {point.exercises?.map((exercise, exerciseIndex) => (
+                              <div
+                                key={`exercise-${exerciseIndex}`}
+                                className="group relative bg-gradient-to-br from-orange-50 via-white to-yellow-50 rounded-lg border-2 border-orange-200 hover:border-orange-400 hover:shadow-lg hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer"
+                                style={{ aspectRatio: '3/4' }}
+                                onClick={() => {
+                                  setCurrentExerciseCard(exercise);
+                                  setCurrentKnowledgeIndex(index);
+                                }}
+                              >
+                                {/* 装饰性背景图案 */}
+                                <div className="absolute inset-0 opacity-5">
+                                  <div className="absolute top-0 right-0 w-12 h-12 bg-orange-400 rounded-full -translate-y-6 translate-x-6"></div>
+                                  <div className="absolute bottom-0 left-0 w-8 h-8 bg-yellow-400 rounded-full translate-y-4 -translate-x-4"></div>
+                                </div>
+                                
+                                {/* 删除按钮 */}
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (confirm('确定要删除这张练习卡片吗？')) {
+                                      setKnowledgePoints(prev => prev.map((p, i) => {
+                                        if (i === index) {
+                                          const exercises = p.exercises || [];
+                                          return {
+                                            ...p,
+                                            exercises: exercises.filter((_, eIdx) => eIdx !== exerciseIndex)
+                                          };
+                                        }
+                                        return p;
+                                      }));
+                                    }
+                                  }}
+                                  className="absolute top-1 right-1 z-10 w-4 h-4 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+                                >
+                                  <X className="w-2.5 h-2.5" />
+                                </button>
+                                
+                                {/* 卡片类型标识 */}
+                                <div className="absolute top-1 left-1 px-1.5 py-0.5 bg-orange-500 text-white rounded text-[9px] font-bold shadow-sm">
+                                  💪
+                                </div>
+                                
+                                {/* 卡片内容 */}
+                                <div className="relative h-full p-2 pt-6 flex flex-col text-left">
+                                  {/* 题目标题 */}
+                                  <div className="mb-2">
+                                    <div className="flex items-center gap-1 mb-1">
+                                      <div className="w-3 h-3 rounded-sm bg-orange-400 flex items-center justify-center flex-shrink-0">
+                                        <span className="text-[8px] font-bold text-white">💡</span>
+                                      </div>
+                                      <div className="text-[9px] font-bold text-orange-700 uppercase tracking-wide">练习</div>
+                                    </div>
+                                    <p className="text-[10px] leading-snug text-gray-700 line-clamp-2 pl-1 font-medium">
+                                      {exercise.title}
+                                    </p>
+                                  </div>
+                                  
+                                  {/* 分隔线 */}
+                                  <div className="w-full border-t border-dashed border-gray-200 my-1"></div>
+                                  
+                                  {/* 题目内容预览 */}
+                                  <div className="flex-1 overflow-hidden">
+                                    <div className="flex items-center gap-1 mb-1">
+                                      <div className="text-[9px] font-bold text-gray-600 uppercase tracking-wide">题目</div>
+                                    </div>
+                                    <p className="text-[10px] leading-snug text-gray-600 line-clamp-4 pl-1">
+                                      {exercise.question || exercise.description || '点击查看完整题目'}
+                                    </p>
+                                  </div>
+                                  
+                                  {/* 题型标签 */}
+                                  <div className="mt-1 flex gap-1 flex-wrap">
+                                    <span className={`px-1 py-0.5 rounded text-[8px] font-medium ${
+                                      exercise.type === 'multiple_choice' ? 'bg-blue-100 text-blue-700' : 
+                                      exercise.type === 'fill_blank' ? 'bg-green-100 text-green-700' :
+                                      'bg-purple-100 text-purple-700'
+                                    }`}>
+                                      {exercise.type === 'multiple_choice' ? '选择' : 
+                                       exercise.type === 'fill_blank' ? '填空' :
+                                       '代码'}
+                                    </span>
+                                  </div>
+                                  
+                                  {/* 底部查看提示 */}
+                                  <div className="absolute bottom-1 left-0 right-0 flex items-center justify-center">
+                                    <div className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full shadow-sm border border-orange-200">
+                                      <span className="text-[9px] text-orange-600 font-medium flex items-center gap-1">
+                                        <Eye className="w-2.5 h-2.5" />
+                                        点击查看
+                                      </span>
                                     </div>
                                   </div>
-                                ))}
+                                </div>
                               </div>
+                            ))}
+                          </div>
                             </div>
                           );
                         })()}
@@ -4984,24 +5129,24 @@ export default function VideoNotesPrototypePage() {
                                     {point.exercise.title}
                                   </h4>
                                   <p className="text-sm text-gray-600 mb-3">{point.exercise.description}</p>
-                                  <div className="flex gap-2 text-xs">
+                                <div className="flex gap-2 text-xs">
                                     <span className={`px-3 py-1 rounded-full font-medium ${
                                       point.exercise.type === 'multiple_choice' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'
-                                    }`}>
+                                  }`}>
                                       {point.exercise.type === 'multiple_choice' ? '选择题' : '填空题'}
-                                    </span>
+                                  </span>
                                     <span className={`px-3 py-1 rounded-full font-medium ${
                                       point.exercise.difficulty === 'beginner' ? 'bg-green-100 text-green-700' :
                                       point.exercise.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-700' :
                                       'bg-red-100 text-red-700'
-                                    }`}>
+                                  }`}>
                                       {point.exercise.difficulty === 'beginner' ? '简单' :
                                        point.exercise.difficulty === 'intermediate' ? '中等' :
                                        '困难'}
-                                    </span>
-                                  </div>
+                                  </span>
                                 </div>
-
+                              </div>
+                              
                                 {/* 题目内容 */}
                                 <div className="bg-white rounded-lg p-5 mb-4 shadow-sm border border-gray-200">
                                   <div className="prose prose-sm max-w-none text-gray-800 leading-relaxed">
@@ -5078,7 +5223,7 @@ export default function VideoNotesPrototypePage() {
                                     </div>
                                   </details>
                                 )}
-
+                                
                                 {/* 提交按钮 */}
                                 <button
                                   onClick={() => validateAnswer(index)}
@@ -5097,7 +5242,7 @@ export default function VideoNotesPrototypePage() {
                                     </>
                                   )}
                                 </button>
-
+                                
                                 {/* 答案验证结果 */}
                                 {point.validationResult && (
                                   <div className={`mt-4 rounded-xl p-5 border-2 shadow-lg ${
@@ -5119,23 +5264,23 @@ export default function VideoNotesPrototypePage() {
                                           </>
                                         )}
                                       </div>
-                                    </div>
+                                        </div>
                                     {point.validationResult.feedback && (
                                       <div className="bg-white rounded-lg p-4 shadow-sm prose prose-sm max-w-none text-gray-800">
-                                        <ReactMarkdown>{point.validationResult.feedback}</ReactMarkdown>
-                                      </div>
+                                          <ReactMarkdown>{point.validationResult.feedback}</ReactMarkdown>
+                                        </div>
                                     )}
                                   </div>
                                 )}
-                              </div>
-                            )}
-
+                                      </div>
+                                    )}
+                                    
                             {/* 代码题（保留原有逻辑） */}
                             {point.exercise.type === 'code_choice' && (
                               <div className="bg-gray-900 rounded-lg overflow-hidden">
                                 {/* ... 保留原有代码题UI ... */}
-                              </div>
-                            )}
+                                  </div>
+                                )}
                           </div>
                         )}
                       </div>
@@ -5228,26 +5373,26 @@ export default function VideoNotesPrototypePage() {
                 </div>
 
                 <div className="relative">
-                  <input
+              <input
                     type="text"
-                    value={questionInput}
-                    onChange={(e) => setQuestionInput(e.target.value)}
-                    onKeyPress={(e) => {
+                value={questionInput}
+                onChange={(e) => setQuestionInput(e.target.value)}
+                onKeyPress={(e) => {
                       if (e.key === 'Enter' && questionInput.trim() && !knowledgePoints[askingKnowledgeIndex]?.isAsking) {
-                        e.preventDefault();
-                        handleAskQuestion(askingKnowledgeIndex);
-                      }
-                    }}
+                    e.preventDefault();
+                    handleAskQuestion(askingKnowledgeIndex);
+                  }
+                }}
                     placeholder="输入你的问题..."
                     className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-yellow-400 focus:outline-none transition-colors text-lg shadow-sm pr-12"
-                    autoFocus
-                  />
-                  <button
-                    onClick={() => handleAskQuestion(askingKnowledgeIndex)}
-                    disabled={!questionInput.trim() || knowledgePoints[askingKnowledgeIndex]?.isAsking}
+                autoFocus
+              />
+              <button
+                onClick={() => handleAskQuestion(askingKnowledgeIndex)}
+                disabled={!questionInput.trim() || knowledgePoints[askingKnowledgeIndex]?.isAsking}
                     className="absolute right-2 top-2 bottom-2 aspect-square bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-all flex items-center justify-center shadow-sm"
-                  >
-                    {knowledgePoints[askingKnowledgeIndex]?.isAsking ? (
+              >
+                {knowledgePoints[askingKnowledgeIndex]?.isAsking ? (
                       <Loader2 className="w-5 h-5 animate-spin" />
                     ) : (
                       <Sparkles className="w-5 h-5" />
@@ -5570,8 +5715,8 @@ export default function VideoNotesPrototypePage() {
                     加入笔记
                   </button>
                 </div>
-              </>
-            ) : (
+                  </>
+                ) : (
               // ------------------- 搜索输入模式 -------------------
               <>
                 {/* 标题栏 */}
@@ -5590,8 +5735,8 @@ export default function VideoNotesPrototypePage() {
                     className="text-gray-400 hover:text-gray-600 transition-colors p-1 hover:bg-gray-100 rounded-lg"
                   >
                     <X className="w-5 h-5" />
-                  </button>
-                </div>
+              </button>
+            </div>
 
                 {/* 搜索输入区域 */}
                 <div className="flex-1 p-6 flex flex-col items-center justify-center relative z-10">
@@ -5599,7 +5744,7 @@ export default function VideoNotesPrototypePage() {
                     <div className="text-center mb-6">
                       <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                         <span className="text-3xl">🔍</span>
-                      </div>
+          </div>
                       <h4 className="text-lg font-bold text-gray-800 mb-1">搜索知识点</h4>
                       <p className="text-sm text-gray-500">输入关键词，快速找到相关知识点</p>
                     </div>
@@ -5643,6 +5788,376 @@ export default function VideoNotesPrototypePage() {
                 </div>
               </>
             )}
+          </div>
+        </div>
+      )}
+      
+      {/* 练习生成对话框 */}
+      {showExerciseDialog && (
+        <div 
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200 p-4"
+          onClick={() => {
+            if (!isGeneratingExercise) {
+              setShowExerciseDialog(false);
+              setGeneratedExercise(null);
+              setExerciseKnowledgePointIndex(null);
+              setIsGeneratingExercise(false);
+              setGeneratedExerciseUserAnswer('');
+              setGeneratedExerciseSubmitted(false);
+              setGeneratedExerciseShowHints(false);
+            }
+          }}
+        >
+          <div 
+            className="bg-white rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col relative"
+            style={{ width: '480px', height: '640px' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* 装饰性背景 */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-orange-200 rounded-full opacity-10 -translate-y-20 translate-x-20"></div>
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-yellow-200 rounded-full opacity-10 translate-y-16 -translate-x-16"></div>
+            </div>
+
+            {/* 标题栏 */}
+            <div className="flex-shrink-0 bg-gradient-to-r from-orange-100 to-yellow-100 border-b-2 border-orange-300 p-5 flex items-center justify-between relative z-10">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center">
+                  <CheckSquare className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-900">
+                    {isGeneratingExercise ? '💪 正在生成练习...' : '✅ 练习生成完成'}
+                  </h3>
+                  {exerciseKnowledgePointIndex !== null && knowledgePoints[exerciseKnowledgePointIndex] && (
+                    <p className="text-xs text-gray-600 line-clamp-1">{knowledgePoints[exerciseKnowledgePointIndex].name}</p>
+                  )}
+                </div>
+              </div>
+              {!isGeneratingExercise && (
+                <button
+                  onClick={() => {
+                    setShowExerciseDialog(false);
+                    setGeneratedExercise(null);
+                    setExerciseKnowledgePointIndex(null);
+                    setIsGeneratingExercise(false);
+                  }}
+                  className="text-gray-500 hover:text-gray-700 transition-colors p-1 hover:bg-white/50 rounded-lg"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              )}
+            </div>
+
+            {/* 内容区域 */}
+            <div className="flex-1 overflow-y-auto p-6 relative z-10">
+              {isGeneratingExercise ? (
+                // 加载状态
+                <div className="flex flex-col items-center justify-center py-12">
+                  <div className="relative mb-6">
+                    <Loader2 className="w-16 h-16 text-orange-500 animate-spin mx-auto" />
+                    <Sparkles className="w-6 h-6 text-yellow-400 absolute top-0 right-1/3 animate-pulse" />
+                  </div>
+                  <p className="text-gray-800 text-lg font-bold">正在为您生成练习题...</p>
+                  <p className="text-gray-500 text-sm mt-2">请稍候</p>
+                </div>
+              ) : generatedExercise ? (
+                // 练习结果展示
+                <div>
+                  {/* 正面：题目和选项 */}
+                  {!generatedExerciseShowHints && (
+                    <div>
+                      {/* 题目内容 - 支持LaTeX */}
+                      {(generatedExercise.type === 'multiple_choice' || generatedExercise.type === 'fill_blank') && (
+                        <>
+                          <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-200 mb-4">
+                            <div className="prose prose-sm max-w-none text-gray-800 leading-relaxed">
+                              <ReactMarkdown {...mathMarkdownPlugins}>{autoWrapLatex(generatedExercise.question || '')}</ReactMarkdown>
+                            </div>
+                          </div>
+
+                          {/* 选择题选项 */}
+                          {generatedExercise.type === 'multiple_choice' && generatedExercise.choices && (
+                            <div className="space-y-2 mb-4">
+                              {generatedExercise.choices.map((choice, idx) => {
+                                const isSelected = generatedExerciseUserAnswer === choice.label;
+                                const isCorrect = isGeneratedAnswerCorrect(choice.label);
+                                const isWrong = generatedExerciseSubmitted && isSelected && isCorrect === false;
+                                
+                                return (
+                                  <label
+                                    key={idx}
+                                    className={`flex items-start gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                                      isCorrect === true
+                                        ? 'border-green-500 bg-green-50'
+                                        : isWrong
+                                        ? 'border-red-500 bg-red-50'
+                                        : isSelected && !generatedExerciseSubmitted
+                                        ? 'border-blue-500 bg-blue-50'
+                                        : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50'
+                                    }`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="generated-exercise-answer"
+                                      value={choice.label}
+                                      checked={isSelected}
+                                      onChange={(e) => {
+                                        if (!generatedExerciseSubmitted) {
+                                          setGeneratedExerciseUserAnswer(e.target.value);
+                                        }
+                                      }}
+                                      disabled={generatedExerciseSubmitted}
+                                      className="mt-1 w-4 h-4 text-blue-600"
+                                    />
+                                    <span className="font-bold text-gray-700">{choice.label}.</span>
+                                    <div className="flex-1 prose prose-sm max-w-none text-gray-800">
+                                      <ReactMarkdown {...mathMarkdownPlugins}>{autoWrapLatex(choice.content)}</ReactMarkdown>
+                                    </div>
+                                  </label>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  {/* 背面：提示 */}
+                  {generatedExerciseShowHints && generatedExercise.hints && generatedExercise.hints.length > 0 && (
+                    <div className="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-lg p-6 border-2 border-orange-200">
+                      <h4 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                        <Lightbulb className="w-5 h-5 text-orange-500" />
+                        提示
+                      </h4>
+                      <div className="space-y-3">
+                        {generatedExercise.hints.map((hint, i) => (
+                          <div key={i} className="flex gap-3 text-sm text-gray-700 bg-white rounded-lg p-3 border border-orange-100">
+                            <span className="text-orange-500 font-bold flex-shrink-0">{i + 1}.</span>
+                            <div className="prose prose-sm max-w-none flex-1">
+                              <ReactMarkdown {...mathMarkdownPlugins}>{autoWrapLatex(hint)}</ReactMarkdown>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 代码题预览 */}
+                  {(generatedExercise.type === 'code_choice' || generatedExercise.type === 'complete') && (
+                    <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+                      <pre className="text-sm text-gray-100">
+                        <code>{generatedExercise.starter_code || '// 代码模板'}</code>
+                      </pre>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                // 错误状态
+                <div className="flex flex-col items-center justify-center py-12">
+                  <X className="w-16 h-16 text-red-500 mb-4" />
+                  <p className="text-gray-800 text-lg font-bold">练习生成失败</p>
+                  <p className="text-gray-500 text-sm mt-2">请稍后重试</p>
+                </div>
+              )}
+            </div>
+
+            {/* 底部按钮 */}
+            {!isGeneratingExercise && generatedExercise && (
+              <div className="flex-shrink-0 bg-gradient-to-r from-gray-50 to-white border-t-2 border-gray-200 p-5 flex gap-3 relative z-10">
+                {/* 反转按钮 - 查看提示 */}
+                {generatedExercise.hints && generatedExercise.hints.length > 0 && (
+                  <button
+                    onClick={() => setGeneratedExerciseShowHints(!generatedExerciseShowHints)}
+                    className="px-4 py-3 bg-white border-2 border-orange-200 text-orange-600 rounded-xl hover:bg-orange-50 hover:border-orange-300 transition-all font-medium flex items-center justify-center gap-2 shadow-sm"
+                    title={generatedExerciseShowHints ? '查看题目' : '查看提示'}
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                    {generatedExerciseShowHints ? '题目' : '提示'}
+                  </button>
+                )}
+                
+                {/* 提交按钮 */}
+                {generatedExercise.type === 'multiple_choice' && !generatedExerciseSubmitted && (
+                  <button
+                    onClick={submitGeneratedExerciseAnswer}
+                    disabled={!generatedExerciseUserAnswer}
+                    className="flex-1 px-5 py-3 bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white rounded-xl transition-all font-bold flex items-center justify-center gap-2 shadow-lg disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed"
+                  >
+                    <CheckCircle className="w-4 h-4" />
+                    提交答案
+                  </button>
+                )}
+                
+                {/* 加入笔记按钮 */}
+                <button
+                  onClick={addExerciseToKnowledgePoint}
+                  className="flex-1 px-5 py-3 bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white rounded-xl transition-all font-bold flex items-center justify-center gap-2 shadow-lg"
+                >
+                  <Plus className="w-4 h-4" />
+                  加入笔记 💾
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+      
+      {/* 练习卡片详情对话框 */}
+      {currentExerciseCard && (
+        <div 
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200 p-4"
+          onClick={closeExerciseCard}
+        >
+          <div 
+            className="bg-white rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col relative"
+            style={{ width: '480px', height: '640px' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* 装饰性背景 */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-orange-200 rounded-full opacity-10 -translate-y-20 translate-x-20"></div>
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-yellow-200 rounded-full opacity-10 translate-y-16 -translate-x-16"></div>
+            </div>
+            
+            {/* 标题栏 */}
+            <div className="flex-shrink-0 bg-gradient-to-r from-orange-100 to-yellow-100 border-b-2 border-orange-300 p-5 flex items-center justify-between relative z-10">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-orange-500 flex items-center justify-center shadow-md">
+                  <CheckSquare className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-900">💪 练习题</h3>
+                  <p className="text-xs text-gray-600">来自知识点分析</p>
+                </div>
+              </div>
+              <button
+                onClick={closeExerciseCard}
+                className="text-gray-500 hover:text-gray-700 transition-colors p-1 hover:bg-white/50 rounded-lg"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            
+            {/* 卡片内容 - 可滚动，支持反转 */}
+            <div className="flex-1 overflow-y-auto p-6 relative z-10">
+              {/* 正面：题目和选项 */}
+              {!exerciseShowHints && (
+                <div>
+                  {/* 题目内容 - 支持LaTeX */}
+                  {(currentExerciseCard.type === 'multiple_choice' || currentExerciseCard.type === 'fill_blank') && (
+                    <>
+                      <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-200 mb-4">
+                        <div className="prose prose-sm max-w-none text-gray-800 leading-relaxed">
+                          <ReactMarkdown {...mathMarkdownPlugins}>{autoWrapLatex(currentExerciseCard.question || '')}</ReactMarkdown>
+                        </div>
+                      </div>
+
+                      {/* 选择题选项 */}
+                      {currentExerciseCard.type === 'multiple_choice' && currentExerciseCard.choices && (
+                        <div className="space-y-2 mb-4">
+                          {currentExerciseCard.choices.map((choice, idx) => {
+                            const isSelected = exerciseUserAnswer === choice.label;
+                            const isCorrect = isAnswerCorrect(choice.label);
+                            const isWrong = exerciseSubmitted && isSelected && isCorrect === false;
+                            
+                            return (
+                              <label
+                                key={idx}
+                                className={`flex items-start gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                                  isCorrect === true
+                                    ? 'border-green-500 bg-green-50'
+                                    : isWrong
+                                    ? 'border-red-500 bg-red-50'
+                                    : isSelected && !exerciseSubmitted
+                                    ? 'border-blue-500 bg-blue-50'
+                                    : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50'
+                                }`}
+                              >
+                                <input
+                                  type="radio"
+                                  name="exercise-answer"
+                                  value={choice.label}
+                                  checked={isSelected}
+                                  onChange={(e) => {
+                                    if (!exerciseSubmitted) {
+                                      setExerciseUserAnswer(e.target.value);
+                                    }
+                                  }}
+                                  disabled={exerciseSubmitted}
+                                  className="mt-1 w-4 h-4 text-blue-600"
+                                />
+                                <span className="font-bold text-gray-700">{choice.label}.</span>
+                                <div className="flex-1 prose prose-sm max-w-none text-gray-800">
+                                  <ReactMarkdown {...mathMarkdownPlugins}>{autoWrapLatex(choice.content)}</ReactMarkdown>
+                                </div>
+                              </label>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
+
+              {/* 背面：提示 */}
+              {exerciseShowHints && currentExerciseCard.hints && currentExerciseCard.hints.length > 0 && (
+                <div className="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-lg p-6 border-2 border-orange-200">
+                  <h4 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                    <Lightbulb className="w-5 h-5 text-orange-500" />
+                    提示
+                  </h4>
+                  <div className="space-y-3">
+                    {currentExerciseCard.hints.map((hint, i) => (
+                      <div key={i} className="flex gap-3 text-sm text-gray-700 bg-white rounded-lg p-3 border border-orange-100">
+                        <span className="text-orange-500 font-bold flex-shrink-0">{i + 1}.</span>
+                        <div className="prose prose-sm max-w-none flex-1">
+                          <ReactMarkdown {...mathMarkdownPlugins}>{hint}</ReactMarkdown>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* 代码题预览 */}
+              {(currentExerciseCard.type === 'code_choice' || currentExerciseCard.type === 'complete') && !exerciseShowHints && (
+                <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+                  <pre className="text-sm text-gray-100">
+                    <code>{currentExerciseCard.starter_code || '// 代码模板'}</code>
+                  </pre>
+                </div>
+              )}
+            </div>
+            
+            {/* 卡片底部按钮 */}
+            <div className="flex-shrink-0 bg-gradient-to-r from-gray-50 to-white border-t-2 border-gray-200 p-5 flex gap-3 relative z-10">
+              {/* 反转按钮 - 查看提示 */}
+              {currentExerciseCard.hints && currentExerciseCard.hints.length > 0 && (
+                <button
+                  onClick={() => setExerciseShowHints(!exerciseShowHints)}
+                  className="px-4 py-3 bg-white border-2 border-orange-200 text-orange-600 rounded-xl hover:bg-orange-50 hover:border-orange-300 transition-all font-medium flex items-center justify-center gap-2 shadow-sm"
+                  title={exerciseShowHints ? '查看题目' : '查看提示'}
+                >
+                  <RotateCcw className="w-4 h-4" />
+                  {exerciseShowHints ? '题目' : '提示'}
+                </button>
+              )}
+              
+              {/* 提交按钮 */}
+              {currentExerciseCard.type === 'multiple_choice' && !exerciseSubmitted && (
+                <button
+                  onClick={submitExerciseAnswer}
+                  disabled={!exerciseUserAnswer}
+                  className="flex-1 px-5 py-3 bg-gradient-to-r from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600 text-white rounded-xl transition-all font-bold flex items-center justify-center gap-2 shadow-lg disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed"
+                >
+                  <CheckCircle className="w-4 h-4" />
+                  提交答案
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
