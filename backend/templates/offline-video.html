@@ -788,7 +788,8 @@
             const steps = [
                 { key: 'download', name: '1. 下载视频并上传', description: '下载B站视频，合并音视频流，上传到CDN' },
                 { key: 'asr', name: '2. ASR识别', description: '语音识别，生成逐字稿' },
-                { key: 'knowledge_points', name: '3. 生成知识点', description: '调用LLM生成知识点文档' }
+                { key: 'knowledge_points', name: '3. 生成知识点', description: '调用LLM生成知识点文档' },
+                { key: 'screenshots', name: '4. 生成截图', description: '根据知识点时间戳从视频中截图' }
             ];
             
             const isSeries = task.is_series || false;
@@ -801,6 +802,7 @@
             const videoUrls = parseUrls(task.video_url);
             const asrResultUrls = parseUrls(task.asr_result_url);
             const knowledgePointsResultUrls = parseUrls(task.knowledge_points_result_url);
+            const screenshotsResultUrls = parseUrls(task.screenshots_result_url);
             
             // 如果是多P任务，渲染tags切换UI
             let partTabsHtml = '';
@@ -828,6 +830,7 @@
                     const videoUrl = videoUrls[idx] || null;
                     const asrUrl = asrResultUrls[idx] || null;
                     const knowledgePointsUrl = knowledgePointsResultUrls[idx] || null;
+                    const screenshotsUrl = screenshotsResultUrls[idx] || null;
                     
                     const stepsHtml = steps.map(step => {
                         const stepInfo = task.steps[step.key];
@@ -855,6 +858,8 @@
                             resultUrl = asrUrl;
                         } else if (step.key === 'knowledge_points') {
                             resultUrl = knowledgePointsUrl;
+                        } else if (step.key === 'screenshots') {
+                            resultUrl = screenshotsUrl;
                         }
                         
                         const canPreview = (status === 'success' || status === 'partial_success') && resultUrl;
@@ -887,7 +892,7 @@
                                 </div>
                             </div>
                         `;
-                    }).join('');
+                    }).filter(html => html).join(''); // 过滤掉空字符串
                     
                     return `
                         <div class="part-content ${idx === 0 ? 'active' : ''}" id="part-content-${taskId}-${idx}">
@@ -910,13 +915,7 @@
                         status = 'partial_success';
                     }
                     
-                    const canExecute = status === 'pending' || status === 'failed';
-                    const canRetry = status === 'failed';
-                    const canContinue = status === 'partial_success'; // 部分成功时显示继续执行
-                    const canRetrySuccess = status === 'partial_success' || status === 'success'; // 部分成功或完全成功时显示重新执行
-                    const canPreview = (status === 'success' || status === 'partial_success') && (stepInfo.result || resultUrl);
-                    
-                    // 获取结果URL
+                    // 获取结果URL（必须在canPreview之前）
                     let resultUrl = null;
                     if (step.key === 'download' && task.video_url) {
                         resultUrl = typeof task.video_url === 'string' && task.video_url.startsWith('[') 
@@ -930,9 +929,19 @@
                         resultUrl = typeof task.knowledge_points_result_url === 'string' && task.knowledge_points_result_url.startsWith('[') 
                             ? JSON.parse(task.knowledge_points_result_url)[0] 
                             : task.knowledge_points_result_url;
+                    } else if (step.key === 'screenshots' && task.screenshots_result_url) {
+                        resultUrl = typeof task.screenshots_result_url === 'string' && task.screenshots_result_url.startsWith('[') 
+                            ? JSON.parse(task.screenshots_result_url)[0] 
+                            : task.screenshots_result_url;
                     } else if (result.result_url) {
                         resultUrl = result.result_url;
                     }
+                    
+                    const canExecute = status === 'pending' || status === 'failed';
+                    const canRetry = status === 'failed';
+                    const canContinue = status === 'partial_success'; // 部分成功时显示继续执行
+                    const canRetrySuccess = status === 'partial_success' || status === 'success'; // 部分成功或完全成功时显示重新执行
+                    const canPreview = (status === 'success' || status === 'partial_success') && (stepInfo.result || resultUrl);
                     
                     // 显示执行中状态
                     const isRunning = status === 'running';
@@ -1320,6 +1329,9 @@
         }
         
         // 开始轮询
+        let lastHadRunningTasks = false;  // 记录上次是否有运行中的任务
+        let extraPollCount = 0;  // 额外轮询次数，确保获取最终状态
+        
         function startPolling() {
             if (refreshInterval) {
                 return;
@@ -1341,15 +1353,28 @@
                         return statusEl && statusEl.textContent.includes('等待执行');
                     });
                     
-                    // 如果所有任务都完成了（没有运行中也没有待执行），停止轮询
-                    if (!hasRunningTasks && !hasPendingTasks) {
+                    // 如果从"有运行中"变为"没有运行中"，再轮询3次以确保获取最终状态
+                    if (lastHadRunningTasks && !hasRunningTasks) {
+                        console.log('🔄 检测到任务状态变化，继续轮询以确保获取最终状态...');
+                        extraPollCount = 3;  // 再轮询3次
+                    }
+                    lastHadRunningTasks = hasRunningTasks;
+                    
+                    // 如果所有任务都完成了（没有运行中也没有待执行），且没有额外轮询需求，停止轮询
+                    if (!hasRunningTasks && !hasPendingTasks && extraPollCount === 0) {
                         console.log('✅ 所有任务已完成，停止轮询');
                         stopPolling();
                         return;
                     }
                     
-                    // 如果有运行中的任务，2秒后刷新；否则30秒后刷新（降低频率）
-                    const delay = hasRunningTasks ? 2000 : 30000;
+                    // 减少额外轮询计数
+                    if (extraPollCount > 0) {
+                        extraPollCount--;
+                        console.log(`🔄 额外轮询 (剩余 ${extraPollCount} 次)`);
+                    }
+                    
+                    // 如果有运行中的任务，2秒后刷新；否则5秒后刷新（确保能获取最终状态）
+                    const delay = hasRunningTasks ? 2000 : 5000;
                     
                     refreshInterval = setTimeout(() => {
                         poll();
@@ -1371,6 +1396,9 @@
                 clearTimeout(refreshInterval);
                 refreshInterval = null;
             }
+            // 重置轮询相关变量
+            lastHadRunningTasks = false;
+            extraPollCount = 0;
         }
         
         // 页面加载时加载任务列表
@@ -1442,6 +1470,7 @@
                 const videoUrls = parseUrls(task.video_url);
                 const asrResultUrls = parseUrls(task.asr_result_url);
                 const knowledgePointsResultUrls = parseUrls(task.knowledge_points_result_url);
+                const screenshotsResultUrls = parseUrls(task.screenshots_result_url);
                 
                 // 如果是多P任务且指定了partNumber，使用对应的URL
                 if (partNumber && task.is_series) {
@@ -1454,6 +1483,8 @@
                         resultUrl = asrResultUrls[partIndex];
                     } else if (step === 'knowledge_points' && knowledgePointsResultUrls[partIndex]) {
                         resultUrl = knowledgePointsResultUrls[partIndex];
+                    } else if (step === 'screenshots' && screenshotsResultUrls[partIndex]) {
+                        resultUrl = screenshotsResultUrls[partIndex];
                     }
                 } else {
                     // 单P任务或未指定partNumber
@@ -1472,6 +1503,10 @@
                         resultUrl = typeof task.knowledge_points_result_url === 'string' && task.knowledge_points_result_url.startsWith('[') 
                             ? JSON.parse(task.knowledge_points_result_url)[0] 
                             : task.knowledge_points_result_url;
+                    } else if (step === 'screenshots' && task.screenshots_result_url) {
+                        resultUrl = typeof task.screenshots_result_url === 'string' && task.screenshots_result_url.startsWith('[') 
+                            ? JSON.parse(task.screenshots_result_url)[0] 
+                            : task.screenshots_result_url;
                     }
                 }
                 

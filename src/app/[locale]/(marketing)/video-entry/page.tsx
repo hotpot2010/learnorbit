@@ -71,16 +71,16 @@ export default function VideoEntryPage() {
         console.log('🔍 从B站搜索视频');
         const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
         response = await fetch(`${API_URL}/open-api/video-search`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            query: searchQuery,
-            limit: 10,
-            locale: locale,
-          }),
-        });
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: searchQuery,
+          limit: 10,
+          locale: locale,
+        }),
+      });
       }
 
       if (!response.ok) {
@@ -117,7 +117,7 @@ export default function VideoEntryPage() {
   const handleStartLearning = (video: VideoInfo) => {
     const params = new URLSearchParams({
       videoUrl: video.url,
-    });
+      });
 
     if (video.processed && video.task_id) {
       params.append('taskId', video.task_id);
@@ -160,7 +160,7 @@ export default function VideoEntryPage() {
             <span className="bg-yellow-200 px-6 py-3 rounded-lg inline-block shadow-md">
               🎬 视频学习 ✨
             </span>
-          </h1>
+                </h1>
           <p 
             className="text-lg md:text-xl text-gray-700 text-center mb-8 transform rotate-1"
             style={{ fontFamily }}
@@ -183,15 +183,15 @@ export default function VideoEntryPage() {
                   style={{ fontFamily }}
                 />
               </div>
-              <Button 
+                <Button 
                 onClick={handleSearch} 
                 disabled={isSearching || !searchQuery.trim()}
                 className="h-12 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-md"
                 style={{ fontFamily }}
               >
                 {isSearching ? <Loader2 className="w-5 h-5 animate-spin" /> : '搜索'}
-              </Button>
-            </div>
+                </Button>
+              </div>
 
             {error && (
               <p className="text-red-500 text-sm mt-2 text-center" style={{ fontFamily }}>
@@ -215,28 +215,28 @@ export default function VideoEntryPage() {
                 🎬 视频学习 ✨
               </span>
             </h1>
-            
-            <div className="flex gap-2">
-              <div className="relative flex-1">
+
+              <div className="flex gap-2">
+                <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <Input
-                  type="text"
+                  <Input
+                    type="text"
                   placeholder="搜索数学、编程、英语等课程..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyPress={handleKeyPress}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyPress={handleKeyPress}
                   className="pl-10 h-12 text-base bg-white border-2 border-yellow-300 focus:border-blue-400 rounded-lg shadow-sm"
                   style={{ fontFamily }}
-                />
-              </div>
-              <Button 
-                onClick={handleSearch} 
-                disabled={isSearching || !searchQuery.trim()}
+                  />
+                </div>
+                <Button 
+                  onClick={handleSearch} 
+                  disabled={isSearching || !searchQuery.trim()}
                 className="h-12 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-md"
                 style={{ fontFamily }}
-              >
+                >
                 {isSearching ? <Loader2 className="w-5 h-5 animate-spin" /> : '搜索'}
-              </Button>
+                </Button>
             </div>
 
             {error && (
@@ -329,7 +329,7 @@ export default function VideoEntryPage() {
               <p className="text-gray-500" style={{ fontFamily }}>
                 未找到相关视频，试试其他关键词吧
               </p>
-            </div>
+              </div>
           )}
         </div>
       )}

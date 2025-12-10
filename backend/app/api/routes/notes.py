@@ -248,22 +248,6 @@ async def generate_exercise(request: ExerciseGenerationRequest):
             if locale == 'en':
                 prompt = f"""You are a professional programming education expert. Please generate a programming exercise for the knowledge point based on the video content.
 
-Knowledge Point: {request.knowledge_point_name}
-Video Title: {request.video_title or 'Unknown'}
-
-Please choose an appropriate exercise type based on the difficulty of the knowledge point and generate the exercise. Must strictly follow the following JSON format:
-
-{{
-  "type": "Exercise type (one of: fill_blank/guided_steps/code_choice/complete)",
-  "title": "Exercise title",
-  "description": "Exercise description (within 50 words)",
-  "difficulty": "Difficulty (beginner/intermediate/advanced)",
-  "language": "Programming language (python/javascript/etc.)",
-  "starter_code": "Initial code template",
-  "solution": "Reference answer",
-  "hints": ["Hint 1", "Hint 2"]
-}}
-
 **Exercise Type Selection Rules**:
 1. fill_blank: Suitable for simple syntax and single concepts (e.g., variable assignment, basic operations)
 2. guided_steps: Suitable for tasks requiring complete function implementation (e.g., writing functions, implementing algorithms)

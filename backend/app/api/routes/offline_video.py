@@ -216,6 +216,8 @@ async def execute_step(
                     await offline_video_service.execute_step_asr(task_id, mode=mode)
                 elif step == "knowledge_points":
                     await offline_video_service.execute_step_knowledge_points(task_id, mode=mode)
+                elif step == "screenshots":
+                    await offline_video_service.execute_step_screenshots(task_id, mode=mode)
             except Exception as e:
                 print(f"❌ 后台步骤执行失败: {step}, task_id: {task_id}, error: {e}")
                 import traceback
