@@ -48,6 +48,8 @@ import { useMobileLayout } from '@/hooks/use-mobile-layout';
 import { buildApiUrl, API_ENDPOINTS, API_BASE_URL } from '@/config/api';
 import { useTranslations, useLocale } from 'next-intl';
 import { NoteEditor } from '@/components/learning/tiptap/note-editor';
+import { useCurrentUser } from '@/hooks/use-current-user';
+import { trackKeyActionSafely } from '@/lib/key-actions-analytics';
 
 // QA对类型定义
 interface QAPair {
@@ -501,6 +503,32 @@ export default function VideoNotesPrototypePage() {
   const { isMobile } = useMobileLayout();
   const locale = useLocale();
   const t = useTranslations('LearningPlatform.videoNotes');
+  const currentUser = useCurrentUser();
+  
+  // 使用 ref 确保只打点一次
+  const hasTrackedStartLearning = useRef(false);
+  
+  // 记录开始学习事件（页面加载）
+  useEffect(() => {
+    // 只在有用户且未打点时执行
+    if (currentUser?.id && !hasTrackedStartLearning.current) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const taskId = urlParams.get('taskId');
+      const videoUrl = urlParams.get('videoUrl');
+      
+      trackKeyActionSafely(
+        'start_video_learning',
+        {
+          task_id: taskId || 'unknown',
+          video_url: videoUrl || 'unknown',
+          timestamp: Date.now(),
+        },
+        currentUser
+      );
+      
+      hasTrackedStartLearning.current = true;
+    }
+  }, [currentUser]); // 依赖 currentUser，当用户信息加载完成后执行
   
   // 加载YouTube iframe API（仅在英文模式下需要）
   useEffect(() => {
@@ -1772,6 +1800,16 @@ export default function VideoNotesPrototypePage() {
       return;
     }
     
+    // 记录搜索事件
+    trackKeyActionSafely(
+      'video_search',
+      {
+        keyword: searchKeyword,
+        timestamp: Date.now(),
+      },
+      currentUser
+    );
+    
     setIsSearching(true);
     
     try {
@@ -2300,6 +2338,16 @@ export default function VideoNotesPrototypePage() {
     
     const point = knowledgePoints[index];
     console.log('📍 当前知识点:', point.name, point.start_time);
+    
+    // 记录截图事件
+    trackKeyActionSafely(
+      'video_screenshot',
+      {
+        knowledge_point: point.name,
+        timestamp: Date.now(),
+      },
+      currentUser
+    );
     
     // 暂停视频
     if (isYouTubeVideo()) {
@@ -3853,6 +3901,16 @@ export default function VideoNotesPrototypePage() {
   const generateExercise = async (index: number) => {
     const point = knowledgePoints[index];
     
+    // 记录练习事件
+    trackKeyActionSafely(
+      'video_exercise',
+      {
+        knowledge_point: point.name,
+        timestamp: Date.now(),
+      },
+      currentUser
+    );
+    
     // 暂停视频
     if (videoRef.current && isPlaying) {
       videoRef.current.pause();
@@ -4647,6 +4705,16 @@ export default function VideoNotesPrototypePage() {
             {/* 提问按钮 - 蓝色 */}
             <Button
               onClick={() => {
+                // 记录提问事件
+                trackKeyActionSafely(
+                  'video_ask_question',
+                  {
+                    knowledge_point: knowledgePoints[currentKnowledgeIndex]?.name || 'unknown',
+                    timestamp: Date.now(),
+                  },
+                  currentUser
+                );
+                
                 // 打开提问框时暂停视频
                 if (isYouTubeVideo()) {
                   if (youtubePlayerRef.current && isPlaying) {

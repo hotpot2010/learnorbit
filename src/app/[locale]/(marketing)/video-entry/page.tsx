@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -10,6 +10,8 @@ import {
 } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import { useMobileLayout } from '@/hooks/use-mobile-layout';
+import { useCurrentUser } from '@/hooks/use-current-user';
+import { useRouter } from 'next/navigation';
 
 interface VideoInfo {
   title: string;
@@ -33,6 +35,8 @@ interface VideoInfo {
 export default function VideoEntryPage() {
   const locale = useLocale();
   const { isMobile } = useMobileLayout();
+  const currentUser = useCurrentUser();
+  const router = useRouter();
 
   // 搜索相关状态
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,6 +44,26 @@ export default function VideoEntryPage() {
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [error, setError] = useState('');
+
+  // 恢复搜索状态（登录后返回）
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedQuery = sessionStorage.getItem('video-entry-search-query');
+      const savedResults = sessionStorage.getItem('video-entry-search-results');
+      const savedHasSearched = sessionStorage.getItem('video-entry-has-searched');
+      
+      if (savedQuery && savedResults && savedHasSearched === 'true') {
+        setSearchQuery(savedQuery);
+        setVideos(JSON.parse(savedResults));
+        setHasSearched(true);
+        
+        // 清除保存的状态
+        sessionStorage.removeItem('video-entry-search-query');
+        sessionStorage.removeItem('video-entry-search-results');
+        sessionStorage.removeItem('video-entry-has-searched');
+      }
+    }
+  }, []);
 
   // 动态字体
   const fontFamily = isMobile && locale === 'en'
@@ -115,6 +139,22 @@ export default function VideoEntryPage() {
 
   // 跳转到学习页面
   const handleStartLearning = (video: VideoInfo) => {
+    // 检查用户是否登录
+    if (!currentUser) {
+      // 保存当前搜索状态
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('video-entry-search-query', searchQuery);
+        sessionStorage.setItem('video-entry-search-results', JSON.stringify(videos));
+        sessionStorage.setItem('video-entry-has-searched', 'true');
+      }
+      
+      // 跳转到登录页面，设置回调 URL
+      const currentPath = window.location.pathname;
+      router.push(`/${locale}/auth/login?callbackUrl=${encodeURIComponent(currentPath)}`);
+      return;
+    }
+
+    // 已登录，正常跳转到学习页面
     const params = new URLSearchParams({
       videoUrl: video.url,
       });
@@ -316,7 +356,7 @@ export default function VideoEntryPage() {
                         onClick={() => handleStartLearning(video)}
                       >
                         <Play className="w-4 h-4 mr-1" />
-                        开始学习
+                        {currentUser ? '开始学习' : '登录学习'}
                       </Button>
                     </div>
                   </div>

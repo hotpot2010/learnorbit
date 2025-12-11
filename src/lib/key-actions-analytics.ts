@@ -5,7 +5,7 @@
 
 interface KeyActionEvent {
   // === 基础字段 ===
-  event_name: 'generate_course' | 'start_learning' | 'continue_learning';
+  event_name: 'generate_course' | 'start_learning' | 'continue_learning' | 'start_video_learning' | 'video_search' | 'video_ask_question' | 'video_screenshot' | 'video_exercise';
   timestamp: number;           // 事件发生时间戳
   session_id: string;          // 用户会话ID
   user_id: string;             // 用户ID（必填字段）
@@ -42,7 +42,7 @@ class KeyActionsAnalytics {
   
   // 只有一个核心方法
   public trackKeyAction(
-    eventName: 'generate_course' | 'start_learning' | 'continue_learning',
+    eventName: 'generate_course' | 'start_learning' | 'continue_learning' | 'start_video_learning' | 'video_search' | 'video_ask_question' | 'video_screenshot' | 'video_exercise',
     actionData: Record<string, any>
   ) {
     const event: KeyActionEvent = {
@@ -125,9 +125,9 @@ export function updateUserId(userId: string) {
   }
 }
 
-// 安全的打点函数（带登录检查）
+// 安全的打点函数（带登录检查和初始化检查）
 export function trackKeyActionSafely(
-  eventName: 'generate_course' | 'start_learning' | 'continue_learning',
+  eventName: 'generate_course' | 'start_learning' | 'continue_learning' | 'start_video_learning' | 'video_search' | 'video_ask_question' | 'video_screenshot' | 'video_exercise',
   actionData: Record<string, any>,
   currentUser?: { id: string } | null
 ) {
@@ -135,6 +135,13 @@ export function trackKeyActionSafely(
     if (!currentUser?.id) {
       console.log(`🔒 用户未登录，跳过${eventName}打点`);
       return;
+    }
+    
+    // 检查打点系统是否已初始化
+    if (!keyActionsAnalytics) {
+      // 如果未初始化，尝试初始化
+      initKeyActionsAnalytics(currentUser.id);
+      console.log(`🎯 打点系统已自动初始化:`, currentUser.id);
     }
     
     const analytics = getKeyActionsAnalytics();

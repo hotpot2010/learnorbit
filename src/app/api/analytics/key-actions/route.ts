@@ -16,7 +16,16 @@ export async function POST(request: NextRequest) {
     }
     
     // 验证事件名称
-    const validEvents = ['generate_course', 'start_learning', 'continue_learning'];
+    const validEvents = [
+      'generate_course', 
+      'start_learning', 
+      'continue_learning',
+      'start_video_learning',
+      'video_search',
+      'video_ask_question',
+      'video_screenshot',
+      'video_exercise'
+    ];
     if (!validEvents.includes(event.event_name)) {
       return NextResponse.json(
         { error: 'Invalid event_name. Must be one of: ' + validEvents.join(', ') },

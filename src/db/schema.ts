@@ -145,7 +145,7 @@ export const userCoursesRelations = relations(userCourses, ({ one }) => ({
 // 关键用户行为表（专门用于核心转化行为追踪）
 export const keyActions = pgTable('key_actions', {
   id: text('id').primaryKey().$defaultFn(() => `key_action_${crypto.randomUUID()}`),
-  eventName: varchar('event_name', { length: 50 }).notNull(), // 'generate_course' | 'start_learning' | 'continue_learning'
+  eventName: varchar('event_name', { length: 50 }).notNull(), // 'generate_course' | 'start_learning' | 'continue_learning' | 'start_video_learning' | 'video_search' | 'video_ask_question' | 'video_screenshot' | 'video_exercise'
   timestamp: bigint('timestamp', { mode: 'number' }).notNull(),
   serverTimestamp: timestamp('server_timestamp').defaultNow().notNull(),
   sessionId: varchar('session_id', { length: 200 }).notNull(),
