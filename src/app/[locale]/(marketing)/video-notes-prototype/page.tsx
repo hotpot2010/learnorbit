@@ -4637,10 +4637,10 @@ export default function VideoNotesPrototypePage() {
                 setShowSearchDialog(true);
               }}
               disabled={!knowledgePoints || knowledgePoints.length === 0}
-              className="flex-1 max-w-xs py-6 text-lg font-bold bg-green-500 hover:bg-green-600 text-white shadow-lg disabled:bg-green-500/50"
+              className="flex-1 max-w-xs py-6 text-lg font-medium bg-green-50 hover:bg-green-100 text-gray-700 border-2 border-green-200 hover:border-green-300 shadow-sm transition-all disabled:bg-gray-50 disabled:text-gray-400"
               size="lg"
             >
-              <Search className="w-5 h-5 mr-2" />
+              <Search className="w-5 h-5 mr-2 text-green-600" />
               搜索知识点
             </Button>
             
@@ -4663,10 +4663,10 @@ export default function VideoNotesPrototypePage() {
                 }
                 setAskingKnowledgeIndex(currentKnowledgeIndex);
               }}
-              className="flex-1 max-w-xs py-6 text-lg font-bold bg-blue-500 text-white shadow-lg hover:bg-blue-600 transition-colors"
+              className="flex-1 max-w-xs py-6 text-lg font-medium bg-yellow-50 hover:bg-yellow-100 text-gray-700 border-2 border-yellow-200 hover:border-yellow-300 shadow-sm transition-all"
               size="lg"
             >
-              <MessageSquare className="w-5 h-5 mr-2" />
+              <MessageSquare className="w-5 h-5 mr-2 text-yellow-600" />
               {t('askQuestion')}
             </Button>
             
@@ -4675,10 +4675,10 @@ export default function VideoNotesPrototypePage() {
             <Button
               onClick={() => captureScreenshotOnly(currentKnowledgeIndex)}
               disabled={!knowledgePoints[currentKnowledgeIndex]}
-              className="flex-1 max-w-xs py-6 text-lg font-bold bg-purple-500 hover:bg-purple-600 text-white shadow-lg disabled:bg-purple-500/50 disabled:cursor-not-allowed"
+              className="flex-1 max-w-xs py-6 text-lg font-medium bg-purple-50 hover:bg-purple-100 text-gray-700 border-2 border-purple-200 hover:border-purple-300 shadow-sm transition-all disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed"
               size="lg"
             >
-              <ImageIcon className="w-5 h-5 mr-2" />
+              <ImageIcon className="w-5 h-5 mr-2 text-purple-600" />
               截图
             </Button>
             
@@ -4686,17 +4686,17 @@ export default function VideoNotesPrototypePage() {
             <Button
               onClick={() => generateExercise(currentKnowledgeIndex)}
               disabled={!knowledgePoints[currentKnowledgeIndex] || isGeneratingExercise}
-              className="flex-1 max-w-xs py-6 text-lg font-bold bg-orange-500 text-white shadow-lg hover:bg-orange-600 transition-colors disabled:bg-orange-500/50 disabled:cursor-not-allowed"
+              className="flex-1 max-w-xs py-6 text-lg font-medium bg-orange-50 hover:bg-orange-100 text-gray-700 border-2 border-orange-200 hover:border-orange-300 shadow-sm transition-all disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed"
               size="lg"
             >
               {isGeneratingExercise ? (
                 <>
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin text-orange-600" />
                   {t('generatingNotes')}
                 </>
               ) : (
                 <>
-                  <CheckSquare className="w-5 h-5 mr-2" />
+                  <CheckSquare className="w-5 h-5 mr-2 text-orange-600" />
                   {t('exercises')}
                 </>
               )}
