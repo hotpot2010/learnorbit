@@ -275,10 +275,15 @@ class KnowledgePointExtractor:
         # 4. 去重（基于名称和时间范围）
         unique_points = self._deduplicate_knowledge_points(all_knowledge_points)
         
+        # 5. 为每个知识点添加对应的逐字稿片段
+        print(f"\n📝 Adding transcript segments to knowledge points...")
+        unique_points = self._add_transcript_segments(unique_points, transcript_with_timestamps)
+        
         print(f"\n{'='*70}")
         print(f"✅ Knowledge Point Extraction Complete")
         print(f"   Total extracted: {len(all_knowledge_points)}")
         print(f"   After deduplication: {len(unique_points)}")
+        print(f"   With transcript segments: {sum(1 for p in unique_points if p.get('transcript_segment'))}")
         print(f"{'='*70}\n")
         
         return unique_points
@@ -322,4 +327,102 @@ class KnowledgePointExtractor:
         except:
             pass
         return 0
+    
+    def _add_transcript_segments(
+        self,
+        knowledge_points: List[Dict[str, Any]],
+        full_transcript: str
+    ) -> List[Dict[str, Any]]:
+        """
+        为每个知识点添加对应的逐字稿片段
+        
+        Args:
+            knowledge_points: 知识点列表
+            full_transcript: 完整逐字稿（带时间戳）
+            
+        Returns:
+            添加了 transcript_segment 字段的知识点列表
+        """
+        import re
+        
+        print(f"\n📝 Adding transcript segments to knowledge points...")
+        print(f"   Full transcript length: {len(full_transcript)} chars")
+        print(f"   Transcript preview (first 500 chars):\n{full_transcript[:500]}")
+        
+        # 解析完整逐字稿，提取所有带时间戳的行
+        # 支持两种格式:
+        # 1. [MM:SS] 文本内容
+        # 2. [MM:SS - MM:SS] 文本内容
+        time_pattern1 = re.compile(r'\[(\d+:\d+)\]\s*(.*)')  # [MM:SS] format
+        time_pattern2 = re.compile(r'\[(\d+:\d+)\s*-\s*(\d+:\d+)\]\s*(.*)')  # [MM:SS - MM:SS] format
+        transcript_lines = []
+        
+        for line in full_transcript.split('\n'):
+            line = line.strip()
+            if not line:
+                continue
+                
+            # 尝试匹配范围格式 [MM:SS - MM:SS]
+            match2 = time_pattern2.match(line)
+            if match2:
+                start_time, end_time, text = match2.groups()
+                start_seconds = self._time_to_seconds(start_time)
+                end_seconds = self._time_to_seconds(end_time)
+                # 使用开始时间作为代表时间
+                transcript_lines.append({
+                    'time': start_time,
+                    'seconds': start_seconds,
+                    'end_seconds': end_seconds,
+                    'text': text.strip()
+                })
+                continue
+            
+            # 尝试匹配单个时间点格式 [MM:SS]
+            match1 = time_pattern1.match(line)
+            if match1:
+                time_str, text = match1.groups()
+                seconds = self._time_to_seconds(time_str)
+                transcript_lines.append({
+                    'time': time_str,
+                    'seconds': seconds,
+                    'end_seconds': seconds,
+                    'text': text.strip()
+                })
+        
+        print(f"   Parsed {len(transcript_lines)} transcript lines with timestamps")
+        if transcript_lines:
+            print(f"   First line example: {transcript_lines[0]}")
+        
+        # 为每个知识点提取对应的逐字稿片段
+        for point in knowledge_points:
+            start_time = point.get('start_time', '')
+            end_time = point.get('end_time', '')
+            
+            start_seconds = self._time_to_seconds(start_time)
+            end_seconds = self._time_to_seconds(end_time)
+            
+            # 提取时间范围内的所有文本
+            segment_texts = []
+            for line in transcript_lines:
+                # 检查这一行是否与知识点的时间范围重叠
+                line_start = line['seconds']
+                line_end = line.get('end_seconds', line_start)
+                
+                # 判断是否有重叠：行的开始时间 <= 知识点结束时间 AND 行的结束时间 >= 知识点开始时间
+                if line_start <= end_seconds and line_end >= start_seconds:
+                    if line['text']:
+                        segment_texts.append(line['text'])
+            
+            # 合并为一段文本
+            if segment_texts:
+                point['transcript_segment'] = ' '.join(segment_texts)
+                print(f"   ✓ Added transcript segment for '{point.get('name', '')}' ({start_time}-{end_time}): {len(point['transcript_segment'])} chars")
+            else:
+                point['transcript_segment'] = ''
+                print(f"   ⚠️ No transcript segment found for '{point.get('name', '')}' ({start_time} - {end_time})")
+                print(f"      Start: {start_seconds}s, End: {end_seconds}s")
+                if transcript_lines:
+                    print(f"      Available transcript range: {transcript_lines[0]['seconds']}s - {transcript_lines[-1].get('end_seconds', transcript_lines[-1]['seconds'])}s")
+        
+        return knowledge_points
 

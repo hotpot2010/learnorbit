@@ -167,3 +167,5 @@ python reset_screenshots_step.py
 4. ✅ 重置前建议先运行 `check_task_status.py` 查看状态
 5. ✅ 重置后需要刷新前端页面才能看到变化
 
+
+

@@ -102,6 +102,7 @@ interface KnowledgePoint {
   start_time: string;
   end_time: string;
   note?: string;  // AI生成的笔记
+  transcript_segment?: string;  // 知识点对应的逐字稿片段
   thumbnail?: string;  // 视频截图缩略图
   isGeneratingNote?: boolean;  // 是否正在生成笔记
   qaList?: QAPair[];  // Q&A列表
@@ -564,12 +565,144 @@ export default function VideoNotesPrototypePage() {
   const [currentTime, setCurrentTime] = useState(0);
   const [currentKnowledgeIndex, setCurrentKnowledgeIndex] = useState(0);
   
+  // 从完整逐字稿中提取知识点对应的片段（保留时间戳格式）
+  const extractTranscriptSegmentWithTimestamp = (startTime: string, endTime: string, fullTranscript: string): string => {
+    if (!fullTranscript) return '';
+    
+    // 解析时间为秒数
+    const timeToSeconds = (timeStr: string): number => {
+      try {
+        const parts = timeStr.trim().split(':');
+        if (parts.length === 2) {
+          const [minutes, seconds] = parts;
+          return parseInt(minutes) * 60 + parseInt(seconds);
+        }
+      } catch {
+        // ignore
+      }
+      return 0;
+    };
+    
+    const startSeconds = timeToSeconds(startTime);
+    const endSeconds = timeToSeconds(endTime);
+    
+    // 支持两种ASR时间戳格式并保留原始格式
+    const timePattern1 = /\[(\d+:\d+)\s*-\s*(\d+:\d+)\]\s*(.*)/;
+    const timePattern2 = /\[(\d+:\d+)\]\s*(.*)/;
+    
+    const lines = fullTranscript.split('\n');
+    const matchedLines: string[] = [];
+    
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      if (!trimmedLine) continue;
+      
+      // 尝试匹配范围格式 [MM:SS - MM:SS]
+      const match1 = timePattern1.exec(trimmedLine);
+      if (match1) {
+        const [fullMatch, lineStart, lineEnd, text] = match1;
+        const lineStartSec = timeToSeconds(lineStart);
+        const lineEndSec = timeToSeconds(lineEnd);
+        
+        // 检查时间范围是否重叠
+        if (lineStartSec <= endSeconds && lineEndSec >= startSeconds) {
+          matchedLines.push(trimmedLine); // 保留完整行（包括时间戳）
+        }
+        continue;
+      }
+      
+      // 尝试匹配单点格式 [MM:SS]
+      const match2 = timePattern2.exec(trimmedLine);
+      if (match2) {
+        const [fullMatch, lineTime, text] = match2;
+        const lineSeconds = timeToSeconds(lineTime);
+        
+        if (lineSeconds >= startSeconds && lineSeconds <= endSeconds) {
+          matchedLines.push(trimmedLine); // 保留完整行（包括时间戳）
+        }
+      }
+    }
+    
+    const result = matchedLines.join('\n');
+    console.log(`📝 提取带时间戳的逐字稿片段 (${startTime}-${endTime}): ${matchedLines.length} 行`);
+    return result;
+  };
+
+  // 从完整逐字稿中提取知识点对应的片段
+  const extractTranscriptSegment = (startTime: string, endTime: string, fullTranscript: string): string => {
+    if (!fullTranscript) return '';
+    
+    // 解析时间为秒数
+    const timeToSeconds = (timeStr: string): number => {
+      try {
+        const parts = timeStr.trim().split(':');
+        if (parts.length === 2) {
+          const [minutes, seconds] = parts;
+          return parseInt(minutes) * 60 + parseInt(seconds);
+        }
+      } catch {
+        // ignore
+      }
+      return 0;
+    };
+    
+    const startSeconds = timeToSeconds(startTime);
+    const endSeconds = timeToSeconds(endTime);
+    
+    // 支持两种ASR时间戳格式:
+    // 1. [MM:SS - MM:SS] 文本内容
+    // 2. [MM:SS] 文本内容
+    const timePattern1 = /\[(\d+:\d+)\s*-\s*(\d+:\d+)\]\s*(.*)/;
+    const timePattern2 = /\[(\d+:\d+)\]\s*(.*)/;
+    
+    const lines = fullTranscript.split('\n');
+    const matchedTexts: string[] = [];
+    
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      if (!trimmedLine) continue;
+      
+      // 尝试匹配范围格式 [MM:SS - MM:SS]
+      const match1 = timePattern1.exec(trimmedLine);
+      if (match1) {
+        const [, lineStart, lineEnd, text] = match1;
+        const lineStartSec = timeToSeconds(lineStart);
+        const lineEndSec = timeToSeconds(lineEnd);
+        
+        // 检查时间范围是否重叠
+        if (lineStartSec <= endSeconds && lineEndSec >= startSeconds) {
+          matchedTexts.push(text.trim());
+        }
+        continue;
+      }
+      
+      // 尝试匹配单点格式 [MM:SS]
+      const match2 = timePattern2.exec(trimmedLine);
+      if (match2) {
+        const [, lineTime, text] = match2;
+        const lineSeconds = timeToSeconds(lineTime);
+        
+        if (lineSeconds >= startSeconds && lineSeconds <= endSeconds) {
+          matchedTexts.push(text.trim());
+        }
+      }
+    }
+    
+    const result = matchedTexts.join(' ');
+    console.log(`📝 提取逐字稿片段 (${startTime}-${endTime}): ${result.length} 字符`);
+    return result;
+  };
+  
   // 已处理视频的相关状态
   const [isProcessedVideo, setIsProcessedVideo] = useState(false);
   const [processedTaskData, setProcessedTaskData] = useState<any>(null);
   // 使用 ref 来存储，确保在异步操作中也能访问到最新值
   const processedTaskDataRef = useRef<any>(null);
   const isProcessedVideoRef = useRef<boolean>(false);
+  
+  // ASR逐字稿数据（从数据库加载）
+  const [fullTranscript, setFullTranscript] = useState<string>('');
+  const fullTranscriptRef = useRef<string>(''); // 使用ref确保能在回调中访问
 
   // 检查URL参数，加载已处理视频数据
   useEffect(() => {
@@ -683,6 +816,27 @@ export default function VideoNotesPrototypePage() {
                 kpArray = kpData.knowledge_points;
               }
               
+              // 🔍 检查是否包含 transcript_segment 字段
+              if (Array.isArray(kpArray) && kpArray.length > 0) {
+                const firstKp = kpArray[0];
+                console.log('🔍 [DEBUG] 第一个知识点的所有字段:', Object.keys(firstKp));
+                console.log('🔍 [DEBUG] 第一个知识点的 transcript_segment:', firstKp.transcript_segment);
+                
+                const hasTranscriptCount = kpArray.filter(kp => kp.transcript_segment).length;
+                if (hasTranscriptCount > 0) {
+                  console.log(`✅ 发现 ${hasTranscriptCount}/${kpArray.length} 个知识点包含逐字稿`);
+                  console.log('✅ 逐字稿字段示例:', firstKp.transcript_segment?.substring(0, 100) + '...');
+                } else {
+                  console.warn('⚠️ 逐字稿字段不存在！这是旧版本的知识点数据。');
+                  console.warn('💡 解决方案：需要重新分析视频以生成包含逐字稿的新数据。');
+                  console.warn('📝 操作步骤：');
+                  console.warn('   1. 在视频列表中找到这个视频');
+                  console.warn('   2. 删除旧任务（如果需要）');
+                  console.warn('   3. 重新上传/分析视频');
+                  console.warn('   4. 新生成的知识点数据将自动包含逐字稿片段');
+                }
+              }
+              
               if (Array.isArray(kpArray) && kpArray.length > 0) {
                 // 检查是否有预生成的截图
                 const screenshotsUrls = task.screenshots_result_url;
@@ -697,6 +851,33 @@ export default function VideoNotesPrototypePage() {
                   
                   if (firstScreenshotsUrl) {
                     finalKpArray = await loadScreenshotsForKnowledgePoints(kpArray, firstScreenshotsUrl);
+                  }
+                }
+                
+                // 🔍 加载ASR逐字稿数据
+                const asrUrls = task.asr_result_url;
+                if (asrUrls) {
+                  console.log('📝 检测到数据库中的ASR结果URL，开始加载...');
+                  const asrUrlArray = typeof asrUrls === 'string'
+                    ? (asrUrls.startsWith('[') ? JSON.parse(asrUrls) : [asrUrls])
+                    : asrUrls;
+                  const firstAsrUrl = Array.isArray(asrUrlArray) ? asrUrlArray[0] : asrUrls;
+                  
+                  if (firstAsrUrl) {
+                    try {
+                      const secureAsrUrl = ensureHttps(firstAsrUrl) as string;
+                      console.log('📥 加载ASR逐字稿:', secureAsrUrl);
+                      const asrResponse = await fetch(secureAsrUrl);
+                      const asrText = await asrResponse.text();
+                      console.log(`✅ ASR逐字稿加载成功，长度: ${asrText.length} 字符`);
+                      console.log('📝 逐字稿预览 (前200字符):', asrText.substring(0, 200));
+                      
+                      // 保存完整逐字稿
+                      setFullTranscript(asrText);
+                      fullTranscriptRef.current = asrText;
+                    } catch (error) {
+                      console.error('❌ 加载ASR逐字稿失败:', error);
+                    }
                   }
                 }
                 
@@ -919,7 +1100,6 @@ export default function VideoNotesPrototypePage() {
   const [isDragging, setIsDragging] = useState<number | null>(null);
   const [expandedNotes, setExpandedNotes] = useState<Set<number>>(new Set([1])); // 默认展开第一条
   const [videoTitle, setVideoTitle] = useState<string>(''); // 视频标题
-  const [fullTranscript, setFullTranscript] = useState<string>(''); // 完整逐字稿
   const [editingNoteIndex, setEditingNoteIndex] = useState<number | null>(null); // 正在编辑的笔记索引
   const [currentVideoUrl, setCurrentVideoUrl] = useState<string>(''); // 当前视频URL（用于缓存）
   const [expandedKnowledgePoints, setExpandedKnowledgePoints] = useState<Set<number>>(new Set()); // 展开的知识点索引（默认空，加载后全部展开）
@@ -1164,6 +1344,27 @@ export default function VideoNotesPrototypePage() {
               kpArray = kpData.knowledge_points;
             }
             
+            // 🔍 检查是否包含 transcript_segment 字段
+            if (Array.isArray(kpArray) && kpArray.length > 0) {
+              const firstKp = kpArray[0];
+              console.log('🔍 [DEBUG] 第一个知识点的所有字段:', Object.keys(firstKp));
+              console.log('🔍 [DEBUG] 第一个知识点的 transcript_segment:', firstKp.transcript_segment);
+              
+              const hasTranscriptCount = kpArray.filter(kp => kp.transcript_segment).length;
+              if (hasTranscriptCount > 0) {
+                console.log(`✅ 发现 ${hasTranscriptCount}/${kpArray.length} 个知识点包含逐字稿`);
+                console.log('✅ 逐字稿字段示例:', firstKp.transcript_segment?.substring(0, 100) + '...');
+              } else {
+                console.warn('⚠️ 逐字稿字段不存在！这是旧版本的知识点数据。');
+                console.warn('💡 解决方案：需要重新分析视频以生成包含逐字稿的新数据。');
+                console.warn('📝 操作步骤：');
+                console.warn('   1. 在视频列表中找到这个视频');
+                console.warn('   2. 删除旧任务（如果需要）');
+                console.warn('   3. 重新上传/分析视频');
+                console.warn('   4. 新生成的知识点数据将自动包含逐字稿片段');
+              }
+            }
+            
             if (Array.isArray(kpArray) && kpArray.length > 0) {
               // 检查是否有预生成的截图
               const screenshotsUrls = processedTaskDataRef.current.screenshots_result_url;
@@ -1178,6 +1379,33 @@ export default function VideoNotesPrototypePage() {
                 
                 if (screenshotsUrl) {
                   finalKpArray = await loadScreenshotsForKnowledgePoints(kpArray, screenshotsUrl);
+                }
+              }
+              
+              // 🔍 加载ASR逐字稿数据
+              const asrUrls = processedTaskDataRef.current.asr_result_url;
+              if (asrUrls) {
+                console.log('📝 检测到数据库中的ASR结果URL，开始加载...');
+                const asrUrlArray = typeof asrUrls === 'string'
+                  ? (asrUrls.startsWith('[') ? JSON.parse(asrUrls) : [asrUrls])
+                  : asrUrls;
+                const asrUrl = Array.isArray(asrUrlArray) ? asrUrlArray[partIndex] : asrUrlArray;
+                
+                if (asrUrl) {
+                  try {
+                    const secureAsrUrl = ensureHttps(asrUrl) as string;
+                    console.log('📥 加载ASR逐字稿:', secureAsrUrl);
+                    const asrResponse = await fetch(secureAsrUrl);
+                    const asrText = await asrResponse.text();
+                    console.log(`✅ ASR逐字稿加载成功，长度: ${asrText.length} 字符`);
+                    console.log('📝 逐字稿预览 (前200字符):', asrText.substring(0, 200));
+                    
+                    // 保存完整逐字稿
+                    setFullTranscript(asrText);
+                    fullTranscriptRef.current = asrText;
+                  } catch (error) {
+                    console.error('❌ 加载ASR逐字稿失败:', error);
+                  }
                 }
               }
               
@@ -1985,12 +2213,12 @@ export default function VideoNotesPrototypePage() {
       const targetPart = allParts[result.partIndex];
       if (targetPart) {
         loadPart(targetPart, result.partIndex);
-        
-        // 等待分P加载完成后跳转到知识点
-        setTimeout(() => {
-          handleTimeJump(result.startTime);
-          setCurrentKnowledgeIndex(result.knowledgePointIndex);
-        }, 1000);
+      
+      // 等待分P加载完成后跳转到知识点
+      setTimeout(() => {
+        handleTimeJump(result.startTime);
+        setCurrentKnowledgeIndex(result.knowledgePointIndex);
+      }, 1000);
       }
     } else {
       // 同一分P，直接跳转
@@ -2208,28 +2436,6 @@ export default function VideoNotesPrototypePage() {
       setExpandedKnowledgePoints(new Set(allIndexes));
       setIsAllExpanded(true);
     }
-  };
-  
-  // 提取知识点对应的逐字稿片段
-  const extractTranscriptSegment = (startTime: string, endTime: string): string => {
-    if (!fullTranscript) return '';
-    
-    const startSeconds = timeToSeconds(startTime);
-    const endSeconds = timeToSeconds(endTime);
-    
-    // 逐字稿格式: [MM:SS - MM:SS] 文本
-    const lines = fullTranscript.split('\n');
-    const relevantLines = lines.filter(line => {
-      const timeMatch = line.match(/\[(\d{2}:\d{2}) - (\d{2}:\d{2})\]/);
-      if (timeMatch) {
-        const lineStart = timeToSeconds(timeMatch[1]);
-        const lineEnd = timeToSeconds(timeMatch[2]);
-        return lineStart >= startSeconds && lineEnd <= endSeconds;
-      }
-      return false;
-    });
-    
-    return relevantLines.join('\n');
   };
   
   // 捕获视频截图
@@ -2514,7 +2720,9 @@ export default function VideoNotesPrototypePage() {
       }
       
       // 提取对应的逐字稿片段
-      const transcriptSegment = extractTranscriptSegment(point.start_time, point.end_time);
+      const transcriptSegment = fullTranscriptRef.current 
+        ? extractTranscriptSegment(point.start_time, point.end_time, fullTranscriptRef.current)
+        : '';
       
       console.log('📝 Generating note for:', point.name);
       console.log('📄 Transcript segment:', transcriptSegment.substring(0, 100), '...');
@@ -2623,10 +2831,19 @@ export default function VideoNotesPrototypePage() {
     
     try {
       // 提取对应的逐字稿片段作为上下文
-      const transcriptSegment = extractTranscriptSegment(point.start_time, point.end_time);
+      // 优先使用知识点中的 transcript_segment 字段，如果没有则从完整逐字稿中动态提取
+      const transcriptSegment = point.transcript_segment || 
+        (fullTranscriptRef.current
+          ? extractTranscriptSegment(point.start_time, point.end_time, fullTranscriptRef.current)
+          : '');
       
       console.log('🤔 Asking question:', question);
-      console.log('📄 Context:', transcriptSegment.substring(0, 100), '...');
+      console.log('📄 Context length:', transcriptSegment.length, 'chars');
+      console.log('📄 Context preview:', transcriptSegment.substring(0, 100), '...');
+      
+      if (!transcriptSegment) {
+        console.warn('⚠️ 没有可用的逐字稿片段，将使用空上下文');
+      }
       
       // 调用LLM API回答问题
       const response = await fetch(buildApiUrl(API_ENDPOINTS.notesAnswerQuestion), {
@@ -3926,7 +4143,9 @@ export default function VideoNotesPrototypePage() {
     
     try {
       // 提取对应的逐字稿片段作为上下文
-      const transcriptSegment = extractTranscriptSegment(point.start_time, point.end_time);
+      const transcriptSegment = fullTranscriptRef.current
+        ? extractTranscriptSegment(point.start_time, point.end_time, fullTranscriptRef.current)
+        : '';
       
       console.log('💪 Generating exercise for:', point.name);
       console.log('📄 Context:', transcriptSegment.substring(0, 100), '...');
@@ -3974,17 +4193,17 @@ export default function VideoNotesPrototypePage() {
       return;
     }
     
-    setKnowledgePoints(prev => prev.map((p, i) => {
+        setKnowledgePoints(prev => prev.map((p, i) => {
       if (i === exerciseKnowledgePointIndex) {
         const exercises = p.exercises || [];
-        return {
-          ...p,
+            return {
+              ...p,
           exercises: [...exercises, generatedExercise],
-        };
-      }
-      return p;
-    }));
-    
+            };
+          }
+          return p;
+        }));
+        
     // 关闭对话框并重置状态
     setShowExerciseDialog(false);
     setGeneratedExercise(null);
@@ -5512,7 +5731,7 @@ export default function VideoNotesPrototypePage() {
                       <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
+                  </svg>
                       保存中...
                     </>
                   ) : saveStatus === 'saved' ? (
@@ -5548,7 +5767,15 @@ export default function VideoNotesPrototypePage() {
       </div>
       
       {/* 提问输入框 - 浮动在视频中心 - 卡片样式 */}
-      {askingKnowledgeIndex !== null && (
+      {askingKnowledgeIndex !== null && (() => {
+        const currentKp = knowledgePoints[askingKnowledgeIndex];
+        // 优先使用知识点中的 transcript_segment 字段，如果没有则从完整逐字稿中动态提取（带时间戳）
+        const transcriptSegment = currentKp?.transcript_segment || 
+          (currentKp?.start_time && currentKp?.end_time && fullTranscriptRef.current
+            ? extractTranscriptSegmentWithTimestamp(currentKp.start_time, currentKp.end_time, fullTranscriptRef.current)
+            : '');
+        const hasTranscript = !!transcriptSegment;
+        return (
         <div 
           className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200 p-4"
           onClick={() => {
@@ -5558,7 +5785,7 @@ export default function VideoNotesPrototypePage() {
         >
           <div 
             className="bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col relative overflow-hidden"
-            style={{ width: '480px', height: '640px' }}
+              style={{ width: '480px', height: '640px' }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* 装饰性背景 */}
@@ -5589,43 +5816,105 @@ export default function VideoNotesPrototypePage() {
               </button>
             </div>
             
-            {/* 输入区域 */}
-            <div className="flex-1 p-6 flex flex-col items-center justify-center relative z-10">
-              <div className="w-full">
-                <div className="text-center mb-6">
-                  <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <span className="text-3xl">🤔</span>
+              {/* 内容区域 */}
+              <div className="flex-1 overflow-y-auto p-6 relative z-10">
+              <div className="w-full h-full flex flex-col">
+                {/* 无逐字稿时显示引导文案 */}
+                {!hasTranscript && (
+                  <div className="flex-1 flex flex-col items-center justify-center mb-6">
+                    <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-3">
+                      <span className="text-3xl">🤔</span>
+                    </div>
+                    <h4 className="text-lg font-bold text-gray-800 mb-1">有什么疑问吗？</h4>
+                    <p className="text-sm text-gray-500">AI 助教随时为你解答，基于视频内容回答。</p>
                   </div>
-                  <h4 className="text-lg font-bold text-gray-800 mb-1">有什么疑问吗？</h4>
-                  <p className="text-sm text-gray-500">AI 助教随时为你解答，基于视频内容回答。</p>
-                </div>
+                )}
 
+                  {/* 逐字稿区域 - 有逐字稿时占据大部分空间 */}
+                  {hasTranscript && (
+                    <div className="flex-1 mb-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border-2 border-blue-200 overflow-hidden flex flex-col">
+                      <div className="flex items-center gap-2 mb-3 flex-shrink-0">
+                        <FileText className="w-4 h-4 text-indigo-600" />
+                        <h5 className="text-sm font-bold text-gray-800">📝 视频逐字稿</h5>
+                        <span className="text-xs text-gray-500">（点击内容快速提问）</span>
+                      </div>
+                      <div className="flex-1 bg-white rounded-lg p-3 overflow-y-auto">
+                        <div className="text-sm text-gray-700 leading-relaxed space-y-2">
+                          {transcriptSegment.split('\n').filter(line => line.trim()).map((line, lineIdx) => {
+                            // 解析时间戳和文本：支持 [MM:SS - MM:SS] 或 [MM:SS] 格式
+                            const timePattern1 = /^\[(\d+:\d+)\s*-\s*(\d+:\d+)\]\s*(.*)$/;
+                            const timePattern2 = /^\[(\d+:\d+)\]\s*(.*)$/;
+                            
+                            const match1 = line.match(timePattern1);
+                            const match2 = line.match(timePattern2);
+                            
+                            let timestamp = '';
+                            let text = '';
+                            
+                            if (match1) {
+                              timestamp = `[${match1[1]} - ${match1[2]}]`;
+                              text = match1[3];
+                            } else if (match2) {
+                              timestamp = `[${match2[1]}]`;
+                              text = match2[2];
+                            } else {
+                              text = line; // 没有时间戳的文本
+                            }
+                            
+                            return (
+                              <div key={lineIdx} className="flex gap-2 items-start">
+                                {timestamp && (
+                                  <span className="flex-shrink-0 text-xs text-blue-600 font-mono bg-blue-50 px-1.5 py-0.5 rounded">
+                                    {timestamp}
+                                  </span>
+                                )}
+                                <button
+                                  onClick={() => setQuestionInput(`关于"${text.trim()}"，`)}
+                                  className="flex-1 hover:bg-yellow-100 hover:text-yellow-900 rounded px-1 transition-colors cursor-pointer text-left"
+                                  title="点击快速提问"
+                                >
+                                  {text.trim()}
+                                </button>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                      <div className="mt-2 text-xs text-gray-500 flex items-center gap-1 flex-shrink-0">
+                        <Lightbulb className="w-3 h-3" />
+                        <span>点击任意句子，自动生成问题模板</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 输入区域 - 使用2行textarea */}
+                  <div className="flex-shrink-0">
                 <div className="relative">
-              <input
-                    type="text"
+              <textarea
                 value={questionInput}
                 onChange={(e) => setQuestionInput(e.target.value)}
                 onKeyPress={(e) => {
-                      if (e.key === 'Enter' && questionInput.trim() && !knowledgePoints[askingKnowledgeIndex]?.isAsking) {
+                  if (e.key === 'Enter' && !e.shiftKey && questionInput.trim() && !knowledgePoints[askingKnowledgeIndex]?.isAsking) {
                     e.preventDefault();
                     handleAskQuestion(askingKnowledgeIndex);
                   }
                 }}
-                    placeholder="输入你的问题..."
-                    className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:border-yellow-400 focus:outline-none transition-colors text-lg shadow-sm pr-12"
+                placeholder="输入你的问题...（Shift+Enter换行）"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-yellow-400 focus:outline-none transition-colors text-base shadow-sm pr-12 resize-none overflow-y-auto"
+                rows={2}
                 autoFocus
               />
               <button
                 onClick={() => handleAskQuestion(askingKnowledgeIndex)}
                 disabled={!questionInput.trim() || knowledgePoints[askingKnowledgeIndex]?.isAsking}
-                    className="absolute right-2 top-2 bottom-2 aspect-square bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-all flex items-center justify-center shadow-sm"
+                className="absolute right-2 bottom-2 w-10 h-10 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-all flex items-center justify-center shadow-sm"
               >
                 {knowledgePoints[askingKnowledgeIndex]?.isAsking ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : (
-                      <Sparkles className="w-5 h-5" />
-                    )}
-                  </button>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Sparkles className="w-5 h-5" />
+                )}
+              </button>
                 </div>
                 
                 <div className="mt-4 flex flex-wrap justify-center gap-2">
@@ -5640,11 +5929,13 @@ export default function VideoNotesPrototypePage() {
                     </button>
                   ))}
                 </div>
+                  </div>
               </div>
             </div>
           </div>
         </div>
-      )}
+        );
+      })()}
       
       {/* QA回答卡片 - 浮动在视频中心 - 竖向卡片(高>宽) */}
       {currentQACard && (
@@ -6045,7 +6336,7 @@ export default function VideoNotesPrototypePage() {
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute top-0 right-0 w-40 h-40 bg-orange-200 rounded-full opacity-10 -translate-y-20 translate-x-20"></div>
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-yellow-200 rounded-full opacity-10 translate-y-16 -translate-x-16"></div>
-            </div>
+    </div>
 
             {/* 标题栏 */}
             <div className="flex-shrink-0 bg-gradient-to-r from-orange-100 to-yellow-100 border-b-2 border-orange-300 p-5 flex items-center justify-between relative z-10">
