@@ -17,8 +17,13 @@ from .asr_service import AsrService
 from .knowledge_point_extractor import KnowledgePointExtractor
 from .file_upload_service import FileUploadService
 from .result_merger_service import ResultMergerService
+from .volcano_service import VolcanoService
+from .doubao_service import DoubaoService
 from ..database import get_db_session, init_db, test_connection
 from ..models.offline_video import OfflineVideoTask
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class TaskStatus(str, Enum):
@@ -37,6 +42,7 @@ class StepType(str, Enum):
     ASR = "asr"  # ASR识别
     KNOWLEDGE_POINTS = "knowledge_points"  # 生成知识点
     SCREENSHOTS = "screenshots"  # 生成截图
+    EXERCISES = "exercises"  # 生成练习题
     SUMMARY = "summary"  # 生成摘要
 
 
@@ -49,6 +55,14 @@ class OfflineVideoService:
         self.knowledge_point_extractor = KnowledgePointExtractor()
         self.file_upload_service = FileUploadService()
         self.result_merger = ResultMergerService()
+        
+        # 初始化 LLM 服务（用于练习生成）
+        llm_provider = os.getenv('LLM_PROVIDER', 'volcano')
+        if llm_provider == 'baijia':
+            self.llm_service = DoubaoService()
+        else:
+            self.llm_service = VolcanoService()
+        print(f"🔍 [OfflineVideoService] LLM_PROVIDER = '{llm_provider}'")
         
         # 任务存储（使用数据库）
         # 内存缓存，用于快速访问
@@ -163,12 +177,21 @@ class OfflineVideoService:
                     "result": None,
                     "error": None,
                     "retry_count": 0
+                },
+                "exercises": {
+                    "status": TaskStatus.PENDING,
+                    "progress": 0,
+                    "message": "等待执行",
+                    "result": None,
+                    "error": None,
+                    "retry_count": 0
                 }
             },
             "video_url": None,  # 上传后的视频URL
             "asr_result_url": None,  # ASR结果文件上传后的URL
             "knowledge_points_result_url": None,  # 知识点结果文件上传后的URL
             "screenshots_result_url": None,  # 截图结果文件上传后的URL
+            "exercises_result_url": None,  # 练习题结果文件上传后的URL
             "asr_document": None,  # ASR结果文档路径（本地）
             "knowledge_points_document": None,  # 知识点文档路径（本地）
             "is_series": is_series,  # 是否为系列视频
@@ -2429,6 +2452,599 @@ class OfflineVideoService:
                 print(f"🗑️ 清理临时目录: {temp_dir}")
             except Exception as e:
                 print(f"⚠️ 清理临时目录失败: {e}")
+    
+    async def _generate_exercises_for_knowledge_points(
+        self,
+        knowledge_points: List[Dict[str, Any]],
+        transcript_text: str,
+        video_title: str = "",
+        locale: str = "zh",
+        subject: str = "math"
+    ) -> List[Dict[str, Any]]:
+        """
+        为知识点生成练习题
+        
+        Args:
+            knowledge_points: 知识点列表
+            transcript_text: 完整逐字稿文本
+            video_title: 视频标题
+            locale: 语言环境 (zh/en)
+            subject: 学科类型 (math/programming)
+            
+        Returns:
+            练习题列表（与知识点一一对应）
+        """
+        exercises = []
+        
+        print(f"💪 开始为 {len(knowledge_points)} 个知识点生成练习题...")
+        print(f"📚 学科: {subject}, 语言: {locale}")
+        
+        for idx, kp in enumerate(knowledge_points):
+            try:
+                kp_name = kp.get("name", f"知识点{idx+1}")
+                start_time = kp.get("start_time", "00:00")
+                end_time = kp.get("end_time", "99:99")
+                
+                # 提取该知识点对应的逐字稿片段
+                transcript_segment = kp.get("transcript_segment", "")
+                if not transcript_segment and transcript_text:
+                    # 如果知识点没有逐字稿片段，尝试从完整逐字稿中提取
+                    # 简化版：使用完整逐字稿的前500字符作为上下文
+                    transcript_segment = transcript_text[:500] if transcript_text else ""
+                
+                print(f"💪 生成练习 {idx+1}/{len(knowledge_points)}: {kp_name}")
+                
+                # 构建练习生成 prompt
+                if subject == 'math':
+                    # 数学题型 prompt
+                    if locale == 'en':
+                        prompt = f"""You are an experienced mathematics teacher. Please generate a math exercise based on the following video knowledge point.
+
+Knowledge Point Name: {kp_name}
+Knowledge Point Content: {transcript_segment}
+
+Please generate an exercise with the following requirements:
+1. Exercise Type: Randomly choose either [Multiple Choice] or [Fill in the Blank]
+2. Difficulty: Suitable for middle/high school level with appropriate differentiation
+3. The question should be directly related to the specific knowledge point explained in the video
+4. The question should have practical application value, not too simple
+5. If there are formulas, use LaTeX format (wrapped with $), **Note: In JSON, backslashes must be escaped, written as double backslashes \\\\, e.g., \\\\frac, \\\\sin**
+6. Provide detailed analysis and solution steps
+
+Please return in JSON format as follows:
+
+**Multiple Choice Format:**
+{{{{
+  "type": "multiple_choice",
+  "title": "Knowledge Point Practice: {kp_name}",
+  "description": "Complete the following exercise based on the video content",
+  "difficulty": "intermediate",
+  "question": "Question content (LaTeX formula example: $\\\\frac{{{{1}}}}{{{{2}}}}$ or $\\\\sin x$)",
+  "choices": [
+    {{{{"label": "A", "content": "Option A content"}}}},
+    {{{{"label": "B", "content": "Option B content"}}}},
+    {{{{"label": "C", "content": "Option C content"}}}},
+    {{{{"label": "D", "content": "Option D content"}}}}
+  ],
+  "answer_type": "single",
+  "solution": "B",
+  "hints": ["Hint 1", "Hint 2", "Hint 3"]
+}}}}
+
+**Fill in the Blank Format:**
+{{{{
+  "type": "fill_blank",
+  "title": "Knowledge Point Practice: {kp_name}",
+  "description": "Complete the following exercise based on the video content",
+  "difficulty": "intermediate",
+  "question": "Question content, use ___ to indicate blank positions (LaTeX example: $\\\\frac{{{{1}}}}{{{{2}}}}$)",
+  "blanks": 2,
+  "answer_type": "text",
+  "solution": "Answer1;Answer2",
+  "hints": ["Hint 1", "Hint 2", "Hint 3"]
+}}}}
+
+Return only JSON, no other explanatory text."""
+                    else:
+                        prompt = f"""你是一位资深的数学教师，需要根据以下视频知识点生成一道练习题。
+
+知识点名称：{kp_name}
+知识点内容：{transcript_segment}
+
+请生成一道练习题，要求：
+1. 题型：随机选择【选择题】或【填空题】其中之一
+2. 难度：适配中考/高考水平，有一定区分度
+3. 题目要结合视频中讲解的具体知识点
+4. 题目要有实际应用价值，不要过于简单
+5. 如果有公式，使用 LaTeX 格式（用 $ 包裹），**注意：JSON中反斜杠必须转义，写成双反斜杠 \\\\ 例如 \\\\frac、\\\\sin**
+6. 提供详细的解析和解题步骤
+
+请以 JSON 格式返回，格式如下：
+
+**选择题格式：**
+{{{{
+  "type": "multiple_choice",
+  "title": "知识点练习：{kp_name}",
+  "description": "根据视频内容，完成以下练习题",
+  "difficulty": "intermediate",
+  "question": "题目内容（LaTeX公式示例：$\\\\frac{{{{1}}}}{{{{2}}}}$ 或 $\\\\sin x$）",
+  "choices": [
+    {{{{"label": "A", "content": "选项A内容"}}}},
+    {{{{"label": "B", "content": "选项B内容"}}}},
+    {{{{"label": "C", "content": "选项C内容"}}}},
+    {{{{"label": "D", "content": "选项D内容"}}}}
+  ],
+  "answer_type": "single",
+  "solution": "B",
+  "hints": ["提示1", "提示2", "提示3"]
+}}}}
+
+**填空题格式：**
+{{{{
+  "type": "fill_blank",
+  "title": "知识点练习：{kp_name}",
+  "description": "根据视频内容，完成以下练习题",
+  "difficulty": "intermediate",
+  "question": "题目内容，用 ___ 表示填空位置（LaTeX示例：$\\\\frac{{{{1}}}}{{{{2}}}}$）",
+  "blanks": 2,
+  "answer_type": "text",
+  "solution": "答案1;答案2",
+  "hints": ["提示1", "提示2", "提示3"]
+}}}}
+
+只返回 JSON，不要其他说明文字。"""
+                else:
+                    # 编程题型 prompt（默认）
+                    if locale == 'en':
+                        prompt = f"""You are a professional programming education expert. Please generate a programming exercise for the knowledge point based on the video content.
+
+Knowledge Point: {kp_name}
+Video Title: {video_title}
+Context: {transcript_segment}
+
+Please generate an exercise in JSON format. Choose the appropriate type and generate the exercise."""
+                    else:
+                        prompt = f"""你是一位专业的编程教学专家。请根据视频内容为知识点生成一道编程练习题。
+
+知识点：{kp_name}
+视频标题：{video_title}
+
+请根据知识点难度选择合适的题型并生成练习题。必须严格按照以下JSON格式返回。只输出 JSON，不要其他内容。"""
+                
+                # 调用 LLM 生成练习
+                exercise_json = await self.llm_service.generate_outline(
+                    transcript=transcript_segment,
+                    custom_prompt=prompt
+                )
+                
+                # 解析 JSON
+                try:
+                    # 清理可能的 markdown 代码块标记
+                    if exercise_json.startswith('```'):
+                        lines = exercise_json.split('\n')
+                        exercise_json = '\n'.join(lines[1:-1]) if len(lines) > 2 else exercise_json
+                    
+                    exercise_data = json.loads(exercise_json)
+                    exercises.append(exercise_data)
+                    print(f"✅ 练习 {idx+1} 生成成功: {exercise_data.get('type', 'unknown')}")
+                    
+                except json.JSONDecodeError as e:
+                    print(f"⚠️ 练习 {idx+1} JSON 解析失败: {e}")
+                    print(f"   Raw response: {exercise_json[:200]}...")
+                    # 添加一个空的占位符
+                    exercises.append({
+                        "type": "error",
+                        "title": f"练习题生成失败：{kp_name}",
+                        "error": str(e)
+                    })
+                    
+            except Exception as e:
+                print(f"⚠️ 练习 {idx+1} 生成失败: {e}")
+                import traceback
+                traceback.print_exc()
+                # 添加一个空的占位符
+                exercises.append({
+                    "type": "error",
+                    "title": f"练习题生成失败：{kp.get('name', f'知识点{idx+1}')}",
+                    "error": str(e)
+                })
+        
+        print(f"📊 练习生成完成: {len(exercises)}/{len(knowledge_points)}")
+        return exercises
+    
+    async def execute_step_exercises(self, task_id: str, subject: str = "math", mode: Optional[str] = None) -> Dict[str, Any]:
+        """
+        执行步骤4: 生成练习题（支持多P视频）
+        
+        Args:
+            task_id: 任务ID
+            subject: 学科类型 (math/programming)
+            mode: 执行模式 (None: 正常执行, "continue": 只执行失败的分P, "retry": 重新执行成功的分P)
+            
+        Returns:
+            执行结果
+        """
+        task = self.get_task(task_id)
+        if not task:
+            raise ValueError(f"任务不存在: {task_id}")
+        
+        # 检查知识点步骤是否完成
+        if task["steps"]["knowledge_points"]["status"] not in [TaskStatus.SUCCESS, TaskStatus.PARTIAL_SUCCESS]:
+            raise ValueError("请先完成知识点提取步骤")
+        
+        is_series = task.get("is_series", False)
+        series_parts = task.get("series_parts", [])
+        locale = task.get("locale", "zh")
+        
+        # 获取知识点结果URL列表
+        kp_result_url_data = task.get("knowledge_points_result_url")
+        if not kp_result_url_data:
+            raise ValueError("知识点结果URL不存在，请先完成知识点提取步骤")
+        
+        # 解析URL
+        try:
+            if isinstance(kp_result_url_data, str) and kp_result_url_data.startswith('['):
+                kp_result_urls = json.loads(kp_result_url_data)
+            elif isinstance(kp_result_url_data, list):
+                kp_result_urls = kp_result_url_data
+            else:
+                kp_result_urls = [kp_result_url_data]
+        except:
+            kp_result_urls = [kp_result_url_data]
+        
+        # 获取ASR结果URL列表
+        asr_result_url_data = task.get("asr_result_url")
+        try:
+            if isinstance(asr_result_url_data, str) and asr_result_url_data.startswith('['):
+                asr_result_urls = json.loads(asr_result_url_data)
+            elif isinstance(asr_result_url_data, list):
+                asr_result_urls = asr_result_url_data
+            else:
+                asr_result_urls = [asr_result_url_data]
+        except:
+            asr_result_urls = [asr_result_url_data]
+        
+        try:
+            # 检查是否已有部分完成的结果
+            existing_result = task["steps"]["exercises"].get("result")
+            
+            # 如果是多P视频，处理所有分P
+            if is_series and len(kp_result_urls) > 1:
+                total_parts = len(kp_result_urls)
+                exercises_result_urls = []
+                part_results = []
+                
+                self._update_step_status(
+                    task_id, "exercises",
+                    TaskStatus.RUNNING, 5,
+                    f"开始生成练习题（共{total_parts}个分P）..."
+                )
+                
+                part_results_existing = existing_result.get("part_results", []) if existing_result else []
+                part_results_map = {r.get("part_number"): r for r in part_results_existing if r.get("part_number")}
+                
+                print(f"💪 开始遍历 {total_parts} 个分P的练习生成... (mode={mode})")
+                
+                for idx, kp_result_url in enumerate(kp_result_urls, 1):
+                    existing_part = part_results_map.get(idx)
+                    existing_url = existing_part.get("result_url") if existing_part else None
+                    existing_status = existing_part.get("status") if existing_part else None
+                    
+                    should_skip = False
+                    
+                    if mode == "continue":
+                        if existing_status == "success" and existing_url:
+                            print(f"⏭️ [continue] 跳过已成功的分P {idx}/{total_parts} 练习生成")
+                            exercises_result_urls.append(existing_url)
+                            part_results.append(existing_part)
+                            should_skip = True
+                    elif mode == "retry":
+                        print(f"🔄 [retry] 重新执行分P {idx}/{total_parts} 练习生成")
+                    
+                    if should_skip:
+                        continue
+                    
+                    try:
+                        self._update_step_status(
+                            task_id, "exercises",
+                            TaskStatus.RUNNING,
+                            int(5 + (idx / total_parts) * 90),
+                            f"正在生成分P {idx}/{total_parts} 的练习题..."
+                        )
+                        
+                        # 下载知识点数据
+                        print(f"📥 下载分P {idx} 知识点数据...")
+                        loop = asyncio.get_event_loop()
+                        
+                        def download_knowledge_points():
+                            response = requests.get(kp_result_url, timeout=30)
+                            response.raise_for_status()
+                            return response.json()
+                        
+                        kp_data = await loop.run_in_executor(
+                            self.executor,
+                            download_knowledge_points
+                        )
+                        
+                        knowledge_points = kp_data
+                        if isinstance(kp_data, dict) and "knowledge_points" in kp_data:
+                            knowledge_points = kp_data["knowledge_points"]
+                        
+                        if not isinstance(knowledge_points, list):
+                            raise ValueError("知识点数据格式错误")
+                        
+                        print(f"✅ 知识点数据下载成功，共 {len(knowledge_points)} 个知识点")
+                        
+                        if len(knowledge_points) == 0:
+                            print(f"ℹ️ 分P {idx} 没有知识点，跳过练习生成")
+                            exercises = []
+                        else:
+                            # 获取ASR文本
+                            asr_text = ""
+                            if idx <= len(asr_result_urls):
+                                asr_result_url = asr_result_urls[idx - 1]
+                                def download_asr_text():
+                                    response = requests.get(asr_result_url, timeout=10)
+                                    response.raise_for_status()
+                                    return response.text
+                                
+                                asr_text = await loop.run_in_executor(
+                                    self.executor,
+                                    download_asr_text
+                                )
+                            
+                            # 获取视频标题
+                            part_title = ""
+                            if series_parts:
+                                for part in series_parts:
+                                    if part.get("part_number") == idx:
+                                        part_title = part.get("part_title", "")
+                                        break
+                            
+                            # 生成练习题
+                            exercises = await self._generate_exercises_for_knowledge_points(
+                                knowledge_points,
+                                asr_text,
+                                part_title,
+                                locale,
+                                subject
+                            )
+                            print(f"✅ 分P {idx} 练习生成完成，共 {len(exercises)} 道练习题")
+                        
+                        # 保存练习题到文件
+                        exercises_json = json.dumps(
+                            {"exercises": exercises, "count": len(exercises)},
+                            ensure_ascii=False,
+                            indent=2
+                        )
+                        
+                        exercises_doc_path = os.path.join(
+                            self.results_dir,
+                            f"{task_id}_exercises_p{idx}.json"
+                        )
+                        with open(exercises_doc_path, 'w', encoding='utf-8') as f:
+                            f.write(exercises_json)
+                        
+                        # 上传练习结果文件
+                        print(f"📤 上传分P {idx} 练习结果文件...")
+                        exercises_result_url = await loop.run_in_executor(
+                            self.executor,
+                            self.file_upload_service.upload_file,
+                            exercises_doc_path,
+                            "file0",
+                            "application/json; charset=utf-8"
+                        )
+                        
+                        if not exercises_result_url:
+                            raise Exception("练习结果文件上传失败")
+                        
+                        if not exercises_result_url.startswith('http'):
+                            exercises_result_url = f"https://file.gsxservice.com/{exercises_result_url}"
+                        
+                        exercises_result_urls.append(exercises_result_url)
+                        
+                        part_results.append({
+                            "part_number": idx,
+                            "status": "success",
+                            "result_url": exercises_result_url,
+                            "exercises_count": len(exercises),
+                            "knowledge_points_count": len(knowledge_points)
+                        })
+                        
+                        print(f"✅ 分P {idx}/{total_parts} 练习处理完成: {exercises_result_url}")
+                        
+                    except Exception as e:
+                        error_msg = str(e)
+                        print(f"❌ 分P {idx}/{total_parts} 练习生成失败: {error_msg}")
+                        part_results.append({
+                            "part_number": idx,
+                            "status": "failed",
+                            "error": error_msg
+                        })
+                        continue
+                
+                # 判断最终状态
+                if len(exercises_result_urls) == total_parts:
+                    final_status = TaskStatus.SUCCESS
+                    final_message = f"✅ 所有分P练习生成完成（共{total_parts}个分P，{sum(r.get('exercises_count', 0) for r in part_results)}道练习题）"
+                elif len(exercises_result_urls) > 0:
+                    final_status = TaskStatus.PARTIAL_SUCCESS
+                    final_message = f"⚠️ 部分分P练习生成完成（{len(exercises_result_urls)}/{total_parts}个分P成功）"
+                else:
+                    final_status = TaskStatus.FAILED
+                    final_message = "❌ 所有分P练习生成均失败"
+                
+                # 更新任务状态
+                task = self.get_task(task_id)
+                if task:
+                    if len(exercises_result_urls) > 1:
+                        task["exercises_result_url"] = json.dumps(exercises_result_urls)
+                    elif len(exercises_result_urls) == 1:
+                        task["exercises_result_url"] = exercises_result_urls[0]
+                    
+                    task["steps"]["exercises"]["result"] = {
+                        "result_urls": exercises_result_urls,
+                        "part_results": part_results,
+                        "total_exercises": sum(r.get("exercises_count", 0) for r in part_results)
+                    }
+                    
+                    self._update_step_status(
+                        task_id, "exercises",
+                        final_status,
+                        100 if final_status == TaskStatus.SUCCESS else 90,
+                        final_message
+                    )
+                    
+                    self.tasks_cache[task_id] = task
+                    self._save_task_to_db(task)
+                
+                return {
+                    "success": True,
+                    "message": final_message,
+                    "result_urls": exercises_result_urls,
+                    "part_results": part_results
+                }
+            
+            else:
+                # 单P视频处理
+                print("💪 单P视频练习生成...")
+                
+                self._update_step_status(
+                    task_id, "exercises",
+                    TaskStatus.RUNNING, 10,
+                    "开始生成练习题..."
+                )
+                
+                kp_url = kp_result_urls[0]
+                
+                # 下载知识点数据
+                print("📥 下载知识点数据...")
+                loop = asyncio.get_event_loop()
+                
+                def download_knowledge_points():
+                    response = requests.get(kp_url, timeout=30)
+                    response.raise_for_status()
+                    return response.json()
+                
+                kp_data = await loop.run_in_executor(
+                    self.executor,
+                    download_knowledge_points
+                )
+                
+                knowledge_points = kp_data
+                if isinstance(kp_data, dict) and "knowledge_points" in kp_data:
+                    knowledge_points = kp_data["knowledge_points"]
+                
+                if not isinstance(knowledge_points, list):
+                    raise ValueError("知识点数据格式错误")
+                
+                print(f"✅ 知识点数据下载成功，共 {len(knowledge_points)} 个知识点")
+                
+                if len(knowledge_points) == 0:
+                    print(f"ℹ️ 没有知识点，跳过练习生成")
+                    exercises = []
+                else:
+                    # 获取ASR文本
+                    asr_text = ""
+                    if asr_result_urls:
+                        def download_asr_text():
+                            response = requests.get(asr_result_urls[0], timeout=10)
+                            response.raise_for_status()
+                            return response.text
+                        
+                        asr_text = await loop.run_in_executor(
+                            self.executor,
+                            download_asr_text
+                        )
+                    
+                    # 获取视频标题
+                    video_title = task.get("video_title", "")
+                    
+                    # 生成练习题
+                    exercises = await self._generate_exercises_for_knowledge_points(
+                        knowledge_points,
+                        asr_text,
+                        video_title,
+                        locale,
+                        subject
+                    )
+                    print(f"✅ 练习生成完成，共 {len(exercises)} 道练习题")
+                
+                # 保存练习题到文件
+                exercises_json = json.dumps(
+                    {"exercises": exercises, "count": len(exercises)},
+                    ensure_ascii=False,
+                    indent=2
+                )
+                
+                exercises_doc_path = os.path.join(
+                    self.results_dir,
+                    f"{task_id}_exercises.json"
+                )
+                with open(exercises_doc_path, 'w', encoding='utf-8') as f:
+                    f.write(exercises_json)
+                
+                # 上传练习结果文件
+                print("📤 上传练习结果文件...")
+                exercises_result_url = await loop.run_in_executor(
+                    self.executor,
+                    self.file_upload_service.upload_file,
+                    exercises_doc_path,
+                    "file0",
+                    "application/json; charset=utf-8"
+                )
+                
+                if not exercises_result_url:
+                    raise Exception("练习结果文件上传失败")
+                
+                if not exercises_result_url.startswith('http'):
+                    exercises_result_url = f"https://file.gsxservice.com/{exercises_result_url}"
+                
+                # 更新步骤状态
+                status_message = f"✅ 练习生成完成（共{len(exercises)}道练习题）"
+                if len(exercises) == 0 and len(knowledge_points) == 0:
+                    status_message = f"✅ 练习生成完成（视频无知识点，无练习题）"
+                
+                self._update_step_status(
+                    task_id, "exercises",
+                    TaskStatus.SUCCESS, 100,
+                    status_message,
+                    result={
+                        "result_url": exercises_result_url,
+                        "exercises_count": len(exercises),
+                        "knowledge_points_count": len(knowledge_points)
+                    }
+                )
+                
+                # 更新任务的exercises_result_url字段
+                task = self.get_task(task_id)
+                if task:
+                    task["exercises_result_url"] = exercises_result_url
+                    self.tasks_cache[task_id] = task
+                    self._save_task_to_db(task)
+                
+                print(f"✅ 单P视频练习生成完成")
+                
+                return {
+                    "success": True,
+                    "message": status_message,
+                    "result_url": exercises_result_url,
+                    "exercises_count": len(exercises)
+                }
+        
+        except Exception as e:
+            error_msg = str(e)
+            print(f"❌ 练习生成失败: {error_msg}")
+            import traceback
+            traceback.print_exc()
+            
+            self._update_step_status(
+                task_id, "exercises",
+                TaskStatus.FAILED, 0,
+                f"执行失败: {error_msg}",
+                error=error_msg
+            )
+            raise
     
     def retry_step(self, task_id: str, step: str):
         """重试步骤"""

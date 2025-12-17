@@ -359,8 +359,8 @@ Return only JSON, no other explanatory text."""
 只返回 JSON，不要其他说明文字。"""
             else:
                 # 编程题型 prompt（默认）
-            if locale == 'en':
-                prompt = f"""You are a professional programming education expert. Please generate a programming exercise for the knowledge point based on the video content.
+                if locale == 'en':
+                    prompt = f"""You are a professional programming education expert. Please generate a programming exercise for the knowledge point based on the video content.
 
 **Exercise Type Selection Rules**:
 1. fill_blank: Suitable for simple syntax and single concepts (e.g., variable assignment, basic operations)
@@ -381,8 +381,8 @@ Return only JSON, no other explanatory text."""
 4. Hints should be clear, help understanding without directly giving answers
 5. Output only JSON, no other content
 6. Ensure JSON format is correct and can be parsed"""
-            else:
-                prompt = f"""你是一位专业的编程教学专家。请根据视频内容为知识点生成一道编程练习题。
+                else:
+                    prompt = f"""你是一位专业的编程教学专家。请根据视频内容为知识点生成一道编程练习题。
 
 知识点：{request.knowledge_point_name}
 视频标题：{request.video_title or '未知'}

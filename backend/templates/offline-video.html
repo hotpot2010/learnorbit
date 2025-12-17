@@ -789,7 +789,8 @@
                 { key: 'download', name: '1. 下载视频并上传', description: '下载B站视频，合并音视频流，上传到CDN' },
                 { key: 'asr', name: '2. ASR识别', description: '语音识别，生成逐字稿' },
                 { key: 'knowledge_points', name: '3. 生成知识点', description: '调用LLM生成知识点文档' },
-                { key: 'screenshots', name: '4. 生成截图', description: '根据知识点时间戳从视频中截图' }
+                { key: 'screenshots', name: '4. 生成截图', description: '根据知识点时间戳从视频中截图' },
+                { key: 'exercises', name: '5. 生成练习', description: '基于知识点生成练习题（数学/编程）' }
             ];
             
             const isSeries = task.is_series || false;
@@ -803,6 +804,7 @@
             const asrResultUrls = parseUrls(task.asr_result_url);
             const knowledgePointsResultUrls = parseUrls(task.knowledge_points_result_url);
             const screenshotsResultUrls = parseUrls(task.screenshots_result_url);
+            const exercisesResultUrls = parseUrls(task.exercises_result_url);
             
             // 如果是多P任务，渲染tags切换UI
             let partTabsHtml = '';
@@ -831,9 +833,17 @@
                     const asrUrl = asrResultUrls[idx] || null;
                     const knowledgePointsUrl = knowledgePointsResultUrls[idx] || null;
                     const screenshotsUrl = screenshotsResultUrls[idx] || null;
+                    const exercisesUrl = exercisesResultUrls[idx] || null;
                     
                     const stepsHtml = steps.map(step => {
-                        const stepInfo = task.steps[step.key];
+                        // 如果步骤不存在（旧任务），创建一个待执行状态
+                        const stepInfo = task.steps[step.key] || {
+                            status: 'pending',
+                            progress: 0,
+                            message: '等待执行',
+                            error: null,
+                            result: null
+                        };
                         let status = stepInfo.status;
                         const progress = stepInfo.progress || 0;
                         const message = stepInfo.message || '';
@@ -860,6 +870,8 @@
                             resultUrl = knowledgePointsUrl;
                         } else if (step.key === 'screenshots') {
                             resultUrl = screenshotsUrl;
+                        } else if (step.key === 'exercises') {
+                            resultUrl = exercisesUrl;
                         }
                         
                         const canPreview = (status === 'success' || status === 'partial_success') && resultUrl;
@@ -903,7 +915,14 @@
             } else {
                 // 单P视频：原有逻辑
                 const stepsHtml = steps.map(step => {
-                    const stepInfo = task.steps[step.key];
+                    // 如果步骤不存在（旧任务），创建一个待执行状态
+                    const stepInfo = task.steps[step.key] || {
+                        status: 'pending',
+                        progress: 0,
+                        message: '等待执行',
+                        error: null,
+                        result: null
+                    };
                     let status = stepInfo.status;
                     const progress = stepInfo.progress || 0;
                     const message = stepInfo.message || '';
@@ -933,6 +952,10 @@
                         resultUrl = typeof task.screenshots_result_url === 'string' && task.screenshots_result_url.startsWith('[') 
                             ? JSON.parse(task.screenshots_result_url)[0] 
                             : task.screenshots_result_url;
+                    } else if (step.key === 'exercises' && task.exercises_result_url) {
+                        resultUrl = typeof task.exercises_result_url === 'string' && task.exercises_result_url.startsWith('[') 
+                            ? JSON.parse(task.exercises_result_url)[0] 
+                            : task.exercises_result_url;
                     } else if (result.result_url) {
                         resultUrl = result.result_url;
                     }
@@ -1471,6 +1494,7 @@
                 const asrResultUrls = parseUrls(task.asr_result_url);
                 const knowledgePointsResultUrls = parseUrls(task.knowledge_points_result_url);
                 const screenshotsResultUrls = parseUrls(task.screenshots_result_url);
+                const exercisesResultUrls = parseUrls(task.exercises_result_url);
                 
                 // 如果是多P任务且指定了partNumber，使用对应的URL
                 if (partNumber && task.is_series) {
@@ -1485,6 +1509,8 @@
                         resultUrl = knowledgePointsResultUrls[partIndex];
                     } else if (step === 'screenshots' && screenshotsResultUrls[partIndex]) {
                         resultUrl = screenshotsResultUrls[partIndex];
+                    } else if (step === 'exercises' && exercisesResultUrls[partIndex]) {
+                        resultUrl = exercisesResultUrls[partIndex];
                     }
                 } else {
                     // 单P任务或未指定partNumber
@@ -1507,6 +1533,10 @@
                         resultUrl = typeof task.screenshots_result_url === 'string' && task.screenshots_result_url.startsWith('[') 
                             ? JSON.parse(task.screenshots_result_url)[0] 
                             : task.screenshots_result_url;
+                    } else if (step === 'exercises' && task.exercises_result_url) {
+                        resultUrl = typeof task.exercises_result_url === 'string' && task.exercises_result_url.startsWith('[') 
+                            ? JSON.parse(task.exercises_result_url)[0] 
+                            : task.exercises_result_url;
                     }
                 }
                 
@@ -1537,7 +1567,7 @@
                 let isJson = false;
                 
                 // 如果是JSON，格式化显示
-                if (contentType.includes('json') || step === 'knowledge_points') {
+                if (contentType.includes('json') || step === 'knowledge_points' || step === 'exercises' || step === 'screenshots') {
                     try {
                         const jsonContent = JSON.parse(content);
                         content = JSON.stringify(jsonContent, null, 2);

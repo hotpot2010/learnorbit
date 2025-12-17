@@ -129,16 +129,18 @@ async def execute_step(
     task_id: str,
     step: str,
     background_tasks: BackgroundTasks,
-    mode: Optional[str] = None  # "continue": 只执行失败的分P, "retry": 重新执行成功的分P
+    mode: Optional[str] = None,  # "continue": 只执行失败的分P, "retry": 重新执行成功的分P
+    subject: Optional[str] = "math"  # 练习题学科类型 (math/programming)
 ):
     """
     执行指定步骤（后台执行）
     
     Args:
         task_id: 任务ID
-        step: 步骤名称 (download, asr, knowledge_points, summary)
+        step: 步骤名称 (download, asr, knowledge_points, screenshots, exercises)
         background_tasks: FastAPI后台任务
         mode: 执行模式 (None: 正常执行, "continue": 只执行失败的分P, "retry": 重新执行成功的分P)
+        subject: 练习题学科类型 (math/programming)，仅在 step=exercises 时有效
         
     Returns:
         执行状态
@@ -193,6 +195,22 @@ async def execute_step(
             if not task.get("asr_result_url"):
                 raise HTTPException(status_code=400, detail="ASR结果URL不存在，请先完成ASR步骤")
         
+        elif step == "screenshots":
+            # 截图步骤需要知识点步骤完成或有部分成功
+            kp_status = get_actual_status("knowledge_points")
+            if kp_status not in [TaskStatus.SUCCESS, TaskStatus.PARTIAL_SUCCESS]:
+                raise HTTPException(status_code=400, detail="请先完成知识点提取步骤")
+            if not task.get("knowledge_points_result_url"):
+                raise HTTPException(status_code=400, detail="知识点结果URL不存在，请先完成知识点提取步骤")
+        
+        elif step == "exercises":
+            # 练习步骤需要知识点步骤完成或有部分成功
+            kp_status = get_actual_status("knowledge_points")
+            if kp_status not in [TaskStatus.SUCCESS, TaskStatus.PARTIAL_SUCCESS]:
+                raise HTTPException(status_code=400, detail="请先完成知识点提取步骤")
+            if not task.get("knowledge_points_result_url"):
+                raise HTTPException(status_code=400, detail="知识点结果URL不存在，请先完成知识点提取步骤")
+        
         # 立即更新步骤状态为RUNNING，让前端立即看到执行中状态
         message = "步骤已开始执行..."
         if mode == "continue":
@@ -218,6 +236,8 @@ async def execute_step(
                     await offline_video_service.execute_step_knowledge_points(task_id, mode=mode)
                 elif step == "screenshots":
                     await offline_video_service.execute_step_screenshots(task_id, mode=mode)
+                elif step == "exercises":
+                    await offline_video_service.execute_step_exercises(task_id, subject=subject, mode=mode)
             except Exception as e:
                 print(f"❌ 后台步骤执行失败: {step}, task_id: {task_id}, error: {e}")
                 import traceback
