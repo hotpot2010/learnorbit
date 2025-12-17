@@ -82,7 +82,14 @@ export function NavbarMobile({
         {...other}
       >
         {/* navbar left shows logo */}
-        <LocaleLink href={Routes.Root} className="flex items-center gap-2">
+        <LocaleLink 
+          href={
+            localePathname.includes('/video-notes-prototype') || localePathname.includes('/video-entry')
+              ? Routes.VideoEntry
+              : Routes.Root
+          } 
+          className="flex items-center gap-2"
+        >
           <Logo />
           <span className="text-xl font-semibold">{t('Metadata.name')}</span>
         </LocaleLink>
@@ -142,13 +149,27 @@ interface MainMobileMenuProps {
 function MainMobileMenu({ userLoggedIn, onLinkClicked }: MainMobileMenuProps) {
   const [expanded, setExpanded] = React.useState<Record<string, boolean>>({});
   const t = useTranslations();
-  const menuLinks = [
-    { title: t('LearningPlatform.home'), href: '/' },
+  const localePathname = useLocalePathname();
+
+  // 检查是否在视频笔记或视频入口页面
+  const isVideoNotesPage = localePathname.includes('/video-notes-prototype');
+  const isVideoEntryPage = localePathname.includes('/video-entry');
+  const isVideoPage = isVideoNotesPage || isVideoEntryPage;
+
+  // 根据页面决定首页链接
+  const homeHref = isVideoPage ? '/video-entry' : '/';
+
+  const allMenuLinks = [
+    { title: t('LearningPlatform.home'), href: homeHref },
     { title: t('LearningPlatform.myCourses'), href: '/my-courses' },
     { title: t('LearningPlatform.courseMarketplace.title'), href: '/course-marketplace' },
     { title: t('Common.contact'), href: '/contact' },
   ];
-  const localePathname = useLocalePathname();
+
+  // 在视频页面时过滤掉"我的课程"和"课程广场"
+  const menuLinks = isVideoPage
+    ? allMenuLinks.filter(item => item.href === homeHref || item.href === '/contact')
+    : allMenuLinks;
 
   return (
     <div

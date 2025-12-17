@@ -45,6 +45,8 @@ export enum Routes {
   // learning routes
   MyCourses = '/my-courses',
   CourseMarketplace = '/course-marketplace',
+  VideoEntry = '/video-entry',
+  VideoNotesPrototype = '/video-notes-prototype',
 
   // block routes
   MagicuiBlocks = '/magicui',

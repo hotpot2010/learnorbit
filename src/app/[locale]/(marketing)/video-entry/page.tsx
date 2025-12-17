@@ -45,25 +45,37 @@ export default function VideoEntryPage() {
   const [hasSearched, setHasSearched] = useState(false);
   const [error, setError] = useState('');
 
-  // 恢复搜索状态（登录后返回）
+  // 生成用户隔离的缓存 key
+  const getCacheKey = (baseName: string) => {
+    const userId = currentUser?.id || 'guest';
+    return `video-entry-${baseName}-${userId}`;
+  };
+
+  // 恢复搜索状态（从视频笔记页面返回或登录后返回）
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedQuery = sessionStorage.getItem('video-entry-search-query');
-      const savedResults = sessionStorage.getItem('video-entry-search-results');
-      const savedHasSearched = sessionStorage.getItem('video-entry-has-searched');
+      // 使用用户隔离的 key
+      const queryKey = getCacheKey('search-query');
+      const resultsKey = getCacheKey('search-results');
+      const hasSearchedKey = getCacheKey('has-searched');
+      
+      const savedQuery = sessionStorage.getItem(queryKey);
+      const savedResults = sessionStorage.getItem(resultsKey);
+      const savedHasSearched = sessionStorage.getItem(hasSearchedKey);
       
       if (savedQuery && savedResults && savedHasSearched === 'true') {
+        console.log('🔄 恢复搜索状态:', { query: savedQuery, resultsCount: JSON.parse(savedResults).length });
         setSearchQuery(savedQuery);
         setVideos(JSON.parse(savedResults));
         setHasSearched(true);
         
         // 清除保存的状态
-        sessionStorage.removeItem('video-entry-search-query');
-        sessionStorage.removeItem('video-entry-search-results');
-        sessionStorage.removeItem('video-entry-has-searched');
+        sessionStorage.removeItem(queryKey);
+        sessionStorage.removeItem(resultsKey);
+        sessionStorage.removeItem(hasSearchedKey);
       }
     }
-  }, []);
+  }, [currentUser]);
 
   // 动态字体
   const fontFamily = isMobile && locale === 'en'
@@ -139,15 +151,20 @@ export default function VideoEntryPage() {
 
   // 跳转到学习页面
   const handleStartLearning = (video: VideoInfo) => {
+    // 保存当前搜索状态（使用用户隔离的 key）
+    if (typeof window !== 'undefined' && searchQuery && videos.length > 0) {
+      const queryKey = getCacheKey('search-query');
+      const resultsKey = getCacheKey('search-results');
+      const hasSearchedKey = getCacheKey('has-searched');
+      
+      sessionStorage.setItem(queryKey, searchQuery);
+      sessionStorage.setItem(resultsKey, JSON.stringify(videos));
+      sessionStorage.setItem(hasSearchedKey, 'true');
+      console.log('💾 保存搜索状态:', { query: searchQuery, resultsCount: videos.length, userId: currentUser?.id || 'guest' });
+    }
+
     // 检查用户是否登录
     if (!currentUser) {
-      // 保存当前搜索状态
-      if (typeof window !== 'undefined') {
-        sessionStorage.setItem('video-entry-search-query', searchQuery);
-        sessionStorage.setItem('video-entry-search-results', JSON.stringify(videos));
-        sessionStorage.setItem('video-entry-has-searched', 'true');
-      }
-      
       // 跳转到登录页面，设置回调 URL
       const currentPath = window.location.pathname;
       router.push(`/${locale}/auth/login?callbackUrl=${encodeURIComponent(currentPath)}`);

@@ -4604,6 +4604,19 @@ export default function VideoNotesPrototypePage() {
         height: 'calc(100vh - var(--navbar-height, 64px))', // 减去导航栏高度
       }}
     >
+      {/* 返回按钮 */}
+      <div className="flex-shrink-0 px-4 pt-4">
+        <button
+          onClick={() => {
+            window.location.href = `/${locale}/video-entry`;
+          }}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg border-2 border-gray-200 shadow-sm transition-all hover:shadow-md group"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          <span className="text-sm font-medium">返回搜索结果</span>
+        </button>
+      </div>
+
       {/* 主要内容区域 */}
       <div className="flex-1 flex gap-4 p-4 overflow-hidden">
         

@@ -35,13 +35,26 @@ export function Navbar({ scroll }: NavBarProps) {
     setMounted(true);
   }, []);
 
+  // 检查是否在视频笔记或视频入口页面
+  const isVideoNotesPage = localePathname.includes('/video-notes-prototype');
+  const isVideoEntryPage = localePathname.includes('/video-entry');
+  const isVideoPage = isVideoNotesPage || isVideoEntryPage;
+
+  // 根据页面决定首页链接
+  const homeHref = isVideoPage ? '/video-entry' : '/';
+
   // 简化的菜单项
-  const menuItems = [
-    { title: t('LearningPlatform.home'), href: '/' },
+  const allMenuItems = [
+    { title: t('LearningPlatform.home'), href: homeHref },
     { title: t('LearningPlatform.myCourses'), href: '/my-courses' },
     { title: t('LearningPlatform.courseMarketplace.title'), href: '/course-marketplace' },
     { title: t('Common.contact'), href: '/contact' },
   ];
+
+  // 在视频页面时过滤掉"我的课程"和"课程广场"
+  const menuItems = isVideoPage
+    ? allMenuItems.filter(item => item.href === homeHref || item.href === '/contact')
+    : allMenuItems;
 
   return (
     <section
