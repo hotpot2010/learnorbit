@@ -43,6 +43,7 @@ import {
   PlayCircle,
   ArrowLeft,
   RotateCcw,
+  Tag,
 } from 'lucide-react';
 import { useMobileLayout } from '@/hooks/use-mobile-layout';
 import { buildApiUrl, API_ENDPOINTS, API_BASE_URL } from '@/config/api';
@@ -1108,6 +1109,8 @@ export default function VideoNotesPrototypePage() {
   const previousKnowledgeIndexRef = useRef<number>(-1); // 上一次的知识点索引，用于避免重复滚动
   const [askingKnowledgeIndex, setAskingKnowledgeIndex] = useState<number | null>(null); // 正在提问的知识点索引
   const [questionInput, setQuestionInput] = useState<string>(''); // 问题输入
+  const [conversationHistory, setConversationHistory] = useState<QAPair[]>([]); // 多轮对话历史
+  const conversationEndRef = useRef<HTMLDivElement>(null); // 对话底部引用，用于自动滚动
   const [currentQACard, setCurrentQACard] = useState<QAPair | null>(null); // 当前待处理的QA卡片
   const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(null); // 查看卡片详情的索引
   const [currentScreenshot, setCurrentScreenshot] = useState<string | null>(null); // 当前查看的截图
@@ -2875,19 +2878,18 @@ export default function VideoNotesPrototypePage() {
           timestamp: new Date().toISOString()
         };
         
-        // 显示浮动卡片，等待用户操作（添加到笔记或关闭）
-        setCurrentQACard(qaPair);
+        // 添加到对话历史（支持多轮对话）
+        setConversationHistory(prev => [...prev, qaPair]);
         
-        // 清空输入框，关闭输入框
+        // 清空输入框，但保持对话框打开
         setQuestionInput('');
-        setAskingKnowledgeIndex(null);
         
         // 标记为不在提问状态
         setKnowledgePoints(prev => prev.map((p, i) => 
           i === index ? { ...p, isAsking: false } : p
         ));
         
-        console.log('✅ Question answered, showing floating card:', qaPair);
+        console.log('✅ Question answered, added to conversation:', qaPair);
       } else {
         throw new Error(data.error || '回答生成失败');
       }
@@ -2899,6 +2901,13 @@ export default function VideoNotesPrototypePage() {
       ));
     }
   };
+  
+  // 当对话历史更新时，自动滚动到底部
+  useEffect(() => {
+    if (conversationHistory.length > 0 && conversationEndRef.current) {
+      conversationEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [conversationHistory]);
   
   // 将搜索结果添加到当前知识点
   const addSearchResultToKnowledgePoint = () => {
@@ -5778,10 +5787,6 @@ export default function VideoNotesPrototypePage() {
         return (
         <div 
           className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-in fade-in duration-200 p-4"
-          onClick={() => {
-            setAskingKnowledgeIndex(null);
-            setQuestionInput('');
-          }}
         >
           <div 
             className="bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col relative overflow-hidden"
@@ -5794,33 +5799,62 @@ export default function VideoNotesPrototypePage() {
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-orange-200 rounded-full opacity-10 translate-y-16 -translate-x-16"></div>
             </div>
 
-            {/* 标题栏 */}
-            <div className="flex-shrink-0 flex items-center justify-between p-5 border-b border-gray-200 relative z-10">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-yellow-400 flex items-center justify-center">
-                  <MessageSquare className="w-4 h-4 text-gray-800" />
+            {/* 卡片头部 - 与单轮QA样式一致 */}
+            <div className="flex-shrink-0 bg-gradient-to-r from-yellow-100 to-green-100 border-b-2 border-yellow-300 p-5 flex items-center justify-between relative z-10">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-yellow-400 flex items-center justify-center shadow-md">
+                  <Sparkles className="w-5 h-5 text-gray-800" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-base text-gray-900">向 AI 提问</h3>
-                  <p className="text-xs text-gray-500 line-clamp-1">{knowledgePoints[askingKnowledgeIndex]?.name}</p>
+                  <h3 className="font-bold text-lg text-gray-900">✨ AI 智能解答</h3>
+                  <p className="text-xs text-gray-600">{knowledgePoints[askingKnowledgeIndex]?.name}</p>
                 </div>
               </div>
               <button
                 onClick={() => {
                   setAskingKnowledgeIndex(null);
                   setQuestionInput('');
+                  setConversationHistory([]);
                 }}
-                className="text-gray-400 hover:text-gray-600 transition-colors p-1 hover:bg-gray-100 rounded-lg"
+                className="text-gray-500 hover:text-gray-700 transition-colors p-1 hover:bg-white/50 rounded-lg"
               >
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6" />
               </button>
             </div>
             
               {/* 内容区域 */}
               <div className="flex-1 overflow-y-auto p-6 relative z-10">
               <div className="w-full h-full flex flex-col">
-                {/* 无逐字稿时显示引导文案 */}
-                {!hasTranscript && (
+                {/* 对话历史显示 */}
+                {conversationHistory.length > 0 && (
+                  <div className="mb-4 space-y-3">
+                    {conversationHistory.map((qa, idx) => (
+                      <div key={idx} className="space-y-2">
+                        {/* 用户问题 */}
+                        <div className="flex justify-end">
+                          <div className="max-w-[85%] bg-blue-500 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 shadow-sm">
+                            <p className="text-sm leading-relaxed whitespace-pre-wrap">{qa.question}</p>
+                          </div>
+                        </div>
+                        {/* AI回答 */}
+                        <div className="flex justify-start">
+                          <div className="max-w-[85%] bg-gray-100 text-gray-900 rounded-2xl rounded-tl-sm px-4 py-2.5 shadow-sm">
+                            <div className="text-sm leading-relaxed prose prose-sm max-w-none">
+                              <ReactMarkdown {...mathMarkdownPlugins}>
+                                {autoWrapLatex(qa.answer)}
+                              </ReactMarkdown>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {/* 对话底部锚点，用于自动滚动 */}
+                    <div ref={conversationEndRef} />
+                  </div>
+                )}
+                
+                {/* 无逐字稿且无对话历史时显示引导文案 */}
+                {!hasTranscript && conversationHistory.length === 0 && (
                   <div className="flex-1 flex flex-col items-center justify-center mb-6">
                     <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-3">
                       <span className="text-3xl">🤔</span>
@@ -5830,8 +5864,8 @@ export default function VideoNotesPrototypePage() {
                   </div>
                 )}
 
-                  {/* 逐字稿区域 - 有逐字稿时占据大部分空间 */}
-                  {hasTranscript && (
+                  {/* 逐字稿区域 - 追问时隐藏 */}
+                  {hasTranscript && conversationHistory.length === 0 && (
                     <div className="flex-1 mb-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border-2 border-blue-200 overflow-hidden flex flex-col">
                       <div className="flex items-center gap-2 mb-3 flex-shrink-0">
                         <FileText className="w-4 h-4 text-indigo-600" />
@@ -5869,9 +5903,24 @@ export default function VideoNotesPrototypePage() {
                                   </span>
                                 )}
                                 <button
-                                  onClick={() => setQuestionInput(`关于"${text.trim()}"，`)}
+                                  onClick={() => {
+                                    const fullText = text.trim();
+                                    // 截取最多5个字作为标签，超过5字加省略号
+                                    const tagText = fullText.length > 5 
+                                      ? fullText.substring(0, 5) + '...' 
+                                      : fullText;
+                                    // 插入【标签】并自动补全问题
+                                    setQuestionInput(prev => {
+                                      // 如果输入框为空，添加完整问题
+                                      if (!prev.trim()) {
+                                        return `【${tagText}】这句什么意思?`;
+                                      }
+                                      // 如果已有内容，只添加标签
+                                      return prev + `【${tagText}】`;
+                                    });
+                                  }}
                                   className="flex-1 hover:bg-yellow-100 hover:text-yellow-900 rounded px-1 transition-colors cursor-pointer text-left"
-                                  title="点击快速提问"
+                                  title="点击添加到提问"
                                 >
                                   {text.trim()}
                                 </button>
@@ -5882,42 +5931,88 @@ export default function VideoNotesPrototypePage() {
                       </div>
                       <div className="mt-2 text-xs text-gray-500 flex items-center gap-1 flex-shrink-0">
                         <Lightbulb className="w-3 h-3" />
-                        <span>点击任意句子，自动生成问题模板</span>
+                        <span>点击任意句子，插入【标签】到提问框</span>
                       </div>
                     </div>
                   )}
-
-                  {/* 输入区域 - 使用2行textarea */}
-                  <div className="flex-shrink-0">
-                <div className="relative">
-              <textarea
-                value={questionInput}
-                onChange={(e) => setQuestionInput(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey && questionInput.trim() && !knowledgePoints[askingKnowledgeIndex]?.isAsking) {
-                    e.preventDefault();
-                    handleAskQuestion(askingKnowledgeIndex);
-                  }
-                }}
-                placeholder="输入你的问题...（Shift+Enter换行）"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-yellow-400 focus:outline-none transition-colors text-base shadow-sm pr-12 resize-none overflow-y-auto"
-                rows={2}
-                autoFocus
-              />
-              <button
-                onClick={() => handleAskQuestion(askingKnowledgeIndex)}
-                disabled={!questionInput.trim() || knowledgePoints[askingKnowledgeIndex]?.isAsking}
-                className="absolute right-2 bottom-2 w-10 h-10 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-all flex items-center justify-center shadow-sm"
-              >
-                {knowledgePoints[askingKnowledgeIndex]?.isAsking ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                ) : (
-                  <Sparkles className="w-5 h-5" />
-                )}
-              </button>
+              </div>
+            </div>
+            
+            {/* 输入区域 - 固定在按钮上方 */}
+            <div className="flex-shrink-0 border-t border-gray-200 p-4 bg-white relative z-10">
+              <div className="relative">
+                {/* 样式化显示层（标签样式） */}
+                <div 
+                  className="absolute inset-0 px-4 py-3 pointer-events-none rounded-xl text-base whitespace-pre-wrap break-words overflow-hidden text-gray-900"
+                  style={{ 
+                    lineHeight: '1.5rem',
+                    minHeight: '60px',
+                    zIndex: 1
+                  }}
+                >
+                  {questionInput.split(/(【[^】]*】)/g).map((part, idx) => {
+                    // 匹配【标签】格式
+                    if (/^【.*】$/.test(part)) {
+                      return (
+                        <span
+                          key={idx}
+                          className="inline-flex items-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-2 py-0.5 rounded-md text-xs font-medium shadow-sm mx-0.5"
+                          style={{ 
+                            verticalAlign: 'middle'
+                          }}
+                        >
+                          {part}
+                        </span>
+                      );
+                    }
+                    return <span key={idx}>{part}</span>;
+                  })}
                 </div>
                 
-                <div className="mt-4 flex flex-wrap justify-center gap-2">
+                {/* 实际输入框（文本透明） */}
+                <textarea
+                  value={questionInput}
+                  onChange={(e) => setQuestionInput(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey && questionInput.trim() && !knowledgePoints[askingKnowledgeIndex]?.isAsking) {
+                      e.preventDefault();
+                      handleAskQuestion(askingKnowledgeIndex);
+                    }
+                  }}
+                  placeholder="输入你的问题...（Shift+Enter换行）"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-yellow-400 focus:outline-none transition-colors text-base shadow-sm pr-12 resize-none overflow-y-auto relative"
+                  style={{ 
+                    lineHeight: '1.5rem',
+                    minHeight: '60px',
+                    zIndex: 2,
+                    color: 'transparent',
+                    caretColor: '#1f2937',
+                    background: 'transparent'
+                  }}
+                  rows={2}
+                  autoFocus
+                />
+                <button
+                  onClick={() => {
+                    if (askingKnowledgeIndex !== null) {
+                      handleAskQuestion(askingKnowledgeIndex);
+                    }
+                  }}
+                  disabled={!questionInput.trim() || knowledgePoints[askingKnowledgeIndex]?.isAsking}
+                  className="absolute right-2 bottom-2 w-10 h-10 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-all flex items-center justify-center shadow-sm"
+                  style={{ zIndex: 3 }}
+                >
+                  {knowledgePoints[askingKnowledgeIndex]?.isAsking ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <Sparkles className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
+              
+              {/* 快捷提问建议 - 仅在首次提问时显示 */}
+              {conversationHistory.length === 0 && (
+                <div className="mt-3 flex flex-wrap justify-center gap-2">
                   <span className="text-xs text-gray-400">💡 试着问：</span>
                   {['举个例子', '解释一下原理', '总结要点'].map((hint) => (
                     <button
@@ -5929,9 +6024,69 @@ export default function VideoNotesPrototypePage() {
                     </button>
                   ))}
                 </div>
-                  </div>
-              </div>
+              )}
             </div>
+            
+            {/* 卡片底部按钮 - 只在有对话历史时显示 */}
+            {conversationHistory.length > 0 && (
+              <div className="flex-shrink-0 bg-gradient-to-r from-gray-50 to-white border-t-2 border-gray-200 p-5 relative z-10">
+                <button
+                  onClick={() => {
+                    // 将所有对话合并成一个QA卡片
+                    if (askingKnowledgeIndex !== null) {
+                      console.log('📝 添加对话到笔记，知识点索引:', askingKnowledgeIndex);
+                      console.log('📝 对话历史条数:', conversationHistory.length);
+                      
+                      // 将所有对话合并到一张卡片中，格式为Q1\n\nA1\n\n---\n\nQ2\n\nA2...
+                      const mergedContent = conversationHistory.map((qa, idx) => {
+                        // 格式：Q[序号]\n\n[问题]\n\nA[序号]\n\n[答案]
+                        return `Q${idx + 1}\n\n${qa.question}\n\nA${idx + 1}\n\n${qa.answer}`;
+                      }).join('\n\n---\n\n');
+                      
+                      const mergedQA: QAPair = {
+                        question: mergedContent,
+                        answer: '', // 答案字段留空，所有内容都在question中
+                        timestamp: new Date().toISOString()
+                      };
+                      
+                      setKnowledgePoints(prev => {
+                        const updated = prev.map((p, i) => {
+                          if (i === askingKnowledgeIndex) {
+                            const qaList = p.qaList || [];
+                            // 将合并后的QA添加到qaList（一张卡片）
+                            return {
+                              ...p,
+                              qaList: [...qaList, mergedQA]
+                            };
+                          }
+                          return p;
+                        });
+                        
+                        console.log('✅ 对话已合并到一张卡片，共', conversationHistory.length, '个QA');
+                        return updated;
+                      });
+                      
+                      // 确保知识点展开，这样可以看到新添加的笔记
+                      setExpandedKnowledgePoints(prev => {
+                        const newSet = new Set(prev);
+                        newSet.add(askingKnowledgeIndex);
+                        return newSet;
+                      });
+                      
+                      // 添加后关闭对话框
+                      console.log('✅ 笔记添加完成，关闭对话框');
+                      setAskingKnowledgeIndex(null);
+                      setQuestionInput('');
+                      setConversationHistory([]);
+                    }
+                  }}
+                  className="w-full px-5 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-xl transition-all font-bold flex items-center justify-center gap-2 shadow-lg"
+                >
+                  <Plus className="w-4 h-4" />
+                  加入笔记 💾
+                </button>
+              </div>
+            )}
           </div>
         </div>
         );
@@ -5975,46 +6130,98 @@ export default function VideoNotesPrototypePage() {
             
             {/* 卡片内容 - 可滚动 */}
             <div className="flex-1 overflow-y-auto p-6 relative z-10">
-              {/* 问题部分 - 无底框 */}
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-400 to-orange-400 text-white flex items-center justify-center font-bold shadow-md">
-                    Q
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-base">你的问题</h4>
-                    <p className="text-xs text-gray-500">来自你的思考</p>
-                  </div>
-                </div>
-                {/* 直接展示问题文本，不包裹在框中 */}
-                <p className="text-gray-800 text-base leading-relaxed font-medium pl-2">{currentQACard.question}</p>
-              </div>
-              
-              {/* 连接线 */}
-              <div className="flex items-center justify-center my-5">
-                <div className="flex-1 border-t-2 border-dashed border-gray-200"></div>
-                <div className="px-3 text-gray-400">
-                  <ChevronDown className="w-5 h-5" />
-                </div>
-                <div className="flex-1 border-t-2 border-dashed border-gray-200"></div>
-              </div>
-              
-              {/* 答案部分 - 无边框 */}
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 text-white flex items-center justify-center font-bold shadow-md">
-                    A
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-base">AI 解答</h4>
-                    <p className="text-xs text-gray-500">基于视频内容分析</p>
-                  </div>
-                </div>
-                {/* 直接展示文本，不包裹在框中 */}
-                <div className="prose prose-base max-w-none text-gray-700 leading-relaxed pl-2">
-                  <ReactMarkdown>{currentQACard.answer}</ReactMarkdown>
-                </div>
-              </div>
+              {(() => {
+                // 检查是否为多QA格式（包含Q1, A1等标记）
+                const isMultiQA = /Q\d+/.test(currentQACard.question);
+                
+                if (!isMultiQA) {
+                  // 原始单QA格式，直接显示
+                  return (
+                    <>
+                      <div className="mb-4">
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-400 to-orange-400 text-white flex items-center justify-center font-bold shadow-md flex-shrink-0">
+                            Q
+                          </div>
+                          <div className="flex-1 prose prose-base max-w-none text-gray-700 leading-relaxed [&>*:first-child]:mt-0">
+                            <p className="text-gray-800 text-base leading-relaxed font-medium m-0">{currentQACard.question}</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {currentQACard.answer && (
+                        <div className="mb-4">
+                          <div className="flex items-start gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 text-white flex items-center justify-center font-bold shadow-md flex-shrink-0">
+                              A
+                            </div>
+                            <div className="flex-1 prose prose-base max-w-none text-gray-700 leading-relaxed [&>*:first-child]:mt-0">
+                              <ReactMarkdown>{currentQACard.answer}</ReactMarkdown>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  );
+                }
+                
+                // 多QA格式：Q1\n\n问题\n\nA1\n\n答案\n\n---\n\nQ2...
+                const content = currentQACard.question;
+                const qaBlocks = content.split('\n\n---\n\n');
+                
+                return qaBlocks.map((block, blockIndex) => {
+                  // 解析每个QA块：Q[n]\n\n问题内容\n\nA[n]\n\n答案内容
+                  const lines = block.split('\n\n');
+                  const items: Array<{type: 'Q' | 'A', label: string, content: string}> = [];
+                  
+                  for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (/^Q\d+$/.test(line)) {
+                      // Q标签
+                      items.push({
+                        type: 'Q',
+                        label: line,
+                        content: lines[i + 1] || ''
+                      });
+                      i++; // 跳过已处理的内容行
+                    } else if (/^A\d+$/.test(line)) {
+                      // A标签
+                      items.push({
+                        type: 'A',
+                        label: line,
+                        content: lines[i + 1] || ''
+                      });
+                      i++; // 跳过已处理的内容行
+                    }
+                  }
+                  
+                  return (
+                    <div key={blockIndex}>
+                      {items.map((item, itemIndex) => (
+                        <div key={itemIndex} className={itemIndex > 0 ? 'mt-4' : ''}>
+                          <div className="flex items-start gap-3">
+                            <div className={`w-8 h-8 rounded-lg ${
+                              item.type === 'Q' 
+                                ? 'bg-gradient-to-br from-yellow-400 to-orange-400' 
+                                : 'bg-gradient-to-br from-green-500 to-emerald-500'
+                            } text-white flex items-center justify-center font-bold shadow-md flex-shrink-0`}>
+                              {item.label}
+                            </div>
+                            <div className="flex-1 prose prose-base max-w-none text-gray-700 leading-relaxed [&>*:first-child]:mt-0">
+                              <ReactMarkdown>{item.content}</ReactMarkdown>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                      
+                      {/* 不同QA组之间的分隔线 */}
+                      {blockIndex < qaBlocks.length - 1 && (
+                        <div className="my-6 border-t-2 border-dashed border-gray-200"></div>
+                      )}
+                    </div>
+                  );
+                });
+              })()}
             </div>
             
             {/* 卡片底部按钮 */}
