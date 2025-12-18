@@ -1,0 +1,276 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数连续性",
+      "description": "根据函数连续性的定义，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数$f(x)=\\begin{cases} 2x+1, & x<1, \\\\ a, & x=1, \\\\ x^2+2, & x>1 \\end{cases}$在$x=1$处连续，则实数$a$的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "2"
+        },
+        {
+          "label": "B",
+          "content": "3"
+        },
+        {
+          "label": "C",
+          "content": "4"
+        },
+        {
+          "label": "D",
+          "content": "5"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：函数在某点连续需满足该点的极限值等于函数值",
+        "提示2：先分别计算$x=1$处的左极限和右极限",
+        "提示3：若左右极限不相等，则函数在该点极限不存在，不连续"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数间断点",
+      "description": "根据视频中函数连续性的定义，判断函数间断点类型",
+      "difficulty": "intermediate",
+      "question": "已知函数$f(x) = \\begin{cases} x+1, & x < 1, \\\\ x-1, & x > 1, \\\\ 2, & x = 1 \\end{cases}$，则函数$f(x)$在$x=1$处的间断点类型为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "可去间断点"
+        },
+        {
+          "label": "B",
+          "content": "跳跃间断点"
+        },
+        {
+          "label": "C",
+          "content": "无穷间断点"
+        },
+        {
+          "label": "D",
+          "content": "连续点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "函数连续性需满足极限值等于函数值",
+        "间断点类型可根据左右极限是否存在及是否相等判断",
+        "跳跃间断点的特点是左右极限存在但不相等"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷间断点",
+      "description": "根据函数间断点的类型判断，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "函数$f(x)=\\dfrac{1}{x^2 - 4}+\\arctan\\left(\\dfrac{1}{x}\\right)$的无穷间断点个数为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "1"
+        },
+        {
+          "label": "C",
+          "content": "2"
+        },
+        {
+          "label": "D",
+          "content": "3"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先确定函数的定义域，找出所有不连续点",
+        "提示2：无穷间断点的特征是函数在该点的极限为无穷大（或正负无穷）",
+        "提示3：分别计算各间断点处的极限，判断是否为无穷间断点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：可去间断点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数$f(x) = \\frac{x^2 - 9}{x - 3}$，则函数$f(x)$在$x=3$处的间断点类型为？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "可去间断点"
+        },
+        {
+          "label": "B",
+          "content": "跳跃间断点"
+        },
+        {
+          "label": "C",
+          "content": "无穷间断点"
+        },
+        {
+          "label": "D",
+          "content": "震荡间断点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：可去间断点的核心特征是函数在该点极限存在但函数值不存在或不等于极限值",
+        "提示2：先计算函数在该点的极限是否存在",
+        "提示3：视频中提到连续性需满足极限值等于函数值，间断点是连续性的反面情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：间断点判断步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数$f(x)$的定义为：当$x \\neq 1$时，$f(x)=\\frac{x^2-1}{x-1}$；当$x=1$时，$f(x)=3$。则函数$f(x)$在$x=1$处（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "连续，因为极限值等于函数值"
+        },
+        {
+          "label": "B",
+          "content": "间断，因为函数在$x=1$处无定义"
+        },
+        {
+          "label": "C",
+          "content": "间断，因为极限不存在"
+        },
+        {
+          "label": "D",
+          "content": "间断，因为极限存在但不等于函数值"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：函数连续性需满足极限值等于函数值",
+        "提示2：先计算$x \\to 1$时$f(x)$的极限值",
+        "提示3：比较极限值与函数在$x=1$处的定义值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数的连续性",
+      "description": "根据视频中函数连续性的定义，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数$f(x)=\\begin{cases} \\dfrac{x^2-1}{x-1}, & x \\neq 1 \\\\ k, & x=1 \\end{cases}$在点$x=1$处连续，则常数$k$的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "2"
+        },
+        {
+          "label": "C",
+          "content": "1"
+        },
+        {
+          "label": "D",
+          "content": "-1"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：函数在某点连续的定义是该点的极限值等于函数值",
+        "提示2：计算$\\lim\\limits_{x \\to 1} \\dfrac{x^2-1}{x-1}$时，先对分子因式分解",
+        "提示3：$x^2-1=(x-1)(x+1)$，可约去非零因子$x-1$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：函数的连续性",
+      "description": "根据视频中函数连续性的定义，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数$f(x)=\\begin{cases} \\dfrac{x^2 - 1}{x - 1}, & x \\neq 1 \\\\ a, & x = 1 \\end{cases}$在点$x=1$处连续，则常数$a$的值为___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "2",
+      "hints": [
+        "函数在某点连续的定义：该点的极限值等于函数值",
+        "先计算$x \\to 1$时，$\\dfrac{x^2 - 1}{x - 1}$的极限值",
+        "可对分子进行因式分解简化极限计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：可去间断点判断",
+      "description": "根据视频中函数连续性的知识，结合可去间断点的概念完成本题",
+      "difficulty": "intermediate",
+      "question": "函数$f(x)=\\frac{x^2 - 3x + 2}{x - 1}$在$x=1$处的间断点类型为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "可去间断点"
+        },
+        {
+          "label": "B",
+          "content": "跳跃间断点"
+        },
+        {
+          "label": "C",
+          "content": "无穷间断点"
+        },
+        {
+          "label": "D",
+          "content": "连续点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "可去间断点需满足：函数在该点极限存在但函数值不存在或不等于极限值",
+        "先判断函数在$x=1$处是否有定义",
+        "通过因式分解化简函数表达式后求极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷间断点",
+      "description": "根据函数间断点的类型判断，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "函数$f(x)=\\dfrac{1}{x^2 - 4}+\\arctan\\left(\\dfrac{1}{x}\\right)$的无穷间断点个数为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "1"
+        },
+        {
+          "label": "C",
+          "content": "2"
+        },
+        {
+          "label": "D",
+          "content": "3"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先确定函数的定义域，找出所有不连续点",
+        "提示2：无穷间断点的特征是函数在该点的极限为无穷大（或正负无穷）",
+        "提示3：分别计算各间断点处的极限，判断是否为无穷间断点"
+      ]
+    }
+  ],
+  "count": 9
+}

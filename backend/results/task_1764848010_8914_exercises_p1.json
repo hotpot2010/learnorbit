@@ -1,0 +1,411 @@
+{
+  "exercises": [
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：极限7种题型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限$\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2} =$ ___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "4",
+      "hints": [
+        "提示1：当直接代入极限值出现0/0型时，可尝试对分子分母进行因式分解或有理化",
+        "提示2：$x^2 - 4$是平方差公式，可分解为$(x - 2)(x + 2)$",
+        "提示3：约去公因式后，再代入x=2计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：0:0型洛必达法则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 \\(\\lim_{x \\to 0} \\frac{\\sin x - x}{x^3}\\) 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "-1/6",
+      "hints": [
+        "提示1：当x趋近于0时，分子分母均趋近于0，属于0:0型未定式，可应用洛必达法则；",
+        "提示2：第一次应用洛必达法则，分子分母分别求导，得 \\(\\lim_{x \\to 0} \\frac{\\cos x - 1}{3x^2}\\)，仍为0:0型；",
+        "提示3：第二次应用洛必达法则，分子分母分别求导，得 \\(\\lim_{x \\to 0} \\frac{-\\sin x}{6x}\\)，仍为0:0型；",
+        "提示4：第三次应用洛必达法则，分子分母分别求导，得 \\(\\lim_{x \\to 0} \\frac{-\\cos x}{6}\\)，代入x=0计算得结果。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：等价无穷小替换",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当$x \\to 0$时，极限$\\lim\\limits_{x \\to 0}\\frac{\\sin x - \\tan x}{x^3}$的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "-\\frac{1}{2}"
+        },
+        {
+          "label": "C",
+          "content": "\\frac{1}{2}"
+        },
+        {
+          "label": "D",
+          "content": "1"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "等价无穷小替换主要适用于乘除运算，加减运算中直接替换可能导致错误",
+        "可先对分子进行因式分解：$\\sin x - \\tan x = \\tan x (\\cos x - 1)$",
+        "当$x \\to 0$时，$\\tan x \\sim x$，$\\cos x - 1 \\sim -\\frac{1}{2}x^2$"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：无穷小替换原则",
+      "error": "Invalid \\escape: line 6 column 18 (char 147)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：0:0型极限解法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim\\limits_{x \\to 2} \\frac{x^3 - 8}{x^2 - 4}$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0/0"
+        },
+        {
+          "label": "B",
+          "content": "3"
+        },
+        {
+          "label": "C",
+          "content": "4"
+        },
+        {
+          "label": "D",
+          "content": "12"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先判断极限类型，当x→2时分子分母均为0，属于0/0型",
+        "提示2：可通过因式分解消去零因子",
+        "提示3：立方差公式：$a^3 - b^3 = (a - b)(a^2 + ab + b^2)$，平方差公式：$a^2 - b^2 = (a - b)(a + b)$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷比无穷型解法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to +\\infty} \\frac{2x^3 - 3x^2 + x - 4}{3x^3 + x^2 - 5x + 2}$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{2}{3}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "1"
+        },
+        {
+          "label": "D",
+          "content": "-2"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：无穷比无穷型极限可采用“抓大头”法求解",
+        "提示2：需关注分子分母的最高次项及其系数",
+        "提示3：极限值等于分子分母最高次项的系数之比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：0乘无穷型转化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim\\limits_{x \\to 0} x \\cdot \\cot x$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "1"
+        },
+        {
+          "label": "C",
+          "content": "+\\infty"
+        },
+        {
+          "label": "D",
+          "content": "-1"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：0·∞型极限需先转化为0/0型或∞/∞型",
+        "提示2：可利用三角函数关系 $\\cot x = \\frac{\\cos x}{\\sin x}$ 进行转化",
+        "提示3：注意当 $x \\to 0$ 时，$\\sin x \\sim x$（等价无穷小替换）"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：抓大头法求极限",
+      "description": "根据视频内容，运用抓大头法求解以下极限问题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to +\\infty} \\frac{3x^2 - 2x + 5}{2x^2 + x - 1}$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{3}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{2}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "0"
+        },
+        {
+          "label": "D",
+          "content": "$+\\infty$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：抓大头法核心是关注分子分母的最高次幂项",
+        "提示2：当$x \\to +\\infty$时，低次项（如$-2x$、$x$等）对极限的影响可忽略",
+        "提示3：极限值等于分子分母最高次项系数之比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：0乘无穷型极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限$\\lim_{x \\to 0^+} x \\cdot \\ln x$的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1"
+        },
+        {
+          "label": "B",
+          "content": "0"
+        },
+        {
+          "label": "C",
+          "content": "-1"
+        },
+        {
+          "label": "D",
+          "content": "不存在"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先判断极限类型，当$x \\to 0^+$时，$x \\to 0$（0型），$\\ln x \\to -\\infty$（无穷型），故为0·∞型极限",
+        "提示2：0·∞型极限需转化为$\\frac{0}{0}$型或$\\frac{\\infty}{\\infty}$型，可将原式改写为$\\lim_{x \\to 0^+} \\frac{\\ln x}{\\frac{1}{x}}$",
+        "提示3：转化后为$\\frac{\\infty}{\\infty}$型，可使用洛必达法则，对分子分母分别求导后计算极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：无穷减无穷型极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim\\limits_{x \\to +\\infty}\\left[ \\sqrt{x^2 + 3x} - \\sqrt{x^2 - 2x} \\right] =$ ___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "5/2",
+      "hints": [
+        "提示1：无穷减无穷型极限可通过有理化、通分等方法转化为可计算形式",
+        "提示2：对于根式差的形式，可尝试分子有理化，即乘以共轭根式",
+        "提示3：化简时注意当 $x \\to +\\infty$ 时，$\\frac{1}{x} \\to 0$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：1的无穷次幂型万能公式",
+      "description": "根据视频中讲解的1的无穷次幂型极限计算方法，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限：$\\lim_{x \\to 0} (1 + 2x)^{\\frac{3}{\\sin x}}$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$e^3$"
+        },
+        {
+          "label": "B",
+          "content": "$e^6$"
+        },
+        {
+          "label": "C",
+          "content": "$e^2$"
+        },
+        {
+          "label": "D",
+          "content": "1"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：该极限为1的无穷次幂型（$1^{\\infty}$），需使用万能公式转化",
+        "提示2：1的无穷次幂型极限公式：$\\lim [f(x)]^{g(x)} = e^{\\lim g(x)(f(x)-1)}$",
+        "提示3：当$x \\to 0$时，$\\sin x \\sim x$，可进行等价无穷小替换"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：0的0次幂型底数法",
+      "description": "根据视频中0的0次幂型底数法的知识点，完成以下极限计算题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim\\limits_{x \\to 0^+} x^x$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "1"
+        },
+        {
+          "label": "C",
+          "content": "e"
+        },
+        {
+          "label": "D",
+          "content": "不存在"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：0的0次幂型未定式需先通过对数恒等式转化为指数形式",
+        "提示2：利用公式 $a^b = e^{b \\ln a}$ 将 $x^x$ 改写为 $e^{x \\ln x}$",
+        "提示3：指数部分 $\\lim\\limits_{x \\to 0^+} x \\ln x$ 可转化为 $\\lim\\limits_{x \\to 0^+} \\frac{\\ln x}{1/x}$，再用洛必达法则求解"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：数列极限夹逼准则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{n \\to \\infty} \\left( \\frac{1}{n^2 + 1} + \\frac{2}{n^2 + 2} + \\cdots + \\frac{n}{n^2 + n} \\right) =$ ___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "1/2",
+      "hints": [
+        "提示1：考虑对数列通项进行适当的放缩，找到左右两个收敛于同一极限的数列",
+        "提示2：左边放缩时，分母取最大值 $n^2 + n$，可得和式 $\\leq \\frac{1 + 2 + \\cdots + n}{n^2 + 1}$",
+        "提示3：右边放缩时，分母取最小值 $n^2 + 1$，可得和式 $\\geq \\frac{1 + 2 + \\cdots + n}{n^2 + n}$，再利用等差数列求和公式及极限运算法则计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：递推数列极限",
+      "description": "根据视频中递推数列极限的知识点，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "设数列\\{a_n\\}满足$a_1 = 1$，且$a_{n+1} = \\frac{2a_n + 3}{a_n + 2}$（$n \\in \\mathbf{N}_+$），若数列\\{a_n\\}的极限存在，则该极限值为___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "\\sqrt{3}",
+      "hints": [
+        "提示1：设数列极限为$L$，则当$n \\to \\infty$时，$a_n \\to L$，$a_{n+1} \\to L$",
+        "提示2：将$a_n \\to L$，$a_{n+1} \\to L$代入递推公式，得到关于$L$的方程",
+        "提示3：解方程后注意结合数列的实际意义舍去不合理的根"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：数列单调性判断",
+      "error": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数列有界性与极限",
+      "description": "根据数列有界性与极限的关系，判断下列说法的正确性",
+      "difficulty": "intermediate",
+      "question": "已知数列\\(\\{a_n\\}\\)，下列关于数列有界性与极限的说法中，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "若数列\\(\\{a_n\\}\\)有界，则\\(\\lim\\limits_{n \\to \\infty} a_n\\)一定存在"
+        },
+        {
+          "label": "B",
+          "content": "若\\(\\lim\\limits_{n \\to \\infty} a_n\\)存在，则数列\\(\\{a_n\\}\\)一定有界"
+        },
+        {
+          "label": "C",
+          "content": "若数列\\(\\{a_n\\}\\)无界，则\\(\\lim\\limits_{n \\to \\infty} a_n\\)可能存在"
+        },
+        {
+          "label": "D",
+          "content": "若\\(\\lim\\limits_{n \\to \\infty} a_n\\)不存在，则数列\\(\\{a_n\\}\\)一定无界"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "收敛数列必有界，但有界数列不一定收敛",
+        "无界数列一定发散（极限不存在）",
+        "发散数列可能有界（如摆动数列）"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数列极限值计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知数列\\{a_n\\}的通项公式为$a_n = \\sqrt{n^2 + n} - n$，当$n$趋向于无穷大时，数列\\{a_n\\}的极限值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "1"
+        },
+        {
+          "label": "D",
+          "content": "2"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：遇到根号差的形式，可尝试分子有理化；",
+        "提示2：分子分母同乘$\\sqrt{n^2 + n} + n$，得$a_n = \\frac{n}{\\sqrt{n^2 + n} + n}$；",
+        "提示3：分子分母同除$n$化简为$\\frac{1}{\\sqrt{1 + \\frac{1}{n}} + 1}$，再求极限"
+      ]
+    }
+  ],
+  "count": 17
+}

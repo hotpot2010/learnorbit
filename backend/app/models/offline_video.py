@@ -27,6 +27,7 @@ class OfflineVideoTask(Base):
     asr_result_url = Column(MEDIUMTEXT, nullable=True, comment='ASR结果文件URL（单P为字符串，多P为JSON数组）')
     knowledge_points_result_url = Column(MEDIUMTEXT, nullable=True, comment='知识点结果文件URL（单P为字符串，多P为JSON数组）')
     screenshots_result_url = Column(MEDIUMTEXT, nullable=True, comment='截图结果文件URL（单P为字符串，多P为JSON数组）')
+    exercises_result_url = Column(MEDIUMTEXT, nullable=True, comment='练习结果文件URL（单P为字符串，多P为JSON数组）')
     
     # 视频信息（JSON格式存储）
     video_info = Column(JSON, nullable=True, comment='视频详细信息')
@@ -65,6 +66,7 @@ class OfflineVideoTask(Base):
             "asr_result_url": parse_url_field(self.asr_result_url),
             "knowledge_points_result_url": parse_url_field(self.knowledge_points_result_url),
             "screenshots_result_url": parse_url_field(self.screenshots_result_url) if hasattr(self, 'screenshots_result_url') else None,
+            "exercises_result_url": parse_url_field(self.exercises_result_url) if hasattr(self, 'exercises_result_url') else None,
             "video_info": self.video_info if isinstance(self.video_info, dict) else json.loads(self.video_info) if self.video_info else {},
             "is_series": bool(self.is_series),
             "series_parts": self.series_parts if isinstance(self.series_parts, list) else json.loads(self.series_parts) if self.series_parts else [],

@@ -1,0 +1,406 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定积分定义求极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限：$\\lim\\limits_{n \\to \\infty} \\left( \\frac{1}{n+1} + \\frac{1}{n+2} + \\cdots + \\frac{1}{2n} \\right) = $",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "$\\ln 2$"
+        },
+        {
+          "label": "C",
+          "content": "1"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{1}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：将和式转化为定积分定义的形式，即$\\lim\\limits_{n \\to \\infty} \\sum_{i=1}^{n} f\\left(\\frac{i}{n}\\right) \\cdot \\frac{1}{n} = \\int_{0}^{1} f(x) dx$",
+        "提示2：先对原式进行变形，提取$\\frac{1}{n}$作为积分元素，即$\\sum_{i=1}^{n} \\frac{1}{n+i} = \\sum_{i=1}^{n} \\frac{1}{1+\\frac{i}{n}} \\cdot \\frac{1}{n}$",
+        "提示3：被积函数为$f(x)=\\frac{1}{1+x}$，积分区间为$[0,1]$，计算定积分得结果"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限与定积分等价",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim\\limits_{n \\to \\infty} \\frac{1}{n} \\left( \\sin\\frac{\\pi}{n} + \\sin\\frac{2\\pi}{n} + \\cdots + \\sin\\frac{n\\pi}{n} \\right)$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{\\pi}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{2}{\\pi}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{\\pi}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\pi$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "n项和的极限可通过定积分定义转化为积分计算",
+        "积分区间通常取 $[0,1]$，此时 $\\Delta x = \\frac{1}{n}$，$x_i = \\frac{i}{n}$",
+        "被积函数为 $f(x) = \\sin(\\pi x)$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：和式转定积分步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "将极限$\\lim\\limits_{n\\to\\infty}\\frac{1}{n}\\sum_{i=1}^{n}\\left(\\left(\\frac{i}{n}\\right)^2 + 2\\right)$表示为定积分，则该定积分是 ___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\int_{0}^{1}(x^2 + 2)dx$",
+      "hints": [
+        "提示1：和式极限转定积分的一般形式为$\\lim\\limits_{n\\to\\infty}\\frac{b-a}{n}\\sum_{i=1}^{n}f\\left(a+\\frac{i(b-a)}{n}\\right)=\\int_{a}^{b}f(x)dx$",
+        "提示2：观察和式中$\\frac{i}{n}$可视为$x$，$\\frac{1}{n}$对应$\\Delta x$",
+        "提示3：本题中$a=0$，$b=1$，被积函数$f(x)$为$x^2 + 2$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：定积分计算实例",
+      "description": "根据视频中利用定积分求数列极限的知识点，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限$\\lim_{n\\to\\infty}\\sum_{i=1}^n \\frac{1}{n}\\left(\\left(\\frac{i}{n}\\right)^2 + 1\\right) = $___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "\\frac{4}{3}",
+      "hints": [
+        "提示1：将n项和的极限转化为定积分计算",
+        "提示2：被积函数为$f(x) = x^2 + 1$，积分区间为[0,1]",
+        "提示3：计算定积分$\\int_0^1 (x^2 + 1)dx$，结果为$\\left[\\frac{x^3}{3} + x\\right]_0^1$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：积分极限洛必达法则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{n \\to \\infty} \\sum_{k=1}^n \\frac{1}{n} \\left( \\left(\\frac{k}{n}\\right)^2 + 1 \\right)$，可转化为定积分 ___ 进行计算，其结果为 ___。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "\\int_0^1 (x^2 + 1) dx;\\frac{4}{3}",
+      "hints": [
+        "提示1：n项和的极限可通过定积分定义转化，关键是确定被积函数和积分区间",
+        "提示2：积分区间通常为[0,1]，被积函数由$\\frac{k}{n}$替换为x得到",
+        "提示3：计算定积分时注意基本积分公式的应用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：变限积分求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "设函数$F(x) = \\int_{\\sin x}^{x^2} (t^2 + 1)dt$，则$F'(x)$等于（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2x(x^4 + 1) - \\cos x(\\sin^2 x + 1)$"
+        },
+        {
+          "label": "B",
+          "content": "$2x(x^4 + 1) + \\cos x(\\sin^2 x + 1)$"
+        },
+        {
+          "label": "C",
+          "content": "$x^2(x^4 + 1) - \\cos x(\\sin^2 x + 1)$"
+        },
+        {
+          "label": "D",
+          "content": "$2x(x^2 + 1) - \\cos x(\\sin^2 x + 1)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：变限积分求导公式为$\\frac{d}{dx}\\int_{v(x)}^{u(x)} f(t)dt = f(u(x))\\cdot u'(x) - f(v(x))\\cdot v'(x)$",
+        "提示2：先确定被积函数$f(t) = t^2 + 1$，上限函数$u(x) = x^2$，下限函数$v(x) = \\sin x$",
+        "提示3：分别计算$f(u(x))\\cdot u'(x)$和$f(v(x))\\cdot v'(x)$，再作差"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：复合函数变限积分求导",
+      "error": "Invalid \\escape: line 1 column 138 (char 137)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：对称区间积分性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算定积分 $\\int_{-1}^{1} (x^3 + \\sqrt{1 - x^2}) \\, dx$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{\\pi}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\pi$"
+        },
+        {
+          "label": "D",
+          "content": "2$\\pi$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：对称区间$[-a,a]$上的积分可利用函数奇偶性简化计算",
+        "提示2：$x^3$是奇函数，$\\sqrt{1 - x^2}$是偶函数",
+        "提示3：$\\int_{0}^{1} \\sqrt{1 - x^2} \\, dx$表示单位圆在第一象限部分的面积"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：华莱士公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算定积分 $\\int_{0}^{\\frac{\\pi}{2}} \\sin^4 x \\, dx$ 的值为 ___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "3\\pi/16",
+      "hints": [
+        "提示：华莱士公式适用于计算形如 $\\int_{0}^{\\frac{\\pi}{2}} \\sin^n x \\, dx$ 或 $\\int_{0}^{\\frac{\\pi}{2}} \\cos^n x \\, dx$ 的积分",
+        "当n为正偶数时，结果为 $\\frac{(n-1)!!}{n!!} \\cdot \\frac{\\pi}{2}$",
+        "本题中n=4，代入公式计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：积分化简技巧",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "利用定积分的定义，计算极限：\\(\\lim_{n\\to\\infty}\\left(\\frac{1}{n+1} + \\frac{1}{n+2} + \\cdots + \\frac{1}{2n}\\right) = \\) ___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "\\ln 2",
+      "hints": [
+        "提示1：可将n项和转化为定积分定义中的积分和形式",
+        "提示2：考虑\\(\\frac{1}{n+k} = \\frac{1}{n} \\cdot \\frac{1}{1+\\frac{k}{n}}\\)，其中\\(k=1,2,\\cdots,n\\)",
+        "提示3：积分区间为[0,1]，被积函数为\\(f(x)=\\frac{1}{1+x}\\)"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：降幂公式积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int \\cos^2 x \\, dx$ 的结果为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{3}\\cos^3 x + C$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{2}x + \\frac{1}{4}\\sin 2x + C$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sin x - \\frac{1}{3}\\sin^3 x + C$"
+        },
+        {
+          "label": "D",
+          "content": "$2\\cos x + \\sin x + C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：降幂公式 $\\cos^2 x = \\frac{1 + \\cos 2x}{2}$",
+        "提示2：积分公式 $\\int \\cos ax \\, dx = \\frac{1}{a}\\sin ax + C$",
+        "提示3：不定积分结果需添加常数项 $C$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：分部积分法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算定积分 $\\int_{0}^{1} x e^x \\, dx$ 的值为___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "1",
+      "hints": [
+        "提示1：分部积分法公式为 $\\int u \\, dv = uv - \\int v \\, du$",
+        "提示2：可设 $u = x$，$dv = e^x dx$",
+        "提示3：计算时注意代入积分上下限"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：替换方法选择",
+      "error": "Invalid \\escape: line 1 column 146 (char 145)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：分部积分法应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限$\\lim\\limits_{n \\to \\infty} \\frac{1}{n} \\sum\\limits_{k=1}^{n} \\left( \\frac{k}{n} \\right) e^{\\frac{k}{n}}$的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$e$"
+        },
+        {
+          "label": "B",
+          "content": "$e-1$"
+        },
+        {
+          "label": "C",
+          "content": "1"
+        },
+        {
+          "label": "D",
+          "content": "$2e-1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "n项和的极限可转化为定积分，关键是识别被积函数$f(x)$",
+        "分部积分法适用于幂函数与指数函数乘积的积分形式",
+        "计算定积分时注意上下限代入后的化简"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：反三角函数积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int \\frac{1}{1+4x^2} \\, dx$ 的结果为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\arctan 2x + C$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{2}\\arctan 2x + C$"
+        },
+        {
+          "label": "C",
+          "content": "$\\arcsin 2x + C$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{1}{2}\\arcsin 2x + C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：可使用换元法，设 $u=2x$",
+        "提示2：回忆基本积分公式 $\\int \\frac{1}{1+u^2} \\, du = \\arctan u + C$",
+        "提示3：注意换元后微分变量的转换，$du=2dx$ 则 $dx=\\frac{1}{2}du$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：三角函数降幂公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "利用三角函数降幂公式化简：$\\sin^2 x =$ ___，并计算当$x = 60^\\circ$时该式的值为 ___",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "\\frac{1 - \\cos 2x}{2};\\frac{3}{4}",
+      "hints": [
+        "提示1：三角函数降幂公式中，$\\sin^2 \\alpha = \\frac{1 - \\cos 2\\alpha}{2}$",
+        "提示2：当$x = 60^\\circ$时，$2x = 120^\\circ$，$\\cos 120^\\circ = -\\frac{1}{2}$",
+        "提示3：代入数值计算时注意先算余弦值再进行加减运算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：分部积分法应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限$\\lim\\limits_{n \\to \\infty} \\frac{1}{n} \\sum\\limits_{k=1}^{n} \\left( \\frac{k}{n} \\right) e^{\\frac{k}{n}}$的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$e$"
+        },
+        {
+          "label": "B",
+          "content": "$e-1$"
+        },
+        {
+          "label": "C",
+          "content": "1"
+        },
+        {
+          "label": "D",
+          "content": "$2e-1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "n项和的极限可转化为定积分，关键是识别被积函数$f(x)$",
+        "分部积分法适用于幂函数与指数函数乘积的积分形式",
+        "计算定积分时注意上下限代入后的化简"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：变限积分的积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "利用定积分求极限：\\(\\lim_{n \\to \\infty} \\sum_{k=1}^{n} \\frac{1}{n} \\left( \\left( \\frac{k}{n} \\right)^2 + 1 \\right)\\)，可转化为定积分 ___ ，其结果为 ___ 。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "\\int_{0}^{1} (x^2 + 1) dx;\\frac{4}{3}",
+      "hints": [
+        "n项和的极限转化为定积分的公式：\\(\\lim_{n \\to \\infty} \\sum_{k=1}^{n} f\\left(\\frac{k}{n}\\right) \\cdot \\frac{1}{n} = \\int_{0}^{1} f(x) dx\\)",
+        "被积函数为\\(f(x) = x^2 + 1\\)，积分区间为[0,1]",
+        "计算定积分时，先求原函数\\(\\frac{x^3}{3} + x\\)，再代入上下限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：定积分计算技巧",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "极限$\\lim\\limits_{n \\to \\infty} \\frac{1}{n} \\left( \\sin\\frac{\\pi}{n} + \\sin\\frac{2\\pi}{n} + \\cdots + \\sin\\frac{n\\pi}{n} \\right)$的值为___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{2}{\\pi}$",
+      "hints": [
+        "提示1：利用定积分定义将n项和极限转化为定积分",
+        "提示2：积分区间通常为[0,1]，被积函数为$f(x)=\\sin(\\pi x)$",
+        "提示3：计算定积分$\\int_{0}^{1}\\sin(\\pi x)dx$可得结果"
+      ]
+    }
+  ],
+  "count": 19
+}

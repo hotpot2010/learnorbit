@@ -150,6 +150,22 @@ async def execute_step(
         if not task:
             raise HTTPException(status_code=404, detail="任务不存在")
         
+        # 如果是旧任务且访问 exercises 步骤，先初始化该步骤
+        if step == "exercises" and step not in task["steps"]:
+            print(f"🔧 [API] 旧任务检测到，初始化 exercises 步骤...")
+            task["steps"]["exercises"] = {
+                "status": TaskStatus.PENDING,
+                "progress": 0,
+                "message": "等待执行",
+                "result": None,
+                "error": None,
+                "retry_count": 0
+            }
+            if "exercises_result_url" not in task:
+                task["exercises_result_url"] = None
+            offline_video_service.tasks_cache[task_id] = task
+            offline_video_service._save_task_to_db(task)
+        
         if step not in task["steps"]:
             raise HTTPException(status_code=400, detail=f"无效的步骤: {step}")
         

@@ -1,0 +1,327 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：不定积分基本概念",
+      "description": "根据不定积分基本概念，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "不定积分计算中，常被称为“凑微分法”的方法是以下哪一种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第二换元法"
+        },
+        {
+          "label": "B",
+          "content": "第一换元法"
+        },
+        {
+          "label": "C",
+          "content": "分部积分法"
+        },
+        {
+          "label": "D",
+          "content": "直接积分法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到“凑微分法也被称为……”",
+        "提示2：注意区分不同换元法的名称",
+        "提示3：该方法是不定积分计算中的基础换元方法之一"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：第一换元法基础",
+      "description": "根据第一换元法（凑微分法）的知识，完成以下不定积分的计算",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int x\\sqrt{x^2 + 1}\\ dx$，设 $u = x^2 + 1$，则 $du =$ ___ $dx$，积分结果为 ___",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "2x;(1/3)(x²+1)^(3/2)+C",
+      "hints": [
+        "提示1：先确定换元变量 $u$ 的导数 $du/dx$",
+        "提示2：根据 $u = x^2 + 1$，计算 $du$ 与 $dx$ 的关系",
+        "提示3：将积分转化为 $\\int \\sqrt{u} \\cdot \\frac{du}{2}$ 后，利用幂函数积分公式 $\\int u^n du = \\frac{u^{n+1}}{n+1} + C$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：凑微分法应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int x e^{x^2} dx$ 的结果为 ___（其中C为积分常数）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{2}e^{x^2} + C$",
+      "hints": [
+        "提示1：观察被积函数中是否存在复合函数结构",
+        "提示2：尝试令 $u = x^2$，计算 $du$",
+        "提示3：利用凑微分公式 $x dx = \\frac{1}{2}d(x^2)$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：凑微分法基本概念",
+      "description": "根据视频中关于凑微分法的讲解，完成以下选择题",
+      "difficulty": "intermediate",
+      "question": "凑微分法在不定积分计算中也被称为下列哪种方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第二换元法"
+        },
+        {
+          "label": "B",
+          "content": "第一换元法"
+        },
+        {
+          "label": "C",
+          "content": "分部积分法"
+        },
+        {
+          "label": "D",
+          "content": "变量替换法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到凑微分法的另一种名称与“换元”有关",
+        "提示2：注意区分“第一换元法”和“第二换元法”的表述差异",
+        "提示3：凑微分法是不定积分计算中基础的换元方法之一"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：常见函数凑微分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int x e^{x^2} dx =$ ___ (结果中常数项可省略)",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "\\frac{1}{2}e^{x^2}",
+      "hints": [
+        "提示1：观察被积函数，考虑将$x dx$凑成某个函数的微分",
+        "提示2：注意到$d(x^2)=2x dx$，因此$x dx=\\frac{1}{2}d(x^2)$",
+        "提示3：设$u=x^2$，则积分可转化为$\\frac{1}{2}\\int e^u du$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：凑微分法综合应用",
+      "description": "根据视频中凑微分法（第一换元法）的知识点，完成以下不定积分计算",
+      "difficulty": "intermediate",
+      "question": "不定积分 $\\int x\\sqrt{x^2 + 1}\\ dx$ 的结果为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{2}(x^2 + 1)^{\\frac{3}{2}} + C$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{3}(x^2 + 1)^{\\frac{3}{2}} + C$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{2}{3}(x^2 + 1)^{\\frac{3}{2}} + C$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{1}{3}x^3\\sqrt{x^2 + 1} + C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：观察被积函数，可令 $u = x^2 + 1$，尝试凑微分 $du$",
+        "提示2：注意 $du = 2x\\ dx$，则 $x\\ dx = \\frac{1}{2}du$",
+        "提示3：积分公式 $\\int u^n\\ du = \\frac{1}{n+1}u^{n+1} + C$（$n \\neq -1$）"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：凑微分法一",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int x\\sqrt{x^2 + 1}\\,dx =$ ___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "\\frac{1}{3}(x^2 + 1)^{\\frac{3}{2}} + C",
+      "hints": [
+        "提示1：可令 $u = x^2 + 1$，凑微分 $du = 2xdx$",
+        "提示2：注意积分结果中需包含常数项 $C$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：凑微分法二",
+      "description": "根据视频中讲解的凑微分法（第一换元法），完成以下不定积分的计算",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int x \\cdot e^{x^2} \\, dx =$ ___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "\\frac{1}{2}e^{x^2} + C",
+      "hints": [
+        "提示1：可令 $u = x^2$，则 $du = 2x \\, dx$，即 $x \\, dx = \\frac{1}{2}du$",
+        "提示2：原积分可转化为 $\\frac{1}{2}\\int e^u \\, du$",
+        "提示3：积分结果需加上常数项 $C$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：积分换元与裂项",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算不定积分$\\int \\frac{2x}{x^2 + 3} \\, dx$的结果为___（其中$C$为积分常数）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "ln(x²+3)+C",
+      "hints": [
+        "提示1：可使用第一换元法（凑微分法）",
+        "提示2：设$u = x^2 + 3$，则$du = 2x \\, dx$",
+        "提示3：$\\int \\frac{1}{u} \\, du = \\ln|u| + C$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：三角函数关系",
+      "description": "根据同角三角函数基本关系解决问题",
+      "difficulty": "intermediate",
+      "question": "已知\\(\\sin\\alpha = \\frac{1}{2}\\)，且\\(\\alpha\\)是第二象限角，则\\(\\cos\\alpha = \\)___，\\(\\tan\\alpha = \\)___。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "-\\frac{\\sqrt{3}}{2};-\\frac{\\sqrt{3}}{3}",
+      "hints": [
+        "提示1：利用同角三角函数平方关系\\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\)求解\\(\\cos\\alpha\\)",
+        "提示2：第二象限角的余弦值为负",
+        "提示3：正切值\\(\\tan\\alpha = \\frac{\\sin\\alpha}{\\cos\\alpha}\\)"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：积分分解与转换",
+      "description": "根据视频中讲解的第一换元法（凑微分法），完成以下不定积分计算",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int 2x(x^2 + 1)^3 dx$ 的结果为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{4}(x^2 + 1)^4 + C$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{3}(x^2 + 1)^3 + C$"
+        },
+        {
+          "label": "C",
+          "content": "$(x^2 + 1)^4 + C$"
+        },
+        {
+          "label": "D",
+          "content": "$2(x^2 + 1)^3 + C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：使用第一换元法（凑微分法），设 $u = x^2 + 1$",
+        "提示2：计算 $du$，得 $du = 2x dx$",
+        "提示3：原积分可转化为 $\\int u^3 du$，再根据幂函数积分公式计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：三角函数积分技巧",
+      "description": "根据视频中讲解的凑微分法（第一换元法），完成以下不定积分的计算",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int \\cos\\left(2x+\\frac{\\pi}{3}\\right)dx$ 的结果为 ___（结果中请包含积分常数 $C$）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "\\frac{1}{2}\\sin\\left(2x+\\frac{\\pi}{3}\\right)+C",
+      "hints": [
+        "提示1：可使用凑微分法，设 $u=2x+\\frac{\\pi}{3}$",
+        "提示2：先计算 $du$，可得 $du=2dx$，即 $dx=\\frac{1}{2}du$",
+        "提示3：积分变为 $\\frac{1}{2}\\int \\cos u\\,du$，再根据基本积分公式求解"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：根号积分换元法",
+      "description": "根据视频内容，运用根号积分换元法（第一换元法）完成不定积分计算",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int \\sqrt{2x+1}\\ dx =$ ___ $+ C$（其中 $C$ 为积分常数）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "\\frac{1}{3}(2x+1)^{\\frac{3}{2}}",
+      "hints": [
+        "提示1：可令 $t = \\sqrt{2x+1}$，先进行变量替换",
+        "提示2：由 $t = \\sqrt{2x+1}$ 可得 $t^2 = 2x + 1$，两边对 $x$ 求导得 $2t\\ dt = 2dx$，即 $dx = t\\ dt$",
+        "提示3：将 $dx = t\\ dt$ 代入积分式，转化为关于 $t$ 的积分计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：三角函数代换积分",
+      "description": "根据视频中三角函数代换积分的知识点，完成以下不定积分的计算",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int \\sqrt{4 - x^2}\\ dx$ 的结果为 ___ (用 $x$ 表示，保留常数项 $C$)",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "2\\arcsin(\\frac{x}{2}) + \\frac{x\\sqrt{4 - x^2}}{2} + C",
+      "hints": [
+        "提示1：被积函数含 $\\sqrt{a^2 - x^2}$ 形式，可尝试三角代换 $x = a\\sin\\theta$",
+        "提示2：设 $x = 2\\sin\\theta$，则 $dx = 2\\cos\\theta d\\theta$，且 $\\sqrt{4 - x^2} = 2\\cos\\theta$",
+        "提示3：积分后需将 $\\theta$ 回代为 $x$ 的表达式，利用 $\\theta = \\arcsin(\\frac{x}{2})$ 及 $\\sin2\\theta = 2\\sin\\theta\\cos\\theta$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：正切代换积分法",
+      "description": "根据正切代换积分法的知识，完成以下不定积分的计算",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int \\frac{1}{4 + x^2}dx$ 的结果是 ___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "\\frac{1}{2}\\arctan(\\frac{x}{2}) + C",
+      "hints": [
+        "提示1：考虑使用正切代换法，设 $x = 2\\tan\\theta$",
+        "提示2：回忆三角恒等式 $1 + \\tan^2\\theta = \\sec^2\\theta$",
+        "提示3：不定积分结果需包含积分常数 $C$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：多根号积分代换",
+      "description": "根据多根号积分代换法，完成以下不定积分计算",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int (\\sqrt{x} + \\sqrt[3]{x}) \\, dx$ 时，可通过多根号积分代换法简化计算。若设 $t = x^{1/6}$（即 $t$ 为 $x$ 的六次方根），则 $x = t^6$，$dx =$ ___ $t^5 dt$（填系数），该积分的结果为 ___ $+ C$（其中 $C$ 为积分常数）",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "6;\\frac{2}{3}x^{3/2} + \\frac{3}{4}x^{4/3}",
+      "hints": [
+        "提示1：多根号积分代换需设 t 为各根号次数的最小公倍数次方根，此处平方根（次数2）和立方根（次数3）的最小公倍数为6",
+        "提示2：先求 dx，对 x = t^6 求导得 dx = 6t^5 dt",
+        "提示3：将 t^3 + t^2 与 6t^5 相乘后积分，再将 t = x^{1/6} 代回原变量"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：不定积分计算技巧",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算不定积分 $\\int x\\sqrt{x^2 + 1}\\text{d}x$ 的结果为___（结果中常数项用 $C$ 表示）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "\\frac{1}{3}(x^2 + 1)^{\\frac{3}{2}} + C",
+      "hints": [
+        "提示1：可利用第一换元法（凑微分法）进行计算",
+        "提示2：设 $u = x^2 + 1$，尝试表示出 $\\text{d}u$ 与 $x\\text{d}x$ 的关系",
+        "提示3：注意被积表达式中 $x\\text{d}x$ 可凑成 $\\frac{1}{2}\\text{d}u$"
+      ]
+    }
+  ],
+  "count": 17
+}

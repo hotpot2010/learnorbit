@@ -30,6 +30,7 @@ import {
   GripVertical,
   Plus,
   X,
+  XCircle,
   Loader2,
   Sparkles,
   Edit2,
@@ -4151,12 +4152,93 @@ export default function VideoNotesPrototypePage() {
     setExerciseKnowledgePointIndex(index);
     
     try {
+      // 🔍 优先检查数据库中是否有练习数据
+      if (isProcessedVideoRef.current && processedTaskDataRef.current) {
+        const exercisesUrls = processedTaskDataRef.current.exercises_result_url;
+        
+        if (exercisesUrls) {
+          console.log('🔍 检测到数据库中的练习URL，尝试加载...');
+          const exercisesUrlArray = typeof exercisesUrls === 'string'
+            ? (exercisesUrls.startsWith('[') ? JSON.parse(exercisesUrls) : [exercisesUrls])
+            : exercisesUrls;
+          const exercisesUrl = Array.isArray(exercisesUrlArray) ? exercisesUrlArray[currentPartIndex] : exercisesUrlArray;
+          
+          if (exercisesUrl) {
+            try {
+              const secureExercisesUrl = ensureHttps(exercisesUrl) as string;
+              console.log('📥 加载练习数据:', secureExercisesUrl);
+              const exercisesResponse = await fetch(secureExercisesUrl);
+              const exercisesData = await exercisesResponse.json();
+              console.log('✅ 练习数据加载成功:', exercisesData);
+              
+              // 查找当前知识点对应的练习
+              let exerciseForKnowledgePoint: Exercise | null = null;
+              
+              // 支持两种格式：直接数组 或 {exercises: [...]}
+              let exercisesArray = Array.isArray(exercisesData) ? exercisesData : exercisesData.exercises;
+              
+              if (Array.isArray(exercisesArray)) {
+                console.log('🔍 开始匹配练习，当前知识点:', point.name);
+                console.log('🔍 练习总数:', exercisesArray.length);
+                
+                // 方式1: 通过 knowledge_point 或 knowledge_point_name 字段匹配
+                exerciseForKnowledgePoint = exercisesArray.find(ex => 
+                  ex.knowledge_point === point.name || 
+                  ex.knowledge_point_name === point.name
+                );
+                
+                // 方式2: 通过 title 匹配（格式："知识点练习：xxx"）
+                if (!exerciseForKnowledgePoint) {
+                  exerciseForKnowledgePoint = exercisesArray.find(ex => {
+                    if (ex.title && ex.title.includes('：')) {
+                      const titleKnowledgePoint = ex.title.split('：')[1];
+                      console.log('🔍 比较 title 中的知识点:', titleKnowledgePoint, 'vs', point.name);
+                      return titleKnowledgePoint === point.name;
+                    }
+                    return false;
+                  });
+                }
+                
+                // 方式3: 通过索引匹配（作为最后的备选）
+                if (!exerciseForKnowledgePoint && exercisesArray[index]) {
+                  console.log('🔍 通过索引匹配，使用第', index, '个练习');
+                  exerciseForKnowledgePoint = exercisesArray[index];
+                }
+              }
+              
+              if (exerciseForKnowledgePoint) {
+                console.log('✅ 找到知识点对应的练习:', exerciseForKnowledgePoint);
+                // 过滤掉错误类型的练习
+                if ((exerciseForKnowledgePoint as any).type === 'error') {
+                  console.warn('⚠️ 该练习生成时出错，将调用API重新生成');
+                  console.warn('错误信息:', (exerciseForKnowledgePoint as any).error);
+                } else {
+                  setGeneratedExercise(exerciseForKnowledgePoint);
+                  setIsGeneratingExercise(false);
+                  return;
+                }
+              } else {
+                console.warn('⚠️ 未找到当前知识点对应的练习');
+                console.warn('当前知识点名称:', point.name);
+                console.warn('可用的练习 titles:', exercisesArray?.map(ex => ex.title));
+                console.log('📝 将调用API生成新练习');
+              }
+            } catch (error) {
+              console.error('❌ 加载练习数据失败:', error);
+              console.log('📝 将调用API生成新练习');
+            }
+          }
+        }
+      }
+      
+      // 如果数据库中没有练习数据，调用LLM API生成
+      console.log('💪 调用API生成练习，知识点:', point.name);
+      
       // 提取对应的逐字稿片段作为上下文
       const transcriptSegment = fullTranscriptRef.current
         ? extractTranscriptSegment(point.start_time, point.end_time, fullTranscriptRef.current)
         : '';
       
-      console.log('💪 Generating exercise for:', point.name);
       console.log('📄 Context:', transcriptSegment.substring(0, 100), '...');
       
       // 调用LLM API生成练习
@@ -4604,19 +4686,6 @@ export default function VideoNotesPrototypePage() {
         height: 'calc(100vh - var(--navbar-height, 64px))', // 减去导航栏高度
       }}
     >
-      {/* 返回按钮 */}
-      <div className="flex-shrink-0 px-4 pt-4">
-        <button
-          onClick={() => {
-            window.location.href = `/${locale}/video-entry`;
-          }}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg border-2 border-gray-200 shadow-sm transition-all hover:shadow-md group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span className="text-sm font-medium">返回搜索结果</span>
-        </button>
-      </div>
-
       {/* 主要内容区域 */}
       <div className="flex-1 flex gap-4 p-4 overflow-hidden">
         
@@ -5803,7 +5872,7 @@ export default function VideoNotesPrototypePage() {
         >
           <div 
             className="bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col relative overflow-hidden"
-              style={{ width: '480px', height: '640px' }}
+            style={{ width: '480px', height: '640px' }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* 装饰性背景 */}
@@ -5870,11 +5939,11 @@ export default function VideoNotesPrototypePage() {
                 {!hasTranscript && conversationHistory.length === 0 && (
                   <div className="flex-1 flex flex-col items-center justify-center mb-6">
                     <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-3">
-                      <span className="text-3xl">🤔</span>
-                    </div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-1">有什么疑问吗？</h4>
-                    <p className="text-sm text-gray-500">AI 助教随时为你解答，基于视频内容回答。</p>
+                    <span className="text-3xl">🤔</span>
                   </div>
+                  <h4 className="text-lg font-bold text-gray-800 mb-1">有什么疑问吗？</h4>
+                  <p className="text-sm text-gray-500">AI 助教随时为你解答，基于视频内容回答。</p>
+                </div>
                 )}
 
                   {/* 逐字稿区域 - 追问时隐藏 */}
@@ -5953,7 +6022,7 @@ export default function VideoNotesPrototypePage() {
             
             {/* 输入区域 - 固定在按钮上方 */}
             <div className="flex-shrink-0 border-t border-gray-200 p-4 bg-white relative z-10">
-              <div className="relative">
+                <div className="relative">
                 {/* 样式化显示层（标签样式） */}
                 <div 
                   className="absolute inset-0 px-4 py-3 pointer-events-none rounded-xl text-base whitespace-pre-wrap break-words overflow-hidden text-gray-900"
@@ -5984,14 +6053,14 @@ export default function VideoNotesPrototypePage() {
                 
                 {/* 实际输入框（文本透明） */}
                 <textarea
-                  value={questionInput}
-                  onChange={(e) => setQuestionInput(e.target.value)}
-                  onKeyPress={(e) => {
+                value={questionInput}
+                onChange={(e) => setQuestionInput(e.target.value)}
+                onKeyPress={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey && questionInput.trim() && !knowledgePoints[askingKnowledgeIndex]?.isAsking) {
-                      e.preventDefault();
-                      handleAskQuestion(askingKnowledgeIndex);
-                    }
-                  }}
+                    e.preventDefault();
+                    handleAskQuestion(askingKnowledgeIndex);
+                  }
+                }}
                   placeholder="输入你的问题...（Shift+Enter换行）"
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-yellow-400 focus:outline-none transition-colors text-base shadow-sm pr-12 resize-none overflow-y-auto relative"
                   style={{ 
@@ -6003,26 +6072,26 @@ export default function VideoNotesPrototypePage() {
                     background: 'transparent'
                   }}
                   rows={2}
-                  autoFocus
-                />
-                <button
+                autoFocus
+              />
+              <button
                   onClick={() => {
                     if (askingKnowledgeIndex !== null) {
                       handleAskQuestion(askingKnowledgeIndex);
                     }
                   }}
-                  disabled={!questionInput.trim() || knowledgePoints[askingKnowledgeIndex]?.isAsking}
+                disabled={!questionInput.trim() || knowledgePoints[askingKnowledgeIndex]?.isAsking}
                   className="absolute right-2 bottom-2 w-10 h-10 bg-yellow-400 hover:bg-yellow-500 text-gray-900 rounded-lg disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-all flex items-center justify-center shadow-sm"
                   style={{ zIndex: 3 }}
-                >
-                  {knowledgePoints[askingKnowledgeIndex]?.isAsking ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                  ) : (
-                    <Sparkles className="w-5 h-5" />
-                  )}
-                </button>
-              </div>
-              
+              >
+                {knowledgePoints[askingKnowledgeIndex]?.isAsking ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <Sparkles className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+                
               {/* 快捷提问建议 - 仅在首次提问时显示 */}
               {conversationHistory.length === 0 && (
                 <div className="mt-3 flex flex-wrap justify-center gap-2">
@@ -6038,7 +6107,7 @@ export default function VideoNotesPrototypePage() {
                   ))}
                 </div>
               )}
-            </div>
+              </div>
             
             {/* 卡片底部按钮 - 只在有对话历史时显示 */}
             {conversationHistory.length > 0 && (
@@ -6098,7 +6167,7 @@ export default function VideoNotesPrototypePage() {
                   <Plus className="w-4 h-4" />
                   加入笔记 💾
                 </button>
-              </div>
+            </div>
             )}
           </div>
         </div>
@@ -6154,23 +6223,23 @@ export default function VideoNotesPrototypePage() {
                       <div className="mb-4">
                         <div className="flex items-start gap-3">
                           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-400 to-orange-400 text-white flex items-center justify-center font-bold shadow-md flex-shrink-0">
-                            Q
-                          </div>
+                    Q
+                  </div>
                           <div className="flex-1 prose prose-base max-w-none text-gray-700 leading-relaxed [&>*:first-child]:mt-0">
                             <p className="text-gray-800 text-base leading-relaxed font-medium m-0">{currentQACard.question}</p>
-                          </div>
-                        </div>
-                      </div>
-                      
+                  </div>
+                </div>
+              </div>
+              
                       {currentQACard.answer && (
                         <div className="mb-4">
                           <div className="flex items-start gap-3">
                             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 text-white flex items-center justify-center font-bold shadow-md flex-shrink-0">
                               A
-                            </div>
+                </div>
                             <div className="flex-1 prose prose-base max-w-none text-gray-700 leading-relaxed [&>*:first-child]:mt-0">
                               <ReactMarkdown>{currentQACard.answer}</ReactMarkdown>
-                            </div>
+              </div>
                           </div>
                         </div>
                       )}
@@ -6219,19 +6288,19 @@ export default function VideoNotesPrototypePage() {
                                 : 'bg-gradient-to-br from-green-500 to-emerald-500'
                             } text-white flex items-center justify-center font-bold shadow-md flex-shrink-0`}>
                               {item.label}
-                            </div>
+                  </div>
                             <div className="flex-1 prose prose-base max-w-none text-gray-700 leading-relaxed [&>*:first-child]:mt-0">
                               <ReactMarkdown>{item.content}</ReactMarkdown>
-                            </div>
-                          </div>
-                        </div>
+                  </div>
+                </div>
+                </div>
                       ))}
                       
                       {/* 不同QA组之间的分隔线 */}
                       {blockIndex < qaBlocks.length - 1 && (
                         <div className="my-6 border-t-2 border-dashed border-gray-200"></div>
                       )}
-                    </div>
+              </div>
                   );
                 });
               })()}
@@ -6658,6 +6727,56 @@ export default function VideoNotesPrototypePage() {
                               })}
                             </div>
                           )}
+                          
+                          {/* 填空题输入框 */}
+                          {generatedExercise.type === 'fill_blank' && (
+                            <div className="mb-4">
+                              <div className="bg-white rounded-lg p-4 border-2 border-gray-200">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                  请输入答案：
+                                </label>
+                                <input
+                                  type="text"
+                                  value={generatedExerciseUserAnswer}
+                                  onChange={(e) => {
+                                    if (!generatedExerciseSubmitted) {
+                                      setGeneratedExerciseUserAnswer(e.target.value);
+                                    }
+                                  }}
+                                  disabled={generatedExerciseSubmitted}
+                                  placeholder="在此输入答案..."
+                                  className={`w-full px-4 py-3 border-2 rounded-lg text-gray-800 focus:outline-none focus:ring-2 transition-all ${
+                                    generatedExerciseSubmitted
+                                      ? generatedExerciseUserAnswer.trim() === generatedExercise.solution?.trim()
+                                        ? 'border-green-500 bg-green-50 focus:ring-green-500'
+                                        : 'border-red-500 bg-red-50 focus:ring-red-500'
+                                      : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+                                  }`}
+                                />
+                                {generatedExerciseSubmitted && (
+                                  <div className="mt-3">
+                                    {generatedExerciseUserAnswer.trim() === generatedExercise.solution?.trim() ? (
+                                      <p className="text-green-600 font-medium flex items-center gap-2">
+                                        <CheckCircle className="w-5 h-5" />
+                                        回答正确！
+                                      </p>
+                                    ) : (
+                                      <div className="space-y-2">
+                                        <p className="text-red-600 font-medium flex items-center gap-2">
+                                          <XCircle className="w-5 h-5" />
+                                          回答错误
+                                        </p>
+                                        <p className="text-gray-700 text-sm">
+                                          <span className="font-medium">正确答案：</span>
+                                          <span className="text-green-600 font-bold">{generatedExercise.solution}</span>
+                                        </p>
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          )}
                         </>
                       )}
                     </div>
@@ -6717,8 +6836,8 @@ export default function VideoNotesPrototypePage() {
                   </button>
                 )}
                 
-                {/* 提交按钮 */}
-                {generatedExercise.type === 'multiple_choice' && !generatedExerciseSubmitted && (
+                {/* 提交按钮 - 选择题和填空题都显示 */}
+                {(generatedExercise.type === 'multiple_choice' || generatedExercise.type === 'fill_blank') && !generatedExerciseSubmitted && (
                   <button
                     onClick={submitGeneratedExerciseAnswer}
                     disabled={!generatedExerciseUserAnswer}
@@ -6836,6 +6955,56 @@ export default function VideoNotesPrototypePage() {
                           })}
                         </div>
                       )}
+                      
+                      {/* 填空题输入框 */}
+                      {currentExerciseCard.type === 'fill_blank' && (
+                        <div className="mb-4">
+                          <div className="bg-white rounded-lg p-4 border-2 border-gray-200">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                              请输入答案：
+                            </label>
+                            <input
+                              type="text"
+                              value={exerciseUserAnswer}
+                              onChange={(e) => {
+                                if (!exerciseSubmitted) {
+                                  setExerciseUserAnswer(e.target.value);
+                                }
+                              }}
+                              disabled={exerciseSubmitted}
+                              placeholder="在此输入答案..."
+                              className={`w-full px-4 py-3 border-2 rounded-lg text-gray-800 focus:outline-none focus:ring-2 transition-all ${
+                                exerciseSubmitted
+                                  ? exerciseUserAnswer.trim() === currentExerciseCard.solution?.trim()
+                                    ? 'border-green-500 bg-green-50 focus:ring-green-500'
+                                    : 'border-red-500 bg-red-50 focus:ring-red-500'
+                                  : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+                              }`}
+                            />
+                            {exerciseSubmitted && (
+                              <div className="mt-3">
+                                {exerciseUserAnswer.trim() === currentExerciseCard.solution?.trim() ? (
+                                  <p className="text-green-600 font-medium flex items-center gap-2">
+                                    <CheckCircle className="w-5 h-5" />
+                                    回答正确！
+                                  </p>
+                                ) : (
+                                  <div className="space-y-2">
+                                    <p className="text-red-600 font-medium flex items-center gap-2">
+                                      <XCircle className="w-5 h-5" />
+                                      回答错误
+                                    </p>
+                                    <p className="text-gray-700 text-sm">
+                                      <span className="font-medium">正确答案：</span>
+                                      <span className="text-green-600 font-bold">{currentExerciseCard.solution}</span>
+                                    </p>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
                     </>
                   )}
                 </div>
@@ -6885,8 +7054,8 @@ export default function VideoNotesPrototypePage() {
                 </button>
               )}
               
-              {/* 提交按钮 */}
-              {currentExerciseCard.type === 'multiple_choice' && !exerciseSubmitted && (
+              {/* 提交按钮 - 选择题和填空题都显示 */}
+              {(currentExerciseCard.type === 'multiple_choice' || currentExerciseCard.type === 'fill_blank') && !exerciseSubmitted && (
                 <button
                   onClick={submitExerciseAnswer}
                   disabled={!exerciseUserAnswer}

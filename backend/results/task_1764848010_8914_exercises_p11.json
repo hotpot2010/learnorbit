@@ -1,0 +1,280 @@
+{
+  "exercises": [
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：可分离变量方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某物体在温度为20℃的环境中冷却，其冷却速率与物体和环境的温度差成正比，比例系数为k（k>0）。若物体初始温度为100℃，则该物体温度T（单位：℃）关于时间t（单位：分钟）的函数表达式为___（用含k、t的式子表示，结果中可含自然对数）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "20 + 80e^{-kt}",
+      "hints": [
+        "提示1：冷却速率即温度对时间的导数，可表示为dT/dt",
+        "提示2：根据题意建立微分方程：dT/dt = -k(T - 20)",
+        "提示3：分离变量后积分，注意代入初始条件t=0时T=100确定常数"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：齐次微分方程",
+      "error": "Invalid \\escape: line 1 column 128 (char 127)"
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：可分离变量例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知某曲线在任意一点$(x,y)$处的切线斜率为$\\frac{2x}{y}$，且该曲线经过点$(1,2)$，则此曲线的方程为___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$y^2=2x^2+2$",
+      "hints": [
+        "提示1：根据切线斜率可知$\\frac{dy}{dx}=\\frac{2x}{y}$，此为可分离变量的微分方程",
+        "提示2：分离变量得$y\\,dy=2x\\,dx$，两边分别积分",
+        "提示3：积分后代入点$(1,2)$求出常数$C$，整理可得曲线方程"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：可分离变量方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某物体在温度为20℃的环境中冷却，其冷却速率与物体和环境的温度差成正比，比例系数为k（k>0）。若物体初始温度为100℃，则该物体温度T（单位：℃）关于时间t（单位：分钟）的函数表达式为___（用含k、t的式子表示，结果中可含自然对数）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "20 + 80e^{-kt}",
+      "hints": [
+        "提示1：冷却速率即温度对时间的导数，可表示为dT/dt",
+        "提示2：根据题意建立微分方程：dT/dt = -k(T - 20)",
+        "提示3：分离变量后积分，注意代入初始条件t=0时T=100确定常数"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：齐次方程解法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "方程$\\frac{dy}{dx}=\\frac{y+x}{x}$是齐次方程，其通解为$y=$___（其中$C$为积分常数）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "xln|x| + Cx",
+      "hints": [
+        "提示1：齐次方程可通过变量替换$u=\\frac{y}{x}$转化为变量可分离方程",
+        "提示2：设$y=ux$，则$\\frac{dy}{dx}=u+x\\frac{du}{dx}$",
+        "提示3：分离变量后积分，再将$u=\\frac{y}{x}$代回原变量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：一阶微分方程类型判断",
+      "description": "根据视频中讲解的一阶微分方程类型，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列微分方程中，属于变量可分离方程的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{dy}{dx} = x + y$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{dy}{dx} = \\frac{y^2}{x^2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{dy}{dx} = x^2 y$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{dy}{dx} = \\frac{x + y}{x - y}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "变量可分离方程的标准形式为$\\frac{dy}{dx} = f(x)g(y)$，可变形为$\\frac{dy}{g(y)} = f(x)dx$",
+        "齐次方程的特点是右边可表示为$F(\\frac{y}{x})$的形式",
+        "一阶线性方程的标准形式为$\\frac{dy}{dx} + P(x)y = Q(x)$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：一阶线性方程定义",
+      "description": "根据视频中一阶线性方程的定义，判断下列微分方程中属于一阶线性微分方程的是",
+      "difficulty": "intermediate",
+      "question": "下列微分方程中，属于一阶线性微分方程的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{dy}{dx} = x^2 y^2$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{dy}{dx} + 2xy = x^3$"
+        },
+        {
+          "label": "C",
+          "content": "$y \\frac{dy}{dx} + x = 0$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{d^2y}{dx^2} + y = 0$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "一阶线性微分方程的标准形式为$\\frac{dy}{dx} + P(x)y = Q(x)$",
+        "方程中$y$和$\\frac{dy}{dx}$必须是一次的，且不含乘积项或高次项",
+        "注意区分一阶与高阶方程，线性与非线性方程"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：一阶线性方程解法",
+      "error": "Invalid \\escape: line 6 column 90 (char 211)"
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：一阶线性微分方程解法",
+      "error": "Invalid \\escape: line 1 column 144 (char 143)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二阶齐次方程特征法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微分方程 $y'' - 5y' + 6y = 0$ 的通解为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y = (C_1 + C_2x)e^{2x}$"
+        },
+        {
+          "label": "B",
+          "content": "$y = C_1e^{2x} + C_2e^{3x}$"
+        },
+        {
+          "label": "C",
+          "content": "$y = e^{2x}(C_1\\cos x + C_2\\sin x)$"
+        },
+        {
+          "label": "D",
+          "content": "$y = C_1e^{2x} + C_2e^{-3x}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先写出该微分方程对应的特征方程",
+        "提示2：求解特征方程得到特征根",
+        "提示3：根据特征根的类型（两个不相等实根、两个相等实根或共轭复根）确定通解形式"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：齐次方程（相异实根）",
+      "error": "Invalid \\escape: line 6 column 22 (char 145)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：齐次方程（重根）",
+      "description": "根据视频中齐次方程的知识点，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知曲线 $y = f(x)$ 上任意一点 $(x, y)$ 处的切线斜率为 $\\frac{y^2 + xy}{x^2}$，且曲线过点 $(1, 1)$，则该曲线的方程为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y = \\frac{x}{1 - \\ln|x|}$"
+        },
+        {
+          "label": "B",
+          "content": "$y = \\frac{x}{1 + \\ln|x|}$"
+        },
+        {
+          "label": "C",
+          "content": "$y = x e^{x-1}$"
+        },
+        {
+          "label": "D",
+          "content": "$y = \\frac{x}{\\ln|x| - 1}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先判断方程类型，切线斜率表达式可化为 $\\left(\\frac{y}{x}\\right)^2 + \\frac{y}{x}$，属于齐次方程",
+        "提示2：齐次方程求解常用代换 $u = \\frac{y}{x}$，则 $y = ux$，$\\frac{dy}{dx} = u + x\\frac{du}{dx}$",
+        "提示3：分离变量后积分，代入初始条件求常数 $C$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：齐次方程（共轭复根）",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求微分方程$y'' + 2y' + 2y = 0$的特征方程为 ___，该特征方程的根为共轭复根，故微分方程的通解为 ___。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "$r^2 + 2r + 2 = 0$;$y = e^{-x}(C_1\\cos x + C_2\\sin x)$",
+      "hints": [
+        "提示1：二阶常系数线性齐次微分方程$y'' + py' + qy = 0$的特征方程为$r^2 + pr + q = 0$",
+        "提示2：当特征方程的判别式$\\Delta < 0$时，有共轭复根$r = \\alpha \\pm i\\beta$",
+        "提示3：共轭复根$r = \\alpha \\pm i\\beta$对应的通解为$y = e^{\\alpha x}(C_1\\cos\\beta x + C_2\\sin\\beta x)$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：非齐次方程解法",
+      "description": "根据视频中一阶线性微分方程的解法，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一阶线性非齐次微分方程 $\\frac{dy}{dx} + y = 2e^x$ 的通解为 $y = e^x + Ce^{-x}$，若该方程满足初始条件 $y(0) = 3$，则特解中的常数 $C =$ ___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "2",
+      "hints": [
+        "提示1：将初始条件 $x=0$，$y=3$ 代入通解表达式",
+        "提示2：通解中的 $e^0 = 1$，$e^{-0} = 1$",
+        "提示3：解方程 $3 = 1 + C \\times 1$ 可得 $C$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：一次多项式特解",
+      "description": "根据视频中一阶线性微分方程特解的知识，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "若微分方程 $y' + 2y = 2x + 1$ 有一个特解为一次多项式，则该特解可以是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y = x$"
+        },
+        {
+          "label": "B",
+          "content": "$y = x - \\frac{1}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$y = 2x + 1$"
+        },
+        {
+          "label": "D",
+          "content": "$y = -x + 1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：一阶线性微分方程 $y' + P(x)y = Q(x)$ 的特解形式与 $Q(x)$ 有关，当 $Q(x)$ 为一次多项式时，可设特解为一次多项式 $y^* = mx + n$",
+        "提示2：将设出的特解 $y^* = mx + n$ 及其导数代入方程，比较系数求解 $m$ 和 $n$",
+        "提示3：代入特解后，方程左边应等于右边的一次多项式 $2x + 1$"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：指数正弦项特解",
+      "error": "Invalid \\escape: line 1 column 147 (char 146)"
+    }
+  ],
+  "count": 16
+}

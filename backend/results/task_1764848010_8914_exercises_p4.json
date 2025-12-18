@@ -1,0 +1,240 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：分段函数可导性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "设函数$f(x)=\\begin{cases} x^2 - 1, & x < 2 \\\\ ax + b, & x \\geq 2 \\end{cases}$，若$f(x)$在$x=2$处可导，则$a$的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "2"
+        },
+        {
+          "label": "B",
+          "content": "3"
+        },
+        {
+          "label": "C",
+          "content": "4"
+        },
+        {
+          "label": "D",
+          "content": "5"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "可导的必要条件是函数在该点连续",
+        "分段函数在分段点处的导数需通过左右导数定义计算",
+        "先利用连续性建立参数关系，再通过左右导数相等求解参数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：基本求导公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数$f(x)=\\begin{cases} x^2 + 1, & x \\leq 0 \\\\ e^x + ax, & x > 0 \\end{cases}$在$x=0$处可导，则实数$a$的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "-1"
+        },
+        {
+          "label": "B",
+          "content": "0"
+        },
+        {
+          "label": "C",
+          "content": "1"
+        },
+        {
+          "label": "D",
+          "content": "2"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：函数在某点可导的必要条件是在该点连续",
+        "提示2：分段函数在分段点处的导数需通过左右导数定义计算",
+        "提示3：利用等价无穷小$e^x - 1 \\sim x$ ($x \\to 0$)可简化极限计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：隐函数求导",
+      "description": "根据隐函数求导的知识，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "已知隐函数方程为 $x^2 + y^2 = 25$，则该函数在点 $(3, 4)$ 处的导数 $\\frac{dy}{dx}$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{3}{4}$"
+        },
+        {
+          "label": "B",
+          "content": "$-\\frac{3}{4}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{4}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$-\\frac{4}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：对隐函数方程两边同时对 $x$ 求导",
+        "提示2：注意 $y$ 是 $x$ 的函数，求导时需使用链式法则",
+        "提示3：求导后整理式子，代入点的坐标计算"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：一阶导数零点求法",
+      "error": "Invalid \\escape: line 6 column 23 (char 144)"
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：二阶导数零点求法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数$f(x) = x^4 - 2x^3 + x^2 - 3$，则其二阶导数的零点为___（若有多个零点，用逗号分隔）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "(3+\\sqrt{3})/6,(3-\\sqrt{3})/6",
+      "hints": [
+        "提示1：先求出函数的一阶导数；提示2：再对一阶导数求导得到二阶导数；提示3：令二阶导数等于0，解一元二次方程"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：参数方程求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知参数方程为$x = t^2 + 1$，$y = t^3 - 2t$，则当$t = 1$时，$\frac{dy}{dx} = $（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "2"
+        },
+        {
+          "label": "D",
+          "content": "0"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "参数方程求导核心公式：$\\frac{dy}{dx} = \\frac{\\frac{dy}{dt}}{\\frac{dx}{dt}}$",
+        "先分别计算$x$对$t$的导数和$y$对$t$的导数",
+        "将$t = 1$代入导数值，再作除法运算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：参数方程求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知参数方程为$x = t^2 + 1$，$y = t^3 - 2t$，则当$t = 1$时，$\frac{dy}{dx} = $（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "2"
+        },
+        {
+          "label": "D",
+          "content": "0"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "参数方程求导核心公式：$\\frac{dy}{dx} = \\frac{\\frac{dy}{dt}}{\\frac{dx}{dt}}$",
+        "先分别计算$x$对$t$的导数和$y$对$t$的导数",
+        "将$t = 1$代入导数值，再作除法运算"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：对数求导法",
+      "error": "Invalid \\escape: line 1 column 129 (char 128)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：隐函数求导",
+      "description": "根据隐函数求导的知识，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "已知隐函数方程为 $x^2 + y^2 = 25$，则该函数在点 $(3, 4)$ 处的导数 $\\frac{dy}{dx}$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{3}{4}$"
+        },
+        {
+          "label": "B",
+          "content": "$-\\frac{3}{4}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{4}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$-\\frac{4}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：对隐函数方程两边同时对 $x$ 求导",
+        "提示2：注意 $y$ 是 $x$ 的函数，求导时需使用链式法则",
+        "提示3：求导后整理式子，代入点的坐标计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：函数的微分",
+      "description": "根据视频中关于分段函数可导性的知识点，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "设函数$f(x)=\\begin{cases} ax + b, & x \\leq 0 \\\\ x^2 + 1, & x > 0 \\end{cases}$在$x=0$处可导，则$a=$___，$b=$___",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "0;1",
+      "hints": [
+        "提示1：函数在某点可导的必要条件是该点连续",
+        "提示2：分段函数在分段点处可导需满足左右导数存在且相等",
+        "提示3：先利用连续性求出参数$b$，再通过左右导数相等求出参数$a$"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：莱布尼茨法求高阶导",
+      "error": "Invalid \\escape: line 6 column 20 (char 163)"
+    }
+  ],
+  "count": 11
+}

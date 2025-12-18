@@ -1,0 +1,462 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：反常积分定义与分类",
+      "description": "根据反常积分的定义与分类，判断下列积分类型",
+      "difficulty": "intermediate",
+      "question": "下列积分中，不属于反常积分的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{1}^{+\\infty} \\frac{1}{x} dx$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{0}^{1} \\frac{1}{\\sqrt{x}} dx$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{-1}^{1} \\frac{1}{x^2} dx$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{0}^{\\pi} \\sin x dx$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "反常积分又称广义积分，包括无穷区间上的反常积分和无界函数的反常积分两类",
+        "无穷区间积分的上下限含有$+\\infty$或$-\\infty$",
+        "无界函数积分的被积函数在积分区间内存在无定义的点（瑕点）",
+        "正常积分需满足积分区间有界且被积函数在区间上有界"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷限积分敛散性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列无穷限积分中收敛的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{1}^{\\infty} \\frac{1}{x} dx$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{1}^{\\infty} \\frac{1}{x^2} dx$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{0}^{\\infty} e^x dx$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{-\\infty}^{0} e^{-x} dx$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "无穷限积分收敛的定义是极限存在且为有限值",
+        "对于$\\int_{1}^{\\infty} \\frac{1}{x^p} dx$，当$p>1$时收敛",
+        "指数函数积分需关注被积函数在无穷远处的趋势"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：瑕积分敛散性",
+      "description": "根据视频中关于反常积分（瑕积分）的讲解，判断下列瑕积分的敛散性",
+      "difficulty": "intermediate",
+      "question": "下列关于瑕积分敛散性的判断中，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "瑕积分$\\int_{0}^{1} \\frac{1}{x^2} dx$收敛"
+        },
+        {
+          "label": "B",
+          "content": "瑕积分$\\int_{0}^{1} \\frac{1}{\\sqrt{x}} dx$收敛"
+        },
+        {
+          "label": "C",
+          "content": "瑕积分$\\int_{1}^{+\\infty} \\frac{1}{x} dx$收敛"
+        },
+        {
+          "label": "D",
+          "content": "瑕积分$\\int_{-1}^{1} \\frac{1}{x} dx$收敛"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "瑕积分的关键是先确定瑕点（被积函数无界的点）",
+        "形如$\\int_{a}^{b} \\frac{1}{(x-a)^p} dx$的瑕积分（瑕点为$a$），当$p<1$时收敛，$p\\geq1$时发散",
+        "无穷限积分（如积分区间含$+\\infty$）不属于瑕积分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：敛散性判别口诀",
+      "description": "根据视频中关于反常积分敛散性的讲解，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "反常积分 \\( \\int_{1}^{+\\infty} \\frac{1}{x} dx \\) 的类型及敛散性为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "无界函数反常积分，收敛"
+        },
+        {
+          "label": "B",
+          "content": "无穷限反常积分，发散"
+        },
+        {
+          "label": "C",
+          "content": "无界函数反常积分，发散"
+        },
+        {
+          "label": "D",
+          "content": "无穷限反常积分，收敛"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "反常积分包括无穷限反常积分和无界函数反常积分两种类型",
+        "无穷限反常积分 \\( \\int_{a}^{+\\infty} \\frac{1}{x^p} dx \\) 的敛散性判别口诀：当 \\( p > 1 \\) 时收敛，当 \\( p \\leq 1 \\) 时发散",
+        "被积函数 \\( \\frac{1}{x} \\) 在区间 \\([1, +\\infty)\\) 内连续，积分上限为 \\( +\\infty \\)，属于无穷限反常积分"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：等价无穷小定义",
+      "error": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷限反常积分收敛",
+      "description": "根据视频中关于无穷限反常积分收敛性的知识点，判断下列积分的收敛性",
+      "difficulty": "intermediate",
+      "question": "下列无穷限反常积分中收敛的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{1}^{+\\infty} \\frac{1}{x} \\, dx$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{1}^{+\\infty} \\frac{1}{x^2} \\, dx$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{0}^{+\\infty} \\sin x \\, dx$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{-\\infty}^{0} e^{-x} \\, dx$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "无穷限反常积分收敛需极限$\\lim\\limits_{b \\to +\\infty} \\int_{a}^{b} f(x)dx$存在",
+        "参考公式：$\\int_{1}^{+\\infty} \\frac{1}{x^p}dx$当$p>1$时收敛",
+        "注意被积函数在积分区间上的有界性和极限趋势"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：瑕积分收敛性判断",
+      "description": "根据视频中关于反常积分（广义积分）的内容，判断下列瑕积分的收敛性",
+      "difficulty": "intermediate",
+      "question": "下列瑕积分中收敛的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{0}^{1} \\frac{1}{x^2} \\, dx$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{0}^{1} \\frac{1}{\\sqrt{x}} \\, dx$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{1}^{2} \\frac{1}{(x-1)^2} \\, dx$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{0}^{1} \\frac{1}{1-x} \\, dx$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：瑕积分的瑕点是指被积函数在积分区间内无界的点",
+        "提示2：对于瑕点为积分下限$a$的瑕积分$\\int_{a}^{b} \\frac{1}{(x-a)^p} \\, dx$，当$p < 1$时收敛，$p \\geq 1$时发散",
+        "提示3：先确定各选项的瑕点位置，再用比较判别法判断收敛性"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：混合型反常积分拆分",
+      "error": "Invalid \\escape: line 1 column 153 (char 152)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：积分收敛性判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列反常积分中收敛的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{1}^{+\\infty} \\frac{1}{\\sqrt{x}} \\, dx$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{0}^{1} \\frac{1}{x^2} \\, dx$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{1}^{+\\infty} \\frac{1}{x^3} \\, dx$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{0}^{+\\infty} e^x \\, dx$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "无穷区间积分 $\\int_{a}^{+\\infty} \\frac{1}{x^p} \\, dx$ 当 $p > 1$ 时收敛",
+        "瑕积分 $\\int_{a}^{b} \\frac{1}{(x - a)^p} \\, dx$ 当 $p < 1$ 时收敛",
+        "判断反常积分收敛性需先确定类型（无穷区间或瑕积分）再用对应判别法"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定积分求面积",
+      "description": "根据定积分求面积的知识，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "曲线 $y=x^2 - 2x$ 与 $x$ 轴围成的封闭图形的面积为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{2}{3}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{4}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{8}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "2"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先联立方程求出曲线与x轴的交点，确定积分区间",
+        "提示2：判断被积函数在积分区间内的正负，面积计算需取绝对值",
+        "提示3：利用定积分公式 $\\int_{a}^{b} |f(x)| dx$ 计算，其中 $f(x)$ 为被积函数"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：圆环面积计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个环形花坛，内圆半径为3米，外圆直径比内圆直径多2米。已知圆环的面积公式为$S=\\\\pi(R^2 - r^2)$（其中$R$为外圆半径，$r$为内圆半径），则外圆半径为___米，圆环的面积为___平方米（π取3.14）",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "4;21.98",
+      "hints": [
+        "外圆直径=内圆直径+2米，半径=直径÷2",
+        "圆环面积公式：$S=\\\\pi(R^2 - r^2)$",
+        "注意先计算外圆半径再代入公式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：曲线面积积分",
+      "description": "根据视频中关于广义积分（反常积分）的讲解，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列积分中，属于广义积分（反常积分）的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{0}^{1} x^2 dx$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{1}^{+\\infty} \\frac{1}{x} dx$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{-1}^{1} (x+1) dx$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{2}^{3} (x-2) dx$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "广义积分（反常积分）是指“不正规”的积分，包括积分区间为无穷区间或被积函数在区间上无界两种类型",
+        "正常定积分的积分区间是有限区间，且被积函数在区间上有界",
+        "选项B的积分区间为$[1, +\\infty)$，属于无穷区间，因此是广义积分"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：坐标系与双纽线",
+      "error": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：双曲线与面积计算",
+      "error": "Invalid \\escape: line 6 column 22 (char 154)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：旋转体体积计算",
+      "description": "根据旋转体体积计算原理，完成以下实际应用问题",
+      "difficulty": "intermediate",
+      "question": "某机械零件的横截面由曲线 $y=x^2$、直线 $x=1$、$x=3$ 及 $x$ 轴围成，将该图形绕 $x$ 轴旋转一周得到的旋转体体积为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{242\\pi}{5}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{121\\pi}{5}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{242\\pi}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{121\\pi}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：使用圆盘法公式 $V=\\pi\\int_{a}^{b}[f(x)]^2dx$",
+        "提示2：积分区间为 $[1,3]$，被积函数为 $(x^2)^2=x^4$",
+        "提示3：计算定积分 $\\int_{1}^{3}x^4dx=\\left[\\frac{x^5}{5}\\right]_{1}^{3}=\\frac{243-1}{5}=\\frac{242}{5}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：旋转体体积计算",
+      "description": "根据旋转体体积计算原理，完成以下实际应用问题",
+      "difficulty": "intermediate",
+      "question": "某机械零件的横截面由曲线 $y=x^2$、直线 $x=1$、$x=3$ 及 $x$ 轴围成，将该图形绕 $x$ 轴旋转一周得到的旋转体体积为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{242\\pi}{5}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{121\\pi}{5}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{242\\pi}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{121\\pi}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：使用圆盘法公式 $V=\\pi\\int_{a}^{b}[f(x)]^2dx$",
+        "提示2：积分区间为 $[1,3]$，被积函数为 $(x^2)^2=x^4$",
+        "提示3：计算定积分 $\\int_{1}^{3}x^4dx=\\left[\\frac{x^5}{5}\\right]_{1}^{3}=\\frac{243-1}{5}=\\frac{242}{5}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：旋转体侧面积计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个圆锥形灯罩的侧面展开图是半径为10cm的扇形，该扇形的圆心角为216°，则这个灯罩的侧面积为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "40π cm²"
+        },
+        {
+          "label": "B",
+          "content": "60π cm²"
+        },
+        {
+          "label": "C",
+          "content": "80π cm²"
+        },
+        {
+          "label": "D",
+          "content": "100π cm²"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "圆锥的侧面积等于其侧面展开图扇形的面积",
+        "扇形面积公式：$S=\\frac{\\theta \\pi l^2}{360}$（其中$\\theta$为圆心角度数，$l$为扇形半径）",
+        "本题中扇形半径等于圆锥母线长"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：切线方程求解",
+      "error": "Invalid \\escape: line 6 column 21 (char 145)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：旋转体体积计算",
+      "description": "根据旋转体体积计算原理，完成以下实际应用问题",
+      "difficulty": "intermediate",
+      "question": "某机械零件的横截面由曲线 $y=x^2$、直线 $x=1$、$x=3$ 及 $x$ 轴围成，将该图形绕 $x$ 轴旋转一周得到的旋转体体积为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{242\\pi}{5}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{121\\pi}{5}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{242\\pi}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{121\\pi}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：使用圆盘法公式 $V=\\pi\\int_{a}^{b}[f(x)]^2dx$",
+        "提示2：积分区间为 $[1,3]$，被积函数为 $(x^2)^2=x^4$",
+        "提示3：计算定积分 $\\int_{1}^{3}x^4dx=\\left[\\frac{x^5}{5}\\right]_{1}^{3}=\\frac{243-1}{5}=\\frac{242}{5}$"
+      ]
+    }
+  ],
+  "count": 19
+}

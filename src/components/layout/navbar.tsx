@@ -9,7 +9,7 @@ import { UserButton } from '@/components/layout/user-button';
 import { Button } from '@/components/ui/button';
 import { buttonVariants } from '@/components/ui/button';
 import { useScroll } from '@/hooks/use-scroll';
-import { LocaleLink, useLocalePathname } from '@/i18n/navigation';
+import { LocaleLink, useLocalePathname, useLocaleRouter } from '@/i18n/navigation';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
 import { Routes } from '@/routes';
@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Skeleton } from '../ui/skeleton';
 import LocaleSwitcher from './locale-switcher';
+import { ArrowLeft } from 'lucide-react';
 
 interface NavBarProps {
   scroll?: boolean;
@@ -27,6 +28,7 @@ export function Navbar({ scroll }: NavBarProps) {
   const t = useTranslations();
   const scrolled = useScroll(50);
   const localePathname = useLocalePathname();
+  const router = useLocaleRouter();
   const [mounted, setMounted] = useState(false);
   const { data: session, isPending } = authClient.useSession();
   const currentUser = session?.user;
@@ -82,6 +84,17 @@ export function Navbar({ scroll }: NavBarProps) {
 
           {/* menu links */}
           <div className="flex-1 flex items-center justify-center space-x-8">
+            {/* 返回搜索结果按钮 - 仅在 video-notes-prototype 页面显示 */}
+            {isVideoNotesPage && (
+              <button
+                onClick={() => router.push('/video-entry')}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow-sm transition-all hover:shadow-md group font-medium"
+              >
+                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                <span className="text-sm">返回搜索结果</span>
+              </button>
+            )}
+            
             {menuItems.map((item, index) => (
               <LocaleLink
                 key={index}

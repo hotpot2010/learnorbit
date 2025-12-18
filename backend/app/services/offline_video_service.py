@@ -517,6 +517,7 @@ class OfflineVideoService:
                 asr_result_url = serialize_url_field(task.get('asr_result_url'))
                 knowledge_points_result_url = serialize_url_field(task.get('knowledge_points_result_url'))
                 screenshots_result_url = serialize_url_field(task.get('screenshots_result_url'))
+                exercises_result_url = serialize_url_field(task.get('exercises_result_url'))
                 
                 if db_task:
                     # 更新现有任务
@@ -527,27 +528,34 @@ class OfflineVideoService:
                     db_task.asr_result_url = asr_result_url
                     db_task.knowledge_points_result_url = knowledge_points_result_url
                     db_task.screenshots_result_url = screenshots_result_url
+                    # 只有当数据库模型有该字段时才设置
+                    if hasattr(db_task, 'exercises_result_url'):
+                        db_task.exercises_result_url = exercises_result_url
                     db_task.video_info = task.get('video_info', {})
                     db_task.is_series = 1 if task.get('is_series') else 0
                     db_task.series_parts = task.get('series_parts', [])
                     db_task.updated_at = datetime.now()
                 else:
                     # 创建新任务
-                    db_task = OfflineVideoTask(
-                        task_id=task_id,
-                        bilibili_url=task.get('bilibili_url'),
-                        video_title=task.get('video_title'),
-                        steps=task.get('steps', {}),
-                        video_url=video_url,
-                        asr_result_url=asr_result_url,
-                        knowledge_points_result_url=knowledge_points_result_url,
-                        screenshots_result_url=screenshots_result_url,
-                        video_info=task.get('video_info', {}),
-                        is_series=1 if task.get('is_series') else 0,
-                        series_parts=task.get('series_parts', []),
-                        created_at=datetime.fromisoformat(task.get('created_at')) if task.get('created_at') else datetime.now(),
-                        updated_at=datetime.now()
-                    )
+                    task_data = {
+                        'task_id': task_id,
+                        'bilibili_url': task.get('bilibili_url'),
+                        'video_title': task.get('video_title'),
+                        'steps': task.get('steps', {}),
+                        'video_url': video_url,
+                        'asr_result_url': asr_result_url,
+                        'knowledge_points_result_url': knowledge_points_result_url,
+                        'screenshots_result_url': screenshots_result_url,
+                        'video_info': task.get('video_info', {}),
+                        'is_series': 1 if task.get('is_series') else 0,
+                        'series_parts': task.get('series_parts', []),
+                        'created_at': datetime.fromisoformat(task.get('created_at')) if task.get('created_at') else datetime.now(),
+                        'updated_at': datetime.now()
+                    }
+                    # 只有当数据库模型有该字段时才设置
+                    if hasattr(OfflineVideoTask, 'exercises_result_url'):
+                        task_data['exercises_result_url'] = exercises_result_url
+                    db_task = OfflineVideoTask(**task_data)
                     db.add(db_task)
                 
                 db.commit()
@@ -2667,6 +2675,22 @@ Please generate an exercise in JSON format. Choose the appropriate type and gene
         task = self.get_task(task_id)
         if not task:
             raise ValueError(f"任务不存在: {task_id}")
+        
+        # 如果是旧任务，初始化 exercises 步骤
+        if "exercises" not in task["steps"]:
+            print(f"🔧 旧任务检测到，初始化 exercises 步骤...")
+            task["steps"]["exercises"] = {
+                "status": TaskStatus.PENDING,
+                "progress": 0,
+                "message": "等待执行",
+                "result": None,
+                "error": None,
+                "retry_count": 0
+            }
+            if "exercises_result_url" not in task:
+                task["exercises_result_url"] = None
+            self.tasks_cache[task_id] = task
+            self._save_task_to_db(task)
         
         # 检查知识点步骤是否完成
         if task["steps"]["knowledge_points"]["status"] not in [TaskStatus.SUCCESS, TaskStatus.PARTIAL_SUCCESS]:

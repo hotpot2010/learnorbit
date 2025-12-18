@@ -1,0 +1,333 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：单调性证不等式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当 $x > 0$ 时，下列不等式恒成立的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\ln(1+x) > x$"
+        },
+        {
+          "label": "B",
+          "content": "$\\ln(1+x) < x$"
+        },
+        {
+          "label": "C",
+          "content": "$\\ln(1+x) \\geq x$"
+        },
+        {
+          "label": "D",
+          "content": "$\\ln(1+x) \\leq x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：可构造函数 $f(x) = x - \\ln(1+x)$，通过导数判断单调性",
+        "提示2：计算 $f(x)$ 在 $x=0$ 处的函数值，并结合单调性分析",
+        "提示3：导数大于0时，函数单调递增；导数小于0时，函数单调递减"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：拉格朗日中值定理",
+      "description": "根据视频中拉格朗日中值定理在不等式证明中的应用，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "设$x>0$，函数$f(t)=\\ln(1+t)$在区间$[0,x]$上满足拉格朗日中值定理的条件，则下列关于$\\ln(1+x)$的不等式一定成立的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\ln(1+x) > x$"
+        },
+        {
+          "label": "B",
+          "content": "$\\ln(1+x) < x$"
+        },
+        {
+          "label": "C",
+          "content": "$\\ln(1+x) = x$"
+        },
+        {
+          "label": "D",
+          "content": "$\\ln(1+x) > \\frac{x}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：拉格朗日中值定理结论为存在$\\xi\\in(a,b)$，使$f(b)-f(a)=f'(\\xi)(b-a)$",
+        "提示2：先求$f(t)=\\ln(1+t)$的导数$f'(t)$",
+        "提示3：分析$\\xi$的取值范围$(0,x)$对$\\frac{x}{1+\\xi}$大小的影响"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：拉格朗日证不等式",
+      "error": "Invalid \\escape: line 1 column 146 (char 145)"
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：函数性质及应用",
+      "error": "Invalid \\escape: line 1 column 145 (char 144)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：利用导数证明不等式",
+      "description": "根据视频中不等式证明的知识点，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当$x > 0$时，下列不等式恒成立的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$e^x < 1 + x$"
+        },
+        {
+          "label": "B",
+          "content": "$\\ln(1 + x) < x$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sin x > x$"
+        },
+        {
+          "label": "D",
+          "content": "$x^2 > x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：可通过构造函数，利用导数判断单调性证明不等式",
+        "提示2：注意分析函数在特殊点（如$x=0$）的函数值",
+        "提示3：导数大于0时函数单调递增，小于0时单调递减"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数单调性与凹凸性分析",
+      "description": "根据视频中导数应用及不等式证明的知识点，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "已知函数$f(x)=\\ln(1+x)-x$，其中$x>0$，则下列结论正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$f(x)$在$(0,+\\infty)$上单调递增，且$f(x)>0$"
+        },
+        {
+          "label": "B",
+          "content": "$f(x)$在$(0,+\\infty)$上单调递减，且$f(x)<0$"
+        },
+        {
+          "label": "C",
+          "content": "$f(x)$在$(0,+\\infty)$上先增后减，且$f(x)<0$"
+        },
+        {
+          "label": "D",
+          "content": "$f(x)$在$(0,+\\infty)$上单调递增，且$f(x)<0$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：利用导数判断函数单调性，先求导$f'(x)$",
+        "提示2：若$f'(x)>0$则函数单调递增，$f'(x)<0$则单调递减",
+        "提示3：结合函数在$x=0$处的函数值判断不等关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：利用导数证明不等式",
+      "description": "根据视频中导数应用（证明不等式）的内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数$f(x)=\\ln(1+x)-x$，其中$x>-1$，则下列结论正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "当$x>0$时，$f(x)>0$"
+        },
+        {
+          "label": "B",
+          "content": "当$x>0$时，$f(x)<0$"
+        },
+        {
+          "label": "C",
+          "content": "当$-1<x<0$时，$f(x)<0$"
+        },
+        {
+          "label": "D",
+          "content": "函数$f(x)$在定义域内单调递增"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：可通过求导判断函数的单调性",
+        "提示2：先求$f'(x)$，分析导数的正负确定单调区间",
+        "提示3：求出函数在关键点的函数值，结合单调性判断不等式方向"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：斜渐近线",
+      "description": "根据斜渐近线的定义及计算方法，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "函数$f(x)=\\frac{x^2+2x+3}{x-1}$（$x\\neq1$）的斜渐近线方程为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "y=x+3",
+      "hints": [
+        "斜渐近线方程的一般形式为$y=ax+b$，其中$a=\\lim\\limits_{x\\to\\infty}\\frac{f(x)}{x}$",
+        "$b=\\lim\\limits_{x\\to\\infty}[f(x)-ax]$",
+        "先对$f(x)$进行多项式除法或分子分母同除$x$化简计算极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：垂直渐近线",
+      "description": "根据垂直渐近线的概念，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "函数$f(x)=\\frac{x+2}{x^2-4x+3}$的垂直渐近线方程为___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "x=1,x=3",
+      "hints": [
+        "提示1：垂直渐近线出现在函数定义域的间断点处，即分母为零且分子不为零的点",
+        "提示2：先求解分母$x^2-4x+3=0$的根",
+        "提示3：判断分子在这些根处的值是否为零，若不为零则该点为垂直渐近线"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：不等式的证明",
+      "description": "根据视频中不等式证明的相关内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "设函数$f(x)=\\ln(1+x)-x$，则当$x>0$时，下列不等式恒成立的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$f(x)>0$"
+        },
+        {
+          "label": "B",
+          "content": "$f(x)<0$"
+        },
+        {
+          "label": "C",
+          "content": "$f(x)\\geq0$"
+        },
+        {
+          "label": "D",
+          "content": "$f(x)$与0的大小关系不确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：可通过求导判断函数$f(x)$在$x>0$时的单调性",
+        "提示2：若函数在区间内单调递减且$f(0)=0$，则$x>0$时$f(x)<f(0)$",
+        "提示3：$f'(x)=\\frac{1}{1+x}-1=\\frac{-x}{1+x}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：水平渐近线判断",
+      "description": "根据水平渐近线的判断方法，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "函数$f(x)=\\frac{3x^2+2x-1}{x^2-4}$的水平渐近线方程为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y=0$"
+        },
+        {
+          "label": "B",
+          "content": "$y=3$"
+        },
+        {
+          "label": "C",
+          "content": "$y=3x$"
+        },
+        {
+          "label": "D",
+          "content": "无水平渐近线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "水平渐近线需判断当$x\\to\\pm\\infty$时函数的极限值",
+        "对于分式函数，若分子分母最高次项次数相同，极限为最高次项系数之比",
+        "注意区分水平渐近线（常数）与斜渐近线（一次函数）"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：导数在不等式证明中的应用",
+      "description": "根据视频中讲解的不等式证明方法，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "当$x>0$时，下列不等式恒成立的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sqrt{1+x} > 1 + \\frac{x}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sqrt{1+x} < 1 + \\frac{x}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sqrt{1+x} \\geq 1 + x$"
+        },
+        {
+          "label": "D",
+          "content": "$\\sqrt{1+x} \\leq \\frac{x}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：可构造函数$f(x)=\\sqrt{1+x} - \\left(1 + \\frac{x}{2}\\right)$，通过导数判断单调性",
+        "提示2：计算$f(0)$的值，结合导数符号分析函数在$x>0$时的取值范围",
+        "提示3：$f'(x)=\\frac{1}{2\\sqrt{1+x}} - \\frac{1}{2}$，当$x>0$时$f'(x)<0$，函数单调递减"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：导数应用总结",
+      "description": "根据视频中导数应用之不等式证明的知识点，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "当$x>0$时，下列不等式恒成立的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\ln(1+x) > x$"
+        },
+        {
+          "label": "B",
+          "content": "$\\ln(1+x) < x$"
+        },
+        {
+          "label": "C",
+          "content": "$\\ln(1+x) = x$"
+        },
+        {
+          "label": "D",
+          "content": "$\\ln(1+x) < \\frac{1}{1+x}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：可构造辅助函数$f(x)=x - \\ln(1+x)$",
+        "提示2：利用导数判断函数单调性，若$f'(x)>0$，则函数在$(0,+\\infty)$单调递增",
+        "提示3：通过函数值$f(0)=0$及单调性可比较大小"
+      ]
+    }
+  ],
+  "count": 13
+}

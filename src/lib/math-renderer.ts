@@ -86,35 +86,59 @@ export const preprocessMathContent = (content: string | null | undefined | any):
 /**
  * 自动检测并包裹LaTeX公式
  * 检测包含LaTeX命令但未被$包裹的内容，自动添加$包裹
+ * 增加容错机制，修复常见的格式错误
  */
 export const autoWrapLatex = (content: string): string => {
   if (!content || typeof content !== 'string') return content;
   
+  let result = content;
+  
+  // 🔧 容错1: 将 \(...\) 转换为 $...$
+  result = result.replace(/\\\((.*?)\\\)/g, '$$$1$$');
+  
+  // 🔧 容错2: 将 \[...\] 转换为 $$...$$（块级公式）
+  result = result.replace(/\\\[([\s\S]*?)\\\]/g, '\n\n$$$$1$$\n\n');
+  
+  // 🔧 容错3: 修复 (\lim 或 (\ 开头的错误格式（LLM有时会输出这种格式）
+  // 将 (\... 替换为 $\...
+  result = result.replace(/\(\\([a-zA-Z]+)/g, '$\\$1');
+  
+  // 🔧 容错4: 修复 \) 结尾的错误格式
+  // 将 ...\) 替换为 ...$
+  result = result.replace(/\\\)/g, '$$');
+  
+  // 🔧 容错5: 检查$符号是否配对
+  const dollarCount = (result.match(/\$/g) || []).length;
+  if (dollarCount % 2 !== 0) {
+    console.warn('⚠️ LaTeX 公式括号不匹配，尝试修复...', result);
+    // 在末尾添加$
+    result += '$';
+  }
+  
   // 如果内容已经包含$包裹的公式，直接返回
-  if (/\$[^$]+\$/.test(content) || /\$\$[\s\S]*?\$\$/.test(content)) {
-    return content;
+  if (/\$[^$]+\$/.test(result) || /\$\$[\s\S]*?\$\$/.test(result)) {
+    return result;
   }
   
   // 匹配LaTeX命令模式：\command{...} 或 \command 或 \command{...}{...}
   // 包括常见的数学符号和命令
   const latexPattern = /\\[a-zA-Z]+\*?(?:\{[^}]*\})*(?:\{[^}]*\})*/g;
   
-  let result = content;
   const matches: Array<{ start: number; end: number; text: string }> = [];
   
   let match;
-  while ((match = latexPattern.exec(content)) !== null) {
+  while ((match = latexPattern.exec(result)) !== null) {
     // 检查是否已经被$包裹
-    const before = content.substring(Math.max(0, match.index - 1), match.index);
-    const after = content.substring(match.index + match[0].length, match.index + match[0].length + 1);
+    const before = result.substring(Math.max(0, match.index - 1), match.index);
+    const after = result.substring(match.index + match[0].length, match.index + match[0].length + 1);
     
     if (before !== '$' && after !== '$') {
       // 尝试找到完整的公式（包括后续的数学符号）
       let formulaEnd = match.index + match[0].length;
       
       // 向后查找，找到公式结束（遇到空格、标点或换行）
-      for (let i = formulaEnd; i < content.length; i++) {
-        const char = content[i];
+      for (let i = formulaEnd; i < result.length; i++) {
+        const char = result[i];
         // 如果遇到数学符号或字母数字，继续
         if (/[a-zA-Z0-9_^{}\\]/.test(char)) {
           formulaEnd = i + 1;
@@ -127,7 +151,7 @@ export const autoWrapLatex = (content: string): string => {
         }
       }
       
-      const formulaText = content.substring(match.index, formulaEnd);
+      const formulaText = result.substring(match.index, formulaEnd);
       // 避免重复添加
       if (!matches.some(m => m.start <= match.index && m.end >= formulaEnd)) {
         matches.push({ start: match.index, end: formulaEnd, text: formulaText });
