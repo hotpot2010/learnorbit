@@ -4180,7 +4180,7 @@ export default function VideoNotesPrototypePage() {
               if (Array.isArray(exercisesArray)) {
                 console.log('🔍 开始匹配练习，当前知识点:', point.name);
                 console.log('🔍 练习总数:', exercisesArray.length);
-                
+      
                 // 方式1: 通过 knowledge_point 或 knowledge_point_name 字段匹配
                 exerciseForKnowledgePoint = exercisesArray.find(ex => 
                   ex.knowledge_point === point.name || 

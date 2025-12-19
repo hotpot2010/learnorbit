@@ -10,8 +10,8 @@ export async function GET(request: NextRequest) {
     
     console.log('🔍 查询已处理视频:', { keyword, BACKEND_API_URL });
 
-    // 调用后端API获取所有已处理的视频任务
-    const backendUrl = `${BACKEND_API_URL}/open-api/offline-video/tasks?limit=100&offset=0`;
+    // 调用后端API获取所有已处理的视频任务（增加limit以获取更多视频）
+    const backendUrl = `${BACKEND_API_URL}/open-api/offline-video/tasks?limit=500&offset=0`;
     console.log('📡 请求URL:', backendUrl);
     
     const response = await fetch(backendUrl, {
@@ -57,13 +57,24 @@ export async function GET(request: NextRequest) {
       );
     });
 
-    // 如果有关键词，进行标题筛选
+    // 如果有关键词，进行多字段搜索（标题、描述、作者）
     let filteredTasks = completedTasks;
     if (keyword) {
       const lowerKeyword = keyword.toLowerCase();
       filteredTasks = completedTasks.filter((task: any) => {
-        const title = task.title || task.video_title || '';
-        return title.toLowerCase().includes(lowerKeyword);
+        const videoInfo = task.video_info || {};
+        const title = (task.title || task.video_title || '').toLowerCase();
+        const description = (task.description || videoInfo.description || '').toLowerCase();
+        const author = (task.author || videoInfo.uploader || '').toLowerCase();
+        const targetAudience = (task.target_audience || '').toLowerCase();
+        
+        // 搜索标题、描述、作者、目标受众
+        return (
+          title.includes(lowerKeyword) ||
+          description.includes(lowerKeyword) ||
+          author.includes(lowerKeyword) ||
+          targetAudience.includes(lowerKeyword)
+        );
       });
     }
 

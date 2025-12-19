@@ -95,29 +95,9 @@ export default function VideoEntryPage() {
     setVideos([]);
 
     try {
-      console.log('🔍 搜索视频:', searchQuery);
-
-      const isMathQuery = searchQuery.includes('数学') || searchQuery.toLowerCase().includes('math');
+      console.log('🔍 从数据库搜索视频:', searchQuery);
       
-      let response;
-      if (isMathQuery) {
-        console.log('📚 从数据库加载数学相关视频');
-        response = await fetch(`/api/processed-videos?keyword=${encodeURIComponent(searchQuery)}`);
-      } else {
-        console.log('🔍 从B站搜索视频');
-        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-        response = await fetch(`${API_URL}/open-api/video-search`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: searchQuery,
-          limit: 10,
-          locale: locale,
-        }),
-      });
-      }
+      const response = await fetch(`/api/processed-videos?keyword=${encodeURIComponent(searchQuery)}`);
 
       if (!response.ok) {
         throw new Error(`搜索失败: ${response.status}`);
