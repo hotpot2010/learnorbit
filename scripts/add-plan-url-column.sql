@@ -8,3 +8,4 @@ ALTER TABLE "user_courses" ADD COLUMN IF NOT EXISTS "plan_url" TEXT;
 
 
 
+

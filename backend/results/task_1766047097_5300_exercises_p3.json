@@ -1,0 +1,217 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：离散型随机变量概率分布",
+      "description": "根据离散型随机变量概率分布的知识，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "口袋中有3个红球和2个白球，这些球除颜色外完全相同。从中随机不放回地摸出2个球，记随机变量X为摸出红球的个数，则X的概率分布列正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "X: 0,1,2; P: 0.2, 0.5, 0.4"
+        },
+        {
+          "label": "B",
+          "content": "X: 0,1,2; P: 0.1, 0.6, 0.3"
+        },
+        {
+          "label": "C",
+          "content": "X: 0,1,2; P: -0.1, 0.7, 0.4"
+        },
+        {
+          "label": "D",
+          "content": "X: 1,2,3; P: 0.3, 0.5, 0.2"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：离散型随机变量的概率分布列需满足所有概率非负",
+        "提示2：概率分布列中所有概率之和为1",
+        "提示3：随机变量的可能取值应根据实际情境确定"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：离散型分布概率计算",
+      "description": "根据离散型分布概率计算的知识，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某商场举办抽奖活动，每次抽奖结果相互独立，奖项分为一等奖（奖金100元）、二等奖（奖金50元）、三等奖（奖金20元）和无奖。已知中一等奖的概率为0.01，二等奖的概率为0.05，三等奖的概率为0.2，其余为无奖。若随机变量X表示一次抽奖获得的奖金（单位：元），则X的数学期望E(X)为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "5.5元"
+        },
+        {
+          "label": "B",
+          "content": "6.0元"
+        },
+        {
+          "label": "C",
+          "content": "7.5元"
+        },
+        {
+          "label": "D",
+          "content": "10.0元"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：离散型随机变量的数学期望公式为E(X)=\\sum x_i p_i",
+        "提示2：先计算无奖的概率，利用所有概率之和为1",
+        "提示3：无奖时X=0，其概率为1-0.01-0.05-0.2=0.74"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二项分布及应用",
+      "description": "根据二项分布的概念及公式，解决以下实际应用问题",
+      "difficulty": "intermediate",
+      "question": "某工厂生产的零件合格率为0.9，现从一批产品中随机抽取5个零件进行质量检验，假设每个零件的合格情况相互独立，则恰好有4个零件合格的概率为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0.59049"
+        },
+        {
+          "label": "B",
+          "content": "0.32805"
+        },
+        {
+          "label": "C",
+          "content": "0.0729"
+        },
+        {
+          "label": "D",
+          "content": "0.00045"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：二项分布公式为$P(X=k)=\\binom{n}{k}p^k(1-p)^{n-k}$，其中$\\binom{n}{k}$为组合数",
+        "提示2：本题中试验次数$n=5$，成功次数$k=4$，每次成功概率$p=0.9$",
+        "提示3：注意区分“成功”事件（零件合格）的概率$p$与“失败”概率$1-p$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：对立事件概率",
+      "description": "根据对立事件概率的概念，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个不透明的盒子中有4个黄球和6个绿球，这些球除颜色外完全相同。从中随机一次性摸出2个球，记事件B为“至少有一个黄球”，则事件B的对立事件的概率是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{3}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{2}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{1}{15}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{4}{15}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：对立事件是指两个事件在任何一次试验中恰好有一个发生，且不可能同时发生，其概率关系为$P(B)+P(\\overline{B})=1$",
+        "提示2：事件B“至少有一个黄球”的对立事件是“没有黄球”（即2个都是绿球）",
+        "提示3：计算古典概型概率时，需先确定总基本事件数和所求事件包含的基本事件数，公式为$P=\\frac{所求事件包含的基本事件数}{总基本事件数}$"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：连续型随机变量",
+      "error": "Invalid \\escape: line 6 column 25 (char 154)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：概率计算实例",
+      "description": "根据概率计算的基本原理，解决以下实际问题",
+      "difficulty": "intermediate",
+      "question": "一个不透明的袋子中装有3个红球和2个白球，这些球除颜色外完全相同。从中随机摸出2个球，求摸出的2个球中至少有1个红球的概率是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{10}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3}{10}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{7}{10}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{9}{10}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：“至少有1个红球”的对立事件是“2个都是白球”",
+        "提示2：总事件数为从5个球中选2个的组合数，即$\\binom{5}{2}$",
+        "提示3：对立事件概率公式：$P(A) = 1 - P(\\overline{A})$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：分布函数基本求解",
+      "description": "根据分布函数的基本定义和性质，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知连续型随机变量X的概率密度函数为：\n$f(x) = \\begin{cases} \n0, & x < 0, \\\\\nkx, & 0 \\leq x < 2, \\\\\n0, & x \\geq 2 \n\\end{cases}$\n其中$k$为常数。则X的分布函数$F(x)$在$x=1$处的值$F(1)=$___，在$x=3$处的值$F(3)=$___。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "\\frac{1}{4};1",
+      "hints": [
+        "分布函数的定义为$F(x)=P(X \\leq x)=\\int_{-\\infty}^{x}f(t)dt$",
+        "先利用概率密度函数的规范性$\\int_{-\\infty}^{+\\infty}f(x)dx=1$求常数$k$",
+        "注意根据$x$的取值范围分段计算积分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三段分段函数分布函数",
+      "description": "根据三段分段函数分布函数的定义及性质，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "设随机变量$X$的概率密度函数为分段函数：\n$f(x)= \\begin{cases} \n0, & x < 0 \\\\ \nx, & 0 \\leq x < 1 \\\\ \n2 - x, & 1 \\leq x < 2 \\\\ \n0, & x \\geq 2 \n\\end{cases}$\n则$X$的分布函数$F(x)$为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$F(x)= \\begin{cases} \n0, & x < 0 \\\\ \n\\frac{1}{2}x^2, & 0 \\leq x < 1 \\\\ \n2x - \\frac{1}{2}x^2 - 1, & 1 \\leq x < 2 \\\\ \n1, & x \\geq 2 \n\\end{cases}$"
+        },
+        {
+          "label": "B",
+          "content": "$F(x)= \\begin{cases} \n0, & x < 0 \\\\ \n\\frac{1}{2}x^2, & 0 \\leq x < 1 \\\\ \n2x - \\frac{1}{2}x^2, & 1 \\leq x < 2 \\\\ \n1, & x \\geq 2 \n\\end{cases}$"
+        },
+        {
+          "label": "C",
+          "content": "$F(x)= \\begin{cases} \n0, & x < 0 \\\\ \nx^2, & 0 \\leq x < 1 \\\\ \n2x - \\frac{1}{2}x^2 - 1, & 1 \\leq x < 2 \\\\ \n1, & x \\geq 2 \n\\end{cases}$"
+        },
+        {
+          "label": "D",
+          "content": "$F(x)= \\begin{cases} \n0, & x < 0 \\\\ \n\\frac{1}{2}x^2, & 0 \\leq x < 1 \\\\ \n2x - x^2 - \\frac{1}{2}, & 1 \\leq x < 2 \\\\ \n1, & x \\geq 2 \n\\end{cases}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "分布函数$F(x)=\\int_{-\\infty}^x f(t)dt$，需分段计算积分",
+        "注意各区间积分的上下限，特别是分段点处的累积积分",
+        "验证分布函数性质：$F(-\\infty)=0$，$F(+\\infty)=1$，单调不减且右连续"
+      ]
+    }
+  ],
+  "count": 8
+}

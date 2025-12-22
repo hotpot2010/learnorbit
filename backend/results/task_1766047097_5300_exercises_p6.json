@@ -1,0 +1,315 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二维随机变量的分布与独立性",
+      "description": "结合二维离散型随机变量的联合分布、条件分布及独立性知识，完成本题",
+      "difficulty": "intermediate",
+      "question": "已知二维离散型随机变量(X,Y)的联合分布列如下表所示，其中X的可能取值为0,1，Y的可能取值为0,1，且P(X=0)=0.4，P(Y=0)=0.5。下列说法正确的是（ ）\n\n| X\\Y | 0   | 1   |\n|-----|-----|-----|\n| 0   | a   | 0.2 |\n| 1   | 0.3 | b   |\n\nA. X与Y不独立，且P(X=0|Y=1)=0.4\nB. X与Y独立，且P(X=0|Y=1)=0.4\nC. X与Y不独立，且P(X=0|Y=1)=0.5\nD. X与Y独立，且P(X=0|Y=1)=0.5",
+      "choices": [
+        {
+          "label": "A",
+          "content": "X与Y不独立，且P(X=0|Y=1)=0.4"
+        },
+        {
+          "label": "B",
+          "content": "X与Y独立，且P(X=0|Y=1)=0.4"
+        },
+        {
+          "label": "C",
+          "content": "X与Y不独立，且P(X=0|Y=1)=0.5"
+        },
+        {
+          "label": "D",
+          "content": "X与Y独立，且P(X=0|Y=1)=0.5"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先根据边缘分布性质求a和b的值；提示2：判断独立性需验证对所有i,j，P(X=i,Y=j)=P(X=i)P(Y=j)；提示3：条件概率公式P(A|B)=P(AB)/P(B)"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二维离散型随机变量的分布与独立性",
+      "description": "结合二维离散型随机变量的联合分布、边缘分布及独立性知识，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "设二维离散型随机变量(X,Y)的联合分布列如下表所示，若X与Y相互独立，则a+b的值为（ ）<br><br>| X\\Y | 0 | 1 |<br>|-----|---|---|<br>| 0   | a | 0.2 |<br>| 1   | 0.3 | b |",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0.4"
+        },
+        {
+          "label": "B",
+          "content": "0.5"
+        },
+        {
+          "label": "C",
+          "content": "0.6"
+        },
+        {
+          "label": "D",
+          "content": "0.7"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：二维离散型随机变量相互独立的充要条件是联合分布列中每个概率都等于对应边缘分布概率的乘积",
+        "提示2：先利用联合分布列的归一性（所有概率之和为1）建立方程",
+        "提示3：设P(X=0)=a+0.2，P(X=1)=0.3+b，P(Y=0)=a+0.3，P(Y=1)=0.2+b，结合独立性条件验证"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二项分布及数字特征",
+      "description": "根据二项分布的数字特征知识，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "某工厂生产的一批产品中，每件产品为次品的概率为0.2，且各件产品是否为次品相互独立。现从该批产品中随机抽查5件，记抽查的次品数为X，则X的期望为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0.2"
+        },
+        {
+          "label": "B",
+          "content": "1"
+        },
+        {
+          "label": "C",
+          "content": "2"
+        },
+        {
+          "label": "D",
+          "content": "4"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：若随机变量X服从二项分布B(n,p)，则期望E(X)=np",
+        "提示2：题中次品数X~B(5,0.2)，其中n=5，p=0.2",
+        "提示3：代入期望公式计算可得结果"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：二维随机变量的独立性",
+      "description": "根据二维离散型随机变量的联合分布与独立性知识，完成填空",
+      "difficulty": "intermediate",
+      "question": "设随机变量X，Y的可能取值均为1，2，3，二维随机变量(X,Y)的联合分布列如下表所示（部分数据缺失）：<br><br>|  Y\\X | 1   | 2   | 3   |<br>|------|-----|-----|-----|<br>| 1    | 1/6 | 1/9 | 1/18|<br>| 2    | 1/3 | a   | b   |<br><br>若X与Y相互独立，则a=___，b=___。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "2/9;1/9",
+      "hints": [
+        "提示1：先计算X和Y的边缘分布列",
+        "提示2：利用独立性条件$P(X=i,Y=j)=P(X=i)P(Y=j)$列方程",
+        "提示3：所有概率之和为1可用于验证结果"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：离散变量期望计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某商场举办抽奖活动，顾客可参与两次抽奖，设随机变量X表示第一次抽奖获得的奖金（单位：元），Y表示第二次抽奖获得的奖金（单位：元）。已知X和Y的联合分布列如下表所示：\n\n| Y \\ X | 0元 | 10元 |\n|-------|-----|------|\n| 0元   | 0.3 | 0.2  |\n| 10元  | 0.2 | 0.3  |\n\n下列说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "X与Y不相互独立，$E(X+Y)=10$"
+        },
+        {
+          "label": "B",
+          "content": "X与Y相互独立，$E(X+Y)=10$"
+        },
+        {
+          "label": "C",
+          "content": "X与Y不相互独立，$E(X+Y)=8$"
+        },
+        {
+          "label": "D",
+          "content": "X与Y相互独立，$E(X+Y)=8$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "判断独立性需验证$P(X=x,Y=y)=P(X=x)P(Y=y)$对所有x,y是否成立",
+        "随机变量和的期望等于期望的和：$E(X+Y)=E(X)+E(Y)$",
+        "离散型随机变量期望公式：$E(X)=\\sum x_iP(X=x_i)$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：离散变量期望方差",
+      "description": "本题考查二维离散型随机变量的独立性及数学期望的计算，需结合联合分布与边缘分布的关系求解",
+      "difficulty": "intermediate",
+      "question": "已知二维离散型随机变量(X,Y)的联合分布列为：<br><table border='1'><tr><th>X\\Y</th><th>0</th><th>1</th></tr><tr><td>0</td><td>0.2</td><td>a</td></tr><tr><td>1</td><td>0.3</td><td>b</td></tr></table><br>若X与Y相互独立，则a=___，E(X+Y)=___。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "0.2;1.1",
+      "hints": [
+        "提示1：随机变量相互独立的充要条件是联合概率等于边缘概率的乘积",
+        "提示2：先根据分布列归一性（所有概率和为1）求出a+b的值",
+        "提示3：E(X+Y)=E(X)+E(Y)，可分别计算X和Y的数学期望再相加"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：二维离散型随机变量的独立性",
+      "description": "根据视频中二维离散型随机变量分布及独立性的知识点，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "已知二维离散型随机变量(X,Y)的联合分布列如下表所示，若X与Y相互独立，则常数a的值为___，b的值为___。<br><br>|  | Y=0 | Y=1 |<br>|----|----|----|<br>| X=0 | $\\frac{1}{6}$ | $a$ |<br>| X=1 | $\\frac{1}{3}$ | $b$ |",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "1/6;1/3",
+      "hints": [
+        "提示1：随机变量X与Y相互独立的充要条件是对所有i,j，有P(X=x_i,Y=y_j)=P(X=x_i)P(Y=y_j)",
+        "提示2：先计算关于X和Y的边缘分布列",
+        "提示3：利用P(X=0,Y=0)=P(X=0)P(Y=0)建立方程求解a"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：离散协方差与相关系数",
+      "description": "根据二维离散型随机变量的联合分布及数字特征知识，完成以下计算",
+      "difficulty": "intermediate",
+      "question": "已知二维离散型随机变量(X,Y)的联合分布列如下表所示（其中X,Y的可能取值均为0和1）：<br><br>| Y\\X | 0 | 1 |<br>|-----|---|---|<br>| 0   | 0.2 | 0.3 |<br>| 1   | 0.3 | 0.2 |<br><br>则Cov(X,Y)=___，相关系数ρ(X,Y)=___（结果保留两位小数，若为负数需保留负号）",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "-0.05;-0.20",
+      "hints": [
+        "协方差计算公式：$Cov(X,Y)=E[XY]-E[X]E[Y]$",
+        "相关系数计算公式：$\\rho(X,Y)=\\frac{Cov(X,Y)}{\\sigma_X\\sigma_Y}$，其中$\\sigma_X=\\sqrt{Var(X)}$，$\\sigma_Y=\\sqrt{Var(Y)}$",
+        "步骤提示：1. 计算X和Y的边缘分布列；2. 分别求出$E[X]$、$E[Y]$、$E[XY]$；3. 代入协方差公式计算；4. 计算X和Y的方差与标准差，代入相关系数公式"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：连续变量协方差计算",
+      "description": "根据连续型二维随机变量协方差的计算方法，完成以下问题",
+      "difficulty": "intermediate",
+      "question": "设二维连续型随机变量$(X,Y)$的联合概率密度函数为$f(x,y)=\\begin{cases}6xy, & 0\\leq x\\leq1, 0\\leq y\\leq x \\\\ 0, & \\text{其他}\\end{cases}$，则$\\text{Cov}(X,Y)=$___（结果用分数表示）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "7/75",
+      "hints": [
+        "协方差计算公式：$\\text{Cov}(X,Y)=E[XY]-E[X]E[Y]$",
+        "连续型随机变量期望计算：$E[g(X,Y)]=\\iint_{\\mathbb{R}^2}g(x,y)f(x,y)dxdy$",
+        "注意积分区域需满足$0\\leq y\\leq x$且$0\\leq x\\leq1$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二维离散型随机变量的独立性",
+      "description": "根据视频中关于二维离散型随机变量联合分布及独立性的内容，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "已知二维离散型随机变量(X,Y)的联合分布律如下表所示，其中a为常数，且X与Y相互独立，则a的值为（ ）<br>  <table border='1'><tr><th></th><th>Y=1</th><th>Y=2</th></tr><tr><td>X=1</td><td>\\frac{1}{6}</td><td>a</td></tr><tr><td>X=2</td><td>\\frac{1}{3}</td><td>b</td></tr></table>",
+      "choices": [
+        {
+          "label": "A",
+          "content": "\\frac{1}{6}"
+        },
+        {
+          "label": "B",
+          "content": "\\frac{1}{3}"
+        },
+        {
+          "label": "C",
+          "content": "\\frac{1}{12}"
+        },
+        {
+          "label": "D",
+          "content": "\\frac{1}{4}"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：相互独立的条件是对于所有i,j，P(X=x_i,Y=y_j)=P(X=x_i)P(Y=y_j)",
+        "提示2：先计算X和Y的边缘分布概率",
+        "提示3：利用联合分布律中所有概率之和为1建立方程"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二维期望计算",
+      "description": "根据二维离散型随机变量的分布与独立性知识点，完成以下练习",
+      "difficulty": "intermediate",
+      "question": "设二维离散型随机变量(X,Y)的可能取值为(0,0),(0,1),(1,0),(1,1)，其联合分布列如下表所示。已知X与Y相互独立，则E(X+Y)的值为（ ）<br> <table border='1'><tr><th>X\\Y</th><th>0</th><th>1</th></tr><tr><td>0</td><td>0.1</td><td>a</td></tr><tr><td>1</td><td>b</td><td>0.4</td></tr></table>",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0.9"
+        },
+        {
+          "label": "B",
+          "content": "1.1"
+        },
+        {
+          "label": "C",
+          "content": "1.3"
+        },
+        {
+          "label": "D",
+          "content": "1.5"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：利用概率总和为1可得a+b=0.5",
+        "提示2：独立性需满足P(X=i,Y=j)=P(X=i)P(Y=j)",
+        "提示3：期望性质E(X+Y)=E(X)+E(Y)"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：二维随机变量的独立性",
+      "description": "根据二维离散型随机变量的联合分布与独立性知识，完成填空",
+      "difficulty": "intermediate",
+      "question": "设随机变量X，Y的可能取值均为1，2，3，二维随机变量(X,Y)的联合分布列如下表所示（部分数据缺失）：<br><br>|  Y\\X | 1   | 2   | 3   |<br>|------|-----|-----|-----|<br>| 1    | 1/6 | 1/9 | 1/18|<br>| 2    | 1/3 | a   | b   |<br><br>若X与Y相互独立，则a=___，b=___。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "2/9;1/9",
+      "hints": [
+        "提示1：先计算X和Y的边缘分布列",
+        "提示2：利用独立性条件$P(X=i,Y=j)=P(X=i)P(Y=j)$列方程",
+        "提示3：所有概率之和为1可用于验证结果"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：二维离散型随机变量的分布与独立性",
+      "description": "根据二维离散型随机变量的联合分布、条件分布及独立性知识，完成以下填空",
+      "difficulty": "intermediate",
+      "question": "已知二维离散型随机变量(X,Y)的联合分布列如下表所示：<br><br>|  Y\\X | 1 | 2 |<br>|------|---|---|<br>| 1    | 0.1 | 0.2 |<br>| 2    | 0.3 | a |<br><br>（1）常数a的值为___；（2）若计算得P(X=1|Y=1)=1/3，P(X=1)=0.4，则X与Y是否相互独立？___（填“是”或“否”）",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "0.4;否",
+      "hints": [
+        "提示1：联合分布列中所有概率之和为1",
+        "提示2：随机变量相互独立的充要条件是P(X=i,Y=j)=P(X=i)P(Y=j)对所有i,j成立",
+        "提示3：条件概率P(X=1|Y=1)=P(X=1,Y=1)/P(Y=1)"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：二维离散型随机变量的分布与独立性",
+      "description": "根据二维离散型随机变量的联合分布、条件分布及独立性知识，完成以下填空",
+      "difficulty": "intermediate",
+      "question": "已知二维离散型随机变量(X,Y)的联合分布列如下表所示：<br><br>|  Y\\X | 1 | 2 |<br>|------|---|---|<br>| 1    | 0.1 | 0.2 |<br>| 2    | 0.3 | a |<br><br>（1）常数a的值为___；（2）若计算得P(X=1|Y=1)=1/3，P(X=1)=0.4，则X与Y是否相互独立？___（填“是”或“否”）",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "0.4;否",
+      "hints": [
+        "提示1：联合分布列中所有概率之和为1",
+        "提示2：随机变量相互独立的充要条件是P(X=i,Y=j)=P(X=i)P(Y=j)对所有i,j成立",
+        "提示3：条件概率P(X=1|Y=1)=P(X=1,Y=1)/P(Y=1)"
+      ]
+    }
+  ],
+  "count": 14
+}

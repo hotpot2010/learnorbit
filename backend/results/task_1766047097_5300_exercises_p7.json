@@ -1,0 +1,367 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：中心极限定理概念",
+      "description": "根据中心极限定理的概念，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某工厂生产的零件重量服从均值为μ，方差为σ²的非正态分布，现从中随机抽取n个零件（n足够大），则这n个零件的平均重量的分布近似为（ ），其数学期望为（ ），方差为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正态分布，μ，σ²"
+        },
+        {
+          "label": "B",
+          "content": "正态分布，μ，σ²/n"
+        },
+        {
+          "label": "C",
+          "content": "原分布，μ，σ²"
+        },
+        {
+          "label": "D",
+          "content": "原分布，μ，σ²/n"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：中心极限定理描述了大量独立同分布随机变量之和（或均值）的分布特征",
+        "提示2：样本均值的数学期望等于总体数学期望",
+        "提示3：样本均值的方差等于总体方差除以样本量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：常见分布的数字特征应用",
+      "description": "根据视频中讲解的常见分布数字特征知识，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某工厂生产的零件中，不合格品率为0.1，现从一批产品中随机抽取20件进行检验，假设每件产品是否合格相互独立。若用X表示抽取的20件产品中的不合格品数，则X的数学期望$E(X)$和方差$D(X)$分别为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "2，1.8"
+        },
+        {
+          "label": "B",
+          "content": "2，2"
+        },
+        {
+          "label": "C",
+          "content": "1.8，2"
+        },
+        {
+          "label": "D",
+          "content": "1.8，1.8"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：判断随机变量X服从的分布类型",
+        "提示2：二项分布$B(n,p)$的数学期望公式为$E(X)=np$",
+        "提示3：二项分布$B(n,p)$的方差公式为$D(X)=np(1-p)$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正态分布标准化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某次数学考试成绩近似服从正态分布$N(\\mu,\\sigma^2)$，已知该次考试的平均分为75分，标准差为10分。若某学生的考试成绩为85分，将其成绩进行标准化后得到的标准正态变量$Z$的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1"
+        },
+        {
+          "label": "B",
+          "content": "2"
+        },
+        {
+          "label": "C",
+          "content": "0.5"
+        },
+        {
+          "label": "D",
+          "content": "1.5"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "正态分布标准化公式为$Z=\\frac{X-\\mu}{\\sigma}$",
+        "其中$\\mu$为总体均值，$\\sigma$为总体标准差",
+        "代入已知数据：$X=85$，$\\mu=75$，$\\sigma=10$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：标准正态分布",
+      "description": "根据视频中关于常见分布数字特征的讲解，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某次数学考试中，某班级学生的成绩近似服从标准正态分布$N(\\mu,\\sigma^2)$，则该分布的数学期望$\\mu$和方差$\\sigma^2$分别为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\mu=0$，$\\sigma^2=0$"
+        },
+        {
+          "label": "B",
+          "content": "$\\mu=0$，$\\sigma^2=1$"
+        },
+        {
+          "label": "C",
+          "content": "$\\mu=1$，$\\sigma^2=0$"
+        },
+        {
+          "label": "D",
+          "content": "$\\mu=\\bar{x}$，$\\sigma^2=s^2$（其中$\\bar{x}$为样本均值，$s^2$为样本方差）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到常见分布的数字特征主要考察数学期望与方差",
+        "提示2：标准正态分布是一种特殊的正态分布，其参数为固定值",
+        "提示3：一般正态分布记为$N(\\mu,\\sigma^2)$，而“标准”二字意味着经过标准化处理"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：中心极限定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某工厂生产的零件重量X（单位：g）服从期望μ=50，方差σ²=4的分布（分布类型未知）。现从该工厂随机抽取100个零件，记这100个零件的平均重量为\\bar{X}。根据中心极限定理，\\bar{X}的近似分布为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "N(50, 4)"
+        },
+        {
+          "label": "B",
+          "content": "N(50, 0.04)"
+        },
+        {
+          "label": "C",
+          "content": "N(50, 2)"
+        },
+        {
+          "label": "D",
+          "content": "无法确定，因为总体分布未知"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "中心极限定理表明，大量独立同分布随机变量的样本均值近似服从正态分布",
+        "样本均值的期望等于总体期望μ",
+        "样本均值的方差等于总体方差σ²除以样本量n"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三大分布",
+      "description": "根据视频中关于常见分布数字特征（数学期望与方差）的讲解，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某射手进行独立重复射击，每次射击命中目标的概率为0.6，共射击10次，用X表示命中目标的次数。已知X服从二项分布，则X的数学期望$E(X)$和方差$D(X)$分别为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "6，2.4"
+        },
+        {
+          "label": "B",
+          "content": "6，3.6"
+        },
+        {
+          "label": "C",
+          "content": "0.6，2.4"
+        },
+        {
+          "label": "D",
+          "content": "0.6，3.6"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：二项分布的数学期望公式为$E(X)=np$，其中n为试验次数，p为每次试验成功的概率",
+        "提示2：二项分布的方差公式为$D(X)=np(1-p)$",
+        "提示3：本题中n=10，p=0.6，代入公式计算即可"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：卡方分布",
+      "error": "Invalid \\escape: line 1 column 139 (char 138)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：t分布",
+      "description": "根据视频中关于常见分布数字特征的讲解，结合t分布的性质，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知某总体服从t分布，其自由度为$df$（$df>2$），下列关于该t分布的数字特征说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "期望为1，方差为$\\frac{df}{df-2}$"
+        },
+        {
+          "label": "B",
+          "content": "期望为0，方差为$\\frac{df}{df-2}$"
+        },
+        {
+          "label": "C",
+          "content": "期望为0，方差为1"
+        },
+        {
+          "label": "D",
+          "content": "期望为$df$，方差为$df$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：t分布是对称分布，其期望在自由度$df>1$时存在且为0",
+        "提示2：t分布的方差公式为$\\frac{df}{df-2}$，要求自由度$df>2$",
+        "提示3：正态分布的方差为1，而t分布方差大于1（当$df>2$时）"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：F分布",
+      "description": "根据视频中关于常见分布数字特征（期望、方差）的讲解，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "若随机变量$X$服从自由度为$(m,n)$的F分布（记为$X\\sim F(m,n)$），且满足$n>2$，则$X$的数学期望$E(X)$等于（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{m}{m-2}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{n}{n-2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{m+n}{m+n-2}$"
+        },
+        {
+          "label": "D",
+          "content": "1"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：F分布的数学期望与第二自由度$n$相关",
+        "提示2：当$n\\leq2$时，F分布的期望不存在",
+        "提示3：回忆常见分布数字特征中F分布期望的计算公式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：F分布性质",
+      "description": "根据视频中常见分布的数字特征（数学期望与方差）知识点，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "设随机变量$F$服从自由度为$(n_1, n_2)$的$F$分布，即$F\\sim F(n_1, n_2)$，则$F$分布的数学期望$E(F)$为（ ），其中要求$n_2$满足的条件是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{n_1}{n_1-2}$，$n_1>2$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{n_2}{n_2-2}$，$n_2>2$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{n_1+n_2}{n_1+n_2-2}$，$n_1+n_2>2$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{n_1n_2}{n_1+n_2-2}$，$n_1+n_2>2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：F分布由两个相互独立的卡方分布除以各自自由度后之比构成",
+        "提示2：F分布的数学期望仅与分母自由度$n_2$相关",
+        "提示3：期望存在的条件是分母自由度需满足一定的数值要求"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：卡方分布例题",
+      "error": "Invalid \\escape: line 6 column 22 (char 157)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：分布可加性",
+      "description": "根据视频中关于常见分布数字特征及分布可加性的内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "假设学生A的数学成绩$X$服从正态分布$N(80, 25)$，学生B的数学成绩$Y$服从正态分布$N(75, 16)$，且$X$与$Y$相互独立。记$Z = X + Y$，则$Z$的数学期望$E(Z)$和方差$D(Z)$分别为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "155, 41"
+        },
+        {
+          "label": "B",
+          "content": "155, 81"
+        },
+        {
+          "label": "C",
+          "content": "160, 41"
+        },
+        {
+          "label": "D",
+          "content": "150, 41"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：正态分布具有可加性，即两个独立正态随机变量之和仍服从正态分布",
+        "提示2：随机变量和的数学期望等于数学期望的和，即$E(X+Y)=E(X)+E(Y)$",
+        "提示3：独立随机变量和的方差等于方差的和，即$D(X+Y)=D(X)+D(Y)$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正态分布标准化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某次数学考试成绩近似服从正态分布$N(\\mu,\\sigma^2)$，已知该次考试的平均分为75分，标准差为10分。若某学生的考试成绩为85分，将其成绩进行标准化后得到的标准正态变量$Z$的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1"
+        },
+        {
+          "label": "B",
+          "content": "2"
+        },
+        {
+          "label": "C",
+          "content": "0.5"
+        },
+        {
+          "label": "D",
+          "content": "1.5"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "正态分布标准化公式为$Z=\\frac{X-\\mu}{\\sigma}$",
+        "其中$\\mu$为总体均值，$\\sigma$为总体标准差",
+        "代入已知数据：$X=85$，$\\mu=75$，$\\sigma=10$"
+      ]
+    }
+  ],
+  "count": 13
+}

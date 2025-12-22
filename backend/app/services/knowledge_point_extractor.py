@@ -275,15 +275,13 @@ class KnowledgePointExtractor:
         # 4. 去重（基于名称和时间范围）
         unique_points = self._deduplicate_knowledge_points(all_knowledge_points)
         
-        # 5. 为每个知识点添加对应的逐字稿片段
-        print(f"\n📝 Adding transcript segments to knowledge points...")
-        unique_points = self._add_transcript_segments(unique_points, transcript_with_timestamps)
+        # 注意：不再添加 transcript_segment 字段，以节省存储空间
+        # 如果需要逐字稿片段，可以从完整逐字稿中动态提取
         
         print(f"\n{'='*70}")
         print(f"✅ Knowledge Point Extraction Complete")
         print(f"   Total extracted: {len(all_knowledge_points)}")
         print(f"   After deduplication: {len(unique_points)}")
-        print(f"   With transcript segments: {sum(1 for p in unique_points if p.get('transcript_segment'))}")
         print(f"{'='*70}\n")
         
         return unique_points

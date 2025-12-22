@@ -1,0 +1,144 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：离散型随机变量的分布律",
+      "description": "根据视频中离散型随机变量分布律的求解方法，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "将一枚质地均匀的骰子掷两次，记X为两次掷得点数中的较小值，则P(X=3)等于（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{5}{36}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{7}{36}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{1}{6}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{1}{4}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：两次掷骰子的所有可能结果共有$6\\times6=36$种，且每种结果概率相等",
+        "提示2：X=3表示两次点数中的较小值为3，需满足两次点数均不小于3且至少有一次为3",
+        "提示3：X=3对应的基本事件包括(3,3),(3,4),(3,5),(3,6),(4,3),(5,3),(6,3)"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：离散型随机变量的分布列",
+      "description": "根据视频中关于离散型随机变量分布列的讲解，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "将一枚质地均匀的骰子连续掷两次，记X为两次掷得的点数中的较小值，则X的分布列为：<br>| X | 1 | 2 | 3 | 4 | 5 | 6 |<br>| P | ___ | ___ | 7/36 | 5/36 | 1/12 | 1/36 |<br>（注：概率结果用分数表示，且为最简形式）",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "11/36;1/4",
+      "hints": [
+        "提示1：X=k时，表示两次点数均不小于k，且至少有一次点数为k",
+        "提示2：所有可能的基本事件总数为6×6=36种",
+        "提示3：X=1时，包含的基本事件有(1,1),(1,2),...,(1,6),(2,1),(3,1),...,(6,1)"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：正态分布互补性",
+      "error": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：离散型随机变量的分布列",
+      "description": "根据视频中关于离散型随机变量分布列的讲解，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "将一枚质地均匀的骰子先后抛掷两次，记X为两次得到的点数中较小的那个数，则P(X=2)等于（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{5}{36}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{7}{36}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{9}{36}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{11}{36}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：X=2表示两次点数中较小的为2，需满足两次点数均不小于2，且至少有一次为2",
+        "提示2：计算方法为“两次点数都≥2的基本事件数”减去“两次点数都≥3的基本事件数”",
+        "提示3：抛掷两次骰子的总基本事件数为6×6=36"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：离散函数分布",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "将一枚质地均匀的骰子先后抛掷两次，记随机变量X为两次掷得的点数中的较小值，则P(X=3)=___（结果用分数表示）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "7/36",
+      "hints": [
+        "提示1：先确定X=3时，两次掷得的点数需满足的条件",
+        "提示2：X为较小值，则两次点数均不小于3，且至少有一次为3",
+        "提示3：列出所有满足条件的基本事件，再除以总事件数36"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：离散型变量概率计算",
+      "description": "根据视频中离散型随机变量分布律的计算方法，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "将一枚质地均匀的骰子先后抛掷两次，记X为两次抛掷所得点数中的较小值，则X的所有可能取值为___，P(X=2)=___（结果用最简分数表示）",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "1,2,3,4,5,6;1/4",
+      "hints": [
+        "提示1：先列出两次抛掷点数的所有可能结果，共有6×6=36种等可能基本事件",
+        "提示2：X为较小值时，需满足两次点数均不小于X，且至少有一次等于X",
+        "提示3：计算P(X=2)时，先确定“两次点数中的较小值为2”包含的基本事件数"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：连续型变量分布",
+      "error": "Invalid \\escape: line 6 column 31 (char 171)"
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：离散型随机变量的分布",
+      "description": "根据视频中离散型随机变量分布的知识点，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "将一枚质地均匀的骰子掷两次，记X为两次掷得点数中的较小值，则X的分布列中，P(X=2)=___，P(X=4)=___（结果用分数表示，形如$\\frac{a}{b}$）",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{4}$;$\\frac{5}{36}$",
+      "hints": [
+        "提示1：X=k时，需满足两次点数均≥k且至少有一次=k",
+        "提示2：总基本事件数为6×6=36",
+        "提示3：P(X=k)=P(两次点数均≥k) - P(两次点数均>k)"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：导数计算及定义域",
+      "error": "Invalid \\escape: line 6 column 31 (char 172)"
+    }
+  ],
+  "count": 9
+}

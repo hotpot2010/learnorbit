@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：矩估计法与最大似然估计法",
+      "description": "根据视频中参数估计的知识点，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知某种零件的长度（单位：cm）服从均匀分布U[a, 5]，现从一批零件中随机抽取5个，测得长度分别为：2, 3, 4, 4, 2。若用矩估计法估计参数a的值，则a的矩估计值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "1"
+        },
+        {
+          "label": "C",
+          "content": "2"
+        },
+        {
+          "label": "D",
+          "content": "3"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：均匀分布U[a,b]的期望为$\\frac{a+b}{2}$",
+        "提示2：矩估计法中用样本均值估计总体期望",
+        "提示3：先计算样本均值，再代入期望公式求解a"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：拒绝域与小概率原理",
+      "description": "根据假设检验中拒绝域与小概率原理的知识，完成以下题目",
+      "difficulty": "intermediate",
+      "question": "在假设检验的基本原理中，下列关于拒绝域与小概率原理的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "若检验统计量落入拒绝域，则应接受原假设"
+        },
+        {
+          "label": "B",
+          "content": "小概率原理是指概率小于显著性水平α的事件在一次试验中几乎不可能发生"
+        },
+        {
+          "label": "C",
+          "content": "显著性水平α越小，拒绝域的范围越大"
+        },
+        {
+          "label": "D",
+          "content": "对于双侧检验，显著性水平α=0.05时，拒绝域为|Z|>1.645"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回忆小概率原理的核心：小概率事件在单次试验中实际不发生",
+        "拒绝域是导致拒绝原假设的统计量取值范围",
+        "显著性水平α与拒绝域范围成正相关关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：U检验法应用",
+      "description": "根据U检验法的知识，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某工厂生产的零件重量服从正态分布N(μ, σ²)，其中总体方差σ²=4。现从一批产品中随机抽取25个零件，测得样本均值为10.5kg。若要在显著性水平α=0.05下检验这批零件的平均重量是否为10kg，则检验统计量U的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1.25"
+        },
+        {
+          "label": "B",
+          "content": "2.5"
+        },
+        {
+          "label": "C",
+          "content": "0.5"
+        },
+        {
+          "label": "D",
+          "content": "5.0"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：U检验法的统计量公式为$U=\\frac{\\bar{x}-\\mu_0}{\\sigma/\\sqrt{n}}$",
+        "提示2：其中$\\bar{x}$为样本均值，$\\mu_0$为待检验的总体均值，$\\sigma$为总体标准差，$n$为样本容量",
+        "提示3：本题中$\\bar{x}=10.5$，$\\mu_0=10$，$\\sigma=2$，$n=25$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：卡方检验法",
+      "description": "根据卡方检验法的知识，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某研究机构调查了100名高中生的学习方式（自主学习/被动学习）与数学成绩（及格/不及格）的关系，得到如下列联表：<br><table border='1'><tr><th></th><th>及格</th><th>不及格</th><th>合计</th></tr><tr><td>自主学习</td><td>30</td><td>10</td><td>40</td></tr><tr><td>被动学习</td><td>20</td><td>40</td><td>60</td></tr><tr><td>合计</td><td>50</td><td>50</td><td>100</td></tr></table><br>若用卡方检验法判断学习方式与数学成绩是否独立，计算得到的\\( \\chi^2 \\)值约为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "5.23"
+        },
+        {
+          "label": "B",
+          "content": "10.42"
+        },
+        {
+          "label": "C",
+          "content": "16.67"
+        },
+        {
+          "label": "D",
+          "content": "20.15"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：卡方检验公式为\\( \\chi^2 = \\sum \\frac{(A - E)^2}{E} \\)，其中A为实际频数，E为期望频数",
+        "提示2：期望频数E的计算公式为\\( E_{ij} = \\frac{行合计_i \\times 列合计_j}{总合计} \\)",
+        "提示3：先计算各单元格的期望频数，再代入公式求和"
+      ]
+    }
+  ],
+  "count": 4
+}

@@ -1,0 +1,264 @@
+{
+  "exercises": [
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：矩估计法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某电子元件的寿命$X$（单位：小时）服从参数为$\\lambda$的指数分布，现从一批该元件中随机抽取10个进行寿命测试，得到样本寿命数据为：85, 92, 105, 110, 98, 102, 88, 95, 108, 100。用矩估计法估计参数$\\lambda$的值为___（结果保留三位小数）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "0.010",
+      "hints": [
+        "指数分布的总体均值$E(X)=\\frac{1}{\\lambda}$",
+        "矩估计中用样本均值$\\bar{X}$估计总体均值$E(X)$",
+        "先计算样本均值$\\bar{X}$，再由$\\hat{\\lambda}=\\frac{1}{\\bar{X}}$得到参数估计值"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：最大似然估计",
+      "error": "Invalid \\escape: line 6 column 28 (char 166)"
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：极大似然估计",
+      "description": "根据视频内容及极大似然估计的知识，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某种电子元件的寿命服从参数为$\\lambda$的指数分布，其概率密度函数为$f(x; \\lambda)=\\lambda e^{-\\lambda x}(x>0, \\lambda>0)$。现随机抽取5个该电子元件，测得寿命（单位：小时）分别为80, 120, 90, 110, 100。则参数$\\lambda$的极大似然估计值为___（结果保留两位小数）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "0.01",
+      "hints": [
+        "提示1：指数分布的极大似然估计中，参数$\\lambda$的估计值为样本均值的倒数",
+        "提示2：先计算样本均值$\\bar{x}=\\frac{1}{n}\\sum_{i=1}^{n}x_i$",
+        "提示3：$\\hat{\\lambda}=\\frac{1}{\\bar{x}}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无偏性与有效性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某电子元件的寿命服从均值为$\\theta$的指数分布，现从一批该元件中随机抽取容量为$n$的样本$X_1,X_2,\\cdots,X_n$。考虑总体均值$\\theta$的两个估计量：$\\hat{\\theta}_1=\\bar{X}=\\frac{1}{n}\\sum_{i=1}^{n}X_i$，$\\hat{\\theta}_2=X_1$。下列说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\hat{\\theta}_1$是无偏估计量，$\\hat{\\theta}_2$不是无偏估计量"
+        },
+        {
+          "label": "B",
+          "content": "$\\hat{\\theta}_1$和$\\hat{\\theta}_2$都是无偏估计量，且$\\hat{\\theta}_1$比$\\hat{\\theta}_2$更有效"
+        },
+        {
+          "label": "C",
+          "content": "$\\hat{\\theta}_1$和$\\hat{\\theta}_2$都是无偏估计量，且$\\hat{\\theta}_2$比$\\hat{\\theta}_1$更有效"
+        },
+        {
+          "label": "D",
+          "content": "$\\hat{\\theta}_1$不是无偏估计量，$\\hat{\\theta}_2$是无偏估计量"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "无偏性需满足估计量的数学期望等于总体参数：$E(\\hat{\\theta})=\\theta$",
+        "指数分布的均值和方差均为$\\theta$，即$E(X_i)=\\theta$，$Var(X_i)=\\theta^2$",
+        "有效性需比较无偏估计量的方差，方差越小越有效"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：区间估计",
+      "description": "根据视频中中心极限定理的应用，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某种电子元件的寿命服从均值为100小时的指数分布，现从该批元件中随机抽取400个，利用中心极限定理近似计算样本平均寿命落在95小时到105小时之间的概率约为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0.68"
+        },
+        {
+          "label": "B",
+          "content": "0.95"
+        },
+        {
+          "label": "C",
+          "content": "0.997"
+        },
+        {
+          "label": "D",
+          "content": "0.5"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：指数分布的均值$\\mu = 100$，方差$\\sigma^2 = \\mu^2 = 10000$",
+        "提示2：样本均值的抽样分布近似服从$N(\\mu, \\frac{\\sigma^2}{n})$，其中$n=400$",
+        "提示3：标准化后$Z = \\frac{\\bar{X} - \\mu}{\\sigma/\\sqrt{n}}$，计算区间对应的$Z$值后查正态分布表"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：均值区间估计",
+      "description": "根据视频中电子元件寿命的实际应用场景，完成以下区间估计练习题",
+      "difficulty": "intermediate",
+      "question": "某种电子元件的寿命服从均值为μ的指数分布。为估计该元件的平均寿命，随机抽取25个元件进行测试，得到样本平均寿命为98小时，样本标准差为10小时。若用95%置信水平估计该电子元件寿命均值μ的置信区间，下列选项正确的是（已知：自由度为24时，t₀.₀₂₅=2.064）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "(93, 103)"
+        },
+        {
+          "label": "B",
+          "content": "(94, 102)"
+        },
+        {
+          "label": "C",
+          "content": "(90, 106)"
+        },
+        {
+          "label": "D",
+          "content": "(88, 110)"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：小样本（n<30）且总体标准差未知时，用t分布计算置信区间",
+        "提示2：置信区间公式为 $\\bar{x} \\pm t_{\\alpha/2} \\cdot \\frac{s}{\\sqrt{n}}$",
+        "提示3：边际误差计算需注意样本标准差s、样本容量n和t临界值的乘积"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：t分布自由度",
+      "description": "根据视频中关于统计应用的知识点，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某研究团队为估计某种电子元件的平均寿命，随机抽取了18个元件进行寿命测试，得到样本数据后拟用t分布构建平均寿命的置信区间。已知总体标准差未知，此时所用t分布的自由度为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "17"
+        },
+        {
+          "label": "B",
+          "content": "18"
+        },
+        {
+          "label": "C",
+          "content": "19"
+        },
+        {
+          "label": "D",
+          "content": "100"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：t分布自由度的计算公式为$df = n - 1$，其中$n$为样本量",
+        "提示2：题目中样本量为18个元件",
+        "提示3：注意“总体标准差未知”是使用t分布的关键条件之一"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：中心极限定理的应用",
+      "description": "根据视频中关于中心极限定理的内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某种电子元件的寿命服从均值为100小时的指数分布，现从该批元件中随机抽取25个独立工作，利用中心极限定理近似计算这25个元件的总寿命超过2700小时的概率约为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0.2119"
+        },
+        {
+          "label": "B",
+          "content": "0.3446"
+        },
+        {
+          "label": "C",
+          "content": "0.6554"
+        },
+        {
+          "label": "D",
+          "content": "0.7881"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：指数分布的期望μ=100，方差σ²=μ²=10000",
+        "提示2：n个独立元件总寿命X近似服从N(nμ, nσ²)",
+        "提示3：标准化公式为Z=(X - nμ)/(σ√n)，查标准正态分布表"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：均值置信区间",
+      "description": "根据视频中关于电子元件寿命及中心极限定理的应用，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某工厂生产的某种电子元件，其寿命服从均值为100小时的指数分布（已知该指数分布的总体标准差为100小时）。为评估一批新生产元件的质量，随机抽取25个元件进行寿命测试，测得样本平均寿命为98小时。若要构造该批电子元件平均寿命的95%置信区间，下列表达式正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$[98 - 1.96 \\times \\frac{100}{\\sqrt{25}}, 98 + 1.96 \\times \\frac{100}{\\sqrt{25}}]$"
+        },
+        {
+          "label": "B",
+          "content": "$[98 - 1.645 \\times \\frac{100}{\\sqrt{25}}, 98 + 1.645 \\times \\frac{100}{\\sqrt{25}}]$"
+        },
+        {
+          "label": "C",
+          "content": "$[100 - 1.96 \\times \\frac{100}{\\sqrt{25}}, 100 + 1.96 \\times \\frac{100}{\\sqrt{25}}]$"
+        },
+        {
+          "label": "D",
+          "content": "$[98 - 1.96 \\times \\frac{100}{25}, 98 + 1.96 \\times \\frac{100}{25}]$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：均值置信区间的基本公式为样本均值\\pm临界值\\times标准误",
+        "提示2：95%置信水平对应的标准正态分布临界值约为1.96",
+        "提示3：标准误计算公式为总体标准差除以样本量的平方根，即$\\frac{\\sigma}{\\sqrt{n}}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：方差置信区间",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "为估计某电子元件寿命的方差，随机抽取20个元件进行测试，得到样本方差为900小时²。已知元件寿命服从正态分布，若置信水平为95%，且\\(\\chi^2_{0.025}(19)=32.852\\)，\\(\\chi^2_{0.975}(19)=8.907\\)，则该电子元件寿命方差的95%置信区间为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "(480, 1800)"
+        },
+        {
+          "label": "B",
+          "content": "(520, 1920)"
+        },
+        {
+          "label": "C",
+          "content": "(550, 2000)"
+        },
+        {
+          "label": "D",
+          "content": "(450, 1700)"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "方差置信区间公式为\\(\\left( \\frac{(n-1)s^2}{\\chi^2_{\\alpha/2}(n-1)}, \\frac{(n-1)s^2}{\\chi^2_{1-\\alpha/2}(n-1)} \\right)\\)",
+        "注意自由度为样本量减1（n-1）",
+        "代入数据时分子为(n-1)与样本方差的乘积"
+      ]
+    }
+  ],
+  "count": 10
+}

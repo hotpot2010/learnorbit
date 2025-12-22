@@ -1,0 +1,202 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：加法公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某学校组织数学和物理两门学科的测试，已知某学生数学测试及格的概率为0.7，物理测试及格的概率为0.6，且该学生两门测试都及格的概率为0.5。则该学生至少有一门测试及格的概率为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0.8"
+        },
+        {
+          "label": "B",
+          "content": "1.3"
+        },
+        {
+          "label": "C",
+          "content": "0.1"
+        },
+        {
+          "label": "D",
+          "content": "0.5"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：概率加法公式为$P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$",
+        "提示2：“至少有一门及格”对应事件$A\\cup B$",
+        "提示3：注意$P(A\\cap B)$为两门都及格的概率"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：概率减法公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知某袋子中装有大小相同的红球和白球共10个，从中随机摸出1个球，记事件A为“摸到红球”，事件B为“摸到编号为偶数的球”。若P(A)=0.6，P(B)=0.4，P(A\\cap B)=0.2，则事件“摸到红球但编号为奇数”的概率为（　　）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0.2"
+        },
+        {
+          "label": "B",
+          "content": "0.4"
+        },
+        {
+          "label": "C",
+          "content": "0.6"
+        },
+        {
+          "label": "D",
+          "content": "0.8"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：事件“摸到红球但编号为奇数”即事件A-B",
+        "提示2：概率减法公式为P(A-B)=P(A)-P(A\\cap B)",
+        "提示3：代入数据计算可得结果"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：事件独立性",
+      "error": "Expecting ',' delimiter: line 1 column 540 (char 539)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：条件概率计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个不透明的盒子中装有3个红球和2个白球，这些球除颜色外完全相同。现从中随机不放回地抽取2个球，已知第一次抽到的是红球，则第二次抽到白球的概率为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1/2"
+        },
+        {
+          "label": "B",
+          "content": "2/5"
+        },
+        {
+          "label": "C",
+          "content": "3/5"
+        },
+        {
+          "label": "D",
+          "content": "1/4"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：条件概率公式为$P(A|B)=\\frac{P(AB)}{P(B)}$，在古典概型中可转化为事件个数之比",
+        "提示2：第一次抽到红球后，剩余球的总数为4个（2红2白）",
+        "提示3：第二次抽到白球的概率等于剩余白球个数除以剩余总球数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：古典概型计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个不透明的袋子中装有3个红球（编号1,2,3）和2个白球（编号4,5），这些球除颜色外完全相同。从中随机不放回地摸出2个球，则摸出的2个球颜色不同的概率是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{2}{5}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3}{5}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{1}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{3}{10}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先计算总的基本事件数，注意是不放回摸2个球，可用组合数计算",
+        "提示2：颜色不同的情况为“1个红球和1个白球”，需分别计算红球和白球的选法",
+        "提示3：古典概型概率公式为$P(A)=\\frac{事件A包含的基本事件数}{总的基本事件数}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：取球概率计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个不透明的袋子中装有3个红球和2个白球，这些球除颜色外完全相同。若从袋中不放回地依次随机取出2个球，则第一次取到红球且第二次取到白球的概率是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{5}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3}{10}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{6}{25}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{1}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意题目中是“不放回”抽样",
+        "提示2：分步计算概率，先求第一次取红球的概率，再求第二次取白球的概率",
+        "提示3：第一次取球后，袋子中球的总数会减少1个"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：对立事件概率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个不透明的袋子中装有5个红球和3个黑球，这些球除颜色外无其他差别。从中随机取出2个球，记事件A为“至少有1个红球”，则事件A的对立事件的概率是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{3}{28}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{28}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{5}{28}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{15}{28}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：对立事件是指不能同时发生且必有一个发生的两个事件",
+        "提示2：事件A“至少有1个红球”的对立事件是“没有红球”（即2个都是黑球）",
+        "提示3：总基本事件数为从8个球中取2个的组合数$C_{8}^{2}$，对立事件的基本事件数为从3个黑球中取2个的组合数$C_{3}^{2}$"
+      ]
+    }
+  ],
+  "count": 7
+}
