@@ -190,6 +190,122 @@ class DoubaoService:
         # 如果有非流式端点，可以在这里实现
         # 目前回退到流式方法
         return await self.generate_outline(transcript, prompt, user_id)
+    
+    async def _call_baijia(
+        self,
+        messages: list,
+        force_json: bool = False,
+        model: str = None
+    ) -> str:
+        """
+        调用百家 LLM API（支持 vision 模型）
+        
+        Args:
+            messages: 消息列表（OpenAI 兼容格式，支持图片）
+            force_json: 是否强制返回 JSON 格式
+            model: 模型名称（默认使用配置的模型）
+            
+        Returns:
+            LLM 生成的内容
+        """
+        actual_model = model or self.model
+        
+        safe_print(f"🤖 Calling Baijia LLM API...")
+        safe_print(f"🤖 Model: {actual_model}")
+        safe_print(f"📝 Messages count: {len(messages)}")
+        
+        # 构建请求数据
+        request_data = {
+            "model": actual_model,
+            "messages": messages
+        }
+        
+        # 如果需要 JSON 格式输出
+        if force_json:
+            request_data["response_format"] = {"type": "json_object"}
+        
+        # 构建请求头
+        headers = {
+            'User-Agent': 'Bilibili-Video-Analyzer/1.0.0',
+            'Content-Type': 'application/json',
+            'Connection': 'keep-alive',
+            'Authorization': f'Bearer {self.api_key}'
+        }
+        
+        try:
+            timeout = aiohttp.ClientTimeout(total=120, connect=30, sock_read=90)
+            
+            # 发起请求（带重试机制）
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    async with aiohttp.ClientSession(timeout=timeout) as session:
+                        async with session.post(
+                            self.base_url,
+                            json=request_data,
+                            headers=headers
+                        ) as response:
+                            safe_print(f"📡 Response status: {response.status} (attempt {attempt + 1}/{max_retries})")
+                            
+                            if response.status != 200:
+                                error_text = await response.text()
+                                safe_print(f"❌ API error response: {error_text[:500]}")
+                                
+                                # 如果不是最后一次尝试，等待后重试
+                                if attempt < max_retries - 1:
+                                    import asyncio
+                                    await asyncio.sleep(2 ** attempt)
+                                    continue
+                                
+                                raise Exception(f"百家 API 调用失败，状态码：{response.status}，响应：{error_text[:200]}")
+                            
+                            # 解析响应
+                            response_text = await response.text()
+                            response_json = json.loads(response_text)
+                            
+                            safe_print(f"✅ API response received")
+                            
+                            # 提取内容
+                            if 'choices' not in response_json:
+                                safe_print(f"⚠️ Unexpected response format: {response_json}")
+                                raise Exception(f"API响应格式错误: 缺少 choices 字段")
+                            
+                            try:
+                                content = response_json['choices'][0]['message']['content']
+                                
+                                if content is None:
+                                    raise Exception("API返回的content为None")
+                                
+                                # 清理可能的 markdown 代码块标记
+                                if force_json:
+                                    content = content.replace('```json\n', '').replace('\n```', '').replace('```json', '').replace('```', '').strip()
+                                
+                                safe_print(f"✅ Content generated ({len(content)} chars)")
+                                safe_print(f"📝 Preview: {content[:200]}...")
+                                
+                                return content
+                                
+                            except (KeyError, IndexError, TypeError) as e:
+                                safe_print(f"❌ Error extracting content: {e}")
+                                safe_print(f"Response: {response_json}")
+                                raise Exception(f"解析API响应失败: {str(e)}")
+                        
+                        # 成功则退出重试循环
+                        break
+                        
+                except aiohttp.ClientError as e:
+                    safe_print(f"⚠️ Network error (attempt {attempt + 1}/{max_retries}): {e}")
+                    if attempt < max_retries - 1:
+                        import asyncio
+                        await asyncio.sleep(2 ** attempt)
+                        continue
+                    raise
+                    
+        except Exception as e:
+            safe_print(f"❌ Baijia LLM API error: {e}")
+            import traceback
+            traceback.print_exc()
+            raise Exception(f"调用失败: {str(e)}")
 
 
 # 创建全局实例

@@ -3,6 +3,38 @@ import { type NextRequest, NextResponse } from 'next/server';
 // 使用后端API URL配置（来自 .env.local）
 const BACKEND_API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
+// 关键词同义词映射表（缩写 -> 完整名称）
+const KEYWORD_SYNONYMS: Record<string, string[]> = {
+  '线代': ['线代', '线性代数'],
+  '高数': ['高数', '高等数学'],
+  '概率论': ['概率论', '概率论与数理统计'],
+  '离散': ['离散', '离散数学'],
+  '数分': ['数分', '数学分析'],
+  '复变': ['复变', '复变函数'],
+  '实变': ['实变', '实变函数'],
+  '泛函': ['泛函', '泛函分析'],
+  '拓扑': ['拓扑', '拓扑学'],
+  '代数': ['代数', '抽象代数'],
+  '微分': ['微分', '微分方程'],
+  '偏微分': ['偏微分', '偏微分方程'],
+  '常微分': ['常微分', '常微分方程'],
+};
+
+// 扩展关键词（添加同义词）
+function expandKeywords(keyword: string): string[] {
+  const lowerKeyword = keyword.toLowerCase().trim();
+  
+  // 检查是否有匹配的同义词
+  for (const [key, synonyms] of Object.entries(KEYWORD_SYNONYMS)) {
+    if (lowerKeyword === key.toLowerCase()) {
+      return synonyms;
+    }
+  }
+  
+  // 如果没有同义词，返回原始关键词
+  return [keyword];
+}
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -60,7 +92,10 @@ export async function GET(request: NextRequest) {
     // 如果有关键词，进行多字段搜索（标题、描述、作者）
     let filteredTasks = completedTasks;
     if (keyword) {
-      const lowerKeyword = keyword.toLowerCase();
+      // 扩展关键词（添加同义词）
+      const expandedKeywords = expandKeywords(keyword);
+      console.log('🔍 关键词扩展:', { original: keyword, expanded: expandedKeywords });
+      
       filteredTasks = completedTasks.filter((task: any) => {
         const videoInfo = task.video_info || {};
         const title = (task.title || task.video_title || '').toLowerCase();
@@ -68,13 +103,16 @@ export async function GET(request: NextRequest) {
         const author = (task.author || videoInfo.uploader || '').toLowerCase();
         const targetAudience = (task.target_audience || '').toLowerCase();
         
-        // 搜索标题、描述、作者、目标受众
-        return (
-          title.includes(lowerKeyword) ||
-          description.includes(lowerKeyword) ||
-          author.includes(lowerKeyword) ||
-          targetAudience.includes(lowerKeyword)
-        );
+        // 使用所有同义词进行搜索（只要匹配任何一个同义词即可）
+        return expandedKeywords.some(kw => {
+          const lowerKw = kw.toLowerCase();
+          return (
+            title.includes(lowerKw) ||
+            description.includes(lowerKw) ||
+            author.includes(lowerKw) ||
+            targetAudience.includes(lowerKw)
+          );
+        });
       });
     }
 
@@ -86,6 +124,18 @@ export async function GET(request: NextRequest) {
       const thumbnail = videoInfo.thumbnail || '';
       const coverUrl = thumbnailCdn || thumbnail;
 
+      // 获取播放数（系列视频优先从 video_info 获取）
+      const isSeries = Array.isArray(task.series_parts) && task.series_parts.length > 1;
+      let playCount = 0;
+      
+      if (isSeries) {
+        // 系列视频：优先使用 video_info.view_count
+        playCount = videoInfo.view_count || task.play_count || 0;
+      } else {
+        // 单视频：优先使用 task.play_count
+        playCount = task.play_count || videoInfo.view_count || 0;
+      }
+
       return {
         title: task.title || task.video_title || '未知标题',
         url: task.bilibili_url,
@@ -93,9 +143,9 @@ export async function GET(request: NextRequest) {
         thumbnail_cdn: thumbnailCdn, // 额外提供 CDN URL
         duration: task.duration || '00:00:00',
         author: task.author || videoInfo.uploader || '未知',
-        play: task.play_count || videoInfo.view_count || 0,
+        play: playCount,
         video_amount: task.series_parts?.length || 1,
-        is_series: Array.isArray(task.series_parts) && task.series_parts.length > 1,
+        is_series: isSeries,
         target_audience: task.target_audience || '全部',
         description: task.description || videoInfo.description || '',
         // 额外字段：已处理数据

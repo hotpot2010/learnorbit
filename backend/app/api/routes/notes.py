@@ -54,6 +54,7 @@ class QuestionAnswerRequest(BaseModel):
     video_title: Optional[str] = None
     video_url: Optional[str] = None
     locale: Optional[str] = 'zh'  # 语言环境，默认为中文
+    image_urls: Optional[list[str]] = None  # 附加的截图URLs
 
 
 class QuestionAnswerResponse(BaseModel):
@@ -159,7 +160,7 @@ Please output the note content directly without any additional explanations."""
 @router.post("/answer-question", response_model=QuestionAnswerResponse)
 async def answer_question(request: QuestionAnswerRequest):
     """
-    回答用户关于特定知识点的问题
+    回答用户关于特定知识点的问题（支持图片）
     
     Args:
         request: 包含问题、知识点名称和上下文逐字稿的请求
@@ -172,38 +173,81 @@ async def answer_question(request: QuestionAnswerRequest):
         print(f"📚 Knowledge point: {request.knowledge_point_name}")
         print(f"📄 Context length: {len(request.transcript_segment)} chars")
         
+        if request.image_urls:
+            print(f"🖼️ Images attached: {len(request.image_urls)}")
+        
         # 根据语言环境构建 prompt
         locale = request.locale or 'zh'
         if locale == 'en':
-            prompt = f"""Please answer the student's question concisely in one sentence.
+            prompt_text = f"""Please answer the student's question concisely based on the video context.
 
 Knowledge Point: {request.knowledge_point_name}
 Question: {request.question}
+Video Context: {request.transcript_segment}
 
 Requirements:
-1. Answer should be 30-50 words
+1. Answer should be 30-100 words
 2. Give the answer directly without explanatory prefixes
 3. Language should be concise and clear
+4. If images are provided, analyze them and incorporate the information into your answer
 
 Output only the answer, nothing else."""
         else:
-            prompt = f"""请用一句话简洁回答学生的问题。
+            prompt_text = f"""请根据视频内容简洁回答学生的问题。
 
 知识点：{request.knowledge_point_name}
 问题：{request.question}
+视频内容：{request.transcript_segment}
 
 要求：
-1. 回答控制在30-50字
+1. 回答控制在30-100字
 2. 直接给出答案，不要解释性前缀
 3. 语言简洁明了
+4. 如果提供了图片，请分析图片内容并结合到回答中
 
 只输出答案，不要其他内容。"""
 
-        # 调用 LLM 生成回答
-        answer = await llm_service.generate_outline(
-            transcript=request.transcript_segment,
-            custom_prompt=prompt
-        )
+        # 如果有图片，使用 vision 模型
+        if request.image_urls and len(request.image_urls) > 0 and llm_provider == 'baijia':
+            print(f"📸 Using vision model for image analysis")
+            
+            # 构建包含图片的消息
+            content_parts = []
+            
+            # 添加所有图片
+            for image_url in request.image_urls:
+                content_parts.append({
+                    "type": "image_url",
+                    "image_url": {
+                        "url": image_url
+                    }
+                })
+            
+            # 添加文本提示
+            content_parts.append({
+                "type": "text",
+                "text": prompt_text
+            })
+            
+            messages = [
+                {
+                    "role": "user",
+                    "content": content_parts
+                }
+            ]
+            
+            # 调用视觉模型
+            answer = await llm_service._call_baijia(
+                messages=messages,
+                force_json=False,
+                model="doubao/Doubao-Seed-1-6-vision"
+            )
+        else:
+            # 没有图片，使用普通模型
+            answer = await llm_service.generate_outline(
+                transcript=request.transcript_segment,
+                custom_prompt=prompt_text
+            )
         
         print(f"✅ Answer generated successfully")
         print(f"💬 Answer preview: {answer[:100]}...")

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/db';
 import { keyActions } from '@/db/schema';
-import { sql, and, gte, lte, inArray, eq } from 'drizzle-orm';
+import { sql, and, gte, lte, inArray, eq, SQL } from 'drizzle-orm';
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     const db = await getDb();
 
     // 构建查询条件
-    const conditions = [];
+    const conditions: SQL<unknown>[] = [];
     
     if (startDate) {
       const start = new Date(startDate);

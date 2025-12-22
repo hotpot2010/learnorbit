@@ -383,6 +383,231 @@ const VideoCompatibilityChecker = ({ videoRef }: { videoRef: React.RefObject<HTM
   );
 };
 
+// 截图选择器组件
+const ScreenshotSelector = ({ imageUrl, onConfirm, onCancel, isUploading }: {
+  imageUrl: string;
+  onConfirm: (croppedImage: string) => void;
+  onCancel: () => void;
+  isUploading: boolean;
+}) => {
+  const [cropArea, setCropArea] = useState<{x: number; y: number; width: number; height: number} | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startPoint, setStartPoint] = useState<{x: number; y: number} | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageDimensions, setImageDimensions] = useState({width: 0, height: 0});
+
+  // 将屏幕坐标转换为canvas坐标
+  const getCanvasCoordinates = (clientX: number, clientY: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return {x: 0, y: 0};
+
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    
+    return {
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY
+    };
+  };
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const point = getCanvasCoordinates(e.clientX, e.clientY);
+    setIsDragging(true);
+    setStartPoint(point);
+    setCropArea(null);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!isDragging || !startPoint) return;
+
+    const currentPoint = getCanvasCoordinates(e.clientX, e.clientY);
+    const width = currentPoint.x - startPoint.x;
+    const height = currentPoint.y - startPoint.y;
+
+    setCropArea({
+      x: width > 0 ? startPoint.x : currentPoint.x,
+      y: height > 0 ? startPoint.y : currentPoint.y,
+      width: Math.abs(width),
+      height: Math.abs(height)
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setStartPoint(null);
+  };
+
+  const handleConfirm = () => {
+    if (!cropArea || cropArea.width === 0 || cropArea.height === 0) {
+      // 如果没有选择区域，使用整张图片
+      onConfirm(imageUrl);
+      return;
+    }
+
+    // 创建裁剪后的图片
+    const sourceCanvas = canvasRef.current;
+    if (!sourceCanvas) {
+      onConfirm(imageUrl);
+      return;
+    }
+
+    const outputCanvas = document.createElement('canvas');
+    outputCanvas.width = cropArea.width;
+    outputCanvas.height = cropArea.height;
+    
+    const ctx = outputCanvas.getContext('2d');
+    if (ctx) {
+      // 从源canvas中提取选中区域
+      ctx.drawImage(
+        sourceCanvas,
+        cropArea.x,
+        cropArea.y,
+        cropArea.width,
+        cropArea.height,
+        0,
+        0,
+        cropArea.width,
+        cropArea.height
+      );
+      
+      const croppedImage = outputCanvas.toDataURL('image/jpeg', 0.9);
+      onConfirm(croppedImage);
+    }
+  };
+
+  // 绘制canvas内容
+  useEffect(() => {
+    if (!imageLoaded || !canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // 加载图片
+    const img = new Image();
+    img.onload = () => {
+      // 设置canvas内部尺寸为图片实际尺寸
+      canvas.width = img.width;
+      canvas.height = img.height;
+      
+      // 绘制原图
+      ctx.drawImage(img, 0, 0);
+      
+      // 绘制选择区域
+      if (cropArea) {
+        // 绘制半透明遮罩
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // 清除选中区域的遮罩
+        ctx.clearRect(cropArea.x, cropArea.y, cropArea.width, cropArea.height);
+        
+        // 重新绘制选中区域（保持清晰）
+        ctx.drawImage(
+          img,
+          cropArea.x,
+          cropArea.y,
+          cropArea.width,
+          cropArea.height,
+          cropArea.x,
+          cropArea.y,
+          cropArea.width,
+          cropArea.height
+        );
+        
+        // 绘制选择框边框
+        ctx.strokeStyle = '#3b82f6';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(cropArea.x, cropArea.y, cropArea.width, cropArea.height);
+      }
+    };
+    img.src = imageUrl;
+  }, [cropArea, imageUrl, imageLoaded]);
+
+  // 图片加载完成后初始化canvas
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    
+    // 预加载图片以获取尺寸
+    const img = new Image();
+    img.onload = () => {
+      setImageDimensions({width: img.width, height: img.height});
+    };
+    img.src = imageUrl;
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+        <div className="flex items-center justify-between p-4 border-b">
+          <h3 className="text-lg font-bold text-gray-900">选择截图区域</h3>
+          <button onClick={onCancel} className="text-gray-500 hover:text-gray-700 p-1">
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+        
+        <div className="flex-1 p-4 overflow-auto flex items-center justify-center" ref={containerRef}>
+          <div className="relative">
+            {/* 预加载图片以触发初始化 */}
+            <img
+              src={imageUrl}
+              alt="Screenshot"
+              className="hidden"
+              onLoad={handleImageLoad}
+            />
+            
+            {/* Canvas用于显示和选择 */}
+            {imageLoaded && (
+              <canvas
+                ref={canvasRef}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+                className="max-w-full max-h-[60vh] cursor-crosshair border-2 border-gray-300 rounded"
+                style={{
+                  width: 'auto',
+                  height: 'auto',
+                  maxWidth: '100%',
+                  maxHeight: '60vh'
+                }}
+              />
+            )}
+            
+            {!imageLoaded && (
+              <div className="w-96 h-64 flex items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+              </div>
+            )}
+          </div>
+        </div>
+        
+        <div className="p-4 border-t flex items-center justify-between">
+          <p className="text-sm text-gray-500">拖动鼠标选择区域，或直接确认使用整张图片</p>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={onCancel} disabled={isUploading}>
+              取消
+            </Button>
+            <Button onClick={handleConfirm} disabled={isUploading}>
+              {isUploading ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  上传中...
+                </>
+              ) : (
+                '确认'
+              )}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // 视频缩略图组件
 const VideoThumbnail = ({ videoUrl, time, screenshotUrl, fallbackUrl, onClick }: { videoUrl: string, time: string, screenshotUrl?: string, fallbackUrl: string, onClick?: (e: React.MouseEvent) => void }) => {
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
@@ -1127,6 +1352,10 @@ export default function VideoNotesPrototypePage() {
   const [exerciseKnowledgePointIndex, setExerciseKnowledgePointIndex] = useState<number | null>(null); // 生成练习的知识点索引
   const [currentExerciseCard, setCurrentExerciseCard] = useState<Exercise | null>(null); // 当前查看的练习卡片
   const [exerciseUserAnswer, setExerciseUserAnswer] = useState<string>(''); // 用户选择的答案（卡槽中的卡片）
+  const [showScreenshotSelector, setShowScreenshotSelector] = useState(false); // 显示截图选择器
+  const [screenshotImage, setScreenshotImage] = useState<string | null>(null); // 当前视频帧截图
+  const [isUploadingScreenshot, setIsUploadingScreenshot] = useState(false); // 是否正在上传截图
+  const [attachedImages, setAttachedImages] = useState<Array<{id: string, url: string, thumbnail: string}>>([]);// 已附加的图片
   const [exerciseSubmitted, setExerciseSubmitted] = useState<boolean>(false); // 是否已提交答案（卡槽中的卡片）
   const [exerciseShowHints, setExerciseShowHints] = useState<boolean>(false); // 是否显示提示（卡槽中的卡片反转）
   const [generatedExerciseUserAnswer, setGeneratedExerciseUserAnswer] = useState<string>(''); // 用户选择的答案（生成对话框）
@@ -2803,6 +3032,98 @@ export default function VideoNotesPrototypePage() {
     setEditingNoteIndex(null);
   };
   
+  // 捕获截图并打开选择器
+  const handleCaptureScreenshot = () => {
+    const screenshot = captureVideoThumbnail();
+    if (screenshot) {
+      setScreenshotImage(screenshot);
+      setShowScreenshotSelector(true);
+      // 暂停视频
+      if (videoRef.current) {
+        videoRef.current.pause();
+      }
+    } else {
+      alert('截图失败，请稍后重试');
+    }
+  };
+
+  // 上传截图到CDN
+  const uploadScreenshotToCDN = async (imageDataUrl: string): Promise<string | null> => {
+    try {
+      setIsUploadingScreenshot(true);
+      
+      // 将base64转换为blob
+      const response = await fetch(imageDataUrl);
+      const blob = await response.blob();
+      
+      // 创建FormData
+      const formData = new FormData();
+      const filename = `screenshot_${Date.now()}.jpg`;
+      formData.append('file0', blob, filename);
+      
+      // 调用后端上传接口
+      const uploadResponse = await fetch(`${API_BASE_URL}/open-api/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!uploadResponse.ok) {
+        throw new Error('Upload failed');
+      }
+      
+      const result = await uploadResponse.json();
+      
+      // 解析CDN URL
+      let cdnUrl: string | null = null;
+      if (result.files && result.files[0]) {
+        cdnUrl = result.files[0].url || result.files[0].path;
+      } else if (result.url) {
+        cdnUrl = result.url;
+      }
+      
+      // 确保URL是完整的
+      if (cdnUrl && !cdnUrl.startsWith('http')) {
+        cdnUrl = `http://file.gsxservice.com/${cdnUrl.replace(/^\//, '')}`;
+      }
+      
+      console.log('✅ Screenshot uploaded to CDN:', cdnUrl);
+      return cdnUrl;
+    } catch (error) {
+      console.error('❌ Screenshot upload failed:', error);
+      return null;
+    } finally {
+      setIsUploadingScreenshot(false);
+    }
+  };
+
+  // 处理截图确认
+  const handleScreenshotConfirm = async (croppedImage: string) => {
+    const cdnUrl = await uploadScreenshotToCDN(croppedImage);
+    
+    if (cdnUrl) {
+      // 生成唯一ID
+      const imageId = `img_${Date.now()}`;
+      
+      // 添加到附加图片列表
+      setAttachedImages(prev => [...prev, {
+        id: imageId,
+        url: cdnUrl,
+        thumbnail: croppedImage
+      }]);
+      
+      // 在输入框中插入标签（使用占位符空格让宽度匹配样式层显示）
+      const imageNumber = attachedImages.length + 1;
+      // 添加4个全角空格作为占位符，匹配图标+删除按钮的宽度
+      setQuestionInput(prev => prev + `【图${imageNumber}　　　】`);
+      
+      // 关闭选择器
+      setShowScreenshotSelector(false);
+      setScreenshotImage(null);
+    } else {
+      alert('上传失败，请重试');
+    }
+  };
+
   // 处理提问
   const handleAskQuestion = async (index: number) => {
     const question = questionInput.trim();
@@ -2849,6 +3170,29 @@ export default function VideoNotesPrototypePage() {
         console.warn('⚠️ 没有可用的逐字稿片段，将使用空上下文');
       }
       
+      // 提取图片标签并替换为实际URL
+      let questionWithImages = question;
+      const imageUrls: string[] = [];
+      
+      // 查找所有图片标签（格式：【图1】、【图2】等，可能包含占位符空格）
+      const imageTagPattern = /【图(\d+)[　\s]*】/g;
+      const matches = [...question.matchAll(imageTagPattern)];
+      
+      for (const match of matches) {
+        const imageNumber = parseInt(match[1]);
+        const imageIndex = imageNumber - 1;
+        
+        if (imageIndex >= 0 && imageIndex < attachedImages.length) {
+          const img = attachedImages[imageIndex];
+          // 替换标签为markdown格式
+          questionWithImages = questionWithImages.replace(match[0], `[图片${imageNumber}](${img.url})`);
+          // 避免重复添加同一张图片URL
+          if (!imageUrls.includes(img.url)) {
+            imageUrls.push(img.url);
+          }
+        }
+      }
+      
       // 调用LLM API回答问题
       const response = await fetch(buildApiUrl(API_ENDPOINTS.notesAnswerQuestion), {
         method: 'POST',
@@ -2856,12 +3200,13 @@ export default function VideoNotesPrototypePage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          question: question,
+          question: questionWithImages,
           knowledge_point_name: point.name,
           transcript_segment: transcriptSegment,
           video_title: videoTitle,
           video_url: currentVideoUrl,
           locale: locale,  // 传递语言环境
+          image_urls: imageUrls.length > 0 ? imageUrls : undefined, // 附加的截图URLs
         }),
       });
       
@@ -2882,8 +3227,9 @@ export default function VideoNotesPrototypePage() {
         // 添加到对话历史（支持多轮对话）
         setConversationHistory(prev => [...prev, qaPair]);
         
-        // 清空输入框，但保持对话框打开
+        // 清空输入框和附加图片，但保持对话框打开
         setQuestionInput('');
+        setAttachedImages([]);
         
         // 标记为不在提问状态
         setKnowledgePoints(prev => prev.map((p, i) => 
@@ -5897,6 +6243,7 @@ export default function VideoNotesPrototypePage() {
                   setAskingKnowledgeIndex(null);
                   setQuestionInput('');
                   setConversationHistory([]);
+                  setAttachedImages([]);
                 }}
                 className="text-gray-500 hover:text-gray-700 transition-colors p-1 hover:bg-white/50 rounded-lg"
               >
@@ -6022,7 +6369,22 @@ export default function VideoNotesPrototypePage() {
             
             {/* 输入区域 - 固定在按钮上方 */}
             <div className="flex-shrink-0 border-t border-gray-200 p-4 bg-white relative z-10">
-                <div className="relative">
+              <div className="flex gap-2">
+                {/* 截图按钮 */}
+                <button
+                  onClick={handleCaptureScreenshot}
+                  disabled={isUploadingScreenshot}
+                  className="flex-shrink-0 w-10 h-10 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:cursor-not-allowed rounded-lg flex items-center justify-center transition-colors"
+                  title="截图"
+                >
+                  {isUploadingScreenshot ? (
+                    <Loader2 className="w-5 h-5 text-gray-400 animate-spin" />
+                  ) : (
+                    <ImageIcon className="w-5 h-5 text-gray-600" />
+                  )}
+                </button>
+                
+                <div className="relative flex-1">
                 {/* 样式化显示层（标签样式） */}
                 <div 
                   className="absolute inset-0 px-4 py-3 pointer-events-none rounded-xl text-base whitespace-pre-wrap break-words overflow-hidden text-gray-900"
@@ -6035,17 +6397,62 @@ export default function VideoNotesPrototypePage() {
                   {questionInput.split(/(【[^】]*】)/g).map((part, idx) => {
                     // 匹配【标签】格式
                     if (/^【.*】$/.test(part)) {
-                      return (
-                        <span
-                          key={idx}
-                          className="inline-flex items-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-2 py-0.5 rounded-md text-xs font-medium shadow-sm mx-0.5"
-                          style={{ 
-                            verticalAlign: 'middle'
-                          }}
-                        >
-                          {part}
-                        </span>
-                      );
+                      // 检查是否是图片标签（格式：【图1】、【图2】等，可能包含占位符空格）
+                      const isImageTag = /^【图\d+[　\s]*】$/.test(part);
+                      
+                      if (isImageTag) {
+                        // 提取图片编号（去除空格）
+                        const match = part.match(/【图(\d+)/);
+                        const imageNumber = match ? parseInt(match[1]) : 0;
+                        const imageIndex = imageNumber - 1;
+                        
+                        // 图片标签：绿色，可点击删除
+                        return (
+                          <span
+                            key={idx}
+                            className="inline-flex items-center bg-gradient-to-r from-green-500 to-emerald-500 text-white px-2 py-0.5 rounded-md text-xs font-medium shadow-sm mx-0.5 cursor-pointer hover:from-green-600 hover:to-emerald-600 pointer-events-auto"
+                            style={{ 
+                              verticalAlign: 'middle',
+                              zIndex: 10
+                            }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              // 从attachedImages中移除对应索引的图片
+                              if (imageIndex >= 0 && imageIndex < attachedImages.length) {
+                                setAttachedImages(prev => prev.filter((_, i) => i !== imageIndex));
+                                // 从输入框中移除标签并更新所有后续标签的编号
+                                setQuestionInput(prev => {
+                                  let newInput = prev.replace(part, '');
+                                  // 更新后续图片标签的编号（匹配带空格的格式）
+                                  for (let i = imageNumber + 1; i <= attachedImages.length; i++) {
+                                    const oldTag = new RegExp(`【图${i}[　\\s]*】`, 'g');
+                                    newInput = newInput.replace(oldTag, `【图${i-1}　　　】`);
+                                  }
+                                  return newInput;
+                                });
+                              }
+                            }}
+                            title="点击删除图片"
+                          >
+                            <ImageIcon className="w-3 h-3 mr-1" />
+                            【图{imageNumber}】
+                            <XCircle className="w-3 h-3 ml-1" />
+                          </span>
+                        );
+                      } else {
+                        // 普通标签：蓝色
+                        return (
+                          <span
+                            key={idx}
+                            className="inline-flex items-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-2 py-0.5 rounded-md text-xs font-medium shadow-sm mx-0.5"
+                            style={{ 
+                              verticalAlign: 'middle'
+                            }}
+                          >
+                            {part}
+                          </span>
+                        );
+                      }
                     }
                     return <span key={idx}>{part}</span>;
                   })}
@@ -6091,7 +6498,8 @@ export default function VideoNotesPrototypePage() {
                     )}
                   </button>
                 </div>
-                
+              </div>
+              
               {/* 快捷提问建议 - 仅在首次提问时显示 */}
               {conversationHistory.length === 0 && (
                 <div className="mt-3 flex flex-wrap justify-center gap-2">
@@ -6107,7 +6515,7 @@ export default function VideoNotesPrototypePage() {
                   ))}
                 </div>
               )}
-              </div>
+            </div>
             
             {/* 卡片底部按钮 - 只在有对话历史时显示 */}
             {conversationHistory.length > 0 && (
@@ -6160,6 +6568,7 @@ export default function VideoNotesPrototypePage() {
                       setAskingKnowledgeIndex(null);
                       setQuestionInput('');
                       setConversationHistory([]);
+                      setAttachedImages([]);
                     }
                   }}
                   className="w-full px-5 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-xl transition-all font-bold flex items-center justify-center gap-2 shadow-lg"
@@ -6173,6 +6582,19 @@ export default function VideoNotesPrototypePage() {
         </div>
         );
       })()}
+      
+      {/* 截图选择器弹窗 */}
+      {showScreenshotSelector && screenshotImage && (
+        <ScreenshotSelector
+          imageUrl={screenshotImage}
+          onConfirm={handleScreenshotConfirm}
+          onCancel={() => {
+            setShowScreenshotSelector(false);
+            setScreenshotImage(null);
+          }}
+          isUploading={isUploadingScreenshot}
+        />
+      )}
       
       {/* QA回答卡片 - 浮动在视频中心 - 竖向卡片(高>宽) */}
       {currentQACard && (

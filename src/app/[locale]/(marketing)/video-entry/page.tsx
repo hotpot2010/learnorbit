@@ -167,7 +167,9 @@ export default function VideoEntryPage() {
 
   // 格式化播放量
   const formatPlayCount = (play: number): string => {
+    if (play === 0) return '--'; // 没有播放数据时显示 --
     if (play > 10000) return `${(play / 10000).toFixed(1)}万`;
+    if (play > 1000) return `${(play / 1000).toFixed(1)}k`;
     return play.toString();
   };
 
@@ -320,13 +322,9 @@ export default function VideoEntryPage() {
                   {/* 信息 */}
                   <div className="flex-1 min-w-0 flex flex-col justify-between py-1">
                     <div>
-                      <h3 className="font-bold text-gray-800 line-clamp-2 text-base mb-1" title={video.title}>
+                      <h3 className="font-bold text-gray-800 line-clamp-2 text-base mb-2" title={video.title}>
                         {video.title}
                       </h3>
-                      <div className="flex items-center gap-2 text-xs text-gray-500 mb-1">
-                        <span className="bg-gray-100 px-1.5 py-0.5 rounded">{video.author}</span>
-                        <span>{formatPlayCount(video.play)}播放</span>
-                      </div>
                     </div>
                     
                     <div className="flex items-center justify-between mt-2">
@@ -341,9 +339,6 @@ export default function VideoEntryPage() {
                             ✨已处理
                           </span>
                         )}
-                        <span className="text-xs bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded border border-yellow-300">
-                          {video.target_audience}
-                        </span>
                       </div>
                       
                       <Button 
