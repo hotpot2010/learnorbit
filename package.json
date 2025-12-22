@@ -23,6 +23,7 @@
     "migrate-feishu": "tsx scripts/migrate-to-feishu.ts",
     "migrate-course-plan-cdn": "tsx scripts/migrate-course-plan-to-cdn.ts",
     "verify-course-plan-url": "tsx scripts/verify-course-plan-url.ts",
+    "test-analytics": "tsx scripts/test-analytics-api.ts",
     "content": "fumadocs-mdx",
     "email": "email dev --dir src/mail/templates --port 3333",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
