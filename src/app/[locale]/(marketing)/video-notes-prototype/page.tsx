@@ -3123,7 +3123,7 @@ export default function VideoNotesPrototypePage() {
       alert('上传失败，请重试');
     }
   };
-
+  
   // 处理提问
   const handleAskQuestion = async (index: number) => {
     const question = questionInput.trim();
@@ -4496,6 +4496,10 @@ export default function VideoNotesPrototypePage() {
     setIsGeneratingExercise(true);
     setGeneratedExercise(null);
     setExerciseKnowledgePointIndex(index);
+    // 清空上一道题的答案和状态
+    setGeneratedExerciseUserAnswer('');
+    setGeneratedExerciseSubmitted(false);
+    setGeneratedExerciseShowHints(false);
     
     try {
       // 🔍 优先检查数据库中是否有练习数据
@@ -5881,6 +5885,10 @@ export default function VideoNotesPrototypePage() {
                                 onClick={() => {
                                   setCurrentExerciseCard(exercise);
                                   setCurrentKnowledgeIndex(index);
+                                  // 清空上一道题的答案和状态
+                                  setExerciseUserAnswer('');
+                                  setExerciseSubmitted(false);
+                                  setExerciseShowHints(false);
                                 }}
                               >
                                 {/* 装饰性背景图案 */}
@@ -6498,8 +6506,8 @@ export default function VideoNotesPrototypePage() {
                     )}
                   </button>
                 </div>
-              </div>
-              
+                </div>
+                
               {/* 快捷提问建议 - 仅在首次提问时显示 */}
               {conversationHistory.length === 0 && (
                 <div className="mt-3 flex flex-wrap justify-center gap-2">
@@ -6515,7 +6523,7 @@ export default function VideoNotesPrototypePage() {
                   ))}
                 </div>
               )}
-            </div>
+              </div>
             
             {/* 卡片底部按钮 - 只在有对话历史时显示 */}
             {conversationHistory.length > 0 && (

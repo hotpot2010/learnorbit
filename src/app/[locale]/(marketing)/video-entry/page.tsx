@@ -96,7 +96,7 @@ export default function VideoEntryPage() {
 
     try {
       console.log('🔍 从数据库搜索视频:', searchQuery);
-      
+
       const response = await fetch(`/api/processed-videos?keyword=${encodeURIComponent(searchQuery)}`);
 
       if (!response.ok) {

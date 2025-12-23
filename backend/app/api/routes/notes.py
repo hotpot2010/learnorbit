@@ -190,6 +190,18 @@ Requirements:
 2. Give the answer directly without explanatory prefixes
 3. Language should be concise and clear
 4. If images are provided, analyze them and incorporate the information into your answer
+5. **For mathematical formulas, MUST use LaTeX format with $ delimiters**:
+   - Inline formula: wrap with single $, e.g., $\\frac{{1}}{{2}}$ or $\\sin x$
+   - Block formula: wrap with double $$, e.g., $$\\int_0^1 x dx$$
+   - Common symbols: $\\pi$, $\\infty$, $\\alpha$, $\\sum$, $\\int$, etc.
+   - Fractions: $\\frac{{numerator}}{{denominator}}$
+   - Limits: $\\lim_{{x \\to 0}}$
+   - Square roots: $\\sqrt{{x}}$ or $\\sqrt[n]{{x}}$
+   - Superscripts: $x^2$, Subscripts: $x_i$
+6. **NEVER use these incorrect formats**:
+   - ❌ \\(...\\) or \\[...\\]
+   - ❌ Plain LaTeX without $ delimiters
+   - ❌ Unescaped backslashes in formulas
 
 Output only the answer, nothing else."""
         else:
@@ -204,6 +216,18 @@ Output only the answer, nothing else."""
 2. 直接给出答案，不要解释性前缀
 3. 语言简洁明了
 4. 如果提供了图片，请分析图片内容并结合到回答中
+5. **数学公式必须使用 LaTeX 格式，用 $ 包裹**：
+   - 行内公式：用单个 $ 包裹，例如 $\\frac{{1}}{{2}}$ 或 $\\sin x$
+   - 块级公式：用双 $$ 包裹，例如 $$\\int_0^1 x dx$$
+   - 常用符号：$\\pi$、$\\infty$、$\\alpha$、$\\sum$、$\\int$ 等
+   - 分数：$\\frac{{分子}}{{分母}}$
+   - 极限：$\\lim_{{x \\to 0}}$
+   - 根号：$\\sqrt{{x}}$ 或 $\\sqrt[n]{{x}}$
+   - 上标：$x^2$，下标：$x_i$
+6. **绝对不要使用以下错误格式**：
+   - ❌ \\(...\\) 或 \\[...\\]
+   - ❌ 不加 $ 的纯 LaTeX 命令
+   - ❌ 公式中的反斜杠未转义
 
 只输出答案，不要其他内容。"""
 
@@ -306,8 +330,18 @@ Please generate an exercise with the following requirements:
 2. Difficulty: Suitable for middle/high school level with appropriate differentiation
 3. The question should be directly related to the specific knowledge point explained in the video
 4. The question should have practical application value, not too simple
-5. If there are formulas, use LaTeX format (wrapped with $), **Note: In JSON, backslashes must be escaped, written as double backslashes \\\\, e.g., \\\\frac, \\\\sin**
+5. **Mathematical formulas MUST use LaTeX format, wrapped with $**
 6. Provide detailed analysis and solution steps
+
+**LaTeX Formula Guidelines (Critical!):**
+- ✅ Correct format: In JSON, all backslashes must be escaped as double backslashes \\\\
+- ✅ Inline formula: $\\\\frac{{1}}{{2}}$, $\\\\sin x$, $\\\\pi$
+- ✅ Block formula: $$\\\\int_0^1 x dx$$
+- ✅ Common symbols: $\\\\alpha$, $\\\\beta$, $\\\\sum$, $\\\\lim_{{x \\\\to 0}}$
+- ✅ Fractions: $\\\\frac{{numerator}}{{denominator}}$
+- ✅ Square roots: $\\\\sqrt{{x}}$, $\\\\sqrt[3]{{x}}$
+- ✅ Super/subscripts: $x^2$, $x_i$, $x_{{ij}}$ (multi-char subscript needs braces)
+- ❌ Wrong format: \\frac{{1}}{{2}} (single backslash), \\(...\\), \\[...\\]
 
 Please return in JSON format as follows:
 
@@ -317,16 +351,20 @@ Please return in JSON format as follows:
   "title": "Knowledge Point Practice: [Knowledge Point Name]",
   "description": "Complete the following exercise based on the video content",
   "difficulty": "intermediate",
-  "question": "Question content (LaTeX formula example: $\\\\frac{{1}}{{2}}$ or $\\\\sin x$)",
+  "question": "Given function $f(x) = \\\\frac{{x^2 + 1}}{{x - 1}}$, find the value of $\\\\lim_{{x \\\\to 1}} f(x)$",
   "choices": [
-    {{"label": "A", "content": "Option A content"}},
-    {{"label": "B", "content": "Option B content"}},
-    {{"label": "C", "content": "Option C content"}},
-    {{"label": "D", "content": "Option D content"}}
+    {{"label": "A", "content": "$\\\\frac{{1}}{{2}}$"}},
+    {{"label": "B", "content": "$1$"}},
+    {{"label": "C", "content": "$2$"}},
+    {{"label": "D", "content": "Does not exist"}}
   ],
   "answer_type": "single",
-  "solution": "B",
-  "hints": ["Hint 1: Think from which angle", "Hint 2: Key formulas or theorems", "Hint 3: Specific solution steps"]
+  "solution": "D",
+  "hints": [
+    "Hint 1: First check if the function is continuous at $x = 1$",
+    "Hint 2: Note the zero denominator case, use the definition of limits",
+    "Hint 3: Calculate left limit $\\\\lim_{{x \\\\to 1^-}}$ and right limit $\\\\lim_{{x \\\\to 1^+}}$ separately"
+  ]
 }}
 
 **Fill in the Blank Format:**
@@ -335,17 +373,22 @@ Please return in JSON format as follows:
   "title": "Knowledge Point Practice: [Knowledge Point Name]",
   "description": "Complete the following exercise based on the video content",
   "difficulty": "intermediate",
-  "question": "Question content, use ___ to indicate blank positions (LaTeX example: $\\\\frac{{1}}{{2}}$)",
-  "blanks": 2,
+  "question": "Calculate the limit $\\\\lim_{{x \\\\to 0}} \\\\frac{{\\\\sin x - x}}{{x^3}}$ = ___ .",
+  "blanks": 1,
   "answer_type": "text",
-  "solution": "Answer1;Answer2 (multiple answers separated by semicolons)",
-  "hints": ["Hint 1: Think from which angle", "Hint 2: Key formulas or theorems", "Hint 3: Specific solution steps"]
+  "solution": "$-\\\\frac{{1}}{{6}}$",
+  "hints": [
+    "Hint 1: Use Taylor series expansion $\\\\sin x = x - \\\\frac{{x^3}}{{6}} + O(x^5)$",
+    "Hint 2: Substitute and simplify the numerator",
+    "Hint 3: Cancel common factors and take the limit"
+  ]
 }}
 
-**Important Reminder**:
-- All backslashes in JSON must be escaped as double backslashes \\\\
-- For example: \\\\frac{{1}}{{2}} instead of \\frac{{1}}{{2}}
-- For example: \\\\sin x instead of \\sin x
+**Key Points**:
+1. Backslashes in JSON must be doubled: \\\\ not \\
+2. Formulas must be wrapped with $, otherwise they won't render
+3. Multi-character subscripts need braces: $x_{{ij}}$ not $x_ij$
+4. All formulas in choices, solution, hints must follow the same rules
 
 Return only JSON, no other explanatory text."""
                 else:
@@ -359,8 +402,18 @@ Return only JSON, no other explanatory text."""
 2. 难度：适配中考/高考水平，有一定区分度
 3. 题目要结合视频中讲解的具体知识点
 4. 题目要有实际应用价值，不要过于简单
-5. 如果有公式，使用 LaTeX 格式（用 $ 包裹），**注意：JSON中反斜杠必须转义，写成双反斜杠 \\\\ 例如 \\\\frac、\\\\sin**
+5. **数学公式必须使用 LaTeX 格式，用 $ 包裹**
 6. 提供详细的解析和解题步骤
+
+**LaTeX 公式规范（重要！）**：
+- ✅ 正确格式：在 JSON 中，所有反斜杠必须转义为双反斜杠 \\\\
+- ✅ 行内公式：$\\\\frac{{1}}{{2}}$、$\\\\sin x$、$\\\\pi$
+- ✅ 块级公式：$$\\\\int_0^1 x dx$$
+- ✅ 常用符号：$\\\\alpha$、$\\\\beta$、$\\\\sum$、$\\\\lim_{{x \\\\to 0}}$
+- ✅ 分数：$\\\\frac{{分子}}{{分母}}$
+- ✅ 根号：$\\\\sqrt{{x}}$、$\\\\sqrt[3]{{x}}$
+- ✅ 上下标：$x^2$、$x_i$、$x_{{ij}}$（多字符下标需要大括号）
+- ❌ 错误格式：\\frac{{1}}{{2}}（单反斜杠）、\\(...\\)、\\[...\\]
 
 请以 JSON 格式返回，格式如下：
 
@@ -370,16 +423,20 @@ Return only JSON, no other explanatory text."""
   "title": "知识点练习：[知识点名称]",
   "description": "根据视频内容，完成以下练习题",
   "difficulty": "intermediate",
-  "question": "题目内容（LaTeX公式示例：$\\\\frac{{1}}{{2}}$ 或 $\\\\sin x$）",
+  "question": "题目内容（公式示例：已知函数 $f(x) = \\\\frac{{x^2 + 1}}{{x - 1}}$，求 $\\\\lim_{{x \\\\to 1}} f(x)$ 的值）",
   "choices": [
-    {{"label": "A", "content": "选项A内容"}},
-    {{"label": "B", "content": "选项B内容"}},
-    {{"label": "C", "content": "选项C内容"}},
-    {{"label": "D", "content": "选项D内容"}}
+    {{"label": "A", "content": "$\\\\frac{{1}}{{2}}$"}},
+    {{"label": "B", "content": "$1$"}},
+    {{"label": "C", "content": "$2$"}},
+    {{"label": "D", "content": "不存在"}}
   ],
   "answer_type": "single",
-  "solution": "B",
-  "hints": ["提示1：从哪个角度思考", "提示2：关键公式或定理", "提示3：具体解题步骤"]
+  "solution": "D",
+  "hints": [
+    "提示1：首先检查函数在 $x = 1$ 处是否连续",
+    "提示2：注意分母为零的情况，需要使用极限的定义",
+    "提示3：可以分别计算左极限 $\\\\lim_{{x \\\\to 1^-}}$ 和右极限 $\\\\lim_{{x \\\\to 1^+}}$"
+  ]
 }}
 
 **填空题格式：**
@@ -388,17 +445,22 @@ Return only JSON, no other explanatory text."""
   "title": "知识点练习：[知识点名称]",
   "description": "根据视频内容，完成以下练习题",
   "difficulty": "intermediate",
-  "question": "题目内容，用 ___ 表示填空位置（LaTeX示例：$\\\\frac{{1}}{{2}}$）",
-  "blanks": 2,
+  "question": "计算极限 $\\\\lim_{{x \\\\to 0}} \\\\frac{{\\\\sin x - x}}{{x^3}}$ 的值为 ___ 。",
+  "blanks": 1,
   "answer_type": "text",
-  "solution": "答案1;答案2（多个答案用分号分隔）",
-  "hints": ["提示1：从哪个角度思考", "提示2：关键公式或定理", "提示3：具体解题步骤"]
+  "solution": "$-\\\\frac{{1}}{{6}}$",
+  "hints": [
+    "提示1：使用泰勒级数展开 $\\\\sin x = x - \\\\frac{{x^3}}{{6}} + O(x^5)$",
+    "提示2：代入后化简分子",
+    "提示3：约分并取极限"
+  ]
 }}
 
-**重要提醒**：
-- JSON 中所有反斜杠都必须转义为双反斜杠 \\\\
-- 例如：\\\\frac{{1}}{{2}} 而不是 \\frac{{1}}{{2}}
-- 例如：\\\\sin x 而不是 \\sin x
+**关键要点**：
+1. JSON 中的反斜杠必须双写：\\\\ 而不是 \\
+2. 公式必须用 $ 包裹，否则无法渲染
+3. 多字符的上下标要用大括号：$x_{{ij}}$ 而不是 $x_ij$
+4. 所有 choices、solution、hints 中的公式都要遵循相同规范
 
 只返回 JSON，不要其他说明文字。"""
             else:
