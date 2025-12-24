@@ -113,14 +113,14 @@ export async function getDb() {
     console.log('🔄 Using session mode pooler instead of transaction mode');
   }
 
-  // 配置postgres客户端 - 优化连接稳定性
+  // 配置postgres客户端 - 针对 Serverless 环境优化
   client = postgres(connectionString, {
     prepare: false,
-    // 连接配置 - 优化连接稳定性
-    max: 5, // 最大连接数
-    idle_timeout: 30, // 30秒空闲超时（增加以避免过早关闭）
-    connect_timeout: 15, // 15秒连接超时（增加以应对网络延迟）
-    max_lifetime: 60 * 60, // 1小时连接生命周期（增加以避免频繁重连）
+    // 连接配置 - Serverless 环境每个实例只需1个连接
+    max: 1, // ✅ Serverless: 每个实例1个连接足够（避免连接池耗尽）
+    idle_timeout: 20, // ✅ 20秒空闲超时（快速释放连接）
+    connect_timeout: 10, // ✅ 10秒连接超时
+    max_lifetime: 60 * 5, // ✅ 5分钟连接生命周期（Serverless短生命周期）
     // SSL配置
     ssl: { rejectUnauthorized: false },
     // 错误处理
@@ -136,8 +136,8 @@ export async function getDb() {
     },
     // 开发环境特殊配置
     ...(process.env.NODE_ENV === 'development' && {
-      max: 3, // 开发环境更严格限制
-      idle_timeout: 20, // 20秒空闲超时
+      max: 3, // 开发环境稍多一些连接
+      idle_timeout: 30,
       max_lifetime: 60 * 30, // 30分钟生命周期
     })
   });
@@ -169,10 +169,10 @@ export async function getDb() {
 
       client = postgres(poolerConnectionString, {
         prepare: false,
-        max: 3, // pooler连接更严格限制
-        idle_timeout: 15,
+        max: 1, // ✅ pooler模式：每个实例1个连接
+        idle_timeout: 20,
         connect_timeout: 10,
-        max_lifetime: 60 * 15,
+        max_lifetime: 60 * 5,
         ssl: { rejectUnauthorized: false },
         onnotice: () => {},
         debug: false,
