@@ -2302,12 +2302,16 @@ export default function VideoNotesPrototypePage() {
         return null;
       };
 
-      // 获取截图URL数组和视频URL数组
+      // 获取截图URL数组和视频URL数组（优先使用转码后的视频）
       const screenshotsResultUrls = processedTaskData?.screenshots_result_url;
       const screenshotsUrlArray = parseUrlField(screenshotsResultUrls);
       
-      const videoUrls = processedTaskData?.video_url;
+      // 优先使用转码后的视频URL，如果没有则使用原始URL
+      const transcodedUrls = processedTaskData?.transcoded_video_url;
+      const videoUrls = transcodedUrls || processedTaskData?.video_url;
       const videoUrlArray = parseUrlField(videoUrls);
+      console.log(`🎬 知识点搜索使用${transcodedUrls ? '转码后' : '原始'}视频URL`);
+
       
       // 如果是多P视频，搜索所有分P的知识点
       if (isSeries && allParts.length > 0) {
