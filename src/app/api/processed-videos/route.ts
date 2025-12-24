@@ -20,6 +20,52 @@ const KEYWORD_SYNONYMS: Record<string, string[]> = {
   '常微分': ['常微分', '常微分方程'],
 };
 
+// 学科关键词列表（用于从自然语言中提取）
+const SUBJECT_KEYWORDS = [
+  // 数学类
+  '数学', '线性代数', '线代', '高等数学', '高数', '微积分',
+  '概率论', '概率', '统计', '离散数学', '离散', '数学分析', '数分',
+  '复变函数', '复变', '实变函数', '实变', '泛函分析', '泛函',
+  '拓扑学', '拓扑', '抽象代数', '代数', '几何', '解析几何',
+  '微分方程', '微分', '偏微分方程', '偏微分', '常微分方程', '常微分',
+  
+  // 编程类
+  '编程', 'python', 'java', 'javascript', 'js', 'c语言', 'c++',
+  '算法', '数据结构', '前端', '后端', 'web', '网页',
+  
+  // 英语类
+  '英语', '英文', '四级', '六级', '雅思', '托福', 'toefl', 'ielts',
+  
+  // 物理类
+  '物理', '力学', '电磁学', '光学', '热学', '量子', '相对论',
+  
+  // 化学类
+  '化学', '有机', '无机', '物化', '分析化学',
+  
+  // 其他学科
+  '经济', '管理', '会计', '金融', '法律', '历史', '政治',
+];
+
+// 从自然语言中提取关键词
+function extractKeywords(input: string): string[] {
+  const lowerInput = input.toLowerCase().trim();
+  const extractedKeywords: string[] = [];
+  
+  // 遍历所有学科关键词，查找匹配
+  for (const keyword of SUBJECT_KEYWORDS) {
+    if (lowerInput.includes(keyword.toLowerCase())) {
+      extractedKeywords.push(keyword);
+    }
+  }
+  
+  // 如果没有提取到关键词，返回原始输入
+  if (extractedKeywords.length === 0) {
+    return [input];
+  }
+  
+  return extractedKeywords;
+}
+
 // 扩展关键词（添加同义词）
 function expandKeywords(keyword: string): string[] {
   const lowerKeyword = keyword.toLowerCase().trim();
@@ -92,9 +138,20 @@ export async function GET(request: NextRequest) {
     // 如果有关键词，进行多字段搜索（标题、描述、作者）
     let filteredTasks = completedTasks;
     if (keyword) {
-      // 扩展关键词（添加同义词）
-      const expandedKeywords = expandKeywords(keyword);
-      console.log('🔍 关键词扩展:', { original: keyword, expanded: expandedKeywords });
+      // 1. 从自然语言中提取关键词
+      const extractedKeywords = extractKeywords(keyword);
+      console.log('🔍 关键词提取:', { original: keyword, extracted: extractedKeywords });
+      
+      // 2. 对每个提取的关键词进行同义词扩展
+      const allExpandedKeywords: string[] = [];
+      for (const kw of extractedKeywords) {
+        const expanded = expandKeywords(kw);
+        allExpandedKeywords.push(...expanded);
+      }
+      
+      // 去重
+      const uniqueKeywords = Array.from(new Set(allExpandedKeywords));
+      console.log('🔍 关键词扩展后:', { expanded: uniqueKeywords });
       
       filteredTasks = completedTasks.filter((task: any) => {
         const videoInfo = task.video_info || {};
@@ -103,8 +160,8 @@ export async function GET(request: NextRequest) {
         const author = (task.author || videoInfo.uploader || '').toLowerCase();
         const targetAudience = (task.target_audience || '').toLowerCase();
         
-        // 使用所有同义词进行搜索（只要匹配任何一个同义词即可）
-        return expandedKeywords.some(kw => {
+        // 使用所有扩展后的关键词进行搜索（只要匹配任何一个关键词即可）
+        return uniqueKeywords.some(kw => {
           const lowerKw = kw.toLowerCase();
           return (
             title.includes(lowerKw) ||

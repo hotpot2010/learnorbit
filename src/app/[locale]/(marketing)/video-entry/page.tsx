@@ -425,19 +425,6 @@ export default function VideoEntryPage() {
             </div>
           )}
 
-          {/* 未登录提示 */}
-          {!currentUser && !isLoadingNotes && (
-            <div className="w-full max-w-2xl px-4 mt-12">
-              <div 
-                className="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-6 text-center"
-                style={{ fontFamily }}
-              >
-                <div className="text-4xl mb-2">🔐</div>
-                <p className="text-gray-700 font-medium mb-2">登录后查看你的学习笔记</p>
-                <p className="text-gray-500 text-sm">记录每一次学习，持续进步</p>
-              </div>
-            </div>
-          )}
         </div>
       )}
 
