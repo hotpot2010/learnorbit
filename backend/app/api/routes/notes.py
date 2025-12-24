@@ -269,9 +269,9 @@ Output only the answer, nothing else."""
         else:
             # 没有图片，使用普通模型
             answer = await llm_service.generate_outline(
-                transcript=request.transcript_segment,
+            transcript=request.transcript_segment,
                 custom_prompt=prompt_text
-            )
+        )
         
         print(f"✅ Answer generated successfully")
         print(f"💬 Answer preview: {answer[:100]}...")

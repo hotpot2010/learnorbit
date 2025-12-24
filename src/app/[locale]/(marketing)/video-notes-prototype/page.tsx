@@ -4520,7 +4520,7 @@ export default function VideoNotesPrototypePage() {
               const exercisesResponse = await fetch(secureExercisesUrl);
               const exercisesData = await exercisesResponse.json();
               console.log('✅ 练习数据加载成功:', exercisesData);
-              
+      
               // 查找当前知识点对应的练习
               let exerciseForKnowledgePoint: Exercise | null = null;
               

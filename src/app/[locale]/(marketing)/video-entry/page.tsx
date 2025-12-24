@@ -6,7 +6,8 @@ import { Input } from '@/components/ui/input';
 import { 
   Search, 
   Play, 
-  Loader2
+  Loader2,
+  Trash2
 } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import { useMobileLayout } from '@/hooks/use-mobile-layout';
@@ -32,6 +33,22 @@ interface VideoInfo {
   thumbnail_cdn?: string; // CDN封面URL
 }
 
+interface VideoNote {
+  id: string;
+  taskId: string;
+  videoUrl: string;
+  videoTitle: string | null;
+  videoPlatform: string;
+  title: string | null;
+  description: string | null;
+  totalKnowledgePoints: number;
+  totalQAs: number;
+  totalExercises: number;
+  userNotesData: any;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export default function VideoEntryPage() {
   const locale = useLocale();
   const { isMobile } = useMobileLayout();
@@ -44,6 +61,11 @@ export default function VideoEntryPage() {
   const [isSearching, setIsSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [error, setError] = useState('');
+
+  // 历史笔记状态
+  const [userNotes, setUserNotes] = useState<VideoNote[]>([]);
+  const [isLoadingNotes, setIsLoadingNotes] = useState(false);
+  const [deletingNoteId, setDeletingNoteId] = useState<string | null>(null);
 
   // 生成用户隔离的缓存 key
   const getCacheKey = (baseName: string) => {
@@ -75,6 +97,33 @@ export default function VideoEntryPage() {
         sessionStorage.removeItem(hasSearchedKey);
       }
     }
+  }, [currentUser]);
+
+  // 加载用户历史笔记
+  useEffect(() => {
+    const fetchUserNotes = async () => {
+      if (!currentUser) {
+        setUserNotes([]);
+        return;
+      }
+
+      setIsLoadingNotes(true);
+      try {
+        const response = await fetch('/api/video-notes?limit=10');
+        const data = await response.json();
+        
+        if (data.success && data.notes) {
+          console.log('✅ 加载用户历史笔记:', data.notes.length);
+          setUserNotes(data.notes);
+        }
+      } catch (error) {
+        console.error('❌ 加载历史笔记失败:', error);
+      } finally {
+        setIsLoadingNotes(false);
+      }
+    };
+
+    fetchUserNotes();
   }, [currentUser]);
 
   // 动态字体
@@ -165,6 +214,62 @@ export default function VideoEntryPage() {
     window.location.href = targetUrl;
   };
 
+  // 继续学习（从历史笔记）
+  const handleContinueLearning = (note: VideoNote) => {
+    // 保存当前搜索状态（如果有）
+    if (typeof window !== 'undefined' && searchQuery && videos.length > 0) {
+      const queryKey = getCacheKey('search-query');
+      const resultsKey = getCacheKey('search-results');
+      const hasSearchedKey = getCacheKey('has-searched');
+      
+      sessionStorage.setItem(queryKey, searchQuery);
+      sessionStorage.setItem(resultsKey, JSON.stringify(videos));
+      sessionStorage.setItem(hasSearchedKey, 'true');
+    }
+
+    // 跳转到学习页面
+    const params = new URLSearchParams({
+      videoUrl: note.videoUrl,
+      taskId: note.taskId,
+      processed: 'true',
+    });
+
+    const targetUrl = `/${locale}/video-notes-prototype?${params.toString()}`;
+    window.location.href = targetUrl;
+  };
+
+  // 删除笔记
+  const handleDeleteNote = async (noteId: string, event: React.MouseEvent) => {
+    event.stopPropagation(); // 防止触发卡片点击
+
+    if (!confirm('确定要删除这条笔记吗？此操作无法撤销。')) {
+      return;
+    }
+
+    setDeletingNoteId(noteId);
+
+    try {
+      const response = await fetch(`/api/video-notes/${noteId}`, {
+        method: 'DELETE',
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('✅ 笔记删除成功:', noteId);
+        // 从列表中移除已删除的笔记
+        setUserNotes(prev => prev.filter(note => note.id !== noteId));
+      } else {
+        throw new Error(data.error || '删除失败');
+      }
+    } catch (error) {
+      console.error('❌ 删除笔记失败:', error);
+      alert(`删除失败：${error instanceof Error ? error.message : '未知错误'}`);
+    } finally {
+      setDeletingNoteId(null);
+    }
+  };
+
   // 格式化播放量
   const formatPlayCount = (play: number): string => {
     if (play === 0) return '--'; // 没有播放数据时显示 --
@@ -178,6 +283,23 @@ export default function VideoEntryPage() {
     const url = video.thumbnail_cdn || video.cover || '';
     console.log(`🖼️ 获取封面URL - 标题: ${video.title.substring(0, 30)}... | CDN: ${video.thumbnail_cdn || '无'} | Cover: ${video.cover || '无'} | 最终: ${url || '无'}`);
     return url;
+  };
+
+  // 格式化相对时间
+  const formatRelativeTime = (dateString: string): string => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return '刚刚';
+    if (diffMins < 60) return `${diffMins}分钟前`;
+    if (diffHours < 24) return `${diffHours}小时前`;
+    if (diffDays < 7) return `${diffDays}天前`;
+    
+    return date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
   };
 
   return (
@@ -238,14 +360,92 @@ export default function VideoEntryPage() {
               </p>
             )}
           </div>
+
+          {/* 历史笔记 - 未搜索时显示在输入框下方 */}
+          {currentUser && userNotes.length > 0 && (
+            <div className="w-full max-w-2xl px-4 mt-12">
+              <h2 
+                className="text-2xl font-bold mb-4 flex items-center gap-2"
+                style={{ fontFamily }}
+              >
+                <span className="bg-blue-100 px-3 py-1 rounded-lg">📚 我的学习笔记</span>
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {userNotes.slice(0, 6).map((note) => (
+                  <div
+                    key={note.id}
+                    onClick={() => handleContinueLearning(note)}
+                    className="bg-white rounded-lg shadow-sm border-2 border-gray-200 p-4 hover:border-blue-400 hover:shadow-md transition-all cursor-pointer relative group"
+                    style={{ fontFamily }}
+                  >
+                    {/* 删除按钮 - 悬停显示 */}
+                    <button
+                      onClick={(e) => handleDeleteNote(note.id, e)}
+                      disabled={deletingNoteId === note.id}
+                      className="absolute top-2 right-2 w-8 h-8 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed z-10"
+                      title="删除笔记"
+                    >
+                      {deletingNoteId === note.id ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Trash2 className="w-4 h-4" />
+                      )}
+                    </button>
+
+                    <h3 className="font-bold text-gray-800 line-clamp-2 text-base mb-2 pr-8">
+                      {note.videoTitle || note.title || '未命名笔记'}
+                    </h3>
+                    
+                    <div className="flex gap-2 mb-3 flex-wrap">
+                      {note.totalKnowledgePoints > 0 && (
+                        <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">
+                          📖 {note.totalKnowledgePoints} 知识点
+                        </span>
+                      )}
+                      {note.totalQAs > 0 && (
+                        <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">
+                          💬 {note.totalQAs} 问答
+                        </span>
+                      )}
+                      {note.totalExercises > 0 && (
+                        <span className="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded">
+                          ✏️ {note.totalExercises} 练习
+                        </span>
+                      )}
+                    </div>
+                    
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      <span>更新于 {formatRelativeTime(note.updatedAt)}</span>
+                      <span className="text-blue-600 font-medium">继续学习 →</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 未登录提示 */}
+          {!currentUser && !isLoadingNotes && (
+            <div className="w-full max-w-2xl px-4 mt-12">
+              <div 
+                className="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-6 text-center"
+                style={{ fontFamily }}
+              >
+                <div className="text-4xl mb-2">🔐</div>
+                <p className="text-gray-700 font-medium mb-2">登录后查看你的学习笔记</p>
+                <p className="text-gray-500 text-sm">记录每一次学习，持续进步</p>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
       {/* 已搜索时：显示搜索栏和结果列表 */}
       {hasSearched && (
-        <div className="container mx-auto max-w-4xl">
-          {/* 顶部搜索栏 */}
-          <div className="mb-8">
+        <div className="container mx-auto">
+          {/* 顶部搜索栏 - 保持与未搜索时相同宽度 */}
+          <div className="max-w-2xl mx-auto mb-8 px-4">
             <h1 
               className="text-3xl md:text-4xl font-bold text-center mb-4 transform -rotate-1"
               style={{ fontFamily }}
@@ -285,7 +485,75 @@ export default function VideoEntryPage() {
             )}
           </div>
 
-          {/* 搜索结果列表 */}
+          {/* 搜索结果和历史笔记的布局 */}
+          <div className={`flex gap-6 ${currentUser && userNotes.length > 0 ? 'justify-center' : ''}`}>
+            {/* 左侧：历史笔记 - 仅在有笔记时显示 */}
+            {currentUser && userNotes.length > 0 && (
+              <div className="w-80 flex-shrink-0 hidden lg:block">
+                <div className="sticky top-4">
+                  <h2 
+                    className="text-xl font-bold mb-4 flex items-center gap-2"
+                    style={{ fontFamily }}
+                  >
+                    <span className="bg-blue-100 px-3 py-1 rounded-lg text-base">📚 我的笔记</span>
+                  </h2>
+                  
+                  <div className="space-y-3 max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
+                    {userNotes.slice(0, 10).map((note) => (
+                      <div
+                        key={note.id}
+                        onClick={() => handleContinueLearning(note)}
+                        className="bg-white rounded-lg shadow-sm border-2 border-gray-200 p-3 hover:border-blue-400 hover:shadow-md transition-all cursor-pointer relative group"
+                        style={{ fontFamily }}
+                      >
+                        {/* 删除按钮 - 悬停显示 */}
+                        <button
+                          onClick={(e) => handleDeleteNote(note.id, e)}
+                          disabled={deletingNoteId === note.id}
+                          className="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed z-10"
+                          title="删除笔记"
+                        >
+                          {deletingNoteId === note.id ? (
+                            <Loader2 className="w-3 h-3 animate-spin" />
+                          ) : (
+                            <Trash2 className="w-3 h-3" />
+                          )}
+                        </button>
+
+                        <h3 className="font-bold text-gray-800 line-clamp-2 text-sm mb-2 pr-6">
+                          {note.videoTitle || note.title || '未命名笔记'}
+                        </h3>
+                        
+                        <div className="flex gap-1 mb-2 flex-wrap">
+                          {note.totalKnowledgePoints > 0 && (
+                            <span className="text-xs bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded">
+                              📖 {note.totalKnowledgePoints}
+                            </span>
+                          )}
+                          {note.totalQAs > 0 && (
+                            <span className="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded">
+                              💬 {note.totalQAs}
+                            </span>
+                          )}
+                          {note.totalExercises > 0 && (
+                            <span className="text-xs bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded">
+                              ✏️ {note.totalExercises}
+                            </span>
+                          )}
+                        </div>
+                        
+                        <div className="text-xs text-gray-500">
+                          {formatRelativeTime(note.updatedAt)}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 搜索结果列表 - 保持与搜索框相同宽度 */}
+            <div className={`w-full ${currentUser && userNotes.length > 0 ? 'max-w-2xl' : 'max-w-2xl mx-auto'} px-4`}>
           {videos.length > 0 ? (
             <div className="grid grid-cols-1 gap-4 pb-20">
               {videos.map((video, index) => (
@@ -363,6 +631,8 @@ export default function VideoEntryPage() {
               </p>
               </div>
           )}
+            </div>
+          </div>
         </div>
       )}
     </div>
