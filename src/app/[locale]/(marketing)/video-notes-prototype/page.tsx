@@ -999,8 +999,12 @@ export default function VideoNotesPrototypePage() {
               });
             }
             
-            // 设置视频URL（取第一个分P）
-            const videoUrls = task.video_url;
+            // 设置视频URL（优先使用转码后的视频，取第一个分P）
+            // 优先使用转码后的视频URL，如果没有则使用原始URL
+            const transcodedUrls = task.transcoded_video_url;
+            const videoUrls = transcodedUrls || task.video_url;
+            const isTranscoded = !!transcodedUrls;
+            
             if (videoUrls) {
               const videoUrlArray = typeof videoUrls === 'string' 
                 ? (videoUrls.startsWith('[') ? JSON.parse(videoUrls) : [videoUrls])
@@ -1010,7 +1014,7 @@ export default function VideoNotesPrototypePage() {
               // 确保使用 HTTPS
               const secureVideoUrl = ensureHttps(firstVideoUrl) as string;
               setCdnVideoUrl(secureVideoUrl);
-              console.log('✅ 设置CDN视频URL:', secureVideoUrl);
+              console.log(`✅ 设置CDN视频URL (${isTranscoded ? '转码后' : '原始'}):`, secureVideoUrl);
             }
 
             setAnalysisProgress({
@@ -1536,8 +1540,11 @@ export default function VideoNotesPrototypePage() {
       if (isProcessedVideoRef.current && processedTaskDataRef.current) {
         console.log(`✅ 从已处理数据中加载第 ${partIndex + 1} P`);
         
-        // 获取视频URL
-        const videoUrls = processedTaskDataRef.current.video_url;
+        // 获取视频URL（优先使用转码后的视频）
+        const transcodedUrls = processedTaskDataRef.current.transcoded_video_url;
+        const videoUrls = transcodedUrls || processedTaskDataRef.current.video_url;
+        const isTranscoded = !!transcodedUrls;
+        
         if (videoUrls) {
           const videoUrlArray = typeof videoUrls === 'string' 
             ? (videoUrls.startsWith('[') ? JSON.parse(videoUrls) : [videoUrls])
@@ -1547,7 +1554,7 @@ export default function VideoNotesPrototypePage() {
             // 确保使用 HTTPS
             const secureVideoUrl = ensureHttps(videoUrl) as string;
             setCdnVideoUrl(secureVideoUrl);
-            console.log(`✅ 设置视频URL (P${partIndex + 1}):`, secureVideoUrl);
+            console.log(`✅ 设置视频URL (P${partIndex + 1}, ${isTranscoded ? '转码后' : '原始'}):`, secureVideoUrl);
           }
         }
         

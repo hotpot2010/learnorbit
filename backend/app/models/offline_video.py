@@ -24,6 +24,7 @@ class OfflineVideoTask(Base):
     # 结果URL（单P视频为字符串，多P视频为JSON数组）
     # 🔧 使用MEDIUMTEXT以支持大量分P的URL列表（最大16MB，足够存储数千个URL）
     video_url = Column(MEDIUMTEXT, nullable=True, comment='视频上传后的URL（单P为字符串，多P为JSON数组）')
+    transcoded_video_url = Column(MEDIUMTEXT, nullable=True, comment='转码后的视频URL（单P为字符串，多P为JSON数组）')
     asr_result_url = Column(MEDIUMTEXT, nullable=True, comment='ASR结果文件URL（单P为字符串，多P为JSON数组）')
     knowledge_points_result_url = Column(MEDIUMTEXT, nullable=True, comment='知识点结果文件URL（单P为字符串，多P为JSON数组）')
     screenshots_result_url = Column(MEDIUMTEXT, nullable=True, comment='截图结果文件URL（单P为字符串，多P为JSON数组）')
@@ -63,6 +64,7 @@ class OfflineVideoTask(Base):
             "video_title": self.video_title,
             "steps": self.steps if isinstance(self.steps, dict) else json.loads(self.steps) if self.steps else {},
             "video_url": parse_url_field(self.video_url),
+            "transcoded_video_url": parse_url_field(self.transcoded_video_url) if hasattr(self, 'transcoded_video_url') else None,
             "asr_result_url": parse_url_field(self.asr_result_url),
             "knowledge_points_result_url": parse_url_field(self.knowledge_points_result_url),
             "screenshots_result_url": parse_url_field(self.screenshots_result_url) if hasattr(self, 'screenshots_result_url') else None,

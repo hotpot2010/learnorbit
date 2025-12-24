@@ -48,7 +48,7 @@ export const websiteConfig: WebsiteConfig = {
     enableGithubLogin: false, // 禁用GitHub登录
   },
   i18n: {
-    defaultLocale: 'en',
+    defaultLocale: 'zh',
     locales: {
       en: {
         flag: '🇺🇸',

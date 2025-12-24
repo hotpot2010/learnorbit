@@ -787,10 +787,11 @@
         function renderTask(task, index = 0) {
             const steps = [
                 { key: 'download', name: '1. 下载视频并上传', description: '下载B站视频，合并音视频流，上传到CDN' },
-                { key: 'asr', name: '2. ASR识别', description: '语音识别，生成逐字稿' },
-                { key: 'knowledge_points', name: '3. 生成知识点', description: '调用LLM生成知识点文档' },
-                { key: 'screenshots', name: '4. 生成截图', description: '根据知识点时间戳从视频中截图' },
-                { key: 'exercises', name: '5. 生成练习', description: '基于知识点生成练习题（数学/编程）' }
+                { key: 'transcode', name: '2. 转码视频', description: '将视频转码为H.264格式，优化浏览器兼容性' },
+                { key: 'asr', name: '3. ASR识别', description: '语音识别，生成逐字稿' },
+                { key: 'knowledge_points', name: '4. 生成知识点', description: '调用LLM生成知识点文档' },
+                { key: 'screenshots', name: '5. 生成截图', description: '根据知识点时间戳从视频中截图' },
+                { key: 'exercises', name: '6. 生成练习', description: '基于知识点生成练习题（数学/编程）' }
             ];
             
             const isSeries = task.is_series || false;
@@ -801,6 +802,7 @@
             
             // 解析多P任务的URL数组
             const videoUrls = parseUrls(task.video_url);
+            const transcodedVideoUrls = parseUrls(task.transcoded_video_url);
             const asrResultUrls = parseUrls(task.asr_result_url);
             const knowledgePointsResultUrls = parseUrls(task.knowledge_points_result_url);
             const screenshotsResultUrls = parseUrls(task.screenshots_result_url);
@@ -830,6 +832,7 @@
                 partContentsHtml = seriesParts.map((part, idx) => {
                     const partNumber = idx + 1;
                     const videoUrl = videoUrls[idx] || null;
+                    const transcodedVideoUrl = transcodedVideoUrls[idx] || null;
                     const asrUrl = asrResultUrls[idx] || null;
                     const knowledgePointsUrl = knowledgePointsResultUrls[idx] || null;
                     const screenshotsUrl = screenshotsResultUrls[idx] || null;
@@ -864,6 +867,8 @@
                         let resultUrl = null;
                         if (step.key === 'download') {
                             resultUrl = videoUrl;
+                        } else if (step.key === 'transcode') {
+                            resultUrl = transcodedVideoUrl;
                         } else if (step.key === 'asr') {
                             resultUrl = asrUrl;
                         } else if (step.key === 'knowledge_points') {
@@ -940,6 +945,10 @@
                         resultUrl = typeof task.video_url === 'string' && task.video_url.startsWith('[') 
                             ? JSON.parse(task.video_url)[0] 
                             : task.video_url;
+                    } else if (step.key === 'transcode' && task.transcoded_video_url) {
+                        resultUrl = typeof task.transcoded_video_url === 'string' && task.transcoded_video_url.startsWith('[') 
+                            ? JSON.parse(task.transcoded_video_url)[0] 
+                            : task.transcoded_video_url;
                     } else if (step.key === 'asr' && task.asr_result_url) {
                         resultUrl = typeof task.asr_result_url === 'string' && task.asr_result_url.startsWith('[') 
                             ? JSON.parse(task.asr_result_url)[0] 
@@ -1491,6 +1500,7 @@
                 
                 // 解析多P任务的URL数组
                 const videoUrls = parseUrls(task.video_url);
+                const transcodedVideoUrls = parseUrls(task.transcoded_video_url);
                 const asrResultUrls = parseUrls(task.asr_result_url);
                 const knowledgePointsResultUrls = parseUrls(task.knowledge_points_result_url);
                 const screenshotsResultUrls = parseUrls(task.screenshots_result_url);
@@ -1502,6 +1512,10 @@
                     if (step === 'download' && videoUrls[partIndex]) {
                         // 视频类型：直接打开链接
                         window.open(videoUrls[partIndex], '_blank');
+                        return;
+                    } else if (step === 'transcode' && transcodedVideoUrls[partIndex]) {
+                        // 转码视频：直接打开链接
+                        window.open(transcodedVideoUrls[partIndex], '_blank');
                         return;
                     } else if (step === 'asr' && asrResultUrls[partIndex]) {
                         resultUrl = asrResultUrls[partIndex];
@@ -1519,6 +1533,13 @@
                         const url = typeof task.video_url === 'string' && task.video_url.startsWith('[') 
                             ? JSON.parse(task.video_url)[0] 
                             : task.video_url;
+                        window.open(url, '_blank');
+                        return;
+                    } else if (step === 'transcode' && task.transcoded_video_url) {
+                        // 转码视频：直接打开链接
+                        const url = typeof task.transcoded_video_url === 'string' && task.transcoded_video_url.startsWith('[') 
+                            ? JSON.parse(task.transcoded_video_url)[0] 
+                            : task.transcoded_video_url;
                         window.open(url, '_blank');
                         return;
                     } else if (step === 'asr' && task.asr_result_url) {

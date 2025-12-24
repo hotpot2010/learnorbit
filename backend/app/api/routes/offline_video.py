@@ -137,7 +137,7 @@ async def execute_step(
     
     Args:
         task_id: 任务ID
-        step: 步骤名称 (download, asr, knowledge_points, screenshots, exercises)
+        step: 步骤名称 (download, transcode, asr, knowledge_points, screenshots, exercises)
         background_tasks: FastAPI后台任务
         mode: 执行模式 (None: 正常执行, "continue": 只执行失败的分P, "retry": 重新执行成功的分P)
         subject: 练习题学科类型 (math/programming)，仅在 step=exercises 时有效
@@ -163,6 +163,22 @@ async def execute_step(
             }
             if "exercises_result_url" not in task:
                 task["exercises_result_url"] = None
+            offline_video_service.tasks_cache[task_id] = task
+            offline_video_service._save_task_to_db(task)
+        
+        # 如果是旧任务且访问 transcode 步骤，先初始化该步骤
+        if step == "transcode" and step not in task["steps"]:
+            print(f"🔧 [API] 旧任务检测到，初始化 transcode 步骤...")
+            task["steps"]["transcode"] = {
+                "status": TaskStatus.PENDING,
+                "progress": 0,
+                "message": "等待执行",
+                "result": None,
+                "error": None,
+                "retry_count": 0
+            }
+            if "transcoded_video_url" not in task:
+                task["transcoded_video_url"] = None
             offline_video_service.tasks_cache[task_id] = task
             offline_video_service._save_task_to_db(task)
         
@@ -195,7 +211,15 @@ async def execute_step(
             return status
         
         # 检查依赖关系
-        if step == "asr":
+        if step == "transcode":
+            # 转码需要下载步骤完成或有部分成功
+            download_status = get_actual_status("download")
+            if download_status not in [TaskStatus.SUCCESS, TaskStatus.PARTIAL_SUCCESS]:
+                raise HTTPException(status_code=400, detail="请先完成下载步骤")
+            if not task.get("video_url"):
+                raise HTTPException(status_code=400, detail="视频URL不存在，请先完成下载并上传")
+        
+        elif step == "asr":
             # ASR需要下载步骤完成或有部分成功
             download_status = get_actual_status("download")
             if download_status not in [TaskStatus.SUCCESS, TaskStatus.PARTIAL_SUCCESS]:
@@ -250,6 +274,8 @@ async def execute_step(
                     await offline_video_service.execute_step_asr(task_id, mode=mode)
                 elif step == "knowledge_points":
                     await offline_video_service.execute_step_knowledge_points(task_id, mode=mode)
+                elif step == "transcode":
+                    await offline_video_service.transcode_video(task_id)
                 elif step == "screenshots":
                     await offline_video_service.execute_step_screenshots(task_id, mode=mode)
                 elif step == "exercises":

@@ -39,6 +39,7 @@ class TaskStatus(str, Enum):
 class StepType(str, Enum):
     """步骤类型枚举"""
     DOWNLOAD = "download"  # 下载视频
+    TRANSCODE = "transcode"  # 转码视频
     ASR = "asr"  # ASR识别
     KNOWLEDGE_POINTS = "knowledge_points"  # 生成知识点
     SCREENSHOTS = "screenshots"  # 生成截图
@@ -154,6 +155,14 @@ class OfflineVideoService:
                     "error": None,
                     "retry_count": 0
                 },
+                "transcode": {
+                    "status": TaskStatus.PENDING,
+                    "progress": 0,
+                    "message": "等待执行",
+                    "result": None,
+                    "error": None,
+                    "retry_count": 0
+                },
                 "asr": {
                     "status": TaskStatus.PENDING,
                     "progress": 0,
@@ -188,6 +197,7 @@ class OfflineVideoService:
                 }
             },
             "video_url": None,  # 上传后的视频URL
+            "transcoded_video_url": None,  # 转码后的视频URL
             "asr_result_url": None,  # ASR结果文件上传后的URL
             "knowledge_points_result_url": None,  # 知识点结果文件上传后的URL
             "screenshots_result_url": None,  # 截图结果文件上传后的URL
@@ -514,6 +524,7 @@ class OfflineVideoService:
                 
                 # 序列化URL字段
                 video_url = serialize_url_field(task.get('video_url'))
+                transcoded_video_url = serialize_url_field(task.get('transcoded_video_url'))
                 asr_result_url = serialize_url_field(task.get('asr_result_url'))
                 knowledge_points_result_url = serialize_url_field(task.get('knowledge_points_result_url'))
                 screenshots_result_url = serialize_url_field(task.get('screenshots_result_url'))
@@ -525,10 +536,12 @@ class OfflineVideoService:
                     db_task.video_title = task.get('video_title')
                     db_task.steps = task.get('steps', {})
                     db_task.video_url = video_url
+                    # 只有当数据库模型有该字段时才设置
+                    if hasattr(db_task, 'transcoded_video_url'):
+                        db_task.transcoded_video_url = transcoded_video_url
                     db_task.asr_result_url = asr_result_url
                     db_task.knowledge_points_result_url = knowledge_points_result_url
                     db_task.screenshots_result_url = screenshots_result_url
-                    # 只有当数据库模型有该字段时才设置
                     if hasattr(db_task, 'exercises_result_url'):
                         db_task.exercises_result_url = exercises_result_url
                     db_task.video_info = task.get('video_info', {})
@@ -3225,6 +3238,333 @@ Please generate an exercise in JSON format. Choose the appropriate type and gene
         
         print(f"📊 同步统计: {result['message']}")
         return result
+    
+    async def transcode_video(self, task_id: str):
+        """
+        转码视频步骤：下载视频、转码成H.264、上传
+        
+        Args:
+            task_id: 任务ID
+        """
+        print(f"\n{'='*60}")
+        print(f"🎬 开始转码视频: {task_id}")
+        print(f"{'='*60}\n")
+        
+        task = self.get_task(task_id)
+        if not task:
+            raise ValueError(f"任务不存在: {task_id}")
+        
+        # 检查是否已有原视频
+        video_url_data = task.get("video_url")
+        if not video_url_data:
+            raise ValueError("视频URL不存在，请先完成下载并上传步骤")
+        
+        # 解析视频URL列表
+        import json
+        try:
+            if isinstance(video_url_data, str) and video_url_data.startswith('['):
+                video_urls = json.loads(video_url_data)
+            elif isinstance(video_url_data, list):
+                video_urls = video_url_data
+            else:
+                video_urls = [video_url_data]
+        except:
+            video_urls = [video_url_data]
+        
+        is_series = task.get("is_series", False)
+        series_parts = task.get("series_parts", [])
+        
+        self._update_step_status(
+            task_id, "transcode",
+            TaskStatus.RUNNING, 0,
+            "开始转码视频"
+        )
+        
+        try:
+            loop = asyncio.get_event_loop()
+            
+            if is_series and len(video_urls) > 1:
+                # 多P视频
+                print(f"📹 处理多P视频，共 {len(video_urls)} 个分P")
+                
+                transcoded_urls = []
+                part_results = []
+                total_parts = len(video_urls)
+                
+                for idx, video_url in enumerate(video_urls, 1):
+                    try:
+                        print(f"\n--- 转码分P {idx}/{total_parts} ---")
+                        
+                        # 下载视频
+                        print(f"⬇️ 下载视频...")
+                        temp_video_path = os.path.join(
+                            self.results_dir,
+                            f"{task_id}_part{idx}_original.mp4"
+                        )
+                        
+                        def download_video():
+                            response = requests.get(video_url, stream=True, timeout=300)
+                            response.raise_for_status()
+                            with open(temp_video_path, 'wb') as f:
+                                for chunk in response.iter_content(chunk_size=8192):
+                                    if chunk:
+                                        f.write(chunk)
+                            return temp_video_path
+                        
+                        await loop.run_in_executor(self.executor, download_video)
+                        print(f"✅ 视频下载完成: {temp_video_path}")
+                        
+                        # 转码视频
+                        print(f"🔄 转码视频为H.264...")
+                        transcoded_path = os.path.join(
+                            self.results_dir,
+                            f"{task_id}_part{idx}_h264.mp4"
+                        )
+                        
+                        def transcode_to_h264():
+                            import subprocess
+                            cmd = [
+                                'ffmpeg',
+                                '-i', temp_video_path,
+                                '-c:v', 'libx264',  # H.264编码器
+                                '-preset', 'medium',  # 编码速度
+                                '-crf', '23',  # 质量（18-28，越小质量越好）
+                                '-c:a', 'aac',  # 音频编码器
+                                '-b:a', '128k',  # 音频比特率
+                                '-movflags', '+faststart',  # 优化网页播放
+                                '-y',  # 覆盖输出文件
+                                transcoded_path
+                            ]
+                            
+                            result = subprocess.run(
+                                cmd,
+                                capture_output=True,
+                                text=True,
+                                timeout=1800  # 30分钟超时
+                            )
+                            
+                            if result.returncode != 0:
+                                raise Exception(f"FFmpeg转码失败: {result.stderr}")
+                            
+                            return transcoded_path
+                        
+                        await loop.run_in_executor(self.executor, transcode_to_h264)
+                        print(f"✅ 视频转码完成: {transcoded_path}")
+                        
+                        # 删除原始下载文件
+                        if os.path.exists(temp_video_path):
+                            os.remove(temp_video_path)
+                        
+                        # 上传转码后的视频
+                        print(f"📤 上传转码后的视频...")
+                        upload_result = await loop.run_in_executor(
+                            self.executor,
+                            self.file_upload_service.upload_file,
+                            transcoded_path,
+                            "file0",
+                            "video/mp4"
+                        )
+                        
+                        if not upload_result:
+                            raise Exception("转码视频上传失败")
+                        
+                        transcoded_url = upload_result
+                        if not transcoded_url.startswith('http'):
+                            transcoded_url = f"https://file.gsxservice.com/{transcoded_url}"
+                        
+                        transcoded_urls.append(transcoded_url)
+                        part_results.append({
+                            "part_number": idx,
+                            "status": "success",
+                            "result_url": transcoded_url
+                        })
+                        
+                        # 删除转码后的本地文件
+                        if os.path.exists(transcoded_path):
+                            os.remove(transcoded_path)
+                        
+                        # 更新进度
+                        progress = int((idx / total_parts) * 100)
+                        self._update_step_status(
+                            task_id, "transcode",
+                            TaskStatus.RUNNING, progress,
+                            f"已完成 {idx}/{total_parts} 个分P"
+                        )
+                        
+                        print(f"✅ 分P {idx}/{total_parts} 转码完成: {transcoded_url}")
+                        
+                    except Exception as e:
+                        error_msg = str(e)
+                        print(f"❌ 分P {idx}/{total_parts} 转码失败: {error_msg}")
+                        part_results.append({
+                            "part_number": idx,
+                            "status": "failed",
+                            "error": error_msg
+                        })
+                        # 继续处理下一个分P
+                        continue
+                
+                # 检查是否全部失败
+                success_count = sum(1 for r in part_results if r["status"] == "success")
+                
+                if success_count == 0:
+                    raise Exception("所有分P转码均失败")
+                
+                # 更新任务状态
+                final_status = TaskStatus.SUCCESS if success_count == total_parts else TaskStatus.PARTIAL_SUCCESS
+                
+                task["transcoded_video_url"] = json.dumps(transcoded_urls) if len(transcoded_urls) > 1 else (transcoded_urls[0] if transcoded_urls else None)
+                task["steps"]["transcode"]["result"] = {
+                    "parts": part_results,
+                    "total": total_parts,
+                    "success": success_count,
+                    "failed": total_parts - success_count
+                }
+                
+                # 先更新缓存，再更新步骤状态（因为_update_step_status会从缓存读取）
+                self.tasks_cache[task_id] = task
+                
+                self._update_step_status(
+                    task_id, "transcode",
+                    final_status, 100,
+                    f"转码完成: {success_count}/{total_parts} 个分P成功"
+                )
+                
+                print(f"\n{'='*60}")
+                print(f"✅ 多P视频转码完成: {success_count}/{total_parts} 个分P成功")
+                print(f"{'='*60}\n")
+                
+            else:
+                # 单P视频
+                video_url = video_urls[0]
+                print(f"📹 处理单P视频")
+                
+                # 下载视频
+                print(f"⬇️ 下载视频...")
+                temp_video_path = os.path.join(
+                    self.results_dir,
+                    f"{task_id}_original.mp4"
+                )
+                
+                def download_video():
+                    response = requests.get(video_url, stream=True, timeout=300)
+                    response.raise_for_status()
+                    with open(temp_video_path, 'wb') as f:
+                        for chunk in response.iter_content(chunk_size=8192):
+                            if chunk:
+                                f.write(chunk)
+                    return temp_video_path
+                
+                await loop.run_in_executor(self.executor, download_video)
+                print(f"✅ 视频下载完成: {temp_video_path}")
+                
+                self._update_step_status(
+                    task_id, "transcode",
+                    TaskStatus.RUNNING, 30,
+                    "视频下载完成，开始转码"
+                )
+                
+                # 转码视频
+                print(f"🔄 转码视频为H.264...")
+                transcoded_path = os.path.join(
+                    self.results_dir,
+                    f"{task_id}_h264.mp4"
+                )
+                
+                def transcode_to_h264():
+                    import subprocess
+                    cmd = [
+                        'ffmpeg',
+                        '-i', temp_video_path,
+                        '-c:v', 'libx264',  # H.264编码器
+                        '-preset', 'medium',  # 编码速度
+                        '-crf', '23',  # 质量（18-28，越小质量越好）
+                        '-c:a', 'aac',  # 音频编码器
+                        '-b:a', '128k',  # 音频比特率
+                        '-movflags', '+faststart',  # 优化网页播放
+                        '-y',  # 覆盖输出文件
+                        transcoded_path
+                    ]
+                    
+                    result = subprocess.run(
+                        cmd,
+                        capture_output=True,
+                        text=True,
+                        timeout=1800  # 30分钟超时
+                    )
+                    
+                    if result.returncode != 0:
+                        raise Exception(f"FFmpeg转码失败: {result.stderr}")
+                    
+                    return transcoded_path
+                
+                await loop.run_in_executor(self.executor, transcode_to_h264)
+                print(f"✅ 视频转码完成: {transcoded_path}")
+                
+                # 删除原始下载文件
+                if os.path.exists(temp_video_path):
+                    os.remove(temp_video_path)
+                
+                self._update_step_status(
+                    task_id, "transcode",
+                    TaskStatus.RUNNING, 70,
+                    "转码完成，开始上传"
+                )
+                
+                # 上传转码后的视频
+                print(f"📤 上传转码后的视频...")
+                upload_result = await loop.run_in_executor(
+                    self.executor,
+                    self.file_upload_service.upload_file,
+                    transcoded_path,
+                    "file0",
+                    "video/mp4"
+                )
+                
+                if not upload_result:
+                    raise Exception("转码视频上传失败")
+                
+                transcoded_url = upload_result
+                if not transcoded_url.startswith('http'):
+                    transcoded_url = f"https://file.gsxservice.com/{transcoded_url}"
+                
+                # 删除转码后的本地文件
+                if os.path.exists(transcoded_path):
+                    os.remove(transcoded_path)
+                
+                # 更新任务信息
+                task["transcoded_video_url"] = transcoded_url
+                task["steps"]["transcode"]["result"] = {
+                    "url": transcoded_url
+                }
+                
+                # 先更新缓存，再更新步骤状态（因为_update_step_status会从缓存读取）
+                self.tasks_cache[task_id] = task
+                
+                self._update_step_status(
+                    task_id, "transcode",
+                    TaskStatus.SUCCESS, 100,
+                    "转码完成"
+                )
+                
+                print(f"\n{'='*60}")
+                print(f"✅ 单P视频转码完成: {transcoded_url}")
+                print(f"{'='*60}\n")
+                
+        except Exception as e:
+            error_msg = str(e)
+            print(f"❌ 转码失败: {error_msg}")
+            import traceback
+            traceback.print_exc()
+            
+            self._update_step_status(
+                task_id, "transcode",
+                TaskStatus.FAILED, 0,
+                f"转码失败: {error_msg}",
+                error=error_msg
+            )
+            
+            raise
 
 
 # 全局实例
