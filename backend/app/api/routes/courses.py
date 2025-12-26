@@ -14,7 +14,7 @@ import uuid
 
 from app.database import get_db
 
-router = APIRouter(prefix="/api/user-courses", tags=["courses"])
+router = APIRouter(prefix="/open-api/user-courses", tags=["courses"])
 Base = declarative_base()
 
 # ==================== 数据模型 ====================

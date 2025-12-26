@@ -13,7 +13,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from app.database import get_db
 
-router = APIRouter(prefix="/api/creator-courses", tags=["creator-courses"])
+router = APIRouter(prefix="/open-api/creator-courses", tags=["creator-courses"])
 Base = declarative_base()
 
 # ==================== 数据模型 ====================

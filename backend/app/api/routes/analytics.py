@@ -13,7 +13,7 @@ import time
 
 from app.database import get_db
 
-router = APIRouter(prefix="/api/analytics", tags=["analytics"])
+router = APIRouter(prefix="/open-api/analytics", tags=["analytics"])
 Base = declarative_base()
 
 # ==================== 数据模型 ====================

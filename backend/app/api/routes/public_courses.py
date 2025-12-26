@@ -15,7 +15,7 @@ import json
 
 from app.database import get_db
 
-router = APIRouter(prefix="/api/public-courses", tags=["public-courses"])
+router = APIRouter(prefix="/open-api/public-courses", tags=["public-courses"])
 
 # 注意：公开课程列表 API 在 public_courses_list.py 中
 Base = declarative_base()

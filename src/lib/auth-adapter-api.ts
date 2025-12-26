@@ -55,29 +55,29 @@ async function callBackendAPI<T>(
  */
 export const userAPI = {
   create: async (data: any) => {
-    return callBackendAPI(`/api/auth-db/user`, {
+    return callBackendAPI(`/open-api/auth-db/user`, {
       method: 'POST',
       body: JSON.stringify(data),
     });
   },
 
   findById: async (id: string) => {
-    return callBackendAPI(`/api/auth-db/user/${id}`);
+    return callBackendAPI(`/open-api/auth-db/user/${id}`);
   },
 
   findByEmail: async (email: string) => {
-    return callBackendAPI(`/api/auth-db/user?email=${encodeURIComponent(email)}`);
+    return callBackendAPI(`/open-api/auth-db/user?email=${encodeURIComponent(email)}`);
   },
 
   update: async (id: string, data: any) => {
-    return callBackendAPI(`/api/auth-db/user/${id}`, {
+    return callBackendAPI(`/open-api/auth-db/user/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(data),
     });
   },
 
   delete: async (id: string) => {
-    return callBackendAPI(`/api/auth-db/user/${id}`, {
+    return callBackendAPI(`/open-api/auth-db/user/${id}`, {
       method: 'DELETE',
     });
   },
@@ -102,39 +102,39 @@ export interface SessionData {
  */
 export const sessionAPI = {
   create: async (data: any): Promise<SessionData> => {
-    return callBackendAPI<SessionData>(`/api/auth-db/session`, {
+    return callBackendAPI<SessionData>(`/open-api/auth-db/session`, {
       method: 'POST',
       body: JSON.stringify(data),
     });
   },
 
   findById: async (id: string): Promise<SessionData | null> => {
-    return callBackendAPI<SessionData | null>(`/api/auth-db/session/${id}`);
+    return callBackendAPI<SessionData | null>(`/open-api/auth-db/session/${id}`);
   },
 
   findByToken: async (token: string): Promise<SessionData | null> => {
-    return callBackendAPI<SessionData | null>(`/api/auth-db/session?token=${encodeURIComponent(token)}`);
+    return callBackendAPI<SessionData | null>(`/open-api/auth-db/session?token=${encodeURIComponent(token)}`);
   },
 
   findByUserId: async (userId: string): Promise<SessionData[]> => {
-    return callBackendAPI<SessionData[]>(`/api/auth-db/sessions?user_id=${encodeURIComponent(userId)}`);
+    return callBackendAPI<SessionData[]>(`/open-api/auth-db/sessions?user_id=${encodeURIComponent(userId)}`);
   },
 
   update: async (id: string, data: any) => {
-    return callBackendAPI(`/api/auth-db/session/${id}`, {
+    return callBackendAPI(`/open-api/auth-db/session/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(data),
     });
   },
 
   delete: async (id: string) => {
-    return callBackendAPI(`/api/auth-db/session/${id}`, {
+    return callBackendAPI(`/open-api/auth-db/session/${id}`, {
       method: 'DELETE',
     });
   },
 
   deleteByUserId: async (userId: string) => {
-    return callBackendAPI(`/api/auth-db/sessions?user_id=${encodeURIComponent(userId)}`, {
+    return callBackendAPI(`/open-api/auth-db/sessions?user_id=${encodeURIComponent(userId)}`, {
       method: 'DELETE',
     });
   },
@@ -164,39 +164,39 @@ export interface AccountData {
  */
 export const accountAPI = {
   create: async (data: any): Promise<AccountData> => {
-    return callBackendAPI<AccountData>(`/api/auth-db/account`, {
+    return callBackendAPI<AccountData>(`/open-api/auth-db/account`, {
       method: 'POST',
       body: JSON.stringify(data),
     });
   },
 
   findById: async (id: string): Promise<AccountData | null> => {
-    return callBackendAPI<AccountData | null>(`/api/auth-db/account/${id}`);
+    return callBackendAPI<AccountData | null>(`/open-api/auth-db/account/${id}`);
   },
 
   findByProvider: async (providerId: string, accountId: string): Promise<AccountData | null> => {
-    return callBackendAPI<AccountData | null>(`/api/auth-db/account?provider_id=${encodeURIComponent(providerId)}&account_id=${encodeURIComponent(accountId)}`);
+    return callBackendAPI<AccountData | null>(`/open-api/auth-db/account?provider_id=${encodeURIComponent(providerId)}&account_id=${encodeURIComponent(accountId)}`);
   },
 
   findByUserId: async (userId: string): Promise<AccountData[]> => {
-    return callBackendAPI<AccountData[]>(`/api/auth-db/accounts?user_id=${encodeURIComponent(userId)}`);
+    return callBackendAPI<AccountData[]>(`/open-api/auth-db/accounts?user_id=${encodeURIComponent(userId)}`);
   },
 
   update: async (id: string, data: any) => {
-    return callBackendAPI(`/api/auth-db/account/${id}`, {
+    return callBackendAPI(`/open-api/auth-db/account/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(data),
     });
   },
 
   delete: async (id: string) => {
-    return callBackendAPI(`/api/auth-db/account/${id}`, {
+    return callBackendAPI(`/open-api/auth-db/account/${id}`, {
       method: 'DELETE',
     });
   },
 
   deleteByUserId: async (userId: string) => {
-    return callBackendAPI(`/api/auth-db/accounts?user_id=${encodeURIComponent(userId)}`, {
+    return callBackendAPI(`/open-api/auth-db/accounts?user_id=${encodeURIComponent(userId)}`, {
       method: 'DELETE',
     });
   },
@@ -207,26 +207,26 @@ export const accountAPI = {
  */
 export const verificationAPI = {
   create: async (data: any) => {
-    return callBackendAPI(`/api/auth-db/verification`, {
+    return callBackendAPI(`/open-api/auth-db/verification`, {
       method: 'POST',
       body: JSON.stringify(data),
     });
   },
 
   findById: async (id: string) => {
-    return callBackendAPI(`/api/auth-db/verification/${id}`);
+    return callBackendAPI(`/open-api/auth-db/verification/${id}`);
   },
 
   findByIdentifier: async (identifier: string) => {
-    return callBackendAPI(`/api/auth-db/verification?identifier=${encodeURIComponent(identifier)}`);
+    return callBackendAPI(`/open-api/auth-db/verification?identifier=${encodeURIComponent(identifier)}`);
   },
 
   findByValue: async (value: string) => {
-    return callBackendAPI(`/api/auth-db/verification?value=${encodeURIComponent(value)}`);
+    return callBackendAPI(`/open-api/auth-db/verification?value=${encodeURIComponent(value)}`);
   },
 
   delete: async (id: string) => {
-    return callBackendAPI(`/api/auth-db/verification/${id}`, {
+    return callBackendAPI(`/open-api/auth-db/verification/${id}`, {
       method: 'DELETE',
     });
   },

@@ -16,7 +16,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from app.database import get_db
 
-router = APIRouter(prefix="/api/user-courses", tags=["tasks"])
+router = APIRouter(prefix="/open-api/user-courses", tags=["tasks"])
 Base = declarative_base()
 
 # ==================== 数据模型 ====================

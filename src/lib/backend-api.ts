@@ -69,7 +69,7 @@ export const coursesAPI = {
    * 创建课程
    */
   create: async (userId: string, coursePlan: any, planUrl?: string): Promise<CourseData> => {
-    return callBackendAPI<CourseData>(`/api/user-courses/?user_id=${userId}`, {
+    return callBackendAPI<CourseData>(`/open-api/user-courses/?user_id=${userId}`, {
       method: 'POST',
       body: JSON.stringify({
         user_id: userId,
@@ -83,21 +83,21 @@ export const coursesAPI = {
    * 获取用户的所有课程
    */
   getUserCourses: async (userId: string): Promise<CourseDataCamelCase[]> => {
-    return callBackendAPI<CourseDataCamelCase[]>(`/api/user-courses/user/${userId}`);
+    return callBackendAPI<CourseDataCamelCase[]>(`/open-api/user-courses/user/${userId}`);
   },
 
   /**
    * 获取单个课程
    */
   get: async (courseId: string, userId: string): Promise<CourseData> => {
-    return callBackendAPI<CourseData>(`/api/user-courses/${courseId}?user_id=${userId}`);
+    return callBackendAPI<CourseData>(`/open-api/user-courses/${courseId}?user_id=${userId}`);
   },
 
   /**
    * 更新课程（部分更新）
    */
   update: async (courseId: string, userId: string, updates: any): Promise<CourseData> => {
-    return callBackendAPI<CourseData>(`/api/user-courses/${courseId}?user_id=${userId}`, {
+    return callBackendAPI<CourseData>(`/open-api/user-courses/${courseId}?user_id=${userId}`, {
       method: 'PATCH',
       body: JSON.stringify(updates),
     });
@@ -107,7 +107,7 @@ export const coursesAPI = {
    * 完整更新课程
    */
   updateFull: async (courseId: string, userId: string, coursePlan: any, planUrl?: string): Promise<CourseData> => {
-    return callBackendAPI<CourseData>(`/api/user-courses/${courseId}?user_id=${userId}`, {
+    return callBackendAPI<CourseData>(`/open-api/user-courses/${courseId}?user_id=${userId}`, {
       method: 'PUT',
       body: JSON.stringify({
         user_id: userId,
@@ -121,7 +121,7 @@ export const coursesAPI = {
    * 更新课程进度
    */
   updateProgress: async (courseId: string, userId: string, currentStep: number, status: string): Promise<CourseData> => {
-    return callBackendAPI<CourseData>(`/api/user-courses/${courseId}/progress?user_id=${userId}`, {
+    return callBackendAPI<CourseData>(`/open-api/user-courses/${courseId}/progress?user_id=${userId}`, {
       method: 'PUT',
       body: JSON.stringify({
         current_step: currentStep,
@@ -134,7 +134,7 @@ export const coursesAPI = {
    * 删除课程
    */
   delete: async (courseId: string, userId: string): Promise<void> => {
-    return callBackendAPI<void>(`/api/user-courses/${courseId}?user_id=${userId}`, {
+    return callBackendAPI<void>(`/open-api/user-courses/${courseId}?user_id=${userId}`, {
       method: 'DELETE',
     });
   },
@@ -146,7 +146,7 @@ export const coursesAPI = {
     // slug 应该已经是解码后的值
     // 使用 URL 对象来正确构建 URL，避免双重编码
     // FastAPI 会自动解码路径参数
-    const url = new URL(`${BACKEND_API_URL}/api/public-courses/${encodeURIComponent(slug)}`);
+    const url = new URL(`${BACKEND_API_URL}/open-api/public-courses/${encodeURIComponent(slug)}`);
     return callBackendAPI(url.pathname + url.search);
   },
 };
@@ -203,7 +203,7 @@ export const videoNotesAPI = {
    * 创建或更新笔记
    */
   createOrUpdate: async (userId: string, noteData: any): Promise<VideoNoteCreateOrUpdateResponse> => {
-    return callBackendAPI<VideoNoteCreateOrUpdateResponse>(`/api/video-notes/?user_id=${userId}`, {
+    return callBackendAPI<VideoNoteCreateOrUpdateResponse>(`/open-api/video-notes/?user_id=${userId}`, {
       method: 'POST',
       body: JSON.stringify(noteData),
     });
@@ -221,21 +221,21 @@ export const videoNotesAPI = {
     if (taskId) {
       params.append('task_id', taskId);
     }
-    return callBackendAPI<VideoNotesListResponse>(`/api/video-notes/?${params}`);
+    return callBackendAPI<VideoNotesListResponse>(`/open-api/video-notes/?${params}`);
   },
 
   /**
    * 获取单个笔记
    */
   get: async (noteId: string, userId: string) => {
-    return callBackendAPI(`/api/video-notes/${noteId}?user_id=${userId}`);
+    return callBackendAPI(`/open-api/video-notes/${noteId}?user_id=${userId}`);
   },
 
   /**
    * 更新笔记
    */
   update: async (noteId: string, userId: string, updates: any) => {
-    return callBackendAPI(`/api/video-notes/${noteId}?user_id=${userId}`, {
+    return callBackendAPI(`/open-api/video-notes/${noteId}?user_id=${userId}`, {
       method: 'PATCH',
       body: JSON.stringify(updates),
     });
@@ -245,7 +245,7 @@ export const videoNotesAPI = {
    * 删除笔记
    */
   delete: async (noteId: string, userId: string) => {
-    return callBackendAPI(`/api/video-notes/${noteId}?user_id=${userId}`, {
+    return callBackendAPI(`/open-api/video-notes/${noteId}?user_id=${userId}`, {
       method: 'DELETE',
     });
   },
@@ -259,7 +259,7 @@ export const analyticsAPI = {
    * 记录关键行为
    */
   trackKeyAction: async (event: any) => {
-    return callBackendAPI(`/api/analytics/key-actions`, {
+    return callBackendAPI(`/open-api/analytics/key-actions`, {
       method: 'POST',
       body: JSON.stringify(event),
     });
@@ -275,7 +275,7 @@ export const analyticsAPI = {
     if (excludeUserIds) params.append('excludeUserIds', excludeUserIds);
     
     const queryString = params.toString();
-    return callBackendAPI(`/api/analytics/stats${queryString ? '?' + queryString : ''}`);
+    return callBackendAPI(`/open-api/analytics/stats${queryString ? '?' + queryString : ''}`);
   },
 };
 
@@ -287,14 +287,14 @@ export const tasksAPI = {
    * 获取课程的所有任务
    */
   getCourseTasks: async (courseId: string, userId: string) => {
-    return callBackendAPI(`/api/user-courses/${courseId}/tasks?user_id=${userId}`);
+    return callBackendAPI(`/open-api/user-courses/${courseId}/tasks?user_id=${userId}`);
   },
 
   /**
    * 保存课程任务
    */
   saveTask: async (courseId: string, userId: string, stepNumber: number, taskContent: any) => {
-    return callBackendAPI(`/api/user-courses/${courseId}/tasks?user_id=${userId}`, {
+    return callBackendAPI(`/open-api/user-courses/${courseId}/tasks?user_id=${userId}`, {
       method: 'POST',
       body: JSON.stringify({
         step_number: stepNumber,
@@ -307,7 +307,7 @@ export const tasksAPI = {
    * 批量生成课程的所有任务
    */
   generateTasks: async (courseId: string, userId: string) => {
-    return callBackendAPI(`/api/user-courses/${courseId}/tasks/generate?user_id=${userId}`, {
+    return callBackendAPI(`/open-api/user-courses/${courseId}/tasks/generate?user_id=${userId}`, {
       method: 'POST',
     });
   },
@@ -371,7 +371,7 @@ export const creatorCoursesAPI = {
    * 创建创作者课程映射
    */
   create: async (courseId: string, title: string, description?: string): Promise<CreatorCourseResponse> => {
-    return callBackendAPI<CreatorCourseResponse>(`/api/creator-courses/`, {
+    return callBackendAPI<CreatorCourseResponse>(`/open-api/creator-courses/`, {
       method: 'POST',
       body: JSON.stringify({
         course_id: courseId,
@@ -385,14 +385,14 @@ export const creatorCoursesAPI = {
    * 获取创作者的所有课程
    */
   getCreatorCourses: async (creatorId: string): Promise<CreatorCoursesListResponse> => {
-    return callBackendAPI<CreatorCoursesListResponse>(`/api/creator-courses/?creator_id=${creatorId}`);
+    return callBackendAPI<CreatorCoursesListResponse>(`/open-api/creator-courses/?creator_id=${creatorId}`);
   },
 
   /**
    * 通过 slug 获取创作者课程
    */
   getBySlug: async (slug: string): Promise<CreatorCourseResponse> => {
-    return callBackendAPI<CreatorCourseResponse>(`/api/creator-courses/${slug}`);
+    return callBackendAPI<CreatorCourseResponse>(`/open-api/creator-courses/${slug}`);
   },
 };
 
@@ -407,14 +407,14 @@ export const publicCoursesAPI = {
     const params = new URLSearchParams();
     if (search) params.append('search', search);
     const queryString = params.toString();
-    return callBackendAPI(`/api/public-courses${queryString ? '?' + queryString : ''}`);
+    return callBackendAPI(`/open-api/public-courses${queryString ? '?' + queryString : ''}`);
   },
 
   /**
    * 通过 slug 获取公开课程
    */
   getBySlug: async (slug: string) => {
-    return callBackendAPI(`/api/public-courses/${slug}`);
+    return callBackendAPI(`/open-api/public-courses/${slug}`);
   },
 };
 
@@ -447,7 +447,7 @@ export const paymentAPI = {
    * 创建支付记录
    */
   create: async (paymentData: any): Promise<PaymentData> => {
-    return callBackendAPI<PaymentData>('/api/payment', {
+    return callBackendAPI<PaymentData>('/open-api/payment', {
       method: 'POST',
       body: JSON.stringify(paymentData),
     });
@@ -457,7 +457,7 @@ export const paymentAPI = {
    * 获取支付记录
    */
   get: async (paymentId: string): Promise<PaymentData> => {
-    return callBackendAPI<PaymentData>(`/api/payment/${paymentId}`);
+    return callBackendAPI<PaymentData>(`/open-api/payment/${paymentId}`);
   },
 
   /**
@@ -467,14 +467,14 @@ export const paymentAPI = {
     const params = new URLSearchParams({ user_id: userId });
     if (type) params.append('type', type);
     if (status) params.append('status', status);
-    return callBackendAPI<PaymentData[]>(`/api/payment?${params.toString()}`);
+    return callBackendAPI<PaymentData[]>(`/open-api/payment?${params.toString()}`);
   },
 
   /**
    * 更新支付记录
    */
   update: async (paymentId: string, updates: any): Promise<PaymentData> => {
-    return callBackendAPI<PaymentData>(`/api/payment/${paymentId}`, {
+    return callBackendAPI<PaymentData>(`/open-api/payment/${paymentId}`, {
       method: 'PATCH',
       body: JSON.stringify(updates),
     });
@@ -487,7 +487,7 @@ export const paymentAPI = {
     const params = new URLSearchParams({
       lifetime_plan_ids: lifetimePlanIds.join(','),
     });
-    return callBackendAPI<{ is_lifetime_member: boolean }>(`/api/payment/user/${userId}/lifetime-status?${params.toString()}`);
+    return callBackendAPI<{ is_lifetime_member: boolean }>(`/open-api/payment/user/${userId}/lifetime-status?${params.toString()}`);
   },
 };
 
@@ -537,21 +537,21 @@ export const usersAPI = {
     if (params.search) queryParams.append('search', params.search);
     if (params.sortField) queryParams.append('sort_field', params.sortField);
     if (params.sortDesc !== undefined) queryParams.append('sort_desc', params.sortDesc.toString());
-    return callBackendAPI<UsersListResponse>(`/api/auth-db/users?${queryParams.toString()}`);
+    return callBackendAPI<UsersListResponse>(`/open-api/auth-db/users?${queryParams.toString()}`);
   },
 
   /**
    * 根据 ID 获取用户
    */
   getById: async (userId: string): Promise<UserData> => {
-    return callBackendAPI<UserData>(`/api/auth-db/user/${userId}`);
+    return callBackendAPI<UserData>(`/open-api/auth-db/user/${userId}`);
   },
 
   /**
    * 根据邮箱获取用户
    */
   getByEmail: async (email: string): Promise<UserData | null> => {
-    return callBackendAPI<UserData | null>(`/api/auth-db/user?email=${encodeURIComponent(email)}`);
+    return callBackendAPI<UserData | null>(`/open-api/auth-db/user?email=${encodeURIComponent(email)}`);
   },
 };
 

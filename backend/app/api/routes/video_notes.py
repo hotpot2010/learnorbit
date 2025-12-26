@@ -13,7 +13,7 @@ import uuid
 
 from app.database import get_db
 
-router = APIRouter(prefix="/api/video-notes", tags=["video-notes"])
+router = APIRouter(prefix="/open-api/video-notes", tags=["video-notes"])
 Base = declarative_base()
 
 # ==================== 数据模型 ====================

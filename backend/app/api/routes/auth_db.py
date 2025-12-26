@@ -13,7 +13,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from app.database import get_db
 
-router = APIRouter(prefix="/api/auth-db", tags=["auth-db"])
+router = APIRouter(prefix="/open-api/auth-db", tags=["auth-db"])
 Base = declarative_base()
 
 # ==================== 数据模型 ====================

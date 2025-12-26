@@ -197,7 +197,7 @@ try:
     app.include_router(creator_courses.router, tags=["creator-courses"])
     app.include_router(auth_db.router, tags=["auth-db"])
     app.include_router(payment.router, tags=["payment"])
-    print("✅ 前端数据库操作 API 已启用 (/api/user-courses, /api/video-notes, /api/analytics, /api/public-courses, /api/creator-courses, /api/auth-db, /api/payment)")
+    print("✅ 前端数据库操作 API 已启用 (/open-api/user-courses, /open-api/video-notes, /open-api/analytics, /open-api/public-courses, /open-api/creator-courses, /open-api/auth-db, /open-api/payment)")
 except Exception as e:
     print(f"⚠️ 前端数据库操作 API 模块导入失败: {e}")
     import traceback
