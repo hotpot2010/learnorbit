@@ -38,8 +38,39 @@ async function callBackendAPI<T>(
       if (response.status === 404) {
         return null as T;
       }
-      const error = await response.json().catch(() => ({ detail: 'Unknown error' }));
-      throw new Error(error.detail || `HTTP ${response.status}`);
+      
+      // 尝试解析错误响应
+      let errorMessage = `HTTP ${response.status}`;
+      try {
+        const error = await response.json();
+        
+        // 处理不同的错误格式
+        if (typeof error.detail === 'string') {
+          errorMessage = error.detail;
+        } else if (typeof error.detail === 'object' && error.detail !== null) {
+          // 如果是对象，尝试序列化
+          errorMessage = JSON.stringify(error.detail);
+        } else if (error.message) {
+          errorMessage = error.message;
+        } else if (error.error) {
+          errorMessage = typeof error.error === 'string' ? error.error : JSON.stringify(error.error);
+        } else {
+          errorMessage = JSON.stringify(error);
+        }
+      } catch (parseError) {
+        // 如果无法解析 JSON，尝试读取文本
+        try {
+          const text = await response.text();
+          errorMessage = text || `HTTP ${response.status}`;
+        } catch {
+          errorMessage = `HTTP ${response.status}: Failed to parse error response`;
+        }
+      }
+      
+      const fullError = new Error(errorMessage);
+      (fullError as any).status = response.status;
+      (fullError as any).endpoint = endpoint;
+      throw fullError;
     }
 
     const data = await response.json();

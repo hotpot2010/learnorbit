@@ -161,30 +161,38 @@ async def create_user(
     db: Session = Depends(get_db)
 ):
     """创建用户"""
-    user = User(
-        id=user_data.id,
-        name=user_data.name,
-        email=user_data.email,
-        email_verified=user_data.email_verified,
-        image=user_data.image,
-        role=user_data.role,
-        customer_id=user_data.customer_id
-    )
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-    
-    return {
-        "id": user.id,
-        "name": user.name,
-        "email": user.email,
-        "email_verified": user.email_verified,
-        "image": user.image,
-        "created_at": user.created_at.isoformat() if user.created_at else None,
-        "updated_at": user.updated_at.isoformat() if user.updated_at else None,
-        "role": user.role,
-        "customer_id": user.customer_id,
-    }
+    try:
+        user = User(
+            id=user_data.id,
+            name=user_data.name,
+            email=user_data.email,
+            email_verified=user_data.email_verified,
+            image=user_data.image,
+            role=user_data.role,
+            customer_id=user_data.customer_id
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+        
+        return {
+            "id": user.id,
+            "name": user.name,
+            "email": user.email,
+            "email_verified": user.email_verified,
+            "image": user.image,
+            "created_at": user.created_at.isoformat() if user.created_at else None,
+            "updated_at": user.updated_at.isoformat() if user.updated_at else None,
+            "role": user.role,
+            "customer_id": user.customer_id,
+        }
+    except Exception as e:
+        db.rollback()
+        error_msg = str(e)
+        if "Duplicate entry" in error_msg or "UNIQUE constraint" in error_msg:
+            raise HTTPException(status_code=409, detail=f"User already exists: {error_msg}")
+        else:
+            raise HTTPException(status_code=500, detail=f"Failed to create user: {error_msg}")
 
 
 @router.get("/user/{user_id}")
@@ -371,28 +379,39 @@ async def create_session(
     db: Session = Depends(get_db)
 ):
     """创建会话"""
-    session = Session(
-        id=session_data.id,
-        token=session_data.token,
-        user_id=session_data.user_id,
-        expires_at=session_data.expires_at,
-        ip_address=session_data.ip_address,
-        user_agent=session_data.user_agent
-    )
-    db.add(session)
-    db.commit()
-    db.refresh(session)
-    
-    return {
-        "id": session.id,
-        "token": session.token,
-        "user_id": session.user_id,
-        "expires_at": session.expires_at.isoformat() if session.expires_at else None,
-        "created_at": session.created_at.isoformat() if session.created_at else None,
-        "updated_at": session.updated_at.isoformat() if session.updated_at else None,
-        "ip_address": session.ip_address,
-        "user_agent": session.user_agent,
-    }
+    try:
+        session = Session(
+            id=session_data.id,
+            token=session_data.token,
+            user_id=session_data.user_id,
+            expires_at=session_data.expires_at,
+            ip_address=session_data.ip_address,
+            user_agent=session_data.user_agent
+        )
+        db.add(session)
+        db.commit()
+        db.refresh(session)
+        
+        return {
+            "id": session.id,
+            "token": session.token,
+            "user_id": session.user_id,
+            "expires_at": session.expires_at.isoformat() if session.expires_at else None,
+            "created_at": session.created_at.isoformat() if session.created_at else None,
+            "updated_at": session.updated_at.isoformat() if session.updated_at else None,
+            "ip_address": session.ip_address,
+            "user_agent": session.user_agent,
+        }
+    except Exception as e:
+        db.rollback()
+        error_msg = str(e)
+        # 处理常见的数据库错误
+        if "Duplicate entry" in error_msg or "UNIQUE constraint" in error_msg:
+            raise HTTPException(status_code=409, detail=f"Session already exists: {error_msg}")
+        elif "Foreign key constraint" in error_msg or "FOREIGN KEY" in error_msg:
+            raise HTTPException(status_code=400, detail=f"Invalid user_id: {error_msg}")
+        else:
+            raise HTTPException(status_code=500, detail=f"Failed to create session: {error_msg}")
 
 
 @router.get("/session/{session_id}")
@@ -532,38 +551,48 @@ async def create_account(
     db: Session = Depends(get_db)
 ):
     """创建账户"""
-    account = Account(
-        id=account_data.id,
-        account_id=account_data.account_id,
-        provider_id=account_data.provider_id,
-        user_id=account_data.user_id,
-        access_token=account_data.access_token,
-        refresh_token=account_data.refresh_token,
-        id_token=account_data.id_token,
-        access_token_expires_at=account_data.access_token_expires_at,
-        refresh_token_expires_at=account_data.refresh_token_expires_at,
-        scope=account_data.scope,
-        password=account_data.password
-    )
-    db.add(account)
-    db.commit()
-    db.refresh(account)
-    
-    return {
-        "id": account.id,
-        "account_id": account.account_id,
-        "provider_id": account.provider_id,
-        "user_id": account.user_id,
-        "access_token": account.access_token,
-        "refresh_token": account.refresh_token,
-        "id_token": account.id_token,
-        "access_token_expires_at": account.access_token_expires_at.isoformat() if account.access_token_expires_at else None,
-        "refresh_token_expires_at": account.refresh_token_expires_at.isoformat() if account.refresh_token_expires_at else None,
-        "scope": account.scope,
-        "password": account.password,
-        "created_at": account.created_at.isoformat() if account.created_at else None,
-        "updated_at": account.updated_at.isoformat() if account.updated_at else None,
-    }
+    try:
+        account = Account(
+            id=account_data.id,
+            account_id=account_data.account_id,
+            provider_id=account_data.provider_id,
+            user_id=account_data.user_id,
+            access_token=account_data.access_token,
+            refresh_token=account_data.refresh_token,
+            id_token=account_data.id_token,
+            access_token_expires_at=account_data.access_token_expires_at,
+            refresh_token_expires_at=account_data.refresh_token_expires_at,
+            scope=account_data.scope,
+            password=account_data.password
+        )
+        db.add(account)
+        db.commit()
+        db.refresh(account)
+        
+        return {
+            "id": account.id,
+            "account_id": account.account_id,
+            "provider_id": account.provider_id,
+            "user_id": account.user_id,
+            "access_token": account.access_token,
+            "refresh_token": account.refresh_token,
+            "id_token": account.id_token,
+            "access_token_expires_at": account.access_token_expires_at.isoformat() if account.access_token_expires_at else None,
+            "refresh_token_expires_at": account.refresh_token_expires_at.isoformat() if account.refresh_token_expires_at else None,
+            "scope": account.scope,
+            "password": account.password,
+            "created_at": account.created_at.isoformat() if account.created_at else None,
+            "updated_at": account.updated_at.isoformat() if account.updated_at else None,
+        }
+    except Exception as e:
+        db.rollback()
+        error_msg = str(e)
+        if "Duplicate entry" in error_msg or "UNIQUE constraint" in error_msg:
+            raise HTTPException(status_code=409, detail=f"Account already exists: {error_msg}")
+        elif "Foreign key constraint" in error_msg or "FOREIGN KEY" in error_msg:
+            raise HTTPException(status_code=400, detail=f"Invalid user_id: {error_msg}")
+        else:
+            raise HTTPException(status_code=500, detail=f"Failed to create account: {error_msg}")
 
 
 @router.get("/account/{account_id}")
@@ -735,24 +764,32 @@ async def create_verification(
     db: Session = Depends(get_db)
 ):
     """创建验证"""
-    verification = Verification(
-        id=verification_data.id,
-        identifier=verification_data.identifier,
-        value=verification_data.value,
-        expires_at=verification_data.expires_at
-    )
-    db.add(verification)
-    db.commit()
-    db.refresh(verification)
-    
-    return {
-        "id": verification.id,
-        "identifier": verification.identifier,
-        "value": verification.value,
-        "expires_at": verification.expires_at.isoformat() if verification.expires_at else None,
-        "created_at": verification.created_at.isoformat() if verification.created_at else None,
-        "updated_at": verification.updated_at.isoformat() if verification.updated_at else None,
-    }
+    try:
+        verification = Verification(
+            id=verification_data.id,
+            identifier=verification_data.identifier,
+            value=verification_data.value,
+            expires_at=verification_data.expires_at
+        )
+        db.add(verification)
+        db.commit()
+        db.refresh(verification)
+        
+        return {
+            "id": verification.id,
+            "identifier": verification.identifier,
+            "value": verification.value,
+            "expires_at": verification.expires_at.isoformat() if verification.expires_at else None,
+            "created_at": verification.created_at.isoformat() if verification.created_at else None,
+            "updated_at": verification.updated_at.isoformat() if verification.updated_at else None,
+        }
+    except Exception as e:
+        db.rollback()
+        error_msg = str(e)
+        if "Duplicate entry" in error_msg or "UNIQUE constraint" in error_msg:
+            raise HTTPException(status_code=409, detail=f"Verification already exists: {error_msg}")
+        else:
+            raise HTTPException(status_code=500, detail=f"Failed to create verification: {error_msg}")
 
 
 @router.get("/verification/{verification_id}")
