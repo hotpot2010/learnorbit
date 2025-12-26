@@ -17,10 +17,43 @@ router = APIRouter(prefix="/db-viewer", tags=["db-viewer"])
 async def list_tables():
     """
     列出所有数据库表
+    learnorbit 相关表按创建时间排序，新的在前面
     """
     try:
         inspector = inspect(engine)
-        tables = inspector.get_table_names()
+        all_tables = inspector.get_table_names()
+        
+        # 分离 learnorbit 表和其他表
+        learnorbit_tables = [t for t in all_tables if t.startswith('learnorbit_')]
+        other_tables = [t for t in all_tables if not t.startswith('learnorbit_')]
+        
+        # 对 learnorbit 表按创建时间排序（新的在前面）
+        if learnorbit_tables:
+            with get_db_session() as db:
+                # 查询表的创建时间
+                sorted_learnorbit = []
+                for table_name in learnorbit_tables:
+                    try:
+                        # 查询 information_schema 获取表创建时间
+                        result = db.execute(text(f"""
+                            SELECT CREATE_TIME 
+                            FROM information_schema.TABLES 
+                            WHERE TABLE_SCHEMA = DATABASE() 
+                            AND TABLE_NAME = '{table_name}'
+                        """))
+                        create_time = result.scalar()
+                        sorted_learnorbit.append((table_name, create_time))
+                    except Exception as e:
+                        print(f"⚠️ 获取表 {table_name} 创建时间失败: {e}")
+                        sorted_learnorbit.append((table_name, None))
+                
+                # 按创建时间降序排序（新的在前面）
+                sorted_learnorbit.sort(key=lambda x: x[1] if x[1] else datetime.min, reverse=True)
+                learnorbit_tables = [t[0] for t in sorted_learnorbit]
+        
+        # 合并列表：learnorbit 表在前，其他表在后
+        tables = learnorbit_tables + other_tables
+        
         return {
             "success": True,
             "tables": tables
@@ -140,20 +173,34 @@ async def get_table_data(
                         order_desc = ':desc' in order_by.lower()
                         order_clause = f" ORDER BY `{order_field}` {'DESC' if order_desc else 'ASC'}"
                     else:
-                        # 默认按主键或第一个字段排序
-                        primary_keys = inspector.get_primary_keys(table_name)
-                        if primary_keys:
-                            order_clause = f" ORDER BY `{primary_keys[0]}` DESC"
-                        else:
+                        # 对于 learnorbit 表，优先按时间字段排序（新的在前面）
+                        if table_name.startswith('learnorbit_'):
                             columns = inspector.get_columns(table_name)
-                            if columns:
-                                # 尝试找到一个可以排序的字段（排除 BLOB、TEXT、JSON 等）
-                                sortable_types = ['INT', 'BIGINT', 'VARCHAR', 'CHAR', 'DATETIME', 'TIMESTAMP', 'DATE', 'TIME', 'DECIMAL', 'FLOAT', 'DOUBLE']
+                            # 优先查找 updated_at，其次 created_at
+                            time_fields = ['updated_at', 'created_at', 'updatedAt', 'createdAt']
+                            for time_field in time_fields:
                                 for col in columns:
-                                    col_type = str(col['type']).upper()
-                                    if any(st in col_type for st in sortable_types):
+                                    if col['name'].lower() == time_field.lower():
                                         order_clause = f" ORDER BY `{col['name']}` DESC"
                                         break
+                                if order_clause:
+                                    break
+                        
+                        # 如果没有找到时间字段，使用默认排序
+                        if not order_clause:
+                            primary_keys = inspector.get_primary_keys(table_name)
+                            if primary_keys:
+                                order_clause = f" ORDER BY `{primary_keys[0]}` DESC"
+                            else:
+                                columns = inspector.get_columns(table_name)
+                                if columns:
+                                    # 尝试找到一个可以排序的字段（排除 BLOB、TEXT、JSON 等）
+                                    sortable_types = ['INT', 'BIGINT', 'VARCHAR', 'CHAR', 'DATETIME', 'TIMESTAMP', 'DATE', 'TIME', 'DECIMAL', 'FLOAT', 'DOUBLE']
+                                    for col in columns:
+                                        col_type = str(col['type']).upper()
+                                        if any(st in col_type for st in sortable_types):
+                                            order_clause = f" ORDER BY `{col['name']}` DESC"
+                                            break
                 except Exception as e:
                     print(f"⚠️ 构建排序子句失败: {e}，将不排序")
                     order_clause = ""

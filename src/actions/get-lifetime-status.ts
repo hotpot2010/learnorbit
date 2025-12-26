@@ -1,11 +1,9 @@
 'use server';
 
-import { getDb } from '@/db';
-import { payment } from '@/db/schema';
 import { findPlanByPriceId, getAllPricePlans } from '@/lib/price-plan';
 import { getSession } from '@/lib/server';
 import { PaymentTypes } from '@/payment/types';
-import { and, eq } from 'drizzle-orm';
+import backendAPI from '@/lib/backend-api';
 import { createSafeActionClient } from 'next-safe-action';
 import { z } from 'zod';
 
@@ -68,25 +66,15 @@ export const getLifetimeStatusAction = actionClient
         };
       }
 
-      // Query the database for one-time payments with lifetime plans
-      const db = await getDb();
-      const result = await db
-        .select({
-          id: payment.id,
-          priceId: payment.priceId,
-          type: payment.type,
-        })
-        .from(payment)
-        .where(
-          and(
-            eq(payment.userId, userId),
-            eq(payment.type, PaymentTypes.ONE_TIME),
-            eq(payment.status, 'completed')
-          )
-        );
+      // 通过 Backend API 查询用户的一次性支付记录
+      const payments = await backendAPI.payment.getByUserId(
+        userId,
+        PaymentTypes.ONE_TIME,
+        'completed'
+      );
 
       // Check if any payment has a lifetime plan
-      const hasLifetimePayment = result.some((paymentRecord) => {
+      const hasLifetimePayment = payments.some((paymentRecord) => {
         const plan = findPlanByPriceId(paymentRecord.priceId);
         return plan && lifetimePlanIds.includes(plan.id);
       });

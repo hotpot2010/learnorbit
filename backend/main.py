@@ -185,6 +185,24 @@ if OFFLINE_VIDEO_ROUTES_AVAILABLE:
 else:
     print("⚠️ 离线视频处理功能不可用")
 
+# 添加前端数据库操作 API（访问公司 MySQL）
+try:
+    from app.api.routes import courses, video_notes, analytics, public_courses, public_courses_list, tasks, creator_courses, auth_db, payment
+    app.include_router(courses.router, tags=["courses"])
+    app.include_router(video_notes.router, tags=["video-notes"])
+    app.include_router(analytics.router, tags=["analytics"])
+    app.include_router(public_courses.router, tags=["public-courses"])
+    app.include_router(public_courses_list.router, tags=["public-courses"])
+    app.include_router(tasks.router, tags=["tasks"])
+    app.include_router(creator_courses.router, tags=["creator-courses"])
+    app.include_router(auth_db.router, tags=["auth-db"])
+    app.include_router(payment.router, tags=["payment"])
+    print("✅ 前端数据库操作 API 已启用 (/api/user-courses, /api/video-notes, /api/analytics, /api/public-courses, /api/creator-courses, /api/auth-db, /api/payment)")
+except Exception as e:
+    print(f"⚠️ 前端数据库操作 API 模块导入失败: {e}")
+    import traceback
+    traceback.print_exc()
+
 # 自定义OpenAPI规范
 def custom_openapi():
     if app.openapi_schema:

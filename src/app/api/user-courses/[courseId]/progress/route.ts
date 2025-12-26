@@ -1,9 +1,7 @@
-import { getDb } from '@/db';
-import { userCourses } from '@/db/schema';
 import { auth } from '@/lib/auth';
-import { and, eq } from 'drizzle-orm';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import backendAPI from '@/lib/backend-api';
 
 // 更新课程进度
 export async function PUT(
@@ -25,21 +23,8 @@ export async function PUT(
     const courseId = resolvedParams.courseId;
     const { currentStep, status } = await request.json();
 
-    // 更新课程进度
-    const db = await getDb();
-    const [updatedCourse] = await db
-      .update(userCourses)
-      .set({
-        currentStep: currentStep,
-        status: status,
-        updatedAt: new Date(),
-      })
-      .where(and(eq(userCourses.id, courseId), eq(userCourses.userId, userId)))
-      .returning();
-
-    if (!updatedCourse) {
-      return NextResponse.json({ error: 'Course not found' }, { status: 404 });
-    }
+    // 通过 Backend API 更新课程进度
+    const updatedCourse = await backendAPI.courses.updateProgress(courseId, userId, currentStep, status);
 
     return NextResponse.json({ course: updatedCourse }, { status: 200 });
   } catch (error) {
@@ -70,16 +55,8 @@ export async function GET(
     const resolvedParams = await params;
     const courseId = resolvedParams.courseId;
 
-    // 获取课程信息
-    const db = await getDb();
-    const [course] = await db
-      .select()
-      .from(userCourses)
-      .where(and(eq(userCourses.id, courseId), eq(userCourses.userId, userId)));
-
-    if (!course) {
-      return NextResponse.json({ error: 'Course not found' }, { status: 404 });
-    }
+    // 通过 Backend API 获取课程信息
+    const course = await backendAPI.courses.get(courseId, userId);
 
     return NextResponse.json({ course }, { status: 200 });
   } catch (error) {

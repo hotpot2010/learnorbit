@@ -1,10 +1,6 @@
-import { getDb } from '@/db';
-import { creatorCourses, userCourses, user } from '@/db/schema';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { eq, and } from 'drizzle-orm';
-import { isCreatorEmail, generateCourseSlug } from '@/lib/creator-utils';
-import { downloadJsonFromCDN } from '@/lib/cdn-utils';
+import backendAPI from '@/lib/backend-api';
 
 // 创建创作者课程映射
 export async function POST(request: NextRequest) {
@@ -15,91 +11,12 @@ export async function POST(request: NextRequest) {
 			return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
 		}
 
-		const db = await getDb();
+		// 通过 Backend API 创建创作者课程映射
+		const result = await backendAPI.creatorCourses.create(courseId, title, description);
 
-		// 获取课程信息和创作者信息
-		const courseData = await db
-			.select({
-				courseId: userCourses.id,
-				userId: userCourses.userId,
-				coursePlan: userCourses.coursePlan,
-				planUrl: userCourses.planUrl,
-				userName: user.name,
-				userEmail: user.email,
-			})
-			.from(userCourses)
-			.innerJoin(user, eq(userCourses.userId, user.id))
-			.where(eq(userCourses.id, courseId))
-			.limit(1);
+		console.log('✅ Created creator course mapping:', result);
 
-		if (!courseData.length) {
-			return NextResponse.json({ error: 'Course not found' }, { status: 404 });
-		}
-
-		const course = courseData[0];
-
-		// 检查是否为创作者
-		const isCreatorAccount = isCreatorEmail(course.userEmail || '');
-		if (!isCreatorAccount) {
-			return NextResponse.json({ error: 'Only creators can create clean URLs' }, { status: 403 });
-		}
-
-		// 检查课程是否已公开（需要从 CDN 或数据库检查 isPublic）
-		let coursePlanData: any = course.coursePlan;
-		if (course.planUrl) {
-			try {
-				coursePlanData = await downloadJsonFromCDN(course.planUrl);
-			} catch (error) {
-				console.error(`❌ 从 CDN 下载课程 ${courseId} 的 coursePlan 失败:`, error);
-				// 如果下载失败，使用数据库数据
-				coursePlanData = course.coursePlan;
-			}
-		}
-		
-		const isPublic = coursePlanData?.isPublic === true;
-		if (!isPublic) {
-			return NextResponse.json({ error: 'Course must be public' }, { status: 400 });
-		}
-
-		// 生成简洁slug
-		const slug = generateCourseSlug(title, course.userId, true);
-
-		// 检查slug是否已存在
-		const existing = await db
-			.select()
-			.from(creatorCourses)
-			.where(eq(creatorCourses.slug, slug))
-			.limit(1);
-
-		if (existing.length > 0) {
-			return NextResponse.json({ error: 'URL slug already exists' }, { status: 409 });
-		}
-
-		// 创建创作者课程映射
-		const newCreatorCourse = await db
-			.insert(creatorCourses)
-			.values({
-				slug,
-				courseId,
-				creatorId: course.userId,
-				title,
-				description: description || '',
-				isActive: true,
-			})
-			.returning();
-
-		console.log('✅ Created creator course mapping:', {
-			slug,
-			courseId,
-			creatorId: course.userId,
-			title
-		});
-
-		return NextResponse.json({
-			success: true,
-			creatorCourse: newCreatorCourse[0],
-			url: `/study/${slug}`
-		});
+		return NextResponse.json(result);
 
 	} catch (error) {
 		console.error('❌ Creator course creation error:', error);
@@ -117,21 +34,10 @@ export async function GET(request: NextRequest) {
 			return NextResponse.json({ error: 'Missing creatorId' }, { status: 400 });
 		}
 
-		const db = await getDb();
+		// 通过 Backend API 获取创作者的所有课程
+		const result = await backendAPI.creatorCourses.getCreatorCourses(creatorId);
 
-		const creatorCourseList = await db
-			.select()
-			.from(creatorCourses)
-			.where(and(
-				eq(creatorCourses.creatorId, creatorId),
-				eq(creatorCourses.isActive, true)
-			))
-			.orderBy(creatorCourses.createdAt);
-
-		return NextResponse.json({
-			success: true,
-			courses: creatorCourseList
-		});
+		return NextResponse.json(result);
 
 	} catch (error) {
 		console.error('❌ Get creator courses error:', error);

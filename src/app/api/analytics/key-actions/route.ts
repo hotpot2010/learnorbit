@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/db';
-import { keyActions } from '@/db/schema';
 import type { KeyActionEvent } from '@/lib/key-actions-analytics';
+import backendAPI from '@/lib/backend-api';
 
 export async function POST(request: NextRequest) {
   try {
@@ -40,8 +39,8 @@ export async function POST(request: NextRequest) {
       action_data: event.action_data
     });
     
-    // 存储到数据库
-    await storeKeyActionToDatabase(event);
+    // 通过 Backend API 存储到数据库
+    await backendAPI.analytics.trackKeyAction(event);
     
     return NextResponse.json({ success: true });
     
@@ -54,37 +53,3 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function storeKeyActionToDatabase(event: KeyActionEvent) {
-  try {
-    const db = await getDb();
-    
-    const eventData = {
-      id: `key_action_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      eventName: event.event_name,
-      timestamp: event.timestamp,
-      sessionId: event.session_id,
-      userId: event.user_id,
-      locale: event.locale,
-      deviceType: event.device_type,
-      userAgent: event.user_agent,
-      pagePath: event.page_path,
-      pageTitle: event.page_title,
-      actionData: event.action_data,
-    };
-    
-    await db.insert(keyActions).values(eventData);
-    
-    console.log(`✅ 关键行为事件已入库: ${event.event_name}`, {
-      id: eventData.id,
-      user_id: event.user_id,
-      event_name: event.event_name,
-      page_path: event.page_path,
-      action_data: event.action_data,
-      timestamp: new Date(event.timestamp).toISOString()
-    });
-    
-  } catch (error) {
-    console.error('❌ 数据库存储失败:', error);
-    throw error;
-  }
-}

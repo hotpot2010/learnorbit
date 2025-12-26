@@ -1,9 +1,7 @@
-import { getDb } from '@/db';
-import { userCourses } from '@/db/schema';
 import { auth } from '@/lib/auth';
-import { desc, eq } from 'drizzle-orm';
 import { type NextRequest, NextResponse } from 'next/server';
 import { uploadJsonToCDN, downloadJsonFromCDN } from '@/lib/cdn-utils';
+import backendAPI from '@/lib/backend-api';
 
 // 创建新课程
 export async function POST(request: NextRequest) {
@@ -127,18 +125,13 @@ export async function POST(request: NextRequest) {
     
     console.log('✅ 整个 coursePlan 已上传到 CDN:', planUrl);
 
-    // 保存课程信息到数据库（coursePlan 字段设为空对象，因为数据已存储在 CDN）
-    const db = await getDb();
-    const [newCourse] = await db
-      .insert(userCourses)
-      .values({
-        userId: userId,
-        planUrl: planUrl, // 存储 CDN URL
-        coursePlan: {}, // 不再存储 coursePlan，所有数据都在 CDN
-        currentStep: 0,
-        status: 'in-progress',
-      })
-      .returning();
+    // 保存课程信息到数据库（通过 Backend API）
+    // coursePlan 字段设为空对象，因为数据已存储在 CDN
+    const newCourse = await backendAPI.courses.create(
+      userId,
+      {}, // coursePlan 为空，数据在 CDN
+      planUrl // 存储 CDN URL
+    );
 
     console.log('✅ 课程保存成功:', { courseId: newCourse.id });
 
@@ -169,15 +162,11 @@ export async function GET(request: NextRequest) {
 
     const userId = session.user.id;
 
-    // 从数据库获取用户课程
-    const db = await getDb();
-    const courses = await db
-      .select()
-      .from(userCourses)
-      .where(eq(userCourses.userId, userId))
-      .orderBy(desc(userCourses.createdAt));
+    // 从 Backend API 获取用户课程
+    const courses = await backendAPI.courses.getUserCourses(userId);
 
     // 为每个有 planUrl 的课程下载完整的 coursePlan 数据
+    // Backend API getUserCourses 返回的是 camelCase 格式
     const enrichedCourses = await Promise.all(
       courses.map(async (course) => {
         if (course.planUrl) {

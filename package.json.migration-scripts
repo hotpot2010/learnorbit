@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "db:migrate:mysql": "mysql -u $MYSQL_USER -p$MYSQL_PASSWORD -h $MYSQL_HOST $MYSQL_DATABASE < migrations/mysql/001_initial_schema.sql",
+    "db:export:supabase": "npx tsx scripts/export-supabase-data.ts",
+    "db:import:mysql": "npx tsx scripts/migrate-to-mysql.ts",
+    "db:switch:mysql": "./scripts/switch-database.sh mysql",
+    "db:switch:postgres": "./scripts/switch-database.sh postgres",
+    "db:health": "npx tsx scripts/check-db-health.ts"
+  }
+}
+
+

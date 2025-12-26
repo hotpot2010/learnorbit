@@ -1,10 +1,8 @@
-import { getDb } from '@/db';
-import { userCourses } from '@/db/schema';
 import { auth } from '@/lib/auth';
-import { and, eq } from 'drizzle-orm';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { uploadJsonToCDN, downloadJsonFromCDN } from '@/lib/cdn-utils';
+import backendAPI from '@/lib/backend-api';
 
 // 重试函数
 async function withRetry<T>(
@@ -102,16 +100,8 @@ export async function GET(
     console.log(`📊 查询课程: ${courseId} for user: ${userId}`);
 
     try {
-      // 使用重试机制从数据库获取课程
-      const course = await withRetry(async () => {
-        const db = await getDb();
-        const [result] = await db
-          .select()
-          .from(userCourses)
-          .where(and(eq(userCourses.id, courseId), eq(userCourses.userId, userId)))
-          .limit(1);
-        return result;
-      });
+      // 通过 Backend API 获取课程
+      const course = await backendAPI.courses.get(courseId, userId);
 
       if (!course) {
         console.log('❌ 课程未找到');
@@ -119,10 +109,11 @@ export async function GET(
       }
 
       // 如果有 planUrl，从 CDN 下载完整的 coursePlan 数据
-      if (course.planUrl) {
+      // Backend API 返回的是 snake_case，所以使用 plan_url
+      if (course.plan_url) {
         try {
-          console.log('📥 从 CDN 下载完整的 coursePlan:', course.planUrl);
-          const coursePlanData = await downloadJsonFromCDN(course.planUrl);
+          console.log('📥 从 CDN 下载完整的 coursePlan:', course.plan_url);
+          const coursePlanData = await downloadJsonFromCDN(course.plan_url);
           
           // 直接使用下载的完整 coursePlan 数据替换
           const enrichedCourse = {
@@ -196,19 +187,8 @@ export async function DELETE(
     const courseId = resolvedParams.courseId;
 
     try {
-      // 使用重试机制删除课程
-      const deletedCourse = await withRetry(async () => {
-        const db = await getDb();
-        const [result] = await db
-          .delete(userCourses)
-          .where(and(eq(userCourses.id, courseId), eq(userCourses.userId, userId)))
-          .returning();
-        return result;
-      });
-
-      if (!deletedCourse) {
-        return NextResponse.json({ error: 'Course not found' }, { status: 404 });
-      }
+      // 通过 Backend API 删除课程
+      await backendAPI.courses.delete(courseId, userId);
 
       return NextResponse.json(
         { message: 'Course deleted successfully' },
@@ -303,20 +283,6 @@ export async function PUT(
       };
     }
 
-    // 更新课程信息到数据库
-    const db = await getDb();
-    
-    // 先检查课程是否存在且属于当前用户
-    const [existingCourse] = await db
-      .select()
-      .from(userCourses)
-      .where(and(eq(userCourses.id, courseId), eq(userCourses.userId, userId)))
-      .limit(1);
-
-    if (!existingCourse) {
-      return NextResponse.json({ error: 'Course not found' }, { status: 404 });
-    }
-
     // 构建完整的 coursePlan 对象（包含 plan、tasks、notes、marks）
     const fullCoursePlan = {
       plan: planDataForDb,
@@ -332,16 +298,13 @@ export async function PUT(
     
     console.log('✅ 整个 coursePlan 已上传到 CDN:', planUrl);
 
-    // 更新课程（coursePlan 字段设为空对象，因为数据已存储在 CDN）
-    const [updatedCourse] = await db
-      .update(userCourses)
-      .set({
-        planUrl: planUrl, // 更新 CDN URL
-        coursePlan: {}, // 不再存储 coursePlan，所有数据都在 CDN
-        updatedAt: new Date(),
-      })
-      .where(and(eq(userCourses.id, courseId), eq(userCourses.userId, userId)))
-      .returning();
+    // 通过 Backend API 更新课程（coursePlan 字段设为空对象，因为数据已存储在 CDN）
+    const updatedCourse = await backendAPI.courses.updateFull(
+      courseId,
+      userId,
+      {}, // coursePlan 为空，数据在 CDN
+      planUrl // 更新 CDN URL
+    );
 
     console.log('✅ 课程更新成功:', { courseId: updatedCourse.id });
 
@@ -373,28 +336,37 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 		const newTitle = typeof body?.title === 'string' ? body.title : undefined;
 		const newDescription = typeof body?.description === 'string' ? body.description : undefined;
 
-		const db = await getDb();
-		const rows = await db.select().from(userCourses).where(eq(userCourses.id, courseId));
-		if (!rows.length) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-		const course = rows[0];
-		if (course.userId !== userId) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+		// 通过 Backend API 获取课程
+		const course = await backendAPI.courses.get(courseId, userId);
+		
+		// 兼容字段名（Backend 返回的是 snake_case，前端需要 camelCase）
+		const courseWithCamelCase = {
+			...course,
+			planUrl: course.plan_url,
+			coursePlan: course.course_plan,
+			currentStep: course.current_step,
+			tasksGenerated: course.tasks_generated,
+			createdAt: course.created_at,
+			updatedAt: course.updated_at,
+			userId: course.user_id,
+		};
 
 		// 如果需要更新 title 或 description，需要从 CDN 下载完整的 coursePlan，更新后重新上传
 		if (newTitle || newDescription) {
 			let coursePlanData: any;
 			
 			// 如果有 planUrl，从 CDN 下载完整的 coursePlan
-			if (course.planUrl) {
+			if (courseWithCamelCase.planUrl) {
 				try {
-					coursePlanData = await downloadJsonFromCDN(course.planUrl);
+					coursePlanData = await downloadJsonFromCDN(courseWithCamelCase.planUrl);
 				} catch (error) {
 					console.error('❌ 从 CDN 下载 coursePlan 失败:', error);
 					// 如果下载失败，尝试从 coursePlan 获取（兼容旧数据）
-					coursePlanData = course.coursePlan as any;
+					coursePlanData = courseWithCamelCase.coursePlan as any;
 				}
 			} else {
 				// 没有 planUrl，从 coursePlan 获取（兼容旧数据）
-				coursePlanData = course.coursePlan as any;
+				coursePlanData = courseWithCamelCase.coursePlan as any;
 			}
 			
 			// 更新 plan 数据中的 title 和 description
@@ -429,11 +401,11 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 			const filename = `course_plan_${courseId}_${Date.now()}_${Math.random().toString(36).substring(7)}.json`;
 			const planUrl = await uploadJsonToCDN(jsonContent, filename);
 			
-			// 更新数据库
-			await db.update(userCourses).set({ 
-				planUrl: planUrl,
-				coursePlan: {} // 不再存储 coursePlan，所有数据都在 CDN
-			}).where(eq(userCourses.id, courseId));
+			// 通过 Backend API 更新课程
+			await backendAPI.courses.update(courseId, userId, {
+				plan_url: planUrl,
+				course_plan: {} // 不再存储 coursePlan，所有数据都在 CDN
+			});
 
 			// 返回更新后的值
 			return NextResponse.json({ 
@@ -446,15 +418,15 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 			// 只更新 isPublic，需要从 CDN 下载完整的 coursePlan，更新后重新上传
 			let coursePlanData: any;
 			
-			if (course.planUrl) {
+			if (courseWithCamelCase.planUrl) {
 				try {
-					coursePlanData = await downloadJsonFromCDN(course.planUrl);
+					coursePlanData = await downloadJsonFromCDN(courseWithCamelCase.planUrl);
 				} catch (error) {
 					console.error('❌ 从 CDN 下载 coursePlan 失败:', error);
-					coursePlanData = course.coursePlan as any;
+					coursePlanData = courseWithCamelCase.coursePlan as any;
 				}
 			} else {
-				coursePlanData = course.coursePlan as any;
+				coursePlanData = courseWithCamelCase.coursePlan as any;
 			}
 			
 			coursePlanData.isPublic = isPublic;
@@ -464,11 +436,11 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
 			const filename = `course_plan_${courseId}_${Date.now()}_${Math.random().toString(36).substring(7)}.json`;
 			const planUrl = await uploadJsonToCDN(jsonContent, filename);
 			
-			// 更新数据库
-			await db.update(userCourses).set({ 
-				planUrl: planUrl,
-				coursePlan: {} // 不再存储 coursePlan，所有数据都在 CDN
-			}).where(eq(userCourses.id, courseId));
+			// 通过 Backend API 更新课程
+			await backendAPI.courses.update(courseId, userId, {
+				plan_url: planUrl,
+				course_plan: {} // 不再存储 coursePlan，所有数据都在 CDN
+			});
 
 			// 返回更新后的值
 			return NextResponse.json({ 

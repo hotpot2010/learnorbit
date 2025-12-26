@@ -1,11 +1,9 @@
 import { websiteConfig } from '@/config/website';
-import { getDb } from '@/db/index';
 import { defaultMessages } from '@/i18n/messages';
 import { LOCALE_COOKIE_NAME, routing } from '@/i18n/routing';
 import { sendEmail } from '@/mail';
 import { subscribe } from '@/newsletter';
 import { betterAuth } from 'better-auth';
-import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin } from 'better-auth/plugins';
 import { parse as parseCookies } from 'cookie';
 import type { Locale } from 'next-intl';
@@ -14,6 +12,20 @@ import { getUrlWithLocaleInCallbackUrl } from './urls/urls';
 
 // 记录环境信息用于调试
 logEnvironmentInfo();
+
+// 使用自定义适配器，通过 Backend API 访问数据库
+// 这样就不需要直接访问数据库了
+import { createBackendAPIAdapter } from './auth-adapter';
+
+// 检查 Backend API URL 是否配置
+const backendApiUrl = process.env.NEXT_PUBLIC_API_URL || process.env.EXTERNAL_API_URL || 'http://localhost:8000';
+console.log('✅ Using Backend API adapter for authentication');
+console.log(`📍 Backend API URL: ${backendApiUrl}`);
+
+// 创建适配器工厂函数
+// createBackendAPIAdapter() 返回一个函数，该函数接收 BetterAuthOptions 并返回 Adapter
+const adapterFactory = createBackendAPIAdapter();
+console.log('✅ Backend API adapter factory created successfully');
 
 /**
  * Better Auth configuration
@@ -30,9 +42,7 @@ export const auth = betterAuth({
     "http://localhost:3000",
     "https://www.aitutorly.ai",
   ],
-  database: drizzleAdapter(await getDb(), {
-    provider: 'pg', // or "mysql", "sqlite"
-  }),
+  database: adapterFactory,
   session: {
     // https://www.better-auth.com/docs/concepts/session-management#cookie-cache
     cookieCache: {

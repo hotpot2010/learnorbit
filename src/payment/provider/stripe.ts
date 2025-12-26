@@ -1,13 +1,14 @@
 import { randomUUID } from 'crypto';
-import { getDb } from '@/db';
-import { payment, session, user } from '@/db/schema';
+// Database imports removed - payment functionality temporarily disabled
+// import { getDb } from '@/db';
+// import { payment, session, user } from '@/db/schema';
 import {
   findPlanByPlanId,
   findPlanByPriceId,
   findPriceInPlan,
 } from '@/lib/price-plan';
 import { sendNotification } from '@/notification/notification';
-import { desc, eq } from 'drizzle-orm';
+// import { desc, eq } from 'drizzle-orm';
 import { Stripe } from 'stripe';
 import {
   type CheckoutResult,
@@ -107,61 +108,57 @@ export class StripeProvider implements PaymentProvider {
    * @param customerId Stripe customer ID
    * @param email Customer email
    * @returns Promise that resolves when the update is complete
+   * 
+   * NOTE: Database operations disabled - payment functionality temporarily disabled
    */
   private async updateUserWithCustomerId(
     customerId: string,
     email: string
   ): Promise<void> {
-    try {
-      // Update user record with customer ID if email matches
-      const db = await getDb();
-      const result = await db
-        .update(user)
-        .set({
-          customerId: customerId,
-          updatedAt: new Date(),
-        })
-        .where(eq(user.email, email))
-        .returning({ id: user.id });
-
-      if (result.length > 0) {
-        console.log(`Updated user ${email} with customer ID ${customerId}`);
-      } else {
-        console.log(`No user found with email ${email}`);
-      }
-    } catch (error) {
-      console.error('Update user with customer ID error:', error);
-      throw new Error('Failed to update user with customer ID');
-    }
+    // Database operation disabled
+    console.warn(`⚠️ Payment functionality disabled: Cannot update user ${email} with customer ID ${customerId}`);
+    // try {
+    //   const db = await getDb();
+    //   const result = await db
+    //     .update(user)
+    //     .set({
+    //       customerId: customerId,
+    //       updatedAt: new Date(),
+    //     })
+    //     .where(eq(user.email, email))
+    //     .returning({ id: user.id });
+    //   // ... rest of the code
+    // } catch (error) {
+    //   console.error('Update user with customer ID error:', error);
+    //   throw new Error('Failed to update user with customer ID');
+    // }
   }
 
   /**
    * Finds a user by customerId
    * @param customerId Stripe customer ID
    * @returns User ID or undefined if not found
+   * 
+   * NOTE: Database operations disabled - payment functionality temporarily disabled
    */
   private async findUserIdByCustomerId(
     customerId: string
   ): Promise<string | undefined> {
-    try {
-      // Query the user table for a matching customerId
-      const db = await getDb();
-      const result = await db
-        .select({ id: user.id })
-        .from(user)
-        .where(eq(user.customerId, customerId))
-        .limit(1);
-
-      if (result.length > 0) {
-        return result[0].id;
-      }
-      console.warn(`No user found with customerId ${customerId}`);
-
-      return undefined;
-    } catch (error) {
-      console.error('Find user by customer ID error:', error);
-      return undefined;
-    }
+    // Database operation disabled
+    console.warn(`⚠️ Payment functionality disabled: Cannot find user by customerId ${customerId}`);
+    return undefined;
+    // try {
+    //   const db = await getDb();
+    //   const result = await db
+    //     .select({ id: user.id })
+    //     .from(user)
+    //     .where(eq(user.customerId, customerId))
+    //     .limit(1);
+    //   // ... rest of the code
+    // } catch (error) {
+    //   console.error('Find user by customer ID error:', error);
+    //   return undefined;
+    // }
   }
 
   /**
@@ -320,29 +317,18 @@ export class StripeProvider implements PaymentProvider {
     const { userId } = params;
 
     try {
-      // Build query to fetch subscriptions from database
-      const db = await getDb();
-      const subscriptions = await db
-        .select()
-        .from(payment)
-        .where(eq(payment.userId, userId))
-        .orderBy(desc(payment.createdAt)); // Sort by creation date, newest first
-
-      // Map database records to our subscription model
-      return subscriptions.map((subscription) => ({
-        id: subscription.subscriptionId || '',
-        customerId: subscription.customerId,
-        priceId: subscription.priceId,
-        status: subscription.status as PaymentStatus,
-        type: subscription.type as PaymentTypes,
-        interval: subscription.interval as PlanInterval,
-        currentPeriodStart: subscription.periodStart || undefined,
-        currentPeriodEnd: subscription.periodEnd || undefined,
-        cancelAtPeriodEnd: subscription.cancelAtPeriodEnd || false,
-        trialStartDate: subscription.trialStart || undefined,
-        trialEndDate: subscription.trialEnd || undefined,
-        createdAt: subscription.createdAt,
-      }));
+      // Database operation disabled - payment functionality temporarily disabled
+      console.warn(`⚠️ Payment functionality disabled: Cannot get subscriptions for user ${userId}`);
+      return [];
+      // const db = await getDb();
+      // const subscriptions = await db
+      //   .select()
+      //   .from(payment)
+      //   .where(eq(payment.userId, userId))
+      //   .orderBy(desc(payment.createdAt));
+      // return subscriptions.map((subscription) => ({
+      //   // ... mapping code
+      // }));
     } catch (error) {
       console.error('List customer subscriptions error:', error);
       return [];
@@ -463,21 +449,16 @@ export class StripeProvider implements PaymentProvider {
       updatedAt: new Date(),
     };
 
-    const db = await getDb();
-    const result = await db
-      .insert(payment)
-      .values(createFields)
-      .returning({ id: payment.id });
-
-    if (result.length > 0) {
-      console.log(
-        `<< Created new payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`
-      );
-    } else {
-      console.warn(
-        `<< No payment record created for Stripe subscription ${stripeSubscription.id}`
-      );
-    }
+    // Database operation disabled - payment functionality temporarily disabled
+    console.warn(`⚠️ Payment functionality disabled: Cannot create payment record for subscription ${stripeSubscription.id}`);
+    // const db = await getDb();
+    // const result = await db
+    //   .insert(payment)
+    //   .values(createFields)
+    //   .returning({ id: payment.id });
+    // if (result.length > 0) {
+    //   console.log(`<< Created new payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
+    // }
   }
 
   /**
@@ -523,22 +504,17 @@ export class StripeProvider implements PaymentProvider {
       updatedAt: new Date(),
     };
 
-    const db = await getDb();
-    const result = await db
-      .update(payment)
-      .set(updateFields)
-      .where(eq(payment.subscriptionId, stripeSubscription.id))
-      .returning({ id: payment.id });
-
-    if (result.length > 0) {
-      console.log(
-        `<< Updated payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`
-      );
-    } else {
-      console.warn(
-        `<< No payment record found for Stripe subscription ${stripeSubscription.id}`
-      );
-    }
+    // Database operation disabled - payment functionality temporarily disabled
+    console.warn(`⚠️ Payment functionality disabled: Cannot update payment record for subscription ${stripeSubscription.id}`);
+    // const db = await getDb();
+    // const result = await db
+    //   .update(payment)
+    //   .set(updateFields)
+    //   .where(eq(payment.subscriptionId, stripeSubscription.id))
+    //   .returning({ id: payment.id });
+    // if (result.length > 0) {
+    //   console.log(`<< Updated payment record ${result[0].id} for Stripe subscription ${stripeSubscription.id}`);
+    // }
   }
 
   /**
@@ -551,27 +527,20 @@ export class StripeProvider implements PaymentProvider {
     console.log(
       `>> Mark payment record for Stripe subscription ${stripeSubscription.id} as canceled`
     );
-    const db = await getDb();
-    const result = await db
-      .update(payment)
-      .set({
-        status: this.mapSubscriptionStatusToPaymentStatus(
-          stripeSubscription.status
-        ),
-        updatedAt: new Date(),
-      })
-      .where(eq(payment.subscriptionId, stripeSubscription.id))
-      .returning({ id: payment.id });
-
-    if (result.length > 0) {
-      console.log(
-        `<< Marked payment record for subscription ${stripeSubscription.id} as canceled`
-      );
-    } else {
-      console.warn(
-        `<< No payment record found to cancel for Stripe subscription ${stripeSubscription.id}`
-      );
-    }
+    // Database operation disabled - payment functionality temporarily disabled
+    console.warn(`⚠️ Payment functionality disabled: Cannot mark payment record as canceled for subscription ${stripeSubscription.id}`);
+    // const db = await getDb();
+    // const result = await db
+    //   .update(payment)
+    //   .set({
+    //     status: this.mapSubscriptionStatusToPaymentStatus(stripeSubscription.status),
+    //     updatedAt: new Date(),
+    //   })
+    //   .where(eq(payment.subscriptionId, stripeSubscription.id))
+    //   .returning({ id: payment.id });
+    // if (result.length > 0) {
+    //   console.log(`<< Marked payment record for subscription ${stripeSubscription.id} as canceled`);
+    // }
   }
 
   /**
@@ -599,33 +568,29 @@ export class StripeProvider implements PaymentProvider {
       return;
     }
 
-    // Create a one-time payment record
-    const now = new Date();
-    const db = await getDb();
-    const result = await db
-      .insert(payment)
-      .values({
-        id: randomUUID(),
-        priceId: priceId,
-        type: PaymentTypes.ONE_TIME,
-        userId: userId,
-        customerId: customerId,
-        status: 'completed', // One-time payments are always completed
-        periodStart: now,
-        createdAt: now,
-        updatedAt: now,
-      })
-      .returning({ id: payment.id });
-
-    if (result.length === 0) {
-      console.warn(
-        `<< Failed to create one-time payment record for user ${userId}`
-      );
-      return;
-    }
-    console.log(
-      `<< Created one-time payment record for user ${userId}, price: ${priceId}`
-    );
+    // Database operation disabled - payment functionality temporarily disabled
+    console.warn(`⚠️ Payment functionality disabled: Cannot create one-time payment record for user ${userId}, price: ${priceId}`);
+    // const now = new Date();
+    // const db = await getDb();
+    // const result = await db
+    //   .insert(payment)
+    //   .values({
+    //     id: randomUUID(),
+    //     priceId: priceId,
+    //     type: PaymentTypes.ONE_TIME,
+    //     userId: userId,
+    //     customerId: customerId,
+    //     status: 'completed',
+    //     periodStart: now,
+    //     createdAt: now,
+    //     updatedAt: now,
+    //   })
+    //   .returning({ id: payment.id });
+    // if (result.length === 0) {
+    //   console.warn(`<< Failed to create one-time payment record for user ${userId}`);
+    //   return;
+    // }
+    // console.log(`<< Created one-time payment record for user ${userId}, price: ${priceId}`);
 
     // Send notification
     const amount = session.amount_total ? session.amount_total / 100 : 0;

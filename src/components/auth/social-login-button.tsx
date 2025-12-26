@@ -22,10 +22,8 @@ interface SocialLoginButtonProps {
 export const SocialLoginButton = ({
   callbackUrl: propCallbackUrl,
 }: SocialLoginButtonProps) => {
-  if (
-    !websiteConfig.auth.enableGoogleLogin &&
-    !websiteConfig.auth.enableGithubLogin
-  ) {
+  // Google 登录暂时禁用，只检查 GitHub
+  if (!websiteConfig.auth.enableGithubLogin) {
     return null;
   }
 
@@ -97,7 +95,8 @@ export const SocialLoginButton = ({
   return (
     <div className="w-full flex flex-col gap-4">
       {/* 移除分割线，因为只有社交登录 */}
-      {websiteConfig.auth.enableGoogleLogin && (
+      {/* Google 登录暂时禁用 */}
+      {false && websiteConfig.auth.enableGoogleLogin && (
         <Button
           size="lg"
           className="w-full cursor-pointer"

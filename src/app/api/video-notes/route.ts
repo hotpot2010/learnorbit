@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/db';
-import { userVideoNotes, VideoNoteData } from '@/db/schema';
-import { eq, and, desc } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
+import backendAPI from '@/lib/backend-api';
 
 // POST /api/video-notes - 保存或更新视频笔记
 export async function POST(request: NextRequest) {
@@ -41,88 +39,21 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    const db = await getDb();
+    // 通过 Backend API 创建或更新笔记
+    const result = await backendAPI.videoNotes.createOrUpdate(userId, {
+      task_id: taskId,
+      video_url: videoUrl,
+      bv_id: bvId,
+      video_title: videoTitle,
+      video_platform: videoPlatform,
+      user_notes_data: userNotesData,
+      title,
+      description,
+    });
     
-    // 检查是否已存在（同一用户对同一视频的笔记）
-    const existing = await db
-      .select()
-      .from(userVideoNotes)
-      .where(
-        and(
-          eq(userVideoNotes.userId, userId),
-          eq(userVideoNotes.taskId, taskId)
-        )
-      )
-      .limit(1);
+    console.log(`✅ Video note ${result.isNew ? 'created' : 'updated'}:`, result.noteId);
     
-    // 计算统计信息
-    const knowledgePointNotes = userNotesData.knowledgePointNotes || [];
-    const stats = {
-      totalKnowledgePoints: knowledgePointNotes.length,
-      totalQAs: knowledgePointNotes.reduce(
-        (sum: number, kp: any) => sum + (kp.qaList?.length || 0),
-        0
-      ),
-      totalExercises: knowledgePointNotes.reduce(
-        (sum: number, kp: any) => sum + (kp.exercises?.length || 0),
-        0
-      ),
-    };
-    
-    let noteId: string;
-    
-    if (existing.length > 0) {
-      // 更新现有笔记
-      noteId = existing[0].id;
-      await db
-        .update(userVideoNotes)
-        .set({
-          userNotesData,
-          title: title || existing[0].title,
-          description: description || existing[0].description,
-          videoTitle: videoTitle || existing[0].videoTitle,
-          ...stats,
-          updatedAt: new Date(),
-        })
-        .where(eq(userVideoNotes.id, noteId));
-      
-      console.log('✅ Video note updated:', noteId);
-      
-      return NextResponse.json({
-        success: true,
-        noteId,
-        message: 'Note updated successfully',
-        isNew: false,
-      });
-    } else {
-      // 创建新笔记
-      const [newNote] = await db
-        .insert(userVideoNotes)
-        .values({
-          userId,
-          taskId,
-          videoUrl,
-          bvId: bvId || null,
-          videoTitle: videoTitle || null,
-          videoPlatform: videoPlatform || 'bilibili',
-          userNotesData,
-          title: title || null,
-          description: description || null,
-          ...stats,
-        })
-        .returning({ id: userVideoNotes.id });
-      
-      noteId = newNote.id;
-      
-      console.log('✅ Video note created:', noteId);
-      
-      return NextResponse.json({
-        success: true,
-        noteId,
-        message: 'Note saved successfully',
-        isNew: true,
-      });
-    }
+    return NextResponse.json(result);
   } catch (error) {
     console.error('❌ Error saving video note:', error);
     return NextResponse.json(
@@ -154,45 +85,40 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '20');
     const taskId = searchParams.get('taskId'); // 查询特定视频的笔记
     
-    const db = await getDb();
+    // 通过 Backend API 获取笔记
+    const result = await backendAPI.videoNotes.getUserNotes(userId, taskId || undefined, page, limit);
     
-    // 构建查询
-    let query = db
-      .select()
-      .from(userVideoNotes)
-      .where(eq(userVideoNotes.userId, userId));
-    
-    // 如果指定了 taskId，查询特定视频的笔记
-    if (taskId) {
-      const notes = await db
-        .select()
-        .from(userVideoNotes)
-        .where(
-          and(
-            eq(userVideoNotes.userId, userId),
-            eq(userVideoNotes.taskId, taskId)
-          )
-        )
-        .orderBy(desc(userVideoNotes.updatedAt));
+    // 转换字段名：snake_case -> camelCase
+    if (result.success && result.notes) {
+      const transformedNotes = result.notes.map((note: any) => ({
+        id: note.id,
+        taskId: note.task_id,
+        videoUrl: note.video_url,
+        bvId: note.bv_id,
+        videoTitle: note.video_title,
+        videoPlatform: note.video_platform || 'bilibili',
+        title: note.title,
+        description: note.description,
+        userNotesData: note.user_notes_data,
+        totalKnowledgePoints: note.total_knowledge_points || 0,
+        totalQAs: note.total_qas || 0,
+        totalExercises: note.total_exercises || 0,
+        isFavorite: note.is_favorite || false,
+        createdAt: note.created_at,
+        updatedAt: note.updated_at,
+        lastViewedAt: note.last_viewed_at,
+      }));
       
       return NextResponse.json({
         success: true,
-        notes,
+        notes: transformedNotes,
+        page: result.page,
+        limit: result.limit,
+        total: result.total,
       });
     }
     
-    // 获取所有笔记（分页）
-    const notes = await query
-      .orderBy(desc(userVideoNotes.updatedAt))
-      .limit(limit)
-      .offset((page - 1) * limit);
-    
-    return NextResponse.json({
-      success: true,
-      notes,
-      page,
-      limit,
-    });
+    return NextResponse.json(result);
   } catch (error) {
     console.error('❌ Error fetching video notes:', error);
     return NextResponse.json(
@@ -201,4 +127,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-

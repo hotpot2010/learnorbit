@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/db';
-import { userVideoNotes } from '@/db/schema';
-import { eq, and } from 'drizzle-orm';
 import { auth } from '@/lib/auth';
+import backendAPI from '@/lib/backend-api';
 
 // GET /api/video-notes/[noteId] - 获取单个笔记
 export async function GET(
@@ -22,31 +20,9 @@ export async function GET(
     }
     
     const { noteId } = await context.params;
-    const db = await getDb();
     
-    const [note] = await db
-      .select()
-      .from(userVideoNotes)
-      .where(
-        and(
-          eq(userVideoNotes.id, noteId),
-          eq(userVideoNotes.userId, session.user.id)
-        )
-      )
-      .limit(1);
-    
-    if (!note) {
-      return NextResponse.json(
-        { error: 'Note not found' },
-        { status: 404 }
-      );
-    }
-    
-    // 更新最后查看时间
-    await db
-      .update(userVideoNotes)
-      .set({ lastViewedAt: new Date() })
-      .where(eq(userVideoNotes.id, noteId));
+    // 通过 Backend API 获取笔记（会自动更新最后查看时间）
+    const note = await backendAPI.videoNotes.get(noteId, session.user.id);
     
     return NextResponse.json({
       success: true,
@@ -79,16 +55,9 @@ export async function DELETE(
     }
     
     const { noteId } = await context.params;
-    const db = await getDb();
     
-    await db
-      .delete(userVideoNotes)
-      .where(
-        and(
-          eq(userVideoNotes.id, noteId),
-          eq(userVideoNotes.userId, session.user.id)
-        )
-      );
+    // 通过 Backend API 删除笔记
+    await backendAPI.videoNotes.delete(noteId, session.user.id);
     
     console.log('✅ Video note deleted:', noteId);
     

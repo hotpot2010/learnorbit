@@ -1,9 +1,7 @@
-import { getDb } from '@/db';
-import { userCourses } from '@/db/schema';
 import { auth } from '@/lib/auth';
-import { and, eq } from 'drizzle-orm';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import backendAPI from '@/lib/backend-api';
 
 // 获取课程的所有任务
 export async function GET(
@@ -24,28 +22,10 @@ export async function GET(
     const resolvedParams = await params;
     const courseId = resolvedParams.courseId;
 
-    // 验证课程归属
-    const db = await getDb();
-    const [course] = await db
-      .select()
-      .from(userCourses)
-      .where(and(eq(userCourses.id, courseId), eq(userCourses.userId, userId)))
-      .limit(1);
+    // 通过 Backend API 获取课程任务
+    const result = await backendAPI.tasks.getCourseTasks(courseId, userId);
 
-    if (!course) {
-      return NextResponse.json({ error: 'Course not found' }, { status: 404 });
-    }
-
-    // 从 coursePlan.tasks 获取任务数据
-    const taskCache = course.coursePlan?.tasks || {};
-
-    return NextResponse.json(
-      {
-        taskCache,
-        tasksGenerated: course.tasksGenerated,
-      },
-      { status: 200 }
-    );
+    return NextResponse.json(result, { status: 200 });
   } catch (error) {
     console.error('Error fetching course tasks:', error);
     return NextResponse.json(
@@ -75,34 +55,8 @@ export async function POST(
     const courseId = resolvedParams.courseId;
     const { stepNumber, taskContent } = await request.json();
 
-    // 验证课程归属
-    const db = await getDb();
-    const [course] = await db
-      .select()
-      .from(userCourses)
-      .where(and(eq(userCourses.id, courseId), eq(userCourses.userId, userId)))
-      .limit(1);
-
-    if (!course) {
-      return NextResponse.json({ error: 'Course not found' }, { status: 404 });
-    }
-
-    // 保存任务到 coursePlan.tasks
-    const updatedCoursePlan = {
-      ...course.coursePlan,
-      tasks: {
-        ...(course.coursePlan?.tasks || {}),
-        [stepNumber]: taskContent,
-      },
-    };
-
-    await db
-      .update(userCourses)
-      .set({
-        coursePlan: updatedCoursePlan,
-        updatedAt: new Date(),
-      })
-      .where(eq(userCourses.id, courseId));
+    // 通过 Backend API 保存任务
+    await backendAPI.tasks.saveTask(courseId, userId, stepNumber, taskContent);
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {

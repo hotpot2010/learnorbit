@@ -1,8 +1,6 @@
 'use server';
 
-import { getDb } from '@/db';
-import { user } from '@/db/schema';
-import { asc, desc, ilike, or, sql } from 'drizzle-orm';
+import backendAPI from '@/lib/backend-api';
 import { createSafeActionClient } from 'next-safe-action';
 import { z } from 'zod';
 
@@ -25,13 +23,13 @@ const getUsersSchema = z.object({
     .default([]),
 });
 
-// Define sort field mapping
+// Define sort field mapping (for reference, actual sorting is done by Backend API)
 const sortFieldMap = {
-  name: user.name,
-  email: user.email,
-  createdAt: user.createdAt,
-  role: user.role,
-  customerId: user.customerId,
+  name: 'name',
+  email: 'email',
+  createdAt: 'created_at',
+  role: 'role',
+  customerId: 'customer_id',
 } as const;
 
 // Create a safe action for getting users
@@ -41,34 +39,25 @@ export const getUsersAction = actionClient
     try {
       const { pageIndex, pageSize, search, sorting } = parsedInput;
 
-      const where = search
-        ? or(ilike(user.name, `%${search}%`), ilike(user.email, `%${search}%`))
-        : undefined;
-
-      const offset = pageIndex * pageSize;
-
       // Get the sort configuration
       const sortConfig = sorting[0];
-      const sortField = sortConfig?.id
-        ? sortFieldMap[sortConfig.id as keyof typeof sortFieldMap]
-        : user.createdAt;
-      const sortDirection = sortConfig?.desc ? desc : asc;
+      const sortField = sortConfig?.id || 'created_at';
+      const sortDesc = sortConfig?.desc || false;
 
-      const db = await getDb();
-      let [items, [{ count }]] = await Promise.all([
-        db
-          .select()
-          .from(user)
-          .where(where)
-          .orderBy(sortDirection(sortField))
-          .limit(pageSize)
-          .offset(offset),
-        db.select({ count: sql`count(*)` }).from(user).where(where),
-      ]);
+      // 通过 Backend API 获取用户列表
+      const result = await backendAPI.users.getUsers({
+        pageIndex,
+        pageSize,
+        search: search || undefined,
+        sortField,
+        sortDesc,
+      });
+
+      let items = result.data.items;
 
       // hide user data in demo website
       if (process.env.NEXT_PUBLIC_DEMO_WEBSITE === 'true') {
-        items = items.map((item) => ({
+        items = items.map((item: any) => ({
           ...item,
           name: 'Demo User',
           email: 'example@mksaas.com',
@@ -80,7 +69,7 @@ export const getUsersAction = actionClient
         success: true,
         data: {
           items,
-          total: Number(count),
+          total: result.data.total,
         },
       };
     } catch (error) {
