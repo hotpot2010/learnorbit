@@ -157,6 +157,7 @@ export const keyActions = mysqlTable('learnorbit_key_actions', {
 
 export interface VideoNoteData {
   knowledgePointNotes: Array<{
+    partIndex?: number;  // 分P索引（多P视频时使用，0表示第一个分P）
     knowledgePointName: string;
     startTime: string;
     endTime: string;

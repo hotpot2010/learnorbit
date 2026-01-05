@@ -1,0 +1,283 @@
+{
+  "task_id": "task_1767078086_680",
+  "bilibili_url": "https://www.bilibili.com/video/BV1xSCPYMEqj/?vd_source=c56a4db010f073556475172c7b3fbedf",
+  "video_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】",
+  "steps": {
+    "asr": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "download": {
+      "error": null,
+      "result": {
+        "video_urls": [
+          "https://file.gsxservice.com/3411167856_ax57csut.mp4"
+        ],
+        "part_results": [
+          {
+            "part_number": 1,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 2,
+            "status": "success",
+            "video_url": "https://file.gsxservice.com/3411167856_ax57csut.mp4",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1767078086_680_p2.mp4"
+          },
+          {
+            "part_number": 3,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 4,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 5,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 6,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 7,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 8,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 9,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 10,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 11,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 12,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 13,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 14,
+            "status": "failed",
+            "error": "视频上传失败"
+          },
+          {
+            "part_number": 15,
+            "status": "failed",
+            "error": "视频上传失败"
+          }
+        ],
+        "total_parts": 15,
+        "success_count": 1,
+        "failed_count": 14
+      },
+      "status": "partial_success",
+      "message": "完成 1/15 个分P，14 个失败",
+      "progress": 100,
+      "retry_count": 0
+    },
+    "exercises": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "transcode": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "screenshots": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "knowledge_points": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    }
+  },
+  "video_url": "https://file.gsxservice.com/3411167856_ax57csut.mp4",
+  "transcoded_video_url": null,
+  "asr_result_url": null,
+  "knowledge_points_result_url": null,
+  "screenshots_result_url": null,
+  "exercises_result_url": null,
+  "video_info": {
+    "bv_id": "BV1xSCPYMEqj",
+    "title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】",
+    "duration": 0,
+    "uploader": "",
+    "thumbnail": "",
+    "like_count": 0,
+    "view_count": 0,
+    "description": "",
+    "upload_date": "",
+    "thumbnail_cdn": "https://file.gsxservice.com/3411130348_lv8mbqx5.jpg"
+  },
+  "is_series": true,
+  "series_parts": [
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=1",
+      "bv_id": "BV1xSCPYMEqj_p1",
+      "duration": 1495.34,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p01 01静力学公理及物体的受力分析",
+      "part_title": "01静力学公理及物体的受力分析",
+      "part_number": 1
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=2",
+      "bv_id": "BV1xSCPYMEqj_p2",
+      "duration": 20.02,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p02 讲义领取",
+      "part_title": "讲义领取",
+      "part_number": 2
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=3",
+      "bv_id": "BV1xSCPYMEqj_p3",
+      "duration": 2182.58,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p03 02平面力系",
+      "part_title": "02平面力系",
+      "part_number": 3
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=4",
+      "bv_id": "BV1xSCPYMEqj_p4",
+      "duration": 1323.58,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p04 03桁架内力计算",
+      "part_title": "03桁架内力计算",
+      "part_number": 4
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=5",
+      "bv_id": "BV1xSCPYMEqj_p5",
+      "duration": 1088.938,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p05 04空间力系与重心",
+      "part_title": "04空间力系与重心",
+      "part_number": 5
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=6",
+      "bv_id": "BV1xSCPYMEqj_p6",
+      "duration": 917.46,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p06 05摩擦",
+      "part_title": "05摩擦",
+      "part_number": 6
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=7",
+      "bv_id": "BV1xSCPYMEqj_p7",
+      "duration": 1640.02,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p07 06点的运动学及刚体的简单运动",
+      "part_title": "06点的运动学及刚体的简单运动",
+      "part_number": 7
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=8",
+      "bv_id": "BV1xSCPYMEqj_p8",
+      "duration": 1696.255,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p08 07点的合成运动",
+      "part_title": "07点的合成运动",
+      "part_number": 8
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=9",
+      "bv_id": "BV1xSCPYMEqj_p9",
+      "duration": 2171.775,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p09 08刚体的平面运动",
+      "part_title": "08刚体的平面运动",
+      "part_number": 9
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=10",
+      "bv_id": "BV1xSCPYMEqj_p10",
+      "duration": 1106.047,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p10 09动量定理",
+      "part_title": "09动量定理",
+      "part_number": 10
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=11",
+      "bv_id": "BV1xSCPYMEqj_p11",
+      "duration": 1593.215,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p11 10动量矩定理",
+      "part_title": "10动量矩定理",
+      "part_number": 11
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=12",
+      "bv_id": "BV1xSCPYMEqj_p12",
+      "duration": 1507.583,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p12 11动能定理",
+      "part_title": "11动能定理",
+      "part_number": 12
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=13",
+      "bv_id": "BV1xSCPYMEqj_p13",
+      "duration": 1219.5,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p13 12动力学普遍定理综合应用",
+      "part_title": "12动力学普遍定理综合应用",
+      "part_number": 13
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=14",
+      "bv_id": "BV1xSCPYMEqj_p14",
+      "duration": 1243.007,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p14 13达朗贝尔原理（选学）",
+      "part_title": "13达朗贝尔原理（选学）",
+      "part_number": 14
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1xSCPYMEqj?p=15",
+      "bv_id": "BV1xSCPYMEqj_p15",
+      "duration": 1401.898,
+      "full_title": "【期末冲刺上大分】《理论力学》5小时快速突击|期末不挂科必备【蜂考】 p15 14虚位移原理（选学）",
+      "part_title": "14虚位移原理（选学）",
+      "part_number": 15
+    }
+  ],
+  "created_at": "2025-12-30T15:01:44",
+  "updated_at": "2025-12-30T17:18:06.746717"
+}

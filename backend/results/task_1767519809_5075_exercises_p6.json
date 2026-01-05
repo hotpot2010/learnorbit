@@ -1,0 +1,138 @@
+{
+  "exercises": [
+    {
+      "type": "error",
+      "title": "练习题生成失败：勒夏特列原理",
+      "error": "Invalid \\escape: line 6 column 71 (char 195)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：浓度对平衡影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $N_2(g) + 3H_2(g) \\rightleftharpoons 2NH_3(g)$，在一定条件下达到平衡状态。若突然增大 $N_2$ 的浓度，根据勒夏特列原理，平衡将向哪个方向移动？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正反应方向"
+        },
+        {
+          "label": "B",
+          "content": "逆反应方向"
+        },
+        {
+          "label": "C",
+          "content": "不移动"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾勒夏特列原理，平衡会向着减弱这种改变的方向移动",
+        "提示2：分析增大 $N_2$ 浓度后，为了减弱 $N_2$ 浓度的增加，反应应该如何进行",
+        "提示3：正反应是消耗 $N_2$ 的方向，逆反应是生成 $N_2$ 的方向"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：温度对平衡影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $N_2(g) + 3H_2(g) \\rightleftharpoons 2NH_3(g) \\quad \\Delta H < 0$，当升高温度时，化学平衡将向哪个方向移动？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正反应方向"
+        },
+        {
+          "label": "B",
+          "content": "逆反应方向"
+        },
+        {
+          "label": "C",
+          "content": "不移动"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频讲解，化学平衡会向着减弱这种改变的方向移动",
+        "提示2：此反应的正反应是放热反应，$\\Delta H < 0$，升高温度相当于改变了外界条件",
+        "提示3：思考如何减弱温度升高这一改变"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：压强对平衡影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $N_2(g) + 3H_2(g) \\rightleftharpoons 2NH_3(g)$，在一定条件下达到平衡状态。若增大压强，平衡将向哪个方向移动？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正反应方向"
+        },
+        {
+          "label": "B",
+          "content": "逆反应方向"
+        },
+        {
+          "label": "C",
+          "content": "不移动"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频中提到的勒夏特列原理，平衡会向着减弱这种改变的方向移动",
+        "提示2：增大压强时，要考虑反应前后气体分子数的变化",
+        "提示3：该反应中，正反应方向是气体分子数减小的方向"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：化学平衡习题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $N_2(g) + 3H_2(g) \\rightleftharpoons 2NH_3(g) + Q$（$Q>0$），当达到平衡后，若升高温度，化学平衡将向哪个方向移动？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正反应方向"
+        },
+        {
+          "label": "B",
+          "content": "逆反应方向"
+        },
+        {
+          "label": "C",
+          "content": "不移动"
+        },
+        {
+          "label": "D",
+          "content": "无法判断"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频内容，改变外界条件时，平衡会向着减弱这种改变的方向移动",
+        "提示2：升高温度，要减弱温度升高的影响，应向吸热反应方向移动",
+        "提示3：分析该反应的正逆反应的热效应，正反应放热，逆反应吸热"
+      ]
+    }
+  ],
+  "count": 5
+}

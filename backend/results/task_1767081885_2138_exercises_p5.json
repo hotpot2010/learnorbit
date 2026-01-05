@@ -1,0 +1,581 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三相电路概述",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网提供的电压，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网提供的是单相电压，进入用户家中也是单相的"
+        },
+        {
+          "label": "B",
+          "content": "电网提供的是三相电压，但进入用户家中是单相的"
+        },
+        {
+          "label": "C",
+          "content": "电网提供的是单相电压，但在输电线路中是三相的"
+        },
+        {
+          "label": "D",
+          "content": "电网提供的是三相电压，进入用户家中也是三相的"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于电网电压和用户端电压的描述",
+        "提示2：明确电网和输电线路以及用户家中电压的区别",
+        "提示3：注意视频中提到进入用户家中的情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三相交流定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于电网中的电流情况，下列说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网中始终是单相的"
+        },
+        {
+          "label": "B",
+          "content": "电网中一直是三相的，进入用户家庭后也是三相的"
+        },
+        {
+          "label": "C",
+          "content": "电网在输电线路中不是单相的，进入用户家庭后是单相的"
+        },
+        {
+          "label": "D",
+          "content": "电网在输电线路中是单相的，进入用户家庭后变成三相的"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于电网和用户家庭用电相数的描述",
+        "提示2：注意区分输电线路和用户家庭的不同情况",
+        "提示3：明确电网在不同阶段的相数特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：星形连接方式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网提供的电压，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网提供的是单相电压，进入用户家中也是单相电压"
+        },
+        {
+          "label": "B",
+          "content": "电网提供的不是单相电压，但进入用户家中是单相电压"
+        },
+        {
+          "label": "C",
+          "content": "电网提供的是单相电压，但进入用户家中不是单相电压"
+        },
+        {
+          "label": "D",
+          "content": "电网提供的不是单相电压，进入用户家中也不是单相电压"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于电网电压和用户家中电压的描述",
+        "提示2：注意区分电网和用户家中电压的不同情况",
+        "提示3：明确电网在输电线路中的电压性质和进入用户家中的电压性质"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：线相电压关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网电压的说法，以下正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网提供的始终是单相电压"
+        },
+        {
+          "label": "B",
+          "content": "电网提供的是三相电压，进入用户家庭后变为单相电压"
+        },
+        {
+          "label": "C",
+          "content": "电网只提供三相电压，用户家庭不能使用单相电压"
+        },
+        {
+          "label": "D",
+          "content": "电网提供的电压类型与输电线路无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于电网电压和用户家庭电压的描述",
+        "提示2：思考电网在输电过程和用户使用时电压的变化情况",
+        "提示3：明确三相电压和单相电压在不同场景下的应用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：连接方式总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网提供的电压及进入用户端的情况，以下说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网提供的是单相电压，进入用户端也是单相电压"
+        },
+        {
+          "label": "B",
+          "content": "电网提供的不是单相电压，但进入用户端是单相电压"
+        },
+        {
+          "label": "C",
+          "content": "电网提供的是单相电压，进入用户端不是单相电压"
+        },
+        {
+          "label": "D",
+          "content": "电网提供的不是单相电压，进入用户端也不是单相电压"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于电网电压和进入用户端电压的描述",
+        "提示2：明确电网和用户端电压之间的区别",
+        "提示3：判断电网是否提供单相电压以及进入用户端的电压情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：负载连接方式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网提供的电压情况，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网提供的是单相电压，进入用户家中也是单相电压"
+        },
+        {
+          "label": "B",
+          "content": "电网提供的不是单相电压，但进入用户家中是单相电压"
+        },
+        {
+          "label": "C",
+          "content": "电网提供的是单相电压，但进入用户家中不是单相电压"
+        },
+        {
+          "label": "D",
+          "content": "电网提供的不是单相电压，进入用户家中也不是单相电压"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于电网电压和用户家中电压的描述",
+        "提示2：明确电网提供的电压和进入用户家中电压的区别",
+        "提示3：判断哪个选项符合视频中讲解的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：线相电压电流",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电力系统中，关于供电方式，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网提供的一直是单相电，只是到用户家中才变成三相电"
+        },
+        {
+          "label": "B",
+          "content": "电网提供的是三相电，只有进入用户家中的是单相电"
+        },
+        {
+          "label": "C",
+          "content": "电网和用户家中使用的都是单相电"
+        },
+        {
+          "label": "D",
+          "content": "电网和用户家中使用的都是三相电"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：思考电网供电和用户用电的不同情况",
+        "提示2：结合视频中提到的进入用户家中和输电线路中的区别",
+        "提示3：明确三相电和单相电在不同场景的应用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：对称负载特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "根据视频所讲内容，关于电网电压的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网提供的是单相电压，进入用户家庭后还是单相电压，在输电线路中也是单相电压"
+        },
+        {
+          "label": "B",
+          "content": "电网提供的不是单相电压，进入用户家庭后变为单相电压，在输电线路中并非单相电压"
+        },
+        {
+          "label": "C",
+          "content": "电网提供的是三相电压，进入用户家庭后变为单相电压，在输电线路中是三相电压"
+        },
+        {
+          "label": "D",
+          "content": "电网提供的是三相电压，进入用户家庭后还是三相电压，在输电线路中也是三相电压"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中关于电网电压本质以及进入用户家庭后电压情况的描述",
+        "提示2：明确输电线路和用户家庭电压之间的区别",
+        "提示3：重点关注视频里提到的电网电压是否是单相这一关键信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：例题计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网电压及相数的描述，以下正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网提供的始终是单相电压"
+        },
+        {
+          "label": "B",
+          "content": "电网提供的是三相电压，到用户端才变为单相电压"
+        },
+        {
+          "label": "C",
+          "content": "电网提供的是单相电压，在输电线路中变为三相电压"
+        },
+        {
+          "label": "D",
+          "content": "电网和用户端都是三相电压"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于电网和用户端相数的描述",
+        "提示2：明确电网在输电过程和用户端的不同情况",
+        "提示3：注意区分电网整体和用户端的电压相数差异"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：对称负载电流",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网电压和用户端电压的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网提供的是单相电压，用户端也是单相电压"
+        },
+        {
+          "label": "B",
+          "content": "电网提供的是三相电压，用户端是单相电压"
+        },
+        {
+          "label": "C",
+          "content": "电网提供的是单相电压，用户端是三相电压"
+        },
+        {
+          "label": "D",
+          "content": "电网提供的是三相电压，用户端也是三相电压"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于电网和用户端电压的描述",
+        "提示2：思考电网在输电线路中的电压情况",
+        "提示3：明确进入我们自己家用户的电压情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：负载连接方式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在输电线路中，电网提供的是（  ），进入我们自己家用户的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单相；三相"
+        },
+        {
+          "label": "B",
+          "content": "三相；单相"
+        },
+        {
+          "label": "C",
+          "content": "直流；交流"
+        },
+        {
+          "label": "D",
+          "content": "交流；直流"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中关于电网和用户端供电类型的描述",
+        "提示2：关注输电线路和进入用户家这两个不同场景的供电差异",
+        "提示3：明确三相电和单相电的概念及应用场景"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电压电流关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网电压的说法，以下正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网提供的始终是单相电压"
+        },
+        {
+          "label": "B",
+          "content": "电网提供的是三相电压，只有到用户家中才变为单相电压"
+        },
+        {
+          "label": "C",
+          "content": "电网提供的电压与用户家中电压没有区别，都是单相的"
+        },
+        {
+          "label": "D",
+          "content": "电网提供的电压与用户家中电压没有区别，都是三相的"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于电网电压和用户家中电压的描述",
+        "提示2：明确电网和用户端在电路中的不同情况",
+        "提示3：思考电压在传输过程中的变化特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三相功率计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网供电情况，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网始终提供单相电"
+        },
+        {
+          "label": "B",
+          "content": "电网只提供三相电，不存在单相电情况"
+        },
+        {
+          "label": "C",
+          "content": "电网输送过程中是三相电，到用户家中一般为单相电"
+        },
+        {
+          "label": "D",
+          "content": "电网输送过程中是单相电，到用户家中变为三相电"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于电网供电和用户用电的相关描述",
+        "提示2：思考电网在输送过程和到用户家中的不同情况",
+        "提示3：明确三相电和单相电在不同阶段的存在形式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三相功率推导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网电压和用户端电压的说法，以下正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网电压和用户端电压都是单相的"
+        },
+        {
+          "label": "B",
+          "content": "电网电压是三相的，用户端电压是单相的"
+        },
+        {
+          "label": "C",
+          "content": "电网电压和用户端电压都是三相的"
+        },
+        {
+          "label": "D",
+          "content": "电网电压是单相的，用户端电压是三相的"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中关于电网和用户端电压的描述",
+        "提示2：明确电网在输电线路中的情况和进入用户端的情况",
+        "提示3：对比各个选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路计算实例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网电压的相数，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网中始终是单相的"
+        },
+        {
+          "label": "B",
+          "content": "电网中是三相的，但到用户家变为单相的"
+        },
+        {
+          "label": "C",
+          "content": "电网中一直是三相和单相同时存在的"
+        },
+        {
+          "label": "D",
+          "content": "电网中不确定是几相的"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的电网在输电线路和用户家情况的区别",
+        "提示2：明确输电时的相数和到用户家后的相数的不同",
+        "提示3：结合讲解内容判断每个选项的正确性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：负载计算讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网提供的电压，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网始终提供的是单相电压"
+        },
+        {
+          "label": "B",
+          "content": "电网提供的是三相电压，但到用户家是单相电压"
+        },
+        {
+          "label": "C",
+          "content": "电网提供的是单相电压，经过转换到用户家变成三相电压"
+        },
+        {
+          "label": "D",
+          "content": "电网提供的电压情况不确定，与用户家的电器有关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于电网电压和用户家电压的相关描述",
+        "提示2：明确电网在输电线路中的电压情况和到用户家的电压情况",
+        "提示3：分析每个选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：线电流计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，电网提供的电压通常是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单相的"
+        },
+        {
+          "label": "B",
+          "content": "三相的"
+        },
+        {
+          "label": "C",
+          "content": "既是单相又是三相的"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：思考视频中提到的电网电压和进入用户家庭电压的区别",
+        "提示2：回忆视频里关于电网传输和用户使用电压相数的描述",
+        "提示3：明确电网在输电线路中的实际情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三相有功功率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正弦交流电路中，关于电网提供的电压，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电网提供的是单相电压，进入用户也是单相电压"
+        },
+        {
+          "label": "B",
+          "content": "电网提供的是三相电压，进入用户也是三相电压"
+        },
+        {
+          "label": "C",
+          "content": "电网提供的是三相电压，但进入用户是单相电压"
+        },
+        {
+          "label": "D",
+          "content": "电网提供的是单相电压，但进入用户是三相电压"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于电网电压和用户端电压的描述",
+        "提示2：明确电网和用户端的区别",
+        "提示3：注意视频中提到进入用户是单相电压这一关键信息"
+      ]
+    }
+  ],
+  "count": 18
+}

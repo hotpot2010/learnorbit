@@ -1,0 +1,325 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：惯性力概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习达朗贝尔原理这一课时中，以下哪个不属于本节课的考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "惯性力以及达朗贝尔原理"
+        },
+        {
+          "label": "B",
+          "content": "惯性力系的简化"
+        },
+        {
+          "label": "C",
+          "content": "牛顿第二定律的推导"
+        },
+        {
+          "label": "D",
+          "content": "达朗贝尔原理的应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课的考点内容",
+        "提示2：明确考点包含惯性力、达朗贝尔原理、惯性力系简化和达朗贝尔原理的应用",
+        "提示3：逐一分析选项，判断哪个不在考点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：达朗贝尔原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个不属于本节课达朗贝尔原理相关的考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "惯性力以及达朗贝尔原理"
+        },
+        {
+          "label": "B",
+          "content": "惯性力系的简化"
+        },
+        {
+          "label": "C",
+          "content": "质点系的动量定理"
+        },
+        {
+          "label": "D",
+          "content": "达朗贝尔原理的应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课关于达朗贝尔原理的考点内容",
+        "提示2：明确每个选项与考点的对应关系",
+        "提示3：判断哪个选项不在视频所提及的考点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：原理应用例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究物体运动时涉及到达朗贝尔原理的相关内容，以下哪个不属于本节课涉及的考点范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "惯性力以及达朗贝尔原理"
+        },
+        {
+          "label": "B",
+          "content": "牛顿第二定律的推导过程"
+        },
+        {
+          "label": "C",
+          "content": "惯性力系的简化"
+        },
+        {
+          "label": "D",
+          "content": "达朗贝尔原理的应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先回顾视频中提到的本节课三个考点具体内容",
+        "提示2：逐一分析每个选项是否与视频中提到的考点相符",
+        "提示3：视频中明确指出的考点为惯性力以及达朗贝尔原理、惯性力系的简化、达朗贝尔原理的应用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：惯性力系简化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本课时中有三个考点，其中惯性力系的简化属于第几个考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第一个"
+        },
+        {
+          "label": "B",
+          "content": "第二个"
+        },
+        {
+          "label": "C",
+          "content": "第三个"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于本课时三个考点的陈述",
+        "提示2：明确每个考点所包含的内容",
+        "提示3：找到惯性力系的简化对应的考点序号"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：惯性力系核心",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个不属于本次课程时（课时13达朗贝尔原理）的考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "惯性力以及达朗贝尔原理"
+        },
+        {
+          "label": "B",
+          "content": "惯性力系的简化"
+        },
+        {
+          "label": "C",
+          "content": "牛顿第二定律"
+        },
+        {
+          "label": "D",
+          "content": "达朗贝尔原理的应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到的本节课的考点有哪些",
+        "提示2：明确视频中指出本节课考点包括惯性力及达朗贝尔原理、惯性力系简化和达朗贝尔原理应用",
+        "提示3：逐一分析每个选项是否在考点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：刚体运动简化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本课时关于达朗贝尔原理的考点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "惯性力以及达朗贝尔原理"
+        },
+        {
+          "label": "B",
+          "content": "惯性力系的简化"
+        },
+        {
+          "label": "C",
+          "content": "达朗贝尔原理的推导过程"
+        },
+        {
+          "label": "D",
+          "content": "达朗贝尔原理的应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本课时的考点内容",
+        "提示2：视频中明确列举了三个考点，逐一与选项进行对比",
+        "提示3：注意判断选项是否在视频所提及的考点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：例题求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课时涉及的高考考点不包括以下哪一项（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "惯性力以及达朗贝尔原理"
+        },
+        {
+          "label": "B",
+          "content": "惯性力系的简化"
+        },
+        {
+          "label": "C",
+          "content": "牛顿第二定律的直接应用"
+        },
+        {
+          "label": "D",
+          "content": "达朗贝尔原理的应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到本节课时的三个考点",
+        "提示2：将选项内容与视频中考点逐一对比",
+        "提示3：找出不在考点范围内的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：达朗贝尔原理应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "达朗贝尔原理这一课时有三个考点，以下哪个不属于这三个考点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "惯性力以及达朗贝尔原理"
+        },
+        {
+          "label": "B",
+          "content": "惯性力系的简化"
+        },
+        {
+          "label": "C",
+          "content": "达朗贝尔原理的证明"
+        },
+        {
+          "label": "D",
+          "content": "达朗贝尔原理的应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本课时的三个考点内容",
+        "提示2：逐一对比选项与视频中考点的表述",
+        "提示3：找出与视频考点不相符的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：原理解题实例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列哪项不属于本节课时的考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "惯性力以及达朗贝尔原理"
+        },
+        {
+          "label": "B",
+          "content": "惯性力系的简化"
+        },
+        {
+          "label": "C",
+          "content": "牛顿第三定律的应用"
+        },
+        {
+          "label": "D",
+          "content": "达朗贝尔原理的应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课时的考点内容",
+        "提示2：明确考点有惯性力以及达朗贝尔原理、惯性力系的简化和达朗贝尔原理的应用",
+        "提示3：对比选项，找出不属于考点的项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求固定端约束力",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在动力学问题中，以下不属于本节课三个考点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "惯性力以及达朗贝尔原理"
+        },
+        {
+          "label": "B",
+          "content": "刚体的转动定律"
+        },
+        {
+          "label": "C",
+          "content": "惯性力系的简化"
+        },
+        {
+          "label": "D",
+          "content": "达朗贝尔原理的应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提及的本节课的三个考点",
+        "提示2：逐一对比选项与视频中考点内容",
+        "提示3：明确不属于考点的选项即为答案"
+      ]
+    }
+  ],
+  "count": 10
+}

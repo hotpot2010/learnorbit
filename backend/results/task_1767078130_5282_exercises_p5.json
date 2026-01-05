@@ -1,0 +1,260 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：不定积分概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=3x^2$，下列哪个函数是它的一个原函数？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$F(x)=x^3 + 1$"
+        },
+        {
+          "label": "B",
+          "content": "$F(x)=x^2 + 1$"
+        },
+        {
+          "label": "C",
+          "content": "$F(x)=6x$"
+        },
+        {
+          "label": "D",
+          "content": "$F(x)=9x^3$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据不定积分与原函数的概念，若 $F(x)$ 是 $f(x)$ 的原函数，则 $F'(x)=f(x)$",
+        "提示2：对每个选项中的函数求导，看哪个函数的导数等于 $f(x)=3x^2$",
+        "提示3：根据求导公式 $(x^n)'=nx^{n - 1}$ 进行求导计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：原函数性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=2x$，则它的一个原函数 $F(x)$ 是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$x^2 + 1$"
+        },
+        {
+          "label": "B",
+          "content": "$x + 1$"
+        },
+        {
+          "label": "C",
+          "content": "$2x^2 + 1$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{1}{2}x^2 + 1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据原函数的定义，如果 $F'(x)=f(x)$，那么 $F(x)$ 就是 $f(x)$ 的原函数",
+        "提示2：对每个选项求导，看哪个选项的导数等于 $f(x)=2x$",
+        "提示3：根据求导公式 $(x^n)'=nx^{n - 1}$ 进行求导计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：原函数算法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = 3x^2 + 2x$，求其一个原函数 $F(x)$ 使得 $F(0) = 1$，则 $F(x) =$ ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$x^3 + x^2 + 1$",
+      "hints": [
+        "提示1：根据不定积分与原函数的关系，先对 $f(x)$ 求不定积分 $\\int (3x^2 + 2x)dx$",
+        "提示2：利用不定积分的运算法则 $\\int (u+v)dx = \\int udx + \\int vdx$ 和 $\\int x^n dx = \\frac{x^{n + 1}}{n + 1}+C$（$n\\neq -1$）计算积分",
+        "提示3：再将 $x = 0$，$F(0) = 1$ 代入求得的原函数表达式中确定常数 $C$ 的值"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：凑微分法原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 的一个原函数是 $F(x)$，且 $\\int f(2x + 1)dx = \\frac{1}{2}F(2x + 1) + C$，那么当 $\\int f(3x - 2)dx$ 时，其结果为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{3}F(3x - 2) + C$",
+      "hints": [
+        "提示1：回顾凑微分法的原理，对于 $\\int f(ax + b)dx$ ，可通过凑微分将其转化为与原函数相关的形式。",
+        "提示2：根据已知条件 $\\int f(2x + 1)dx = \\frac{1}{2}F(2x + 1) + C$ ，分析系数与函数自变量的关系。",
+        "提示3：对于 $\\int f(3x - 2)dx$ ，令 $u = 3x - 2$ ，则 $du = 3dx$ ，那么 $dx = \\frac{1}{3}du$ 。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：凑微分法示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知不定积分和原函数的概念相关，若 $\\int f(x)dx = F(x) + C$（$C$ 为常数），那么 $\\int 2f(2x)dx$ 等于（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$F(2x) + C$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{2}F(2x) + C$"
+        },
+        {
+          "label": "C",
+          "content": "$2F(2x) + C$"
+        },
+        {
+          "label": "D",
+          "content": "$F(x) + C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：考虑凑微分法，根据积分的性质对 $\\int 2f(2x)dx$ 进行变形",
+        "提示2：令 $u = 2x$，则 $du = 2dx$",
+        "提示3：将变形后的式子与已知的 $\\int f(x)dx = F(x) + C$ 进行联系和计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：换元法介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 的一个原函数是 $F(x)$，则 $\\int f(2x + 1)dx$ 等于（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{2}F(2x + 1) + C$"
+        },
+        {
+          "label": "B",
+          "content": "$2F(2x + 1) + C$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{1}{2}f(2x + 1) + C$"
+        },
+        {
+          "label": "D",
+          "content": "$2f(2x + 1) + C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：使用换元法，令 $u = 2x + 1$，则 $du = 2dx$",
+        "提示2：将原积分 $\\int f(2x + 1)dx$ 转化为关于 $u$ 的积分，即 $\\frac{1}{2}\\int f(u)du$",
+        "提示3：因为 $F(x)$ 是 $f(x)$ 的一个原函数，所以 $\\int f(u)du = F(u) + C$，再将 $u = 2x + 1$ 代回"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三角换元示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知不定积分与原函数的概念紧密相关，若函数 $f(x)=2x$，则它的一个原函数 $F(x)$ 是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$x^2 + 1$"
+        },
+        {
+          "label": "B",
+          "content": "$x + 1$"
+        },
+        {
+          "label": "C",
+          "content": "$2x^2 + 1$"
+        },
+        {
+          "label": "D",
+          "content": "$2x + 1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据原函数的定义，如果 $F'(x)=f(x)$，那么 $F(x)$ 就是 $f(x)$ 的原函数",
+        "提示2：对每个选项求导，看哪个选项的导数等于 $f(x)=2x$",
+        "提示3：根据求导公式 $(x^n)'=nx^{n - 1}$ 进行求导计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：函数回代技巧",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=2x + 1$，其不定积分 $\\int f(x)dx$ 对应的原函数 $F(x)$ 满足 $F(0)=1$，则 $F(x)=$ ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$x^2 + x + 1$",
+      "hints": [
+        "提示1：先根据不定积分的运算规则求出 $\\int f(x)dx$ 的表达式",
+        "提示2：不定积分结果会含有一个常数 $C$",
+        "提示3：将 $F(0)=1$ 代入求出常数 $C$ 的值"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：分部积分法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "使用分部积分法计算不定积分 $\\int x\\cos x dx$ 的结果为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$x\\sin x + \\cos x + C$",
+      "hints": [
+        "提示1：根据分部积分公式 $\\int u dv = uv - \\int v du$，选择合适的 $u$ 和 $dv$",
+        "提示2：令 $u = x$，$dv = \\cos x dx$，求出 $du$ 和 $v$",
+        "提示3：将 $u$、$v$、$du$ 代入分部积分公式进行计算"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：定积分计算",
+      "error": "Invalid \\escape: line 17 column 24 (char 488)"
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：变上限积分求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "设 $F(x)=\\int_{0}^{x} t^2 dt$，则 $F'(x)$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$x^2$",
+      "hints": [
+        "提示1：根据变上限积分求导公式，若 $F(x)=\\int_{a}^{x} f(t) dt$，则 $F'(x)=f(x)$",
+        "提示2：在本题中找到对应的 $f(t)$",
+        "提示3：将 $x$ 代入 $f(t)$ 即可得到 $F'(x)$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：积分课程总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=3x^2$，则它的一个原函数 $F(x)$ 为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$x^3 + C$（$C$ 为常数）",
+      "hints": [
+        "提示1：根据不定积分与原函数的关系，求 $f(x)$ 的原函数就是求 $\\int f(x)dx$",
+        "提示2：利用积分公式 $\\int x^n dx = \\frac{1}{n + 1}x^{n + 1} + C$（$n\\neq -1$）进行计算",
+        "提示3：对 $3x^2$ 进行积分，注意积分常数 $C$"
+      ]
+    }
+  ],
+  "count": 12
+}

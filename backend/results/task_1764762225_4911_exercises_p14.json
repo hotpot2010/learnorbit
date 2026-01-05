@@ -1,0 +1,69 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：input函数使用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在Python中，若要从用户那里获取信息，并给出提示信息“请输入您的年龄”，以下正确的调用函数方式是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "input(请输入您的年龄)"
+        },
+        {
+          "label": "B",
+          "content": "input('请输入您的年龄')"
+        },
+        {
+          "label": "C",
+          "content": "input[请输入您的年龄]"
+        },
+        {
+          "label": "D",
+          "content": "input{请输入您的年龄}"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的input函数的使用方法，函数名后面要跟括号",
+        "提示2：括号里面要放字符串作为给用户的提示信息，字符串需要用引号引起来",
+        "提示3：注意区分不同的符号，如括号、方括号、花括号，正确的是括号"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：BMI计算器实现",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在Python中，要从用户那里获取身高信息并给出提示“请输入您的身高（米）”，正确调用 `input` 函数的方式是以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "input('请输入您的身高（米）')"
+        },
+        {
+          "label": "B",
+          "content": "input请输入您的身高（米）"
+        },
+        {
+          "label": "C",
+          "content": "input[请输入您的身高（米）]"
+        },
+        {
+          "label": "D",
+          "content": "input(请输入您的身高（米）)"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频，调用函数时函数名后面要跟括号",
+        "提示2：括号里面要放字符串作为给用户的提示信息",
+        "提示3：字符串需要用引号括起来"
+      ]
+    }
+  ],
+  "count": 2
+}

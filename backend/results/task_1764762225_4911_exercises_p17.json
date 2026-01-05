@@ -1,0 +1,69 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：嵌套条件判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知判断规则：若对象心情指数小于 6.0，判断他当晚是否在家，若在家则不能打游戏，否则拥有自由；若对象心情大好，奖励一个 switch 作为新年礼物。现有对象 A，心情指数为 5.5，当晚在家，对象 B 心情大好。以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "对象 A 可以打游戏，对象 B 没有新年礼物"
+        },
+        {
+          "label": "B",
+          "content": "对象 A 不可以打游戏，对象 B 有新年礼物"
+        },
+        {
+          "label": "C",
+          "content": "对象 A 可以打游戏，对象 B 有新年礼物"
+        },
+        {
+          "label": "D",
+          "content": "对象 A 不可以打游戏，对象 B 没有新年礼物"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示 1：先根据对象 A 的心情指数和是否在家的情况，按照规则判断其能否打游戏",
+        "提示 2：再根据对象 B 的心情状态，按照规则判断其是否有新年礼物",
+        "提示 3：回顾视频中提到的嵌套条件判断规则来进行分析"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：逻辑运算符",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知对于对象，当心情指数小于 $6.0$ 时，判断其当晚是否在家，若在家则不能打游戏，若不在家则有自由；同时若对象心情大好，会奖励一个 switch 作为新年礼物。现在对象心情指数为 $5.5$，且当晚在家，心情大好，那么以下说法正确的是：",
+      "choices": [
+        {
+          "label": "A",
+          "content": "对象不能打游戏，但能获得 switch"
+        },
+        {
+          "label": "B",
+          "content": "对象能打游戏，且能获得 switch"
+        },
+        {
+          "label": "C",
+          "content": "对象不能打游戏，也不能获得 switch"
+        },
+        {
+          "label": "D",
+          "content": "对象能打游戏，但不能获得 switch"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先根据心情指数和是否在家判断能否打游戏",
+        "提示2：再根据心情状况判断是否能获得 switch",
+        "提示3：按照视频中给出的条件逻辑进行推理"
+      ]
+    }
+  ],
+  "count": 2
+}

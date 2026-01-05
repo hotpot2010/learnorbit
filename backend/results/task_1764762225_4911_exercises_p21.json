@@ -1,0 +1,101 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：while循环基础",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在拍摄日落过程的自动化程序中，已知有一个用于测量当前天空亮度的函数 $measure\\_brightness()$，若要持续拍照直到天空亮度小于 500，以下哪种方式是正确且能实现完整拍摄过程的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "使用 `if (measure_brightness() >= 500): 拍照` 语句"
+        },
+        {
+          "label": "B",
+          "content": "使用 `while (measure_brightness() >= 500): 拍照` 语句"
+        },
+        {
+          "label": "C",
+          "content": "使用 `if (measure_brightness() < 500): 拍照` 语句"
+        },
+        {
+          "label": "D",
+          "content": "以上都不正确"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：思考 `if` 语句和 `while` 语句的执行特点，`if` 语句只执行一次判断，而 `while` 语句会在条件满足时持续执行。",
+        "提示2：明确需求是持续拍照直到天空亮度小于 500，即天空亮度大于等于 500 时要不断拍照。",
+        "提示3：分析每个选项的条件和语句执行逻辑是否符合需求。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：for与while对比",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "假如你想用相机拍摄日落的整个过程，又懒得一直盯着，于是打算写一个自动化程序，持续拍照直到天空亮度小于500。假设我们有一个用来测量当前天空亮度的叫做 measure_brightness 的函数可以用，若仅使用 if 判断来编写这个程序，会出现什么问题？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "程序会一直拍照，不会停止"
+        },
+        {
+          "label": "B",
+          "content": "程序会不断进行判断，直到天空亮度小于500"
+        },
+        {
+          "label": "C",
+          "content": "程序只会进行一次判断，最多也就拍一张照片，拍摄不到整个日落过程"
+        },
+        {
+          "label": "D",
+          "content": "程序会在天空亮度小于500时继续拍照一段时间后再停止"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：思考 if 判断的执行逻辑，它是只执行一次判断还是会循环执行判断",
+        "提示2：根据视频内容，只使用 if 判断在这个场景下有局限性",
+        "提示3：回忆 if 判断的特性，它不会自动重复执行判断和动作"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：while循环实践",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在使用相机拍摄日落过程时，我们希望程序持续拍摄，直到天空亮度小于 $500$。假设有一个用于测量当前天空亮度的函数 $measure\\_brightness$，若仅使用 $if$ 判断来编写程序，会出现什么问题？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "程序会无限循环拍摄，无法停止"
+        },
+        {
+          "label": "B",
+          "content": "程序会持续拍摄，直到电量耗尽"
+        },
+        {
+          "label": "C",
+          "content": "程序只会进行一次判断，最多只能拍一张照片，拍摄不到完整日落过程"
+        },
+        {
+          "label": "D",
+          "content": "程序会报错，无法运行"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的仅使用 $if$ 判断编写程序的情况",
+        "提示2：思考 $if$ 判断的执行特点，它是只执行一次还是会持续执行",
+        "提示3：结合拍摄日落过程需要持续拍摄的需求来分析"
+      ]
+    }
+  ],
+  "count": 3
+}

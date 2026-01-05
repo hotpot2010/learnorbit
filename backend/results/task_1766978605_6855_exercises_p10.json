@@ -1,0 +1,358 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：向量概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，$|\\vec{a}| = 6$，$|\\vec{b}| = 3$，$|\\vec{c}| = 3$，向量 $\\vec{a}$ 与向量 $\\vec{b}$ 的夹角为 $\\frac{\\pi}{6}$，且向量 $\\vec{c}$ 垂直于向量 $\\vec{a}$ 也垂直于向量 $\\vec{b}$，则 $(\\vec{a}+2\\vec{b})\\cdot\\vec{c}$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "9"
+        },
+        {
+          "label": "C",
+          "content": "18"
+        },
+        {
+          "label": "D",
+          "content": "27"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "根据向量垂直的性质得到向量点积为0",
+        "利用向量数量积的分配律展开式子",
+        "代入已知条件计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：向量点积",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，$|\\vec{a}| = 8$，$|\\vec{b}| = 4$，$|\\vec{c}| = 4$，且 $\\vec{a}$ 与 $\\vec{b}$ 的夹角为 $\\frac{\\pi}{6}$，$\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则 $\\vec{a} \\cdot \\vec{b} =$ ___，$\\vec{a} \\cdot \\vec{c} =$ ___。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "16\\sqrt{3};0",
+      "hints": [
+        "根据向量点积公式 $\\vec{a}\\cdot\\vec{b}=|\\vec{a}||\\vec{b}|\\cos\\theta$ 计算 $\\vec{a}\\cdot\\vec{b}$",
+        "当两个向量垂直时，它们的点积为0，据此计算 $\\vec{a}\\cdot\\vec{c}$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：向量叉积",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，$|\\vec{a}| = 8$，$|\\vec{b}| = 4$，$\\vec{a}$ 与 $\\vec{b}$ 的夹角为 $\\frac{\\pi}{6}$，$\\vec{c}$ 垂直于 $\\vec{a}$ 且垂直于 $\\vec{b}$，$|\\vec{c}| = 5$，则向量 $\\vec{a}$ 与 $\\vec{b}$ 的叉积 $|\\vec{a} \\times \\vec{b}|$ 的值为___，向量 $\\vec{a} \\times \\vec{b}$ 与 $\\vec{c}$ 的数量积 $(\\vec{a} \\times \\vec{b}) \\cdot \\vec{c}$ 的值为___。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "16;±80",
+      "hints": [
+        "根据向量叉积的模的计算公式 $|\\vec{a} \\times \\vec{b}| = |\\vec{a}| |\\vec{b}| \\sin\\theta$ 计算 $|\\vec{a} \\times \\vec{b}|$。",
+        "判断 $\\vec{a} \\times \\vec{b}$ 与 $\\vec{c}$ 的位置关系，再根据向量数量积公式计算 $(\\vec{a} \\times \\vec{b}) \\cdot \\vec{c}$。",
+        "注意 $\\vec{a} \\times \\vec{b}$ 与 $\\vec{c}$ 可能同向，也可能反向。"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：向量垂直条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，$|\\vec{a}| = 6$，$|\\vec{b}| = 3$，$|\\vec{c}| = 3$，且向量 $\\vec{a}$ 与 $\\vec{b}$ 的夹角为 $\\frac{\\pi}{6}$，向量 $\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则 $(\\vec{a} + 2\\vec{b})\\cdot\\vec{c} =$ ___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "0",
+      "hints": [
+        "根据向量垂直的性质，若两向量垂直，则它们的数量积为0。",
+        "利用向量数量积的分配律来计算 $(\\vec{a} + 2\\vec{b})\\cdot\\vec{c}$。",
+        "分别计算 $\\vec{a}\\cdot\\vec{c}$ 和 $\\vec{b}\\cdot\\vec{c}$ 的值。"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：向量平行条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，$|\\vec{a}| = 6$，$|\\vec{b}| = 3$，$|\\vec{c}| = 3$，且 $\\vec{a}$ 与 $\\vec{b}$ 的夹角为 $\\frac{\\pi}{6}$，$\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则 $(\\vec{a} + 2\\vec{b})\\cdot\\vec{c} =$ ___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "0",
+      "hints": [
+        "根据向量数量积的分配律展开式子",
+        "利用向量垂直的性质计算结果"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：向量叉积模计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，其中 $|\\vec{a}| = 8$，$|\\vec{b}| = 4$，$|\\vec{c}| = 4$，且 $\\vec{a}$ 与 $\\vec{b}$ 的夹角是 $\\frac{\\pi}{6}$，$\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则 $|\\vec{a}\\times\\vec{b}|$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$8$"
+        },
+        {
+          "label": "B",
+          "content": "$16$"
+        },
+        {
+          "label": "C",
+          "content": "$8\\sqrt{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$16\\sqrt{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回忆向量叉积模的计算公式",
+        "明确公式中各参数的值",
+        "准确计算三角函数值"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：向量混合积计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，$|\\vec{a}| = 6$，$|\\vec{b}| = 3$，$|\\vec{c}| = 3$，且 $\\vec{a}$ 与 $\\vec{b}$ 的夹角为 $\\frac{\\pi}{6}$，$\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则向量混合积 $(\\vec{a}\\times\\vec{b})\\cdot\\vec{c}$ 的值为 ___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "27; -27",
+      "hints": [
+        "先根据向量叉积公式求出 $\\vec{a}\\times\\vec{b}$ 的模长",
+        "再结合向量混合积的性质以及 $\\vec{c}$ 与 $\\vec{a}\\times\\vec{b}$ 的关系确定最终结果",
+        "注意向量混合积的值有正负两种情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：向量运算示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，$|\\vec{a}| = 6$，$|\\vec{b}| = 3$，$|\\vec{c}| = 3$，且向量 $\\vec{a}$ 与 $\\vec{b}$ 的夹角为 $\\frac{\\pi}{6}$，向量 $\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则 $(\\vec{a} + 2\\vec{b})\\cdot\\vec{c}$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "18"
+        },
+        {
+          "label": "C",
+          "content": "9"
+        },
+        {
+          "label": "D",
+          "content": "36"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "根据向量数量积的分配律展开式子",
+        "利用向量垂直的性质进行计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：向量叉积计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知向量 $\\vec{a}$ 的模 $|\\vec{a}| = 8$，向量 $\\vec{b}$ 的模 $|\\vec{b}| = 4$，且 $\\vec{a}$ 与 $\\vec{b}$ 的夹角为 $\\frac{\\pi}{3}$，向量 $\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则 $|\\vec{a} \\times \\vec{b}|$ 的值为___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "16\\sqrt{3}",
+      "hints": [
+        "先明确向量叉积的模的计算公式",
+        "找到公式中对应的向量模和夹角的值",
+        "代入公式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面方程求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，$|\\vec{a}| = 6$，$|\\vec{b}| = 3$，$|\\vec{c}| = 3$，且向量 $\\vec{a}$ 与向量 $\\vec{b}$ 的夹角是 $\\frac{\\pi}{6}$，向量 $\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则 $(\\vec{a} + 2\\vec{b})\\cdot\\vec{c}$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "18"
+        },
+        {
+          "label": "C",
+          "content": "9"
+        },
+        {
+          "label": "D",
+          "content": "27"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "根据向量垂直的性质，若两向量垂直，则它们的数量积为0",
+        "利用向量数量积的分配律来计算 $(\\vec{a} + 2\\vec{b})\\cdot\\vec{c}$",
+        "分别计算 $\\vec{a}\\cdot\\vec{c}$ 和 $\\vec{b}\\cdot\\vec{c}$ 的值"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：平面方程求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，$|\\vec{a}| = 6$，$|\\vec{b}| = 3$，$|\\vec{c}| = 3$，且 $\\vec{a}$ 与 $\\vec{b}$ 的夹角为 $\\frac{\\pi}{6}$，$\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则 $(\\vec{a} + 2\\vec{b})\\cdot\\vec{c} =$ ___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "0",
+      "hints": [
+        "根据向量垂直的性质得到向量点积为0",
+        "利用向量数量积的分配律展开式子",
+        "将已知条件代入展开后的式子进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：空间直线方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$ 的模等于 $6$，$\\vec{b}$ 的模等于 $3$，$\\vec{c}$ 的模等于 $3$，且 $\\vec{a}$ 与 $\\vec{b}$ 的夹角是 $\\frac{\\pi}{6}$，$\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则 $(\\vec{a}+\\vec{b})\\cdot\\vec{c}$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "9"
+        },
+        {
+          "label": "C",
+          "content": "18"
+        },
+        {
+          "label": "D",
+          "content": "27"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "根据向量垂直的性质得到向量点积为0",
+        "利用向量乘法分配律展开式子",
+        "将已知条件代入展开后的式子计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：直线方程形式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，$|\\vec{a}| = 6$，$|\\vec{b}| = 3$，$|\\vec{c}| = 3$，且向量 $\\vec{a}$ 与 $\\vec{b}$ 的夹角为 $\\frac{\\pi}{6}$，向量 $\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则 $(\\vec{a} + 2\\vec{b})\\cdot\\vec{c} =$ ___；$\\vec{a}\\cdot\\vec{b} =$ ___。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "0;9\\sqrt{3}",
+      "hints": [
+        "根据向量垂直的性质计算第一个空",
+        "根据向量数量积公式计算第二个空"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：向量的运算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，$|\\vec{a}| = 6$，$|\\vec{b}| = 3$，$|\\vec{c}| = 3$，且向量 $\\vec{a}$ 与向量 $\\vec{b}$ 的夹角是 $\\frac{\\pi}{6}$，向量 $\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则 $(\\vec{a} + 2\\vec{b})\\cdot\\vec{c}$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "3"
+        },
+        {
+          "label": "C",
+          "content": "6"
+        },
+        {
+          "label": "D",
+          "content": "9"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "根据向量垂直的性质，若两向量垂直，则它们的数量积为0。",
+        "利用向量数量积的分配律展开 $(\\vec{a} + 2\\vec{b})\\cdot\\vec{c}$。",
+        "分别计算 $\\vec{a}\\cdot\\vec{c}$ 和 $\\vec{b}\\cdot\\vec{c}$ 的值。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求直线交点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量，向量 $\\vec{a}$ 的模 $|\\vec{a}| = 6$，向量 $\\vec{b}$ 的模 $|\\vec{b}| = 3$，向量 $\\vec{c}$ 的模 $|\\vec{c}| = 3$，且 $\\vec{a}$ 与 $\\vec{b}$ 的夹角为 $\\frac{\\pi}{6}$，$\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则向量 $(\\vec{a} + \\vec{b})\\cdot\\vec{c}$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "9"
+        },
+        {
+          "label": "C",
+          "content": "18"
+        },
+        {
+          "label": "D",
+          "content": "27"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "根据向量垂直的性质得到向量点积为0",
+        "利用向量数量积的分配律计算所求式子"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：向量平行求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三个向量 $\\vec{a}$、$\\vec{b}$、$\\vec{c}$，$|\\vec{a}| = 6$，$|\\vec{b}| = 3$，$|\\vec{c}| = 3$，且 $\\vec{a}$ 与 $\\vec{b}$ 的夹角为 $\\frac{\\pi}{6}$，$\\vec{c}$ 垂直于 $\\vec{a}$ 也垂直于 $\\vec{b}$，则 $(\\vec{a} + 2\\vec{b})\\cdot\\vec{c} =$ ___；$\\vec{a}\\cdot\\vec{b} =$ ___",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "0;9\\sqrt{3}",
+      "hints": [
+        "根据向量垂直的性质计算数量积",
+        "利用向量数量积公式计算两向量的数量积"
+      ]
+    }
+  ],
+  "count": 16
+}

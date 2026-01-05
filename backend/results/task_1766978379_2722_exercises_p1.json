@@ -1,0 +1,517 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：GDP概念讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到宏观经济学给多数人的感受是怎样的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "非常具体、实际"
+        },
+        {
+          "label": "B",
+          "content": "非常虚假、空洞，非常抽象"
+        },
+        {
+          "label": "C",
+          "content": "非常简单、易懂"
+        },
+        {
+          "label": "D",
+          "content": "非常生动、有趣"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中对学习宏观经济学感受的描述",
+        "提示2：注意提到的是多数人学习宏观经济学的普遍感受",
+        "提示3：对比各选项与视频内容进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：GDP计算探讨",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "许多人学习宏观经济学时感觉其“假大空”“抽象”，主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济学的理论过于复杂，难以理解"
+        },
+        {
+          "label": "B",
+          "content": "宏观经济学的研究对象是整个社会和国家，范围太大"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济学缺乏实际应用价值"
+        },
+        {
+          "label": "D",
+          "content": "宏观经济学的学习方法不正确"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的人们学习宏观经济学有这种感受的原因",
+        "提示2：重点关注宏观经济学研究对象的特点",
+        "提示3：分析每个选项与视频中所讲原因的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：GDP概念与计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学研究对象范围大，很多人学习宏观经济学感觉抽象、不切实际。下列关于宏观经济指标GDP（国内生产总值）的理解，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "GDP是指一个国家（或地区）所有常住单位在一定时期内生产活动的最终成果，只计算最终产品价值，不计算中间产品价值，避免重复计算"
+        },
+        {
+          "label": "B",
+          "content": "GDP计算的是一年内一个国家（或地区）所销售的全部产品和服务的市场价值总和"
+        },
+        {
+          "label": "C",
+          "content": "GDP只包括物质生产部门的生产成果，不包括非物质生产部门的成果"
+        },
+        {
+          "label": "D",
+          "content": "GDP核算时，二手商品的交易价值也应计入其中"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：明确GDP的定义，它是衡量一个国家或地区经济活动总量的重要指标",
+        "提示2：思考GDP计算的范围和对象，区分最终产品与中间产品、生产与销售、物质与非物质生产部门等概念",
+        "提示3：分析二手商品交易是否属于当期生产活动"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：GNP概念及与GDP关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学研究的对象是整个社会、整个国家，其范围非常大。以下关于宏观经济指标GNP和GDP的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "GNP是指一个国家（或地区）所有常住单位在一定时期内生产活动的最终成果，与GDP概念完全相同"
+        },
+        {
+          "label": "B",
+          "content": "GDP强调的是国民原则，GNP强调的是国土原则"
+        },
+        {
+          "label": "C",
+          "content": "GNP = GDP + 国外净收入（从国外得到的要素收入－支付给国外的要素收入）"
+        },
+        {
+          "label": "D",
+          "content": "GDP和GNP在数值上总是相等的"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：明确GNP和GDP的定义及两者的区别",
+        "提示2：了解GNP和GDP分别遵循的原则",
+        "提示3：掌握GNP和GDP之间的数量关系公式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：国民收入核算生产法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学给很多人的感觉是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "非常具体、形象"
+        },
+        {
+          "label": "B",
+          "content": "非常虚假、空洞，非常抽象"
+        },
+        {
+          "label": "C",
+          "content": "非常实际、容易掌握"
+        },
+        {
+          "label": "D",
+          "content": "与生活无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中对学习宏观部分的感受描述",
+        "提示2：视频提到多数人学习宏观有特定的感受",
+        "提示3：结合宏观研究对象范围大的特点来思考其给人的感觉"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：生产法核算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到宏观经济学学习时大部分人会有什么样的感受？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "觉得宏观经济学很具体、很实际"
+        },
+        {
+          "label": "B",
+          "content": "觉得宏观经济学很虚假、很空洞，非常抽象"
+        },
+        {
+          "label": "C",
+          "content": "觉得宏观经济学很容易掌握"
+        },
+        {
+          "label": "D",
+          "content": "觉得宏观经济学与生活无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于宏观经济学学习感受的描述",
+        "提示2：注意视频中提到的宏观经济学特点的关键词",
+        "提示3：对比各个选项与视频描述的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：支出法核算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学学习起来让人感觉比较抽象，原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济学的研究方法过于复杂"
+        },
+        {
+          "label": "B",
+          "content": "宏观经济学的研究对象是整个社会、整个国家，范围太大"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济学的理论缺乏实际应用价值"
+        },
+        {
+          "label": "D",
+          "content": "宏观经济学的概念难以理解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到宏观经济学学习感觉抽象的原因相关内容",
+        "提示2：重点考虑宏观经济学研究对象的特点",
+        "提示3：分析每个选项与视频所讲原因的契合度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：两法对比分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "大多数人学习宏观部分会感觉宏观学起来非常的假大空、非常的抽象，其主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观部分的内容没有实际意义"
+        },
+        {
+          "label": "B",
+          "content": "宏观的研究对象是整个社会、整个国家，范围太大"
+        },
+        {
+          "label": "C",
+          "content": "宏观部分的知识过于复杂，难以理解"
+        },
+        {
+          "label": "D",
+          "content": "宏观部分的学习方法不正确"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细阅读视频内容，寻找关于大多数人学习宏观有特定感受的原因表述",
+        "提示2：重点关注与宏观研究对象相关的描述",
+        "提示3：逐一分析每个选项，判断其是否符合视频中提到的原因"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：收入法核算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学学习起来让人感觉很抽象，主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "学习的人理解能力不足"
+        },
+        {
+          "label": "B",
+          "content": "宏观经济学的研究对象是整个社会和国家，范围太大"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济学知识点过于复杂"
+        },
+        {
+          "label": "D",
+          "content": "宏观经济学没有实际应用价值"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的宏观经济学让人感觉抽象的原因",
+        "提示2：重点关注宏观经济学研究对象的特点",
+        "提示3：分析每个选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：收入法核算GDP",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学的研究对象是整个社会和国家，范围很大，所以很多人学习宏观经济学时会有怎样的感受？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "觉得非常具体和实际"
+        },
+        {
+          "label": "B",
+          "content": "觉得非常虚假大空、抽象"
+        },
+        {
+          "label": "C",
+          "content": "觉得很容易掌握具体内容"
+        },
+        {
+          "label": "D",
+          "content": "觉得与实际生活联系紧密"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到很多人学习宏观经济学的感受相关内容",
+        "提示2：注意视频中描述宏观经济学研究对象范围大对学习感受的影响",
+        "提示3：思考宏观经济学研究对象范围大与具体、容易掌握、联系实际等表述的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投资储蓄恒等式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学研究对象范围大，很多人学习宏观经济学有抽象、难把握的感受。以下关于宏观经济学研究对象的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济学只研究单个企业的经济活动"
+        },
+        {
+          "label": "B",
+          "content": "宏观经济学研究对象是整个社会、整个国家的经济运行"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济学研究的是个人的消费行为"
+        },
+        {
+          "label": "D",
+          "content": "宏观经济学研究的是某个行业的市场竞争情况"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于宏观经济学研究对象的描述",
+        "提示2：明确宏观经济学的研究范围是比较宽泛的",
+        "提示3：分析每个选项所涉及的经济活动主体和范围是否符合宏观经济学的定义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三部门经济分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学学习起来让人感觉非常的假大空、非常的抽象，其主要原因是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济学的理论过于复杂，难以理解"
+        },
+        {
+          "label": "B",
+          "content": "宏观经济学的研究对象是整个社会、整个国家，范围太大"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济学缺乏实际应用价值"
+        },
+        {
+          "label": "D",
+          "content": "宏观经济学的数学公式太多"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到的宏观经济学让人感觉抽象的原因",
+        "提示2：重点关注宏观经济学研究对象的特点",
+        "提示3：分析每个选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三部门收支均衡",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学研究对象范围大，很多人学习宏观会有抽象、不切实际的感受，以下哪个原因最能解释这种现象？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济学的研究方法过于复杂"
+        },
+        {
+          "label": "B",
+          "content": "宏观经济学的研究对象是整个社会和国家，范围太大"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济学的理论缺乏实际应用价值"
+        },
+        {
+          "label": "D",
+          "content": "宏观经济学的公式过于难理解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频内容中提到的人们学习宏观经济学有抽象感受的原因",
+        "提示2：重点关注研究对象与这种感受之间的联系",
+        "提示3：分析每个选项与视频所讲内容的契合度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：四部门收支分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学学习起来让人感觉很抽象，主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济学的理论过于复杂，难以理解"
+        },
+        {
+          "label": "B",
+          "content": "宏观经济学的研究对象是整个社会和国家，范围太大"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济学的研究方法不科学"
+        },
+        {
+          "label": "D",
+          "content": "宏观经济学与实际生活联系不紧密"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到宏观经济学学习感受及原因的相关内容",
+        "提示2：重点关注宏观经济学研究对象的特点",
+        "提示3：分析每个选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：GDP核算局限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学学习起来让人感觉很“假大空”、很抽象，主要原因是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济学的研究方法过于复杂"
+        },
+        {
+          "label": "B",
+          "content": "宏观经济学的研究对象是整个社会和国家，范围太大"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济学的理论与实际生活无关"
+        },
+        {
+          "label": "D",
+          "content": "宏观经济学的公式太多难以理解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的宏观经济学让人感觉抽象的原因",
+        "提示2：重点关注宏观经济学研究对象的相关内容",
+        "提示3：分析每个选项与视频中知识点的关联程度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：名义与实际GDP",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学的研究对象范围很大，导致很多人学习宏观时有抽象、*假大空*的感觉。那么宏观经济学主要研究的是以下哪种范围？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单个企业的生产经营活动"
+        },
+        {
+          "label": "B",
+          "content": "单个消费者的消费行为"
+        },
+        {
+          "label": "C",
+          "content": "整个社会和国家的经济运行状况"
+        },
+        {
+          "label": "D",
+          "content": "某一行业的市场竞争情况"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：视频中提到宏观经济学的研究对象范围是很大的",
+        "提示2：要结合宏观经济学的研究范围特点来分析各选项",
+        "提示3：单个企业、单个消费者、某一行业都不属于宏观经济学研究的大范围对象"
+      ]
+    }
+  ],
+  "count": 16
+}

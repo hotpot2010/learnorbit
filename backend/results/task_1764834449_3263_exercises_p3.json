@@ -1,0 +1,630 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定积分概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个函数曲线 $y = f(x)$，在区间 $[a,b]$ 上，定积分 $\\int_{a}^{b} f(x) dx$ 的本质意义是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "函数 $f(x)$ 在区间 $[a,b]$ 上的导数"
+        },
+        {
+          "label": "B",
+          "content": "函数 $f(x)$ 在区间 $[a,b]$ 上的极限值"
+        },
+        {
+          "label": "C",
+          "content": "将区间 $[a,b]$ 细分后，对应小曲边梯形面积近似值累加的极限"
+        },
+        {
+          "label": "D",
+          "content": "函数 $f(x)$ 在区间 $[a,b]$ 上的平均值"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到定积分的本质含义，是类似将圆切割后累加的思想",
+        "提示2：导数是函数的变化率，与定积分本质不同，可排除选项A",
+        "提示3：极限是一个趋近的值，和定积分累加的概念不同，可排除选项B",
+        "提示4：函数平均值与定积分有一定关系，但不是定积分的本质意义，可排除选项D"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：定积分计算示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = x^2$ 的曲线，求该曲线与 $x$ 轴在区间 $[0, 2]$ 所围成的面积为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{8}{3}$",
+      "hints": [
+        "提示1：根据视频内容，曲线与坐标轴围成的面积可以用定积分来求解",
+        "提示2：本题所求面积为定积分 $\\int_{0}^{2} x^2 dx$",
+        "提示3：使用定积分的基本公式 $\\int x^n dx = \\frac{1}{n + 1}x^{n + 1} + C$（$n \\neq -1$）计算定积分的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：牛顿 - 莱布尼茨公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=x^2$，求曲线 $y = f(x)$ 与 $x$ 轴以及直线 $x = 0$，$x = 2$ 所围成的图形的面积。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{4}{3}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{8}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{16}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据定积分的几何意义，所求图形的面积可以用定积分来表示",
+        "提示2：利用牛顿 - 莱布尼茨公式 $\\int_{a}^{b}f(x)dx = F(b)-F(a)$，其中 $F(x)$ 是 $f(x)$ 的一个原函数",
+        "提示3：先求出 $f(x)=x^2$ 的一个原函数，再代入牛顿 - 莱布尼茨公式计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：不定积分与原函数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 的图像是一条曲线，若要计算该曲线与 $x$ 轴在区间 $[a,b]$ 所围成的面积，通常会用到下列哪个数学概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "极限"
+        },
+        {
+          "label": "B",
+          "content": "导数"
+        },
+        {
+          "label": "C",
+          "content": "积分"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的不同数学概念的应用场景",
+        "提示2：思考哪个概念与将曲线分割后的部分累加起来有关",
+        "提示3：结合求曲线与 $x$ 轴围成面积的方法来判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：换元积分法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=x\\sqrt{x^2 + 1}$，求 $\\int x\\sqrt{x^2 + 1}dx$ 的值。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{3}(x^2 + 1)^{\\frac{3}{2}} + C$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{2}{3}(x^2 + 1)^{\\frac{3}{2}} + C$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{1}{2}(x^2 + 1)^{\\frac{3}{2}} + C$"
+        },
+        {
+          "label": "D",
+          "content": "$(x^2 + 1)^{\\frac{3}{2}} + C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：使用换元积分法，设 $u = x^2 + 1$",
+        "提示2：对 $u = x^2 + 1$ 求导，得到 $du = 2xdx$，则 $xdx = \\frac{1}{2}du$",
+        "提示3：将 $xdx$ 和 $u$ 代入原积分式进行计算，再将 $u$ 换为 $x$ 的表达式"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：换元法积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "使用换元法计算积分 $\\int 2x e^{x^2} dx$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$e^{x^2} + C$",
+      "hints": [
+        "提示1：考虑使用换元法，令 $u = x^2$",
+        "提示2：求出 $du$ 与 $dx$ 的关系",
+        "提示3：将原积分转化为关于 $u$ 的积分进行计算，最后再将 $u$ 换回 $x$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：幂函数积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=x^2$，求该函数曲线与 $x$ 轴在区间 $[0, 2]$ 所围成的面积为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{8}{3}$",
+      "hints": [
+        "提示1：根据视频内容，求函数曲线与 $x$ 轴所围成的面积可以使用积分来解决",
+        "提示2：对于幂函数 $x^n$ 的积分公式为 $\\int x^n dx = \\frac{1}{n + 1}x^{n + 1} + C$（$n\\neq -1$）",
+        "提示3：本题所求面积为定积分 $\\int_{0}^{2} x^2 dx$，利用牛顿 - 莱布尼茨公式 $\\int_{a}^{b} F'(x)dx = F(b) - F(a)$ 计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：部分分式积分（可分解）",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = x^2 + 1$，求该函数曲线与 $x$ 轴在区间 $[0, 1]$ 所围成的面积为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{4}{3}$",
+      "hints": [
+        "提示1：根据积分的几何意义，所求面积可通过定积分来计算",
+        "提示2：确定被积函数为 $f(x)=x^2 + 1$，积分区间为 $[0, 1]$",
+        "提示3：使用定积分公式 $\\int_{a}^{b}(F^{\\prime}(x))dx=F(b)-F(a)$，先求出 $x^2 + 1$ 的原函数，再代入上下限计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：部分分式积分（无实根）",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个函数曲线的表达式为 $y = x^2 + 3x + 2$，求该函数曲线在区间 $[1, 3]$ 上与 $x$ 轴所围成的面积为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{52}{3}$",
+      "hints": [
+        "提示1：根据积分的几何意义，函数曲线与 $x$ 轴所围成的面积可以用定积分来表示，即 $S = \\int_{a}^{b} |f(x)| dx$，这里在区间 $[1,3]$ 上 $y = x^2 + 3x + 2>0$，所以面积 $S = \\int_{1}^{3} (x^2 + 3x + 2) dx$",
+        "提示2：利用定积分的运算法则 $\\int_{a}^{b} (f(x)+g(x)+h(x))dx=\\int_{a}^{b} f(x)dx + \\int_{a}^{b} g(x)dx+\\int_{a}^{b} h(x)dx$，将 $\\int_{1}^{3} (x^2 + 3x + 2) dx$ 拆分为 $\\int_{1}^{3} x^2 dx + 3\\int_{1}^{3} x dx + 2\\int_{1}^{3} 1 dx$",
+        "提示3：根据定积分公式 $\\int_{a}^{b} x^n dx = \\frac{1}{n + 1}x^{n + 1}\\big|_{a}^{b}$（$n\\neq - 1$）和 $\\int_{a}^{b} 1 dx = x\\big|_{a}^{b}$ 分别计算各项定积分的值，再求和。$\\int_{1}^{3} x^2 dx = \\frac{1}{3}x^3\\big|_{1}^{3}=\\frac{1}{3}(3^3 - 1^3)=\\frac{26}{3}$，$3\\int_{1}^{3} x dx = 3\\times\\frac{1}{2}x^2\\big|_{1}^{3}=\\frac{3}{2}(3^2 - 1^2)=12$，$2\\int_{1}^{3} 1 dx = 2x\\big|_{1}^{3}=2(3 - 1)=4$，最后把结果相加。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：凑微分法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = 2x$ 的曲线，求该曲线与 $x$ 轴在区间 $[0, 1]$ 所围成的面积，可通过积分的方法求解，那么积分表达式为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_0^1 2x dx$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_0^2 x dx$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_1^0 2x dx$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_0^1 x dx$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据积分求面积的知识，对于函数 $y = f(x)$ 与 $x$ 轴在区间 $[a, b]$ 所围成的面积，积分表达式为 $\\int_a^b f(x) dx$",
+        "提示2：本题中函数为 $y = 2x$，区间是 $[0, 1]$",
+        "提示3：将函数和区间代入积分表达式即可得到正确结果"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：cos换元积分法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "使用 $\\cos$ 换元积分法计算 $\\int \\sin^3x \\cos^2x dx$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$-\\frac{1}{3}\\cos^3x + \\frac{1}{5}\\cos^5x + C$",
+      "hints": [
+        "提示1：利用三角函数关系 $\\sin^2x = 1 - \\cos^2x$ 将被积函数变形",
+        "提示2：令 $t = \\cos x$，则 $dt = -\\sin x dx$",
+        "提示3：将变形后的积分式转化为关于 $t$ 的积分进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：换元符号判断规律",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知有一个函数曲线 $y = x^2 + 1$，那么积分在这类问题中通常用于求解以下哪个量？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "该函数曲线的斜率"
+        },
+        {
+          "label": "B",
+          "content": "该函数曲线在某区间与 $x$ 轴所围成的面积"
+        },
+        {
+          "label": "C",
+          "content": "该函数曲线在某点的切线方程"
+        },
+        {
+          "label": "D",
+          "content": "该函数的单调性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于积分本质及常解决问题的描述",
+        "提示2：思考积分与函数曲线相关量之间的关系",
+        "提示3：分析各选项所涉及的概念与积分的联系，函数曲线斜率、切线方程和单调性一般与导数有关，而积分用于求面积等积累量"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：sin³x积分例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求函数 $y = \\sin^3 x$ 在区间 $[0, \\frac{\\pi}{2}]$ 上的定积分 $\\int_{0}^{\\frac{\\pi}{2}} \\sin^3 x dx$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{2}{3}$",
+      "hints": [
+        "提示1：将 $\\sin^3 x$ 变形为 $\\sin^2 x \\cdot \\sin x$，再利用 $\\sin^2 x = 1 - \\cos^2 x$ 进行替换",
+        "提示2：令 $t = \\cos x$，则 $dt = -\\sin x dx$，并相应改变积分上下限",
+        "提示3：计算换元后的定积分"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：sec²x换元技巧",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数曲线为 $y = \\sec^2 x$，求该函数曲线在区间 $\\left[0, \\frac{\\pi}{4}\\right]$ 与 $x$ 轴所围成的面积为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$1$",
+      "hints": [
+        "提示1：根据定积分的几何意义，所求面积可表示为定积分 $\\int_{0}^{\\frac{\\pi}{4}} \\sec^2 x dx$",
+        "提示2：回忆基本积分公式，$\\int \\sec^2 x dx = \\tan x + C$",
+        "提示3：使用牛顿 - 莱布尼茨公式 $\\int_{a}^{b} f(x) dx = F(b) - F(a)$，其中 $F(x)$ 是 $f(x)$ 的一个原函数"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：一次根式换元",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = \\sqrt{x + 1}$ 与直线 $y = x - 1$ 所围成的封闭图形的面积为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{9}{2}$",
+      "hints": [
+        "提示1：先求出函数 $y = \\sqrt{x + 1}$ 与直线 $y = x - 1$ 的交点坐标",
+        "提示2：根据定积分的几何意义，所求面积为定积分 $\\int_{a}^{b} [f(x)-g(x)]dx$ 的值，其中 $f(x)$ 为上方函数，$g(x)$ 为下方函数，$[a,b]$ 为积分区间",
+        "提示3：确定积分区间和被积函数后，计算定积分的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二次根式换元",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知曲线 $y = x^2 + 1$，求该曲线与 $x$ 轴在区间 $[0, 1]$ 所围成的面积，可通过定积分来计算，该定积分表达式为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_0^1 (x^2 + 1)dx$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_0^1 x^2dx$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_0^1 (x^2 - 1)dx$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_1^0 (x^2 + 1)dx$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频内容，定积分可以用来求函数曲线与坐标轴围成的面积",
+        "提示2：当求曲线 $y = f(x)$ 与 $x$ 轴在区间 $[a, b]$ 所围成的面积时，定积分表达式为 $\\int_a^b f(x)dx$",
+        "提示3：本题中 $f(x)=x^2 + 1$，区间是 $[0, 1]$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：三角代换法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知曲线 $y = \\sqrt{4 - x^2}$，求该曲线与 $x$ 轴所围成的图形的面积，可通过积分来计算，积分表达式为 $\\int_{-2}^{2} \\sqrt{4 - x^2} dx$，使用三角代换法计算该积分的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$2\\pi$",
+      "hints": [
+        "提示1：令 $x = 2\\sin t$，则 $dx = 2\\cos t dt$",
+        "提示2：确定积分上下限，当 $x=-2$ 时，$t = -\\frac{\\pi}{2}$；当 $x = 2$ 时，$t = \\frac{\\pi}{2}$",
+        "提示3：将 $x = 2\\sin t$ 代入被积函数化简，再进行积分计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：换元法应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知曲线 $y = x^2 + 1$，求该曲线与 $x$ 轴在区间 $[0, 2]$ 所围成的面积，可通过定积分来求解，设积分式为 $\\int_{0}^{2} (x^2 + 1)dx$，若使用换元法，令 $t = x - 1$，则原积分式可化为以下哪个式子？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{-1}^{1} ((t + 1)^2 + 1)dt$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{0}^{2} (t^2 + 1)dt$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{-1}^{1} (t^2 + 1)dt$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{0}^{2} ((t - 1)^2 + 1)dt$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先根据换元法，$x$ 要用 $t$ 表示出来，由 $t = x - 1$ 可得 $x = t + 1$",
+        "提示2：然后要根据换元后 $t$ 与 $x$ 的关系，重新确定积分上下限，当 $x = 0$ 时求 $t$ 的值，当 $x = 2$ 时求 $t$ 的值",
+        "提示3：将 $x = t + 1$ 代入被积函数 $x^2 + 1$ 中，再结合新的积分上下限得到新的积分式"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：部分积分法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=x^2$，求该函数曲线与 $x$ 轴在区间 $[0, 2]$ 所围成的面积为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{8}{3}$",
+      "hints": [
+        "提示1：根据积分的几何意义，函数曲线与 $x$ 轴在区间 $[a,b]$ 所围成的面积可以用定积分 $\\int_{a}^{b} f(x)dx$ 来表示",
+        "提示2：本题中 $a = 0$，$b = 2$，$f(x)=x^2$，即求 $\\int_{0}^{2} x^2dx$ 的值",
+        "提示3：根据积分公式 $\\int x^n dx=\\frac{1}{n + 1}x^{n + 1}+C$（$n\\neq - 1$）来计算定积分"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：分部积分法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = x\\mathrm{e}^x$ 的曲线，求该函数在区间 $[0, 1]$ 与 $x$ 轴所围成的面积为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$1$",
+      "hints": [
+        "提示1：根据定积分的几何意义，所求面积为 $\\int_{0}^{1} x\\mathrm{e}^x dx$",
+        "提示2：使用分部积分法，设 $u = x$，$dv = \\mathrm{e}^x dx$，则 $du = dx$，$v = \\mathrm{e}^x$",
+        "提示3：根据分部积分公式 $\\int_{a}^{b} u dv = [uv]_{a}^{b}-\\int_{a}^{b} v du$ 进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：分部积分顺序规则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个函数曲线的方程为 $y = x^2$，要求计算该函数曲线在区间 $[0, 1]$ 与 $x$ 轴所围成的图形的面积，以下哪个式子是正确的积分表达式？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_0^1 x^2 dx$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_1^0 x^2 dx$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_0^1 x dx$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_1^0 x dx$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据定积分的几何意义，由函数 $y = f(x)$，直线 $x = a$，$x = b$ 以及 $x$ 轴所围成的曲边梯形的面积，当 $f(x) \\geq 0$ 在区间 $[a, b]$ 上成立时，面积可以用定积分 $\\int_a^b f(x) dx$ 来表示。",
+        "提示2：确定积分的下限和上限，下限应该小于上限，这里区间是 $[0, 1]$。",
+        "提示3：明确被积函数，题目中给出的函数曲线方程是 $y = x^2$，所以被积函数为 $x^2$。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：分部积分表格法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = f(x)$ 的曲线，求该曲线与 $x$ 轴在区间 $[a,b]$ 所围成的面积，通常使用的数学方法是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "求导数"
+        },
+        {
+          "label": "B",
+          "content": "求极限"
+        },
+        {
+          "label": "C",
+          "content": "求积分"
+        },
+        {
+          "label": "D",
+          "content": "求函数值"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到积分的本质和常见解决的问题",
+        "提示2：思考求曲线与坐标轴围成面积和积分、导数、极限、函数值之间的关系",
+        "提示3：积分的本质是将微小部分累加起来，与求曲线下的面积概念相符"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：奇偶函数定积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 是一个在 $[-a,a]$ 上的连续函数，且该函数的图像与 $x$ 轴所围成的区域在 $x$ 轴上方。若 $f(x)$ 是奇函数，那么 $\\int_{-a}^{a} f(x)dx$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$0$",
+      "hints": [
+        "提示1：回顾奇函数的性质，$f(-x)=-f(x)$",
+        "提示2：根据定积分的性质，$\\int_{-a}^{a} f(x)dx = \\int_{-a}^{0} f(x)dx + \\int_{0}^{a} f(x)dx$",
+        "提示3：对于 $\\int_{-a}^{0} f(x)dx$ ，令 $t=-x$ 进行换元，然后结合奇函数性质化简"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定积分换元限处理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 的图象是一条曲线，求由函数 $y = f(x)$，$x = a$，$x = b$ 以及 $x$ 轴所围成的曲边梯形的面积，通常可以用定积分来表示，以下哪个定积分表示该曲边梯形的面积（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{a}^{b} f(x) dx$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{b}^{a} f(x) dx$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{a}^{b} |f(x)| dx$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{b}^{a} |f(x)| dx$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：定积分中积分上下限的顺序是下限小于上限，所以先排除选项B和D",
+        "提示2：当函数 $f(x)$ 在区间 $[a,b]$ 上有正有负时，$\\int_{a}^{b} f(x) dx$ 表示的是 $x$ 轴上方的面积减去 $x$ 轴下方的面积",
+        "提示3：而求曲边梯形的面积应该是 $x$ 轴上方和下方的面积之和，所以需要取绝对值"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：华里士公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = x^2$ 的曲线，求该曲线与 $x$ 轴以及直线 $x = 1$ 所围成的图形的面积，使用积分的思想来计算，结果为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{3}$",
+      "hints": [
+        "提示1：根据积分的定义，所求图形面积可以表示为定积分 $\\int_0^1 x^2 dx$",
+        "提示2：使用积分公式 $\\int x^n dx = \\frac{x^{n + 1}}{n + 1} + C$（$n \\neq -1$）来计算定积分",
+        "提示3：计算定积分的值时，用上限代入积分结果减去下限代入积分结果"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：定积分应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = x^2$ 的曲线，求该曲线与 $x$ 轴以及直线 $x = 1$、$x = 2$ 所围成的封闭图形的面积为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{7}{3}$",
+      "hints": [
+        "提示1：根据定积分的几何意义，所求面积可以用定积分来表示",
+        "提示2：确定被积函数和积分区间，本题被积函数为 $f(x)=x^2$，积分区间是 $[1,2]$",
+        "提示3：使用定积分公式 $\\int_{a}^{b}x^n dx = \\frac{1}{n + 1}x^{n + 1}\\big|_{a}^{b}$ 进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：变上限积分求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $F(x)=\\int_{0}^{x} t^2 dt$，则 $F'(x)$ 等于（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$x^2$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{3}x^3$"
+        },
+        {
+          "label": "C",
+          "content": "$2x$"
+        },
+        {
+          "label": "D",
+          "content": "$x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据变上限积分求导定理，若 $F(x)=\\int_{a}^{x} f(t) dt$，则 $F'(x)=f(x)$",
+        "提示2：在本题中确定 $f(t)$ 的表达式",
+        "提示3：将 $x$ 代入 $f(t)$ 即可得到 $F'(x)$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：积分变量替换",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知曲线 $y = x^2 + 1$，求该曲线与 $x$ 轴在区间 $[0, 2]$ 所围成的图形面积为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{14}{3}$",
+      "hints": [
+        "提示1：根据积分的几何意义，曲线与 $x$ 轴所围成图形的面积可以用定积分来表示",
+        "提示2：本题中所求面积为 $S = \\int_{0}^{2} (x^2 + 1) dx$",
+        "提示3：利用积分公式 $\\int x^n dx = \\frac{1}{n + 1}x^{n+1} + C$（$n\\neq -1$）和 $\\int k dx = kx + C$（$k$ 为常数）来计算定积分"
+      ]
+    }
+  ],
+  "count": 28
+}

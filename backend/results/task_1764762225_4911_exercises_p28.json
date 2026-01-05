@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：类方法定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于定义一个可爱猫猫类的对象及其属性和方法的描述，正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "使用 `innate` 方法定义对象拥有的属性，通过在 `class` 关键字定义的类名后加括号调用 `init` 创建新对象并赋值属性，但未定义对象拥有的方法"
+        },
+        {
+          "label": "B",
+          "content": "使用 `init` 方法定义类，通过在 `class` 关键字定义的类名后加括号调用 `innate` 创建新对象并赋值属性，同时定义了对象拥有的方法"
+        },
+        {
+          "label": "C",
+          "content": "使用 `class` 关键字创建一个类，通过 `init` 这个构造方法定义对象拥有哪些属性，通过在 `class`、名称后面加括号，可以调用 `init` 来创建新对象并把对应属性进行赋值，且已完整定义了对象拥有的方法"
+        },
+        {
+          "label": "D",
+          "content": "使用 `class` 关键字创建一个类，通过 `init` 这个构造方法定义对象拥有哪些属性，通过在 `class`、名称后面加括号，可以调用 `init` 来创建新对象并把对应属性进行赋值，但还未定义对象拥有的方法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中创建类和定义对象属性的步骤，是使用哪个关键字创建类，哪个方法定义属性的",
+        "提示2：注意区分 `init` 和 `innate` 的作用",
+        "提示3：视频中明确提到还留了一个坑没填，即还未定义对象拥有的方法"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：学生类属性定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在编程中，要创建一个学生类，该类的对象具有姓名、年龄、成绩属性，以下创建新对象并赋值属性的正确方式是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "使用 `class` 关键字创建类后，直接给对象属性赋值，如 `student.name = '张三'`"
+        },
+        {
+          "label": "B",
+          "content": "使用 `class` 关键字创建类，通过 `init` 方法定义对象属性，然后通过 `class`、类名后面加括号调用 `init` 来创建新对象并赋值属性，如 `student = Student('张三', 18, 90)`"
+        },
+        {
+          "label": "C",
+          "content": "使用 `init` 关键字创建类，再用 `class` 调用创建对象并赋值属性，如 `init Student; student = class('张三', 18, 90)`"
+        },
+        {
+          "label": "D",
+          "content": "使用 `class` 关键字创建类，直接在类外创建对象并赋值属性，不使用 `init` 方法，如 `student = Student; student.name = '张三'; student.age = 18; student.score = 90`"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的创建类和对象的关键字是 `class`",
+        "提示2：思考如何通过特定方法定义对象具有哪些属性，以及怎样创建新对象并赋值",
+        "提示3：明确 `init` 方法在创建对象和赋值属性过程中的作用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：成绩设置方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在编程中，若要创建一个新的对象并为其属性赋值，以下哪种操作是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "仅使用 `class` 关键字创建类，不进行其他操作"
+        },
+        {
+          "label": "B",
+          "content": "使用 `class` 关键字创建类，通过 `innate` 方法定义对象属性，但不调用 `init` 方法"
+        },
+        {
+          "label": "C",
+          "content": "使用 `class` 关键字创建类，在类名后面加括号调用 `init` 方法来创建新对象并为对应属性赋值"
+        },
+        {
+          "label": "D",
+          "content": "直接使用 `init` 方法，不使用 `class` 关键字创建类"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中创建类和对象的步骤，先要用 `class` 关键字创建类",
+        "提示2：思考如何为对象的属性赋值，需要调用哪个方法",
+        "提示3：明确 `class`、`innate` 和 `init` 方法各自的作用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：打印成绩方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在Python中，要创建一个宠物猫类，该类的对象具有名字、年龄、花色、属性，以下创建类和初始化对象属性的步骤正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "先使用 `class` 关键字创建类，再使用 `init` 方法定义对象属性，最后通过类名加括号调用 `init` 创建新对象并赋值属性"
+        },
+        {
+          "label": "B",
+          "content": "先使用 `init` 方法定义对象属性，再使用 `class` 关键字创建类，最后通过类名加括号调用 `init` 创建新对象并赋值属性"
+        },
+        {
+          "label": "C",
+          "content": "先通过类名加括号调用 `init` 创建新对象并赋值属性，再使用 `class` 关键字创建类，最后使用 `init` 方法定义对象属性"
+        },
+        {
+          "label": "D",
+          "content": "先使用 `class` 关键字创建类，再通过类名加括号调用 `init` 创建新对象并赋值属性，最后使用 `init` 方法定义对象属性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频，创建类是使用 `class` 关键字，这是第一步",
+        "提示2：定义对象属性是通过 `init` 方法，它应该在类创建之后进行",
+        "提示3：最后是通过类名加括号调用 `init` 来创建新对象并为对象的属性赋值"
+      ]
+    }
+  ],
+  "count": 4
+}

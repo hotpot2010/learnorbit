@@ -1,0 +1,1191 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限的概念与存在性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=\\begin{cases}2x + 1, & x < 0 \\\\ x^2 - 1, & x \\geq 0 \\end{cases}$，则 $\\lim_{x \\to 0^-} f(x)$ 和 $\\lim_{x \\to 0^+} f(x)$ 分别为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$ 和 $-1$"
+        },
+        {
+          "label": "B",
+          "content": "$-1$ 和 $1$"
+        },
+        {
+          "label": "C",
+          "content": "$1$ 和 $1$"
+        },
+        {
+          "label": "D",
+          "content": "$-1$ 和 $-1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：求 $\\lim_{x \\to 0^-} f(x)$ 时，因为 $x$ 从左侧趋近于 $0$，即 $x<0$，此时应代入 $f(x)=2x + 1$ 进行计算",
+        "提示2：求 $\\lim_{x \\to 0^+} f(x)$ 时，因为 $x$ 从右侧趋近于 $0$，即 $x\\geq0$，此时应代入 $f(x)=x^2 - 1$ 进行计算",
+        "提示3：分别计算两个极限的值，再与选项进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限的性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册可以被分为多个板块，以下不属于其中板块的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "极限"
+        },
+        {
+          "label": "B",
+          "content": "一元函数、微分学"
+        },
+        {
+          "label": "C",
+          "content": "多元函数、积分学"
+        },
+        {
+          "label": "D",
+          "content": "微分方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的高等数学上册的板块划分",
+        "提示2：明确每个板块的名称，与选项进行对比",
+        "提示3：注意视频中只提到了一元函数相关内容，未提及多元函数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷小的概念与性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册可以被分为四大板块，按照概念性质、计算、应用的顺序学习，以下哪个选项不属于这四大板块？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "极限"
+        },
+        {
+          "label": "B",
+          "content": "一元函数微积分学"
+        },
+        {
+          "label": "C",
+          "content": "多元函数微积分学"
+        },
+        {
+          "label": "D",
+          "content": "微分方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的高等数学上册的四大板块内容",
+        "提示2：明确每个板块的名称和范围",
+        "提示3：对比选项与视频所讲的板块内容，找出不符合的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷小的比较",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册可被分为极限，一元函数、微分学、一元函数、积分学、微分方程 4 大板块，那么按照概念性质计算应用的顺序学习，在学习一元函数积分学时，前面应该已经学过了以下哪个板块？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一元函数微分学"
+        },
+        {
+          "label": "B",
+          "content": "微分方程"
+        },
+        {
+          "label": "C",
+          "content": "都还没学"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频内容，各板块是按概念性质计算应用的顺序学习的",
+        "提示2：思考各板块在学习顺序中的先后关系，极限和一元函数微分学应在一元函数积分学之前",
+        "提示3：微分方程通常在积分学之后学习"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：未定式判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在高等数学中，极限是重要的一部分。已知函数 $f(x)=\\frac{x^2 - 1}{x - 1}$，当 $x\\to 1$ 时，该极限属于以下哪种情况？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "可直接代入计算"
+        },
+        {
+          "label": "B",
+          "content": "是 $\\frac{0}{0}$ 型未定式"
+        },
+        {
+          "label": "C",
+          "content": "是 $\\frac{\\infty}{\\infty}$ 型未定式"
+        },
+        {
+          "label": "D",
+          "content": "极限不存在"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先将 $x = 1$ 代入函数的分子和分母，看其值的情况",
+        "提示2：若分子分母都为 0，则是 $\\frac{0}{0}$ 型未定式",
+        "提示3：若分子分母都趋于无穷大，则是 $\\frac{\\infty}{\\infty}$ 型未定式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：未定式化简技巧",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知高等数学上册包含极限、一元函数微积分学、常微分方程等板块，求极限 $\\lim_{x \\to 0} \\frac{\\ln(1 + x) - x}{x^2}$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$-\\frac{1}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$-1$"
+        },
+        {
+          "label": "D",
+          "content": "$1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：利用泰勒级数展开 $\\ln(1 + x) = x - \\frac{x^2}{2} + \\frac{x^3}{3} - \\cdots$",
+        "提示2：将展开式代入原式化简分子",
+        "提示3：对化简后的式子约分并取极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：极限计算方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$4$",
+      "hints": [
+        "提示1：首先对分子进行因式分解",
+        "提示2：分子 $x^2 - 4$ 可分解为 $(x + 2)(x - 2)$",
+        "提示3：约分后再求极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷大比较",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在高等数学中，极限和一元微分学是重要部分。已知当 $x \\to 0$ 时，$f(x) = \\frac{1 - \\cos x}{x^2}$，$g(x) = \\ln(1 + x^2)$，$h(x) = e^{x^2} - 1$，则当 $x \\to 0$ 时，这三个函数关于无穷小的阶数关系是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$f(x)$ 是比 $g(x)$ 高阶的无穷小，$g(x)$ 是比 $h(x)$ 高阶的无穷小"
+        },
+        {
+          "label": "B",
+          "content": "$f(x)$ 是比 $g(x)$ 低阶的无穷小，$g(x)$ 是比 $h(x)$ 低阶的无穷小"
+        },
+        {
+          "label": "C",
+          "content": "$f(x)$，$g(x)$，$h(x)$ 是同阶无穷小，但不是等价无穷小"
+        },
+        {
+          "label": "D",
+          "content": "$f(x)$，$g(x)$，$h(x)$ 是等价无穷小"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：利用等价无穷小替换公式，当 $x \\to 0$ 时，$1 - \\cos x \\sim \\frac{1}{2}x^2$，$\\ln(1 + x) \\sim x$，$e^x - 1 \\sim x$",
+        "提示2：分别对 $f(x)$，$g(x)$，$h(x)$ 进行等价无穷小替换后求极限",
+        "提示3：通过计算 $\\lim_{x \\to 0}\\frac{f(x)}{g(x)}$，$\\lim_{x \\to 0}\\frac{g(x)}{h(x)}$ 等极限来判断阶数关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷小乘无穷大",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当 $x \\to 0$ 时，$x$ 是无穷小量，$\\frac{1}{x^2}$ 是无穷大量，那么 $\\lim_{x \\to 0} x \\cdot \\frac{1}{x^2}$ 的结果是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$1$"
+        },
+        {
+          "label": "C",
+          "content": "$+\\infty$"
+        },
+        {
+          "label": "D",
+          "content": "不存在，但不是 $\\infty$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先对 $x \\cdot \\frac{1}{x^2}$ 进行化简",
+        "提示2：化简后再求 $x \\to 0$ 时的极限",
+        "提示3：注意分母趋近于 0 时函数值的变化情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷大减无穷大",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to +\\infty} (\\sqrt{x^2 + 3x} - x)$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{3}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$3$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{1}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "不存在"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：对于 $\\lim_{x \\to +\\infty} (\\sqrt{x^2 + 3x} - x)$ 这种无穷大减无穷大的形式，可先进行分子有理化",
+        "提示2：分子分母同时乘以 $\\sqrt{x^2 + 3x} + x$",
+        "提示3：化简后再求极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：1的无穷次幂",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在高等数学中，极限和一元微积分是重要部分。对于极限 $\\lim_{x \\to \\infty} (1 + \\frac{1}{x})^x$ ，它的值是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$1$"
+        },
+        {
+          "label": "C",
+          "content": "$e$"
+        },
+        {
+          "label": "D",
+          "content": "$\\infty$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：这是一个 $1$ 的无穷次幂型的极限问题",
+        "提示2：它是一个重要极限，在高等数学中有明确的定义和结论",
+        "提示3：记住常见的重要极限公式 $\\lim_{x \\to \\infty} (1 + \\frac{1}{x})^x = e$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数列极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知数列 $\\{a_n\\}$ 满足 $a_{n + 1} = \\frac{2a_n}{a_n + 2}$，$a_1 = 1$，求 $\\lim_{n \\to \\infty} a_n$ 的值。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$1$"
+        },
+        {
+          "label": "C",
+          "content": "$2$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{1}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：设 $\\lim_{n \\to \\infty} a_n = A$（假设极限存在）",
+        "提示2：对递推公式 $a_{n + 1} = \\frac{2a_n}{a_n + 2}$ 两边同时取极限",
+        "提示3：得到关于 $A$ 的方程，求解方程并根据数列性质舍去不合理的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数列极限转定积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知高等数学上册可分为极限、一元函数微分学、一元函数积分学、微分方程 4 大板块，且每个板块按概念性质计算应用的顺序学习。那么对于极限板块的学习，首先应该学习的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "极限的计算"
+        },
+        {
+          "label": "B",
+          "content": "极限的概念"
+        },
+        {
+          "label": "C",
+          "content": "极限的性质"
+        },
+        {
+          "label": "D",
+          "content": "极限的应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频中提到的每个板块按概念性质计算应用的顺序学习",
+        "提示2：思考在这个顺序中，最先开始学习的部分是什么",
+        "提示3：依次分析概念、性质、计算、应用在学习顺序中的先后位置"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：夹逼准则求极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "利用夹逼准则求极限 $\\lim_{n \\to \\infty} \\left(\\frac{1}{\\sqrt{n^2 + 1}} + \\frac{1}{\\sqrt{n^2 + 2}} + \\cdots + \\frac{1}{\\sqrt{n^2 + n}}\\right)$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "1",
+      "hints": [
+        "提示1：先找出原式的上下界",
+        "提示2：下界为 $n$ 个 $\\frac{1}{\\sqrt{n^2 + n}}$ 相加，上界为 $n$ 个 $\\frac{1}{\\sqrt{n^2 + 1}}$ 相加",
+        "提示3：分别求上下界的极限，根据夹逼准则得出原式极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限函数模型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册可分为极限、一元函数微分学、一元函数积分学、微分方程 4 大板块，已知函数 $f(x)=\\frac{x^2 - 1}{x - 1}$，当 $x$ 趋近于 1 时，该极限属于高等数学上册哪个板块的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "极限"
+        },
+        {
+          "label": "B",
+          "content": "一元函数微分学"
+        },
+        {
+          "label": "C",
+          "content": "一元函数积分学"
+        },
+        {
+          "label": "D",
+          "content": "微分方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：明确各个板块的主要研究内容",
+        "提示2：极限板块主要研究函数在某点的极限情况",
+        "提示3：判断求 $\\lim_{x \\to 1}\\frac{x^2 - 1}{x - 1}$ 属于哪个板块的研究范畴"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数连续性与间断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册可分为四大板块，按照概念性质计算应用的顺序学习，其中不包含以下哪个板块？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "极限与一元函数微积分学"
+        },
+        {
+          "label": "B",
+          "content": "线性代数"
+        },
+        {
+          "label": "C",
+          "content": "一元函数积分学"
+        },
+        {
+          "label": "D",
+          "content": "微分方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的高等数学上册的四大板块内容",
+        "提示2：逐一分析每个选项是否在视频所提及的板块范围内",
+        "提示3：明确视频中未出现的板块即为答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：闭区间连续函数性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册分为极限、一元函数微分学、一元函数积分学、微分方程 4 大板块，我们学习每个板块是按照一定顺序进行的，这个顺序是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "概念、性质、计算、应用"
+        },
+        {
+          "label": "B",
+          "content": "性质、概念、计算、应用"
+        },
+        {
+          "label": "C",
+          "content": "计算、概念、性质、应用"
+        },
+        {
+          "label": "D",
+          "content": "应用、概念、性质、计算"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于学习每个板块顺序的描述",
+        "提示2：思考一般学习知识的逻辑顺序，通常是先了解概念",
+        "提示3：结合视频明确提到的顺序来选择"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：导数的定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册可分为四大板块，以下不属于这四大板块的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "极限"
+        },
+        {
+          "label": "B",
+          "content": "一元函数、微积分学"
+        },
+        {
+          "label": "C",
+          "content": "多元函数微积分学"
+        },
+        {
+          "label": "D",
+          "content": "微分方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的高等数学上册的四大板块内容",
+        "提示2：明确每个板块的名称并与选项进行对比",
+        "提示3：注意题目问的是不属于四大板块的选项"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：导数定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册分为极限、一元函数微积分学和微分方程 4 大板块，若已知极限板块占总知识量的 $\\frac{1}{4}$，一元函数微分学和积分学知识量占比相同，且微分方程板块知识量比一元函数微分学板块多占总知识量的 $\\frac{1}{12}$，那么一元函数微分学板块知识量占总知识量的比例是 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{3}$",
+      "hints": [
+        "提示1：设一元函数微分学板块知识量占总知识量的比例为 $x$",
+        "提示2：根据各板块知识量占比关系列出方程",
+        "提示3：结合所有板块知识量占比之和为 1 来解方程"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：导数本质与几何意义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在高等数学上册的知识体系中，我们按照概念、性质、计算、应用的顺序学习各个板块。已知有一个关于极限和一元微分学的综合问题，需要运用极限的计算方法和导数的几何意义来求解。若函数 $f(x)$ 在 $x = x_0$ 处的导数 $f'(x_0) = 2$，那么曲线 $y = f(x)$ 在点 $(x_0, f(x_0))$ 处的切线方程为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y - f(x_0) = 2(x - x_0)$"
+        },
+        {
+          "label": "B",
+          "content": "$y - f(x_0) = \\frac{1}{2}(x - x_0)$"
+        },
+        {
+          "label": "C",
+          "content": "$y - f(x_0) = -2(x - x_0)$"
+        },
+        {
+          "label": "D",
+          "content": "$y - f(x_0) = -\\frac{1}{2}(x - x_0)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确导数的几何意义，函数在某点处的导数就是该点处切线的斜率",
+        "提示2：已知函数 $f(x)$ 在 $x = x_0$ 处的导数 $f'(x_0) = 2$，那么切线的斜率 $k = 2$",
+        "提示3：根据直线的点斜式方程 $y - y_0 = k(x - x_0)$（其中 $(x_0, y_0)$ 为直线上一点，$k$ 为直线斜率）来确定切线方程"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：左导右导与可导条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在高等数学上册中，按照概念、性质、计算、应用的顺序学习，已知函数 $f(x)$ 在区间的学习属于一元函数微积分学板块，对于函数 $f(x)$ 在点 $x_0$ 处可导的充要条件是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "左导数存在"
+        },
+        {
+          "label": "B",
+          "content": "右导数存在"
+        },
+        {
+          "label": "C",
+          "content": "左导数和右导数都存在"
+        },
+        {
+          "label": "D",
+          "content": "左导数和右导数都存在且相等"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾函数在某点可导的定义",
+        "提示2：明确左导数和右导数与可导之间的关系",
+        "提示3：可导要求左右两侧的变化率情况一致"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：反函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = f(x)$ 与它的反函数 $x = f^{-1}(y)$ ，若 $f(x)=x^3 + 2x + 1$，在点 $x = 1$ 处，$f(1)=4$，则反函数在 $y = 4$ 处的导数 $(f^{-1})'(4)$ 为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{5}$"
+        },
+        {
+          "label": "B",
+          "content": "$5$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{1}{6}$"
+        },
+        {
+          "label": "D",
+          "content": "$6$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据反函数求导公式 $(f^{-1})'(y)=\\frac{1}{f'(x)}$，其中 $y = f(x)$",
+        "提示2：先对函数 $f(x)=x^3 + 2x + 1$ 求导",
+        "提示3：求出 $f(x)$ 在 $x = 1$ 处的导数值 $f'(1)$，再代入反函数求导公式中计算 $(f^{-1})'(4)$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：复合函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = \\sin(2x^2 + 3)$，求其导数 $y'$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$4x\\cos(2x^2 + 3)$"
+        },
+        {
+          "label": "B",
+          "content": "$\\cos(2x^2 + 3)$"
+        },
+        {
+          "label": "C",
+          "content": "$2x\\cos(2x^2 + 3)$"
+        },
+        {
+          "label": "D",
+          "content": "$4x\\sin(2x^2 + 3)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：设 $u = 2x^2 + 3$，则原函数 $y = \\sin u$ 是一个复合函数",
+        "提示2：根据复合函数求导法则 $y'_{x}=y'_{u}\\cdot u'_{x}$ 来计算",
+        "提示3：先对 $y = \\sin u$ 关于 $u$ 求导，再对 $u = 2x^2 + 3$ 关于 $x$ 求导，最后将结果相乘"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：隐函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y$ 是由方程 $x^2 + y^2 = 25$ 所确定的隐函数，求 $\\frac{dy}{dx}$ 在点 $(3, 4)$ 处的值。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$-\\frac{3}{4}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3}{4}$"
+        },
+        {
+          "label": "C",
+          "content": "$-\\frac{4}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{4}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：对方程 $x^2 + y^2 = 25$ 两边同时对 $x$ 求导",
+        "提示2：根据求导法则，$x^2$ 对 $x$ 求导为 $2x$，$y^2$ 对 $x$ 求导要使用链式法则，结果为 $2y\\frac{dy}{dx}$",
+        "提示3：求出 $\\frac{dy}{dx}$ 的表达式后，将点 $(3, 4)$ 代入计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：参数方程求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知参数方程 $\\begin{cases}x = t^2 + 1 \\\\ y = \\sin t \\end{cases}$，求 $\\frac{dy}{dx}$ 在 $t = \\frac{\\pi}{4}$ 处的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{\\sqrt{2}}{2\\pi}$",
+      "hints": [
+        "提示1：根据参数方程求导公式 $\\frac{dy}{dx}=\\frac{\\frac{dy}{dt}}{\\frac{dx}{dt}}$",
+        "提示2：分别对 $x$ 和 $y$ 关于 $t$ 求导",
+        "提示3：将 $t = \\frac{\\pi}{4}$ 代入求导后的式子计算"
+      ]
+    },
+    {
+      "type": "选择题",
+      "title": "知识点练习：分段函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知分段函数 $f(x)=\\begin{cases}x^2 + 1, & x\\leq 1 \\\\ 2x + a, & x > 1 \\end{cases}$ 在 $x = 1$ 处可导，则 $a$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$1$"
+        },
+        {
+          "label": "C",
+          "content": "$-1$"
+        },
+        {
+          "label": "D",
+          "content": "$2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：函数在某点可导，则在该点连续，先根据连续性求出 $a$ 的一个关系式",
+        "提示2：函数在某点可导，其左导数等于右导数，分别求出左导数和右导数",
+        "提示3：根据左导数等于右导数以及连续性的关系式，解出 $a$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：高阶导数公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册分为极限、一元函数微分学、一元函数积分学、微分方程 4 大板块，若已知一个函数 $f(x)$ 在极限板块中的极限为 $\\lim_{x \\to 2} (x^2 + 3x - 1)$，在一元函数微分学板块中求该函数在 $x = 2$ 处的一阶导数 $f'(2)$，那么极限值与一阶导数的值之和为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$13$"
+        },
+        {
+          "label": "B",
+          "content": "$15$"
+        },
+        {
+          "label": "C",
+          "content": "$17$"
+        },
+        {
+          "label": "D",
+          "content": "$19$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先根据极限的运算法则计算 $\\lim_{x \\to 2} (x^2 + 3x - 1)$ 的值",
+        "提示2：对函数 $f(x)=x^2 + 3x - 1$ 求导，再将 $x = 2$ 代入导函数求出 $f'(2)$",
+        "提示3：最后将极限值和一阶导数值相加得到结果"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：乘积n阶导数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册可分为极限、一元函数微分学、一元函数积分学、微分方程4大板块，以下学习顺序正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "概念 - 性质 - 计算 - 应用"
+        },
+        {
+          "label": "B",
+          "content": "概念 - 计算 - 性质 - 应用"
+        },
+        {
+          "label": "C",
+          "content": "性质 - 概念 - 计算 - 应用"
+        },
+        {
+          "label": "D",
+          "content": "性质 - 计算 - 概念 - 应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的每个板块的学习顺序",
+        "提示2：视频明确说明了是按照一定顺序学习的",
+        "提示3：正确顺序是先了解概念，再掌握性质，接着学习计算，最后进行应用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：微分定义与计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册分为极限、一元函数微分学、一元函数积分学、微分方程 4 大板块，若已知函数 $f(x)$ 在某点的导数与微分相关，且在学习一元函数微分学板块时，按照概念、性质、计算、应用的顺序学习，那么当研究函数 $f(x)=x^2$ 在 $x = 1$ 处的微分时，首先应该明确的是以下哪个方面？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "计算 $f(x)=x^2$ 在 $x = 1$ 处的导数 $f'(1)$"
+        },
+        {
+          "label": "B",
+          "content": "了解微分的性质，如可微与可导的关系"
+        },
+        {
+          "label": "C",
+          "content": "明确微分的概念"
+        },
+        {
+          "label": "D",
+          "content": "将微分应用到实际问题中"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：注意视频中提到每个板块按照概念、性质、计算、应用的顺序学习",
+        "提示2：当研究函数在某点的微分时，要遵循这个学习顺序来确定首先要明确的方面",
+        "提示3：在这个顺序中，概念是最先需要掌握的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：微分中值定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册可分为极限、一元函数微分学、一元函数积分学、微分方程 4 大块内容，若已知某道综合题涉及到极限和一元函数微分学的知识点，那么它可能出自以下哪个板块组合？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "仅极限板块"
+        },
+        {
+          "label": "B",
+          "content": "仅一元函数微分学板块"
+        },
+        {
+          "label": "C",
+          "content": "极限和一元函数微分学板块"
+        },
+        {
+          "label": "D",
+          "content": "一元函数积分学和微分方程板块"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：明确题目中给出的综合题涉及的知识点是极限和一元函数微分学",
+        "提示2：依次分析每个选项是否符合涉及的知识点范围",
+        "提示3：注意题目强调的是综合题涉及两个方面的知识点，要选择包含这两个方面的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：指数函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=e^{2x}+3^x$，求 $f'(x)$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2e^{2x}+3^x\\ln 3$"
+        },
+        {
+          "label": "B",
+          "content": "$e^{2x}+3^x\\ln 3$"
+        },
+        {
+          "label": "C",
+          "content": "$2e^{2x}+3^x$"
+        },
+        {
+          "label": "D",
+          "content": "$e^{2x}+3^x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据求导的加法法则，若 $f(x)=g(x)+h(x)$，则 $f'(x)=g'(x)+h'(x)$",
+        "提示2：对于指数函数 $y = e^{ax}$，其导数为 $y'=ae^{ax}$",
+        "提示3：对于指数函数 $y = a^x$，其导数为 $y'=a^x\\ln a$"
+      ]
+    },
+    {
+      "type": "选择题",
+      "title": "知识点练习：中值定理应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册可分为极限、一元函数微分学、一元函数积分学、微分方程 4 大板块，按照概念性质计算应用的顺序学习。已知函数 $f(x)$ 在区间 $[a,b]$ 上连续，在 $(a,b)$ 内可导，且满足中值定理条件，若 $f(a)=0$，$f(b)=1$，则在 $(a,b)$ 内至少存在一点 $\\xi$ 使得（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$f'(\\xi)=\\frac{1}{b - a}$"
+        },
+        {
+          "label": "B",
+          "content": "$f'(\\xi)=\\frac{b - a}{1}$"
+        },
+        {
+          "label": "C",
+          "content": "$f'(\\xi)=\\frac{1}{a - b}$"
+        },
+        {
+          "label": "D",
+          "content": "$f'(\\xi)=\\frac{a - b}{1}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾拉格朗日中值定理的内容，若函数 $y = f(x)$ 满足在闭区间 $[a,b]$ 上连续，在开区间 $(a,b)$ 内可导，则在 $(a,b)$ 内至少存在一点 $\\xi$，使得 $f(b)-f(a)=f'(\\xi)(b - a)$。",
+        "提示2：将已知条件 $f(a)=0$，$f(b)=1$ 代入拉格朗日中值定理公式。",
+        "提示3：对代入后的式子进行变形求解 $f'(\\xi)$。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：泰勒公式余项",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册可分为极限、一元函数微分学、一元函数积分学、微分方程 4 大板块，在学习每个板块时，我们遵循的顺序是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "概念 - 性质 - 计算 - 应用"
+        },
+        {
+          "label": "B",
+          "content": "性质 - 概念 - 计算 - 应用"
+        },
+        {
+          "label": "C",
+          "content": "计算 - 概念 - 性质 - 应用"
+        },
+        {
+          "label": "D",
+          "content": "应用 - 概念 - 性质 - 计算"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于学习每个板块遵循顺序的描述",
+        "提示2：明确学习一般是先了解概念，再研究性质",
+        "提示3：掌握概念和性质后进行计算，最后应用到实际中"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：余项x取值范围",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册主要分为四大板块进行学习，以下哪个选项不属于这四大板块？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "极限"
+        },
+        {
+          "label": "B",
+          "content": "一元函数微分学"
+        },
+        {
+          "label": "C",
+          "content": "线性代数"
+        },
+        {
+          "label": "D",
+          "content": "微分方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的高等数学上册的四大板块内容",
+        "提示2：逐一分析每个选项是否在视频中提及的板块范围内",
+        "提示3：确定四大板块分别是极限、一元函数微分学、一元函数积分学、微分方程"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：泰勒展开式写法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "利用泰勒展开式求极限 $\\lim_{x \\to 0} \\frac{\\cos x - 1 + \\frac{x^2}{2}}{x^4}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{24}$",
+      "hints": [
+        "提示1：写出 $\\cos x$ 的泰勒展开式 $\\cos x = 1 - \\frac{x^2}{2!} + \\frac{x^4}{4!} - \\cdots + (-1)^n\\frac{x^{2n}}{(2n)!} + R_{2n}(x)$",
+        "提示2：将 $\\cos x$ 的泰勒展开式代入原式化简",
+        "提示3：对化简后的式子求极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：泰勒公式求极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 0} \\frac{e^x - 1 - x}{x^2}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{2}$",
+      "hints": [
+        "提示1：使用泰勒级数展开 $e^x = 1 + x + \\frac{x^2}{2!} + O(x^3)$",
+        "提示2：代入后化简分子",
+        "提示3：约分并取极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：泰勒公式求高阶导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = e^{x^2}$，利用泰勒公式求 $f^{(10)}(0)$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{10!}{5!}$",
+      "hints": [
+        "提示1：先写出 $e^x$ 的泰勒公式 $e^x = \\sum_{n = 0}^{\\infty}\\frac{x^n}{n!}$",
+        "提示2：将 $x$ 替换为 $x^2$ 得到 $e^{x^2}$ 的泰勒公式",
+        "提示3：根据泰勒公式的系数与高阶导数的关系 $f^{(n)}(0)=n!\\cdot a_n$（$a_n$ 是 $x^n$ 的系数）来计算 $f^{(10)}(0)$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：泰勒公式证明题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知在高等数学上册中极限和一元微分学是重要部分，利用泰勒公式求极限 $\\lim_{x \\to 0} \\frac{e^x - 1 - x}{x^2}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{2}$",
+      "hints": [
+        "提示1：根据视频提到的知识，使用泰勒公式展开 $e^x$，$e^x = 1 + x + \\frac{x^2}{2!} + O(x^3)$",
+        "提示2：将展开式代入原式，化简分子",
+        "提示3：约分并取极限"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：函数极值",
+      "error": "Invalid \\escape: line 16 column 39 (char 475)"
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：函数最值",
+      "error": "Invalid \\escape: line 16 column 39 (char 484)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：凹凸性与拐点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册分为极限、一元函数微积分学、一元函数积分学、微分方程 4 大板块，每个板块按概念性质计算应用的顺序学习。已知函数 $f(x)=x^3 - 3x^2 + 2$ 属于一元函数微积分学板块内容，求该函数的凹凸区间和拐点。则以下哪个选项正确？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "凹区间为 $(1, +\\infty)$，凸区间为 $(-\\infty, 1)$，拐点为 $(1, 0)$"
+        },
+        {
+          "label": "B",
+          "content": "凹区间为 $(-\\infty, 1)$，凸区间为 $(1, +\\infty)$，拐点为 $(1, 0)$"
+        },
+        {
+          "label": "C",
+          "content": "凹区间为 $(1, +\\infty)$，凸区间为 $(-\\infty, 1)$，拐点为 $(0, 1)$"
+        },
+        {
+          "label": "D",
+          "content": "凹区间为 $(-\\infty, 1)$，凸区间为 $(1, +\\infty)$，拐点为 $(0, 1)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先对函数 $f(x)$ 求一阶导数 $f'(x)$，再求二阶导数 $f''(x)$",
+        "提示2：令 $f''(x)=0$，求出可能的拐点横坐标",
+        "提示3：根据二阶导数的正负判断函数的凹凸区间"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：渐近线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在高等数学中，极限和一元微分学是重要的板块。已知函数 $f(x)=\\frac{x^2 + 2x - 3}{x - 1}$，当 $x$ 趋近于某个值时，函数会出现渐近线情况。请问该函数的垂直渐近线是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$x = 1$"
+        },
+        {
+          "label": "B",
+          "content": "$x = -3$"
+        },
+        {
+          "label": "C",
+          "content": "$x = 3$"
+        },
+        {
+          "label": "D",
+          "content": "不存在垂直渐近线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：先对函数 $f(x)=\\frac{x^2 + 2x - 3}{x - 1}$ 进行化简，可对分子因式分解。",
+        "提示2：判断函数的垂直渐近线，需要看函数在哪些点处无定义且极限为无穷大。",
+        "提示3：化简后再分析分母为零的点是否满足垂直渐近线的条件。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：曲率与曲率圆",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学上册可分为四大板块，按照概念性质计算应用的顺序学习，以下哪个选项不属于这四大板块？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "极限与一元函数微积分学"
+        },
+        {
+          "label": "B",
+          "content": "多元函数微积分学"
+        },
+        {
+          "label": "C",
+          "content": "一元函数积分学"
+        },
+        {
+          "label": "D",
+          "content": "微分方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的高等数学上册的四大板块内容",
+        "提示2：明确每个选项所涉及的知识领域是否在视频提到的板块范围内",
+        "提示3：注意题目强调的是高等数学上册的板块"
+      ]
+    }
+  ],
+  "count": 43
+}

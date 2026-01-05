@@ -1,0 +1,70 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：类与对象概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于类和对象的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "对象是创建类的模板"
+        },
+        {
+          "label": "B",
+          "content": "类定义了对象有何种属性和方法，且对象具有的具体属性一定相同"
+        },
+        {
+          "label": "C",
+          "content": "类是创建对象的模板，对象是类的实例"
+        },
+        {
+          "label": "D",
+          "content": "定义类时不需要使用关键字 class"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中类和对象的基本定义",
+        "提示2：明确类和对象之间的关系，以及类对对象属性和方法的定义",
+        "提示3：注意对象具体属性的特点和定义类的关键字"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定义类与对象",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在面向对象编程中，以下关于类和对象的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "对象是创建类的模板，类是对象的实例"
+        },
+        {
+          "label": "B",
+          "content": "类定义了对象具有何种属性和方法，同一类的对象所拥有的具体属性一定完全相同"
+        },
+        {
+          "label": "C",
+          "content": "在创建自己的类时，首先使用关键字class，空格后接着写上类的名称"
+        },
+        {
+          "label": "D",
+          "content": "类和对象没有任何关联，是完全独立的概念"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中类和对象的定义，明确谁是模板，谁是实例",
+        "提示2：思考同一类的对象的具体属性是否一定相同",
+        "提示3：根据视频中创建类的步骤来判断选项C是否正确",
+        "提示4：分析类和对象之间是否存在关联"
+      ]
+    }
+  ],
+  "count": 2
+}

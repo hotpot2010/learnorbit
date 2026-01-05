@@ -1,0 +1,549 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：总供给曲线介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "总需求曲线向右下方倾斜，主要是由以下哪些效应来解释？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应、利率效应和汇率效应"
+        },
+        {
+          "label": "B",
+          "content": "收入效应、替代效应和财富效应"
+        },
+        {
+          "label": "C",
+          "content": "利率效应、通胀效应和产出效应"
+        },
+        {
+          "label": "D",
+          "content": "汇率效应、就业效应和消费效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对总需求曲线向右下方倾斜原因的讲解",
+        "提示2：明确提到了解释总需求曲线向右下方倾斜的主要效应",
+        "提示3：逐一对比选项中的效应与视频所讲内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：总供给投入要素",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在讲解总需求曲线时，其解释中最重要的部分斜率部分导致曲线向右下方倾斜的主要效应不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应"
+        },
+        {
+          "label": "B",
+          "content": "替代效应"
+        },
+        {
+          "label": "C",
+          "content": "利率效应"
+        },
+        {
+          "label": "D",
+          "content": "汇率效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于总需求曲线斜率部分导致其向右下方倾斜的主要效应相关内容",
+        "提示2：明确提到的主要效应有财富效应、利率效应和汇率效应",
+        "提示3：对比选项，找出不在这些主要效应范围内的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：生产函数学习",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "总需求曲线向右下方倾斜的主要原因不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应"
+        },
+        {
+          "label": "B",
+          "content": "利率效应"
+        },
+        {
+          "label": "C",
+          "content": "乘数效应"
+        },
+        {
+          "label": "D",
+          "content": "汇率效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中讲解的总需求曲线向右下方倾斜的原因",
+        "提示2：视频中提到主要是三个效应来解释总需求曲线向右下方倾斜",
+        "提示3：逐一分析选项，判断哪个不属于视频中提到的三个效应"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：宏观微观符号差异",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在adas模型中，总需求曲线向右下方倾斜的主要解释因素不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应"
+        },
+        {
+          "label": "B",
+          "content": "利率效应"
+        },
+        {
+          "label": "C",
+          "content": "汇率效应"
+        },
+        {
+          "label": "D",
+          "content": "替代效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的解释总需求曲线向右下方倾斜的主要因素。",
+        "提示2：视频中明确指出主要是财富效应、利率效应和汇率效应。",
+        "提示3：对比选项，找出不属于这些主要因素的那一项。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：模型未含技术原因",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在adas模型中，对总需求曲线向右下倾斜原因的解释主要涉及以下哪些效应？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应、利率效应和汇率效应"
+        },
+        {
+          "label": "B",
+          "content": "财富效应、通胀效应和供求效应"
+        },
+        {
+          "label": "C",
+          "content": "利率效应、通胀效应和供求效应"
+        },
+        {
+          "label": "D",
+          "content": "汇率效应、通胀效应和供求效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对总需求曲线向右下倾斜原因的解释内容",
+        "提示2：明确指出的三种效应是解答本题的关键",
+        "提示3：在给出的选项中寻找与视频讲解一致的三种效应组合"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：短期宏观生产函数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "总需求曲线向右下方倾斜的主要解释因素不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应"
+        },
+        {
+          "label": "B",
+          "content": "利率效应"
+        },
+        {
+          "label": "C",
+          "content": "乘数效应"
+        },
+        {
+          "label": "D",
+          "content": "汇率效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到的总需求曲线向右下方倾斜的解释因素",
+        "提示2：关注内容中明确指出的三个主要因素",
+        "提示3：对比选项，找出不属于这三个因素的那一项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：长期宏观生产函数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "总需求曲线向右下方倾斜，主要是由以下哪些效应来解释的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应、利率效应和汇率效应"
+        },
+        {
+          "label": "B",
+          "content": "收入效应、替代效应和财富效应"
+        },
+        {
+          "label": "C",
+          "content": "价格效应、收入效应和利率效应"
+        },
+        {
+          "label": "D",
+          "content": "税收效应、补贴效应和汇率效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对总需求曲线向右下方倾斜原因的讲解",
+        "提示2：明确提到了解释总需求曲线向右下方倾斜的主要是三个效应",
+        "提示3：这三个效应分别是财富效应、利率效应和汇率效应"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：短期生产函数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "总需求曲线向右下方倾斜的原因主要是由以下哪几个效应来解释？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应、利率效应和汇率效应"
+        },
+        {
+          "label": "B",
+          "content": "收入效应、替代效应和利率效应"
+        },
+        {
+          "label": "C",
+          "content": "财富效应、收入效应和汇率效应"
+        },
+        {
+          "label": "D",
+          "content": "替代效应、利率效应和汇率效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中讲解总需求曲线向右下方倾斜原因的部分",
+        "提示2：明确提到了三个主要效应来进行解释",
+        "提示3：重点关注这三个效应分别是什么，与选项进行比对"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：引入劳动力市场",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在adas模型中，总需求曲线向右下方倾斜的主要原因不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应"
+        },
+        {
+          "label": "B",
+          "content": "利率效应"
+        },
+        {
+          "label": "C",
+          "content": "汇率效应"
+        },
+        {
+          "label": "D",
+          "content": "供给效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中讲解的总需求曲线向右下方倾斜的原因。",
+        "提示2：视频中提到主要是三个效应来解释总需求曲线向右下方倾斜。",
+        "提示3：这三个效应分别是财富效应、利率效应和汇率效应，据此判断选项。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：劳动力市场分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "总需求曲线向右下方倾斜，主要是由以下哪些效应来解释的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应、利率效应和汇率效应"
+        },
+        {
+          "label": "B",
+          "content": "收入效应、替代效应和财富效应"
+        },
+        {
+          "label": "C",
+          "content": "利率效应、价格效应和汇率效应"
+        },
+        {
+          "label": "D",
+          "content": "收入效应、利率效应和价格效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中讲解的总需求曲线向右下方倾斜的原因",
+        "提示2：明确提到的是三个特定的效应来解释该现象",
+        "提示3：逐一对比选项中的效应与视频所讲内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：完全竞争劳动力市场",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "总需求曲线向右下方倾斜的主要原因不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应"
+        },
+        {
+          "label": "B",
+          "content": "利率效应"
+        },
+        {
+          "label": "C",
+          "content": "供给效应"
+        },
+        {
+          "label": "D",
+          "content": "汇率效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中讲解的总需求曲线向右下方倾斜的原因",
+        "提示2：明确提到的主要原因有财富效应、利率效应和汇率效应",
+        "提示3：逐一分析每个选项，看哪个不属于主要原因"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：劳动市场利润最大化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "总需求曲线最重要的部分是斜率部分，其向右下方倾斜的主要解释原因不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应"
+        },
+        {
+          "label": "B",
+          "content": "利率效应"
+        },
+        {
+          "label": "C",
+          "content": "偏好效应"
+        },
+        {
+          "label": "D",
+          "content": "汇率效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中讲解的总需求曲线向右下方倾斜的原因",
+        "提示2：注意题目问的是不包含的选项",
+        "提示3：视频中明确提到主要是财富效应、利率效应和汇率效应来解释"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：利润最大化证明",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "总需求曲线向右下方倾斜的主要原因不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应"
+        },
+        {
+          "label": "B",
+          "content": "利率效应"
+        },
+        {
+          "label": "C",
+          "content": "替代效应"
+        },
+        {
+          "label": "D",
+          "content": "汇率效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中讲解的总需求曲线向右下方倾斜的原因",
+        "提示2：明确提到的原因有财富效应、利率效应和汇率效应",
+        "提示3：判断选项中哪个不属于这些原因"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：劳动供需函数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "总需求曲线为什么是向右下方倾斜的？主要是由以下哪几个效应引起的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财政效应、利率效应和汇率效应"
+        },
+        {
+          "label": "B",
+          "content": "财富效应、利率效应和汇率效应"
+        },
+        {
+          "label": "C",
+          "content": "财富效应、税率效应和汇率效应"
+        },
+        {
+          "label": "D",
+          "content": "财富效应、利率效应和财政效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于总需求曲线向右下方倾斜原因的讲解。",
+        "提示2：明确提到了三个主要效应。",
+        "提示3：这三个效应分别是财富效应、利率效应和汇率效应。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：总供给与就业",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "总需求曲线向右下倾斜的主要原因不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应"
+        },
+        {
+          "label": "B",
+          "content": "乘数效应"
+        },
+        {
+          "label": "C",
+          "content": "利率效应"
+        },
+        {
+          "label": "D",
+          "content": "汇率效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中讲解的总需求曲线向右下倾斜的原因",
+        "提示2：视频中提到了三个主要效应来解释总需求曲线向右下倾斜",
+        "提示3：逐一对比选项，看哪个不属于视频中提到的效应"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：充分就业状态",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "总需求曲线向右下方倾斜的主要原因不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应"
+        },
+        {
+          "label": "B",
+          "content": "边际效应"
+        },
+        {
+          "label": "C",
+          "content": "利率效应"
+        },
+        {
+          "label": "D",
+          "content": "汇率效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中讲解的总需求曲线向右下方倾斜的原因",
+        "提示2：明确提到的主要原因有财富效应、利率效应和汇率效应",
+        "提示3：判断哪个选项不属于这些主要原因"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：潜在产出含义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在adas模型中，总需求曲线斜率部分是很重要的内容，总需求曲线向右下方倾斜主要是由以下哪些效应来解释的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财富效应、利率效应和汇率效应"
+        },
+        {
+          "label": "B",
+          "content": "财富效应、收入效应和替代效应"
+        },
+        {
+          "label": "C",
+          "content": "利率效应、收入效应和价格效应"
+        },
+        {
+          "label": "D",
+          "content": "汇率效应、替代效应和价格效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中讲解的用于解释总需求曲线向右下方倾斜的效应",
+        "提示2：明确提到的是财富效应、利率效应和汇率效应",
+        "提示3：对每个选项中的效应进行分析，排除不符合视频内容的选项"
+      ]
+    }
+  ],
+  "count": 17
+}

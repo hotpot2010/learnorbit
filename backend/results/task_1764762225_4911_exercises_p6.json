@@ -1,0 +1,101 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Python打印基础",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在Python中，若要让计算机在屏幕上显示“father”，以下哪个指令是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "print(father)"
+        },
+        {
+          "label": "B",
+          "content": "print(\"father\")"
+        },
+        {
+          "label": "C",
+          "content": "input(\"father\")"
+        },
+        {
+          "label": "D",
+          "content": "show(\"father\")"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频，使用Python让计算机执行显示操作通常用print函数",
+        "提示2：print函数中要显示的字符串需要用引号括起来",
+        "提示3：input函数用于获取用户输入，show不是Python的标准显示函数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：代码实操流程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于写代码的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "写代码只是和计算机交流，和给计算机下命令无关"
+        },
+        {
+          "label": "B",
+          "content": "只要有电脑，随便写的命令计算机都能执行"
+        },
+        {
+          "label": "C",
+          "content": "写代码更准确的说法是给计算机下命令，只要有相应权限且命令能让计算机听懂，计算机就会按命令执行"
+        },
+        {
+          "label": "D",
+          "content": "让朋友喊一声爸爸和让程序喊一声爸爸的难易程度是一样的"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对写代码本质的描述",
+        "提示2：思考计算机执行命令的条件",
+        "提示3：对比让朋友和程序执行特定任务的情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：运行结果判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "根据视频内容，当我们在编程时，给计算机下达正确且它能听懂的指令（有足够权限），计算机的反应是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "不一定按照指令执行，因为可能有外部因素干扰"
+        },
+        {
+          "label": "B",
+          "content": "一定按照指令做"
+        },
+        {
+          "label": "C",
+          "content": "有一半的概率按照指令执行"
+        },
+        {
+          "label": "D",
+          "content": "只有部分指令能执行，大部分不行"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到的给计算机下达指令的关键条件",
+        "提示2：注意关键信息'只要有权限，而且指令能让计算机听懂，计算机就会按照你说的照做'",
+        "提示3：明确指令与计算机执行的关系"
+      ]
+    }
+  ],
+  "count": 3
+}

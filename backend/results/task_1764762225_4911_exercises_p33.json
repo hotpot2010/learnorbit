@@ -1,0 +1,101 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：程序异常类型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪种情况可能会导致程序报错？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "代码编写正确，但用户输入的数据类型不合理"
+        },
+        {
+          "label": "B",
+          "content": "代码编写完全符合语法规则，且没有任何外部输入"
+        },
+        {
+          "label": "C",
+          "content": "程序中某一行代码执行时间过长"
+        },
+        {
+          "label": "D",
+          "content": "程序代码的注释过多"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的导致程序报错的原因",
+        "提示2：思考代码本身和外部因素对程序运行的影响",
+        "提示3：注意区分正常情况和异常情况对程序的影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：try-except语句",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在编程中，以下哪种情况最需要使用像视频中提到的提前预判机制（类似try - except语句）？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "代码逻辑简单，且输入数据格式固定的程序"
+        },
+        {
+          "label": "B",
+          "content": "代码中有用户输入数据，且数据类型可能不符合程序要求的情况"
+        },
+        {
+          "label": "C",
+          "content": "只处理固定文件数据，不会出现文件读取错误的程序"
+        },
+        {
+          "label": "D",
+          "content": "所有代码都经过严格测试，不会出现任何错误的程序"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：思考视频中提到的程序报错的原因有哪些",
+        "提示2：重点关注用户输入数据类型不合理导致程序报错这一情况",
+        "提示3：分析每个选项的程序场景是否容易出现报错情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：else和finally",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在编程中，当程序因为代码存在问题或者用户输入的数据类型不合理而报错时，后续的代码将不会被执行，这在很多情况下不是我们想要的。那么为了避免这种情况，我们应该怎么做？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "对代码进行详细的注释"
+        },
+        {
+          "label": "B",
+          "content": "在程序报错之前进行预判"
+        },
+        {
+          "label": "C",
+          "content": "增加代码行数来完善功能"
+        },
+        {
+          "label": "D",
+          "content": "使用更高级的编程语言"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：思考视频中提到的避免程序报错后后续代码无法执行的方法",
+        "提示2：重点关注视频中提到的需要做的操作",
+        "提示3：结合视频内容判断每个选项是否符合要求"
+      ]
+    }
+  ],
+  "count": 3
+}

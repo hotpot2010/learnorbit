@@ -1,0 +1,84 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：化学反应速率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个化学反应中，起始投入反应物 A 的物质的量为 2 mol，反应容器体积为 1 L，经过 5 分钟后，反应物 A 转化了 0.5 mol，下列关于该反应中反应物 A 的反应速率的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "反应速率为 $0.1 \\ mol\\cdot L^{-1}\\cdot min^{-1}$"
+        },
+        {
+          "label": "B",
+          "content": "反应速率为 $0.5 \\ mol\\cdot L^{-1}\\cdot min^{-1}$"
+        },
+        {
+          "label": "C",
+          "content": "反应速率为 $0.2 \\ mol\\cdot L^{-1}\\cdot min^{-1}$"
+        },
+        {
+          "label": "D",
+          "content": "反应速率为 $0.05 \\ mol\\cdot L^{-1}\\cdot min^{-1}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先根据起始投入量和转化量求出反应物浓度的变化量",
+        "提示2：反应速率是指单位时间内反应物浓度的减少",
+        "提示3：使用公式 $v = \\frac{\\Delta c}{\\Delta t}$ 来计算反应速率，其中 $\\Delta c$ 是浓度变化量，$\\Delta t$ 是时间变化量"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：三段式计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个化学反应中，反应物 $A$ 的初始投入量为 $5\\ mol/L$，经过一段时间后，其转化量为 $2\\ mol/L$，已知反应时间为 $10$ 分钟，求该反应中反应物 $A$ 的反应速率为 ___ $mol/(L\\cdot min)$。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "0.2",
+      "hints": [
+        "提示1：明确反应速率的定义，即单位时间内反应物浓度的减少量",
+        "提示2：找出反应物 $A$ 的浓度减少量和反应时间",
+        "提示3：根据反应速率的计算公式 $v = \\frac{\\Delta c}{\\Delta t}$ 进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：速率计算应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个化学反应中，起始投入反应物 A 的物质的量为 $2\\ mol$，反应容器体积为 $2\\ L$，经过 $10\\ min$ 后，反应物 A 转化了 $0.5\\ mol$。则该反应中反应物 A 的反应速率为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.025\\ mol\\cdot L^{-1}\\cdot min^{-1}$"
+        },
+        {
+          "label": "B",
+          "content": "$0.05\\ mol\\cdot L^{-1}\\cdot min^{-1}$"
+        },
+        {
+          "label": "C",
+          "content": "$0.1\\ mol\\cdot L^{-1}\\cdot min^{-1}$"
+        },
+        {
+          "label": "D",
+          "content": "$0.2\\ mol\\cdot L^{-1}\\cdot min^{-1}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先根据起始投入量和反应容器体积计算反应物 A 的起始浓度",
+        "提示2：根据转化量计算反应物 A 浓度的减少量",
+        "提示3：结合反应时间，利用反应速率的定义公式 $v = \\frac{\\Delta c}{\\Delta t}$ 计算反应速率"
+      ]
+    }
+  ],
+  "count": 3
+}

@@ -1,0 +1,165 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：蛛网模型概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到本期视频要一起学习的是以下哪个模型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "线性回归模型"
+        },
+        {
+          "label": "B",
+          "content": "蛛网模型"
+        },
+        {
+          "label": "C",
+          "content": "马尔可夫模型"
+        },
+        {
+          "label": "D",
+          "content": "逻辑斯蒂模型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中明确指出本期要学习的模型名称",
+        "提示2：关注视频中[00:32 - 00:36]的内容",
+        "提示3：直接从视频对应位置获取关键信息即可得出答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：蛛网模型假设",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到本期视频要一起学习的内容是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "考研经验分享"
+        },
+        {
+          "label": "B",
+          "content": "经济学考研专业课重难点解析"
+        },
+        {
+          "label": "C",
+          "content": "蛛网模型"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：在视频中找到关于本期视频学习内容的明确表述",
+        "提示2：注意特定的关键字如‘本期视频’‘学习内容’等",
+        "提示3：在 00:32 - 00:36 时间区间寻找答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：蛛网模型分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本视频计划后续利用课余时间为大家更新内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "考研经验分享"
+        },
+        {
+          "label": "B",
+          "content": "经济学考研专业课难点解析"
+        },
+        {
+          "label": "C",
+          "content": "英语四六级备考技巧"
+        },
+        {
+          "label": "D",
+          "content": "经济学考研专业课重点解析"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中提到的后续更新内容",
+        "提示2：视频明确说明了利用课余时间更新的是考研相关的经验分享和专业课重难点解析",
+        "提示3：对比各选项与视频内容，找出不包含的那一项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：发散型模式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到后续会利用课余时间更新的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "考研经验的分享"
+        },
+        {
+          "label": "B",
+          "content": "数学公式推导过程"
+        },
+        {
+          "label": "C",
+          "content": "经济学考研专业课中的难点解析"
+        },
+        {
+          "label": "D",
+          "content": "经济学考研专业课中的重点解析"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的后续要更新的内容",
+        "提示2：明确视频中列举的更新方向",
+        "提示3：对比各个选项与视频内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：封闭型模式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频主讲人打算利用课余时间做以下哪些事情？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "分享考研经验和进行经济学考研专业课中的难点、重点解析"
+        },
+        {
+          "label": "B",
+          "content": "只分享考研经验"
+        },
+        {
+          "label": "C",
+          "content": "只进行经济学考研专业课中的难点、重点解析"
+        },
+        {
+          "label": "D",
+          "content": "进行其他学科的考研辅导"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中关于主讲人课余时间安排的表述",
+        "提示2：注意内容包含两方面，不要只关注其中一点",
+        "提示3：明确是针对经济学考研专业课的相关内容"
+      ]
+    }
+  ],
+  "count": 5
+}

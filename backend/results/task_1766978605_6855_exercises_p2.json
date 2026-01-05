@@ -1,0 +1,285 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：多元隐函数定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于多元函数微分的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "多元函数的微分和一元函数的微分都叫微分"
+        },
+        {
+          "label": "B",
+          "content": "多元函数的微分叫全微分，一元函数的微分叫微分"
+        },
+        {
+          "label": "C",
+          "content": "多元函数的微分叫微分，一元函数的微分叫全微分"
+        },
+        {
+          "label": "D",
+          "content": "以上说法都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回顾视频中对多元函数微分和一元函数微分的定义",
+        "注意两者名称的区别",
+        "明确全微分和微分分别对应的函数类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：隐函数求偏导法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知二元函数 $z = f(x,y)$ 的全微分公式为 $dz = \\frac{\\partial z}{\\partial x}dx + \\frac{\\partial z}{\\partial y}dy$，对于函数 $z = x^2 + 3xy + y^2$，其全微分 $dz$ 为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(2x + 3y)dx + (3x + 2y)dy$"
+        },
+        {
+          "label": "B",
+          "content": "$(2x + 3)dx + (3 + 2y)dy$"
+        },
+        {
+          "label": "C",
+          "content": "$(x^2 + 3y)dx + (3x + y^2)dy$"
+        },
+        {
+          "label": "D",
+          "content": "$(2x)dx + (2y)dy$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "1. 首先明确全微分公式为 $dz = \\frac{\\partial z}{\\partial x}dx + \\frac{\\partial z}{\\partial y}dy$。",
+        "2. 分别对函数 $z = x^2 + 3xy + y^2$ 求关于 $x$ 和 $y$ 的偏导数。",
+        "3. 对于求偏导数时，将另一个变量看成常数进行求导。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求驻点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知二元函数 $z = x^2 + 2xy + y^2$，其全微分 $dz$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(2x + 2y)dx + (2x + 2y)dy$"
+        },
+        {
+          "label": "B",
+          "content": "$(2x + y)dx + (x + 2y)dy$"
+        },
+        {
+          "label": "C",
+          "content": "$(x + 2y)dx + (2x + y)dy$"
+        },
+        {
+          "label": "D",
+          "content": "$(x + y)dx + (x + y)dy$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先分别对二元函数 $z$ 关于 $x$ 和 $y$ 求偏导数",
+        "根据全微分公式 $dz = \\frac{\\partial z}{\\partial x}dx + \\frac{\\partial z}{\\partial y}dy$ 计算",
+        "求偏导数时把另一个变量看作常数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求二阶导数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "设二元函数 $z = x^2y + \\sin(xy)$，则它的全微分 $dz$ 为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(2xy + y\\cos(xy))dx + (x^2 + x\\cos(xy))dy$"
+        },
+        {
+          "label": "B",
+          "content": "$(2xy + x\\cos(xy))dx + (x^2 + y\\cos(xy))dy$"
+        },
+        {
+          "label": "C",
+          "content": "$(2xy - y\\cos(xy))dx + (x^2 - x\\cos(xy))dy$"
+        },
+        {
+          "label": "D",
+          "content": "$(2xy - x\\cos(xy))dx + (x^2 - y\\cos(xy))dy$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先分别求 $z$ 对 $x$ 和 $y$ 的偏导数",
+        "根据全微分公式 $dz = \\frac{\\partial z}{\\partial x}dx + \\frac{\\partial z}{\\partial y}dy$ 计算",
+        "求偏导数时，把另一个变量看作常数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：驻点代值求 ABC",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知二元函数 $z = x^2 + 3xy + y^2$，则它的全微分 $dz$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(2x + 3y)dx + (3x + 2y)dy$"
+        },
+        {
+          "label": "B",
+          "content": "$(2x + 3y)dy + (3x + 2y)dx$"
+        },
+        {
+          "label": "C",
+          "content": "$(2x + y)dx + (x + 2y)dy$"
+        },
+        {
+          "label": "D",
+          "content": "$(2x + y)dy + (x + 2y)dx$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "根据全微分公式 $dz = \\frac{\\partial z}{\\partial x}dx + \\frac{\\partial z}{\\partial y}dy$ 进行计算",
+        "先分别求出 $z$ 对 $x$ 和 $y$ 的偏导数",
+        "求偏导数时，将另一个变量看作常数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：判别式判断极值",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "若函数 $z = x^2 + xy + y^2 + 2x - 2y + 1$，那么它的全微分 $dz$ 为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(2x + y + 2)dx + (x + 2y - 2)dy$"
+        },
+        {
+          "label": "B",
+          "content": "$(2x + y)dx + (x + 2y)dy$"
+        },
+        {
+          "label": "C",
+          "content": "$(2x + 2)dx + (2y - 2)dy$"
+        },
+        {
+          "label": "D",
+          "content": "$(x + y + 2)dx + (x + y - 2)dy$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先明确多元函数全微分公式 $dz = \\frac{\\partial z}{\\partial x}dx + \\frac{\\partial z}{\\partial y}dy$",
+        "分别对函数 $z$ 关于 $x$ 和 $y$ 求偏导数",
+        "根据偏导数结果得出全微分表达式"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：条件极值问题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知二元函数 $z = x^2y + 3xy^2$，则它的全微分 $dz =$ ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$(2xy + 3y^2)dx + (x^2 + 6xy)dy$",
+      "hints": [
+        "先分别求出函数 $z$ 对 $x$ 和 $y$ 的偏导数",
+        "根据全微分公式 $dz = \\frac{\\partial z}{\\partial x}dx + \\frac{\\partial z}{\\partial y}dy$ 进行计算"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：拉格朗日乘数法",
+      "error": "Invalid \\escape: line 10 column 205 (char 493)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：例题求解过程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于多元函数和一元函数微分的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一元函数的微分叫全微分"
+        },
+        {
+          "label": "B",
+          "content": "多元函数的微分叫全微分"
+        },
+        {
+          "label": "C",
+          "content": "多元函数和一元函数的微分都叫全微分"
+        },
+        {
+          "label": "D",
+          "content": "多元函数和一元函数的微分都不叫全微分"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回顾视频中对多元函数和一元函数微分的定义",
+        "明确全微分是针对哪种函数的微分",
+        "对比各选项与视频知识点是否相符"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：二元函数化一元",
+      "error": "Invalid \\escape: line 6 column 25 (char 158)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：判断极值类型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知二元函数 $z = x^2 + y^2$，求该函数在点 $(1, 1)$ 处的全微分 $dz$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2dx + 2dy$"
+        },
+        {
+          "label": "B",
+          "content": "$dx + dy$"
+        },
+        {
+          "label": "C",
+          "content": "$4dx + 4dy$"
+        },
+        {
+          "label": "D",
+          "content": "$x dx + y dy$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "首先明确全微分公式，对于二元函数 $z = f(x,y)$，全微分 $dz = \\frac{\\partial z}{\\partial x}dx + \\frac{\\partial z}{\\partial y}dy$",
+        "然后分别求出函数 $z = x^2 + y^2$ 对 $x$ 和 $y$ 的偏导数",
+        "最后将点 $(1,1)$ 代入偏导数表达式，再代入全微分公式计算。"
+      ]
+    }
+  ],
+  "count": 11
+}

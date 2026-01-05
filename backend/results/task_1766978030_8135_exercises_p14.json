@@ -1,0 +1,709 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：要素市场学习感受",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会有一种特别别扭的感觉，其主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场的知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "一直学习的都是产品市场，思维转换不适应"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的内容与生活实际联系不紧密"
+        },
+        {
+          "label": "D",
+          "content": "要素市场的概念过于抽象难以理解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的产生别扭感觉的关键原因",
+        "提示2：思考是知识点本身难度问题，还是其他方面的影响",
+        "提示3：结合视频中关于学习经历的描述来分析"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：课程讲解思路",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会给人特别别扭的感觉，主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场的知识点本身非常难"
+        },
+        {
+          "label": "B",
+          "content": "一直学习的都是产品市场，思维有惯性"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的内容过于抽象"
+        },
+        {
+          "label": "D",
+          "content": "缺乏学习要素市场的相关资料"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到学习要素市场别扭并非因为知识点本身难",
+        "提示2：思考与一直学习产品市场之间的联系",
+        "提示3：结合视频内容判断主要影响因素"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：要素市场学习框架",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会给人特别别扭的感觉，原因是什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "知识点本身非常难"
+        },
+        {
+          "label": "B",
+          "content": "一直学的都是产品市场，转换思维有难度"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的内容过于复杂"
+        },
+        {
+          "label": "D",
+          "content": "缺乏相关的学习资料"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的学习要素市场感觉别扭的关键原因",
+        "提示2：思考与之前学习内容的关联",
+        "提示3：排除与视频内容不符的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：需求供给与均衡",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时感觉特别别扭，主要原因是什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场知识点本身太难"
+        },
+        {
+          "label": "B",
+          "content": "一直学习的都是产品市场，形成思维惯性"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的学习方法不对"
+        },
+        {
+          "label": "D",
+          "content": "要素市场的资料太少"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到学习要素市场感觉别扭并非因为知识点本身难",
+        "提示2：关注视频中关于一直学习的市场类型的描述",
+        "提示3：思考与已有学习经历的关联"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剩余内容要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会给人一种特别别扭的感觉，原因是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场的知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "一直学习的是产品市场，不习惯要素市场的学习"
+        },
+        {
+          "label": "C",
+          "content": "要素市场教学方式有问题"
+        },
+        {
+          "label": "D",
+          "content": "学习要素市场没有实际用途"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到了学习要素市场时有特别别扭的感觉的原因相关内容",
+        "提示2：可排除关于知识点本身难易、教学方式、学习用途等没有在视频中体现的原因",
+        "提示3：重点关注视频中提到一直学习的市场类型对学习要素市场的影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：产品市场供需方",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习要素市场时，感觉特别别扭的原因主要是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "一直学的都是产品市场，思维有惯性"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的内容过于复杂多样"
+        },
+        {
+          "label": "D",
+          "content": "缺乏学习要素市场的相关资料"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到了学习要素市场感觉别扭的原因",
+        "提示2：要关注与之前学习内容的关联",
+        "提示3：思考是否是因为一直学习某类市场而对新市场学习产生影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：要素市场供需方",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会有一种特别别扭的感觉，主要原因是什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场的知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "一直学习的是产品市场，思维转换不适应"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的内容过于复杂"
+        },
+        {
+          "label": "D",
+          "content": "缺乏学习要素市场的相关资料"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到学习要素市场有别扭感不是因为知识点本身难",
+        "提示2：思考与一直学习产品市场之间的联系",
+        "提示3：结合视频内容判断哪个选项符合主要原因"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：生产要素需求特点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会给人特别别扭的感觉，主要原因是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场的知识点本身非常难"
+        },
+        {
+          "label": "B",
+          "content": "我们一直学习的都是产品市场，思维有惯性"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的概念过于抽象，难以理解"
+        },
+        {
+          "label": "D",
+          "content": "要素市场和产品市场完全没有关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到学习要素市场别扭的原因和过往学习经历有关",
+        "提示2：思考和一直学习产品市场有什么联系",
+        "提示3：注意视频中提到不是知识点本身难"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：生产要素相关概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会有特别别扭的感觉，主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场的知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "我们一直学习的都是产品市场，思维有惯性"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的内容太枯燥"
+        },
+        {
+          "label": "D",
+          "content": "要素市场与实际生活联系不紧密"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到学习要素市场别扭的原因，并非是知识点本身的难度问题",
+        "提示2：思考与我们一直学习的内容有什么关联",
+        "提示3：回忆视频中关于学习要素市场感觉别扭的关键表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：[公式推导原理]",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会给人特别别扭的感觉，主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场的知识点本身非常难"
+        },
+        {
+          "label": "B",
+          "content": "一直学的都是产品市场，思维转换不适应"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的公式推导过于复杂"
+        },
+        {
+          "label": "D",
+          "content": "要素市场的案例太少难以理解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到学习要素市场感觉别扭的原因并非知识点本身难",
+        "提示2：重点关注提到一直学习产品市场对学习要素市场的影响",
+        "提示3：思考思维惯性对学习新内容的作用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：mrp公式推导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时感觉特别别扭，主要原因是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场的知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "一直学的都是产品市场，思维有惯性"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的内容过于复杂，难以理解"
+        },
+        {
+          "label": "D",
+          "content": "缺乏学习要素市场的兴趣"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到学习要素市场感觉别扭的原因相关内容",
+        "提示2：关注视频中对一直学习产品市场的描述",
+        "提示3：明确视频强调的不是知识点本身的难度问题"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：市场关系分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会给人特别别扭的感觉，其主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场的知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "一直学习的都是产品市场，对要素市场不熟悉"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的内容不符合逻辑"
+        },
+        {
+          "label": "D",
+          "content": "要素市场的学习资料太少"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到学习要素市场别扭的原因并非是知识点本身的难易",
+        "提示2：思考视频中强调的我们以往学习的市场类型与要素市场的关系",
+        "提示3：排除与视频内容不符的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：产品市场曲线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会给人特别别扭的感觉，其主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "我们一直学的都是产品市场"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的曲线难以理解"
+        },
+        {
+          "label": "D",
+          "content": "要素市场的概念过于抽象"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到了学习要素市场有别扭感觉的原因",
+        "提示2：注意区分是知识点本身难度还是其他外部因素",
+        "提示3：结合视频中提到的一直学习的市场类型来思考"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：mrp与vmp关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习生产要素市场时，与以往学习的产品市场相比，会给人一种特别别扭的感觉，这主要是因为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "生产要素市场的知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "我们一直学的都是产品市场，习惯了产品市场的思维模式"
+        },
+        {
+          "label": "C",
+          "content": "生产要素市场没有实际应用价值"
+        },
+        {
+          "label": "D",
+          "content": "产品市场的知识点错误，影响了生产要素市场的学习"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确说明了不是因为知识点本身难才感觉别扭",
+        "提示2：思考与以往学习的产品市场有什么关联对学习生产要素市场产生影响",
+        "提示3：回忆视频中提到的学习前后的差异"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：要素市场条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会给人一种特别别扭的感觉，其主要原因是什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场的知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "我们一直学的都是产品市场"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的概念太抽象"
+        },
+        {
+          "label": "D",
+          "content": "要素市场的研究方法与产品市场不同"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到学习要素市场别扭的原因阐述",
+        "提示2：明确指出不是知识点本身难这一关键信息",
+        "提示3：重点关注与之前学习内容的关联"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：要素需求曲线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场会给人特别别扭的感觉，主要原因是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场的知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "我们一直学的都是产品市场"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的理论过于抽象"
+        },
+        {
+          "label": "D",
+          "content": "要素市场和产品市场完全不同"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到了学习要素市场感觉别扭的原因",
+        "提示2：注意对比选项和视频中表述的一致性",
+        "提示3：思考每个选项与视频中关键信息的关联"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：要素供给曲线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会给人特别别扭的感觉，主要原因是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "一直学习的都是产品市场，思维转换有难度"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的内容过于复杂"
+        },
+        {
+          "label": "D",
+          "content": "要素市场和产品市场没有关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到学习要素市场别扭的原因并非知识点本身难",
+        "提示2：思考与之前学习内容的联系",
+        "提示3：关注一直学习的市场和现在学习的市场的区别"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：市场均衡分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场会给人一种特别别扭的感觉，主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场知识点本身太难"
+        },
+        {
+          "label": "B",
+          "content": "我们一直学的都是产品市场"
+        },
+        {
+          "label": "C",
+          "content": "要素市场缺乏实际应用价值"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到学习要素市场别扭的原因描述",
+        "提示2：视频强调并不是知识点本身的难度问题",
+        "提示3：思考与之前学习内容的关联"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：市场均衡绘图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场与之前学习的产品市场有所不同，以下关于学习要素市场的感受描述正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "学习要素市场的知识点本身非常难，难以理解"
+        },
+        {
+          "label": "B",
+          "content": "学习要素市场会给人一种特别别扭的感觉，是因为知识点本身难"
+        },
+        {
+          "label": "C",
+          "content": "学习要素市场会给人一种特别别扭的感觉，不是因为知识点本身难，而是和之前学的产品市场不同"
+        },
+        {
+          "label": "D",
+          "content": "学习要素市场和学习产品市场没有任何区别和不同感受"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于学习要素市场感受的描述",
+        "提示2：明确视频中提到的学习要素市场感觉别扭的原因",
+        "提示3：对比产品市场和要素市场学习的不同点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：厂商均衡绘图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时感觉特别别扭，主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "一直学的是产品市场，思维有惯性"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的绘图太难掌握"
+        },
+        {
+          "label": "D",
+          "content": "要素市场的概念太抽象"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到学习要素市场的感受，要关注造成这种感受的原因描述",
+        "提示2：明确指出不是知识点本身难，要从其他方面找原因",
+        "提示3：考虑一直学习的市场类型对学习要素市场的影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：厂商与市场均衡差异",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会给人特别别扭的感觉，主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "一直学的都是产品市场，思维转换不适应"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的内容过于复杂，难以理解"
+        },
+        {
+          "label": "D",
+          "content": "缺乏相关的学习资料和案例"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到学习要素市场别扭不是因为知识点本身难",
+        "提示2：思考与之前学习内容的关联",
+        "提示3：关注视频中提到一直学的内容对学习要素市场的影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：供需曲线确定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习要素市场时会给人特别别扭的感觉，主要原因是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要素市场知识点本身很难"
+        },
+        {
+          "label": "B",
+          "content": "我们一直学的都是产品市场，思维有惯性"
+        },
+        {
+          "label": "C",
+          "content": "要素市场的供需曲线难以确定"
+        },
+        {
+          "label": "D",
+          "content": "要素市场的研究方法与产品市场完全不同"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到学习要素市场的别扭感并非因为知识点本身难",
+        "提示2：思考视频中提到我们以往学习的市场类型对学习要素市场的影响",
+        "提示3：根据视频内容判断选项中哪个是主要原因"
+      ]
+    }
+  ],
+  "count": 22
+}

@@ -1,0 +1,35 @@
+{
+  "exercises": [
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：分析an取值范围",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{n \\to \\infty} (\\frac{1}{n^2} + \\frac{2}{n^2} + \\frac{3}{n^2} + \\cdots + \\frac{n}{n^2})$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{2}$",
+      "hints": [
+        "提示1：先对括号内的式子进行求和，利用等差数列求和公式 $S_n = \\frac{n(a_1 + a_n)}{2}$ ，这里 $a_1 = 1$，$a_n = n$。",
+        "提示2：化简求和后的式子，再求极限。",
+        "提示3：约去分子分母中的相同项，然后取极限 $n \\to \\infty$ "
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：证明极限存在",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{n \\to +\\infty} \\sum_{k = 1}^{n} \\frac{k}{n^2 + k^2}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{2}\\ln 2$",
+      "hints": [
+        "提示1：将和式 $\\sum_{k = 1}^{n} \\frac{k}{n^2 + k^2}$ 变形为定积分的形式，可先提出 $\\frac{1}{n}$，得到 $\\frac{1}{n}\\sum_{k = 1}^{n} \\frac{\\frac{k}{n}}{1 + (\\frac{k}{n})^2}$",
+        "提示2：根据定积分定义 $\\lim_{n \\to +\\infty} \\frac{1}{n}\\sum_{k = 1}^{n} f(\\frac{k}{n}) = \\int_{0}^{1} f(x)dx$，确定被积函数 $f(x)$",
+        "提示3：计算定积分 $\\int_{0}^{1} \\frac{x}{1 + x^2}dx$，可令 $u = 1 + x^2$ 进行换元积分"
+      ]
+    }
+  ],
+  "count": 2
+}

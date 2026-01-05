@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：字符串类型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个选项是正确的字符串类型表示？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "123"
+        },
+        {
+          "label": "B",
+          "content": "$True$"
+        },
+        {
+          "label": "C",
+          "content": "\"Hello World\""
+        },
+        {
+          "label": "D",
+          "content": "None"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中字符串类型的特点，字符串会被双引号或单引号包裹",
+        "提示2：分析每个选项是否符合字符串类型的表示形式",
+        "提示3：选项A是整数，选项B可能是布尔值，选项D通常表示空值，都不符合字符串的特征"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：其他数据类型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个不属于视频中提到的 Python 数据类型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "字符串类型"
+        },
+        {
+          "label": "B",
+          "content": "小数类型"
+        },
+        {
+          "label": "C",
+          "content": "布尔类型"
+        },
+        {
+          "label": "D",
+          "content": "复数类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的 Python 数据类型有哪些",
+        "提示2：视频中提到的数据类型包括字符串、整数、浮点数、布尔类型、空值类型、列表、字典等",
+        "提示3：逐一对比选项与视频中提到的数据类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数据类型重要性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个不属于视频中提到的 Python 数据类型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "字符串类型"
+        },
+        {
+          "label": "B",
+          "content": "小数类型"
+        },
+        {
+          "label": "C",
+          "content": "布尔类型"
+        },
+        {
+          "label": "D",
+          "content": "空值类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的 Python 数据类型具体有哪些",
+        "提示2：视频中提到了字符串、整数、浮点数、布尔类型、空值类型等",
+        "提示3：注意选项中“小数类型”并非视频提到的规范表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：操作实践",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个选项不属于视频中提到的 Python 数学类型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "字符串类型"
+        },
+        {
+          "label": "B",
+          "content": "布尔类型"
+        },
+        {
+          "label": "C",
+          "content": "复数类型"
+        },
+        {
+          "label": "D",
+          "content": "空值类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的 Python 数学类型有哪些",
+        "提示2：视频中明确指出了字符串、整数、浮点数、布尔类型、空值类型等",
+        "提示3：逐一对比选项与视频中提到的类型"
+      ]
+    }
+  ],
+  "count": 4
+}

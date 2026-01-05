@@ -1,0 +1,549 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：点的运动学",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在本节课程中，关于点的运动学，我们主要研究的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点的受力情况"
+        },
+        {
+          "label": "B",
+          "content": "点的运动"
+        },
+        {
+          "label": "C",
+          "content": "点的质量变化"
+        },
+        {
+          "label": "D",
+          "content": "点的颜色变化"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于点的运动学的描述",
+        "提示2：明确点的运动学的研究重点",
+        "提示3：在视频中找到与研究内容相关的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：自然法分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课时包含两个考点，以下哪个选项正确涵盖了这两个考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点的运动学和刚体的一般运动"
+        },
+        {
+          "label": "B",
+          "content": "点的运动学和钢铁的简单运动"
+        },
+        {
+          "label": "C",
+          "content": "刚体的复杂运动和点的动力学"
+        },
+        {
+          "label": "D",
+          "content": "质点的运动和刚体的转动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本节课时的两个考点内容",
+        "提示2：与每个选项进行仔细对比",
+        "提示3：注意准确把握考点名称表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：运动问题求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究点的运动学中，一个点在平面直角坐标系中的运动方程为 $x = 3t^2$，$y = 2t$，则该点在 $t = 2$ 时刻的速度大小为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sqrt{148}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sqrt{144}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sqrt{146}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\sqrt{142}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先根据运动方程分别对时间 $t$ 求导，得到速度在 $x$ 轴和 $y$ 轴方向的分量",
+        "提示2：速度在 $x$ 轴方向的分量 $v_x = \\frac{dx}{dt}$，速度在 $y$ 轴方向的分量 $v_y = \\frac{dy}{dt}$",
+        "提示3：再根据速度的合成公式 $v = \\sqrt{v_x^2 + v_y^2}$ 计算速度大小"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：拐点相关知识",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程时间的两个考点中，第一个考点是关于什么的研究？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点的运动学"
+        },
+        {
+          "label": "B",
+          "content": "钢铁的简单运动"
+        },
+        {
+          "label": "C",
+          "content": "点的简单运动"
+        },
+        {
+          "label": "D",
+          "content": "刚体的简单运动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的两个考点的具体内容",
+        "提示2：明确第一个考点的准确表述",
+        "提示3：注意与其他相关概念进行区分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：常加速度问题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本课时有两个考点，以下哪个选项包含了这两个考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点的运动学和刚体的简单运动"
+        },
+        {
+          "label": "B",
+          "content": "点的运动学和物体的复杂运动"
+        },
+        {
+          "label": "C",
+          "content": "质点的动力学和刚体的简单运动"
+        },
+        {
+          "label": "D",
+          "content": "质点的动力学和物体的复杂运动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本课时的两个考点内容",
+        "提示2：对比每个选项和视频中考点的描述",
+        "提示3：明确考点是点的运动学以及刚体的简单运动"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：选择题分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课时的考试中，主要考查的题型不包括以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "选择题"
+        },
+        {
+          "label": "B",
+          "content": "解答题"
+        },
+        {
+          "label": "C",
+          "content": "填空题"
+        },
+        {
+          "label": "D",
+          "content": "判断题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本节课时考试主要考查的题型",
+        "提示2：视频中明确说明了考查的题型类别",
+        "提示3：将选项与视频中提到的题型进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：小球运动分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课时涉及的考点中，关于点的运动学，主要研究的内容是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点的受力情况"
+        },
+        {
+          "label": "B",
+          "content": "点的运动"
+        },
+        {
+          "label": "C",
+          "content": "点的能量转化"
+        },
+        {
+          "label": "D",
+          "content": "点的质量变化"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于点的运动学的描述内容",
+        "提示2：视频明确指出了点的运动学主要研究方向",
+        "提示3：按照视频原话来进行选择，关注‘主要研究’关键词"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：A点加速度求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在点的运动学中，一个质点做直线运动，其位移 $s$ 与时间 $t$ 的关系为 $s = 3t^2 - 2t + 1$（单位：$m$，$s$），则该质点在 $t = 2s$ 时的加速度为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$6m/s^2$"
+        },
+        {
+          "label": "B",
+          "content": "$4m/s^2$"
+        },
+        {
+          "label": "C",
+          "content": "$2m/s^2$"
+        },
+        {
+          "label": "D",
+          "content": "$0m/s^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据位移公式求速度，速度是位移对时间的一阶导数，即 $v = \\frac{ds}{dt}$",
+        "提示2：根据速度公式求加速度，加速度是速度对时间的一阶导数，即 $a = \\frac{dv}{dt}$",
+        "提示3：对位移公式 $s = 3t^2 - 2t + 1$ 先求导得到速度公式，再对速度公式求导得到加速度公式，最后将 $t = 2s$ 代入加速度公式计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：钢铁平动概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课有两个考点，以下属于本次课考点的是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点的运动学"
+        },
+        {
+          "label": "B",
+          "content": "刚体的复杂运动"
+        },
+        {
+          "label": "C",
+          "content": "质点系的动力学"
+        },
+        {
+          "label": "D",
+          "content": "物体的圆周运动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的本次课的考点内容",
+        "提示2：明确指出了有两个考点，一个是点的运动学，另一个是钢铁的简单运动",
+        "提示3：将各选项与视频中考点进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：铁块平动原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在本节课的考试中，关于本节课内容主要考察的题型不包括以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "选择题"
+        },
+        {
+          "label": "B",
+          "content": "解答题"
+        },
+        {
+          "label": "C",
+          "content": "填空题"
+        },
+        {
+          "label": "D",
+          "content": "判断题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到的本节课考试主要考察的题型。",
+        "提示2：视频中明确给出了主要考察的题型范围。",
+        "提示3：从选项中找出不在这个范围内的题型。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定轴转动基础",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程时一共有两个考点，以下不属于这两个考点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点的运动学"
+        },
+        {
+          "label": "B",
+          "content": "钢铁的简单运动"
+        },
+        {
+          "label": "C",
+          "content": "刚体的复杂运动"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的这节课的两个考点内容",
+        "提示2：明确视频中只提及了两个考点，对各选项与考点进行逐一对比",
+        "提示3：注意题目问的是不属于考点的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：转动体速度与加速度",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程时主要考察的题型不包括以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "选择题"
+        },
+        {
+          "label": "B",
+          "content": "解答题"
+        },
+        {
+          "label": "C",
+          "content": "填空题"
+        },
+        {
+          "label": "D",
+          "content": "判断题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确视频中提到本次课时主要考察的题型",
+        "提示2：仔细对比选项和视频描述的题型",
+        "提示3：关注不包括的那种题型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：例题分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课的两个考点中，重点研究点的运动的是哪个考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点的运动学"
+        },
+        {
+          "label": "B",
+          "content": "钢铁的简单运动"
+        },
+        {
+          "label": "C",
+          "content": "都重点研究"
+        },
+        {
+          "label": "D",
+          "content": "都不重点研究"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于两个考点的描述",
+        "提示2：明确每个考点的主要研究对象",
+        "提示3：找到重点研究点的运动的考点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定轴转动刚体",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课程16主要学习内容对应的考点有两个，以下选项中哪个属于这两个考点之一？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点的运动学"
+        },
+        {
+          "label": "B",
+          "content": "物体的平抛运动"
+        },
+        {
+          "label": "C",
+          "content": "物体的圆周运动"
+        },
+        {
+          "label": "D",
+          "content": "物体的自由落体运动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的课程16的两个考点内容",
+        "提示2：视频明确指出了考点名称，从中寻找答案",
+        "提示3：注意与考点直接对应的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：圆盘运动分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在本节课学习的内容中，关于这节课时的考点，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "本节课时只有一个考点，即点的运动学"
+        },
+        {
+          "label": "B",
+          "content": "本节课时的考点包括点的运动学和钢铁的简单运动"
+        },
+        {
+          "label": "C",
+          "content": "本节课时主要考大题，以解答题为主"
+        },
+        {
+          "label": "D",
+          "content": "对于点的运动学，我们主要研究的是物体的整体运动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于本节课时考点的描述",
+        "提示2：注意区分考点内容和考试题型",
+        "提示3：明确点的运动学的研究对象"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轮系传动比",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课时有两个考点，以下不属于本次课时考点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点的运动学"
+        },
+        {
+          "label": "B",
+          "content": "钢铁的简单运动"
+        },
+        {
+          "label": "C",
+          "content": "刚体的复杂运动"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是考点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本次课时的考点有哪些",
+        "提示2：视频明确指出本次课时有两个考点，分别进行了说明",
+        "提示3：将选项与视频中提到的考点进行逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：带轮传动问题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课时包含两个考点，以下哪个选项是其中一个考点呢？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点的运动学"
+        },
+        {
+          "label": "B",
+          "content": "物体的曲线运动"
+        },
+        {
+          "label": "C",
+          "content": "刚体的复杂运动"
+        },
+        {
+          "label": "D",
+          "content": "点的静止状态研究"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的本节课时的考点内容",
+        "提示2：明确指出有两个考点，其中一个是与点的运动相关",
+        "提示3：准确对应选项和考点内容"
+      ]
+    }
+  ],
+  "count": 17
+}

@@ -1,0 +1,389 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：刚体内力做功",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于做功和动能定理的说法，正确的是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "在考试中做功这一考点必定会以大题形式出现"
+        },
+        {
+          "label": "B",
+          "content": "动能和动能定理在考试中属于必考点，且往往会以大题形式出现"
+        },
+        {
+          "label": "C",
+          "content": "功率和机械能守恒定理在考试中是选考内容，一般出小题"
+        },
+        {
+          "label": "D",
+          "content": "本课时的三个考点在考试中出现的可能性一样"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于本课时三个考点在考试中的情况",
+        "提示2：明确动能和动能定理在考试中的地位和出题形式",
+        "提示3：对比各选项与视频内容是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：动能概念讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在动能定理的相关考试中，以下关于动能和动能定理的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "动能和动能定理在考试中属于选考内容"
+        },
+        {
+          "label": "B",
+          "content": "动能和动能定理在考试中通常以小题的形式出现"
+        },
+        {
+          "label": "C",
+          "content": "动能和动能定理在考试中属于必考内容，且往往会以大题的形式出现"
+        },
+        {
+          "label": "D",
+          "content": "动能和动能定理在考试中不会单独考查"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于动能和动能定理在考试中的相关描述",
+        "提示2：明确提到了该知识点在考试中的性质和出题形式",
+        "提示3：根据描述对每个选项进行分析判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求动能解题法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在动能定理的相关知识点中，以下哪个是本节课的必考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "力的功"
+        },
+        {
+          "label": "B",
+          "content": "动能和动能定理"
+        },
+        {
+          "label": "C",
+          "content": "功率和机械能守恒定律"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到本节课的必考点相关信息",
+        "提示2：明确指出了哪个考点是考试中的必考题",
+        "提示3：注意题干问的是必考点，结合知识点逐一分析选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：动能计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m = 2\\text{kg}$ 的物体，在水平面上受到一个恒力 $F = 10\\text{N}$ 的作用，从静止开始运动了 $s = 5\\text{m}$ 后，忽略摩擦力，根据动能定理，该物体此时的动能 $E_k$ 为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$20\\text{J}$"
+        },
+        {
+          "label": "B",
+          "content": "$25\\text{J}$"
+        },
+        {
+          "label": "C",
+          "content": "$50\\text{J}$"
+        },
+        {
+          "label": "D",
+          "content": "$100\\text{J}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：明确动能定理的表达式 $W = \\Delta E_k$，其中 $W$ 是合外力做的功，$\\Delta E_k$ 是动能的变化量。",
+        "提示2：根据题目可知物体初动能为 $0$，所以末动能 $E_k$ 就等于合外力做的功 $W$。",
+        "提示3：合外力做的功可以根据公式 $W = Fs$ 来计算，这里 $F$ 是合外力，$s$ 是物体运动的位移。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：动能定理讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在动能定理相关的考试中，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "动能和动能定理属于选考内容，通常以小题形式出现"
+        },
+        {
+          "label": "B",
+          "content": "动能和动能定理属于必考内容，通常以小题形式出现"
+        },
+        {
+          "label": "C",
+          "content": "动能和动能定理属于必考内容，往往会以大题的形式出现"
+        },
+        {
+          "label": "D",
+          "content": "动能和动能定理属于选考内容，往往会以大题的形式出现"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中关于动能和动能定理在考试中的要求",
+        "提示2：明确是必考还是选考内容",
+        "提示3：注意其通常出现的题型形式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：动能定理应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m$ 的物体，在水平恒力 $F$ 的作用下，沿粗糙水平面由静止开始运动，经过时间 $t$ 后，速度达到 $v$。若物体与水平面间的动摩擦因数为 $\\mu$，重力加速度为 $g$，则在这段时间内，力 $F$ 对物体做的功为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{2}mv^2$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{2}mv^2 + \\mu mgt^2$"
+        },
+        {
+          "label": "C",
+          "content": "$Fvt$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{1}{2}mv^2 + \\mu mgvt$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：根据动能定理，合外力对物体做的功等于物体动能的变化量",
+        "提示2：分析物体受到的力，找出合外力",
+        "提示3：计算摩擦力做的功，再结合动能定理求出力 $F$ 做的功"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：做功与动能定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m = 2\\text{kg}$ 的物体，在水平拉力 $F$ 的作用下，从静止开始在光滑水平面上做匀加速直线运动。经过 $t = 3\\text{s}$，物体的速度达到 $v = 6\\text{m/s}$。则在这段时间内，拉力 $F$ 做的功为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$36\\text{J}$"
+        },
+        {
+          "label": "B",
+          "content": "$72\\text{J}$"
+        },
+        {
+          "label": "C",
+          "content": "$18\\text{J}$"
+        },
+        {
+          "label": "D",
+          "content": "$54\\text{J}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先根据动能定理 $W_{合}=\\Delta E_{k}$ 来分析，本题中合外力就是拉力 $F$，所以拉力做的功等于物体动能的变化量",
+        "提示2：物体初速度 $v_0 = 0$，末速度 $v = 6\\text{m/s}$，根据动能公式 $E_{k}=\\frac{1}{2}mv^{2}$ 计算动能变化量",
+        "提示3：动能变化量 $\\Delta E_{k}=\\frac{1}{2}mv^{2}-\\frac{1}{2}mv_{0}^{2}$，将 $m = 2\\text{kg}$，$v = 6\\text{m/s}$，$v_0 = 0$ 代入计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：功率与机械能守恒",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m$ 的物体从静止开始沿光滑斜面下滑，斜面的倾角为 $\\theta$，物体下滑的距离为 $s$。已知重力加速度为 $g$，则物体下滑过程中重力的功率为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$mg\\sqrt{2gs\\sin\\theta}\\sin\\theta$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{2}mg\\sqrt{2gs\\sin\\theta}\\sin\\theta$"
+        },
+        {
+          "label": "C",
+          "content": "$mg\\sqrt{2gs}\\sin\\theta$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{1}{2}mg\\sqrt{2gs}\\sin\\theta$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先根据机械能守恒定律求出物体下滑 $s$ 距离时的末速度 $v$",
+        "提示2：重力的功率 $P = Fv\\cos\\alpha$，这里 $F = mg$，$\\alpha$ 是重力与速度方向的夹角",
+        "提示3：注意这里求的是平均功率，平均功率等于力与平均速度的乘积"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：系统运动分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课时的重点考查内容中，以下哪个常以大题形式出现？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "力的功"
+        },
+        {
+          "label": "B",
+          "content": "动能和动能定理"
+        },
+        {
+          "label": "C",
+          "content": "功率和机械能守恒定律"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本节课时的三个考点",
+        "提示2：注意视频中明确指出常以大题形式出现的考点内容",
+        "提示3：将选项与视频关键点进行匹配"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：物理量转换计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m = 2\\text{kg}$ 的物体，在水平拉力 $F$ 的作用下，从静止开始沿水平地面做匀加速直线运动。已知物体与地面间的动摩擦因数 $\\mu = 0.2$，经过 $t = 3\\text{s}$ 物体的速度达到 $v = 6\\text{m/s}$。根据动能定理，求这段时间内拉力 $F$ 做的功 $W_F$ 是多少？（重力加速度 $g = 10\\text{m/s}^2$）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$36\\text{J}$"
+        },
+        {
+          "label": "B",
+          "content": "$48\\text{J}$"
+        },
+        {
+          "label": "C",
+          "content": "$60\\text{J}$"
+        },
+        {
+          "label": "D",
+          "content": "$72\\text{J}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先根据运动学公式求出物体的加速度 $a$",
+        "提示2：再根据牛顿第二定律求出拉力 $F$ 的大小",
+        "提示3：利用动能定理 $W_{合}=\\Delta E_k$ 计算拉力 $F$ 做的功，其中 $W_{合}=W_F - W_f$，$\\Delta E_k = \\frac{1}{2}mv^2 - 0$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：外力做功计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m$ 的物体，在水平拉力 $F$ 的作用下，在光滑水平面上移动了一段距离 $s$。若物体初始速度为 $v_0$，末速度为 $v$，根据动能定理，以下哪个表达式能正确表示外力对物体做的功？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$Fs$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{2}mv^2 - \\frac{1}{2}mv_0^2$"
+        },
+        {
+          "label": "C",
+          "content": "$Fs + \\frac{1}{2}mv^2$"
+        },
+        {
+          "label": "D",
+          "content": "$Fs - \\frac{1}{2}mv_0^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确动能定理的内容，即合外力对物体所做的功等于物体动能的变化量",
+        "提示2：动能的表达式为 $E_k = \\frac{1}{2}mv^2$，其中 $m$ 是物体质量，$v$ 是物体速度",
+        "提示3：分析物体动能的初始值和末值，然后根据动能定理得出外力做功的表达式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：动能定理应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m$ 的物体，在水平拉力 $F$ 的作用下，在粗糙水平面上由静止开始运动，经过位移 $s$ 后速度达到 $v$。已知物体与水平面间的动摩擦因数为 $\\mu$，重力加速度为 $g$。根据动能定理，以下哪个式子是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$Fs - \\mu mgs = \\frac{1}{2}mv^2$"
+        },
+        {
+          "label": "B",
+          "content": "$Fs + \\mu mgs = \\frac{1}{2}mv^2$"
+        },
+        {
+          "label": "C",
+          "content": "$Fs = \\frac{1}{2}mv^2$"
+        },
+        {
+          "label": "D",
+          "content": "$\\mu mgs = \\frac{1}{2}mv^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：明确动能定理的表达式为合外力做的功等于物体动能的变化量",
+        "提示2：分析物体所受的力，找出各个力做的功",
+        "提示3：拉力 $F$ 做正功，摩擦力 $f = \\mu mg$ 做负功，初动能为 0，末动能为 $\\frac{1}{2}mv^2$"
+      ]
+    }
+  ],
+  "count": 12
+}

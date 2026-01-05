@@ -1,0 +1,37 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Python环境准备",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在编写第一行Python代码之前，需要做两件事情，其中安装Python本质上指的是安装什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "Python编译器"
+        },
+        {
+          "label": "B",
+          "content": "Python解释器"
+        },
+        {
+          "label": "C",
+          "content": "Python编辑器"
+        },
+        {
+          "label": "D",
+          "content": "Python调试器"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的在编写Python代码前要做的事情以及安装Python的本质",
+        "提示2：思考计算机如何理解我们编写的Python代码",
+        "提示3：明确解释器在Python运行过程中的作用"
+      ]
+    }
+  ],
+  "count": 1
+}

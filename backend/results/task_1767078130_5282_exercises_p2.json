@@ -1,0 +1,277 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数连续性定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = \\begin{cases} x + 1, & x < 2 \\\\ a, & x = 2 \\\\ 3x - 5, & x > 2 \\end{cases}$，若函数 $f(x)$ 在 $x = 2$ 处连续，则 $a$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$3$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$5$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据函数连续性的定义，函数在某点连续，则该点处的左极限等于右极限等于该点的函数值",
+        "提示2：先计算函数在 $x = 2$ 处的左极限 $\\lim_{x \\to 2^-} f(x)$",
+        "提示3：再计算函数在 $x = 2$ 处的右极限 $\\lim_{x \\to 2^+} f(x)$",
+        "提示4：最后令左极限等于右极限等于 $f(2)$ ，求出 $a$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：证明函数连续",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=\\begin{cases}x + 1, & x\\geq0 \\\\x^2+ 2x + 1, & x<0\\end{cases}$，则函数 $f(x)$ 在 $x = 0$ 处是否连续？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "连续"
+        },
+        {
+          "label": "B",
+          "content": "不连续，左极限不等于函数值"
+        },
+        {
+          "label": "C",
+          "content": "不连续，右极限不等于函数值"
+        },
+        {
+          "label": "D",
+          "content": "不连续，左极限不等于右极限"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先明确函数在一点连续的定义，即函数在该点的左极限、右极限和函数值都相等",
+        "提示2：分别计算函数在 $x = 0$ 处的左极限、右极限",
+        "提示3：再求出函数在 $x = 0$ 处的函数值，然后进行比较"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：左右连续概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=\\begin{cases}x + 1, & x < 0 \\\\ 2, & x = 0 \\\\ x^2 - 1, & x > 0\\end{cases}$，则函数 $f(x)$ 在 $x = 0$ 处（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "左连续但不右连续"
+        },
+        {
+          "label": "B",
+          "content": "右连续但不左连续"
+        },
+        {
+          "label": "C",
+          "content": "左右都连续"
+        },
+        {
+          "label": "D",
+          "content": "左右都不连续"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先分别计算函数在 $x = 0$ 处的左极限和右极限",
+        "提示2：根据左连续的定义，若 $\\lim_{x \\to 0^-} f(x) = f(0)$，则函数在 $x = 0$ 处左连续",
+        "提示3：根据右连续的定义，若 $\\lim_{x \\to 0^+} f(x) = f(0)$，则函数在 $x = 0$ 处右连续"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：证明等价命题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$，若 $\\lim_{x \\to x_0} f(x) = f(x_0)$，则函数 $f(x)$ 在 $x = x_0$ 处连续。若函数 $f(x)=\\begin{cases}x + 1, & x<1 \\\\ 2, & x = 1 \\\\ x^2, & x>1\\end{cases}$，判断该函数在 $x = 1$ 处是否连续，并说明理由。答案是：___ （填“连续”或“不连续”）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "不连续",
+      "hints": [
+        "提示1：先分别计算函数在 $x = 1$ 处的左极限 $\\lim_{x \\to 1^-} f(x)$ 和右极限 $\\lim_{x \\to 1^+} f(x)$",
+        "提示2：再将左右极限的值与 $f(1)$ 的值进行比较",
+        "提示3：若 $\\lim_{x \\to 1^-} f(x)=\\lim_{x \\to 1^+} f(x)=f(1)$，则函数在 $x = 1$ 处连续，否则不连续"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：一致连续定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 在区间 $[a,b]$ 上连续，若要判断该函数在该区间上是否一致连续，可依据的定义是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "对于任意给定的 $\\epsilon > 0$，存在 $\\delta > 0$，使得当 $x,y \\in [a,b]$ 且 $|x - y| < \\delta$ 时，有 $|f(x) - f(y)| < \\epsilon$"
+        },
+        {
+          "label": "B",
+          "content": "对于任意给定的 $\\epsilon > 0$，存在 $\\delta > 0$，使得当 $x,y \\in [a,b]$ 且 $|x - y| < \\epsilon$ 时，有 $|f(x) - f(y)| < \\delta$"
+        },
+        {
+          "label": "C",
+          "content": "存在 $\\epsilon > 0$，对于任意的 $\\delta > 0$，当 $x,y \\in [a,b]$ 且 $|x - y| < \\delta$ 时，有 $|f(x) - f(y)| < \\epsilon$"
+        },
+        {
+          "label": "D",
+          "content": "存在 $\\epsilon > 0$，对于任意的 $\\delta > 0$，当 $x,y \\in [a,b]$ 且 $|x - y| < \\epsilon$ 时，有 $|f(x) - f(y)| < \\delta$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾函数一致连续的定义，明确 $\\epsilon$ 和 $\\delta$ 的作用和关系",
+        "提示2：一致连续强调对于任意小的正数 $\\epsilon$，都能找到一个对应的正数 $\\delta$，使得区间内任意两点距离小于 $\\delta$ 时，函数值之差小于 $\\epsilon$",
+        "提示3：对每个选项逐一分析，看是否符合一致连续的定义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：一致连续判别",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 在区间 $I$ 上，若通过极限来定义连续性，以下哪个选项符合函数 $f(x)$ 在点 $x_0$ 处连续的定义？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\lim_{x \\to x_0} f(x) - f(x_0) = 0$"
+        },
+        {
+          "label": "B",
+          "content": "$\\lim_{x \\to x_0} f(x) + f(x_0) = 0$"
+        },
+        {
+          "label": "C",
+          "content": "$\\lim_{x \\to x_0} [f(x) \\cdot f(x_0)] = 0$"
+        },
+        {
+          "label": "D",
+          "content": "$\\lim_{x \\to x_0} \\frac{f(x)}{f(x_0)} = 0$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：函数 $f(x)$ 在点 $x_0$ 处连续的定义和极限有关",
+        "提示2：回忆连续性定义，函数在一点连续意味着该点的极限值等于函数值",
+        "提示3：将极限值等于函数值转化为极限表达式进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：非一致连续证明",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 在区间 $I$ 上连续，若要证明 $f(x)$ 在区间 $I$ 上非一致连续，可根据连续与极限的关系，以下哪种方法是可行的（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "找到一个 $\\epsilon_0 > 0$，对于任意的 $\\delta > 0$，都能找到 $x_1, x_2 \\in I$，使得 $|x_1 - x_2| < \\delta$，但 $|f(x_1) - f(x_2)| \\geq \\epsilon_0$"
+        },
+        {
+          "label": "B",
+          "content": "对于任意的 $\\epsilon > 0$，都能找到一个 $\\delta > 0$，使得当 $|x_1 - x_2| < \\delta$ 时，有 $|f(x_1) - f(x_2)| < \\epsilon$"
+        },
+        {
+          "label": "C",
+          "content": "找到一个 $\\delta_0 > 0$，对于任意的 $\\epsilon > 0$，都能找到 $x_1, x_2 \\in I$，使得 $|x_1 - x_2| < \\delta_0$，但 $|f(x_1) - f(x_2)| \\geq \\epsilon$"
+        },
+        {
+          "label": "D",
+          "content": "对于任意的 $\\delta > 0$，都能找到一个 $\\epsilon > 0$，使得当 $|x_1 - x_2| < \\delta$ 时，有 $|f(x_1) - f(x_2)| < \\epsilon$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆函数一致连续和非一致连续的定义，一致连续强调对于任意给定的 $\\epsilon > 0$，都能找到一个 $\\delta > 0$ 满足相应条件",
+        "提示2：非一致连续则是要否定一致连续的定义，即找到一个反例",
+        "提示3：分析每个选项与非一致连续定义的匹配程度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：康托定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=\\begin{cases}x + 1, & x\\geq0 \\\\ x - 1, & x<0\\end{cases}$，判断函数 $f(x)$ 在 $x = 0$ 处是否连续，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "函数 $f(x)$ 在 $x = 0$ 处连续，因为 $\\lim_{x \\to 0^+}f(x)=\\lim_{x \\to 0^-}f(x)$"
+        },
+        {
+          "label": "B",
+          "content": "函数 $f(x)$ 在 $x = 0$ 处不连续，因为 $\\lim_{x \\to 0^+}f(x)\\neq\\lim_{x \\to 0^-}f(x)$"
+        },
+        {
+          "label": "C",
+          "content": "函数 $f(x)$ 在 $x = 0$ 处连续，因为 $f(0)$ 有定义"
+        },
+        {
+          "label": "D",
+          "content": "函数 $f(x)$ 在 $x = 0$ 处不连续，因为 $f(0)$ 无定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据函数连续性的定义，函数在某点连续需要满足 $\\lim_{x \\to x_0^+}f(x)=\\lim_{x \\to x_0^-}f(x)=f(x_0)$",
+        "提示2：分别计算 $\\lim_{x \\to 0^+}f(x)$ 和 $\\lim_{x \\to 0^-}f(x)$ 的值",
+        "提示3：比较左右极限是否相等，再结合连续性定义判断函数在 $x = 0$ 处的连续性"
+      ]
+    },
+    {
+      "type": "选择题",
+      "title": "知识点练习：区间连续性定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=\\begin{cases}x + 1, & x \\lt 1 \\\\ 2x - a, & x \\geq 1 \\end{cases}$，若函数 $f(x)$ 在 $x = 1$ 处连续，则 $a$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$1$"
+        },
+        {
+          "label": "C",
+          "content": "$2$"
+        },
+        {
+          "label": "D",
+          "content": "$3$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据函数在某点连续的定义，$\\lim_{x \\to x_0^-}f(x)=\\lim_{x \\to x_0^+}f(x)=f(x_0)$",
+        "提示2：先分别计算 $x \\to 1^-$ 和 $x \\to 1^+$ 时函数的极限",
+        "提示3：令左右极限相等且等于该点函数值，进而求出 $a$ 的值"
+      ]
+    }
+  ],
+  "count": 9
+}

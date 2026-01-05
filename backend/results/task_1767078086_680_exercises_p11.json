@@ -1,0 +1,325 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：转动惯量",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习动量矩定理这一课时，包含了多个考点，以下哪个选项不是本课时的考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "转动惯量"
+        },
+        {
+          "label": "B",
+          "content": "角加速度"
+        },
+        {
+          "label": "C",
+          "content": "动量矩"
+        },
+        {
+          "label": "D",
+          "content": "运动微分方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本课时的四个考点内容。",
+        "提示2：逐一对比选项与视频中考点是否一致。",
+        "提示3：明确视频中考点为转动惯量、动量矩、动量矩定理和运动微分方程。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：动量矩",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个涉及动量矩的物理系统中，已知转动惯量 $I$ 与角速度 $\\omega$ 相关，且该系统遵循动量矩定理。若系统初始的动量矩为 $L_1 = I_1\\omega_1$，经过一段时间后，转动惯量变为 $I_2$，角速度变为 $\\omega_2$。在没有外力矩作用的情况下，以下哪个等式成立？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$I_1\\omega_1 = I_2\\omega_2$"
+        },
+        {
+          "label": "B",
+          "content": "$I_1\\omega_1 + I_2\\omega_2 = 0$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{I_1}{\\omega_1} = \\frac{I_2}{\\omega_2}$"
+        },
+        {
+          "label": "D",
+          "content": "$I_1\\omega_1^2 = I_2\\omega_2^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆动量矩定理的内容，在没有外力矩作用时，系统的动量矩守恒。",
+        "提示2：动量矩的计算公式为 $L = I\\omega$，其中 $L$ 表示动量矩，$I$ 表示转动惯量，$\\omega$ 表示角速度。",
+        "提示3：根据动量矩守恒，系统初始的动量矩等于末态的动量矩。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：动量矩定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个不属于本节课的四个考点范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "转动惯量"
+        },
+        {
+          "label": "B",
+          "content": "角加速度"
+        },
+        {
+          "label": "C",
+          "content": "动量矩定理"
+        },
+        {
+          "label": "D",
+          "content": "运动微分方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本节课的四个考点内容",
+        "提示2：明确每个选项与考点的对应关系",
+        "提示3：逐一排查选项是否在考点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：动量矩守恒条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个可绕固定轴转动的圆盘上，有一个质量为 $m$ 的质点，初始时质点距离转轴的距离为 $r_1$，圆盘以角速度 $\\omega_1$ 转动。若质点沿径向缓慢移动到距离转轴为 $r_2$ 的位置，此时圆盘的角速度变为 $\\omega_2$。已知圆盘的转动惯量为 $I$，忽略一切摩擦，根据动量矩守恒定律，以下哪个等式成立？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(I + mr_1^2)\\omega_1 = (I + mr_2^2)\\omega_2$"
+        },
+        {
+          "label": "B",
+          "content": "$I\\omega_1 = I\\omega_2$"
+        },
+        {
+          "label": "C",
+          "content": "$mr_1^2\\omega_1 = mr_2^2\\omega_2$"
+        },
+        {
+          "label": "D",
+          "content": "$(I + mr_1)\\omega_1 = (I + mr_2)\\omega_2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确系统的总动量矩等于圆盘的动量矩与质点的动量矩之和",
+        "提示2：质点的转动惯量公式为 $J = mr^2$，动量矩公式为 $L = J\\omega$",
+        "提示3：根据动量矩守恒定律，系统初始的总动量矩等于末态的总动量矩"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：应用动量矩定理解题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个物理系统中，涉及到转动惯量 $I$、动量矩 $L$、动量矩定理以及运动微分方程等知识。已知一个绕定轴转动的刚体，其转动惯量为 $I$，所受外力矩为 $M$，根据动量矩定理，下列哪个表达式是正确描述刚体角速度 $\\omega$ 随时间 $t$ 变化的运动微分方程？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$M = I\\frac{d\\omega}{dt}$"
+        },
+        {
+          "label": "B",
+          "content": "$M = I\\omega$"
+        },
+        {
+          "label": "C",
+          "content": "$M = \\frac{I}{\\omega}$"
+        },
+        {
+          "label": "D",
+          "content": "$M = \\frac{d\\omega}{I dt}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾动量矩定理的基本内容，它描述了外力矩与动量矩变化率之间的关系",
+        "提示2：动量矩 $L = I\\omega$，对动量矩求时间的导数",
+        "提示3：根据动量矩定理，外力矩等于动量矩的变化率"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：刚体运动微分方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在刚体运动的学习中，涉及到多个重要考点。已知一个刚体的运动，下列哪个考点在考试中基本属于必考题？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "转动惯量"
+        },
+        {
+          "label": "B",
+          "content": "动量矩"
+        },
+        {
+          "label": "C",
+          "content": "动量矩定理和运动微分方程"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中提到的各个考点以及它们在考试中的情况",
+        "提示2：视频中明确指出了某些考点在考试中基本属于必考题",
+        "提示3：对比每个选项与视频内容，找出符合必考题描述的考点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面运动微分方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在本节课的学习中，涉及到多个考点，以下哪个考点在考试中基本上属于必考题？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "转动惯量"
+        },
+        {
+          "label": "B",
+          "content": "动量矩"
+        },
+        {
+          "label": "C",
+          "content": "动量矩定理和运动微分方程"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的各个考点以及关于必考题的描述",
+        "提示2：明确视频中指出哪些考点在考试中基本上属于必考题",
+        "提示3：对每个选项进行分析，判断是否符合必考题的条件"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求解第一题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在本节课学习的四个考点中，在考试里基本属于必考点的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "转动惯量和动量矩"
+        },
+        {
+          "label": "B",
+          "content": "动量矩和动量矩定理"
+        },
+        {
+          "label": "C",
+          "content": "动量矩定理和运动微分方程"
+        },
+        {
+          "label": "D",
+          "content": "转动惯量和运动微分方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到哪些考点在考试中基本属于必考点",
+        "提示2：定位视频中关于必考点的描述部分",
+        "提示3：明确提到的第三考点和第四考点分别是什么"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：分析第二题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个物理系统中，涉及到动量矩相关知识。已知某物体的转动惯量为 $I$，角速度为 $\\omega$，其动量矩 $L$ 可表示为 $L = I\\omega$。若一个圆盘状物体质量为 $m$，半径为 $r$，绕中心轴做匀速转动，其转动惯量 $I = \\frac{1}{2}mr^2$，当角速度从 $\\omega_1$ 变为 $\\omega_2$ 时，根据动量矩定理，合外力矩 $M$ 对时间 $t$ 的冲量矩等于动量矩的变化量。那么在这段时间内，合外力矩 $M$ 对时间 $t$ 的冲量矩 $J$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{2}mr^2(\\omega_2 - \\omega_1)$"
+        },
+        {
+          "label": "B",
+          "content": "$mr^2(\\omega_2 - \\omega_1)$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{1}{2}mr^2(\\omega_1 - \\omega_2)$"
+        },
+        {
+          "label": "D",
+          "content": "$mr^2(\\omega_1 - \\omega_2)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确动量矩定理的表达式，即合外力矩 $M$ 对时间 $t$ 的冲量矩 $J$ 等于动量矩的变化量 $\\Delta L$",
+        "提示2：根据已知条件求出初始动量矩 $L_1$ 和末动量矩 $L_2$",
+        "提示3：计算动量矩的变化量 $\\Delta L = L_2 - L_1$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：滚动轮受力分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个物理系统中，涉及到动量矩和动量矩定理的应用。已知一个质量为 $m$ 的小球绕着半径为 $r$ 的圆周做匀速圆周运动，线速度为 $v$，则该小球的动量矩大小为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$mvr$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{2}mvr$"
+        },
+        {
+          "label": "C",
+          "content": "$2mvr$"
+        },
+        {
+          "label": "D",
+          "content": "$mv^2r$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆动量矩的定义公式",
+        "提示2：动量矩 $L$ 等于质点的动量 $p$ 与质点到转动轴的垂直距离 $r$ 的乘积",
+        "提示3：先求出质点的动量 $p = mv$，再结合定义求动量矩"
+      ]
+    }
+  ],
+  "count": 10
+}

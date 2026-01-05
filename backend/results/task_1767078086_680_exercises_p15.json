@@ -1,0 +1,449 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：约束概念与分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课时 14 关于区位原理的学习中，以下哪个选项不属于本节课的考点内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束虚位移以及虚功"
+        },
+        {
+          "label": "B",
+          "content": "区位原理在实际城市规划中的应用案例分析"
+        },
+        {
+          "label": "C",
+          "content": "序位原理"
+        },
+        {
+          "label": "D",
+          "content": "以上选项都属于考点内容"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本节课的考点有哪些",
+        "提示2：明确考点包含约束虚位移以及虚功和序位原理",
+        "提示3：判断每个选项是否与考点一致"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：约束其他分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课时 14 学习的区位原理内容在考试中考察时，如果考到这部分内容，通常会考察一道大题，且这部分内容有两个考点，以下选项中属于这两个考点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束虚位移以及虚功、顺序原理"
+        },
+        {
+          "label": "B",
+          "content": "约束实位移以及实功、顺序原理"
+        },
+        {
+          "label": "C",
+          "content": "约束虚位移以及虚功、逆序原理"
+        },
+        {
+          "label": "D",
+          "content": "约束实位移以及实功、逆序原理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回忆视频中提到的两个考点的具体内容",
+        "提示2：明确是约束虚位移以及虚功，而不是实位移和实功",
+        "提示3：另一个考点是顺序原理，不是逆序原理"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：理想约束",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在考察本节内容时，通常会涉及到两个考点，以下不属于这两个考点的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束虚位移以及虚功"
+        },
+        {
+          "label": "B",
+          "content": "序位原理"
+        },
+        {
+          "label": "C",
+          "content": "动能定理"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课的两个考点。",
+        "提示2：视频中明确指出两个考点分别是约束虚位移以及虚功和序位原理。",
+        "提示3：逐一分析每个选项，看哪个选项不属于这两个考点。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：虚位移与实位移",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在考察本课时内容时，通常会考察一道大题，本课时有两个考点，以下哪个选项是本课时的考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束虚位移以及虚功和虚位移原理"
+        },
+        {
+          "label": "B",
+          "content": "约束虚位移以及虚功和序位原理"
+        },
+        {
+          "label": "C",
+          "content": "约束实位移以及实功和虚位移原理"
+        },
+        {
+          "label": "D",
+          "content": "约束实位移以及实功和序位原理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本课时的两个考点内容",
+        "提示2：明确考点是关于虚位移相关概念以及另一个特定原理",
+        "提示3：注意区分虚位移和实位移，以及准确的原理名称"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：虚功概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课时的两个考点不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束虚位移以及虚功"
+        },
+        {
+          "label": "B",
+          "content": "序位原理"
+        },
+        {
+          "label": "C",
+          "content": "动能定理"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是考点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课时的考点内容",
+        "提示2：明确视频中指出的两个考点分别是什么",
+        "提示3：将选项内容与视频考点进行逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：实虚位移区别",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本课时有两个考点，以下哪个选项包含了这两个考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束实位移以及实功，顺序原理"
+        },
+        {
+          "label": "B",
+          "content": "约束虚位移以及虚功，顺序原理"
+        },
+        {
+          "label": "C",
+          "content": "约束虚位移以及实功，顺序原理"
+        },
+        {
+          "label": "D",
+          "content": "约束实位移以及虚功，顺序原理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本课时的两个考点内容",
+        "提示2：明确第一个考点是关于虚位移和虚功，而不是实位移和实功",
+        "提示3：第二个考点是顺序原理，对比各选项进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：虚位移关系求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程时的两个考点不包含以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束虚位移以及虚功"
+        },
+        {
+          "label": "B",
+          "content": "虚位移关系求解"
+        },
+        {
+          "label": "C",
+          "content": "虚位移原理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本次课时的两个考点内容",
+        "提示2：明确每个选项与考点的对应关系",
+        "提示3：逐一分析选项，找出不在考点范围内的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：虚速度定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程时14学习的内容为区域原理，这一课时有两个考点，以下属于这两个考点的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束虚位移以及虚功，区域原理"
+        },
+        {
+          "label": "B",
+          "content": "约束虚位移以及虚功，序位原理"
+        },
+        {
+          "label": "C",
+          "content": "虚速度定义，序位原理"
+        },
+        {
+          "label": "D",
+          "content": "虚速度定义，区域原理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本课时的两个考点内容",
+        "提示2：注意要准确匹配考点名称",
+        "提示3：在选项中找到和视频中提到的考点完全一致的组合"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：虚位移原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程（课时14虚位移原理）的考核内容包含以下哪些方面？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束虚位移以及虚功"
+        },
+        {
+          "label": "B",
+          "content": "虚位移定理的应用案例分析"
+        },
+        {
+          "label": "C",
+          "content": "虚位移原理的历史发展"
+        },
+        {
+          "label": "D",
+          "content": "虚位移可视化展示操作"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中提到的本次课程的考核点相关内容",
+        "提示2：视频明确指出了两个考核点，可据此进行筛选",
+        "提示3：对比每个选项，看是否与视频中提到的考核点一致"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：虚功方程求解要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在考查虚功原理相关内容的考试中，若涉及本节课（课时14）的内容，通常会考查一道大题，且本节课有两个考点，以下哪个选项是本节课的考点之一？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束虚位移以及虚功"
+        },
+        {
+          "label": "B",
+          "content": "动能定理"
+        },
+        {
+          "label": "C",
+          "content": "牛顿第二定律"
+        },
+        {
+          "label": "D",
+          "content": "机械能守恒定律"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的本节课的考点内容",
+        "提示2：明确指出本节课有两个考点，一个是约束虚位移以及虚功，另一个是序位原理",
+        "提示3：逐一分析选项，看哪个符合视频中所讲的考点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：椭圆规机构例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的课时14的内容属于选学内容，且该课时有两个考点，下列选项中正确描述这两个考点的是哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第一个是约束位移以及虚力，第二个是序位原理"
+        },
+        {
+          "label": "B",
+          "content": "第一个是约束虚位移以及虚功，第二个是序位原理"
+        },
+        {
+          "label": "C",
+          "content": "第一个是约束虚位移以及虚力，第二个是区位原理"
+        },
+        {
+          "label": "D",
+          "content": "第一个是约束位移以及虚功，第二个是区位原理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到的课时14的两个考点的准确表述",
+        "提示2：注意区分是约束虚位移还是约束位移，是虚功还是虚力，以及是序位原理还是区位原理",
+        "提示3：按照视频内容准确对应每个考点的信息进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：几何法求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在物理情境中，关于本节课所学的两个考点：约束虚位移以及虚功和序位原理，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束虚位移以及虚功和序位原理在考试中一般只考选择题"
+        },
+        {
+          "label": "B",
+          "content": "约束虚位移以及虚功和序位原理在考试中通常会以一道大题的形式考查"
+        },
+        {
+          "label": "C",
+          "content": "只有约束虚位移以及虚功会在考试中以大题形式考查，序位原理不会"
+        },
+        {
+          "label": "D",
+          "content": "约束虚位移以及虚功和序位原理在考试中都不会考到大题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回忆视频中关于考试考查形式的描述",
+        "提示2：明确提到了如果考查这一部分内容，往往会怎样考查",
+        "提示3：注意是考查整体这部分内容的形式，并非单独针对某个考点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：解析法求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在考查本节内容时，通常会涉及到的两个考点分别是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束虚位移以及虚功，参考系原理"
+        },
+        {
+          "label": "B",
+          "content": "约束虚位移以及虚功，序位原理"
+        },
+        {
+          "label": "C",
+          "content": "约束实位移以及实功，序位原理"
+        },
+        {
+          "label": "D",
+          "content": "约束实位移以及实功，参考系原理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本节课的两个考点内容",
+        "提示2：明确考点是关于虚位移和虚功，而不是实位移和实功",
+        "提示3：另一个考点是序位原理，不是参考系原理"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求弹簧劲度系数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在考察约束虚位移以及虚功和序位原理的题目中，有一个弹簧连接的系统。已知弹簧在初始状态下伸长量为 $x_1 = 0.1m$，此时弹簧的弹性势能为 $E_{p1}=2J$，当弹簧伸长量变为 $x_2 = 0.2m$ 时，弹簧的弹性势能变为 $E_{p2}=8J$。则该弹簧的劲度系数 $k$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$100N/m$"
+        },
+        {
+          "label": "B",
+          "content": "$200N/m$"
+        },
+        {
+          "label": "C",
+          "content": "$300N/m$"
+        },
+        {
+          "label": "D",
+          "content": "$400N/m$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确弹簧弹性势能公式为 $E_p = \\frac{1}{2}kx^2$",
+        "提示2：可以根据已知的两组弹性势能和伸长量数据列出方程",
+        "提示3：任选一组数据代入公式求解劲度系数 $k$"
+      ]
+    }
+  ],
+  "count": 14
+}

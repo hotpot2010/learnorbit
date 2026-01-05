@@ -1,0 +1,357 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：梁架结构介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本课时的两个考点中，在考试中偶尔会以大题形式考查的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "横向内力计算"
+        },
+        {
+          "label": "B",
+          "content": "静定与超静定问题"
+        },
+        {
+          "label": "C",
+          "content": "两者都会"
+        },
+        {
+          "label": "D",
+          "content": "两者都不会"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对两个考点在考试中考查形式的描述",
+        "提示2：明确提到偶尔考大题的是哪个考点",
+        "提示3：仔细对比每个选项与视频内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：节点法原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程讲解的课时三涉及两个考点，以下关于这两个考点在考试中的情况描述正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "横梁内力计算和静定与超静定问题在考试中偶尔都会考大题"
+        },
+        {
+          "label": "B",
+          "content": "横梁内力计算在考试中偶尔考大题，静定与超静定问题在考试中较少涉及"
+        },
+        {
+          "label": "C",
+          "content": "横梁内力计算在考试中很少涉及，静定与超静定问题在考试中偶尔考大题"
+        },
+        {
+          "label": "D",
+          "content": "横梁内力计算和静定与超静定问题在考试中经常考大题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确视频中提到的两个考点分别是什么",
+        "提示2：关注视频对于每个考点在考试中出现情况的描述",
+        "提示3：对比各选项与视频内容是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：节点法解题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程时的考点不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "横梁内力求和计算"
+        },
+        {
+          "label": "B",
+          "content": "横梁内力计算"
+        },
+        {
+          "label": "C",
+          "content": "静定与超静定问题"
+        },
+        {
+          "label": "D",
+          "content": "无正确选项"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的本次课时的考点内容",
+        "提示2：明确视频中指出的两个考点分别是什么",
+        "提示3：将各选项与视频中的考点进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：节点a受力分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在本次课程学习的内容中，关于考试出题情况，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "横向加内力计算在考试中经常考大题"
+        },
+        {
+          "label": "B",
+          "content": "横向加内力计算在考试中偶尔考大题"
+        },
+        {
+          "label": "C",
+          "content": "静定与超静定问题在考试中经常考大题"
+        },
+        {
+          "label": "D",
+          "content": "静定与超静定问题在考试中偶尔考大题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于两个考点在考试中的出题描述",
+        "提示2：明确横向加内力计算和静定与超静定问题各自的考试出题频率",
+        "提示3：视频中提到横向加内力计算在考试中偶尔考大题，而对于静定与超静定问题未提及考大题情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：节点选取原则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程时三的学习内容中，以下关于考试情况描述正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "横向加内力计算在考试中一定会考大题"
+        },
+        {
+          "label": "B",
+          "content": "横向加内力计算在考试中偶尔会考大题"
+        },
+        {
+          "label": "C",
+          "content": "静定与超静定问题在考试中会考大题"
+        },
+        {
+          "label": "D",
+          "content": "本次课程时三的两个考点在考试中都不会考大题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于两个考点在考试中的情况描述",
+        "提示2：明确横向加内力计算和静定与超静定问题分别在考试中的表现",
+        "提示3：对比各选项与视频内容是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：后续节点求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课时的考点中，在考试中偶尔会考查大题的是以下哪个考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "横梁内力求和计算"
+        },
+        {
+          "label": "B",
+          "content": "横梁加内力计算"
+        },
+        {
+          "label": "C",
+          "content": "静定与超静定问题"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到的两个考点分别是什么",
+        "提示2：明确每个考点在考试中的考查情况",
+        "提示3：根据考查情况判断哪个考点偶尔会考查大题"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截面法介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程时三的学习内容为横梁内力计算，该课时有两个考点，以下关于考点及考试情况描述正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第一个考点是横梁内力计算，考试中偶尔考大题；第二个考点是静定与超静定问题，考试中经常考大题"
+        },
+        {
+          "label": "B",
+          "content": "第一个考点是横梁内力计算，考试中经常考大题；第二个考点是静定与超静定问题，考试中偶尔考大题"
+        },
+        {
+          "label": "C",
+          "content": "第一个考点是横梁内力计算，考试中偶尔考大题；第二个考点是静定与超静定问题，考试中只偶尔有涉及"
+        },
+        {
+          "label": "D",
+          "content": "第一个考点是横梁内力计算，考试中只偶尔有涉及；第二个考点是静定与超静定问题，考试中偶尔考大题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于两个考点的具体描述",
+        "提示2：明确第一个考点是横梁内力计算，第二个考点是静定与超静定问题",
+        "提示3：准确记忆每个考点在考试中的情况，横梁内力计算偶尔考大题，静定与超静定问题只偶尔有涉及"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截面法解题步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程时的两个考点中，在考试中偶尔会出现大题的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "横加内力计算"
+        },
+        {
+          "label": "B",
+          "content": "横截内力计算"
+        },
+        {
+          "label": "C",
+          "content": "静定与超静定问题"
+        },
+        {
+          "label": "D",
+          "content": "截面法解题步骤"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对两个考点在考试中出现情况的描述",
+        "提示2：明确哪个考点偶尔会出大题",
+        "提示3：对照选项进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：综合应用例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本课时有两个考点，以下关于考点在考试中的情况描述正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第一个考点在考试中偶尔考大题，第二个考点在考试中常考大题"
+        },
+        {
+          "label": "B",
+          "content": "第一个考点在考试中常考大题，第二个考点在考试中偶尔考大题"
+        },
+        {
+          "label": "C",
+          "content": "第一个考点在考试中偶尔考大题，第二个考点在考试中情况未提及"
+        },
+        {
+          "label": "D",
+          "content": "两个考点在考试中都常考大题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对两个考点在考试中情况的描述",
+        "提示2：明确第一个考点是横向加内力计算，第二个考点是静定与超静定问题",
+        "提示3：准确判断每个考点在考试中的考查频率"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：节点截面法应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在本次课程时三的学习中，关于计算的考察点，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "本次课程时只有一个考察点，即横梁内力计算"
+        },
+        {
+          "label": "B",
+          "content": "本次课程时有两个考察点，分别是横梁内力计算和静定与超静定问题"
+        },
+        {
+          "label": "C",
+          "content": "横梁内力计算在考试中只会考小题"
+        },
+        {
+          "label": "D",
+          "content": "静定与超静定问题在考试中经常考大题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到本次课时考察点的数量",
+        "提示2：明确两个考察点分别是什么",
+        "提示3：看清每个考察点在考试中的考察形式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：静定超静定问题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程时三的两个考点中，在考试中偶尔会以大题形式出现的考点是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "横梁内力计算"
+        },
+        {
+          "label": "B",
+          "content": "静定与超静定问题"
+        },
+        {
+          "label": "C",
+          "content": "两个考点都会"
+        },
+        {
+          "label": "D",
+          "content": "两个考点都不会"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对两个考点在考试中出现形式的描述",
+        "提示2：明确哪个考点偶尔会在考试中考大题",
+        "提示3：仔细对比每个选项与视频内容的匹配度"
+      ]
+    }
+  ],
+  "count": 11
+}

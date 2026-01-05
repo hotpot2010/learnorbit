@@ -1,0 +1,421 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：点的运动分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个点同时参与两个方向的运动，在水平方向上的速度 $v_x = 3 m/s$，在竖直方向上的速度 $v_y = 4 m/s$，则该点的合速度大小为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3 m/s$"
+        },
+        {
+          "label": "B",
+          "content": "$4 m/s$"
+        },
+        {
+          "label": "C",
+          "content": "$5 m/s$"
+        },
+        {
+          "label": "D",
+          "content": "$7 m/s$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据速度的合成定理，当两个分速度相互垂直时，合速度大小可以用勾股定理计算",
+        "提示2：已知水平速度 $v_x$ 和竖直速度 $v_y$，合速度 $v$ 满足 $v = \\sqrt{v_x^2 + v_y^2}$",
+        "提示3：将 $v_x = 3 m/s$，$v_y = 4 m/s$ 代入公式计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：运动分析原则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质点同时参与两个方向的运动，在水平方向上的速度 $v_x = 3 m/s$，加速度 $a_x = 1 m/s^2$；在竖直方向上的速度 $v_y = 4 m/s$，加速度 $a_y = 2 m/s^2$。则该质点的合速度大小和 $t = 2s$ 时的合加速度大小分别为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$5 m/s$，$\\sqrt{5} m/s^2$"
+        },
+        {
+          "label": "B",
+          "content": "$7 m/s$，$3 m/s^2$"
+        },
+        {
+          "label": "C",
+          "content": "$5 m/s$，$3 m/s^2$"
+        },
+        {
+          "label": "D",
+          "content": "$7 m/s$，$\\sqrt{5} m/s^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据速度的合成法则，合速度大小 $v = \\sqrt{v_x^2 + v_y^2}$",
+        "提示2：加速度是矢量，合加速度大小 $a = \\sqrt{a_x^2 + a_y^2}$",
+        "提示3：分别代入水平和竖直方向的速度、加速度值进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：实例运动分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质点同时参与两个方向的运动，在水平方向的速度 $v_x = 3 m/s$，加速度 $a_x = 1 m/s^2$；在竖直方向的速度 $v_y = 4 m/s$，加速度 $a_y = 2 m/s^2$。则在 $t = 2s$ 时，质点的合速度大小为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$5 m/s$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sqrt{37} m/s$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sqrt{41} m/s$"
+        },
+        {
+          "label": "D",
+          "content": "$7 m/s$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先根据匀变速直线运动速度公式 $v = v_0 + at$ 分别求出 $t = 2s$ 时水平和竖直方向的速度",
+        "提示2：水平方向速度 $v_{x}' = v_x + a_x t$，竖直方向速度 $v_{y}' = v_y + a_y t$",
+        "提示3：再根据平行四边形定则，合速度大小 $v = \\sqrt{v_{x}'^2 + v_{y}'^2}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：点的运动分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个点同时参与两个方向的运动，在水平方向的运动方程为 $x = 3t + 2$（单位：m，$t$ 为时间，单位：s），在垂直方向的运动方程为 $y = 4t - 1$（单位：m）。则该点在 $t = 2s$ 时的合速度大小为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$5m/s$"
+        },
+        {
+          "label": "B",
+          "content": "$10m/s$"
+        },
+        {
+          "label": "C",
+          "content": "$15m/s$"
+        },
+        {
+          "label": "D",
+          "content": "$20m/s$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先分别对水平和垂直方向的位移方程求导，得到水平和垂直方向的速度方程",
+        "提示2：将 $t = 2s$ 代入速度方程，求出该时刻水平和垂直方向的速度",
+        "提示3：再根据速度合成定理，利用勾股定理计算合速度大小"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：速度合成定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个物体在水平方向上以速度 $v_1 = 3 m/s$ 匀速运动，同时在竖直方向上以速度 $v_2 = 4 m/s$ 匀速运动，根据速度合成定理，该物体的合速度大小为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$5 m/s$"
+        },
+        {
+          "label": "B",
+          "content": "$7 m/s$"
+        },
+        {
+          "label": "C",
+          "content": "$1 m/s$"
+        },
+        {
+          "label": "D",
+          "content": "$\\sqrt{7} m/s$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：速度是矢量，满足平行四边形定则",
+        "提示2：当两个分速度相互垂直时，合速度大小可以用勾股定理计算",
+        "提示3：根据勾股定理 $v = \\sqrt{v_1^2 + v_2^2}$ 计算合速度大小"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：速度求解实例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质点同时参与两个方向的运动，在水平方向上的速度 $v_x = 3 m/s$，在竖直方向上的速度 $v_y = 4 m/s$。则该质点的合速度大小为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3 m/s$"
+        },
+        {
+          "label": "B",
+          "content": "$4 m/s$"
+        },
+        {
+          "label": "C",
+          "content": "$5 m/s$"
+        },
+        {
+          "label": "D",
+          "content": "$7 m/s$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据速度的合成定理，当两个分速度相互垂直时，合速度大小可以用勾股定理计算",
+        "提示2：设水平速度为 $v_x$，竖直速度为 $v_y$，合速度为 $v$，则 $v = \\sqrt{v_x^2 + v_y^2}$",
+        "提示3：将 $v_x = 3 m/s$，$v_y = 4 m/s$ 代入公式计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：滑块速度求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个滑块在水平面上同时参与两个方向的运动，沿 $x$ 轴方向的速度为 $v_x = 3 m/s$，沿 $y$ 轴方向的速度为 $v_y = 4 m/s$，则滑块的合速度大小为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3 m/s$"
+        },
+        {
+          "label": "B",
+          "content": "$4 m/s$"
+        },
+        {
+          "label": "C",
+          "content": "$5 m/s$"
+        },
+        {
+          "label": "D",
+          "content": "$7 m/s$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据速度的合成定理，当两个分速度相互垂直时，合速度大小可以用勾股定理计算",
+        "提示2：合速度 $v$ 与分速度 $v_x$、$v_y$ 的关系为 $v = \\sqrt{v_x^2 + v_y^2}$",
+        "提示3：将 $v_x = 3 m/s$，$v_y = 4 m/s$ 代入公式计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：机构速度求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个点在平面内同时参与两个运动，第一个运动的速度向量为 $\\vec{v}_1 = 3\\vec{i} + 4\\vec{j}$，第二个运动的速度向量为 $\\vec{v}_2 = -2\\vec{i} + 3\\vec{j}$，则该点的合速度大小为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sqrt{26}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sqrt{34}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sqrt{50}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\sqrt{74}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据速度的合成定理，合速度 $\\vec{v} = \\vec{v}_1 + \\vec{v}_2$",
+        "提示2：先求出合速度的向量表达式，再根据向量模长公式 $|\\vec{v}| = \\sqrt{v_x^2 + v_y^2}$ 计算合速度大小",
+        "提示3：分别计算合速度在 $x$ 轴和 $y$ 轴上的分量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：加速度分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质点同时参与两个方向的运动，在水平方向的加速度 $a_x = 3 m/s^2$，在竖直方向的加速度 $a_y = 4 m/s^2$，则该质点的合加速度大小为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3 m/s^2$"
+        },
+        {
+          "label": "B",
+          "content": "$4 m/s^2$"
+        },
+        {
+          "label": "C",
+          "content": "$5 m/s^2$"
+        },
+        {
+          "label": "D",
+          "content": "$7 m/s^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频中提到的速度与加速度的合成定理来计算合加速度",
+        "提示2：加速度是矢量，合成时遵循平行四边形定则，当两个分加速度相互垂直时，可使用勾股定理计算合加速度",
+        "提示3：合加速度大小 $a = \\sqrt{a_x^2 + a_y^2}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：加速度方向判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质点同时参与两个方向的运动，在水平方向上的速度 $v_x = 3m/s$，加速度 $a_x = 1m/s^2$；在竖直方向上的速度 $v_y = 4m/s$，加速度 $a_y = -2m/s^2$。则该质点合加速度的方向与水平方向夹角的正切值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{2}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{3}{4}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{4}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据加速度的合成原理，先分别确定水平和竖直方向的加速度",
+        "提示2：再利用三角函数关系，求合加速度方向与水平方向夹角的正切值",
+        "提示3：正切值等于竖直方向加速度与水平方向加速度的比值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：科氏加速度大小",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在点的合成运动中，对于速度与加速度的合成定理，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只涉及点的运动分析，不考虑加速度合成"
+        },
+        {
+          "label": "B",
+          "content": "只关注加速度合成，与点的运动分析无关"
+        },
+        {
+          "label": "C",
+          "content": "既包含点的运动分析，又包含速度与加速度的合成定理"
+        },
+        {
+          "label": "D",
+          "content": "仅适用于简单的直线运动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课两个考点",
+        "提示2：明确速度与加速度的合成定理和点的运动分析的关系",
+        "提示3：思考该定理的适用范围"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：例题求解加速度",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个质点的合运动中，已知该质点在 $x$ 方向的加速度为 $a_x = 3\\ m/s^2$，在 $y$ 方向的加速度为 $a_y = 4\\ m/s^2$，则该质点的合加速度大小为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2\\ m/s^2$"
+        },
+        {
+          "label": "B",
+          "content": "$3\\ m/s^2$"
+        },
+        {
+          "label": "C",
+          "content": "$4\\ m/s^2$"
+        },
+        {
+          "label": "D",
+          "content": "$5\\ m/s^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：根据加速度的合成定理，合加速度的大小可以使用勾股定理计算",
+        "提示2：对于相互垂直的两个方向的加速度 $a_x$ 和 $a_y$，合加速度大小 $a = \\sqrt{a_x^2 + a_y^2}$",
+        "提示3：将 $a_x = 3\\ m/s^2$，$a_y = 4\\ m/s^2$ 代入公式计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：加速度分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质点同时参与两个方向的运动，在水平方向的加速度为 $a_x = 3m/s^2$，在竖直方向的加速度为 $a_y = 4m/s^2$，则该质点合加速度大小为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3m/s^2$"
+        },
+        {
+          "label": "B",
+          "content": "$4m/s^2$"
+        },
+        {
+          "label": "C",
+          "content": "$5m/s^2$"
+        },
+        {
+          "label": "D",
+          "content": "$7m/s^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据加速度的合成定理，当两个加速度相互垂直时，可使用勾股定理计算合加速度",
+        "提示2：合加速度 $a$ 满足 $a = \\sqrt{a_x^2 + a_y^2}$",
+        "提示3：将 $a_x = 3m/s^2$，$a_y = 4m/s^2$ 代入公式计算"
+      ]
+    }
+  ],
+  "count": 13
+}

@@ -1,0 +1,682 @@
+{
+  "task_id": "task_1766978379_2722",
+  "bilibili_url": "https://www.bilibili.com/video/BV1WA411Y7RH?vd_source=c56a4db010f073556475172c7b3fbedf",
+  "video_title": "《宏观经济学》重难点精讲合集（已完结）",
+  "steps": {
+    "asr": {
+      "error": null,
+      "result": {
+        "result_urls": [
+          "https://file.gsxservice.com/3408826398_yrb8ju0q.txt",
+          "https://file.gsxservice.com/3408830235_zyftt9up.txt",
+          "https://file.gsxservice.com/3408834162_20r2x66b.txt",
+          "https://file.gsxservice.com/3408837971_s9cbfo69.txt",
+          "https://file.gsxservice.com/3408840580_50xe0u04.txt",
+          "https://file.gsxservice.com/3408847948_iye1cuz2.txt",
+          "https://file.gsxservice.com/3408855766_brgh6q2s.txt",
+          "https://file.gsxservice.com/3408870061_kpchba5u.txt",
+          "https://file.gsxservice.com/3408873524_h237ir9s.txt",
+          "https://file.gsxservice.com/3408876516_b5pr7jx6.txt",
+          "https://file.gsxservice.com/3408880642_hrg691ul.txt",
+          "https://file.gsxservice.com/3408885861_ae04ndtu.txt",
+          "https://file.gsxservice.com/3408894513_3l1gm045.txt",
+          "https://file.gsxservice.com/3408900126_fwmxtku1.txt",
+          "https://file.gsxservice.com/3408905035_80fjqfoi.txt",
+          "https://file.gsxservice.com/3408912978_hbc9ni49.txt",
+          "https://file.gsxservice.com/3408925954_r1ljfjc8.txt",
+          "https://file.gsxservice.com/3408943237_9a9lu6u0.txt"
+        ],
+        "total_parts": 18,
+        "failed_count": 0,
+        "part_results": [
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408826398_yrb8ju0q.txt",
+            "part_number": 1,
+            "transcript_length": 21566
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408830235_zyftt9up.txt",
+            "part_number": 2,
+            "transcript_length": 15551
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408834162_20r2x66b.txt",
+            "part_number": 3,
+            "transcript_length": 19117
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408837971_s9cbfo69.txt",
+            "part_number": 4,
+            "transcript_length": 21563
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408840580_50xe0u04.txt",
+            "part_number": 5,
+            "transcript_length": 16282
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408847948_iye1cuz2.txt",
+            "part_number": 6,
+            "transcript_length": 22168
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408855766_brgh6q2s.txt",
+            "part_number": 7,
+            "transcript_length": 25174
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408870061_kpchba5u.txt",
+            "part_number": 8,
+            "transcript_length": 43662
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408873524_h237ir9s.txt",
+            "part_number": 9,
+            "transcript_length": 13114
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408876516_b5pr7jx6.txt",
+            "part_number": 10,
+            "transcript_length": 21890
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408880642_hrg691ul.txt",
+            "part_number": 11,
+            "transcript_length": 19308
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408885861_ae04ndtu.txt",
+            "part_number": 12,
+            "transcript_length": 22964
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408894513_3l1gm045.txt",
+            "part_number": 13,
+            "transcript_length": 29535
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408900126_fwmxtku1.txt",
+            "part_number": 14,
+            "transcript_length": 33344
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408905035_80fjqfoi.txt",
+            "part_number": 15,
+            "transcript_length": 16169
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408912978_hbc9ni49.txt",
+            "part_number": 16,
+            "transcript_length": 24407
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408925954_r1ljfjc8.txt",
+            "part_number": 17,
+            "transcript_length": 33889
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3408943237_9a9lu6u0.txt",
+            "part_number": 18,
+            "transcript_length": 34989
+          }
+        ],
+        "success_count": 18
+      },
+      "status": "success",
+      "message": "完成 18/18 个分P的ASR",
+      "progress": 100,
+      "retry_count": 0
+    },
+    "download": {
+      "error": null,
+      "result": {
+        "video_urls": [
+          "https://file.gsxservice.com/3408747700_ybcjmf2u.mp4",
+          "https://file.gsxservice.com/3408750077_a7urb3fg.mp4",
+          "https://file.gsxservice.com/3408753410_79gbdbj8.mp4",
+          "https://file.gsxservice.com/3408757679_iupzs9tu.mp4",
+          "https://file.gsxservice.com/3408763081_86gkajpt.mp4",
+          "https://file.gsxservice.com/3408767766_r8fhrf12.mp4",
+          "https://file.gsxservice.com/3408772620_obuk771t.mp4",
+          "https://file.gsxservice.com/3408779166_8gjvc6ny.mp4",
+          "https://file.gsxservice.com/3408781746_klwq87aa.mp4",
+          "https://file.gsxservice.com/3408785130_79b2qgu8.mp4",
+          "https://file.gsxservice.com/3408788151_wi00i6s6.mp4",
+          "https://file.gsxservice.com/3408792114_7e1k9ort.mp4",
+          "https://file.gsxservice.com/3408797157_ng1hrijc.mp4",
+          "https://file.gsxservice.com/3408802310_zezfmpyd.mp4",
+          "https://file.gsxservice.com/3408804885_j5bcph6z.mp4",
+          "https://file.gsxservice.com/3408808925_26n69zk8.mp4",
+          "https://file.gsxservice.com/3408813701_95rz40dp.mp4",
+          "https://file.gsxservice.com/3408818314_o2drtx8c.mp4"
+        ],
+        "total_parts": 18,
+        "failed_count": 0,
+        "part_results": [
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p1.mp4",
+            "video_url": "https://file.gsxservice.com/3408747700_ybcjmf2u.mp4",
+            "part_number": 1
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p2.mp4",
+            "video_url": "https://file.gsxservice.com/3408750077_a7urb3fg.mp4",
+            "part_number": 2
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p3.mp4",
+            "video_url": "https://file.gsxservice.com/3408753410_79gbdbj8.mp4",
+            "part_number": 3
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p4.mp4",
+            "video_url": "https://file.gsxservice.com/3408757679_iupzs9tu.mp4",
+            "part_number": 4
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p5.mp4",
+            "video_url": "https://file.gsxservice.com/3408763081_86gkajpt.mp4",
+            "part_number": 5
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p6.mp4",
+            "video_url": "https://file.gsxservice.com/3408767766_r8fhrf12.mp4",
+            "part_number": 6
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p7.mp4",
+            "video_url": "https://file.gsxservice.com/3408772620_obuk771t.mp4",
+            "part_number": 7
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p8.mp4",
+            "video_url": "https://file.gsxservice.com/3408779166_8gjvc6ny.mp4",
+            "part_number": 8
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p9.mp4",
+            "video_url": "https://file.gsxservice.com/3408781746_klwq87aa.mp4",
+            "part_number": 9
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p10.mp4",
+            "video_url": "https://file.gsxservice.com/3408785130_79b2qgu8.mp4",
+            "part_number": 10
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p11.mp4",
+            "video_url": "https://file.gsxservice.com/3408788151_wi00i6s6.mp4",
+            "part_number": 11
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p12.mp4",
+            "video_url": "https://file.gsxservice.com/3408792114_7e1k9ort.mp4",
+            "part_number": 12
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p13.mp4",
+            "video_url": "https://file.gsxservice.com/3408797157_ng1hrijc.mp4",
+            "part_number": 13
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p14.mp4",
+            "video_url": "https://file.gsxservice.com/3408802310_zezfmpyd.mp4",
+            "part_number": 14
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p15.mp4",
+            "video_url": "https://file.gsxservice.com/3408804885_j5bcph6z.mp4",
+            "part_number": 15
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p16.mp4",
+            "video_url": "https://file.gsxservice.com/3408808925_26n69zk8.mp4",
+            "part_number": 16
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p17.mp4",
+            "video_url": "https://file.gsxservice.com/3408813701_95rz40dp.mp4",
+            "part_number": 17
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978379_2722_p18.mp4",
+            "video_url": "https://file.gsxservice.com/3408818314_o2drtx8c.mp4",
+            "part_number": 18
+          }
+        ],
+        "success_count": 18
+      },
+      "status": "success",
+      "message": "完成 18/18 个分P",
+      "progress": 100,
+      "retry_count": 0
+    },
+    "exercises": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "transcode": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "screenshots": {
+      "error": null,
+      "result": null,
+      "status": "partial_success",
+      "message": "⚠️ 部分分P截图生成完成（6/18个分P成功）",
+      "progress": 90,
+      "retry_count": 0
+    },
+    "knowledge_points": {
+      "error": null,
+      "result": {
+        "result_urls": [
+          "https://file.gsxservice.com/3409005737_7krn61w4.json",
+          "https://file.gsxservice.com/3409006490_5ntgqnhr.json",
+          "https://file.gsxservice.com/3409007062_yiq97pap.json",
+          "https://file.gsxservice.com/3409007828_u8i4ew5o.json",
+          "https://file.gsxservice.com/3409008372_wrb87j58.json",
+          "https://file.gsxservice.com/3409009155_51kydykn.json",
+          "https://file.gsxservice.com/3409009805_960hhev9.json",
+          "https://file.gsxservice.com/3409011326_1yg4svmf.json",
+          "https://file.gsxservice.com/3409012071_vvm6zj9j.json",
+          "https://file.gsxservice.com/3409013050_qls4hs65.json",
+          "https://file.gsxservice.com/3409013698_90f29gxx.json",
+          "https://file.gsxservice.com/3409014324_gwtethz0.json",
+          "https://file.gsxservice.com/3409015095_fmokbkzp.json",
+          "https://file.gsxservice.com/3409016307_eitqpwne.json",
+          "https://file.gsxservice.com/3409017749_9p33zacb.json",
+          "https://file.gsxservice.com/3409018473_989yu80j.json",
+          "https://file.gsxservice.com/3409019419_s31yg9i9.json",
+          "https://file.gsxservice.com/3409020535_g570vym1.json"
+        ],
+        "total_parts": 18,
+        "failed_count": 0,
+        "part_results": [
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409005737_7krn61w4.json",
+            "part_number": 1,
+            "knowledge_points_count": 16
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409006490_5ntgqnhr.json",
+            "part_number": 2,
+            "knowledge_points_count": 13
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409007062_yiq97pap.json",
+            "part_number": 3,
+            "knowledge_points_count": 8
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409007828_u8i4ew5o.json",
+            "part_number": 4,
+            "knowledge_points_count": 15
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409008372_wrb87j58.json",
+            "part_number": 5,
+            "knowledge_points_count": 13
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409009155_51kydykn.json",
+            "part_number": 6,
+            "knowledge_points_count": 16
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409009805_960hhev9.json",
+            "part_number": 7,
+            "knowledge_points_count": 23
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409011326_1yg4svmf.json",
+            "part_number": 8,
+            "knowledge_points_count": 40
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409012071_vvm6zj9j.json",
+            "part_number": 9,
+            "knowledge_points_count": 8
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409013050_qls4hs65.json",
+            "part_number": 10,
+            "knowledge_points_count": 17
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409013698_90f29gxx.json",
+            "part_number": 11,
+            "knowledge_points_count": 17
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409014324_gwtethz0.json",
+            "part_number": 12,
+            "knowledge_points_count": 21
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409015095_fmokbkzp.json",
+            "part_number": 13,
+            "knowledge_points_count": 25
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409016307_eitqpwne.json",
+            "part_number": 14,
+            "knowledge_points_count": 23
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409017749_9p33zacb.json",
+            "part_number": 15,
+            "knowledge_points_count": 11
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409018473_989yu80j.json",
+            "part_number": 16,
+            "knowledge_points_count": 25
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409019419_s31yg9i9.json",
+            "part_number": 17,
+            "knowledge_points_count": 31
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409020535_g570vym1.json",
+            "part_number": 18,
+            "knowledge_points_count": 24
+          }
+        ],
+        "success_count": 18,
+        "total_knowledge_points": 346
+      },
+      "status": "success",
+      "message": "完成 18/18 个分P的知识点生成",
+      "progress": 100,
+      "retry_count": 0
+    }
+  },
+  "video_url": [
+    "https://file.gsxservice.com/3408747700_ybcjmf2u.mp4",
+    "https://file.gsxservice.com/3408750077_a7urb3fg.mp4",
+    "https://file.gsxservice.com/3408753410_79gbdbj8.mp4",
+    "https://file.gsxservice.com/3408757679_iupzs9tu.mp4",
+    "https://file.gsxservice.com/3408763081_86gkajpt.mp4",
+    "https://file.gsxservice.com/3408767766_r8fhrf12.mp4",
+    "https://file.gsxservice.com/3408772620_obuk771t.mp4",
+    "https://file.gsxservice.com/3408779166_8gjvc6ny.mp4",
+    "https://file.gsxservice.com/3408781746_klwq87aa.mp4",
+    "https://file.gsxservice.com/3408785130_79b2qgu8.mp4",
+    "https://file.gsxservice.com/3408788151_wi00i6s6.mp4",
+    "https://file.gsxservice.com/3408792114_7e1k9ort.mp4",
+    "https://file.gsxservice.com/3408797157_ng1hrijc.mp4",
+    "https://file.gsxservice.com/3408802310_zezfmpyd.mp4",
+    "https://file.gsxservice.com/3408804885_j5bcph6z.mp4",
+    "https://file.gsxservice.com/3408808925_26n69zk8.mp4",
+    "https://file.gsxservice.com/3408813701_95rz40dp.mp4",
+    "https://file.gsxservice.com/3408818314_o2drtx8c.mp4"
+  ],
+  "transcoded_video_url": null,
+  "asr_result_url": [
+    "https://file.gsxservice.com/3408826398_yrb8ju0q.txt",
+    "https://file.gsxservice.com/3408830235_zyftt9up.txt",
+    "https://file.gsxservice.com/3408834162_20r2x66b.txt",
+    "https://file.gsxservice.com/3408837971_s9cbfo69.txt",
+    "https://file.gsxservice.com/3408840580_50xe0u04.txt",
+    "https://file.gsxservice.com/3408847948_iye1cuz2.txt",
+    "https://file.gsxservice.com/3408855766_brgh6q2s.txt",
+    "https://file.gsxservice.com/3408870061_kpchba5u.txt",
+    "https://file.gsxservice.com/3408873524_h237ir9s.txt",
+    "https://file.gsxservice.com/3408876516_b5pr7jx6.txt",
+    "https://file.gsxservice.com/3408880642_hrg691ul.txt",
+    "https://file.gsxservice.com/3408885861_ae04ndtu.txt",
+    "https://file.gsxservice.com/3408894513_3l1gm045.txt",
+    "https://file.gsxservice.com/3408900126_fwmxtku1.txt",
+    "https://file.gsxservice.com/3408905035_80fjqfoi.txt",
+    "https://file.gsxservice.com/3408912978_hbc9ni49.txt",
+    "https://file.gsxservice.com/3408925954_r1ljfjc8.txt",
+    "https://file.gsxservice.com/3408943237_9a9lu6u0.txt"
+  ],
+  "knowledge_points_result_url": [
+    "https://file.gsxservice.com/3409005737_7krn61w4.json",
+    "https://file.gsxservice.com/3409006490_5ntgqnhr.json",
+    "https://file.gsxservice.com/3409007062_yiq97pap.json",
+    "https://file.gsxservice.com/3409007828_u8i4ew5o.json",
+    "https://file.gsxservice.com/3409008372_wrb87j58.json",
+    "https://file.gsxservice.com/3409009155_51kydykn.json",
+    "https://file.gsxservice.com/3409009805_960hhev9.json",
+    "https://file.gsxservice.com/3409011326_1yg4svmf.json",
+    "https://file.gsxservice.com/3409012071_vvm6zj9j.json",
+    "https://file.gsxservice.com/3409013050_qls4hs65.json",
+    "https://file.gsxservice.com/3409013698_90f29gxx.json",
+    "https://file.gsxservice.com/3409014324_gwtethz0.json",
+    "https://file.gsxservice.com/3409015095_fmokbkzp.json",
+    "https://file.gsxservice.com/3409016307_eitqpwne.json",
+    "https://file.gsxservice.com/3409017749_9p33zacb.json",
+    "https://file.gsxservice.com/3409018473_989yu80j.json",
+    "https://file.gsxservice.com/3409019419_s31yg9i9.json",
+    "https://file.gsxservice.com/3409020535_g570vym1.json"
+  ],
+  "screenshots_result_url": "[\"https://file.gsxservice.com/3409388782_0i12dgdr.json\", \"https://file.gsxservice.com/3409390011_jy6080cx.json\", \"https://file.gsxservice.com/3409391275_eb36enlx.json\", \"https://file.gsxservice.com/3409392957_f9u44wsa.json\", \"https://file.gsxservice.com/3409394798_z0a1o1qe.json\", \"https://file.gsxservice.com/3409397551_0h3tlbac.json\"]",
+  "exercises_result_url": null,
+  "video_info": {
+    "bv_id": "BV1WA411Y7RH",
+    "title": "《宏观经济学》重难点精讲合集（已完结）",
+    "duration": 0,
+    "uploader": "",
+    "thumbnail": "",
+    "like_count": 0,
+    "view_count": 0,
+    "description": "",
+    "upload_date": "",
+    "thumbnail_cdn": "https://file.gsxservice.com/3408668590_o3aa9l66.jpg"
+  },
+  "is_series": true,
+  "series_parts": [
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=1",
+      "bv_id": "BV1WA411Y7RH_p1",
+      "duration": 2409.322,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p01 【宏观经济学】第十二章：国民收入核算",
+      "part_title": "【宏观经济学】第十二章：国民收入核算",
+      "part_number": 1
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=2",
+      "bv_id": "BV1WA411Y7RH_p2",
+      "duration": 1923.651,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p02 【宏观经济学】第十三章：国民收入的决定（1）：均衡产出",
+      "part_title": "【宏观经济学】第十三章：国民收入的决定（1）：均衡产出",
+      "part_number": 2
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=3",
+      "bv_id": "BV1WA411Y7RH_p3",
+      "duration": 2279.061,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p03 【宏观经济学】第十三章：国民收入决定（2）：消费函数",
+      "part_title": "【宏观经济学】第十三章：国民收入决定（2）：消费函数",
+      "part_number": 3
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=4",
+      "bv_id": "BV1WA411Y7RH_p4",
+      "duration": 2490.502,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p04 【宏观经济学】第十三章：国民收入决定（3）：乘数",
+      "part_title": "【宏观经济学】第十三章：国民收入决定（3）：乘数",
+      "part_number": 4
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=5",
+      "bv_id": "BV1WA411Y7RH_p5",
+      "duration": 2100.01,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p05 【宏观经济学】第十四章：国民收入的决定：IS-LM模型（1）（主要知识点：资本边际效率、投资边际效率、托宾Q理论）",
+      "part_title": "【宏观经济学】第十四章：国民收入的决定：IS-LM模型（1）（主要知识点：资本边际效率、投资边际效率、托宾Q理论）",
+      "part_number": 5
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=6",
+      "bv_id": "BV1WA411Y7RH_p6",
+      "duration": 2585.877,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p06 【宏观经济学】第十四章：国民收入的决定：IS-LM模型（2）：（主要知识点：IS曲线的含义、推导、斜率、移动）",
+      "part_title": "【宏观经济学】第十四章：国民收入的决定：IS-LM模型（2）：（主要知识点：IS曲线的含义、推导、斜率、移动）",
+      "part_number": 6
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=7",
+      "bv_id": "BV1WA411Y7RH_p7",
+      "duration": 2836.885,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p07 【宏观经济学】第十四章：国民收入的决定：IS-LM模型（3）[主要知识点：利率的决定]",
+      "part_title": "【宏观经济学】第十四章：国民收入的决定：IS-LM模型（3）[主要知识点：利率的决定]",
+      "part_number": 7
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=8",
+      "bv_id": "BV1WA411Y7RH_p8",
+      "duration": 4696.127,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p08 【宏观经济学】第十四章：国民收入的决定：IS-LM模型（4）[主要内容：LM曲线、IS-LM模型、凯恩斯基本理论框架]",
+      "part_title": "【宏观经济学】第十四章：国民收入的决定：IS-LM模型（4）[主要内容：LM曲线、IS-LM模型、凯恩斯基本理论框架]",
+      "part_number": 8
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=9",
+      "bv_id": "BV1WA411Y7RH_p9",
+      "duration": 1567.167,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p09 【宏观经济学】第十五章：AD-AS模型（1）：AD曲线",
+      "part_title": "【宏观经济学】第十五章：AD-AS模型（1）：AD曲线",
+      "part_number": 9
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=10",
+      "bv_id": "BV1WA411Y7RH_p10",
+      "duration": 2352.319,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p10 【宏观经济学】第十五章：AD-AS模型（2）：AS之劳动市场",
+      "part_title": "【宏观经济学】第十五章：AD-AS模型（2）：AS之劳动市场",
+      "part_number": 10
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=11",
+      "bv_id": "BV1WA411Y7RH_p11",
+      "duration": 2144.17,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p11 【宏观经济学】第十五章AD-AS模型（3）：AS曲线（古典、正常、凯恩斯）",
+      "part_title": "【宏观经济学】第十五章AD-AS模型（3）：AS曲线（古典、正常、凯恩斯）",
+      "part_number": 11
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=12",
+      "bv_id": "BV1WA411Y7RH_p12",
+      "duration": 2515.157,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p12 【宏观经济学】第十五章：AD-AS模型（4）：AD-AS模型（短期均衡、长期均衡）",
+      "part_title": "【宏观经济学】第十五章：AD-AS模型（4）：AD-AS模型（短期均衡、长期均衡）",
+      "part_number": 12
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=13",
+      "bv_id": "BV1WA411Y7RH_p13",
+      "duration": 3235.007,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p13 【宏观经济学】第十六章：失业和通货膨胀（1）：失业",
+      "part_title": "【宏观经济学】第十六章：失业和通货膨胀（1）：失业",
+      "part_number": 13
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=14",
+      "bv_id": "BV1WA411Y7RH_p14",
+      "duration": 3934.933,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p14 【宏观经济学】失业和通货膨胀（2）：通货膨胀、菲利普斯曲线",
+      "part_title": "【宏观经济学】失业和通货膨胀（2）：通货膨胀、菲利普斯曲线",
+      "part_number": 14
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=15",
+      "bv_id": "BV1WA411Y7RH_p15",
+      "duration": 2114.325,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p15 【宏观经济学】宏观经济政策（1）",
+      "part_title": "【宏观经济学】宏观经济政策（1）",
+      "part_number": 15
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=16",
+      "bv_id": "BV1WA411Y7RH_p16",
+      "duration": 3301.93,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p16 【宏观经济学】宏观经济政策（2）[主要知识点：货币创造乘数]",
+      "part_title": "【宏观经济学】宏观经济政策（2）[主要知识点：货币创造乘数]",
+      "part_number": 16
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=17",
+      "bv_id": "BV1WA411Y7RH_p17",
+      "duration": 4323.413,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p17 【宏观经济学】蒙代尔-弗莱明模型",
+      "part_title": "【宏观经济学】蒙代尔-弗莱明模型",
+      "part_number": 17
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1WA411Y7RH?p=18",
+      "bv_id": "BV1WA411Y7RH_p18",
+      "duration": 4475.647,
+      "full_title": "《宏观经济学》重难点精讲合集（已完结） p18 【宏观经济学】经济增长",
+      "part_title": "【宏观经济学】经济增长",
+      "part_number": 18
+    }
+  ],
+  "created_at": "2025-12-29T11:19:57",
+  "updated_at": "2025-12-29T17:26:39.760576"
+}

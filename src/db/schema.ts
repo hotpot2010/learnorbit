@@ -184,6 +184,7 @@ export const creatorCoursesRelations = relations(creatorCourses, ({ one }) => ({
 export interface VideoNoteData {
   knowledgePointNotes: Array<{
     // 匹配原始知识点
+    partIndex?: number;  // 分P索引（多P视频时使用，0表示第一个分P）
     knowledgePointName: string;
     startTime: string;
     endTime: string;

@@ -1,0 +1,441 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三重积分概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于三重积分的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "三重积分是两个积分后形成的积分"
+        },
+        {
+          "label": "B",
+          "content": "三重积分是一个三元函数构成的积分"
+        },
+        {
+          "label": "C",
+          "content": "求三重积分只能用先一后二的方法"
+        },
+        {
+          "label": "D",
+          "content": "先一后二的方法和投影法是不同的两种方法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回顾视频中对三重积分的定义和求三重积分的方法",
+        "明确三重积分的构成要素",
+        "判断各个选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投影法求积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "使用投影法求三重积分 $\\iiint_{\\Omega} f(x,y,z) dV$ 时，其中积分区域 $\\Omega$ 是由平面 $x = 0$，$y = 0$，$z = 0$ 以及 $x + y + z = 1$ 所围成的闭区域，若采用先一后二的方法，先对 $z$ 积分，那么关于 $z$ 的积分上下限分别是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$ 到 $1 - x - y$"
+        },
+        {
+          "label": "B",
+          "content": "$0$ 到 $1$"
+        },
+        {
+          "label": "C",
+          "content": "$1 - x - y$ 到 $1$"
+        },
+        {
+          "label": "D",
+          "content": "$x + y$ 到 $1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先确定积分区域在 $xOy$ 平面上的投影",
+        "根据投影区域和积分区域的边界方程确定 $z$ 的取值范围",
+        "利用给定的平面方程 $x + y + z = 1$ 来推导 $z$ 的上下限"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：空间平面绘制",
+      "error": "Invalid \\escape: line 6 column 51 (char 175)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：立体区域表示",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个三重积分 $\\iiint_{\\Omega} f(x,y,z) dV$，其中积分区域 $\\Omega$ 是由曲面 $z = x^2 + y^2$ 和平面 $z = 4$ 所围成的立体区域。若采用先一后二的方法（投影法）来计算该三重积分，那么先对哪个变量积分合适？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "先对 $x$ 积分"
+        },
+        {
+          "label": "B",
+          "content": "先对 $y$ 积分"
+        },
+        {
+          "label": "C",
+          "content": "先对 $z$ 积分"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "先一后二的方法是先确定一个变量的积分范围，再对另外两个变量在投影区域上进行二重积分。",
+        "观察积分区域的特点，看哪个变量的积分范围更容易确定。",
+        "考虑曲面和平面的方程，分析哪个变量的上下限更容易表示。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：先一后二法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三重积分 $\\iiint_{\\Omega} f(x,y,z)dV$，其中积分区域 $\\Omega$ 由平面 $x + y + z = 1$ 与三个坐标面所围成，使用先一后二法（投影法）计算该三重积分时，以下哪个积分表达式是正确的（）？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{0}^{1}dx\\int_{0}^{1 - x}dy\\int_{0}^{1 - x - y} f(x,y,z)dz$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{0}^{1}dx\\int_{0}^{1 - y}dy\\int_{0}^{1 - x - y} f(x,y,z)dz$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{0}^{1}dx\\int_{0}^{1 - x}dy\\int_{0}^{1 + x + y} f(x,y,z)dz$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{0}^{1}dx\\int_{0}^{1 + x}dy\\int_{0}^{1 - x - y} f(x,y,z)dz$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先确定积分区域在 $xOy$ 平面上的投影",
+        "根据投影区域确定 $x$ 和 $y$ 的积分上下限",
+        "再根据积分区域的边界方程确定 $z$ 的积分上下限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：先二后一法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "使用先一后二法（投影法）求三重积分 $\\iiint_{\\Omega} f(x,y,z) dV$，其中积分区域 $\\Omega$ 由 $z = x^2 + y^2$，$z = 1$ 所围成，正确的积分表达式是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{-1}^{1}dx\\int_{-\\sqrt{1 - x^2}}^{\\sqrt{1 - x^2}}dy\\int_{x^2 + y^2}^{1} f(x,y,z) dz$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{0}^{1}dz\\int_{-\\sqrt{z}}^{\\sqrt{z}}dx\\int_{-\\sqrt{z - x^2}}^{\\sqrt{z - x^2}} f(x,y,z) dy$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{0}^{2\\pi}d\\theta\\int_{0}^{1}dr\\int_{r^2}^{1} f(r\\cos\\theta,r\\sin\\theta,z) r dz$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{-1}^{1}dy\\int_{-\\sqrt{1 - y^2}}^{\\sqrt{1 - y^2}}dx\\int_{1}^{x^2 + y^2} f(x,y,z) dz$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先确定投影区域，再根据投影区域和积分区域的上下限关系确定积分顺序和上下限",
+        "投影到 $xOy$ 平面，先对 $z$ 积分，再对 $x$ 和 $y$ 积分",
+        "注意积分区域的上下限的确定"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三重积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求由函数 $f(x,y,z)=x + y + z$ 在区域 $V$ 上的三重积分，区域 $V$ 由 $z = 0$，$z = 1$，$x^2 + y^2 = 1$ 所围成，采用先一后二法（投影法），正确的计算式子是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{-1}^{1}dx\\int_{-\\sqrt{1 - x^2}}^{\\sqrt{1 - x^2}}dy\\int_{0}^{1}(x + y + z)dz$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{0}^{1}dz\\int_{-1}^{1}dx\\int_{-\\sqrt{1 - x^2}}^{\\sqrt{1 - x^2}}(x + y + z)dy$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{0}^{1}dy\\int_{-1}^{1}dx\\int_{-\\sqrt{1 - x^2}}^{\\sqrt{1 - x^2}}(x + y + z)dz$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{-1}^{1}dz\\int_{-\\sqrt{1 - z^2}}^{\\sqrt{1 - z^2}}dy\\int_{0}^{1}(x + y + z)dx$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先一后二法（投影法）是先对一个变量积分，再对另外两个变量在投影区域上积分",
+        "根据区域 $V$ 的边界条件确定积分限，先确定 $z$ 的范围，再确定投影到 $xOy$ 平面上的区域",
+        "注意积分顺序和积分限的对应关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三重积分求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "利用投影法（先一后二的方法）求三重积分 $\\iiint_{\\Omega} z \\,dV$，其中 $\\Omega$ 是由平面 $z = 0$，$z = x + y + 1$ 以及柱面 $x^2 + y^2 = 1$ 所围成的空间闭区域，以下哪个选项是正确结果？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{\\pi}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3\\pi}{4}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{5\\pi}{6}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\pi$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "先将三重积分利用投影法转化为先对 $z$ 积分，再对 $x$ 和 $y$ 进行二重积分",
+        "利用极坐标计算二重积分会更简便",
+        "确定积分上下限是关键"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：积分值含义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个三重积分 $\\iiint_{\\Omega} f(x,y,z)dxdydz$，其中积分区域 $\\Omega$ 是由三个坐标面与平面 $x + y + z = 1$ 所围成的闭区域，若采用先一后二的方法（投影法）来计算该三重积分，首先应该确定的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "对 $x$ 的积分上下限"
+        },
+        {
+          "label": "B",
+          "content": "对 $y$ 的积分上下限"
+        },
+        {
+          "label": "C",
+          "content": "对 $z$ 的积分上下限"
+        },
+        {
+          "label": "D",
+          "content": "投影区域在 $xOy$ 平面上的表达式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "先一后二的方法（投影法）计算三重积分，第一步是将空间区域投影到坐标平面上。",
+        "确定投影区域的表达式是后续确定积分上下限的基础。",
+        "本题积分区域在 $xOy$ 平面上的投影区域是关键。"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：柱面坐标求三重积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "利用投影法求三重积分 $\\iiint_{\\Omega} x^2 dV$，其中 $\\Omega$ 是由旋转抛物面 $z = x^2 + y^2$ 与平面 $z = 4$ 所围成的闭区域。首先将三重积分化为先一后二的形式，再依次计算。先对 $z$ 积分，积分下限为 ___，积分上限为 ___，然后在投影区域上进行二重积分计算。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "x^2 + y^2;4",
+      "hints": [
+        "先确定积分区域 $\\Omega$ 的范围，根据旋转抛物面和平面的方程来确定 $z$ 的上下限。",
+        "对于投影区域，可以通过联立旋转抛物面和平面的方程得到。",
+        "理解投影法的原理，即先对 $z$ 积分，再在投影区域上对 $x$ 和 $y$ 积分。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：计算定积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知三重积分 $\\iiint_{\\Omega} f(x,y,z) dV$，其中积分区域 $\\Omega$ 由平面 $x + y + z = 1$ 与三个坐标面所围成，采用先一后二（投影法）计算该三重积分时，先对 $z$ 积分，那么积分限的确定正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "下限为 $0$，上限为 $1 - x - y$"
+        },
+        {
+          "label": "B",
+          "content": "下限为 $0$，上限为 $1 - x$"
+        },
+        {
+          "label": "C",
+          "content": "下限为 $0$，上限为 $1 - y$"
+        },
+        {
+          "label": "D",
+          "content": "下限为 $x + y$，上限为 $1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先确定积分区域在 $xOy$ 平面上的投影，再根据投影区域和平面方程确定 $z$ 的积分限",
+        "平面 $x + y + z = 1$ 可变形为 $z = 1 - x - y$",
+        "积分区域在 $z$ 轴方向上是从 $z = 0$ 开始的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：球面坐标算三重积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算三重积分 $\\iiint_{\\Omega} z \\,dV$，其中 $\\Omega$ 是由球面 $x^2 + y^2 + z^2 = 1$ 所围成的上半球体，以下哪种方法可以求解该积分？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直接对 $x,y,z$ 进行积分，不使用投影法"
+        },
+        {
+          "label": "B",
+          "content": "使用先一后二的方法，也就是投影法来求解"
+        },
+        {
+          "label": "C",
+          "content": "只对 $x$ 和 $y$ 进行积分，忽略 $z$"
+        },
+        {
+          "label": "D",
+          "content": "将积分区域转化为二维区域进行积分"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "视频中提到了计算三重积分的一种题型是使用先一后二的方法，也就是投影法。",
+        "对于由球面围成的上半球体，投影法是一种合适的求解方法。",
+        "思考每种方法是否符合三重积分的计算原理和本题的积分区域特点。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：球坐标换元",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "利用投影法求三重积分 $\\iiint_{\\Omega} f(x,y,z) dV$，其中积分区域 $\\Omega$ 由 $z = x^2 + y^2$ 与 $z = 4$ 所围成，以下步骤正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "先将积分区域投影到 $xOy$ 平面，得到投影区域 $D_{xy}$ 为 $x^2 + y^2 \\leq 4$，然后将三重积分化为先对 $z$ 积分，再对 $x,y$ 在 $D_{xy}$ 上积分，即 $\\iint_{D_{xy}} \\left(\\int_{x^2 + y^2}^{4} f(x,y,z) dz\\right) dxdy$"
+        },
+        {
+          "label": "B",
+          "content": "先将积分区域投影到 $xOz$ 平面，得到投影区域 $D_{xz}$ 为 $x^2 \\leq z \\leq 4$，然后将三重积分化为先对 $y$ 积分，再对 $x,z$ 在 $D_{xz}$ 上积分，即 $\\iint_{D_{xz}} \\left(\\int_{-\\sqrt{z - x^2}}^{\\sqrt{z - x^2}} f(x,y,z) dy\\right) dxdz$"
+        },
+        {
+          "label": "C",
+          "content": "先将积分区域投影到 $yOz$ 平面，得到投影区域 $D_{yz}$ 为 $y^2 \\leq z \\leq 4$，然后将三重积分化为先对 $x$ 积分，再对 $y,z$ 在 $D_{yz}$ 上积分，即 $\\iint_{D_{yz}} \\left(\\int_{-\\sqrt{z - y^2}}^{\\sqrt{z - y^2}} f(x,y,z) dx\\right) dydz$"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "回顾投影法求三重积分的步骤，先确定投影平面，再确定积分顺序和积分限。",
+        "对于本题，观察积分区域的特点，判断哪个投影平面更方便计算。",
+        "根据投影区域确定积分限，注意积分顺序的合理性。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：体积元变换",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算三重积分 $\\iiint_{\\Omega} xyz dV$，其中 $\\Omega$ 是由平面 $x = 0$，$y = 0$，$z = 0$ 和 $x + y + z = 1$ 所围成的闭区域，使用投影法计算时，下列积分表达式正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{0}^{1} dx \\int_{0}^{1 - x} dy \\int_{0}^{1 - x - y} xyz dz$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{0}^{1} dx \\int_{0}^{1 - y} dy \\int_{0}^{1 - x - y} xyz dz$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{0}^{1} dx \\int_{0}^{1 - x} dy \\int_{0}^{1 + x + y} xyz dz$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{0}^{1} dx \\int_{0}^{1 + y} dy \\int_{0}^{1 - x - y} xyz dz$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先确定积分区域的范围，再根据投影法确定积分的上下限",
+        "对于投影法，通常先对一个变量积分，再对另外两个变量在投影区域上积分",
+        "根据平面方程确定每个变量的取值范围"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三重积分计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算三重积分 $\\iiint_{\\Omega} z \\,dxdydz$，其中 $\\Omega$ 是由平面 $z = 0$，$z = 1$ 以及圆柱面 $x^2 + y^2 = 1$ 所围成的闭区域。使用先一后二（投影法），以下哪个选项是正确的结果？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{\\pi}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{\\pi}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{\\pi}{4}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{\\pi}{6}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先确定投影区域，再根据投影区域和积分区域确定积分限",
+        "利用极坐标计算二重积分会更方便",
+        "先对 $z$ 积分，再对 $x$ 和 $y$ 积分"
+      ]
+    }
+  ],
+  "count": 15
+}

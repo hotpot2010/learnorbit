@@ -1,0 +1,357 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：跨期消费概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于跨期消费的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "消费者把所有的钱都在当期花完属于跨期消费"
+        },
+        {
+          "label": "B",
+          "content": "跨期消费只需要考虑当期的预算约束"
+        },
+        {
+          "label": "C",
+          "content": "跨期消费是指消费者并不把所有的钱都在当期花完，而是在不同时期进行消费选择"
+        },
+        {
+          "label": "D",
+          "content": "跨期消费与预算约束和比较静态分析无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频中对跨期消费的定义来分析选项",
+        "提示2：明确跨期消费强调的是不同时期的消费选择",
+        "提示3：考虑跨期消费与预算约束和比较静态分析的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：跨期约束情形",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "消费者的跨期选择主要需要掌握两个要点，以下哪个选项是其中之一？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "跨期消费的预算约束"
+        },
+        {
+          "label": "B",
+          "content": "跨期生产的成本控制"
+        },
+        {
+          "label": "C",
+          "content": "跨期投资的风险评估"
+        },
+        {
+          "label": "D",
+          "content": "跨期储蓄的利率调整"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的消费者跨期选择的两个要点",
+        "提示2：明确其中一个要点与消费相关的预算方面",
+        "提示3：逐一分析选项，看哪个符合视频所讲要点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：预算线方程推导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "消费者进行跨期消费时，面临预算约束。假设消费者在第一期收入为 $I_1$，消费为 $C_1$，第二期收入为 $I_2$，消费为 $C_2$，市场利率为 $r$。若消费者在第一期有储蓄，以下哪个式子能正确表示其跨期预算约束？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$C_1 + \\frac{C_2}{1 + r} = I_1 + \\frac{I_2}{1 + r}$"
+        },
+        {
+          "label": "B",
+          "content": "$C_1 + C_2 = I_1 + I_2$"
+        },
+        {
+          "label": "C",
+          "content": "$C_1(1 + r)+ C_2 = I_1(1 + r)+ I_2$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{C_1}{1 + r}+ C_2 = \\frac{I_1}{1 + r}+ I_2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：考虑储蓄在第二期的增值情况，第一期储蓄的钱到第二期会因为利率而增加。",
+        "提示2：将两期的消费和收入都折算到同一期来建立等式。",
+        "提示3：若第一期有储蓄，意味着第一期消费小于收入，储蓄的部分会在第二期产生利息。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：消费曲线绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "消费者的跨期选择主要掌握两个要点，以下属于这两个要点的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "跨期消费的预算约束和比较静态分析"
+        },
+        {
+          "label": "B",
+          "content": "当期消费的预算约束和比较动态分析"
+        },
+        {
+          "label": "C",
+          "content": "跨期消费的收入约束和比较静态分析"
+        },
+        {
+          "label": "D",
+          "content": "当期消费的收入约束和比较动态分析"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中提到的消费者跨期选择的两个要点内容",
+        "提示2：明确是跨期消费相关，不是当期消费",
+        "提示3：要点是预算约束和比较静态分析"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：跨期消费概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于跨期消费的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "消费者会把所有的钱都花在当期消费上"
+        },
+        {
+          "label": "B",
+          "content": "跨期消费仅涉及短期的消费决策，与长期规划无关"
+        },
+        {
+          "label": "C",
+          "content": "跨期消费是指消费者不把所有的钱都花在当期，而是在不同时期进行消费分配"
+        },
+        {
+          "label": "D",
+          "content": "跨期消费与消费者的预算约束和静态比较分析无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对跨期消费的定义，思考其核心特点",
+        "提示2：明确跨期消费涉及不同时期的消费安排，与预算约束相关",
+        "提示3：逐一分析每个选项，判断其是否符合跨期消费的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：借贷者概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "消费者的跨时期选择主要需要掌握两个要点，以下哪个选项包含了这两个要点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "跨期消费的预算约束和比较静态分析"
+        },
+        {
+          "label": "B",
+          "content": "跨期储蓄的利息计算和投资风险分析"
+        },
+        {
+          "label": "C",
+          "content": "当期消费的折扣优惠和商品评价"
+        },
+        {
+          "label": "D",
+          "content": "未来消费的市场预测和价格波动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的消费者跨时期选择的两个要点",
+        "提示2：重点关注涉及到跨期消费的相关因素",
+        "提示3：比对各选项与视频中要点表述是否一致"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：贷出者分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "消费者的跨时期选择主要需要掌握两个要点，以下哪个选项是这两个要点之一？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "跨期消费的预算约束"
+        },
+        {
+          "label": "B",
+          "content": "消费者的收入水平"
+        },
+        {
+          "label": "C",
+          "content": "商品的价格波动"
+        },
+        {
+          "label": "D",
+          "content": "市场的供求关系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中提到的消费者跨时期选择的两个要点",
+        "提示2：明确其中一个要点与跨期消费相关",
+        "提示3：逐一分析选项，看哪个符合视频所讲要点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：利率变动影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "消费者的跨时期选择主要掌握两个要点，以下属于这两个要点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "跨期消费的预算约束和比较静态分析"
+        },
+        {
+          "label": "B",
+          "content": "即期消费的预算约束和比较动态分析"
+        },
+        {
+          "label": "C",
+          "content": "跨期消费的收入约束和比较静态分析"
+        },
+        {
+          "label": "D",
+          "content": "即期消费的收入约束和比较动态分析"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中提到的消费者跨时期选择的两个要点内容",
+        "提示2：明确是跨期消费相关，不是即期消费",
+        "提示3：是跨期消费的预算约束，不是收入约束"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：利率变动与借贷选择",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "消费者进行跨期消费规划时，需要考虑跨期消费的预算约束。已知消费者在本期的收入为 $m_1 = 100$，下期的收入为 $m_2 = 120$，市场利率为 $r = 0.1$。如果消费者本期消费 $c_1 = 150$，那么下期最多能消费多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$15$"
+        },
+        {
+          "label": "B",
+          "content": "$62$"
+        },
+        {
+          "label": "C",
+          "content": "$71$"
+        },
+        {
+          "label": "D",
+          "content": "$80$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先根据跨期消费的预算约束公式 $c_2=(m_1 - c_1)(1 + r)+m_2$ 来计算",
+        "提示2：明确公式中各参数的含义，$m_1$ 是本期收入，$c_1$ 是本期消费，$r$ 是利率，$m_2$ 是下期收入",
+        "提示3：将已知数值代入公式计算下期消费 $c_2$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：选择点的规则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "消费者进行跨期消费时，主要需要掌握的要点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "跨期消费的预算约束"
+        },
+        {
+          "label": "B",
+          "content": "比较静态分析"
+        },
+        {
+          "label": "C",
+          "content": "当期全部消费完所有金钱"
+        },
+        {
+          "label": "D",
+          "content": "合理规划跨期的消费安排"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的消费者跨期选择需要掌握的要点",
+        "提示2：明确跨期消费的定义，它不是把所有钱当期花完",
+        "提示3：对比各选项与视频讲解的要点是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：利率变化影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "消费者进行跨期消费时，会受到跨期消费的预算约束。假设消费者在第一期收入为 $y_1$，消费为 $c_1$，第二期收入为 $y_2$，消费为 $c_2$，利率为 $r$。若消费者在第一期储蓄，那么以下哪个式子表示该消费者的跨期预算约束？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$c_1 + \\frac{c_2}{1 + r} = y_1 + \\frac{y_2}{1 + r}$"
+        },
+        {
+          "label": "B",
+          "content": "$c_1 + c_2 = y_1 + y_2$"
+        },
+        {
+          "label": "C",
+          "content": "$c_1(1 + r)+ c_2 = y_1(1 + r)+ y_2$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{c_1}{1 + r}+ c_2 = \\frac{y_1}{1 + r}+ y_2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确跨期预算约束是基于消费者两期的收入和消费，以及利率来构建的",
+        "提示2：考虑储蓄的情况，第一期储蓄的钱会在第二期获得利息",
+        "提示3：将两期的消费和收入都折现到第一期来构建预算约束方程"
+      ]
+    }
+  ],
+  "count": 11
+}

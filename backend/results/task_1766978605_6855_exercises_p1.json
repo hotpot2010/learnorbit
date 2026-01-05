@@ -1,0 +1,272 @@
+{
+  "exercises": [
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：二元函数极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求二元函数 $f(x,y)=\\frac{x^2y}{x^2 + y^2}$ 当 $(x,y)\\to(0,0)$ 时的极限 ___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "0",
+      "hints": [
+        "可利用极坐标变换 $x = r\\cos\\theta$，$y = r\\sin\\theta$ 来求解极限",
+        "当 $(x,y)\\to(0,0)$ 时，$r\\to0$",
+        "化简函数后求极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求极限方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{(x,y)\\to(0,0)} \\frac{x^2y}{x^4 + y^2}$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "0"
+        },
+        {
+          "label": "B",
+          "content": "1"
+        },
+        {
+          "label": "C",
+          "content": "不存在"
+        },
+        {
+          "label": "D",
+          "content": "2"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "考虑沿着不同路径趋近于(0,0)时极限的值",
+        "可以先尝试沿着y = kx路径",
+        "再尝试沿着 $y = x^2$ 路径"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：抽象函数介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "高等数学下册速成课主要讲解的题型是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "证明题为主"
+        },
+        {
+          "label": "B",
+          "content": "计算题为主"
+        },
+        {
+          "label": "C",
+          "content": "应用题为主"
+        },
+        {
+          "label": "D",
+          "content": "选择题为主"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "可以从视频中关于速成课的内容描述来寻找答案",
+        "视频明确说明了速成课主要讲解的题型",
+        "重点关注提到题型的部分"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：复合函数求偏导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "设 $z = f(x^2 - y^2, e^{xy})$，其中 $f$ 具有一阶连续偏导数，求 $\\frac{\\partial z}{\\partial x}$ 和 $\\frac{\\partial z}{\\partial y}$。$\\frac{\\partial z}{\\partial x}$ = ___ ；$\\frac{\\partial z}{\\partial y}$ = ___。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "2xf_1'+ye^{xy}f_2';-2yf_1'+xe^{xy}f_2'",
+      "hints": [
+        "利用复合函数求偏导的链式法则",
+        "设 $u = x^2 - y^2$，$v = e^{xy}$，则 $z = f(u, v)$",
+        "分别对 $x$ 和 $y$ 求偏导时，要考虑中间变量的变化"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：二元函数二阶偏导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知二元函数 $z = x^3y^2 + 2x^2y + 3xy + 4$，求 $\\frac{\\partial^2 z}{\\partial x^2}$ 在点 $(1, 1)$ 处的值为 ___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "10",
+      "hints": [
+        "先对函数 $z$ 关于 $x$ 求一阶偏导数",
+        "再对一阶偏导数关于 $x$ 求偏导数得到二阶偏导数",
+        "最后将点 $(1, 1)$ 代入二阶偏导数求值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求偏导数顺序",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于函数 $z = x^2y + 3xy^2$，先对 $x$ 求偏导数，再对 $y$ 求偏导数，结果是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2x + 6y$"
+        },
+        {
+          "label": "B",
+          "content": "$2x + 6xy$"
+        },
+        {
+          "label": "C",
+          "content": "$2xy + 3y^2$"
+        },
+        {
+          "label": "D",
+          "content": "$x^2 + 6xy$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先根据求偏导数的规则求出函数对 $x$ 的偏导数，再对得到的结果求关于 $y$ 的偏导数",
+        "求对 $x$ 的偏导数时，把 $y$ 看作常数",
+        "求对 $y$ 的偏导数时，把 $x$ 看作常数"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：一阶偏导数求解",
+      "error": "Invalid \\escape: line 15 column 58 (char 578)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二阶偏导数求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知二元函数 $z = x^3y^2 + 2x^2y + 3xy^3$，则 $\\frac{\\partial^2 z}{\\partial x^2}$ 在点 $(1, 2)$ 处的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "12"
+        },
+        {
+          "label": "B",
+          "content": "18"
+        },
+        {
+          "label": "C",
+          "content": "24"
+        },
+        {
+          "label": "D",
+          "content": "30"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "先对函数 $z$ 关于 $x$ 求一阶偏导数",
+        "再对一阶偏导数关于 $x$ 求偏导数得到二阶偏导数",
+        "最后将点 $(1, 2)$ 代入二阶偏导数求值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：抽象函数求导要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知抽象函数 $f(x,y)$ 满足 $f(x + y,x - y)=x^2 - y^2$，则 $\\frac{\\partial f}{\\partial x}\\big|_{(x = 1,y = 1)}$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1"
+        },
+        {
+          "label": "B",
+          "content": "2"
+        },
+        {
+          "label": "C",
+          "content": "3"
+        },
+        {
+          "label": "D",
+          "content": "4"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "先对已知等式进行变形，找到 $f(x,y)$ 的表达式",
+        "再根据偏导数的求导法则求出 $\\frac{\\partial f}{\\partial x}$",
+        "最后将点 $(1,1)$ 代入偏导数中求值"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：一阶偏导求法",
+      "error": "Invalid \\escape: line 10 column 58 (char 370)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二阶偏导要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "设二元函数 $z = x^2y + \\sin(xy)$，则 $\\frac{\\partial^2 z}{\\partial x\\partial y}$ 等于（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2x + x\\cos(xy)$"
+        },
+        {
+          "label": "B",
+          "content": "$2x + \\cos(xy) - xy\\sin(xy)$"
+        },
+        {
+          "label": "C",
+          "content": "$x^2 + \\cos(xy)$"
+        },
+        {
+          "label": "D",
+          "content": "$x^2 + y\\cos(xy)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "先对 $z$ 关于 $x$ 求偏导数，再对所得结果关于 $y$ 求偏导数",
+        "求偏导数时，把其他变量看作常数",
+        "使用求导公式 $(x^n)' = nx^{n - 1}$，$(\\sin u)' = \\cos u \\cdot u'$"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：函数对y求偏导",
+      "error": "Invalid \\escape: line 6 column 39 (char 172)"
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：含y函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $x^2 + y^2 = 25$，求 $\\frac{dy}{dx}$ 在点 $(3, 4)$ 处的值为 ___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "-\\frac{3}{4}",
+      "hints": [
+        "对等式两边同时关于x求导",
+        "使用求导的加法法则和复合函数求导法则",
+        "将点(3, 4)代入求导后的式子求解"
+      ]
+    }
+  ],
+  "count": 13
+}

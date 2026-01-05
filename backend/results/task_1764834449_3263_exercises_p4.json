@@ -1,0 +1,357 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：罗尔中值定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个是罗尔中值定理所需满足的条件（多项选择）：",
+      "choices": [
+        {
+          "label": "A",
+          "content": "函数 $f(x)$ 在闭区间 $[a,b]$ 上连续"
+        },
+        {
+          "label": "B",
+          "content": "函数 $f(x)$ 在开区间 $(a,b)$ 内可导"
+        },
+        {
+          "label": "C",
+          "content": "函数 $f(x)$ 在区间端点处函数值相等，即 $f(a)=f(b)$"
+        },
+        {
+          "label": "D",
+          "content": "函数 $f(x)$ 在区间 $[a,b]$ 上单调递增"
+        }
+      ],
+      "answer_type": "multiple",
+      "solution": "ABC",
+      "hints": [
+        "提示1：回顾罗尔中值定理的定义，明确其需要满足的条件",
+        "提示2：逐一分析每个选项是否符合罗尔中值定理的要求",
+        "提示3：单调递增并非罗尔中值定理的必要条件"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：拉格朗日中值定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个是微分中值定理的类型之一？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "牛顿 - 莱布尼茨定理"
+        },
+        {
+          "label": "B",
+          "content": "拉格朗日中值定理"
+        },
+        {
+          "label": "C",
+          "content": "柯西积分定理"
+        },
+        {
+          "label": "D",
+          "content": "洛必达法则"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到微分中值定理有三种类型",
+        "提示2：回忆视频中列举的具体定理名称",
+        "提示3：逐一分析选项，判断哪个符合视频中提到的类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：等式证明步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微分中值定理常见的有三种，以下不属于常见微分中值定理的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "罗尔中值定理"
+        },
+        {
+          "label": "B",
+          "content": "拉格朗日中值定理"
+        },
+        {
+          "label": "C",
+          "content": "柯西中值定理"
+        },
+        {
+          "label": "D",
+          "content": "费马中值定理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的常见微分中值定理有哪些",
+        "提示2：视频中明确指出了三种常见的微分中值定理",
+        "提示3：逐一对比选项与视频中提到的定理名称"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：辅助函数构造",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "证明中值定理的证明题是我们常考的最后一道题，微分中值定理有三种，以下不属于微分中值定理的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "罗尔中值定理"
+        },
+        {
+          "label": "B",
+          "content": "拉格朗日中值定理"
+        },
+        {
+          "label": "C",
+          "content": "柯西中值定理"
+        },
+        {
+          "label": "D",
+          "content": "费马引理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的微分中值定理的种类",
+        "提示2：明确各个选项所代表的定理内容",
+        "提示3：对比选项与视频中提到的微分中值定理进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：辅助函数应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个不属于微分中值定理的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "罗尔中值定理"
+        },
+        {
+          "label": "B",
+          "content": "拉格朗日中值定理"
+        },
+        {
+          "label": "C",
+          "content": "柯西中值定理"
+        },
+        {
+          "label": "D",
+          "content": "牛顿 - 莱布尼茨公式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的微分中值定理有哪些",
+        "提示2：明确每个选项所代表的定理的性质",
+        "提示3：牛顿 - 莱布尼茨公式是关于定积分与原函数关系的定理，并非微分中值定理"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：拉格朗日中值定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于微分中值定理的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "拉格朗日中值定理"
+        },
+        {
+          "label": "B",
+          "content": "柯西中值定理"
+        },
+        {
+          "label": "C",
+          "content": "罗尔中值定理"
+        },
+        {
+          "label": "D",
+          "content": "以上都是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的微分中值定理的种类",
+        "提示2：视频中明确指出微分中值定理包含几种类型",
+        "提示3：逐一分析选项是否属于视频中提到的微分中值定理范畴"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限计算方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微分中值定理有三种，以下不属于这三种微分中值定理的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "罗尔中值定理"
+        },
+        {
+          "label": "B",
+          "content": "拉格朗日中值定理"
+        },
+        {
+          "label": "C",
+          "content": "柯西中值定理"
+        },
+        {
+          "label": "D",
+          "content": "牛顿 - 莱布尼茨定理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的三种微分中值定理",
+        "提示2：明确每个选项所代表的定理内容",
+        "提示3：判断哪个选项不属于视频中提到的三种微分中值定理"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：级数求和化简法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微分中值定理在证明题中经常运用，其中微分中值定理包含以下哪几种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "罗尔中值定理、拉格朗日中值定理、洛必达法则"
+        },
+        {
+          "label": "B",
+          "content": "罗尔中值定理、拉格朗日中值定理、柯西中值定理"
+        },
+        {
+          "label": "C",
+          "content": "罗尔中值定理、柯西中值定理、牛顿 - 莱布尼茨公式"
+        },
+        {
+          "label": "D",
+          "content": "拉格朗日中值定理、柯西中值定理、泰勒公式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的微分中值定理的种类",
+        "提示2：明确每个选项中各个定理或公式的性质，判断是否属于微分中值定理",
+        "提示3：视频中明确指出微分中值定理有三种，分别为罗尔中值定理、拉格朗日中值定理和柯西中值定理"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：夹逼准则应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微分中值定理不包含以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "罗尔中值定理"
+        },
+        {
+          "label": "B",
+          "content": "拉格朗日中值定理"
+        },
+        {
+          "label": "C",
+          "content": "柯西中值定理"
+        },
+        {
+          "label": "D",
+          "content": "费马引理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回忆视频中提到的微分中值定理有哪几种",
+        "提示2：逐一分析选项，判断哪个不属于视频所讲的微分中值定理范畴",
+        "提示3：视频中明确提到了罗尔、拉格朗日和柯西三种中值定理"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定积分求极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个不属于微分中值定理的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "罗尔中值定理"
+        },
+        {
+          "label": "B",
+          "content": "拉格朗日中值定理"
+        },
+        {
+          "label": "C",
+          "content": "柯西中值定理"
+        },
+        {
+          "label": "D",
+          "content": "牛顿 - 莱布尼茨公式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的微分中值定理的类型",
+        "提示2：明确各个定理的名称",
+        "提示3：判断每个选项是否属于微分中值定理"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷求和式化简",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个不属于微分中值定理？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "罗尔中值定理"
+        },
+        {
+          "label": "B",
+          "content": "拉格朗日中值定理"
+        },
+        {
+          "label": "C",
+          "content": "柯西中值定理"
+        },
+        {
+          "label": "D",
+          "content": "牛顿 - 莱布尼茨公式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的微分中值定理的种类",
+        "提示2：明确每个选项所代表的定理的性质",
+        "提示3：判断哪个选项不属于微分中值定理的范畴"
+      ]
+    }
+  ],
+  "count": 11
+}

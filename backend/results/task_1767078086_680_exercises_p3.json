@@ -1,0 +1,613 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：力在轴上投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知平面力 $\\vec{F}$ 的大小为 $10N$，与 $x$ 轴正方向夹角为 $60^\\circ$，与 $y$ 轴正方向夹角为 $30^\\circ$，则该力在 $x$ 轴上的投影 $F_x$ 和在 $y$ 轴上的投影 $F_y$ 分别为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$F_x = 5N$，$F_y = 5\\sqrt{3}N$"
+        },
+        {
+          "label": "B",
+          "content": "$F_x = 5\\sqrt{3}N$，$F_y = 5N$"
+        },
+        {
+          "label": "C",
+          "content": "$F_x = 10N$，$F_y = 0N$"
+        },
+        {
+          "label": "D",
+          "content": "$F_x = 0N$，$F_y = 10N$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据力在轴上投影的定义，力 $\\vec{F}$ 在某轴上的投影等于力的大小乘以力与该轴正方向夹角的余弦值",
+        "提示2：力 $\\vec{F}$ 在 $x$ 轴上的投影 $F_x = F\\cos\\alpha$，其中 $\\alpha$ 是力 $\\vec{F}$ 与 $x$ 轴正方向的夹角",
+        "提示3：力 $\\vec{F}$ 在 $y$ 轴上的投影 $F_y = F\\cos\\beta$，其中 $\\beta$ 是力 $\\vec{F}$ 与 $y$ 轴正方向的夹角"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面汇交力系合成",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面汇交力系中，若有三个力 $\\vec{F}_1$、$\\vec{F}_2$、$\\vec{F}_3$ 汇交于一点，已知 $\\vec{F}_1$ 大小为 3N，方向水平向右；$\\vec{F}_2$ 大小为 4N，方向竖直向上；$\\vec{F}_3$ 大小为 5N，方向与水平方向夹角为 $45^\\circ$ 斜向右上方。则该平面汇交力系的合力大小最接近以下哪个值？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$7.5N$"
+        },
+        {
+          "label": "B",
+          "content": "$8.5N$"
+        },
+        {
+          "label": "C",
+          "content": "$9.5N$"
+        },
+        {
+          "label": "D",
+          "content": "$10.5N$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先将各个力分解到水平和竖直方向",
+        "提示2：分别计算水平方向和竖直方向的合力分量",
+        "提示3：再根据勾股定理计算合力大小"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面汇交力系平衡",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面汇交力系中，已知三个力 $\\vec{F}_1$、$\\vec{F}_2$、$\\vec{F}_3$ 汇交于一点，且该力系处于平衡状态。若 $\\vec{F}_1$ 的大小为 $3N$，方向水平向右；$\\vec{F}_2$ 的大小为 $4N$，方向竖直向上。则 $\\vec{F}_3$ 的大小和方向分别为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$5N$，与水平方向成 $\\arctan(\\frac{4}{3})$ 角斜向左上方"
+        },
+        {
+          "label": "B",
+          "content": "$5N$，与水平方向成 $\\arctan(\\frac{3}{4})$ 角斜向左上方"
+        },
+        {
+          "label": "C",
+          "content": "$7N$，与水平方向成 $\\arctan(\\frac{4}{3})$ 角斜向左上方"
+        },
+        {
+          "label": "D",
+          "content": "$7N$，与水平方向成 $\\arctan(\\frac{3}{4})$ 角斜向左上方"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据平面汇交力系平衡的条件，合力为零，即 $\\vec{F}_1 + \\vec{F}_2 + \\vec{F}_3 = \\vec{0}$，所以 $\\vec{F}_3 = -(\\vec{F}_1 + \\vec{F}_2)$",
+        "提示2：先求出 $\\vec{F}_1$ 和 $\\vec{F}_2$ 的合力大小，可利用勾股定理 $F = \\sqrt{F_1^2 + F_2^2}$",
+        "提示3：再根据三角函数关系求出合力的方向，$\\tan\\theta = \\frac{F_2}{F_1}$，$\\vec{F}_3$ 的方向与 $\\vec{F}_1$ 和 $\\vec{F}_2$ 的合力方向相反"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：力对一点的关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面力系中，以下哪个知识点不属于本次课程的 6 个考点之一？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "力在轴上投影"
+        },
+        {
+          "label": "B",
+          "content": "空间平行力系的合成与平衡"
+        },
+        {
+          "label": "C",
+          "content": "力偶系"
+        },
+        {
+          "label": "D",
+          "content": "力的平移定理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本次课程的 6 个考点内容",
+        "提示2：逐一分析每个选项与 6 个考点的匹配情况",
+        "提示3：注意选项中力系的维度与视频中考点力系维度的区别"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：力对点的矩",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面力系中，以下哪个是本课时的考点之一？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "力在坐标轴上的投影"
+        },
+        {
+          "label": "B",
+          "content": "空间汇交力系的合成与平衡"
+        },
+        {
+          "label": "C",
+          "content": "力对直线的矩"
+        },
+        {
+          "label": "D",
+          "content": "空间力偶系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的本课时的6个考点",
+        "提示2：逐一对比选项与考点内容",
+        "提示3：注意考点强调的是平面力系相关内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面力偶系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面力系的学习中，以下哪个不是本节课的考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "力在轴上投影"
+        },
+        {
+          "label": "B",
+          "content": "平面平行力系的合成与平衡"
+        },
+        {
+          "label": "C",
+          "content": "力对轴的矩"
+        },
+        {
+          "label": "D",
+          "content": "平面力偶系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课的6个考点内容",
+        "提示2：逐一分析每个选项是否在考点范围内",
+        "提示3：注意考点的准确表述，与选项进行仔细对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：力偶特性四",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个不是本节课时的考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "力在轴上投影"
+        },
+        {
+          "label": "B",
+          "content": "平面平行力系的合成与平衡"
+        },
+        {
+          "label": "C",
+          "content": "力对轴的矩"
+        },
+        {
+          "label": "D",
+          "content": "平面任意力系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课时的6个考点内容",
+        "提示2：将每个选项与视频中的考点进行逐一对比",
+        "提示3：注意考点的准确表述，视频中是力对“点”的矩，而不是力对“轴”的矩"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面力偶合成与平衡",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面力系的知识体系中，以下哪个不属于本节课所提及的考点范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "力在轴上投影"
+        },
+        {
+          "label": "B",
+          "content": "空间任意力系的合成与平衡"
+        },
+        {
+          "label": "C",
+          "content": "平面汇交力系的合成与平衡"
+        },
+        {
+          "label": "D",
+          "content": "力的平移定理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本节课的6个考点内容。",
+        "提示2：逐个分析选项是否与视频中考点对应。",
+        "提示3：注意区分平面力系和空间力系的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：力的平移定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面力系中，以下关于力的平移定理的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "力可以随意平移到平面内任意一点，而不改变力对物体的作用效果"
+        },
+        {
+          "label": "B",
+          "content": "力平移到平面内某一点时，需要附加一个力偶，附加力偶矩等于原力对平移点的矩"
+        },
+        {
+          "label": "C",
+          "content": "力平移时，只需要考虑力的大小和方向，不需要考虑附加力偶"
+        },
+        {
+          "label": "D",
+          "content": "力的平移定理只适用于平面汇交力系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾力的平移定理的具体内容",
+        "提示2：思考力平移时对物体作用效果的变化以及需要满足的条件",
+        "提示3：分析每个选项与力的平移定理的符合程度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面任意力系简化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一平面任意力系，其中包含力 $\\vec{F}_1$、$\\vec{F}_2$ 等多个力，若要对该力系进行简化，以下哪个步骤通常不会用到视频中提到的知识点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "计算力在轴上的投影"
+        },
+        {
+          "label": "B",
+          "content": "合成平面汇交力系"
+        },
+        {
+          "label": "C",
+          "content": "计算力对某点的矩"
+        },
+        {
+          "label": "D",
+          "content": "求解力的波动频率"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的6个考点，分别是力在轴上投影、平面汇交力系的合成与平衡、力对点的矩、平面力偶系、力的平移定理、平面任意力系",
+        "提示2：分析每个选项是否与视频中的考点相关",
+        "提示3：力的波动频率不属于视频所讲的平面力系相关知识点范畴"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：简化结果分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面力系的分析中，以下哪个不属于该课时的 6 个考点之一？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "力在轴上投影"
+        },
+        {
+          "label": "B",
+          "content": "空间平行力系的合成与平衡"
+        },
+        {
+          "label": "C",
+          "content": "力对点的矩"
+        },
+        {
+          "label": "D",
+          "content": "平面力偶系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本课时的 6 个考点具体内容",
+        "提示2：逐一对比每个选项与考点内容是否相符",
+        "提示3：注意题目问的是不属于考点的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：力系简化例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面力系中，已知有两个力 $\\vec{F}_1$ 和 $\\vec{F}_2$ 作用于一点，$\\vec{F}_1$ 的大小为 $3N$，方向水平向右，$\\vec{F}_2$ 的大小为 $4N$，方向竖直向上。若将这两个力合成，根据平面汇交力系的合成知识，合力 $\\vec{R}$ 的大小为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3N$"
+        },
+        {
+          "label": "B",
+          "content": "$4N$"
+        },
+        {
+          "label": "C",
+          "content": "$5N$"
+        },
+        {
+          "label": "D",
+          "content": "$7N$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：平面汇交力系合成可以使用平行四边形法则或三角形法则",
+        "提示2：本题中两个力相互垂直，可根据勾股定理计算合力大小",
+        "提示3：合力大小 $R = \\sqrt{F_1^2 + F_2^2}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：力系简化计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面力系中，已知一个力 $\\vec{F}$ 在 $x$ 轴和 $y$ 轴上的投影分别为 $F_x = 3N$，$F_y = 4N$，该力对坐标原点 $O$ 的矩 $M_O(\\vec{F}) = 12N\\cdot m$（逆时针为正），若将此力沿其作用线平移到距离原点 $d = 2m$ 的一点 $A$ 处，平移后该力对原点 $O$ 的矩 $M_O'(\\vec{F})$ 为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$12N\\cdot m$"
+        },
+        {
+          "label": "B",
+          "content": "$18N\\cdot m$"
+        },
+        {
+          "label": "C",
+          "content": "$6N\\cdot m$"
+        },
+        {
+          "label": "D",
+          "content": "$24N\\cdot m$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据力的平移定理，力沿其作用线平移时，力的大小、方向和对某点的矩不变",
+        "提示2：回顾力对某点的矩的概念，本题中力的大小和方向不变，作用线也未改变",
+        "提示3：不需要根据投影去计算力的大小和方向，直接利用力沿作用线平移的性质即可"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面力系平衡",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面力系中，一个力 $F$ 与 $x$ 轴夹角为 $\\theta$，则该力在 $x$ 轴上的投影应该用到视频中哪个考点知识？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "力在轴上投影"
+        },
+        {
+          "label": "B",
+          "content": "平面汇交力系的合成与平衡"
+        },
+        {
+          "label": "C",
+          "content": "力对点的矩"
+        },
+        {
+          "label": "D",
+          "content": "平面力偶系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：思考力在坐标轴上投影的概念",
+        "提示2：分析题目是在求力在轴上的投影，与哪个考点直接相关",
+        "提示3：回顾视频中各个考点的定义和应用场景"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求解约束反力",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个平面汇交力系由三个力 $\\vec{F}_1$、$\\vec{F}_2$、$\\vec{F}_3$ 组成，其中 $\\vec{F}_1$ 的大小为 $10N$，方向水平向右；$\\vec{F}_2$ 的大小为 $20N$，方向竖直向上；$\\vec{F}_3$ 的大小为 $15N$，方向与水平方向成 $30°$ 角斜向上。求该平面汇交力系的合力大小最接近以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$25N$"
+        },
+        {
+          "label": "B",
+          "content": "$30N$"
+        },
+        {
+          "label": "C",
+          "content": "$35N$"
+        },
+        {
+          "label": "D",
+          "content": "$40N$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先将各个力分解到水平和竖直方向",
+        "提示2：分别计算水平方向和竖直方向的分力之和",
+        "提示3：根据勾股定理计算合力大小"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：超静定结构分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面力系中，已知有两个力 $\\vec{F}_1$ 和 $\\vec{F}_2$，$\\vec{F}_1$ 的大小为 $3N$，方向水平向右，$\\vec{F}_2$ 的大小为 $4N$，方向竖直向上。若求这两个力在 $45^\\circ$ 斜向上坐标轴上的投影之和，以下哪个选项正确？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{7\\sqrt{2}}{2}N$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{\\sqrt{2}}{2}N$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{5\\sqrt{2}}{2}N$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{3\\sqrt{2}}{2}N$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据力在轴上投影的计算公式 $F_{x}=F\\cos\\theta$，分别计算 $\\vec{F}_1$ 和 $\\vec{F}_2$ 在 $45^\\circ$ 斜向上坐标轴上的投影。",
+        "提示2：对于 $\\vec{F}_1$，其与 $45^\\circ$ 斜向上坐标轴的夹角为 $45^\\circ$；对于 $\\vec{F}_2$，其与 $45^\\circ$ 斜向上坐标轴的夹角也为 $45^\\circ$。",
+        "提示3：将两个力的投影相加得到投影之和。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：BC 梁受力分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面力系中，已知一个力 $\\vec{F}$ 与 $x$ 轴正方向夹角为 $30^\\circ$，大小为 $10N$，求该力在 $x$ 轴和 $y$ 轴上的投影分别为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$F_x = 5\\sqrt{3}N$，$F_y = 5N$"
+        },
+        {
+          "label": "B",
+          "content": "$F_x = 5N$，$F_y = 5\\sqrt{3}N$"
+        },
+        {
+          "label": "C",
+          "content": "$F_x = 10\\sqrt{3}N$，$F_y = 10N$"
+        },
+        {
+          "label": "D",
+          "content": "$F_x = 10N$，$F_y = 10\\sqrt{3}N$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据力在轴上投影的定义，力 $\\vec{F}$ 在 $x$ 轴上的投影 $F_x = F\\cos\\alpha$，在 $y$ 轴上的投影 $F_y = F\\sin\\alpha$，其中 $\\alpha$ 是力与 $x$ 轴正方向的夹角。",
+        "提示2：已知力的大小 $F = 10N$，夹角 $\\alpha = 30^\\circ$。",
+        "提示3：分别计算 $\\cos30^\\circ = \\frac{\\sqrt{3}}{2}$，$\\sin30^\\circ = \\frac{1}{2}$，再代入投影公式计算。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：AB 梁受力分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面力系中，若有一个力 $\\vec{F}$ 与 $x$ 轴正方向夹角为 $30^\\circ$，大小为 $10N$，那么该力在 $x$ 轴上的投影大小为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$5N$"
+        },
+        {
+          "label": "B",
+          "content": "$5\\sqrt{3}N$"
+        },
+        {
+          "label": "C",
+          "content": "$10N$"
+        },
+        {
+          "label": "D",
+          "content": "$10\\sqrt{3}N$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆力在轴上投影的计算公式，力 $\\vec{F}$ 在 $x$ 轴上的投影 $F_x = F\\cos\\alpha$，其中 $F$ 是力的大小，$\\alpha$ 是力与 $x$ 轴正方向的夹角。",
+        "提示2：已知力的大小 $F=10N$，夹角 $\\alpha = 30^\\circ$，将其代入公式计算。",
+        "提示3：根据三角函数值 $\\cos30^\\circ = \\frac{\\sqrt{3}}{2}$ 进行计算。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：结构约束反力求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一平面汇交力系由三个力 $\\vec{F}_1$、$\\vec{F}_2$、$\\vec{F}_3$ 组成，其中 $\\vec{F}_1$ 大小为 $3N$，方向水平向右；$\\vec{F}_2$ 大小为 $4N$，方向竖直向上；$\\vec{F}_3$ 大小为 $5N$，方向与水平方向成 $45°$ 角斜向右上方。求该平面汇交力系的合力大小最接近以下哪个值？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$8N$"
+        },
+        {
+          "label": "B",
+          "content": "$9N$"
+        },
+        {
+          "label": "C",
+          "content": "$10N$"
+        },
+        {
+          "label": "D",
+          "content": "$11N$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先将各个力分别在水平和竖直方向进行分解",
+        "提示2：根据力的投影原理计算水平和竖直方向的分力之和",
+        "提示3：最后利用勾股定理计算合力大小"
+      ]
+    }
+  ],
+  "count": 19
+}

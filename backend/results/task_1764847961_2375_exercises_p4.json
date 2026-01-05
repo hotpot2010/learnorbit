@@ -1,0 +1,276 @@
+{
+  "exercises": [
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：求导组合公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = 5 + 3\\sin x$，求 $f'(x)$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$3\\cos x$",
+      "hints": [
+        "提示1：根据求导的加法法则分别对函数中的常数项和含三角函数项求导",
+        "提示2：牢记视频中提到的常数的导数等于 $0$",
+        "提示3：结合视频中 $\\sin x$ 的导数等于 $\\cos x$ 来计算含三角函数项的导数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：隐函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = 3 + 2\\sin x$，求 $y$ 的导数 $y'$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2\\cos x$"
+        },
+        {
+          "label": "B",
+          "content": "$3 + 2\\cos x$"
+        },
+        {
+          "label": "C",
+          "content": "$2\\sin x$"
+        },
+        {
+          "label": "D",
+          "content": "$3 + 2\\sin x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据求导的加法法则，若 $y = u + v$，则 $y' = u' + v'$",
+        "提示2：回忆视频中提到的常数的导数为 $0$",
+        "提示3：视频中还提到 $\\sin x$ 的导数为 $\\cos x$，据此求出 $y$ 的导数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：隐函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = 3 + \\sin x$，求 $y$ 的导数 $y'$ 等于以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\cos x$"
+        },
+        {
+          "label": "B",
+          "content": "$3 + \\cos x$"
+        },
+        {
+          "label": "C",
+          "content": "$0$"
+        },
+        {
+          "label": "D",
+          "content": "$3$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据求导的加法法则，若 $y = u + v$，则 $y' = u' + v'$",
+        "提示2：回忆常数的导数为 $0$，即若 $u$ 为常数，则 $u' = 0$",
+        "提示3：牢记 $\\sin x$ 的导数为 $\\cos x$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：隐函数二阶导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = 3 + \\sin x$，求其导数 $y'$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$\\cos x$"
+        },
+        {
+          "label": "C",
+          "content": "$3 + \\cos x$"
+        },
+        {
+          "label": "D",
+          "content": "$\\sin x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据求导的加法法则，$(u+v)'=u'+v'$，这里 $u = 3$，$v = \\sin x$",
+        "提示2：回顾常数的导数为 $0$，即 $(3)' = 0$",
+        "提示3：根据视频中提到的 $\\sin x$ 的导数为 $\\cos x$，即 $(\\sin x)' = \\cos x$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：参数方程求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=3 + \\sin x$，则 $f'(x)$ 等于（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$\\cos x$"
+        },
+        {
+          "label": "C",
+          "content": "$3 + \\cos x$"
+        },
+        {
+          "label": "D",
+          "content": "$1 + \\cos x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据求导的加法法则，若 $f(x)=u(x)+v(x)$，则 $f'(x)=u'(x)+v'(x)$",
+        "提示2：回忆常数的导数和 $\\sin x$ 的导数公式，常数的导数为 $0$，$\\sin x$ 的导数为 $\\cos x$",
+        "提示3：分别对 $3$ 和 $\\sin x$ 求导后相加"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极值最值求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = 3 + \\sin x$，求 $f(x)$ 的导数 $f'(x)$ 为以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sin x$"
+        },
+        {
+          "label": "C",
+          "content": "$\\cos x$"
+        },
+        {
+          "label": "D",
+          "content": "$3 + \\cos x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据求导的加法法则，若 $f(x)=u(x)+v(x)$，则 $f'(x)=u'(x)+v'(x)$",
+        "提示2：回忆常数的导数性质，常数的导数为 $0$",
+        "提示3：根据视频中提到的 $\\sin x$ 的导数为 $\\cos x$ 来计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数极值的求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = 5 + \\sin x$，求 $f'(x)$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sin x$"
+        },
+        {
+          "label": "C",
+          "content": "$\\cos x$"
+        },
+        {
+          "label": "D",
+          "content": "$5 + \\cos x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据求导的加法法则，若 $f(x)=u(x)+v(x)$，则 $f'(x)=u'(x)+v'(x)$",
+        "提示2：回忆常数的导数为 $0$，即若 $u(x)$ 为常数，则 $u'(x)=0$",
+        "提示3：牢记 $\\sin x$ 的导数为 $\\cos x$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：凹凸区间与拐点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = 3 + \\sin x$，则 $f'(x)$ 等于以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3 + \\cos x$"
+        },
+        {
+          "label": "B",
+          "content": "$\\cos x$"
+        },
+        {
+          "label": "C",
+          "content": "$3$"
+        },
+        {
+          "label": "D",
+          "content": "$0$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据求导的加法法则，若 $f(x)=u(x)+v(x)$，则 $f'(x)=u'(x)+v'(x)$",
+        "提示2：回顾常数的导数为 $0$，即若 $u(x)=C$（$C$ 为常数），则 $u'(x)=0$",
+        "提示3：记住 $\\sin x$ 的导数为 $\\cos x$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：增减区间与拐点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = 3 + 2\\sin x$，则 $f'(x)$ 等于（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2\\cos x$"
+        },
+        {
+          "label": "B",
+          "content": "$3 + 2\\cos x$"
+        },
+        {
+          "label": "C",
+          "content": "$2\\sin x$"
+        },
+        {
+          "label": "D",
+          "content": "$3 + 2\\sin x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据求导的加法法则，若 $f(x)=u(x)+v(x)$，则 $f'(x)=u'(x)+v'(x)$",
+        "提示2：回忆常数的导数为 $0$，即若 $u(x)$ 为常数，则 $u'(x)=0$",
+        "提示3：根据视频内容，$\\sin x$ 的导数为 $\\cos x$"
+      ]
+    }
+  ],
+  "count": 9
+}

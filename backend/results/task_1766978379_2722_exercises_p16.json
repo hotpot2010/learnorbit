@@ -1,0 +1,805 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：课程内容介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "上一个视频讲解了宏观经济政策的部分内容，本次视频将讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财政政策及其效果"
+        },
+        {
+          "label": "B",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "C",
+          "content": "两种政策的混合使用"
+        },
+        {
+          "label": "D",
+          "content": "本次视频讲解完相关内容后会总结一个表"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：明确上一个视频和本次视频分别讲解的知识点范围",
+        "提示2：根据视频内容，上一个视频已经讲完了财政政策相关内容",
+        "提示3：本次视频将讲解货币政策及其效果、两种政策的混合使用，并在讲完后总结一个表"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：政策学习要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到上一个视频讲解完了宏观经济政策的部分内容，以下不属于上一个视频讲解内容的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "B",
+          "content": "经济政策的影响"
+        },
+        {
+          "label": "C",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "D",
+          "content": "财政政策"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于上一个视频讲解内容的描述",
+        "提示2：明确指出上一个视频讲完了宏观经济政策第一、二节内容",
+        "提示3：对比各选项与视频所讲的上一个视频内容是否相符，找出不属于的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：两类银行区别",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到上一个视频讲解了宏观经济政策的前两部分内容，以下不属于上一个视频讲解内容的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "B",
+          "content": "经济政策的影响"
+        },
+        {
+          "label": "C",
+          "content": "财政政策效果"
+        },
+        {
+          "label": "D",
+          "content": "货币政策及其效果"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到上一个视频讲解的内容范围",
+        "提示2：明确本视频要讲解的内容与上一个视频内容的区分",
+        "提示3：根据视频可知本视频开始讲解货币政策及其效果，所以这不属于上一个视频内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：货币概念讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到上一个视频讲解了宏观经济政策的前两节内容，不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "B",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "C",
+          "content": "经济政策的影响"
+        },
+        {
+          "label": "D",
+          "content": "财政政策"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于上一个视频讲解内容的描述",
+        "提示2：明确提到上一个视频讲完了宏观经济政策的第一节和第二节",
+        "提示3：判断每个选项是否属于上一个视频讲解的范围"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：基础货币概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济政策体系中，接下来要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "B",
+          "content": "两种政策的混合使用"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "D",
+          "content": "总结表格"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的上一个视频讲解内容和本次视频要讲解的内容",
+        "提示2：明确上一个视频讲完了哪些部分，本次视频要接着讲什么",
+        "提示3：注意区分已讲内容和未讲内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：基础货币构成分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "上一个视频讲解了宏观经济政策的前两小节内容，不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "B",
+          "content": "经济政策的影响"
+        },
+        {
+          "label": "C",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "D",
+          "content": "财政政策"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到上一个视频讲解的内容范围",
+        "提示2：明确各个选项所代表的政策内容与视频讲解的对应关系",
+        "提示3：注意题目问的是不包括的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：超额准备金讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到上一个视频讲完了宏观经济政策的第一、二节内容，以下不属于上一个视频讲解内容的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "B",
+          "content": "经济政策的影响"
+        },
+        {
+          "label": "C",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "D",
+          "content": "财政政策"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中提到上一个视频所讲的内容范围",
+        "提示2：明确区分上一个视频和本次视频要讲解的不同内容",
+        "提示3：视频中表明本次视频要讲货币政策及其效果，由此可判断答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：债券创造乘数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济政策体系中，关于债券政策及两种政策混合使用的说法，以下正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "债券政策只影响宏观经济政策目标，不影响政策效果"
+        },
+        {
+          "label": "B",
+          "content": "两种政策混合使用一定能达到最佳经济效果"
+        },
+        {
+          "label": "C",
+          "content": "债券政策的实施效果受多种因素影响，两种政策混合使用需综合考虑各方面情况"
+        },
+        {
+          "label": "D",
+          "content": "债券政策与财政政策没有关联，可独立发挥作用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：思考宏观经济政策的复杂性，一项政策的效果往往不是单一因素决定的",
+        "提示2：分析两种政策混合使用时是否存在绝对的最佳效果情况",
+        "提示3：考虑债券政策与其他政策之间的相互关系以及实施效果的影响因素"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：乘数前提条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到上一个视频讲解完了宏观经济政策的前两节后，接下来这个视频要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "B",
+          "content": "两种政策的混合使用"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济政策的目标"
+        },
+        {
+          "label": "D",
+          "content": "总结一个表"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：明确视频中提到上一个视频已经讲解完的内容和接下来要讲解的内容分别是什么",
+        "提示2：回顾视频可知上一个视频讲完了宏观经济政策目标等内容",
+        "提示3：接下来这个视频要讲货币政策及其效果、两种政策混合使用以及最后总结一个表"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：乘数推导示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到上一个视频讲完了宏观经济政策的部分内容，以下不属于上一个视频讲解内容的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "B",
+          "content": "经济政策的影响"
+        },
+        {
+          "label": "C",
+          "content": "财政政策"
+        },
+        {
+          "label": "D",
+          "content": "两种政策的混合使用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：仔细回顾视频中关于上一个视频讲解内容的描述",
+        "提示2：明确区分上一个视频和本次视频要讲解的内容",
+        "提示3：根据视频可知本次视频才会讲解两种政策的混合使用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：存款流动示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到上一个视频讲完了宏观经济政策的部分内容，以下不属于上一个视频所讲内容的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "B",
+          "content": "经济政策的影响"
+        },
+        {
+          "label": "C",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "D",
+          "content": "财政政策"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中提到上一个视频所涵盖的内容范围",
+        "提示2：明确视频中说当前视频要讲的内容和上一个视频讲完的内容有所区分",
+        "提示3：注意选项内容与视频中对应部分的匹配"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：货币创造乘数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济政策中，货币政策及其效果是重要的知识点。若法定准备金率为 $r_d = 0.2$，现金 - 存款比率为 $c = 0.3$，超额准备金率为 $r_e = 0.1$，那么货币创造乘数 $k$ 是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$2.5$"
+        },
+        {
+          "label": "C",
+          "content": "$3$"
+        },
+        {
+          "label": "D",
+          "content": "$3.5"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确货币创造乘数 $k$ 的计算公式 $k = \\frac{1 + c}{r_d + r_e + c}$",
+        "提示2：将题目中给定的法定准备金率 $r_d$、现金 - 存款比率 $c$ 和超额准备金率 $r_e$ 代入公式",
+        "提示3：按照公式进行计算得出结果"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：推导存款总额",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到讲解完宏观经济政策的第一、二节后，接下来要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "B",
+          "content": "两种政策的混合使用"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济政策目标的调整方式"
+        },
+        {
+          "label": "D",
+          "content": "总结相关内容表格"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到讲解完第一、二节后要进行的内容",
+        "提示2：明确视频中后续讲解内容的范围",
+        "提示3：逐一分析每个选项是否在后续讲解范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：存款总额计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "假设货币政策与财政政策配合使用来刺激经济，在某银行中，初始存款为 $1000$ 万元，法定准备金率为 $20\\%$，现金漏损率为 $10\\%$，则该银行最终能创造出的存款总额约为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3333.33$ 万元"
+        },
+        {
+          "label": "B",
+          "content": "$3000$ 万元"
+        },
+        {
+          "label": "C",
+          "content": "$4000$ 万元"
+        },
+        {
+          "label": "D",
+          "content": "$5000$ 万元"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确存款总额的计算公式 $D = \\frac{R}{r + c}$，其中 $D$ 是存款总额，$R$ 是初始存款，$r$ 是法定准备金率，$c$ 是现金漏损率",
+        "提示2：将题目中的初始存款、法定准备金率和现金漏损率的值代入公式",
+        "提示3：计算出结果并与选项进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：乘数推导条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到上一个视频讲解完宏观经济政策的前两节后，接下来这个视频要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "财政政策及其效果"
+        },
+        {
+          "label": "B",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "C",
+          "content": "两种政策的混合使用"
+        },
+        {
+          "label": "D",
+          "content": "对相关内容总结成一个表"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到上一个视频和这个视频分别要讲解的内容",
+        "提示2：明确上一个视频已经讲完了财政政策相关内容",
+        "提示3：根据视频可知这个视频要讲货币政策及其效果、两种政策的混合使用，最后总结成表"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：不同情形乘数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到上一个视频讲解了宏观经济政策的部分内容，以下不属于上一个视频讲解范围的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "B",
+          "content": "经济政策的影响"
+        },
+        {
+          "label": "C",
+          "content": "财政政策与货币政策的混合使用"
+        },
+        {
+          "label": "D",
+          "content": "财政政策"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细阅读视频内容，明确上一个视频和本次视频分别讲解的知识点范围",
+        "提示2：视频中提到上一个视频讲完了宏观经济政策的第一、二节内容",
+        "提示3：本次视频要讲解货币政策及其效果以及两种政策的混合使用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：广义乘数概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "上一个视频讲解了宏观经济政策的前两部分内容，下列不属于上一个视频讲解内容的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "B",
+          "content": "经济政策的影响"
+        },
+        {
+          "label": "C",
+          "content": "财政政策效果"
+        },
+        {
+          "label": "D",
+          "content": "两种政策的混合使用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到上一个视频讲解的内容范围",
+        "提示2：明确本次视频要讲解的内容与上一个视频内容的区别",
+        "提示3：逐一分析每个选项是否属于上一个视频讲解的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：基础货币构成",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到上一个视频讲完了宏观经济政策的前两小节，以下不属于上一个视频讲解内容的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "B",
+          "content": "经济政策的影响"
+        },
+        {
+          "label": "C",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "D",
+          "content": "财政政策"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到上一个视频讲解的具体内容",
+        "提示2：明确每个选项所代表的政策范畴",
+        "提示3：找出不属于上一个视频讲解内容的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：基础货币来源",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "上一个视频讲解了宏观经济政策的第一、二节内容，不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "B",
+          "content": "经济政策的影响"
+        },
+        {
+          "label": "C",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "D",
+          "content": "财政政策"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到上一个视频讲解的内容范围",
+        "提示2：明确货币政策及其效果是本次视频要讲解的内容",
+        "提示3：逐一分析选项，判断哪个不属于上一个视频的讲解内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：货币创造乘数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济政策中，货币政策是重要的组成部分。以下关于货币政策及其效果的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "货币政策只影响短期经济增长，对长期经济增长没有作用"
+        },
+        {
+          "label": "B",
+          "content": "货币政策和财政政策不能混合使用，否则会相互抵消效果"
+        },
+        {
+          "label": "C",
+          "content": "合理的货币政策可以通过调节货币供应量来影响经济活动和物价水平"
+        },
+        {
+          "label": "D",
+          "content": "货币政策的效果与货币创造乘数无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：思考货币政策在经济中的作用范围，它是否只影响短期经济",
+        "提示2：回忆视频中提到的两种政策混合使用的相关内容",
+        "提示3：理解货币政策的主要手段和目标，以及货币创造乘数在其中的影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：贴现价格与利率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频提到宏观经济政策包括财政政策和货币政策等，若政府采取扩张性财政政策（增加政府支出、减少税收）和紧缩性货币政策（提高利率、减少货币供应量）的组合，以下哪种情况最可能出现？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "经济增长加速，通货膨胀加剧"
+        },
+        {
+          "label": "B",
+          "content": "经济增长放缓，通货膨胀得到抑制"
+        },
+        {
+          "label": "C",
+          "content": "经济增长可能维持一定水平，但通货膨胀压力减轻"
+        },
+        {
+          "label": "D",
+          "content": "经济陷入衰退，通货紧缩加剧"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先分析扩张性财政政策的影响，它一般会刺激经济增长和增加总需求。",
+        "提示2：再考虑紧缩性货币政策的作用，它会抑制投资和消费，减少货币流通量。",
+        "提示3：综合两种政策的效果，判断对经济增长和通货膨胀的综合影响。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：货币政策工具",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济政策中，接下来要讲解的内容不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "B",
+          "content": "财政政策的目标"
+        },
+        {
+          "label": "C",
+          "content": "两种政策的混合使用"
+        },
+        {
+          "label": "D",
+          "content": "对前面内容总结成表格"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到之前讲过的内容和接下来要讲的内容",
+        "提示2：视频里表明财政政策的相关内容已经讲完",
+        "提示3：确定接下来要讲的内容范围，从而排除选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：货币政策效果ISLM分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到讲解完宏观经济政策效果后，接下来要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "B",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "C",
+          "content": "两种政策的混合使用"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是需要讲解的内容"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意要清楚视频中提到已经讲完的内容和接下来要讲的内容。",
+        "提示2：回顾视频可知宏观经济政策目标已经讲过。",
+        "提示3：明确接下来要讲货币政策及其效果和两种政策的混合使用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：两种政策配合使用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济政策包括财政政策和货币政策，以下关于两种政策配合使用的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "两种政策配合使用一定能达到最佳的经济调控效果"
+        },
+        {
+          "label": "B",
+          "content": "只使用财政政策或只使用货币政策就能有效调控宏观经济"
+        },
+        {
+          "label": "C",
+          "content": "合理搭配两种政策使用，能在一定程度上弥补单一政策的局限性，更好地实现宏观经济政策目标"
+        },
+        {
+          "label": "D",
+          "content": "两种政策配合使用对经济的影响是相互独立的，没有关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：思考单一政策在调控经济时是否存在不足",
+        "提示2：考虑两种政策配合使用的目的和效果",
+        "提示3：分析两种政策之间的关系以及对经济调控的综合作用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：ISLM图形分析总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到上一个视频讲完了宏观经济政策的部分内容，接下来这个视频要讲的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "货币政策及其效果"
+        },
+        {
+          "label": "B",
+          "content": "两种政策的混合使用"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济政策目标"
+        },
+        {
+          "label": "D",
+          "content": "对相关内容总结成表格"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：明确视频中提到上一个视频和这个视频分别要讲解的内容",
+        "提示2：回顾视频中关于上一个视频讲完的内容有宏观经济政策目标、经济政策的影响和财政政策",
+        "提示3：这个视频要讲货币政策及其效果、两种政策的混合使用以及最后总结表格"
+      ]
+    }
+  ],
+  "count": 25
+}

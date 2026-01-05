@@ -1,0 +1,709 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：成本函数定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数时，需要掌握几个重要概念，以下哪个概念不属于学习成本函数前需要掌握的概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "边际成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的学习成本函数前需要掌握的概念有哪些",
+        "提示2：视频里明确指出了机会成本、显性成本和隐性成本是需要掌握的概念",
+        "提示3：对比各选项，找出不属于视频所提概念的那一项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数对比区分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究成本函数时，以下几个概念是在讲解短期和长期成本函数之前必须掌握的，请问以下概念不属于此范畴的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "边际成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的在讲解短期和长期成本函数之前需要掌握的概念",
+        "提示2：明确每个选项概念的含义，与视频内容进行对比",
+        "提示3：视频中明确指出了机会成本、显性成本、隐性成本是需要掌握的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数图像绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在分析成本函数时，以下哪个概念不属于在讲解短期和长期成本函数之前需要掌握的概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "边际成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的在讲解短期和长期成本函数前需掌握的概念",
+        "提示2：明确每个选项所代表的成本概念",
+        "提示3：对比视频内容找出不属于的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：边际关系分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在分析成本函数相关问题时，要掌握几个要点和概念。以下不属于在讲解短期和长期成本函数之前需要掌握的概念是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "显性成本"
+        },
+        {
+          "label": "C",
+          "content": "可变成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到在讲解短期和长期成本函数之前需要掌握的概念有哪些",
+        "提示2：明确每个选项对应的成本概念的含义",
+        "提示3：将选项与视频中提到的概念进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平均产量与成本关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数相关知识时，包含短期成本函数和长期成本函数，在深入学习这两种成本函数之前，需要掌握几个重要概念。下列不属于在学习成本函数前需掌握概念的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "固定成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到了在学习短期和长期成本函数之前需要掌握的几个概念。",
+        "提示2：回顾视频中所列举的概念来进行判断。",
+        "提示3：逐一分析每个选项，看是否是视频中提到的需掌握概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：短期成本函数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数时，需要掌握几个概念，以下不属于学习短期和长期成本函数前需要掌握的概念是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "边际成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的在讲解短期和长期成本函数前需要掌握的概念",
+        "提示2：明确每个选项所代表的成本概念",
+        "提示3：对比选项与视频中提到的概念进行筛选"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：短期成本函数记忆法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数知识点时，以下哪个概念不是在讲解短期和长期成本函数之前需要掌握的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "固定成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到在讲解短期和长期成本函数之前需要掌握的概念",
+        "提示2：明确每个选项所代表的成本概念",
+        "提示3：对比视频内容，找出不符合要求的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：成本函数图像绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数知识点时，以下哪个概念不属于学习短期和长期成本函数之前需要掌握的概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "边际成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提及的在学习短期和长期成本函数前要掌握的概念",
+        "提示2：明确视频中列举了机会成本、显性成本、隐性成本等为需要掌握的概念",
+        "提示3：对比选项判断哪个不在列举范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：短期平均成本",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数时，以下哪个概念是在讲解短期和长期成本函数之前需要掌握的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "边际成本"
+        },
+        {
+          "label": "B",
+          "content": "机会成本"
+        },
+        {
+          "label": "C",
+          "content": "平均可变成本"
+        },
+        {
+          "label": "D",
+          "content": "总成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的在讲解短期和长期成本函数之前需要掌握的概念",
+        "提示2：视频中明确列举了一些相关概念，从中寻找答案",
+        "提示3：重点关注机会成本、显性成本、隐性成本等概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：短期边际成本",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数时，需要掌握多个概念。以下不属于学习短期和长期成本函数前需要掌握的概念是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "固定成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到学习短期和长期成本函数前需要掌握的概念",
+        "提示2：明确各个选项所代表的成本概念",
+        "提示3：将选项与视频中提到的概念进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：长期成本函数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数时，以下哪个概念不属于在讲解短期和长期成本函数之前需要掌握的概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "边际成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的在讲解短期和长期成本函数之前需要掌握的概念",
+        "提示2：明确每个选项所代表的成本概念",
+        "提示3：对比视频内容和选项，找出不属于的那一项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：长期成本曲线绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数时，必须掌握几个重要概念，以下不属于这些概念的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "显性成本"
+        },
+        {
+          "label": "C",
+          "content": "边际成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到在讲解短期和长期成本函数之前需要掌握的概念",
+        "提示2：明确这些概念包含机会成本、显性成本、隐性成本等",
+        "提示3：逐一分析选项，判断哪个不属于视频提及的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数曲线绘制原则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数时，以下哪个概念不属于在学习短期和长期成本函数前需要掌握的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "边际成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的在学习短期和长期成本函数前需要掌握的概念",
+        "提示2：找到视频中列举的相关概念并与选项进行对比",
+        "提示3：排除符合视频中提到的概念的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：长短总成本曲线关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数时，需要掌握几个概念，以下哪个不属于学习短期和长期成本函数前需要掌握的概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "边际成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的在讲解短期和长期成本函数前需要掌握的概念",
+        "提示2：视频中明确列举了一些概念，可以对照选项进行判断",
+        "提示3：确认每个选项是否在视频提及的概念范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：最优产量选择",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在分析成本函数以确定最优产量时，以下哪个概念不属于分析前需要掌握的基础概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "边际产量"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到在讲解短期和长期成本函数前需要掌握的概念",
+        "提示2：明确视频里具体列举的几个基础概念",
+        "提示3：对比各选项，判断哪个概念不在视频所提及的基础概念范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：规模成本分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究成本函数时，以下哪个概念不属于在讲解短期和长期成本函数之前需要掌握的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "边际成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的在讲解短期和长期成本函数之前需要掌握的概念",
+        "提示2：明确每个选项对应的成本概念的含义",
+        "提示3：根据视频内容判断哪个选项不属于该范围"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无限细分原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数时，以下哪个不是在讲解短期和长期成本函数之前需要掌握的概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "显性成本"
+        },
+        {
+          "label": "C",
+          "content": "边际成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中讲解的在学习短期和长期成本函数前需要掌握的概念",
+        "提示2：明确每个选项对应的概念定义，与视频内容进行对比",
+        "提示3：找出不在视频提及的概念列表中的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：长期总成本曲线推导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在掌握成本函数这个知识点前，需要理解的概念不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "固定成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的在讲解短期和长期成本函数之前需要掌握的概念",
+        "提示2：明确视频中列举的概念名称",
+        "提示3：对比选项逐一分析，找出不在列举范围内的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：长短期平均成本曲线关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数时，需要掌握几个概念，以下不属于视频中提到的概念的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "固定成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中在讲解长短期成本函数前提到的概念",
+        "提示2：视频中明确列举了几个需要掌握的概念",
+        "提示3：对比选项与视频中提到的概念进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：长短期边际成本曲线绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数相关知识时，以下哪个概念不属于学习长短期成本函数之前需要掌握的概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "固定成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的在讲解长短期成本函数之前需要掌握的概念",
+        "提示2：明确视频中列举的相关概念有哪些",
+        "提示3：将选项与视频中提到的概念进行逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：长短成本曲线关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习成本函数相关知识时，以下哪个概念不属于学习短期和长期成本函数前需要掌握的概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "显性成本"
+        },
+        {
+          "label": "C",
+          "content": "边际成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的在讲解短期和长期成本函数前需要掌握的概念",
+        "提示2：明确视频中列举的具体概念有哪些",
+        "提示3：逐一对比选项与视频中所讲概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：成本最小化问题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在考虑成本函数相关问题时，以下哪种成本不属于视频中提到的在讲解短期和长期成本函数前需要掌握的概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机会成本"
+        },
+        {
+          "label": "B",
+          "content": "沉没成本"
+        },
+        {
+          "label": "C",
+          "content": "显性成本"
+        },
+        {
+          "label": "D",
+          "content": "隐性成本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频内容中在讲解短期和长期成本函数前需要掌握的概念有哪些",
+        "提示2：明确每个选项所代表的成本概念",
+        "提示3：对比分析视频中提及的概念和各选项内容"
+      ]
+    }
+  ],
+  "count": 22
+}

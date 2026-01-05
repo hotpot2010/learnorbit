@@ -1,0 +1,197 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Python 数据类型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在计算复杂算式 $\\frac{3 + 5 \\times (2 - 1)}{4 - 1}$ 时，使用计算器可能会遇到各种问题，而使用 Python 编写数学运算可以避免这些问题。以下哪种情况是使用计算器可能出现，而 Python 能避免的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "计算结果错误，因为计算器本身的算法有问题"
+        },
+        {
+          "label": "B",
+          "content": "输入到中途，感觉自己可能手滑按错了一个键，进退两难"
+        },
+        {
+          "label": "C",
+          "content": "计算器没电了，无法完成计算"
+        },
+        {
+          "label": "D",
+          "content": "算式过于复杂，计算器无法显示完整的算式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的使用计算器可能遇到的问题",
+        "提示2：视频中强调了输入中途可能出现的困扰",
+        "提示3：对比各个选项，看哪个与视频中描述的情况相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Python 运算符号",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在计算复杂算式 $\\frac{3\\times(4 + 5) - 2^3}{\\sqrt{16}}$ 时，若使用计算器可能会出现按错键或者忘记算到哪里的情况，而使用 Python 编写代码可以避免这些问题。以下哪个 Python 代码能正确计算该算式的结果？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "print((3 * (4 + 5) - 2 ** 3) / math.sqrt(16))  # 需导入 math 模块"
+        },
+        {
+          "label": "B",
+          "content": "print((3 * (4 + 5) - 2 ^ 3) / sqrt(16))"
+        },
+        {
+          "label": "C",
+          "content": "print(3 * 4 + 5 - 2 ** 3 / sqrt(16))"
+        },
+        {
+          "label": "D",
+          "content": "print((3 * 4 + 5 - 2 ^ 3) / math.sqrt(16))  # 需导入 math 模块"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：在 Python 中，乘方运算使用 ** 符号，而不是 ^ 符号",
+        "提示2：计算平方根需要使用 math 模块中的 sqrt 函数，或者使用 ** 0.5 的方式",
+        "提示3：要保证代码中的算式与题目中的算式 $\\frac{3\\times(4 + 5) - 2^3}{\\sqrt{16}}$ 一致"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：导入 math 库",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在计算复杂算式 $\\frac{\\sqrt{2^3 + 5^2} \\times \\pi}{\\log_{10}(100)}$ 时，使用计算器可能会遇到输入错误或忘记计算进度的问题，若使用 Python 编写代码来计算该算式，以下哪种方式是正确导入相关库以完成计算的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "无需导入库，直接编写代码计算"
+        },
+        {
+          "label": "B",
+          "content": "仅导入 `math` 库，`import math` 后使用库中的函数计算"
+        },
+        {
+          "label": "C",
+          "content": "仅导入 `numpy` 库，`import numpy` 后使用库中的函数计算"
+        },
+        {
+          "label": "D",
+          "content": "同时导入 `math` 和 `numpy` 库，`import math` 和 `import numpy` 后使用库中的函数计算"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：分析算式中用到的函数，判断需要使用哪个库",
+        "提示2：$\\sqrt{x}$、$\\pi$ 和 $\\log_{10}(x)$ 这些函数在 `math` 库中都有对应的实现",
+        "提示3：`numpy` 库主要用于科学计算和数组操作，对于这个简单算式不是必需的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：查看计算结果",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在计算复杂算式 $\\frac{3 + 5 \\times 7 - \\sqrt{16}}{2}$ 时，若使用计算器输入到中途感觉可能按错了一个键，此时最好的解决办法是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "继续使用计算器完成计算，碰碰运气看结果是否正确"
+        },
+        {
+          "label": "B",
+          "content": "全部清空重新用计算器输入计算"
+        },
+        {
+          "label": "C",
+          "content": "使用 Python 编写代码进行计算"
+        },
+        {
+          "label": "D",
+          "content": "放弃计算，不做这道题了"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到使用计算器计算复杂算式时遇到的问题及解决办法",
+        "提示2：思考每个选项是否能有效避免按错键带来的问题",
+        "提示3：视频中明确指出使用 Python 编写代码可以避免使用计算器时遇到的问题"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：一元二次方程求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在求解一元二次方程 $2x^2 - 5x + 3 = 0$ 时，若使用计算器计算可能会出现输入错误或忘记计算进度的情况，而使用 Python 编程可以避免这些问题。已知一元二次方程 $ax^2 + bx + c = 0$ 的求根公式为 $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$，那么该方程的根是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$x_1 = 1, x_2 = \\frac{3}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$x_1 = -1, x_2 = -\\frac{3}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$x_1 = 1, x_2 = -\\frac{3}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$x_1 = -1, x_2 = \\frac{3}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先确定方程 $2x^2 - 5x + 3 = 0$ 中 $a$、$b$、$c$ 的值，分别为 $a = 2$，$b = -5$，$c = 3$",
+        "提示2：将 $a$、$b$、$c$ 的值代入求根公式 $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$ 计算",
+        "提示3：先计算判别式 $\\Delta = b^2 - 4ac$ 的值，再分别计算 $x_1 = \\frac{-b + \\sqrt{\\Delta}}{2a}$ 和 $x_2 = \\frac{-b - \\sqrt{\\Delta}}{2a}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：代码计算优势",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在进行复杂的数学计算，如 $\\frac{3 + 5 \\times (2^3 - 4)}{2 - \\sqrt{9}}$ 时，使用计算器可能会遇到一些问题，而使用 Python 代码编写数学运算则可以避免这些问题。以下哪种情况是使用计算器可能遇到，而使用 Python 代码可以避免的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "计算结果不准确"
+        },
+        {
+          "label": "B",
+          "content": "输入到中途感觉可能按错了一个键，进退两难"
+        },
+        {
+          "label": "C",
+          "content": "计算器电量不足无法完成计算"
+        },
+        {
+          "label": "D",
+          "content": "计算器屏幕太小显示不全算式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的使用计算器进行复杂计算时遇到的问题",
+        "提示2：分析每个选项是否与视频中描述的情况相符",
+        "提示3：视频中明确指出使用计算器输入复杂算式中途可能按错键，而 Python 代码可避免这种情况"
+      ]
+    }
+  ],
+  "count": 6
+}

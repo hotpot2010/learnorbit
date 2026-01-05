@@ -1,0 +1,67 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三段式计算例题1",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个 $10\\text{ L}$ 的密闭容器中加入某些反应物，经过 $10\\text{ min}$ 达到平衡状态，已知此时混合气体的平均相对分子质量为 $58$。若起始加入的是 $\\text{A}$ 和 $\\text{B}$ 两种气体发生反应 $2\\text{A}(g) + \\text{B}(g) \\rightleftharpoons 3\\text{C}(g)$，且起始时 $\\text{A}$ 为 $2\\text{ mol}$，$\\text{B}$ 为 $1\\text{ mol}$，达到平衡时 $\\text{C}$ 的物质的量可能为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.5\\text{ mol}$"
+        },
+        {
+          "label": "B",
+          "content": "$1\\text{ mol}$"
+        },
+        {
+          "label": "C",
+          "content": "$1.5\\text{ mol}$"
+        },
+        {
+          "label": "D",
+          "content": "$2\\text{ mol}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先假设反应完全进行，求出 $\\text{C}$ 的最大物质的量",
+        "提示2：根据平均相对分子质量的公式 $\\overline{M} = \\frac{m_{总}}{n_{总}}$，结合反应前后气体的物质的量变化，分析 $\\text{C}$ 的物质的量的取值范围",
+        "提示3：通过计算判断各个选项是否符合取值范围"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：三段式计算例题2",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个 $10L$ 的密闭容器中装入一定反应物，经过 $10$ 分钟达到平衡，已知平衡时混合气体的平均相对分子质量为 $58$。若起始时放入的是 $A$ 和 $B$ 两种气体，发生反应 $2A(g) + B(g) \\rightleftharpoons 3C(g)$，且起始时 $A$ 的物质的量为 $2mol$，$B$ 的物质的量为 $1mol$，求平衡时 $C$ 的物质的量浓度为 ___ $mol/L$。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "0.1",
+      "hints": [
+        "提示1：设平衡时 $B$ 转化的物质的量为 $x mol$，根据化学计量数关系表示出平衡时各物质的物质的量",
+        "提示2：根据平均相对分子质量的计算公式 $\\overline{M} = \\frac{m_{总}}{n_{总}}$ 列出方程",
+        "提示3：结合起始物质的量和反应的化学计量数求出平衡时 $C$ 的物质的量，进而求出其物质的量浓度"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：平衡常数计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个 $10L$ 的密闭容器中加入一定量的反应物，反应一段时间后达到平衡。已知平衡时混合气体的平均相对分子质量为 $58$，若反应为 $2A(g) \\rightleftharpoons B(g) + C(g)$，起始时仅加入 $A$ 气体，求平衡时 $A$ 的转化率（保留一位小数） ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "66.7%",
+      "hints": [
+        "提示1：设起始时 $A$ 的物质的量为 $n_0$，转化的 $A$ 的物质的量为 $x$，根据三段式列出平衡时各物质的物质的量",
+        "提示2：根据平均相对分子质量的计算公式 $\\overline{M}=\\frac{m_{总}}{n_{总}}$，结合质量守恒定律得出等式",
+        "提示3：通过计算求出 $x$ 与 $n_0$ 的关系，进而计算出 $A$ 的转化率"
+      ]
+    }
+  ],
+  "count": 3
+}

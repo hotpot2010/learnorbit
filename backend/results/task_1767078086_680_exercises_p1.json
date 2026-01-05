@@ -1,0 +1,453 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：力学基础概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在静力学中，一个物体处于平衡状态，以下关于约束和约束力的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "约束是指对物体的运动起限制作用的周围物体，约束力的方向总是与约束所能阻止的物体的运动方向相反"
+        },
+        {
+          "label": "B",
+          "content": "约束是指物体受到的力，约束力的方向总是与物体的运动方向相同"
+        },
+        {
+          "label": "C",
+          "content": "约束和约束力是同一个概念，它们的方向没有特定规律"
+        },
+        {
+          "label": "D",
+          "content": "约束对物体的运动没有影响，约束力可以随意改变方向"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先明确约束和约束力的定义，根据视频可知这是重要考点",
+        "提示2：思考约束的作用是什么，它与物体运动的关系",
+        "提示3：分析约束力的方向特点，结合静力学平衡的知识"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：力学五大公理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程时一的4个考点中，以下哪个考点与力学五大公理同属必须掌握的考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "能量力学基础"
+        },
+        {
+          "label": "B",
+          "content": "约束和约束力"
+        },
+        {
+          "label": "C",
+          "content": "受力分析"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的4个考点分别是什么",
+        "提示2：明确指出的必须掌握的考点有哪些",
+        "提示3：将选项与必须掌握的考点进行对应匹配"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三力汇交原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在静力学中，下列哪个知识点属于本节课必须掌握的考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "能量力学基础"
+        },
+        {
+          "label": "B",
+          "content": "经济学5大公理"
+        },
+        {
+          "label": "C",
+          "content": "约束和约束力"
+        },
+        {
+          "label": "D",
+          "content": "受力分析"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课的4个考点分别是什么",
+        "提示2：明确哪些考点是必须掌握的",
+        "提示3：对每个选项进行分析，判断是否为必须掌握的考点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：作用与反作用力",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在静力学中，以下哪个考点是必须掌握的？ ",
+      "choices": [
+        {
+          "label": "A",
+          "content": "能量力学基础"
+        },
+        {
+          "label": "B",
+          "content": "经济学5大公理"
+        },
+        {
+          "label": "C",
+          "content": "约束和约束力"
+        },
+        {
+          "label": "D",
+          "content": "受力分析"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的必须掌握的考点",
+        "提示2：视频明确指出了其中两个考点是必须掌握的",
+        "提示3：对比选项和视频中必须掌握考点的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：简化原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在静力学原理及物体的受力分析这一课时中，有四个考点，其中必须掌握的考点是以下哪两个组合？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "能量学基础和经济学5大公理"
+        },
+        {
+          "label": "B",
+          "content": "经济学5大公理和约束与约束力"
+        },
+        {
+          "label": "C",
+          "content": "约束与约束力和受力分析"
+        },
+        {
+          "label": "D",
+          "content": "能量学基础和受力分析"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确视频中提到的四个考点分别是什么",
+        "提示2：注意视频中强调的必须掌握的考点的相关表述",
+        "提示3：从四个考点中找出必须掌握的两个考点的组合"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：练习题讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在静力学中，对于一个处于平衡状态的物体进行受力分析时，以下哪个知识点是必须掌握的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "能量学基础"
+        },
+        {
+          "label": "B",
+          "content": "经济学5大公理"
+        },
+        {
+          "label": "C",
+          "content": "约束和约束力"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的必须掌握的知识点",
+        "提示2：视频中明确指出了部分知识点是必须掌握的",
+        "提示3：逐一对比选项与视频中必须掌握的知识点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：常见约束及力",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在静力学公理及物体的受力分析这一课时中，有4个考点，其中必须掌握的两个考点不包括以下哪个？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "经济学5大公理"
+        },
+        {
+          "label": "B",
+          "content": "约束和约束力"
+        },
+        {
+          "label": "C",
+          "content": "能力学基础"
+        },
+        {
+          "label": "D",
+          "content": "以上选项都不符合题意"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到本课时有哪4个考点",
+        "提示2：明确视频里指出必须掌握的是哪两个考点",
+        "提示3：根据掌握的关键信息来逐一分析选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：约束类型介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课时一一共有 4 个考点，其中必须掌握的考点不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "经济学 5 大公理"
+        },
+        {
+          "label": "B",
+          "content": "约束和约束力"
+        },
+        {
+          "label": "C",
+          "content": "能量学基础"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是必须掌握的考点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先明确视频中提到必须掌握的考点有哪些",
+        "提示2：根据视频内容，找出明确指出必须掌握的考点进行对比",
+        "提示3：注意题干问的是不包含的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二力构件讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在静力学原理及物体的受力分析这一课时中，有4个考点，其中必须掌握的考点是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "能力学基础和经济学5大公理"
+        },
+        {
+          "label": "B",
+          "content": "经济学5大公理和约束与约束力"
+        },
+        {
+          "label": "C",
+          "content": "约束与约束力和受力分析"
+        },
+        {
+          "label": "D",
+          "content": "能力学基础和受力分析"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到必须掌握的是哪几个考点",
+        "提示2：明确4个考点分别是什么",
+        "提示3：找到视频中提到必须掌握的考点组合"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：约束方向判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在静力学公理及物体的受力分析这一课时中，有四个考点，其中必须掌握的考点是以下哪一组？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "能量学基础和经济学5大公理"
+        },
+        {
+          "label": "B",
+          "content": "经济学5大公理和约束与约束力"
+        },
+        {
+          "label": "C",
+          "content": "约束与约束力和受力分析"
+        },
+        {
+          "label": "D",
+          "content": "能量学基础和受力分析"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的四个考点分别是什么",
+        "提示2：明确视频中指出必须掌握的是哪两个考点",
+        "提示3：根据考点内容对选项进行逐一分析"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：受力分析方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在静力学中，对一个物体进行受力分析时，以下哪个概念不属于本次课程必须掌握的考点相关概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "经济力学 5 大公理"
+        },
+        {
+          "label": "B",
+          "content": "约束和约束力"
+        },
+        {
+          "label": "C",
+          "content": "能量力学基础"
+        },
+        {
+          "label": "D",
+          "content": "以上都属于必须掌握的考点相关概念"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的必须掌握的考点",
+        "提示2：明确哪些考点是必须掌握的，哪些不是",
+        "提示3：对比选项和必须掌握的考点进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：杆件受力分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在静力学中，以下哪个知识点不是本节课时一的考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "能量力学基础"
+        },
+        {
+          "label": "B",
+          "content": "经济学5大原理"
+        },
+        {
+          "label": "C",
+          "content": "牛顿三大定律"
+        },
+        {
+          "label": "D",
+          "content": "约束和约束力"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课时一的4个考点内容",
+        "提示2：逐一对比选项与考点，判断哪个选项不属于考点",
+        "提示3：注意视频中明确指出的考点信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三角架受力分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个三脚架支撑重物的情境中，已知重物重力为 $G$，三脚架三条腿与竖直方向夹角均为 $\\theta$，且三条腿受力相同。根据静力学原理和物体的受力分析，每条腿受到的力大小为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{G}{3\\cos\\theta}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{G}{3\\sin\\theta}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{G}{\\cos\\theta}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{G}{\\sin\\theta}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：对三脚架整体进行受力分析，重物重力与三条腿的支持力平衡",
+        "提示2：将每条腿的支持力分解为竖直方向和水平方向的分力",
+        "提示3：根据竖直方向上力的平衡关系列出方程求解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：复杂构架受力分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在静力学中，以下哪个知识点不是本节课时的考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "能量力学基础"
+        },
+        {
+          "label": "B",
+          "content": "经济学5大原理"
+        },
+        {
+          "label": "C",
+          "content": "牛顿三大定律"
+        },
+        {
+          "label": "D",
+          "content": "受力分析"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课时的4个考点",
+        "提示2：明确每个选项所涉及的知识点是否在考点范围内",
+        "提示3：排除属于考点的选项，选择不属于考点的选项"
+      ]
+    }
+  ],
+  "count": 14
+}

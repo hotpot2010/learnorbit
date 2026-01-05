@@ -1,0 +1,820 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电工学课程介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "电工学这门课程主要面向以下哪种专业的学生？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "所有理工科专业"
+        },
+        {
+          "label": "B",
+          "content": "理工科类的非电专业"
+        },
+        {
+          "label": "C",
+          "content": "所有电气专业"
+        },
+        {
+          "label": "D",
+          "content": "文科专业"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到了电工学课程的适用专业范围",
+        "提示2：重点关注与理工科和非电专业相关的描述",
+        "提示3：排除明显不符合视频内容的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：课程难度说明",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "电气学这门课程通常是哪些专业需要学习的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "所有理工科专业"
+        },
+        {
+          "label": "B",
+          "content": "理工科类的非电专业"
+        },
+        {
+          "label": "C",
+          "content": "仅电专业"
+        },
+        {
+          "label": "D",
+          "content": "文科专业"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于课程适用专业的描述",
+        "提示2：注意区分电专业和非电专业",
+        "提示3：明确提到是理工科类的部分专业"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：高效冲刺方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于视频中提到的《电工学》课程的描述，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有电学专业的学生需要学习这门课程"
+        },
+        {
+          "label": "B",
+          "content": "这门课程是所有理工科专业都必须学习的"
+        },
+        {
+          "label": "C",
+          "content": "理工科类的非电专业大多需要学习这门课程"
+        },
+        {
+          "label": "D",
+          "content": "这门课程内容较少，覆盖的知识面窄"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于《电工学》课程适用专业的描述",
+        "提示2：关注‘理工科类’‘非电专业’‘大多’等关键词",
+        "提示3：同时注意课程内容多少及覆盖范围相关信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：第一章学习要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列关于电工学这门课程的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有电学专业需要学习这门课程"
+        },
+        {
+          "label": "B",
+          "content": "所有理工科专业都需要学习这门课程"
+        },
+        {
+          "label": "C",
+          "content": "理工科类的非电专业大多需要学习这门课程"
+        },
+        {
+          "label": "D",
+          "content": "这门课程内容较少，涵盖的知识范围窄"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于电工学课程学习对象的描述",
+        "提示2：明确提到了理工科类的非电专业与这门课程的关系",
+        "提示3：注意对课程内容多少和涵盖范围的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路基本认识",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于电工学这门课程的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有电学专业的学生需要学习这门课程"
+        },
+        {
+          "label": "B",
+          "content": "电工学课程内容较少，覆盖范围小"
+        },
+        {
+          "label": "C",
+          "content": "作为理工科类的非电专业大多需要学习这门课程"
+        },
+        {
+          "label": "D",
+          "content": "非电专业不需要学习这门课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于电工学课程学习对象的描述",
+        "提示2：明确提到了理工科类非电专业的学习情况",
+        "提示3：结合视频中对课程内容多少和覆盖范围的表述来判断选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路元件介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "电工学这门课程主要针对哪些专业的学生开设？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "所有理工科专业"
+        },
+        {
+          "label": "B",
+          "content": "理工科类的非电专业"
+        },
+        {
+          "label": "C",
+          "content": "所有电气专业"
+        },
+        {
+          "label": "D",
+          "content": "文科专业"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的专业类别限制",
+        "提示2：明确是理工科类，且有非电专业的限定",
+        "提示3：结合视频内容排除不符合的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路方向表示",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电工学中，对于非电专业的理工科学生来说，以下关于电工学课程的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有部分非电专业需要学习这门课程"
+        },
+        {
+          "label": "B",
+          "content": "所有理工科专业都需要学习这门课程"
+        },
+        {
+          "label": "C",
+          "content": "大多数理工科类的非电专业都需要学习这门课程"
+        },
+        {
+          "label": "D",
+          "content": "非电专业不需要学习这门课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：注意视频中提到的是理工科类的非电专业的学习情况",
+        "提示2：明确是大多数非电专业，而不是全部理工科专业或部分非电专业",
+        "提示3：根据视频内容判断每个选项的正确性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路方程求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个简单的串联电路中，已知电阻 $R_1 = 5\\Omega$，$R_2 = 10\\Omega$，电源电压 $U = 15V$，则通过电阻 $R_1$ 的电流 $I$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.5A$"
+        },
+        {
+          "label": "B",
+          "content": "$1A$"
+        },
+        {
+          "label": "C",
+          "content": "$1.5A$"
+        },
+        {
+          "label": "D",
+          "content": "$2A$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确串联电路的特点，串联电路中电流处处相等，总电阻等于各分电阻之和",
+        "提示2：根据欧姆定律 $I = \\frac{U}{R}$ 来计算电流，这里的 $R$ 是总电阻",
+        "提示3：先计算出总电阻 $R = R_1 + R_2$，再代入欧姆定律计算电流"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路负载功率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知某电路中，负载两端的电压为 $U = 220V$，通过负载的电流为 $I = 5A$，则该负载的功率 $P$ 为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1100W$"
+        },
+        {
+          "label": "B",
+          "content": "$225W$"
+        },
+        {
+          "label": "C",
+          "content": "$44W$"
+        },
+        {
+          "label": "D",
+          "content": "$110W$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆电路负载功率的计算公式 $P = UI$",
+        "提示2：明确公式中各物理量的含义，$U$ 是电压，$I$ 是电流",
+        "提示3：将题目中给出的电压和电流值代入公式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路状态分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电气工程学习中，对于工科类的非电专业而言，电路状态分析是重要的一部分。现有一个简单的串联电路，电源电压为 $U = 12V$，电阻 $R_1 = 2\\Omega$，$R_2 = 4\\Omega$，当开关闭合后，请问通过 $R_1$ 的电流 $I_1$ 为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2A$"
+        },
+        {
+          "label": "B",
+          "content": "$3A$"
+        },
+        {
+          "label": "C",
+          "content": "$4A$"
+        },
+        {
+          "label": "D",
+          "content": "$6A$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确串联电路的特点，串联电路中电流处处相等，即 $I_1 = I_2 = I$",
+        "提示2：根据欧姆定律 $I = \\frac{U}{R}$，需要先求出串联电路的总电阻 $R_{总}$",
+        "提示3：串联电路总电阻 $R_{总}=R_1 + R_2$，再代入欧姆定律计算电流"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：负载电源判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于理工科类的非电专业，以下关于电气工程学这门课程的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有部分专业需要学习这门课程"
+        },
+        {
+          "label": "B",
+          "content": "每个专业都不需要学习这门课程"
+        },
+        {
+          "label": "C",
+          "content": "大多数专业都需要学习这门课程"
+        },
+        {
+          "label": "D",
+          "content": "这门课程内容很少，覆盖范围窄"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于理工科类非电专业与电气工程学课程关系的描述",
+        "提示2：关注提到的专业学习情况和课程覆盖内容相关信息",
+        "提示3：对每个选项进行分析，与视频内容进行比对"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：功率判断元件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工科类专业中，以下哪种情况符合视频中对于电工学课程学习的描述？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "所有工科类专业都不需要学习电工学课程"
+        },
+        {
+          "label": "B",
+          "content": "只有电工类专业需要学习电工学课程"
+        },
+        {
+          "label": "C",
+          "content": "工科类的非电专业大多需要学习电工学课程"
+        },
+        {
+          "label": "D",
+          "content": "电工学课程内容很少，覆盖范围窄"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于哪些专业需要学习电工学课程的描述",
+        "提示2：关注视频中提到的电工学课程覆盖内容的情况",
+        "提示3：对比每个选项与视频内容是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：关联参考方向",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于电工学这门课程的描述，正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有电气类专业需要学习电工学这门课程"
+        },
+        {
+          "label": "B",
+          "content": "电工学这门课程是所有工科类专业都必须学习的"
+        },
+        {
+          "label": "C",
+          "content": "电工学这门课程是理工科类的非电专业大多需要学习的"
+        },
+        {
+          "label": "D",
+          "content": "电工学这门课程包含的内容很少，覆盖范围小"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：注意关注视频中对电工学课程适用专业的描述",
+        "提示2：根据视频内容判断各选项中专业范围的准确性",
+        "提示3：结合视频提到的课程知识覆盖情况分析选项D"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：非法关系法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列关于电工学这门课程的说法，正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有电气类专业需要学习电工学这门课程"
+        },
+        {
+          "label": "B",
+          "content": "作为理工科类的非电专业，大多数专业都需要学习电工学这门课程"
+        },
+        {
+          "label": "C",
+          "content": "电工学这门课程涵盖的内容很少"
+        },
+        {
+          "label": "D",
+          "content": "非电专业不需要学习电工学这门课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于哪些专业需要学习电工学课程的描述",
+        "提示2：关注视频里对电工学课程涵盖内容的表述",
+        "提示3：对比各个选项与视频知识点是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路元件特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于理工科类的非电专业学生来说，以下关于《电工学》这门课程的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有少数非电专业需要学习这门课程"
+        },
+        {
+          "label": "B",
+          "content": "大部分非电专业都需要学习这门课程"
+        },
+        {
+          "label": "C",
+          "content": "非电专业都不需要学习这门课程"
+        },
+        {
+          "label": "D",
+          "content": "这门课程只对电专业有意义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于哪些专业需要学习《电工学》这门课程的描述",
+        "提示2：明确提到是理工科类的非电专业大部分都需要学习",
+        "提示3：对每个选项进行分析，判断其是否符合视频内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：基尔霍夫定律",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于电工学这门课程的说法，正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有电气专业需要学习这门课程"
+        },
+        {
+          "label": "B",
+          "content": "作为一些理工科类的非电专业，大部分专业都不需要学习这门课程"
+        },
+        {
+          "label": "C",
+          "content": "理工科类的非电专业都需要学习这门课程"
+        },
+        {
+          "label": "D",
+          "content": "这门课程涵盖内容很少"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于电工学课程学习对象的描述",
+        "提示2：注意提到的是理工科类非电专业的情况",
+        "提示3：视频中还提及了课程涵盖内容的多少"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：复杂电路概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于理工科类的非电专业学生而言，以下关于电工学这门课程的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有部分非电专业需要学习这门课程"
+        },
+        {
+          "label": "B",
+          "content": "所有理工科专业都必须学习这门课程"
+        },
+        {
+          "label": "C",
+          "content": "理工科类的非电专业大多需要学习这门课程"
+        },
+        {
+          "label": "D",
+          "content": "非理工科类的专业也都要学习这门课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于哪些专业需要学习电工学课程的描述",
+        "提示2：明确是理工科类的非电专业的情况",
+        "提示3：注意关键词“大多”等限定词"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：基尔霍夫电流定律",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于电工学课程的描述，正确的是？（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有电气类专业需要学习这门课程"
+        },
+        {
+          "label": "B",
+          "content": "这门课程涉及的内容比较少"
+        },
+        {
+          "label": "C",
+          "content": "它是理工科类的非电专业大多需要学习的课程"
+        },
+        {
+          "label": "D",
+          "content": "这门课程不涉及电学相关知识"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于电工学课程适用专业的描述",
+        "提示2：关注视频里提到的课程内容多少和涉及范围",
+        "提示3：结合视频信息对每个选项进行分析判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定律例题求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于电工学这门课程的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有电气类专业需要学习电工学这门课程"
+        },
+        {
+          "label": "B",
+          "content": "电工学课程涵盖内容较少，只涉及简单的电气知识"
+        },
+        {
+          "label": "C",
+          "content": "作为理工科类的非电专业，大多专业都需要学习电工学这门课程"
+        },
+        {
+          "label": "D",
+          "content": "电工学课程对于理工科类的非电专业没有实际应用价值"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于电工学课程学习对象的描述",
+        "提示2：思考视频中提到的电工学课程涵盖内容的特点",
+        "提示3：结合理工科类非电专业的实际需求来判断各选项的正确性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电流电压计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个简单的串联电路中，已知电阻 $R = 10\\Omega$，电源电压 $U = 20V$，则通过电阻的电流 $I$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1A$"
+        },
+        {
+          "label": "B",
+          "content": "$2A$"
+        },
+        {
+          "label": "C",
+          "content": "$3A$"
+        },
+        {
+          "label": "D",
+          "content": "$4A$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据欧姆定律 $I = \\frac{U}{R}$ 来计算电流",
+        "提示2：明确题目中给出的电压 $U$ 和电阻 $R$ 的值",
+        "提示3：将数值代入公式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路求解示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于电工学这门课程的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只有电气类专业需要学习电工学课程"
+        },
+        {
+          "label": "B",
+          "content": "电工学课程只涉及少量的电路知识"
+        },
+        {
+          "label": "C",
+          "content": "作为理工科类的非电专业，大多专业都需要学习电工学课程"
+        },
+        {
+          "label": "D",
+          "content": "电工学课程内容很少，覆盖的知识范围小"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于电工学课程学习专业的描述",
+        "提示2：注意视频中提到的课程内容多少和覆盖范围的信息",
+        "提示3：对每个选项进行逐一分析，与视频内容进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路参数求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于某电路，已知电阻 $R = 10\\Omega$，电压 $U = 20V$，根据所学电工学知识，该电路中的电流 $I$ 为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1A$"
+        },
+        {
+          "label": "B",
+          "content": "$2A$"
+        },
+        {
+          "label": "C",
+          "content": "$3A$"
+        },
+        {
+          "label": "D",
+          "content": "$4A"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾欧姆定律，其公式为 $I = \\frac{U}{R}$",
+        "提示2：明确公式中各物理量的含义，$I$ 表示电流，$U$ 表示电压，$R$ 表示电阻",
+        "提示3：将已知的电压和电阻值代入欧姆定律公式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电位概念讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "电气专业课程通常是哪类专业学生需要学习的课程？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "所有文科专业"
+        },
+        {
+          "label": "B",
+          "content": "所有理科专业"
+        },
+        {
+          "label": "C",
+          "content": "工科类的非电专业"
+        },
+        {
+          "label": "D",
+          "content": "所有工科专业"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的需要学习该课程的专业范围",
+        "提示2：明确指出是工科类中的特定专业",
+        "提示3：不是所有工科专业和文科、理科专业都需要学习"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路计算步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电工学的电路计算中，已知一个简单串联电路，电源电压为 $U = 12V$，两个电阻分别为 $R_1 = 3\\Omega$ 和 $R_2 = 5\\Omega$，则通过电路的电流 $I$ 为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.5A$"
+        },
+        {
+          "label": "B",
+          "content": "$2A$"
+        },
+        {
+          "label": "C",
+          "content": "$1A$"
+        },
+        {
+          "label": "D",
+          "content": "$1.8A"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确在串联电路中，总电阻 $R_{总}=R_1 + R_2$",
+        "提示2：然后根据欧姆定律 $I = \\frac{U}{R}$ 进行计算",
+        "提示3：先计算出总电阻，再用电源电压除以总电阻得到电流"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：电位与电位差",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电工学中，电位差也被叫做电压，现有一个电路，已知 A 点电位为 $V_A = 12V$，B 点电位为 $V_B = 5V$，则 A、B 两点间的电位差 $U_{AB}$ 为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$7V$",
+      "hints": [
+        "提示1：明确电位差的计算公式，$U_{AB}=V_A - V_B$",
+        "提示2：将题目中给出的 $V_A$ 和 $V_B$ 的值代入公式进行计算",
+        "提示3：注意计算的准确性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路计算题求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个简单串联电路中，电源电压为 $6V$，已知电阻 $R_1 = 2\\Omega$，$R_2 = 4\\Omega$，则通过电阻 $R_1$ 的电流为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1A$"
+        },
+        {
+          "label": "B",
+          "content": "$2A$"
+        },
+        {
+          "label": "C",
+          "content": "$0.5A$"
+        },
+        {
+          "label": "D",
+          "content": "$3A"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先根据串联电路电阻特点，计算总电阻 $R_{总}$",
+        "提示2：串联电路中总电阻 $R_{总}=R_1 + R_2$",
+        "提示3：再根据欧姆定律 $I = \\frac{U}{R}$ 计算电路中的电流，串联电路中各处电流相等"
+      ]
+    }
+  ],
+  "count": 26
+}

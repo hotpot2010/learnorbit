@@ -1,0 +1,357 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：宏观章节框架",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济政策这一章一共有 7 节内容，其中重点学习的是哪几节？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第 1 - 3 节"
+        },
+        {
+          "label": "B",
+          "content": "第 1 - 4 节"
+        },
+        {
+          "label": "C",
+          "content": "第 4 - 7 节"
+        },
+        {
+          "label": "D",
+          "content": "第 5 - 7 节"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示 1：回忆视频中提到的重点节数范围",
+        "提示 2：视频明确指出了前几节是重点",
+        "提示 3：根据关键信息确定具体的重点节数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：政策核心目标",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学中的宏观经济政策这一章的学习中，该章共有 7 节内容，那么重点学习的节数占总节数的比例是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{3}{7}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{4}{7}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{5}{7}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{6}{7}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确重点学习的节数和总节数分别是多少",
+        "提示2：根据题目可知总节数是 7 节，重点学习的是前 4 节",
+        "提示3：计算重点学习节数占总节数的比例，用重点学习节数除以总节数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：政策作用影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学中的宏观经济政策这一章学习中，已知该章一共有 7 节内容，那么重点学习的应该是哪部分内容呢？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第 1 - 7 节全部内容"
+        },
+        {
+          "label": "B",
+          "content": "第 1 - 4 节内容"
+        },
+        {
+          "label": "C",
+          "content": "第 5 - 7 节内容"
+        },
+        {
+          "label": "D",
+          "content": "第 2 - 5 节内容"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示 1：注意视频中提到了重点和非重点的区分",
+        "提示 2：明确指出了前几节是重点",
+        "提示 3：根据视频所说的节数范围来确定重点内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：政策判断方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的宏观经济政策这一章中，一共有 7 节内容，那么学习的重点应该是哪些节？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "前 3 节"
+        },
+        {
+          "label": "B",
+          "content": "前 4 节"
+        },
+        {
+          "label": "C",
+          "content": "5、6、7 节"
+        },
+        {
+          "label": "D",
+          "content": "全部 7 节"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示 1：明确视频中提到了重点和非重点节数的划分",
+        "提示 2：注意区分重点节和非重点节的具体范围",
+        "提示 3：根据视频内容，重点学习的节数是前面的部分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：税率利率关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学中的宏观经济政策这一章共有 7 节内容，已知重点章节所占比例是关键考点，那么重点章节占整章的比例是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{3}{7}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{4}{7}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{5}{7}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{6}{7}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确重点章节的数量和整章的章节数量",
+        "提示2：根据比例的定义，用重点章节数除以总章节数来计算比例",
+        "提示3：视频中提到前 4 节是重点，整章共 7 节"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：政策影响推导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的宏观经济政策这一章中，整章共有7节内容，那么重点学习的应该是哪几节？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "前2节"
+        },
+        {
+          "label": "B",
+          "content": "前3节"
+        },
+        {
+          "label": "C",
+          "content": "前4节"
+        },
+        {
+          "label": "D",
+          "content": "前5节"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中关于章节重点的描述",
+        "提示2：明确提到了重点和非重点的划分",
+        "提示3：关注前几节是重点的具体信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：财政构成与工具",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学中的宏观经济政策这一章学习中，该章一共7节，那么重点学习的节数是哪些呢？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "前2节"
+        },
+        {
+          "label": "B",
+          "content": "前3节"
+        },
+        {
+          "label": "C",
+          "content": "前4节"
+        },
+        {
+          "label": "D",
+          "content": "前5节"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中关于该章重点节数的描述",
+        "提示2：明确提到了重点和非重点节数的划分",
+        "提示3：关注重点节数的具体数量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：自动稳定器",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学中关于宏观经济政策这一章，若学生想要重点掌握相关内容，应该着重学习哪部分章节？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "前 3 节"
+        },
+        {
+          "label": "B",
+          "content": "前 4 节"
+        },
+        {
+          "label": "C",
+          "content": "后 3 节"
+        },
+        {
+          "label": "D",
+          "content": "全部 7 节"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示 1：注意视频中提到的重点章节范围",
+        "提示 2：明确区分重点和非重点章节",
+        "提示 3：根据视频所说，重点学习的章节数量是关键"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：挤出效应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学中关于宏观经济政策这一章的学习里，已知这一章共有7节内容，那么重点学习的应该是以下哪些节次？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第1 - 3节"
+        },
+        {
+          "label": "B",
+          "content": "第1 - 4节"
+        },
+        {
+          "label": "C",
+          "content": "第4 - 7节"
+        },
+        {
+          "label": "D",
+          "content": "第2 - 5节"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中对该章重点节次的描述",
+        "提示2：明确指出了前几节是重点",
+        "提示3：根据描述确定重点节次范围"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：挤出效应讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的宏观经济政策这一章中，该章一共有 7 节内容，那么重点学习的节数占总节数的比例是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{3}{7}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{4}{7}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{5}{7}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{6}{7}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确重点学习的节数",
+        "提示2：根据视频可知总节数为 7 节",
+        "提示3：用重点学习的节数除以总节数即可得到比例"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：财政政策效果分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的宏观经济政策这一章中，一共有 7 节内容，其中重点学习的是前几节？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "前 2 节"
+        },
+        {
+          "label": "B",
+          "content": "前 3 节"
+        },
+        {
+          "label": "C",
+          "content": "前 4 节"
+        },
+        {
+          "label": "D",
+          "content": "前 5 节"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示 1：仔细回忆视频中关于章节重点的描述",
+        "提示 2：视频明确提到了重点学习的节数",
+        "提示 3：注意区分重点节和非重点节的划分"
+      ]
+    }
+  ],
+  "count": 11
+}

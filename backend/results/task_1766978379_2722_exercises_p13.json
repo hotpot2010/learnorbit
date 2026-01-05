@@ -1,0 +1,805 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：失业章节要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到失业章节需要记住的重点不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "通货膨胀的原因"
+        },
+        {
+          "label": "C",
+          "content": "自然失业率"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的失业章节需要记住的重点内容",
+        "提示2：逐一分析每个选项是否在重点内容中",
+        "提示3：视频主要围绕失业展开，重点强调了失业的概念、自然失业率和失业的类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：课程内容回顾",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的关于失业的重要知识点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "通货膨胀率"
+        },
+        {
+          "label": "C",
+          "content": "自然失业率"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的关于失业的关键知识点。",
+        "提示2：视频主要围绕失业展开，提及了几个需要记住的重点。",
+        "提示3：逐一分析每个选项是否在视频所讲的知识点范围内。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：adas与失业",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的失业相关重要知识点不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "通货膨胀率"
+        },
+        {
+          "label": "C",
+          "content": "自然失业率"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的关于失业的重要知识点有哪些",
+        "提示2：逐一分析每个选项是否在视频中被提及",
+        "提示3：视频重点围绕失业展开，可据此判断选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：失业通胀情况",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于失业的知识点中，不属于本次视频提到的重点的是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "自然失业率"
+        },
+        {
+          "label": "C",
+          "content": "失业的影响因素"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的需要记住的重点内容",
+        "提示2：明确视频中列举出的几个重点分别是什么",
+        "提示3：逐一对比选项与视频重点内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：失业研究内容",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个不属于视频中提到的失业研究的重点内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "通货膨胀率"
+        },
+        {
+          "label": "C",
+          "content": "自然失业率"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的失业研究重点内容",
+        "提示2：逐一分析每个选项是否在视频中有提及",
+        "提示3：视频主要围绕失业相关的概念、比率和类型进行讲解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：失业率概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于失业率相关概念，说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "视频重点讲解了失业的概念、自然失业率以及失业的类型"
+        },
+        {
+          "label": "B",
+          "content": "视频只提到了失业的概念，未涉及自然失业率和失业的类型"
+        },
+        {
+          "label": "C",
+          "content": "视频中自然失业率不是重要知识点"
+        },
+        {
+          "label": "D",
+          "content": "视频没有列出需要记住的重点内容"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的内容，明确讲解的要点",
+        "提示2：注意视频中对重点内容的列举和强调",
+        "提示3：判断每个选项与视频内容是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：自然失业率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于自然失业率的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "自然失业率是固定不变的数值"
+        },
+        {
+          "label": "B",
+          "content": "自然失业率是失业率中一个非常重要的知识点"
+        },
+        {
+          "label": "C",
+          "content": "自然失业率与失业的类型无关"
+        },
+        {
+          "label": "D",
+          "content": "自然失业率不包含在失业的概念里"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于自然失业率在失业相关知识中的地位",
+        "提示2：思考自然失业率是否会受到一些因素影响而改变",
+        "提示3：考虑自然失业率与失业类型之间的联系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：自然失业率定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到在失业相关知识里，一个非常重要的知识点是什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的类型"
+        },
+        {
+          "label": "B",
+          "content": "自然失业率"
+        },
+        {
+          "label": "C",
+          "content": "通货膨胀"
+        },
+        {
+          "label": "D",
+          "content": "失业的概念"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于重要知识点的表述",
+        "提示2：关注提到的特定的重要知识点名称",
+        "提示3：明确视频中指出的‘非常重要的一个知识点’的具体内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：就业失业人数关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于失业相关概念的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念和自然失业率不是重要知识点"
+        },
+        {
+          "label": "B",
+          "content": "自然失业率是失业内容里非常重要的一个知识点"
+        },
+        {
+          "label": "C",
+          "content": "不需要了解失业的类型"
+        },
+        {
+          "label": "D",
+          "content": "视频主要讲解的是通货膨胀，与失业无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的关于失业的重要知识点有哪些",
+        "提示2：明确自然失业率在失业内容中的地位",
+        "提示3：判断每个选项与视频所讲内容是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：失业率公式概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于失业相关知识，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的重要知识点只包含自然失业率"
+        },
+        {
+          "label": "B",
+          "content": "只需要了解失业的概念，不需要知道失业的类型"
+        },
+        {
+          "label": "C",
+          "content": "视频主要讲的是失业，且涉及失业的概念、自然失业率和失业的类型等知识点"
+        },
+        {
+          "label": "D",
+          "content": "视频中未提及自然失业率这一重要知识点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回想视频中提到的关于失业讲解内容的范围",
+        "提示2：明确视频指出了不止一个关于失业的重要知识点",
+        "提示3：视频强调不仅要知道失业概念，还需清楚失业类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：自然失业率公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频提到了自然失业率这一重要知识点，假设某经济体系中，摩擦性失业人数为 100 人，结构性失业人数为 200 人，劳动力总数为 1000 人，那么该经济体系的自然失业率约为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$10\\%$"
+        },
+        {
+          "label": "B",
+          "content": "$20\\%$"
+        },
+        {
+          "label": "C",
+          "content": "$30\\%$"
+        },
+        {
+          "label": "D",
+          "content": "$40\\%$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示 1：自然失业率是摩擦性失业和结构性失业占劳动力总数的比例",
+        "提示 2：先计算摩擦性失业和结构性失业的总人数",
+        "提示 3：用总失业人数除以劳动力总数得到自然失业率"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：市场出清概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到讲解失业相关知识时，以下哪个是需要记住的重点之一？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的原因"
+        },
+        {
+          "label": "B",
+          "content": "自然失业率"
+        },
+        {
+          "label": "C",
+          "content": "就业市场规模"
+        },
+        {
+          "label": "D",
+          "content": "工资水平变化"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的需要记住的重点内容",
+        "提示2：视频里明确指出了一个非常重要的知识点",
+        "提示3：该知识点与失业相关且是特定的一个比率"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：失业经济学解释",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下不属于视频中提到的关于失业需要记住的重点是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "自然失业率"
+        },
+        {
+          "label": "C",
+          "content": "失业的解决措施"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的需要记住的重点内容",
+        "提示2：明确视频里列举的几个关键知识点",
+        "提示3：逐一分析每个选项是否在视频重点中出现"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：凯恩斯观点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到讲解失业相关内容时，以下哪个不属于重点需要记住的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "自然失业率"
+        },
+        {
+          "label": "C",
+          "content": "通货膨胀的原因"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的讲解失业相关重点知识点的内容",
+        "提示2：明确视频中列举的重点内容有失业的概念、自然失业率和失业的类型",
+        "提示3：逐一分析每个选项是否属于视频提到的重点内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：古典失业理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的关于失业需要记住的要点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "通货膨胀率"
+        },
+        {
+          "label": "C",
+          "content": "自然失业率"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的需要记住的关于失业的要点内容",
+        "提示2：逐一分析每个选项是否在视频中作为要点被提及",
+        "提示3：明确视频重点围绕失业展开，判断选项是否与失业要点相关"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：凯恩斯失业观",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到在讲解失业相关知识时，有几个需要记住的重点，以下不属于这些重点的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "通货膨胀率"
+        },
+        {
+          "label": "C",
+          "content": "自然失业率"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的需要记住的重点内容",
+        "提示2：明确视频主要围绕失业相关知识展开，判断各选项是否与失业重点相关",
+        "提示3：逐一分析每个选项，看是否在视频所列举的重点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：非自愿失业理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到讲解失业相关内容时，以下哪个不属于重点知识？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "自然失业率"
+        },
+        {
+          "label": "C",
+          "content": "通货膨胀率"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的重点知识内容",
+        "提示2：明确视频强调的是关于失业的几个重点知识",
+        "提示3：判断每个选项是否在视频提及的重点知识范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：自愿与非自愿失业",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在失业相关知识中，下列哪个是非常重要的知识点且后续会详细讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的定义"
+        },
+        {
+          "label": "B",
+          "content": "自然失业率"
+        },
+        {
+          "label": "C",
+          "content": "失业的类型"
+        },
+        {
+          "label": "D",
+          "content": "通货膨胀"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到后续会详细讲解的重要知识点",
+        "提示2：注意视频中专门指出后续要详细讲的那个特定内容",
+        "提示3：排除视频未提及后续详细讲解的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：失业类型讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到在讲解失业相关知识时，需要记住的重点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "通货膨胀率"
+        },
+        {
+          "label": "C",
+          "content": "自然失业率"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的需要记住的失业相关重点内容",
+        "提示2：明确各项选项与视频重点内容的对应关系",
+        "提示3：判断哪个选项不属于视频所强调的重点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：结构性失业",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于失业相关概念，说法错误的是哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "视频重点提及了失业的概念是一个需要记住的要点"
+        },
+        {
+          "label": "B",
+          "content": "自然失业率是失业相关内容里非常重要的一个知识点"
+        },
+        {
+          "label": "C",
+          "content": "视频没有提到需要知道失业的类型有哪些"
+        },
+        {
+          "label": "D",
+          "content": "视频围绕失业和通货膨胀相关内容展开，主要讲解失业"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中明确列出的需要记住的重点内容",
+        "提示2：注意视频关于自然失业率以及失业类型的描述",
+        "提示3：整体把握视频围绕的核心内容以及主要讲解方向"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：周期性失业",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的失业相关内容里，下列哪个是非常重要的知识点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "通货膨胀率"
+        },
+        {
+          "label": "B",
+          "content": "经济增长率"
+        },
+        {
+          "label": "C",
+          "content": "自然失业率"
+        },
+        {
+          "label": "D",
+          "content": "就业率"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中明确指出的重要知识点",
+        "提示2：关注视频里提到的特定概念",
+        "提示3：重点看关于重要知识点的表述，其中提到了一个特定的比率"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：奥肯定律",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于失业知识点，不属于视频中提到的重点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "自然失业率"
+        },
+        {
+          "label": "C",
+          "content": "失业的影响因素"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的需要记住的重点内容",
+        "提示2：明确视频中列举的几个重点分别是什么",
+        "提示3：将选项与视频重点内容进行逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：奥肯定律结论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于失业相关概念的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念是视频中讲解的唯一重点"
+        },
+        {
+          "label": "B",
+          "content": "自然失业率不是视频中提到的重要知识点"
+        },
+        {
+          "label": "C",
+          "content": "了解失业的类型也是视频讲解的重要内容之一"
+        },
+        {
+          "label": "D",
+          "content": "视频未提及失业的相关内容"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中提到的关于失业的重点内容",
+        "提示2：明确视频中指出的几个需要记住的重点分别是什么",
+        "提示3：判断每个选项与视频内容是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：失业率不变情况",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于失业相关知识点的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "视频主要讲失业和通货膨胀，重点是通货膨胀相关知识"
+        },
+        {
+          "label": "B",
+          "content": "视频提到失业的概念，但未提及自然失业率"
+        },
+        {
+          "label": "C",
+          "content": "视频提到需要知道失业的类型有哪些"
+        },
+        {
+          "label": "D",
+          "content": "视频只讲了失业的概念，其他关于失业的知识未涉及"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于重点讲解内容的描述，判断是否以通货膨胀为重点",
+        "提示2：思考视频中是否提到自然失业率这个关键知识点",
+        "提示3：确认视频有没有提及要了解失业的类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：失业率下降情况",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到在讲解失业相关知识时，下列哪个不属于重点讲解的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "失业的概念"
+        },
+        {
+          "label": "B",
+          "content": "通货膨胀的成因"
+        },
+        {
+          "label": "C",
+          "content": "自然失业率"
+        },
+        {
+          "label": "D",
+          "content": "失业的类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的重点讲解内容",
+        "提示2：视频主要围绕失业展开讲解，可据此判断选项",
+        "提示3：逐一分析每个选项是否在视频重点讲解范围内"
+      ]
+    }
+  ],
+  "count": 25
+}

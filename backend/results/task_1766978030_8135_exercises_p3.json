@@ -1,0 +1,293 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：效用论基础",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微观经济学这本书主要从三个方面进行分析，我们今天讲的效用论及消费者均衡是从哪个方面进行分析的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "消费者"
+        },
+        {
+          "label": "B",
+          "content": "生产者"
+        },
+        {
+          "label": "C",
+          "content": "市场"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中提到微观经济学分析的三个方面具体是什么",
+        "提示2：明确效用论及消费者均衡是从哪个主体的角度进行分析",
+        "提示3：对比各个选项，找出符合描述的答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无差异曲线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微观经济学这本书主要从哪几个方面进行分析？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "消费者、生产者、市场"
+        },
+        {
+          "label": "B",
+          "content": "消费者、生产者、政府"
+        },
+        {
+          "label": "C",
+          "content": "生产者、市场、政府"
+        },
+        {
+          "label": "D",
+          "content": "消费者、市场、社会"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中提到的微观经济学分析的方面",
+        "提示2：关注从消费者角度分析的相关内容，从中找出整体的分析方面",
+        "提示3：明确视频中指出的三个方面的具体表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：边际替代率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微观经济学主要从三个方面进行分析，其中我们今天讲的效用论及消费者均衡是从哪个方面进行分析的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "消费者"
+        },
+        {
+          "label": "B",
+          "content": "生产者"
+        },
+        {
+          "label": "C",
+          "content": "市场"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到微观经济学分析的三个方面",
+        "提示2：明确效用论和消费者均衡的分析角度",
+        "提示3：在选项中找到与之对应的方面"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无差异曲线特例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微观经济学这本书主要从哪几个方面进行分析？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "消费者、生产者、市场"
+        },
+        {
+          "label": "B",
+          "content": "消费者、生产者、政府"
+        },
+        {
+          "label": "C",
+          "content": "生产者、市场、政府"
+        },
+        {
+          "label": "D",
+          "content": "消费者、市场、行业"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中提到微观经济学分析的几个方面",
+        "提示2：明确视频中指出的具体主体",
+        "提示3：逐一对比选项与视频内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：预算线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微观经济学主要从三个方面进行分析，以下不属于这三个方面的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "消费者"
+        },
+        {
+          "label": "B",
+          "content": "生产者"
+        },
+        {
+          "label": "C",
+          "content": "政府"
+        },
+        {
+          "label": "D",
+          "content": "市场"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到微观经济学分析的三个方面",
+        "提示2：明确视频中指出的三个分析角度",
+        "提示3：逐一对比选项与知识点内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：均衡分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微观经济学主要从哪几个方面进行分析？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "消费者、生产者、政府"
+        },
+        {
+          "label": "B",
+          "content": "消费者、生产者、市场"
+        },
+        {
+          "label": "C",
+          "content": "消费者、市场、政府"
+        },
+        {
+          "label": "D",
+          "content": "生产者、市场、政府"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到微观经济学分析的几个方面",
+        "提示2：重点关注涉及到的主体",
+        "提示3：明确这几个方面的具体内容是消费者、生产者和市场"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：拉格朗日方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微观经济学主要从三个方面进行分析，下列哪一组选项是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "消费者、生产者、市场"
+        },
+        {
+          "label": "B",
+          "content": "消费者、投资者、市场"
+        },
+        {
+          "label": "C",
+          "content": "生产者、投资者、政府"
+        },
+        {
+          "label": "D",
+          "content": "消费者、生产者、政府"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的微观经济学分析的三个方面",
+        "提示2：明确是从视频给定的信息中找答案",
+        "提示3：关注消费者、生产者、市场这几个关键要素"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：价格消费曲线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微观经济学这本书主要从哪几个方面进行分析？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "消费者、生产者、市场"
+        },
+        {
+          "label": "B",
+          "content": "厂商、政府、消费者"
+        },
+        {
+          "label": "C",
+          "content": "需求、供给、市场均衡"
+        },
+        {
+          "label": "D",
+          "content": "生产、分配、交换"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：视频中明确提到了微观经济学这本书的分析方面",
+        "提示2：仔细回顾视频中关于微观经济学分析方面的表述",
+        "提示3：根据视频内容直接找出正确选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：收入消费曲线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "微观经济学这本书主要从三个方面进行分析，以下不属于这三个方面的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "消费者"
+        },
+        {
+          "label": "B",
+          "content": "生产者"
+        },
+        {
+          "label": "C",
+          "content": "投资者"
+        },
+        {
+          "label": "D",
+          "content": "市场"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的微观经济学分析的三个方面",
+        "提示2：明确每个选项是否在视频所提及的范围内",
+        "提示3：根据视频内容，微观经济学从消费者、生产者和市场三个方面分析"
+      ]
+    }
+  ],
+  "count": 9
+}

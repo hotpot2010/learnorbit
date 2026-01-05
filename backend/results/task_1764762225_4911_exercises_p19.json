@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：通讯录实现思路",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在使用变量实现通讯录功能时，若要存储小李的电话号码，以下哪种做法符合视频中提到的思路？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直接将电话号码存储在一个通用的列表中，不与姓名关联"
+        },
+        {
+          "label": "B",
+          "content": "创建变量 phone number of 小李，并将电话号码赋值给该变量"
+        },
+        {
+          "label": "C",
+          "content": "将所有电话号码存储在一个字典中，不涉及姓名的使用"
+        },
+        {
+          "label": "D",
+          "content": "把电话号码随意记录在文本文件中，不做任何整理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到可以用变量强化实现用人名查找对应电话号码这一功能",
+        "提示2：结合视频中存储小明、小花电话号码的例子来思考",
+        "提示3：要使电话号码与姓名相关联"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：字典基本介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "要实现一个通讯录，使用变量来存储每个人的电话号码，这种方式存在的问题是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "变量赋值太复杂"
+        },
+        {
+          "label": "B",
+          "content": "无法用姓名查找电话号码"
+        },
+        {
+          "label": "C",
+          "content": "不规范，人多了电话号码杂乱无章"
+        },
+        {
+          "label": "D",
+          "content": "不能存储电话号码"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于使用变量存储电话号码实现通讯录的描述",
+        "提示2：重点关注提到的这种方式存在的问题",
+        "提示3：视频中明确指出了人多之后电话号码的情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：元组与字典操作",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在实现通讯录功能时，若要存储小明的电话号码为 13800138000，小红的电话号码为 13900139000，以下哪种方式更规范且便于查找？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "分别定义变量 `phone_number_of_小明 = '13800138000'` 和 `phone_number_of_小红 = '13900139000'`，查找时直接 `print(phone_number_of_小明)` 或 `print(phone_number_of_小红)`"
+        },
+        {
+          "label": "B",
+          "content": "使用字典 `contacts = {'小明': '13800138000', '小红': '13900139000'}`，查找时 `print(contacts['小明'])` 或 `print(contacts['小红'])`"
+        },
+        {
+          "label": "C",
+          "content": "使用元组 `contacts = ('小明', '13800138000', '小红', '13900139000')`，查找时通过索引查找，如 `print(contacts[1])` 查找小明的电话"
+        },
+        {
+          "label": "D",
+          "content": "使用列表 `contacts = ['小明', '13800138000', '小红', '13900139000']`，查找时通过索引查找，如 `print(contacts[1])` 查找小明的电话"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：考虑数据的规范性和查找的便捷性",
+        "提示2：视频中提到分别用变量存储电话号码不规范，人数多了会很混乱",
+        "提示3：字典的特点是可以通过键来快速查找对应的值，适合用于实现通讯录功能"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电子词典实践",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知要实现一个通讯录功能，通过人名查找对应的手机号码，以下哪种做法相对更规范？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "为每个人创建一个单独的变量，如给变量“phone number of 小明”赋值小明的电话，需要时打印该变量"
+        },
+        {
+          "label": "B",
+          "content": "将所有人的姓名和电话信息存储在一个统一的数据结构中进行管理，而不是单独的变量存储"
+        },
+        {
+          "label": "C",
+          "content": "随机选择存储方式，不做统一规划"
+        },
+        {
+          "label": "D",
+          "content": "只存储人名，不存储电话号码"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：思考视频中提到的单独用变量存储电话号码存在的问题",
+        "提示2：规范的做法应该是便于管理和查找的",
+        "提示3：分析每个选项是否符合规范管理联系人信息的需求"
+      ]
+    }
+  ],
+  "count": 4
+}

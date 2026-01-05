@@ -1,0 +1,742 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：利率决定理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在利率决定理论的学习中，以下不属于需要掌握的知识点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和债券需求动机"
+        },
+        {
+          "label": "B",
+          "content": "债券供给函数"
+        },
+        {
+          "label": "C",
+          "content": "流动性偏好陷阱"
+        },
+        {
+          "label": "D",
+          "content": "债券供求均衡和利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的需要掌握的知识点有哪些",
+        "提示2：明确视频中指出的重点是债券需求函数而非供给函数",
+        "提示3：对照选项逐一排查是否为视频中提及的知识点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：债券供求分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学中关于利率决定的章节，以下哪个不属于需要掌握的知识点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和债券需求动机"
+        },
+        {
+          "label": "B",
+          "content": "债券供给函数"
+        },
+        {
+          "label": "C",
+          "content": "流动性偏好陷阱"
+        },
+        {
+          "label": "D",
+          "content": "债券供求均衡和利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本章节需要掌握的4个知识点内容",
+        "提示2：检查每个选项是否与视频中提到的知识点相匹配",
+        "提示3：视频中提到要掌握债券需求函数，而非债券供给函数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：流动性偏好",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的 IS - LM 模型中，关于利率决定这一章节，以下不属于需要掌握的知识点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和货币需求动机"
+        },
+        {
+          "label": "B",
+          "content": "货币供给函数"
+        },
+        {
+          "label": "C",
+          "content": "流动性偏好陷阱"
+        },
+        {
+          "label": "D",
+          "content": "货币供求均衡和利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的这一章节需要掌握的4个知识点",
+        "提示2：明确知识点包含流动性偏好和货币需求动机、货币需求函数、流动性偏好陷阱、货币供求均衡和利率的决定",
+        "提示3：对比各选项与视频中知识点的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：货币需求动机",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学中，$IS - LM$ 模型里关于利率的决定这一章节需掌握几个知识点，其中货币需求动机包含几个因素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "4 个知识点，货币需求动机包含 2 个因素"
+        },
+        {
+          "label": "B",
+          "content": "3 个知识点，货币需求动机包含 3 个因素"
+        },
+        {
+          "label": "C",
+          "content": "4 个知识点，货币需求动机包含 3 个因素"
+        },
+        {
+          "label": "D",
+          "content": "3 个知识点，货币需求动机包含 2 个因素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示 1：回顾视频中提到这一章节要掌握的知识点数量",
+        "提示 2：明确视频里所说的货币需求动机包含的因素个数",
+        "提示 3：仔细对比每个选项中知识点数量和货币需求动机因素数量与视频内容是否一致"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：交易动机",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学中，IS - LM模型里利率的决定这一章需要掌握的知识点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和债券需求动机"
+        },
+        {
+          "label": "B",
+          "content": "债券供求均衡和利率的决定"
+        },
+        {
+          "label": "C",
+          "content": "投资乘数的计算"
+        },
+        {
+          "label": "D",
+          "content": "债券需求函数"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的这一章需要掌握的4个知识点",
+        "提示2：明确每个选项与视频所讲知识点的对应关系",
+        "提示3：找出不在视频所讲知识点范围内的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：预防动机",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学中，关于货币需求动机和相关知识点，下列说法错误的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "货币需求动机包含三个方面"
+        },
+        {
+          "label": "B",
+          "content": "需要掌握货币需求函数这一知识点"
+        },
+        {
+          "label": "C",
+          "content": "流动性偏好陷阱不属于该章节的知识点"
+        },
+        {
+          "label": "D",
+          "content": "该章节还涉及货币供求均衡和利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的该章节需要掌握的知识点有哪些",
+        "提示2：明确货币需求动机的数量",
+        "提示3：确认流动性偏好陷阱是否在该章节知识点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投机动机",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学中，关于第 14 章国民收入的决定，IS - LM 模型的第三节利率的决定这一章，以下不属于需要掌握的知识点是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和债券需求动机"
+        },
+        {
+          "label": "B",
+          "content": "债券供求均衡和收入的决定"
+        },
+        {
+          "label": "C",
+          "content": "债券需求函数"
+        },
+        {
+          "label": "D",
+          "content": "流动性偏好陷阱"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的这一章需要掌握的 4 个知识点",
+        "提示2：明确每个选项对应的内容是否在视频提及的知识点范围内",
+        "提示3：注意题目问的是不属于需要掌握的知识点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：利率与货币需求",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的 IS - LM 模型中，关于利率的决定这一章节，需要掌握的知识点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和货币需求动机"
+        },
+        {
+          "label": "B",
+          "content": "货币供给与财政政策的关系"
+        },
+        {
+          "label": "C",
+          "content": "货币需求函数"
+        },
+        {
+          "label": "D",
+          "content": "流动性偏好陷阱"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到本章节需要掌握的4个知识点。",
+        "提示2：明确每个选项与视频中知识点的对应关系。",
+        "提示3：判断哪个选项不属于视频所提及的知识点范畴。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：流动性偏好陷阱",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的 IS - LM 模型中，关于利率决定这一章节需要掌握的知识点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和货币需求动机"
+        },
+        {
+          "label": "B",
+          "content": "货币需求函数"
+        },
+        {
+          "label": "C",
+          "content": "通货膨胀率的计算方法"
+        },
+        {
+          "label": "D",
+          "content": "货币供求均衡和利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的在这一章节需要掌握的知识点有哪些",
+        "提示2：明确视频中列举的几个关键知识点内容",
+        "提示3：逐一分析每个选项是否在视频所讲的知识点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：货币需求动机",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的 IS - LM 模型中，关于货币需求动机的知识点，以下说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "货币需求动机只有两个"
+        },
+        {
+          "label": "B",
+          "content": "货币需求动机包括三个，且需要掌握货币需求函数、流动性偏好陷阱、货币供求均衡和利率的决定等知识点"
+        },
+        {
+          "label": "C",
+          "content": "只需要掌握货币需求动机这一个知识点即可"
+        },
+        {
+          "label": "D",
+          "content": "货币需求动机与利率的决定无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的该章节需要掌握的知识点有哪些",
+        "提示2：明确货币需求动机的数量",
+        "提示3：思考货币需求动机与其他知识点之间的联系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：货币动机分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的 IS - LM 模型中，关于利率决定这一章节需要掌握的知识点不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和货币需求动机"
+        },
+        {
+          "label": "B",
+          "content": "消费函数与储蓄函数关系"
+        },
+        {
+          "label": "C",
+          "content": "流动性偏好陷阱"
+        },
+        {
+          "label": "D",
+          "content": "货币供求均衡和利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本章节需要掌握的4个知识点内容",
+        "提示2：明确每个选项是否在视频所提及的知识点范围内",
+        "提示3：逐一分析选项，判断哪个选项不属于视频中讲解的范畴"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：货币需求函数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学学习货币需求相关知识时，以下不属于需要掌握的知识点的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和货币需求动机"
+        },
+        {
+          "label": "B",
+          "content": "货币供求均衡和利率的决定"
+        },
+        {
+          "label": "C",
+          "content": "通货膨胀的计算方法"
+        },
+        {
+          "label": "D",
+          "content": "货币需求函数"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到这一章需要掌握的知识点。",
+        "提示2：重点关注视频中提到的4个知识点的具体内容。",
+        "提示3：明确不属于那4个知识点范围内的选项即为答案。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：需求函数表达式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学中，关于货币需求动机和相关知识点，以下说法错误的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "货币需求动机包含三个方面"
+        },
+        {
+          "label": "B",
+          "content": "需要掌握货币需求函数这一知识点"
+        },
+        {
+          "label": "C",
+          "content": "流动性偏好陷阱与货币供求无关"
+        },
+        {
+          "label": "D",
+          "content": "要掌握货币供求均衡和利率的决定的知识点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的几个关键知识点，包括货币需求动机、货币需求函数、流动性偏好陷阱、货币供求均衡和利率的决定等",
+        "提示2：明确每个知识点之间可能存在的联系，分析各选项与知识点的匹配度",
+        "提示3：思考流动性偏好陷阱对货币供求可能产生的影响来判断选项C"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：实际与名义需求",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学中，关于第14章国民收入的决定，IS - LM模型的第三节利率的决定，需要掌握的知识点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和货币需求动机"
+        },
+        {
+          "label": "B",
+          "content": "商品供求均衡和价格的决定"
+        },
+        {
+          "label": "C",
+          "content": "货币需求函数"
+        },
+        {
+          "label": "D",
+          "content": "流动性偏好陷阱"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的需要掌握的4个知识点",
+        "提示2：明确每个选项与视频知识点的对应关系",
+        "提示3：判断哪个选项不属于视频所讲的知识点范畴"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：名义与实际货币量",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的 IS - LM 模型中，关于货币需求动机及相关知识点，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "货币需求动机只包含两个方面"
+        },
+        {
+          "label": "B",
+          "content": "流动性偏好陷阱是指利率极低时，人们对货币的需求趋于无穷大"
+        },
+        {
+          "label": "C",
+          "content": "货币供求均衡是由货币供给决定的，与货币需求无关"
+        },
+        {
+          "label": "D",
+          "content": "货币需求函数只与利率有关，与收入无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的货币需求动机的数量",
+        "提示2：理解流动性偏好陷阱的概念",
+        "提示3：思考货币供求均衡的决定因素",
+        "提示4：明确货币需求函数的影响因素"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：货币符号含义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学中关于 IS - LM 模型第三节利率的决定这一章，以下不属于需要掌握的知识点的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和货币需求动机"
+        },
+        {
+          "label": "B",
+          "content": "货币供给函数"
+        },
+        {
+          "label": "C",
+          "content": "流动性偏好陷阱"
+        },
+        {
+          "label": "D",
+          "content": "货币供求均衡和利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的这一章需要掌握的4个知识点",
+        "提示2：明确知识点中包含的具体内容，如货币需求动机等",
+        "提示3：对比选项与视频中提到的知识点进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：货币需求函数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学中，关于货币需求相关知识，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "货币需求动机只有两个"
+        },
+        {
+          "label": "B",
+          "content": "货币需求函数不属于这一章需要掌握的知识点"
+        },
+        {
+          "label": "C",
+          "content": "这一章主要掌握4个知识点，包括流动性偏好和货币需求动机等"
+        },
+        {
+          "label": "D",
+          "content": "流动性偏好陷阱与货币供求均衡和利率的决定无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中提到的这一章需要掌握的知识点内容",
+        "提示2：明确货币需求动机的数量",
+        "提示3：思考各知识点之间的关联"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：货币需求曲线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学中，关于货币需求相关知识，以下哪个不属于需要掌握的知识点范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和货币需求动机"
+        },
+        {
+          "label": "B",
+          "content": "货币供给的季节性波动"
+        },
+        {
+          "label": "C",
+          "content": "流动性偏好陷阱"
+        },
+        {
+          "label": "D",
+          "content": "货币供求均衡和利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到这一章需要掌握的4个知识点",
+        "提示2：明确货币需求相关知识的范畴，判断每个选项是否在其中",
+        "提示3：注意视频中未提及的内容即为不属于需要掌握的知识点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：债券需求曲线a",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学中，关于第14章国民收入的决定，IS - LM模型的第三节利率的决定，需要掌握的知识点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和债券需求动机"
+        },
+        {
+          "label": "B",
+          "content": "债券供给曲线的移动因素"
+        },
+        {
+          "label": "C",
+          "content": "债券需求函数"
+        },
+        {
+          "label": "D",
+          "content": "流动性偏好陷阱和债券供求均衡及利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的需要掌握的4个知识点内容",
+        "提示2：明确每个选项与视频所讲知识点的对应关系",
+        "提示3：判断哪个选项不属于视频中提到的知识点范畴"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：债券需求曲线b",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的IS - LM模型中，关于利率的决定这一章节，以下哪个不属于需要掌握的知识点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和债券需求动机"
+        },
+        {
+          "label": "B",
+          "content": "债券供求动机的具体种类数量"
+        },
+        {
+          "label": "C",
+          "content": "债券需求函数"
+        },
+        {
+          "label": "D",
+          "content": "流动性偏好陷阱和债券供求均衡及利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的关于宏观经济学利率决定这一章节需要掌握的四个知识点。",
+        "提示2：明确每个选项所涉及的内容是否在视频给出的知识点范围内。",
+        "提示3：重点关注是要掌握四个关键知识点，而不是某个知识点里的具体数量。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：表达需求与收入关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "宏观经济学中关于货币需求决定这一章节，需要掌握的知识点不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和货币需求动机"
+        },
+        {
+          "label": "B",
+          "content": "货币供求平衡和利率的决定"
+        },
+        {
+          "label": "C",
+          "content": "商品市场均衡和价格的决定"
+        },
+        {
+          "label": "D",
+          "content": "流动性偏好陷阱"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到本章节需要掌握的4个知识点。",
+        "提示2：明确各个选项与视频中知识点的对应关系。",
+        "提示3：判断哪个选项不属于视频所提及的知识点范畴。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：债券需求关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学里，关于债券需求相关内容，下列哪项不属于必须掌握的知识点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和债券需求动机"
+        },
+        {
+          "label": "B",
+          "content": "债券供给弹性公式"
+        },
+        {
+          "label": "C",
+          "content": "流动性偏好陷阱"
+        },
+        {
+          "label": "D",
+          "content": "债券供求均衡和利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到这一章需要掌握的4个知识点具体内容",
+        "提示2：核对每个选项是否在知识点范围内",
+        "提示3：视频中未提及债券供给弹性公式这一内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：债券供求均衡",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学中关于利率的决定这一章节，以下不属于需要掌握的知识点的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "流动性偏好和债券需求动机"
+        },
+        {
+          "label": "B",
+          "content": "债券供求的影响因素分析"
+        },
+        {
+          "label": "C",
+          "content": "债券需求函数"
+        },
+        {
+          "label": "D",
+          "content": "流动性偏好陷阱"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本章节需要掌握的知识点有哪些",
+        "提示2：明确知道有流动性偏好和债券需求动机、债券需求函数、流动性偏好陷阱以及债券供求均衡和利率的决定这些知识点",
+        "提示3：对照选项，找出不在这些知识点范围内的选项"
+      ]
+    }
+  ],
+  "count": 23
+}

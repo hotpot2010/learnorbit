@@ -1,0 +1,485 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：替代与收入效应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于替代效应与收入效应有两种分解方法，若考研学校指定教材是高鸿业这类初级教材，那么需要掌握哪种分解方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯拉茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种都要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：视频中明确提到对于两种分解方法在不同指定教材下的掌握要求",
+        "提示2：关注高鸿业这类初级教材对应的分解方法",
+        "提示3：仔细回忆视频中关于初级教材和中级教材分别需要掌握的分解方法内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：需求定理与价格效应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于替代效应与收入效应，有两种分解方法，分别是希克斯分解和斯勒茨基分解。如果考研学校指定教材是高鸿业这类初级教材，那么需要掌握哪种分解方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯勒茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种都需要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中关于不同教材对应需要掌握的分解方法的内容",
+        "提示2：明确提到高鸿业这类初级教材的相关要求",
+        "提示3：根据视频信息判断需要掌握的是哪种分解方法"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：替代效应解析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于替代效应与收入效应的分解方法，若报考院校指定教材是高鸿业这类初级教材，需要掌握哪种分解方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯勒茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种都要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于不同教材对应需要掌握的分解方法的内容",
+        "提示2：明确提到了高鸿业这类初级教材对应的分解方法",
+        "提示3：注意区分两种分解方法在不同教材要求下的掌握情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：替代效应讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于替代效应与收入效应的分解方法，若报考院校指定教材是高鸿业这类初级教材，需要掌握哪种分解方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯拉茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种都需要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：视频中明确提到了针对不同指定教材所需掌握的分解方法",
+        "提示2：关注高鸿业这类初级教材对应的要求",
+        "提示3：回忆视频中关于初级教材和中级教材分别对应掌握哪种分解方法的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：收入效应讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于替代效应与收入效应的分解方法，若报考院校的指定教材是高鸿业这类初级教材，那么需要掌握的分解方法是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯拉茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种方法都要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种方法都不用掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：视频中明确提到对于替代效应与收入效应有两种分解方法及对应的适用教材情况",
+        "提示2：关注高鸿业这类初级教材对应的分解方法描述",
+        "提示3：根据对应描述来选择正确答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：总效应总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于替代效应与收入效应的分解方法，若报考学校指定的教材是高鸿业这类初级教材，需要掌握哪种分解方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯勒茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种分解方法都要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种分解方法都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于不同教材对应需要掌握的分解方法的内容",
+        "提示2：明确高鸿业这类初级教材对应的要求",
+        "提示3：根据视频信息判断正确选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正常商品效应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于替代效应与收入效应的分解方法，若报考学校指定教材是高鸿业这类初级教材，需要掌握哪种分解方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯勒茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种都要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：视频中明确提到了针对不同指定教材所需掌握的分解方法",
+        "提示2：注意区分高鸿业这类初级教材对应的要求",
+        "提示3：回顾视频内容，找出初级教材对应的分解方法"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：替代效应与收入效应分解方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习替代效应与收入效应的分解方法时，若报考的学校指定教材是高鸿业这类初级教材，那么需要掌握的分解方法是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯勒茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两者都需要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两者都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：视频中明确提到了针对不同指定教材需要掌握的分解方法",
+        "提示2：关注初级教材对应的分解方法",
+        "提示3：留意原文中对于掌握情况的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三种商品效应总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于替代效应与收入效应的分解方法，若你报考的学校指定教材是高鸿业这类初级教材，那么你需要掌握哪种分解方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯勒茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种方法都需要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种方法都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：视频中明确提到了针对不同指定教材所需掌握的分解方法",
+        "提示2：注意区分高鸿业这类初级教材对应的要求",
+        "提示3：回忆视频中关于初级教材只需掌握一种分解方法的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：低档和吉芬商品画图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于替代效应与收入效应的分解方法，若报考学校指定教材是高鸿业这类初级教材，应掌握哪种分解方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯勒茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种分解方法都要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种分解方法都不用掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：视频中明确提到了针对不同指定教材需要掌握的分解方法",
+        "提示2：关注高鸿业这类初级教材对应的要求",
+        "提示3：回忆视频中关于初级教材只需掌握一种分解方法的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三种商品效应表格总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于替代效应与收入效应的分解方法，若报考学校指定教材是高鸿业这类初级教材，那么需要掌握哪种分解方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯勒茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种都要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于不同教材对应需要掌握的分解方法的内容",
+        "提示2：明确高鸿业这类初级教材对应的要求",
+        "提示3：注意区分两种分解方法的掌握情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正常品效应分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于替代效应与收入效应的分解方法，若报考院校指定教材是高鸿业这类初级教材，那么需要掌握哪种分解方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯勒茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两者都要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两者都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中针对不同指定教材所需要掌握的分解方法的内容",
+        "提示2：明确提到高鸿业这类初级教材的对应要求",
+        "提示3：对应相应信息找出正确答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：效应正负判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "如果一个同学备考的学校指定教材是高鸿业这一类初级教材，那么他需要掌握的替代效应与收入效应的分解方法是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯勒茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种分解方法都要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种分解方法都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中针对不同教材对应需要掌握的分解方法的描述",
+        "提示2：明确高鸿业这一类初级教材对应的要求",
+        "提示3：根据视频信息判断哪种方法是需要掌握的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：低档品效应分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习替代效应与收入效应的分解方法时，若报考院校指定教材是高鸿业这类初级教材，那么需要掌握哪种分解方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯拉茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种方法都要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种方法都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：视频中明确提到了针对不同指定教材所需掌握的分解方法",
+        "提示2：关注高鸿业这类初级教材对应的要求",
+        "提示3：回忆视频里关于初级教材分解方法的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：积分商品效应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于替代效应与收入效应的分解方法，若考研学校指定教材是高鸿业这类初级教材，需要掌握哪种分解方法？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "希克斯分解"
+        },
+        {
+          "label": "B",
+          "content": "斯勒茨基分解"
+        },
+        {
+          "label": "C",
+          "content": "两种都需要掌握"
+        },
+        {
+          "label": "D",
+          "content": "两种都不需要掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：视频中明确提到了针对不同指定教材需要掌握的分解方法",
+        "提示2：重点关注高鸿业这类初级教材对应的要求",
+        "提示3：回忆视频中关于初级教材的描述来确定答案"
+      ]
+    }
+  ],
+  "count": 15
+}

@@ -1,0 +1,719 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：微积分的本质与思想",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "假设在复习高等数学时，对于微积分中求定积分 $\\int_{0}^{2} (x^2 + 1)dx$ 的值，以下哪个选项是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{14}{3}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{10}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{8}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据定积分的运算法则 $\\int_{a}^{b} (f(x)+g(x))dx = \\int_{a}^{b} f(x)dx + \\int_{a}^{b} g(x)dx$，将 $\\int_{0}^{2} (x^2 + 1)dx$ 拆分为 $\\int_{0}^{2} x^2dx + \\int_{0}^{2} 1dx$",
+        "提示2：利用定积分公式 $\\int x^n dx = \\frac{1}{n + 1}x^{n + 1}+C (n\\neq - 1)$ 计算 $\\int_{0}^{2} x^2dx$ 的值",
+        "提示3：对于 $\\int_{0}^{2} 1dx$，根据定积分的几何意义或公式计算其值，最后将两部分结果相加"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：微分与积分思想",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 在区间 $[a,b]$ 上可积，且 $F(x)$ 是 $f(x)$ 的一个原函数，若用微分与积分思想来计算 $\\int_{a}^{b} f(x)dx$，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\int_{a}^{b} f(x)dx = f(b) - f(a)$"
+        },
+        {
+          "label": "B",
+          "content": "$\\int_{a}^{b} f(x)dx = F(b) - F(a)$"
+        },
+        {
+          "label": "C",
+          "content": "$\\int_{a}^{b} f(x)dx = f'(b) - f'(a)$"
+        },
+        {
+          "label": "D",
+          "content": "$\\int_{a}^{b} f(x)dx = F'(b) - F'(a)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据牛顿 - 莱布尼茨公式来分析",
+        "提示2：该公式表明若 $F(x)$ 是 $f(x)$ 在区间 $[a,b]$ 上的一个原函数，则 $\\int_{a}^{b} f(x)dx = F(b) - F(a)$",
+        "提示3：思考原函数与被积函数的关系以及积分的计算方法"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：微分积分的应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一物体做变速直线运动，其速度函数为 $v(t) = 3t^2 + 2$（单位：m/s），则该物体在时间段 $[1, 2]$ 内的位移为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$9$ m"
+        },
+        {
+          "label": "B",
+          "content": "$10$ m"
+        },
+        {
+          "label": "C",
+          "content": "$11$ m"
+        },
+        {
+          "label": "D",
+          "content": "$12$ m"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据位移与速度的关系，位移 $s$ 等于速度函数 $v(t)$ 在对应时间段上的定积分",
+        "提示2：计算定积分 $\\int_1^2 (3t^2 + 2)dt$",
+        "提示3：利用定积分的运算法则 $\\int (f(x)+g(x))dx=\\int f(x)dx+\\int g(x)dx$ 分别计算各项积分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限的概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}$ 的值。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "不存在"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先对分子进行因式分解",
+        "提示2：约去分子分母的公因式",
+        "提示3：再将 $x = 2$ 代入化简后的式子求极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷小与无穷大",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当 $x \\to 0$ 时，下列哪个函数是无穷小量？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{x}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sin\\frac{1}{x}$"
+        },
+        {
+          "label": "C",
+          "content": "$x\\sin\\frac{1}{x}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{\\sin x}{x}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：无穷小量的定义是在某个变化过程中，极限为0的变量",
+        "提示2：分析每个选项在 $x \\to 0$ 时的极限情况",
+        "提示3：对于选项C，可利用有界函数与无穷小的乘积仍为无穷小来判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限的定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}$ 的值是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$6$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先对分子进行因式分解",
+        "提示2：化简原式，消去分母中为零的因子",
+        "提示3：将 $x = 2$ 代入化简后的式子求极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：求极限三步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$4$",
+      "hints": [
+        "提示1：先对分子进行因式分解，$x^2 - 4$ 可分解为 $(x + 2)(x - 2)$",
+        "提示2：将分解后的式子代入原式进行化简",
+        "提示3：化简后再求极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限计算示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = \\frac{x^2 - 1}{x - 1}$，当 $x \\to 1$ 时，$\\lim_{x \\to 1} f(x)$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$1$"
+        },
+        {
+          "label": "C",
+          "content": "$2$"
+        },
+        {
+          "label": "D",
+          "content": "不存在"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先对函数 $f(x)$ 进行化简，注意 $x \\neq 1$ 的条件",
+        "提示2：化简后再求极限",
+        "提示3：使用平方差公式 $a^2 - b^2 = (a + b)(a - b)$ 对分子进行因式分解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷小与无穷大",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当 $x \\to 0$ 时，下列函数中为无穷小量的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{\\sin x}{x}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{x}$"
+        },
+        {
+          "label": "C",
+          "content": "$x^2 \\sin\\frac{1}{x}$"
+        },
+        {
+          "label": "D",
+          "content": "$e^{\\frac{1}{x}}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据无穷小量的定义，若 $\\lim_{x \\to x_0} f(x) = 0$，则称 $f(x)$ 为 $x \\to x_0$ 时的无穷小量",
+        "提示2：对于选项A，利用重要极限 $\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1$ 来判断",
+        "提示3：对于选项B，分析 $x \\to 0$ 时 $\\frac{1}{x}$ 的趋向情况",
+        "提示4：对于选项C，利用有界函数与无穷小的乘积为无穷小这一性质，$\\sin\\frac{1}{x}$ 是有界函数",
+        "提示5：对于选项D，分别考虑 $x \\to 0^+$ 和 $x \\to 0^-$ 时 $e^{\\frac{1}{x}}$ 的情况"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：极限类型分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$4$",
+      "hints": [
+        "提示1：先对分子进行因式分解",
+        "提示2：然后约去分子分母的公因式",
+        "提示3：最后将 $x = 2$ 代入化简后的式子求极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：无穷小与无穷大处理方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to \\infty} \\frac{3x^2 - 2x + 1}{5x^2 + 4x - 3}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{3}{5}$",
+      "hints": [
+        "提示1：当 $x \\to \\infty$ 时，分子分母都是无穷大，可考虑分子分母同时除以最高次幂 $x^2$",
+        "提示2：化简式子后再求极限",
+        "提示3：根据极限的运算法则计算化简后式子的极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：极限的有理化化简",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 4} \\frac{\\sqrt{x + 5} - 3}{x - 4}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{6}$",
+      "hints": [
+        "提示1：对分子进行有理化，分子分母同时乘以 $\\sqrt{x + 5} + 3$",
+        "提示2：利用平方差公式 $(a - b)(a + b) = a^2 - b^2$ 化简分子",
+        "提示3：约分后再求极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：等价无穷小替换",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 0} \\frac{\\tan 3x - \\sin 2x}{x}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "1",
+      "hints": [
+        "提示1：当 $x \\to 0$ 时，$\\tan x \\sim x$，$\\sin x \\sim x$，使用等价无穷小替换 $\\tan 3x$ 和 $\\sin 2x$",
+        "提示2：将 $\\tan 3x$ 替换为 $3x$，$\\sin 2x$ 替换为 $2x$",
+        "提示3：对替换后的式子进行化简并求极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：无穷小替换技巧",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 0} \\frac{\\tan x - \\sin x}{x^3}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{2}$",
+      "hints": [
+        "提示1：先将 $\\tan x$ 化为 $\\frac{\\sin x}{\\cos x}$，则原式变为 $\\lim_{x \\to 0} \\frac{\\frac{\\sin x}{\\cos x}-\\sin x}{x^3}$",
+        "提示2：对分子提取 $\\sin x$，得到 $\\lim_{x \\to 0} \\frac{\\sin x(\\frac{1}{\\cos x}-1)}{x^3}$",
+        "提示3：当 $x \\to 0$ 时，$\\sin x \\sim x$，进行无穷小替换，再化简计算极限"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：等价替换加减法限制",
+      "error": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：无穷小极限替换法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 0} \\frac{\\tan 2x - \\sin 2x}{x^3}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "4",
+      "hints": [
+        "提示1：将 $\\tan 2x$ 化为 $\\frac{\\sin 2x}{\\cos 2x}$，则原式变为 $\\lim_{x \\to 0} \\frac{\\frac{\\sin 2x}{\\cos 2x}-\\sin 2x}{x^3}$",
+        "提示2：对分子提取公因式 $\\sin 2x$，得到 $\\lim_{x \\to 0} \\frac{\\sin 2x(\\frac{1}{\\cos 2x}-1)}{x^3}$",
+        "提示3：当 $x \\to 0$ 时，$\\sin 2x \\sim 2x$，$1 - \\cos 2x \\sim \\frac{(2x)^2}{2}=2x^2$，进行无穷小替换后化简计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷大比较法则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知当 $x \\to +\\infty$ 时，$f(x)=x^{2}$ 和 $g(x)=e^{x}$ 均为无穷大，比较它们增长速度的快慢，正确的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$f(x)$ 比 $g(x)$ 增长快"
+        },
+        {
+          "label": "B",
+          "content": "$f(x)$ 与 $g(x)$ 增长速度相同"
+        },
+        {
+          "label": "C",
+          "content": "$g(x)$ 比 $f(x)$ 增长快"
+        },
+        {
+          "label": "D",
+          "content": "无法比较"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：对于两个无穷大函数 $f(x)$ 和 $g(x)$ ，可以通过求极限 $\\lim_{x \\to +\\infty} \\frac{f(x)}{g(x)}$ 来比较增长速度",
+        "提示2：若 $\\lim_{x \\to +\\infty} \\frac{f(x)}{g(x)} = 0$ ，则 $g(x)$ 比 $f(x)$ 增长快",
+        "提示3：计算 $\\lim_{x \\to +\\infty} \\frac{x^{2}}{e^{x}}$ ，可使用洛必达法则"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷大比无穷大",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to +\\infty} \\frac{3x^2 + 2x + 1}{2x^2 - x + 5}$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$2$"
+        },
+        {
+          "label": "D",
+          "content": "$3$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：对于无穷大比无穷大的极限，可分子分母同时除以最高次幂 $x^2$",
+        "提示2：化简式子后再求极限",
+        "提示3：根据极限运算法则计算化简后式子的极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：洛必达法则局限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在使用洛必达法则求极限 $\\lim_{x \\to 0} \\frac{e^x - 1 - x}{x^2}$ 时，若不考虑洛必达法则的局限，直接多次使用洛必达法则计算，第一次使用洛必达法则后得到的式子为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\lim_{x \\to 0} \\frac{e^x - 1}{2x}$",
+      "hints": [
+        "提示1：明确洛必达法则的内容，对于 $\\frac{0}{0}$ 型或 $\\frac{\\infty}{\\infty}$ 型的极限 $\\lim_{x \\to a} \\frac{f(x)}{g(x)}$，可以转化为 $\\lim_{x \\to a} \\frac{f'(x)}{g'(x)}$",
+        "提示2：确定本题中 $f(x)=e^x - 1 - x$，$g(x)=x^2$",
+        "提示3：分别对 $f(x)$ 和 $g(x)$ 求导，再代入洛必达法则的公式中"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷减无穷求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to +\\infty} (\\sqrt{x^2 + 2x} - x)$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$1$"
+        },
+        {
+          "label": "C",
+          "content": "$2$"
+        },
+        {
+          "label": "D",
+          "content": "+$\\infty$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：这是一个无穷减无穷的形式，可先进行分子有理化",
+        "提示2：分子有理化后，对式子进行化简",
+        "提示3：最后求极限得出结果"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：1^∞型极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to 0} (1 + 3x)^{\\frac{2}{x}}$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$e^3$"
+        },
+        {
+          "label": "B",
+          "content": "$e^6$"
+        },
+        {
+          "label": "C",
+          "content": "$e^2$"
+        },
+        {
+          "label": "D",
+          "content": "$e$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：对于 $1^\\infty$ 型极限 $\\lim_{x \\to a} (1 + f(x))^{g(x)}$，可利用重要极限 $\\lim_{t \\to 0} (1 + t)^{\\frac{1}{t}} = e$ 进行求解",
+        "提示2：将原式变形为 $\\lim_{x \\to 0} [(1 + 3x)^{\\frac{1}{3x}}]^{6}$",
+        "提示3：令 $t = 3x$，当 $x \\to 0$ 时，$t \\to 0$，再根据指数运算法则和重要极限求解"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：自然常数e的定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知自然常数 $e$ 的一种定义为 $\\lim_{n \\to \\infty}(1 + \\frac{1}{n})^n$，计算极限 $\\lim_{x \\to 0}(1 + x)^{\\frac{1}{x}}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$e$",
+      "hints": [
+        "提示1：令 $n = \\frac{1}{x}$，当 $x \\to 0$ 时，分析 $n$ 的变化趋势",
+        "提示2：将 $x = \\frac{1}{n}$ 代入原式进行转化",
+        "提示3：根据自然常数 $e$ 的定义 $\\lim_{n \\to \\infty}(1 + \\frac{1}{n})^n$ 得出结果"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：e的自然现象应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在某个自然现象的数学模型中，涉及到 $e$ 的应用。已知某自然增长现象的函数模型为 $y = A e^{kt}$，其中 $A$ 为初始值，$k$ 为增长率常数，$t$ 为时间。若初始值 $A = 100$，当 $t = 2$ 时，$y = 150$，那么当 $t = 5$ 时，$y$ 的值约为 ___ （结果保留整数）。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "260",
+      "hints": [
+        "提示1：先将 $A = 100$，$t = 2$，$y = 150$ 代入函数 $y = A e^{kt}$ 中，求出 $k$ 的值",
+        "提示2：对等式 $150 = 100 e^{2k}$ 两边同时除以 $100$，再取自然对数求解 $k$",
+        "提示3：将求出的 $k$ 值和 $t = 5$ 代入函数 $y = A e^{kt}$ 中，计算出 $y$ 的值"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：e相关极限计算方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 0} (1 + 2x)^{\\frac{1}{x}}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$e^2$",
+      "hints": [
+        "提示1：回忆重要极限公式 $\\lim_{x \\to 0} (1 + x)^{\\frac{1}{x}} = e$",
+        "提示2：对原式进行变形，令 $t = 2x$，则 $x = \\frac{t}{2}$",
+        "提示3：将变形后的式子化简并利用重要极限公式求解"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：含三角函数的e极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 0} \\frac{e^{\\sin x} - 1}{x}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "1",
+      "hints": [
+        "提示1：当 $x \\to 0$ 时，有等价无穷小 $e^x - 1 \\sim x$",
+        "提示2：将 $\\sin x$ 看作一个整体，当 $x \\to 0$ 时，$\\sin x \\to 0$，此时 $e^{\\sin x} - 1 \\sim \\sin x$",
+        "提示3：再利用重要极限 $\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1$ 计算极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：极限四则运算法则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知 $\\lim_{x \\to 2} f(x) = 3$，$\\lim_{x \\to 2} g(x) = 4$，计算 $\\lim_{x \\to 2} \\frac{2f(x) - g(x)}{f(x) + 3g(x)}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{2}{13}$",
+      "hints": [
+        "提示1：根据极限四则运算法则，若 $\\lim_{x \\to a} f(x)$ 和 $\\lim_{x \\to a} g(x)$ 都存在，则 $\\lim_{x \\to a} [k_1f(x) \\pm k_2g(x)] = k_1\\lim_{x \\to a} f(x) \\pm k_2\\lim_{x \\to a} g(x)$，其中 $k_1,k_2$ 为常数",
+        "提示2：先分别计算分子分母的极限",
+        "提示3：再将分子分母的极限值代入原式计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数连续性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=\\begin{cases}x + 1, & x < 0 \\\\ 2x + a, & x \\geq 0 \\end{cases}$，若函数 $f(x)$ 在 $x = 0$ 处连续，则 $a$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$1$"
+        },
+        {
+          "label": "C",
+          "content": "$2$"
+        },
+        {
+          "label": "D",
+          "content": "$3$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：函数在某点连续的定义是该点的左极限等于右极限等于该点的函数值",
+        "提示2：先分别计算函数在 $x = 0$ 处的左极限和右极限",
+        "提示3：根据左极限等于右极限求出 $a$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：间断点类型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "函数 $f(x) = \\frac{x^2 - 1}{x^2 - 3x + 2}$ 的间断点类型是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "可去间断点"
+        },
+        {
+          "label": "B",
+          "content": "跳跃间断点"
+        },
+        {
+          "label": "C",
+          "content": "无穷间断点"
+        },
+        {
+          "label": "D",
+          "content": "振荡间断点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先求出函数的间断点，即分母为零的点",
+        "提示2：对函数进行化简，再求间断点处的极限",
+        "提示3：根据极限情况判断间断点类型，若极限存在但函数在该点无定义或函数值不等于极限值，则为可去间断点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：间断点的寻找",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "函数 $f(x) = \\frac{x^2 - 4}{x^2 - 5x + 6}$ 的间断点为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$x = 2$ 和 $x = 3$"
+        },
+        {
+          "label": "B",
+          "content": "$x = 2$"
+        },
+        {
+          "label": "C",
+          "content": "$x = 3$"
+        },
+        {
+          "label": "D",
+          "content": "无间断点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：函数的间断点是使函数无定义的点，对于分式函数，分母为零的点可能是间断点",
+        "提示2：令分母 $x^2 - 5x + 6 = 0$，求解方程",
+        "提示3：通过因式分解 $x^2 - 5x + 6=(x - 2)(x - 3)$ 来求解方程"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：已知极限求参数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知 $\\lim_{x \\to 2} \\frac{x^2 + ax + b}{x - 2} = 3$，则 $a$ 和 $b$ 的值分别为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$a = -1$，$b = -2$"
+        },
+        {
+          "label": "B",
+          "content": "$a = -1$，$b = 2$"
+        },
+        {
+          "label": "C",
+          "content": "$a = 1$，$b = -2$"
+        },
+        {
+          "label": "D",
+          "content": "$a = 1$，$b = 2"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：因为当 $x \\to 2$ 时，分母 $x - 2 \\to 0$，而极限值存在，所以分子 $x^2 + ax + b$ 在 $x = 2$ 时的值为 $0$，由此可得到一个关于 $a$ 和 $b$ 的方程",
+        "提示2：将分子因式分解，再结合极限值求出 $a$ 和 $b$ 的值",
+        "提示3：设 $x^2 + ax + b = (x - 2)(x + m)$，展开后对比系数求解"
+      ]
+    }
+  ],
+  "count": 30
+}

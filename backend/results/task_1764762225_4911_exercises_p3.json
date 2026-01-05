@@ -1,0 +1,69 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Python安装",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在Windows系统上安装Python，若因网络等原因想直接获取安装包，应该怎么做？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "在搜索引擎中随意下载安装包"
+        },
+        {
+          "label": "B",
+          "content": "在有官方标志的网页中直接获取"
+        },
+        {
+          "label": "C",
+          "content": "在同名公众号中回复“py y安装”获取"
+        },
+        {
+          "label": "D",
+          "content": "从非官方渠道购买安装包"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：视频中提到了特殊情况下获取安装包的特定方式",
+        "提示2：关注公众号回复关键词是视频中给出的办法",
+        "提示3：不要选择随意或非官方的获取途径"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Pycharm安装",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在进行Pycharm安装时，若遇到网络问题无法从官方渠道下载安装包，以下哪种方式可以获取安装包？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "在任意网站搜索下载Pycharm安装包"
+        },
+        {
+          "label": "B",
+          "content": "在视频作者的同名公众号回复“py y安装”获取"
+        },
+        {
+          "label": "C",
+          "content": "在电脑自带的应用商店搜索下载"
+        },
+        {
+          "label": "D",
+          "content": "等待网络恢复后再从官方渠道下载，无其他办法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到了在网络有问题时获取安装包的特殊方式",
+        "提示2：关注视频中提到的公众号相关信息",
+        "提示3：思考除了官方渠道，是否还有其他获取安装包的途径"
+      ]
+    }
+  ],
+  "count": 2
+}

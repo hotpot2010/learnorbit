@@ -1,0 +1,453 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：今日讲解内容",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "老师今天打算讲解的内容是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一般均衡论和福利经济学以及市场失灵和微观经济政策"
+        },
+        {
+          "label": "B",
+          "content": "一般均衡论和福利经济学"
+        },
+        {
+          "label": "C",
+          "content": "市场失灵和微观经济政策"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细听老师提到的今天要讲解的内容",
+        "提示2：关注老师对于后续章节讲与不讲的表述",
+        "提示3：明确老师实际打算讲的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：重点内容划分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "老师今天打算讲解的内容是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一般均衡论和福利经济学以及市场失灵和微观经济政策"
+        },
+        {
+          "label": "B",
+          "content": "一般均衡论和福利经济学"
+        },
+        {
+          "label": "C",
+          "content": "市场失灵和微观经济政策"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意老师明确表示了今天要讲的内容",
+        "提示2：关注老师对于后续章节讲与不讲的说明",
+        "提示3：根据视频内容直接判断老师打算讲解的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：帕累托最优",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频提到将讲解一般均衡论和福利经济学，以下关于这部分内容的理解，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "视频会重点讲解市场失灵和微观经济政策"
+        },
+        {
+          "label": "B",
+          "content": "一般均衡论和福利经济学是微观经济学部分录制的最后一期视频内容"
+        },
+        {
+          "label": "C",
+          "content": "市场失灵和微观经济政策的内容过于复杂，老师不打算深入讲解"
+        },
+        {
+          "label": "D",
+          "content": "一般均衡论和福利经济学与市场失灵和微观经济政策无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于讲解内容安排的描述",
+        "提示2：明确老师对不同章节内容的讲解计划",
+        "提示3：分析每个选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：帕累托改进",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频提到要讲解一般均衡论和福利经济学，以下关于一般均衡论的理解正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一般均衡论只考虑单个市场的均衡情况"
+        },
+        {
+          "label": "B",
+          "content": "一般均衡论研究所有市场的相互联系和同时达到均衡的状态，如商品市场和要素市场的共同均衡 $\\sum_{i = 1}^{n} Q_{i}^{d}=\\sum_{i = 1}^{n} Q_{i}^{s}$，其中 $Q_{i}^{d}$ 表示第 $i$ 种商品的需求量，$Q_{i}^{s}$ 表示第 $i$ 种商品的供给量，$n$ 为商品种类数"
+        },
+        {
+          "label": "C",
+          "content": "一般均衡论与福利经济学没有关联"
+        },
+        {
+          "label": "D",
+          "content": "一般均衡论不考虑市场之间的反馈效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确一般均衡论的定义，它是研究多个市场相互作用的理论",
+        "提示2：分析每个选项与一般均衡论概念的契合度，思考市场之间的联系和均衡状态",
+        "提示3：注意一般均衡论和福利经济学的关系以及市场反馈效应等要点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：交换帕累托最优",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "老师本次视频打算讲解的内容是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一般均衡论和福利经济学以及市场失灵和微观经济政策"
+        },
+        {
+          "label": "B",
+          "content": "仅一般均衡论和福利经济学"
+        },
+        {
+          "label": "C",
+          "content": "仅市场失灵和微观经济政策"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细聆听老师在视频中对讲解内容的说明",
+        "提示2：注意老师提到对某些内容的讲解计划",
+        "提示3：明确老师本次视频要讲的核心内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：交换最优条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到要讲解的内容是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一般均衡论和福利经济学，以及市场失灵和微观经济政策"
+        },
+        {
+          "label": "B",
+          "content": "只讲解一般均衡论和福利经济学，市场失灵和微观经济政策让大家自己看书"
+        },
+        {
+          "label": "C",
+          "content": "只讲解市场失灵和微观经济政策，一般均衡论和福利经济学让大家自己看书"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中老师对要讲解内容和不讲解内容的表述",
+        "提示2：明确老师提到了要讲一般均衡论和福利经济学",
+        "提示3：注意老师说市场失灵和微观经济政策大家自己看书能看懂，所以不打算讲"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：生产最优分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到微观经济学部分录制的最后一期视频讲解的内容是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "市场失灵和微观经济政策"
+        },
+        {
+          "label": "B",
+          "content": "一般均衡论和福利经济学"
+        },
+        {
+          "label": "C",
+          "content": "生产最优分析"
+        },
+        {
+          "label": "D",
+          "content": "消费者行为理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的最后一期视频要讲解的内容",
+        "提示2：注意区分讲解内容和未讲解内容",
+        "提示3：在视频中找到明确提及的最后一期讲解主题"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：生产可能性曲线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到要讲解的内容是关于微观经济学部分最后一期视频，涉及的知识点是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "市场失灵和微观经济政策"
+        },
+        {
+          "label": "B",
+          "content": "一般均衡论和福利经济学"
+        },
+        {
+          "label": "C",
+          "content": "生产可能性曲线"
+        },
+        {
+          "label": "D",
+          "content": "消费者行为理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中明确指出要讲解的本期内容",
+        "提示2：不要被未讲解的内容干扰",
+        "提示3：仔细在视频中找到关键的知识点名称表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：生产可能性曲线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到本节课要讲解的内容是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "局部均衡论和福利经济学"
+        },
+        {
+          "label": "B",
+          "content": "一般均衡论和福利经济学"
+        },
+        {
+          "label": "C",
+          "content": "市场失灵和微观经济政策"
+        },
+        {
+          "label": "D",
+          "content": "生产可能性曲线相关知识"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中明确指出本节课要讲解的内容",
+        "提示2：视频中对不同内容有提及是否要讲解，注意区分",
+        "提示3：关注视频中关于本节课讲解重点的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：经济相关比率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到微观经济学部分计划录制的最后一期视频讲解的内容是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一般均衡论和福利经济学"
+        },
+        {
+          "label": "B",
+          "content": "市场失灵和微观经济政策"
+        },
+        {
+          "label": "C",
+          "content": "消费者行为理论"
+        },
+        {
+          "label": "D",
+          "content": "生产者行为理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中关于最后一期视频讲解内容的描述",
+        "提示2：注意区分讲解内容和未讲解内容",
+        "提示3：视频中明确说明了最后一期要讲的具体内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：福利经济学第一定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到微观经济学部分录制的最后一期视频讲解的内容是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一般均衡论和福利经济学"
+        },
+        {
+          "label": "B",
+          "content": "市场失灵和微观经济政策"
+        },
+        {
+          "label": "C",
+          "content": "消费者行为理论"
+        },
+        {
+          "label": "D",
+          "content": "生产者行为理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中关于最后一期视频讲解内容的描述",
+        "提示2：明确提到了具体要讲的内容名称",
+        "提示3：注意与未讲解内容进行区分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：福利经济学第一定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到接下来要讲的内容是后续计划录制的微观经济学部分的最后一期视频的内容，这部分内容是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "市场失灵和微观经济政策"
+        },
+        {
+          "label": "B",
+          "content": "一般均衡论和福利经济学"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济政策分析"
+        },
+        {
+          "label": "D",
+          "content": "消费者行为理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中明确提到的本期要讲的内容",
+        "提示2：回顾视频里关于后续录制安排和内容的描述",
+        "提示3：排除与视频所讲内容无关的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：福利经济学第二定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到老师打算在微观经济学部分录制的最后一期视频讲解的内容是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一般均衡论和福利经济学"
+        },
+        {
+          "label": "B",
+          "content": "市场失灵和微观经济政策"
+        },
+        {
+          "label": "C",
+          "content": "宏观经济政策"
+        },
+        {
+          "label": "D",
+          "content": "消费者行为理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：认真回顾视频中老师关于最后一期视频讲解内容的表述",
+        "提示2：注意区分老师讲解的内容和不打算讲解的内容",
+        "提示3：仔细对比各个选项与视频内容是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：阿罗不可能定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "老师本次视频讲解的内容属于以下哪个经济学范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "宏观经济学"
+        },
+        {
+          "label": "B",
+          "content": "微观经济学"
+        },
+        {
+          "label": "C",
+          "content": "产业经济学"
+        },
+        {
+          "label": "D",
+          "content": "计量经济学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到本次讲解是在微观经济学部分录制的内容",
+        "提示2：仔细分析关键词‘微观经济学’与各选项的关联",
+        "提示3：排除与微观经济学无关的其他经济学范畴选项"
+      ]
+    }
+  ],
+  "count": 14
+}

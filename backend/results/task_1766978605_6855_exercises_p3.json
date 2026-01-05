@@ -1,0 +1,37 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：课程资料介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课程配套的电子讲义可以在哪里找到？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "置顶评论区，点击链接获取"
+        },
+        {
+          "label": "B",
+          "content": "课程官方网站首页"
+        },
+        {
+          "label": "C",
+          "content": "老师的个人社交媒体账号"
+        },
+        {
+          "label": "D",
+          "content": "课程讨论区的精华帖"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "注意视频中提到的资料获取位置的关键信息",
+        "回忆视频里关于电子讲义查找方式的描述",
+        "视频中明确指出了具体的查找区域和操作"
+      ]
+    }
+  ],
+  "count": 1
+}

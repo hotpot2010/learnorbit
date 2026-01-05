@@ -1,0 +1,165 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正逆相等判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $A(g) + B(g) \\rightleftharpoons C(g) + D(g)$，以下哪种情况能说明该反应达到平衡状态？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "反应速率 $v(A)_{正} = v(C)_{正}$"
+        },
+        {
+          "label": "B",
+          "content": "反应速率 $v(A)_{正} = v(D)_{逆}$"
+        },
+        {
+          "label": "C",
+          "content": "反应速率 $v(B)_{逆} = v(D)_{逆}$"
+        },
+        {
+          "label": "D",
+          "content": "反应速率 $v(B)_{正} = v(C)_{逆}$ 且 $v(A)_{正} = v(D)_{逆}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频内容，反应达到平衡状态的判断依据之一是正逆反应速率相等",
+        "提示2：对于同一物质，正反应速率和逆反应速率要相等才能说明达到平衡",
+        "提示3：对于不同物质，要根据化学计量数的关系来判断正逆反应速率是否相等"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：变量不变判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个化学反应中，正反应速率用 $v_{正}$ 表示，逆反应速率用 $v_{逆}$ 表示。当满足以下哪个条件时，反应达到平衡状态？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$v_{正} > v_{逆}$"
+        },
+        {
+          "label": "B",
+          "content": "$v_{正} < v_{逆}$"
+        },
+        {
+          "label": "C",
+          "content": "$v_{正} = v_{逆}$"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的判断反应达到平衡状态的方法",
+        "提示2：明确正逆反应速率的关系与平衡状态的联系",
+        "提示3：当正反应速率等于逆反应速率时，反应体系中各物质的量不再随时间变化，达到平衡状态"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平均摩尔质量",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应，以下哪种情况可以说明反应达到了平衡状态？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正反应速率大于逆反应速率"
+        },
+        {
+          "label": "B",
+          "content": "$v_A正 = v_A逆$"
+        },
+        {
+          "label": "C",
+          "content": "正反应速率逐渐增大"
+        },
+        {
+          "label": "D",
+          "content": "反应物浓度逐渐增大"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频内容，判断平衡状态有两类依据，其中之一是正逆相等",
+        "提示2：正逆相等指的是正反应速率等于逆反应速率",
+        "提示3：分析每个选项是否符合正逆反应速率相等这一平衡判断依据"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：气体密度判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于某可逆反应，以下能说明反应达到平衡状态的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "反应速率 $v_{正} > v_{逆}$"
+        },
+        {
+          "label": "B",
+          "content": "反应速率 $v_{正} = v_{逆} = 0$"
+        },
+        {
+          "label": "C",
+          "content": "反应速率 $v_{正} = v_{逆}$，如 $v_{a正}=v_{a逆}$"
+        },
+        {
+          "label": "D",
+          "content": "反应速率 $v_{正}$ 与 $v_{逆}$ 无固定关系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频内容，判断平衡状态有两类依据，第一类是正逆相等",
+        "提示2：正逆相等指的是正反应速率等于逆反应速率",
+        "提示3：当反应达到平衡状态时，反应并没有停止，正逆反应速率不为0"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：温度颜色判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个化学反应中，正反应速率用 $v_正$ 表示，逆反应速率用 $v_逆$ 表示。当反应达到平衡状态时，下列哪个条件是成立的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$v_正 > v_逆$"
+        },
+        {
+          "label": "B",
+          "content": "$v_正 < v_逆$"
+        },
+        {
+          "label": "C",
+          "content": "$v_正 = v_逆$"
+        },
+        {
+          "label": "D",
+          "content": "无法确定 $v_正$ 和 $v_逆$ 的关系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于平衡状态的判断依据",
+        "提示2：明确正逆相等是平衡状态的一个重要特征",
+        "提示3：当正反应速率等于逆反应速率时，反应达到动态平衡"
+      ]
+    }
+  ],
+  "count": 5
+}

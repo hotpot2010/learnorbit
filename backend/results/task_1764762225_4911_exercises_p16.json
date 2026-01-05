@@ -1,0 +1,101 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：嵌套条件语句",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在Python编程中，考虑一个场景：你想和对象一起打游戏。如果对象心情好，你可以和他一起打游戏；如果对象心情不好，但他出去找朋友玩不在家了，你也可以自己在家打游戏；否则你不能打游戏。以下哪个代码能正确实现这个逻辑？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "python\nif 对象心情好:\n    print('一起打游戏')\nelse:\n    if 对象不在家:\n        print('自己在家打游戏')\n    else:\n        print('不能打游戏')\n"
+        },
+        {
+          "label": "B",
+          "content": "python\nif 对象心情好:\n    print('一起打游戏')\nif 对象不在家:\n    print('自己在家打游戏')\nelse:\n    print('不能打游戏')\n"
+        },
+        {
+          "label": "C",
+          "content": "python\nif 对象心情好:\n    print('一起打游戏')\nelse:\n    if 对象在家:\n        print('自己在家打游戏')\n    else:\n        print('不能打游戏')\n"
+        },
+        {
+          "label": "D",
+          "content": "python\nif 对象心情好:\n    print('一起打游戏')\nelse:\n    if 对象不在家:\n        print('不能打游戏')\n    else:\n        print('自己在家打游戏')\n"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先判断对象心情是否好，若心情好则一起打游戏",
+        "提示2：若对象心情不好，需要进一步判断对象是否在家",
+        "提示3：若对象不在家，此时可以自己在家打游戏；若在家则不能打游戏"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：多条件判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 Python 编程中，考虑一个场景：你想和对象一起打游戏。已知如果对象心情好，你可以邀请他一起打游戏；但如果对象心情不好，且他在家，你就不敢邀请他打游戏；若对象心情不好，但他不在家（找朋友玩去了），你可以自己打游戏。现有以下代码片段，选择能正确实现该逻辑的选项。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "python\nmood_good = True\nat_home = True\nif mood_good:\n    print('邀请对象一起打游戏')\nelif not mood_good and at_home:\n    print('不敢邀请对象打游戏')\nelif not mood_good and not at_home:\n    print('自己打游戏')\n"
+        },
+        {
+          "label": "B",
+          "content": "python\nmood_good = True\nat_home = True\nif not mood_good:\n    print('邀请对象一起打游戏')\nelif mood_good and at_home:\n    print('不敢邀请对象打游戏')\nelif mood_good and not at_home:\n    print('自己打游戏')\n"
+        },
+        {
+          "label": "C",
+          "content": "python\nmood_good = True\nat_home = True\nif mood_good:\n    print('不敢邀请对象打游戏')\nelif not mood_good and at_home:\n    print('邀请对象一起打游戏')\nelif not mood_good and not at_home:\n    print('自己打游戏')\n"
+        },
+        {
+          "label": "D",
+          "content": "python\nmood_good = True\nat_home = True\nif mood_good:\n    print('自己打游戏')\nelif not mood_good and at_home:\n    print('不敢邀请对象打游戏')\nelif not mood_good and not at_home:\n    print('邀请对象一起打游戏')\n"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先明确各个条件对应的行为，心情好时邀请对象一起打游戏，心情不好且在家时不敢邀请，心情不好且不在家时自己打游戏。",
+        "提示2：检查每个选项中 if 和 elif 条件的设置是否与上述逻辑一致。",
+        "提示3：注意条件判断中布尔值的使用，True 表示条件成立，False 表示条件不成立。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：完善BMI计算器",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在Python编程中，考虑一个场景：当你的对象心情好时，你可以陪他打一晚上游戏；当对象心情不好时，你通常不敢陪他打游戏，但如果他心情不好且出去找朋友玩不在家了，你就可以自己打游戏。以下哪个代码逻辑符合这个场景？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "python\nmood_good = True\nat_home = True\nif mood_good:\n    print('陪对象打游戏')\nelif not mood_good and not at_home:\n    print('自己打游戏')\nelse:\n    print('不敢陪对象打游戏')\n"
+        },
+        {
+          "label": "B",
+          "content": "python\nmood_good = True\nat_home = True\nif not mood_good:\n    print('不敢陪对象打游戏')\nelif mood_good and not at_home:\n    print('自己打游戏')\nelse:\n    print('陪对象打游戏')\n"
+        },
+        {
+          "label": "C",
+          "content": "python\nmood_good = True\nat_home = True\nif mood_good:\n    print('陪对象打游戏')\nelif not mood_good and at_home:\n    print('自己打游戏')\nelse:\n    print('不敢陪对象打游戏')\n"
+        },
+        {
+          "label": "D",
+          "content": "python\nmood_good = True\nat_home = True\nif not mood_good:\n    print('自己打游戏')\nelif mood_good and at_home:\n    print('陪对象打游戏')\nelse:\n    print('不敢陪对象打游戏')\n"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确各种情况对应的条件，心情好陪对象打游戏，心情不好且不在家自己打游戏，其他情况不敢陪对象打游戏",
+        "提示2：分析每个选项中条件判断语句是否正确对应了各种情况",
+        "提示3：注意 `if`、`elif` 和 `else` 语句的逻辑关系"
+      ]
+    }
+  ],
+  "count": 3
+}

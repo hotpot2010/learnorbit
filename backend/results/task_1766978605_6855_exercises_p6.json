@@ -1,0 +1,400 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：第一类曲线积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知曲线 $C$ 为圆心在原点，半径为 $2$ 的圆在第一象限的部分，计算第一类曲线积分 $\\int_{C} (x + y) ds$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2\\sqrt{2}\\pi$"
+        },
+        {
+          "label": "B",
+          "content": "$4\\sqrt{2}\\pi$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sqrt{2}\\pi$"
+        },
+        {
+          "label": "D",
+          "content": "$3\\sqrt{2}\\pi$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "先写出曲线 $C$ 的参数方程",
+        "根据第一类曲线积分公式 $\\int_{C} f(x,y) ds = \\int_{\\alpha}^{\\beta} f(x(t),y(t))\\sqrt{(x'(t))^2+(y'(t))^2}dt$ 进行转化",
+        "确定参数的取值范围并计算定积分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：曲线积分计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算曲线 $C$：$x = t$，$y = t^2$（$0 \\leq t \\leq 1$）上的第一类曲线积分 $\\int_{C}(x + y) ds$，结果为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{3}(5\\sqrt{5}-1)$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{12}(5\\sqrt{5}-1)$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{1}{6}(5\\sqrt{5}-1)$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{1}{24}(5\\sqrt{5}-1)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "先根据曲线参数方程求出 $ds$ 的表达式",
+        "将曲线的参数方程代入被积函数",
+        "最后根据定积分计算曲线积分的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：积分代入技巧",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算曲线积分 $\\int_{L} (x + y) ds$，其中 $L$ 为直线 $y = x$ 上从点 $(0,0)$ 到点 $(1,1)$ 的线段，以下哪个选项正确？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sqrt{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$2\\sqrt{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{\\sqrt{2}}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{3\\sqrt{2}}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先将曲线 $L$ 用参数方程表示",
+        "根据曲线积分公式 $\\int_{L} f(x,y) ds=\\int_{a}^{b} f(x(t),y(t))\\sqrt{(x'(t))^{2}+(y'(t))^{2}}dt$ 进行计算",
+        "确定参数的取值范围"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：例题解题方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算曲线积分 $\\int_{L} (x^2 + y^2) ds$，其中 $L$ 为圆周 $x^2 + y^2 = a^2$（$a>0$），___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "2\\pi a^3",
+      "hints": [
+        "先将曲线 $L$ 的方程代入被积函数化简",
+        "利用曲线积分与弧长的关系，将曲线积分转化为定积分",
+        "根据定积分的计算方法求解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：曲线积分解法一",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算曲线积分 $\\int_{L} (x + y) ds$，其中 $L$ 为直线段 $y = x$ 从点 $(0,0)$ 到点 $(1,1)$ 的部分，以下结果正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sqrt{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$2\\sqrt{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{\\sqrt{2}}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{3\\sqrt{2}}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先将曲线 $L$ 用参数方程表示",
+        "根据曲线积分公式进行计算",
+        "确定积分上下限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：曲线积分解法二",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算曲线积分 $\\int_{L} (x + y) ds$，其中 $L$ 为直线 $y = x$ 上从点 $(0,0)$ 到点 $(1,1)$ 的线段，以下哪个选项正确？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sqrt{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$2\\sqrt{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{\\sqrt{2}}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{3\\sqrt{2}}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先将曲线 $L$ 用参数方程表示",
+        "根据曲线积分公式进行计算",
+        "注意 $ds$ 的计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：曲线积分解法三",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算第一类曲线积分 $\\int_{L} (x + y) ds$，其中 $L$ 为直线 $y = x$ 上从点 $(0,0)$ 到点 $(1,1)$ 的线段，以下结果正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sqrt{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$2\\sqrt{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{\\sqrt{2}}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{3\\sqrt{2}}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先将曲线 $L$ 用参数方程表示",
+        "再根据第一类曲线积分公式进行计算",
+        "注意 $ds$ 的计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：两类曲线积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算曲线积分 $\\int_{L} (x^2 + y^2) ds$，其中 $L$ 为圆心在原点，半径为 $2$ 的圆周。 ___",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "8\\pi",
+      "hints": [
+        "首先写出圆周的参数方程，然后根据第一类曲线积分公式进行计算",
+        "圆心在原点，半径为 $r$ 的圆周的参数方程为 $x = r\\cos t$，$y = r\\sin t$，$t\\in[0,2\\pi]$",
+        "第一类曲线积分公式 $\\int_{L} f(x,y) ds=\\int_{\\alpha}^{\\beta} f(x(t),y(t))\\sqrt{(x'(t))^2+(y'(t))^2}dt$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：第二类曲线积分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算第一类曲线积分 $\\int_{L} (x + y) ds$，其中 $L$ 为连接点 $(0,0)$ 和 $(1,1)$ 的直线段，以下哪个选项正确？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sqrt{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{2\\sqrt{2}}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{3\\sqrt{2}}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$2\\sqrt{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "先求出直线段 $L$ 的参数方程",
+        "再根据第一类曲线积分的计算公式进行计算",
+        "注意 $ds$ 的计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：直角坐标计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知曲线 $C$ 的方程为 $y = x^2$，计算曲线 $C$ 从 $x = 0$ 到 $x = 1$ 关于弧长的第一类曲线积分 $\\int_{C} (x + y) ds$ 的值为 ___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "\\frac{5\\sqrt{5}-1}{12}",
+      "hints": [
+        "先根据曲线方程求出弧长元素 $ds$ 的表达式",
+        "将曲线积分转化为定积分进行计算",
+        "利用定积分的计算方法求解定积分的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：参数方程计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知曲线 $C$ 的参数方程为 $\\begin{cases}x = t^2 \\\\ y = 2t \\end{cases}$（$t$ 为参数），计算曲线 $C$ 从 $t = 0$ 到 $t = 1$ 关于弧长的曲线积分 $\\int_{C} (x + y) ds$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{5\\sqrt{5} - 1}{3}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{5\\sqrt{5} + 1}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{5\\sqrt{5} - 1}{6}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{5\\sqrt{5} + 1}{6}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先根据参数方程求出 $ds$ 的表达式",
+        "将 $x,y$ 用参数 $t$ 表示代入曲线积分式子",
+        "最后进行定积分计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：例题计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算曲线积分 $\\oint_{L} (x + y) ds$，其中 $L$ 为圆周 $x^2 + y^2 = 4$，则该曲线积分的值为 ___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "0",
+      "hints": [
+        "利用曲线的参数方程将曲线积分转化为定积分",
+        "圆周 $x^2 + y^2 = r^2$ 的参数方程为 $x = r\\cos t$，$y = r\\sin t$",
+        "注意积分上下限的确定"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：格林公式使用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "设曲线 $C$ 为圆周 $x^2 + y^2 = 4$ 取正向，计算曲线积分 $\\oint_{C}(x^2 - y)dx + (x + y^2)dy$，结果为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$4\\pi$"
+        },
+        {
+          "label": "B",
+          "content": "$8\\pi$"
+        },
+        {
+          "label": "C",
+          "content": "$12\\pi$"
+        },
+        {
+          "label": "D",
+          "content": "$16\\pi$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "本题可使用格林公式将曲线积分转化为二重积分进行计算",
+        "格林公式为 $\\oint_{C}Pdx + Qdy = \\iint_{D}(\\frac{\\partial Q}{\\partial x}-\\frac{\\partial P}{\\partial y})dxdy$，其中 $C$ 为正向闭曲线，$D$ 为 $C$ 所围成的闭区域",
+        "先求出 $P$、$Q$ 关于 $x$、$y$ 的偏导数，再计算二重积分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正负方向判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知曲线积分 $\\int_{L} Pdx + Qdy$，其中曲线 $L$ 是从点 $(0,0)$ 到点 $(1,1)$ 的直线段，$P = x + y$，$Q = x - y$，则该曲线积分的值（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "大于 0"
+        },
+        {
+          "label": "B",
+          "content": "小于 0"
+        },
+        {
+          "label": "C",
+          "content": "等于 0"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "先写出曲线 $L$ 的参数方程",
+        "将参数方程代入曲线积分公式进行计算",
+        "根据计算结果判断正负"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：公式应用计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算曲线积分 $\\int_{C} (x + y) ds$，其中曲线 $C$ 为圆周 $x^2 + y^2 = 1$ 在第一象限的部分，___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "\\sqrt{2}",
+      "hints": [
+        "先将曲线 $C$ 用参数方程表示",
+        "再根据曲线积分的计算公式进行计算",
+        "注意参数的取值范围"
+      ]
+    }
+  ],
+  "count": 15
+}

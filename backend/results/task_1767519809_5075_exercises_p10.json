@@ -1,0 +1,69 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：浓度对转化率影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $aA(g) + bB(g) \\rightleftharpoons cC(g) + dD(g)$，在一定温度下达到平衡状态。若增大反应物 $A$ 的浓度，下列说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "反应物 $A$ 的转化率升高，反应物 $B$ 的转化率升高"
+        },
+        {
+          "label": "B",
+          "content": "反应物 $A$ 的转化率降低，反应物 $B$ 的转化率升高"
+        },
+        {
+          "label": "C",
+          "content": "反应物 $A$ 的转化率升高，反应物 $B$ 的转化率降低"
+        },
+        {
+          "label": "D",
+          "content": "反应物 $A$ 的转化率降低，反应物 $B$ 的转化率降低"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：依据视频内容，分析增大反应物浓度时平衡移动方向",
+        "提示2：考虑增大 $A$ 的浓度后，$A$ 转化的量和总量的变化关系对其转化率的影响",
+        "提示3：思考增大 $A$ 的浓度使平衡正向移动对 $B$ 转化率的影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：同增浓度分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在可逆反应 $aA(g) + bB(g) \\rightleftharpoons cC(g) + dD(g)$ 达到平衡后，增大反应物 $A$ 的浓度，下列说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "反应物 $A$ 的转化率升高，反应物 $B$ 的转化率也升高"
+        },
+        {
+          "label": "B",
+          "content": "反应物 $A$ 的转化率降低，反应物 $B$ 的转化率升高"
+        },
+        {
+          "label": "C",
+          "content": "反应物 $A$ 的转化率升高，反应物 $B$ 的转化率降低"
+        },
+        {
+          "label": "D",
+          "content": "反应物 $A$ 的转化率降低，反应物 $B$ 的转化率也降低"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频内容，增大反应物 $A$ 的浓度，平衡会正向移动",
+        "提示2：对于反应物 $B$ ，平衡正向移动会使其反应的量增多，从而转化率升高",
+        "提示3：对于反应物 $A$ ，虽然转化的量有所提高，但增加的总量相对更多，所以其转化率会降低"
+      ]
+    }
+  ],
+  "count": 2
+}

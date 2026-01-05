@@ -1,0 +1,564 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限类型介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "数学分析中，主要讲解的极限类型有哪些？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的极限和函数的极限"
+        },
+        {
+          "label": "B",
+          "content": "积分的极限和导数的极限"
+        },
+        {
+          "label": "C",
+          "content": "级数的极限和微分的极限"
+        },
+        {
+          "label": "D",
+          "content": "向量的极限和矩阵的极限"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的数学分析讲解的极限类型",
+        "提示2：重点关注提到的两种主要类型",
+        "提示3：排除未在视频中提及的类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限定义讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "数学分析中，极限主要讲了哪两类极限？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的极限和积分的极限"
+        },
+        {
+          "label": "B",
+          "content": "数列的极限和函数的极限"
+        },
+        {
+          "label": "C",
+          "content": "导数的极限和函数的极限"
+        },
+        {
+          "label": "D",
+          "content": "积分的极限和导数的极限"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中关于极限分类的相关内容",
+        "提示2：明确指出了两类极限的名称",
+        "提示3：与数列和函数相关"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限性质讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "数学分析中主要讲解的两类极限是以下哪一组？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的极限和导数的极限"
+        },
+        {
+          "label": "B",
+          "content": "数列的极限和函数的极限"
+        },
+        {
+          "label": "C",
+          "content": "函数的极限和积分的极限"
+        },
+        {
+          "label": "D",
+          "content": "导数的极限和积分的极限"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到数学分析讲解极限的类别",
+        "提示2：明确指出了两类极限，其中一类是数列的极限",
+        "提示3：另一类是与函数相关的极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限题型分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "数学分析中讲解的极限主要分为哪两类？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的极限和导数的极限"
+        },
+        {
+          "label": "B",
+          "content": "函数的极限和积分的极限"
+        },
+        {
+          "label": "C",
+          "content": "数列的极限和函数的极限"
+        },
+        {
+          "label": "D",
+          "content": "级数的极限和函数的极限"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到数学分析讲解极限的分类内容",
+        "提示2：重点关注提到的两类极限的具体名称",
+        "提示3：逐一分析选项，与视频内容进行匹配"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限计算方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于极限类型的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数学分析中极限只有数列的极限这一种类型"
+        },
+        {
+          "label": "B",
+          "content": "数学分析中极限只有函数的极限这一种类型"
+        },
+        {
+          "label": "C",
+          "content": "数学分析中主要讲了数列的极限和函数的极限这两种类型"
+        },
+        {
+          "label": "D",
+          "content": "数学分析中极限类型有无数种，无法具体分类"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的数学分析里极限的分类情况",
+        "提示2：明确视频指出有几类极限以及具体类别",
+        "提示3：对每个选项与视频内容进行逐一对比判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数序列与极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "数学分析中讲到的极限主要分为两类，以下选项正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的极限和函数的导数"
+        },
+        {
+          "label": "B",
+          "content": "数列的导数和函数的极限"
+        },
+        {
+          "label": "C",
+          "content": "数列的极限和函数的极限"
+        },
+        {
+          "label": "D",
+          "content": "数列的导数和函数的导数"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的数学分析中极限的分类",
+        "提示2：明确提到的两类极限分别与数列和函数的哪种概念相关",
+        "提示3：对比各个选项中的内容与视频所讲知识点是否一致"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求极限方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于极限类型的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数学分析中只讲了数列的极限"
+        },
+        {
+          "label": "B",
+          "content": "数学分析中只讲了函数的极限"
+        },
+        {
+          "label": "C",
+          "content": "数学分析中主要讲了数列的极限和函数的极限这两类极限"
+        },
+        {
+          "label": "D",
+          "content": "数学分析中讲了超过两类的极限类型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的数学分析讲极限的相关内容",
+        "提示2：明确视频中指出的极限类型有哪些",
+        "提示3：对每个选项进行逐一分析，判断其是否符合视频所讲内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：等价无穷小",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在数学分析中，极限主要分为两类，以下选项正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的极限和函数的极限"
+        },
+        {
+          "label": "B",
+          "content": "整数的极限和小数的极限"
+        },
+        {
+          "label": "C",
+          "content": "正数的极限和负数的极限"
+        },
+        {
+          "label": "D",
+          "content": "有理数的极限和无理数的极限"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的数学分析里极限的分类",
+        "提示2：明确提到的两类极限的具体名称",
+        "提示3：对各选项进行逐一分析，看哪个符合视频所讲内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：已知极限求未知",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知数列 $\\{a_n\\}$ 的极限 $\\lim_{n \\to \\infty} a_n = 2$，函数 $f(x) = 3x - 1$，求 $\\lim_{n \\to \\infty} f(a_n)$ 的值。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$3$"
+        },
+        {
+          "label": "C",
+          "content": "$5$"
+        },
+        {
+          "label": "D",
+          "content": "$6$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据函数极限的运算法则，若 $\\lim_{n \\to \\infty} a_n = A$，$f(x)$ 在 $x = A$ 处连续，则 $\\lim_{n \\to \\infty} f(a_n) = f(\\lim_{n \\to \\infty} a_n)$",
+        "提示2：先判断函数 $f(x) = 3x - 1$ 的连续性",
+        "提示3：将 $\\lim_{n \\to \\infty} a_n = 2$ 代入函数 $f(x)$ 中计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：夹逼准则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪种类型属于数学分析中所讲的极限类型（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的导数"
+        },
+        {
+          "label": "B",
+          "content": "函数的积分"
+        },
+        {
+          "label": "C",
+          "content": "数列的极限"
+        },
+        {
+          "label": "D",
+          "content": "函数的导数"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到数学分析讲的极限类型",
+        "提示2：视频明确指出有两类极限",
+        "提示3：这两类极限分别是数列的极限和函数的极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：化定积分法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "数学分析中主要讲解的极限类型有哪些？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的极限和函数的极限"
+        },
+        {
+          "label": "B",
+          "content": "导数的极限和积分的极限"
+        },
+        {
+          "label": "C",
+          "content": "级数的极限和微分的极限"
+        },
+        {
+          "label": "D",
+          "content": "向量的极限和矩阵的极限"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的数学分析讲解极限的主要类型",
+        "提示2：明确指出了是两种类型，可排除包含三种及以上类型的选项",
+        "提示3：重点关注数列和函数相关的极限类型"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：洛必达法则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算函数极限 $\\lim_{x \\to 0} \\frac{e^x - 1 - x}{x^2}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{2}$",
+      "hints": [
+        "提示1：判断该极限是否为 $\\frac{0}{0}$ 型",
+        "提示2：若为 $\\frac{0}{0}$ 型，可使用洛必达法则对分子分母分别求导",
+        "提示3：求导后再看是否还为 $\\frac{0}{0}$ 型，若还是则可继续使用洛必达法则"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：洛必达法则条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "数学分析中主要讲解的两类极限是以下哪一组？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的极限和函数的导数"
+        },
+        {
+          "label": "B",
+          "content": "数列的极限和函数的极限"
+        },
+        {
+          "label": "C",
+          "content": "函数的极限和函数的值域"
+        },
+        {
+          "label": "D",
+          "content": "数列的级数和函数的极限"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的数学分析讲解极限的分类",
+        "提示2：明确指出了是两类极限，不要与其他概念混淆",
+        "提示3：确定这两类极限分别是和数列、函数相关的极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：泰勒公式记忆",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "数学分析中主要讲解的极限类型有哪些？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的极限和函数的极限"
+        },
+        {
+          "label": "B",
+          "content": "数列的极限和导数的极限"
+        },
+        {
+          "label": "C",
+          "content": "函数的极限和积分的极限"
+        },
+        {
+          "label": "D",
+          "content": "导数的极限和积分的极限"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的数学分析讲解极限的主要类型",
+        "提示2：明确提到了是两种类型的极限",
+        "提示3：直接从视频内容中寻找答案，提到了数列和函数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：公式展开化简",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知数列 $\\{a_n\\}$ 满足 $a_n = \\frac{n^2 + 3n + 2}{n + 1}$，函数 $f(x) = \\frac{x^2 - 1}{x - 1}$，分别求 $\\lim_{n \\to \\infty} a_n$ 和 $\\lim_{x \\to 1} f(x)$ 的值，以下选项正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\lim_{n \\to \\infty} a_n = \\infty$，$\\lim_{x \\to 1} f(x) = 0$"
+        },
+        {
+          "label": "B",
+          "content": "$\\lim_{n \\to \\infty} a_n = 2$，$\\lim_{x \\to 1} f(x) = 1$"
+        },
+        {
+          "label": "C",
+          "content": "$\\lim_{n \\to \\infty} a_n = \\infty$，$\\lim_{x \\to 1} f(x) = 2$"
+        },
+        {
+          "label": "D",
+          "content": "$\\lim_{n \\to \\infty} a_n = 2$，$\\lim_{x \\to 1} f(x) = \\infty$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：对于数列极限 $\\lim_{n \\to \\infty} a_n$，先对 $a_n$ 进行化简",
+        "提示2：对于函数极限 $\\lim_{x \\to 1} f(x)$，要注意 $x \\to 1$ 时函数的定义域，先化简函数再求极限",
+        "提示3：化简时可使用因式分解等方法"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限计算示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "数学分析中主要讲解的极限类型有以下几种，请问是哪两类？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的极限和函数的极限"
+        },
+        {
+          "label": "B",
+          "content": "导数的极限和积分的极限"
+        },
+        {
+          "label": "C",
+          "content": "方程的极限和不等式的极限"
+        },
+        {
+          "label": "D",
+          "content": "向量的极限和矩阵的极限"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到数学分析讲极限主要讲的类别",
+        "提示2：视频明确指出了这两类极限",
+        "提示3：逐一分析选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：柯西收敛准则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "数学分析中主要讲解的两类极限是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的极限和导数的极限"
+        },
+        {
+          "label": "B",
+          "content": "数列的极限和函数的极限"
+        },
+        {
+          "label": "C",
+          "content": "函数的极限和积分的极限"
+        },
+        {
+          "label": "D",
+          "content": "导数的极限和积分的极限"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到数学分析讲解极限的分类",
+        "提示2：视频中明确指出了是两类极限",
+        "提示3：关注提到的具体两类极限名称"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：单调有界收敛定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "数学分析中主要讲了两类极限，下列选项中正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数列的极限和函数的极限"
+        },
+        {
+          "label": "B",
+          "content": "积分的极限和导数的极限"
+        },
+        {
+          "label": "C",
+          "content": "级数的极限和微分的极限"
+        },
+        {
+          "label": "D",
+          "content": "复数的极限和实数的极限"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的数学分析所讲的极限类别",
+        "提示2：明确提到了两类极限，注意准确对应",
+        "提示3：在选项中寻找与视频内容一致的表述"
+      ]
+    }
+  ],
+  "count": 18
+}

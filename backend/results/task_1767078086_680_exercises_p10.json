@@ -1,0 +1,261 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：动量计算要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个光滑的水平面上，质量为 $m_1 = 2\\text{kg}$ 的小球以速度 $v_1 = 3\\text{m/s}$ 向右运动，与质量为 $m_2 = 3\\text{kg}$ 静止的小球发生正碰。已知碰撞后两球的总动量为 $P$，且碰撞过程中满足动量守恒定律。则以下关于碰撞后两球总动量 $P$ 的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$P = 6\\text{kg}\\cdot\\text{m/s}$，方向向右"
+        },
+        {
+          "label": "B",
+          "content": "$P = 6\\text{kg}\\cdot\\text{m/s}$，方向向左"
+        },
+        {
+          "label": "C",
+          "content": "$P = 9\\text{kg}\\cdot\\text{m/s}$，方向向右"
+        },
+        {
+          "label": "D",
+          "content": "$P = 9\\text{kg}\\cdot\\text{m/s}$，方向向左"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据动量守恒定律，系统在碰撞前后的总动量保持不变",
+        "提示2：先计算出碰撞前系统的总动量",
+        "提示3：确定总动量的方向，与速度方向一致"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：动量定理讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m = 2\\text{kg}$ 的物体，在水平方向受到一个 $F = 10\\text{N}$ 的恒力作用，从静止开始运动，经过 $t = 3\\text{s}$，则该物体在此过程中的动量变化量 $\\Delta p$ 为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$10\\text{kg}\\cdot\\text{m/s}$"
+        },
+        {
+          "label": "B",
+          "content": "$20\\text{kg}\\cdot\\text{m/s}$"
+        },
+        {
+          "label": "C",
+          "content": "$30\\text{kg}\\cdot\\text{m/s}$"
+        },
+        {
+          "label": "D",
+          "content": "$40\\text{kg}\\cdot\\text{m/s}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频可知，本题可结合动量定理来求解，动量定理表达式为 $F\\cdot\\Delta t = \\Delta p$",
+        "提示2：明确题目中所给的力 $F$ 和时间 $\\Delta t$ 的值",
+        "提示3：将力和时间的值代入动量定理表达式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：动量守恒定律",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m_1 = 2\\text{kg}$ 的小球以 $v_1 = 3\\text{m/s}$ 的速度向右运动，与一个质量为 $m_2 = 3\\text{kg}$ 静止的小球发生正碰，碰后两球粘在一起。已知碰撞过程中系统动量守恒，那么碰后两球的共同速度 $v$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.2\\text{m/s}$，方向向右"
+        },
+        {
+          "label": "B",
+          "content": "$1.2\\text{m/s}$，方向向左"
+        },
+        {
+          "label": "C",
+          "content": "$1.8\\text{m/s}$，方向向右"
+        },
+        {
+          "label": "D",
+          "content": "$1.8\\text{m/s}$，方向向左"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据动量守恒定律，碰撞前系统的总动量等于碰撞后系统的总动量，公式为 $m_1v_1 + m_2v_2 = (m_1 + m_2)v$",
+        "提示2：确定各球碰撞前的速度，$v_1$ 已知，$v_2 = 0$",
+        "提示3：代入数据计算碰后共同速度 $v$ 的大小和方向"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：质心运动定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于动量和冲量以及动量定理，下列说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "物体的动量 $p$ 与其质量 $m$ 和速度 $v$ 的关系为 $p = mv$，冲量 $I$ 是力 $F$ 在时间 $t$ 上的积累，即 $I = Ft$，在只有一个恒力作用的情况下，动量定理可表示为 $Ft = mv_2 - mv_1$，其中 $v_1$ 和 $v_2$ 分别是物体的初速度和末速度，所以动量定理只能用于恒力情况。"
+        },
+        {
+          "label": "B",
+          "content": "动量定理在考试中往往会和其他内容结合在一起考查，以计算题为主，若一个物体在变力 $F(t)$ 作用下，动量定理依然成立，可表示为 $\\int_{t_1}^{t_2} F(t)dt = mv_2 - mv_1$，其中 $t_1$ 和 $t_2$ 分别是作用时间的起始和结束时刻。"
+        },
+        {
+          "label": "C",
+          "content": "冲量的方向一定和物体的动量方向相同，因为冲量是引起动量变化的原因。"
+        },
+        {
+          "label": "D",
+          "content": "动量定理只能用于单个物体，不能用于多个物体组成的系统。"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾动量、冲量和动量定理的基本概念和表达式。",
+        "提示2：思考动量定理在恒力和变力情况下的应用。",
+        "提示3：分析冲量方向与动量方向的关系以及动量定理对系统的适用性。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：例题分析应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于本节课的两个考点，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第一个考点只讲解动量的概念"
+        },
+        {
+          "label": "B",
+          "content": "第二个考点动量定理在考试中只会单独考查"
+        },
+        {
+          "label": "C",
+          "content": "第一个考点主要讲解动量和冲量的概念"
+        },
+        {
+          "label": "D",
+          "content": "第二个考点动量定理在考试中以选择题为主"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于两个考点的具体内容",
+        "提示2：明确第一个考点是讲解动量和冲量的概念",
+        "提示3：知道第二个考点动量定理在考试中常和其他内容结合，以计算题为主"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求杆约束反力",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个物体的质量为 $m$，在水平方向上受到一个力 $F$ 的作用，其动量的变化量为 $\\Delta p$，冲量为 $I$，下列关于动量和冲量的关系正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\Delta p = I + F$"
+        },
+        {
+          "label": "B",
+          "content": "$\\Delta p = I$"
+        },
+        {
+          "label": "C",
+          "content": "$\\Delta p = \\frac{I}{F}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\Delta p = I - F$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于动量和冲量的基本概念",
+        "提示2：根据动量定理来分析动量变化量和冲量的关系",
+        "提示3：动量定理的表达式为合外力的冲量等于物体动量的变化量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求平台加速度",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m = 2\\text{kg}$ 的物体在水平平台上受到一个水平恒力 $F = 10\\text{N}$ 的作用，物体与平台间的动摩擦因数 $\\mu = 0.2$，若物体在 $t = 3\\text{s}$ 内速度从 $v_0 = 1\\text{m/s}$ 增加到 $v = 4\\text{m/s}$，则平台的加速度为（重力加速度 $g = 10\\text{m/s}^2$）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1\\text{m/s}^2$"
+        },
+        {
+          "label": "B",
+          "content": "$2\\text{m/s}^2$"
+        },
+        {
+          "label": "C",
+          "content": "$3\\text{m/s}^2$"
+        },
+        {
+          "label": "D",
+          "content": "$4\\text{m/s}^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先根据牛顿第二定律求出物体相对平台的加速度 $a_{相对}$",
+        "提示2：再根据运动学公式求出物体相对地面的加速度 $a_{相对地面}$",
+        "提示3：最后根据 $a_{平台}=a_{相对地面}-a_{相对}$ 求出平台的加速度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：小车加速度计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m = 2\\text{kg}$ 的小车，在受到一个大小为 $F = 10\\text{N}$ 的恒力作用下，从静止开始运动。已知小车运动过程中受到的摩擦力为 $f = 2\\text{N}$，根据动量定理 $Ft = \\Delta p$（$\\Delta p$ 为动量变化量），求小车在 $t = 5\\text{s}$ 时的加速度 $a$ 为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2\\text{m/s}^2$"
+        },
+        {
+          "label": "B",
+          "content": "$4\\text{m/s}^2$"
+        },
+        {
+          "label": "C",
+          "content": "$5\\text{m/s}^2$"
+        },
+        {
+          "label": "D",
+          "content": "$6\\text{m/s}^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先根据牛顿第二定律 $F_{合}=ma$ 求出合力",
+        "提示2：合力等于恒力减去摩擦力，即 $F_{合}=F - f$",
+        "提示3：将合力代入牛顿第二定律求出加速度"
+      ]
+    }
+  ],
+  "count": 8
+}

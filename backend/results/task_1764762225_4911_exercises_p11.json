@@ -1,0 +1,101 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Python注释介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在Python编程中，以下关于注释的说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "注释是给解释器或编译器执行的代码"
+        },
+        {
+          "label": "B",
+          "content": "注释可以是一行或多行文字，会被解释器或编译器忽略，是给人类阅读的"
+        },
+        {
+          "label": "C",
+          "content": "注释只能是一行文字，不能是多行文字"
+        },
+        {
+          "label": "D",
+          "content": "注释在程序运行时会影响程序的执行结果"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对注释的定义",
+        "提示2：明确注释的作用对象是人类，而不是解释器或编译器",
+        "提示3：思考注释是否会影响程序的执行结果"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：多行注释方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于代码注释的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "注释是会被解释器或编译器忽略的一行或多行文字，主要是给计算机读取的"
+        },
+        {
+          "label": "B",
+          "content": "注释是会被解释器或编译器执行的一行或多行文字，主要是给人类阅读的"
+        },
+        {
+          "label": "C",
+          "content": "注释是会被解释器或编译器忽略的一行或多行文字，主要是给人类阅读的"
+        },
+        {
+          "label": "D",
+          "content": "注释是会被解释器或编译器执行的一行或多行文字，主要是给计算机读取的"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频内容，明确注释在代码中的作用",
+        "提示2：思考注释是被解释器或编译器如何处理的",
+        "提示3：确定注释是给人类还是计算机阅读的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：注释规范建议",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "程序员写代码时添加注释的主要目的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "让代码在解释器或编译器中运行更快"
+        },
+        {
+          "label": "B",
+          "content": "避免只有自己和上级知道代码是干什么的情况，方便人类阅读代码"
+        },
+        {
+          "label": "C",
+          "content": "增加代码的行数，使代码看起来更复杂"
+        },
+        {
+          "label": "D",
+          "content": "让代码在解释器或编译器中不被忽略"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：思考视频中提到的程序员写代码添加注释是为了避免什么情况",
+        "提示2：明确注释在解释器或编译器中的作用以及对人类的意义",
+        "提示3：排除明显不符合视频知识点的选项"
+      ]
+    }
+  ],
+  "count": 3
+}

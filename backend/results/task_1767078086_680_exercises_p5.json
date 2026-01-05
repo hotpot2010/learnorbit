@@ -1,0 +1,197 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：力对轴的矩",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本课时在考试中通常考查的题型不包括以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "选择题"
+        },
+        {
+          "label": "B",
+          "content": "解答题"
+        },
+        {
+          "label": "C",
+          "content": "填空题"
+        },
+        {
+          "label": "D",
+          "content": "判断题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本课时在考试中常考的题型",
+        "提示2：视频中明确指出了常考题型以选择填空为主，偶尔会出判断",
+        "提示3：对比各选项与视频内容进行排除"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：空间任意力系简化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程有两个考点，以下不属于本次课程考点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "空间力系"
+        },
+        {
+          "label": "B",
+          "content": "重心"
+        },
+        {
+          "label": "C",
+          "content": "平面力系"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本次课程的考点",
+        "提示2：视频明确指出本次课程考点为空间力系和重心",
+        "提示3：逐一分析每个选项是否属于考点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：空间力系平衡",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间力系平衡问题中，若一个物体受到三个不共面的力 $\\vec{F}_1$、$\\vec{F}_2$、$\\vec{F}_3$ 作用而处于平衡状态，已知 $\\vec{F}_1$ 沿 $x$ 轴正方向，大小为 $10N$，$\\vec{F}_2$ 沿 $y$ 轴正方向，大小为 $20N$，则 $\\vec{F}_3$ 的大小和方向可能是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "大小为 $\\sqrt{500}N$，方向与 $x$ 轴负方向夹角为 $\\arctan(2)$，与 $y$ 轴负方向夹角为 $\\arctan(\\frac{1}{2})$"
+        },
+        {
+          "label": "B",
+          "content": "大小为 $\\sqrt{300}N$，方向与 $x$ 轴负方向夹角为 $\\arctan(\\frac{1}{2})$，与 $y$ 轴负方向夹角为 $\\arctan(2)$"
+        },
+        {
+          "label": "C",
+          "content": "大小为 $\\sqrt{500}N$，方向与 $x$ 轴正方向夹角为 $\\arctan(2)$，与 $y$ 轴正方向夹角为 $\\arctan(\\frac{1}{2})$"
+        },
+        {
+          "label": "D",
+          "content": "大小为 $\\sqrt{300}N$，方向与 $x$ 轴正方向夹角为 $\\arctan(\\frac{1}{2})$，与 $y$ 轴正方向夹角为 $\\arctan(2)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据空间力系平衡条件，三个力的合力为零，即 $\\vec{F}_1+\\vec{F}_2+\\vec{F}_3 = 0$，可推出 $\\vec{F}_3=-(\\vec{F}_1 + \\vec{F}_2)$",
+        "提示2：先求出 $\\vec{F}_1 + \\vec{F}_2$ 的大小，根据勾股定理 $F = \\sqrt{F_{1}^{2}+F_{2}^{2}}$",
+        "提示3：再根据三角函数关系确定 $\\vec{F}_3$ 的方向，设与 $x$ 轴负方向夹角为 $\\alpha$，则 $\\tan\\alpha=\\frac{F_2}{F_1}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：重心知识",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间力系中，一个物体的重心位置与以下哪个因素无关？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "物体的形状"
+        },
+        {
+          "label": "B",
+          "content": "物体的质量分布"
+        },
+        {
+          "label": "C",
+          "content": "物体所处的地理位置"
+        },
+        {
+          "label": "D",
+          "content": "物体的材料密度分布"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先明确重心的定义，它是物体各部分所受重力的合力的作用点。",
+        "提示2：思考物体的形状、质量分布、材料密度分布如何影响重心位置。",
+        "提示3：考虑地理位置对物体重心位置是否有影响，注意重力加速度在不同地理位置虽有差异，但不影响重心相对物体的位置。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：有限分割法求形心",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在本次课程时的考试中，主要考察的题型不包括以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "选择题"
+        },
+        {
+          "label": "B",
+          "content": "简答题"
+        },
+        {
+          "label": "C",
+          "content": "填空题"
+        },
+        {
+          "label": "D",
+          "content": "判断题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本次课程时考试常考的题型",
+        "提示2：视频中明确说明了以哪种题型为主，偶尔会出现哪种题型",
+        "提示3：逐一分析每个选项与视频内容是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：负面积法求形心",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间力系与重心这一知识点中，本次课时的考试题型主要以什么为主？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "选择题和判断题"
+        },
+        {
+          "label": "B",
+          "content": "选择题和填空题"
+        },
+        {
+          "label": "C",
+          "content": "填空题和判断题"
+        },
+        {
+          "label": "D",
+          "content": "解答题和证明题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于本次课时考试题型的描述",
+        "提示2：注意提到的主要题型",
+        "提示3：视频中明确说明了是以某两种题型为主"
+      ]
+    }
+  ],
+  "count": 6
+}

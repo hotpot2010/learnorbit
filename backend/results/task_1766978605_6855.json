@@ -1,0 +1,458 @@
+{
+  "task_id": "task_1766978605_6855",
+  "bilibili_url": "https://www.bilibili.com/video/BV1Hu411s7J1?vd_source=c56a4db010f073556475172c7b3fbedf",
+  "video_title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科）",
+  "steps": {
+    "asr": {
+      "error": null,
+      "result": {
+        "result_urls": [
+          "https://file.gsxservice.com/3409016325_7xee7n9b.txt",
+          "https://file.gsxservice.com/3409028223_c4gqhslg.txt",
+          "https://file.gsxservice.com/3409028526_ygfdduap.txt",
+          "https://file.gsxservice.com/3409034766_ulfmpigh.txt",
+          "https://file.gsxservice.com/3409045204_vqbmr5rt.txt",
+          "https://file.gsxservice.com/3409050793_ibbwaeg7.txt",
+          "https://file.gsxservice.com/3409057066_h40ehkul.txt",
+          "https://file.gsxservice.com/3409071912_nsswyagp.txt",
+          "https://file.gsxservice.com/3409074890_928er7ed.txt",
+          "https://file.gsxservice.com/3409084691_y1l2jvdz.txt",
+          "https://file.gsxservice.com/3409088766_w4mfijmx.txt"
+        ],
+        "total_parts": 11,
+        "failed_count": 0,
+        "part_results": [
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409016325_7xee7n9b.txt",
+            "part_number": 1,
+            "transcript_length": 29670
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409028223_c4gqhslg.txt",
+            "part_number": 2,
+            "transcript_length": 24194
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409028526_ygfdduap.txt",
+            "part_number": 3,
+            "transcript_length": 395
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409034766_ulfmpigh.txt",
+            "part_number": 4,
+            "transcript_length": 28738
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409045204_vqbmr5rt.txt",
+            "part_number": 5,
+            "transcript_length": 28762
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409050793_ibbwaeg7.txt",
+            "part_number": 6,
+            "transcript_length": 22452
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409057066_h40ehkul.txt",
+            "part_number": 7,
+            "transcript_length": 26224
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409071912_nsswyagp.txt",
+            "part_number": 8,
+            "transcript_length": 27099
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409074890_928er7ed.txt",
+            "part_number": 9,
+            "transcript_length": 25055
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409084691_y1l2jvdz.txt",
+            "part_number": 10,
+            "transcript_length": 23651
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409088766_w4mfijmx.txt",
+            "part_number": 11,
+            "transcript_length": 348
+          }
+        ],
+        "success_count": 11
+      },
+      "status": "success",
+      "message": "完成 11/11 个分P的ASR",
+      "progress": 100,
+      "retry_count": 0
+    },
+    "download": {
+      "error": null,
+      "result": {
+        "video_urls": [
+          "https://file.gsxservice.com/3408946584_98dddvdw.mp4",
+          "https://file.gsxservice.com/3408949346_h2o4k2lm.mp4",
+          "https://file.gsxservice.com/3408949637_8889fxxj.mp4",
+          "https://file.gsxservice.com/3408953802_004b8yk9.mp4",
+          "https://file.gsxservice.com/3408956459_52zptne6.mp4",
+          "https://file.gsxservice.com/3408958348_9nr4lt3u.mp4",
+          "https://file.gsxservice.com/3408961958_zsbu9c37.mp4",
+          "https://file.gsxservice.com/3408964619_idl18sja.mp4",
+          "https://file.gsxservice.com/3408967342_s2hrc9fd.mp4",
+          "https://file.gsxservice.com/3408971104_21dqdtfd.mp4",
+          "https://file.gsxservice.com/3408971422_owcsmtrz.mp4"
+        ],
+        "total_parts": 11,
+        "failed_count": 0,
+        "part_results": [
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978605_6855_p1.mp4",
+            "video_url": "https://file.gsxservice.com/3408946584_98dddvdw.mp4",
+            "part_number": 1
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978605_6855_p2.mp4",
+            "video_url": "https://file.gsxservice.com/3408949346_h2o4k2lm.mp4",
+            "part_number": 2
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978605_6855_p3.mp4",
+            "video_url": "https://file.gsxservice.com/3408949637_8889fxxj.mp4",
+            "part_number": 3
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978605_6855_p4.mp4",
+            "video_url": "https://file.gsxservice.com/3408953802_004b8yk9.mp4",
+            "part_number": 4
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978605_6855_p5.mp4",
+            "video_url": "https://file.gsxservice.com/3408956459_52zptne6.mp4",
+            "part_number": 5
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978605_6855_p6.mp4",
+            "video_url": "https://file.gsxservice.com/3408958348_9nr4lt3u.mp4",
+            "part_number": 6
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978605_6855_p7.mp4",
+            "video_url": "https://file.gsxservice.com/3408961958_zsbu9c37.mp4",
+            "part_number": 7
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978605_6855_p8.mp4",
+            "video_url": "https://file.gsxservice.com/3408964619_idl18sja.mp4",
+            "part_number": 8
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978605_6855_p9.mp4",
+            "video_url": "https://file.gsxservice.com/3408967342_s2hrc9fd.mp4",
+            "part_number": 9
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978605_6855_p10.mp4",
+            "video_url": "https://file.gsxservice.com/3408971104_21dqdtfd.mp4",
+            "part_number": 10
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1766978605_6855_p11.mp4",
+            "video_url": "https://file.gsxservice.com/3408971422_owcsmtrz.mp4",
+            "part_number": 11
+          }
+        ],
+        "success_count": 11
+      },
+      "status": "success",
+      "message": "完成 11/11 个分P",
+      "progress": 100,
+      "retry_count": 0
+    },
+    "exercises": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "transcode": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "screenshots": {
+      "error": null,
+      "result": null,
+      "status": "success",
+      "message": "✅ 所有分P截图生成完成（共11个分P，144张截图）",
+      "progress": 100,
+      "retry_count": 0
+    },
+    "knowledge_points": {
+      "error": null,
+      "result": {
+        "result_urls": [
+          "https://file.gsxservice.com/3409387265_k19fx52w.json",
+          "https://file.gsxservice.com/3409388219_nwil0o4h.json",
+          "https://file.gsxservice.com/3409388437_w5plhplj.json",
+          "https://file.gsxservice.com/3409388874_sxzejhxr.json",
+          "https://file.gsxservice.com/3409389355_vnh99rh9.json",
+          "https://file.gsxservice.com/3409389917_3vt663lu.json",
+          "https://file.gsxservice.com/3409390782_tj9qdobs.json",
+          "https://file.gsxservice.com/3409391463_sguidrm4.json",
+          "https://file.gsxservice.com/3409392269_v2ia6zem.json",
+          "https://file.gsxservice.com/3409392788_sirtqnt0.json",
+          "https://file.gsxservice.com/3409392962_595t31dj.json"
+        ],
+        "total_parts": 11,
+        "failed_count": 0,
+        "part_results": [
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409387265_k19fx52w.json",
+            "part_number": 1,
+            "knowledge_points_count": 13
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409388219_nwil0o4h.json",
+            "part_number": 2,
+            "knowledge_points_count": 11
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409388437_w5plhplj.json",
+            "part_number": 3,
+            "knowledge_points_count": 1
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409388874_sxzejhxr.json",
+            "part_number": 4,
+            "knowledge_points_count": 20
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409389355_vnh99rh9.json",
+            "part_number": 5,
+            "knowledge_points_count": 15
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409389917_3vt663lu.json",
+            "part_number": 6,
+            "knowledge_points_count": 15
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409390782_tj9qdobs.json",
+            "part_number": 7,
+            "knowledge_points_count": 15
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409391463_sguidrm4.json",
+            "part_number": 8,
+            "knowledge_points_count": 20
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409392269_v2ia6zem.json",
+            "part_number": 9,
+            "knowledge_points_count": 20
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409392788_sirtqnt0.json",
+            "part_number": 10,
+            "knowledge_points_count": 16
+          },
+          {
+            "status": "success",
+            "result_url": "https://file.gsxservice.com/3409392962_595t31dj.json",
+            "part_number": 11,
+            "knowledge_points_count": 0
+          }
+        ],
+        "success_count": 11,
+        "total_knowledge_points": 146
+      },
+      "status": "success",
+      "message": "完成 11/11 个分P的知识点生成",
+      "progress": 100,
+      "retry_count": 0
+    }
+  },
+  "video_url": [
+    "https://file.gsxservice.com/3408946584_98dddvdw.mp4",
+    "https://file.gsxservice.com/3408949346_h2o4k2lm.mp4",
+    "https://file.gsxservice.com/3408949637_8889fxxj.mp4",
+    "https://file.gsxservice.com/3408953802_004b8yk9.mp4",
+    "https://file.gsxservice.com/3408956459_52zptne6.mp4",
+    "https://file.gsxservice.com/3408958348_9nr4lt3u.mp4",
+    "https://file.gsxservice.com/3408961958_zsbu9c37.mp4",
+    "https://file.gsxservice.com/3408964619_idl18sja.mp4",
+    "https://file.gsxservice.com/3408967342_s2hrc9fd.mp4",
+    "https://file.gsxservice.com/3408971104_21dqdtfd.mp4",
+    "https://file.gsxservice.com/3408971422_owcsmtrz.mp4"
+  ],
+  "transcoded_video_url": null,
+  "asr_result_url": [
+    "https://file.gsxservice.com/3409016325_7xee7n9b.txt",
+    "https://file.gsxservice.com/3409028223_c4gqhslg.txt",
+    "https://file.gsxservice.com/3409028526_ygfdduap.txt",
+    "https://file.gsxservice.com/3409034766_ulfmpigh.txt",
+    "https://file.gsxservice.com/3409045204_vqbmr5rt.txt",
+    "https://file.gsxservice.com/3409050793_ibbwaeg7.txt",
+    "https://file.gsxservice.com/3409057066_h40ehkul.txt",
+    "https://file.gsxservice.com/3409071912_nsswyagp.txt",
+    "https://file.gsxservice.com/3409074890_928er7ed.txt",
+    "https://file.gsxservice.com/3409084691_y1l2jvdz.txt",
+    "https://file.gsxservice.com/3409088766_w4mfijmx.txt"
+  ],
+  "knowledge_points_result_url": [
+    "https://file.gsxservice.com/3409387265_k19fx52w.json",
+    "https://file.gsxservice.com/3409388219_nwil0o4h.json",
+    "https://file.gsxservice.com/3409388437_w5plhplj.json",
+    "https://file.gsxservice.com/3409388874_sxzejhxr.json",
+    "https://file.gsxservice.com/3409389355_vnh99rh9.json",
+    "https://file.gsxservice.com/3409389917_3vt663lu.json",
+    "https://file.gsxservice.com/3409390782_tj9qdobs.json",
+    "https://file.gsxservice.com/3409391463_sguidrm4.json",
+    "https://file.gsxservice.com/3409392269_v2ia6zem.json",
+    "https://file.gsxservice.com/3409392788_sirtqnt0.json",
+    "https://file.gsxservice.com/3409392962_595t31dj.json"
+  ],
+  "screenshots_result_url": "[\"https://file.gsxservice.com/3411120280_xdvfp587.json\", \"https://file.gsxservice.com/3411121626_xk49ha3z.json\", \"https://file.gsxservice.com/3411121822_ajm3pd3d.json\", \"https://file.gsxservice.com/3411124510_ju16pwi9.json\", \"https://file.gsxservice.com/3411127115_w94awjbu.json\", \"https://file.gsxservice.com/3411130808_kb1sxvak.json\", \"https://file.gsxservice.com/3411133996_kdzlywja.json\", \"https://file.gsxservice.com/3411158206_mocg87n3.json\", \"https://file.gsxservice.com/3411180889_m30lgdbo.json\", \"https://file.gsxservice.com/3411222799_mutzqjxp.json\", \"https://file.gsxservice.com/3411229430_ibfb4620.json\"]",
+  "exercises_result_url": null,
+  "video_info": {
+    "bv_id": "BV1Hu411s7J1",
+    "title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科）",
+    "duration": 0,
+    "uploader": "",
+    "thumbnail": "",
+    "like_count": 0,
+    "view_count": 0,
+    "description": "",
+    "upload_date": "",
+    "thumbnail_cdn": "https://file.gsxservice.com/3408674797_schnpmzt.jpg"
+  },
+  "is_series": true,
+  "series_parts": [
+    {
+      "url": "https://www.bilibili.com/video/BV1Hu411s7J1?p=1",
+      "bv_id": "BV1Hu411s7J1_p1",
+      "duration": 2536.5,
+      "full_title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科） p01 第一讲：多元函数微分学（一）",
+      "part_title": "第一讲：多元函数微分学（一）",
+      "part_number": 1
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1Hu411s7J1?p=2",
+      "bv_id": "BV1Hu411s7J1_p2",
+      "duration": 2455.138,
+      "full_title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科） p02 第二讲：多元函数微分学（二）",
+      "part_title": "第二讲：多元函数微分学（二）",
+      "part_number": 2
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1Hu411s7J1?p=3",
+      "bv_id": "BV1Hu411s7J1_p3",
+      "duration": 33.993,
+      "full_title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科） p03 提醒：配套电子讲义、章节测试题获取方法",
+      "part_title": "提醒：配套电子讲义、章节测试题获取方法",
+      "part_number": 3
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1Hu411s7J1?p=4",
+      "bv_id": "BV1Hu411s7J1_p4",
+      "duration": 3423.317,
+      "full_title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科） p04 第三讲：二重积分",
+      "part_title": "第三讲：二重积分",
+      "part_number": 4
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1Hu411s7J1?p=5",
+      "bv_id": "BV1Hu411s7J1_p5",
+      "duration": 2942.339,
+      "full_title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科） p05 第四讲：三重积分",
+      "part_title": "第四讲：三重积分",
+      "part_number": 5
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1Hu411s7J1?p=6",
+      "bv_id": "BV1Hu411s7J1_p6",
+      "duration": 2152.257,
+      "full_title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科） p06 第五讲：曲线积分与曲面积分（一）",
+      "part_title": "第五讲：曲线积分与曲面积分（一）",
+      "part_number": 6
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1Hu411s7J1?p=7",
+      "bv_id": "BV1Hu411s7J1_p7",
+      "duration": 2861.766,
+      "full_title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科） p07 第六讲：曲线积分与曲面积分（二）",
+      "part_title": "第六讲：曲线积分与曲面积分（二）",
+      "part_number": 7
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1Hu411s7J1?p=8",
+      "bv_id": "BV1Hu411s7J1_p8",
+      "duration": 3288.734,
+      "full_title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科） p08 第七讲：无穷级数",
+      "part_title": "第七讲：无穷级数",
+      "part_number": 8
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1Hu411s7J1?p=9",
+      "bv_id": "BV1Hu411s7J1_p9",
+      "duration": 2849.877,
+      "full_title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科） p09 第八讲：微分方程",
+      "part_title": "第八讲：微分方程",
+      "part_number": 9
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1Hu411s7J1?p=10",
+      "bv_id": "BV1Hu411s7J1_p10",
+      "duration": 2772.415,
+      "full_title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科） p10 第九讲：向量代数和解析几何",
+      "part_title": "第九讲：向量代数和解析几何",
+      "part_number": 10
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1Hu411s7J1?p=11",
+      "bv_id": "BV1Hu411s7J1_p11",
+      "duration": 32.414,
+      "full_title": "《高等数学(下)》6小时速成课 | 框框老师（突击课，适合高等数学（微积分）期末考试、期中考试、补考、重修、专升本，考试不挂科） p11 课程的最后",
+      "part_title": "课程的最后",
+      "part_number": 11
+    }
+  ],
+  "created_at": "2025-12-29T11:23:42",
+  "updated_at": "2025-12-30T15:38:06.316773"
+}

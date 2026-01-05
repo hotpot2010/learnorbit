@@ -1,0 +1,165 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：显示偏好定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于显示偏好这个知识点，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只需要掌握一个方面，就能应对考试"
+        },
+        {
+          "label": "B",
+          "content": "只需要掌握定义，就能应对考试"
+        },
+        {
+          "label": "C",
+          "content": "需要掌握定义和公理，其中公理分为两个公理，即显示偏好弱公理和显示偏好强公理，掌握这两方面基本可以应对考试"
+        },
+        {
+          "label": "D",
+          "content": "只需要掌握公理，就能应对考试"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到应对考试需要掌握的方面",
+        "提示2：明确显示偏好知识点包含的内容",
+        "提示3：注意视频中提到公理是分为两类的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：显示偏好弱公理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于显示偏好这一知识点，从考研角度来看，掌握以下哪些方面基本就可以应对考试？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "定义和一个公理"
+        },
+        {
+          "label": "B",
+          "content": "定义和两个公理"
+        },
+        {
+          "label": "C",
+          "content": "仅定义"
+        },
+        {
+          "label": "D",
+          "content": "仅一个公理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到应对考试需掌握的两个方面",
+        "提示2：注意公理是分为两个的",
+        "提示3：结合视频里关于显示偏好需掌握内容的表述来判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：显示偏好弱公理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于显示偏好这一知识点，从考研角度来看，掌握哪两个方面基本就可以应对考试了？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "定义和强公理"
+        },
+        {
+          "label": "B",
+          "content": "定义和弱公理"
+        },
+        {
+          "label": "C",
+          "content": "定义和公理（包括弱公理和强公理）"
+        },
+        {
+          "label": "D",
+          "content": "弱公理和强公理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：视频中明确提到掌握两个方面基本可应对考试，思考这两个方面具体是什么",
+        "提示2：注意公理包含了弱公理和强公理这一信息",
+        "提示3：对每个选项进行分析，看哪个符合视频讲解的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：间接显示偏好",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究显示偏好知识点时，要应对考试，主要需要掌握的方面不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "显示偏好的定义"
+        },
+        {
+          "label": "B",
+          "content": "显示偏好弱公理"
+        },
+        {
+          "label": "C",
+          "content": "显示偏好的图形表示"
+        },
+        {
+          "label": "D",
+          "content": "显示偏好强公理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到应对考试需要掌握的关于显示偏好的关键方面",
+        "提示2：明确视频中指出的掌握要点是定义和两条公理",
+        "提示3：逐一分析选项，看哪个不属于视频提到的要点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：间接显示偏好",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究显示偏好这个知识点时，以下关于应对考试所需要掌握的关键内容描述正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只需要掌握定义即可"
+        },
+        {
+          "label": "B",
+          "content": "需要掌握定义和一个公理"
+        },
+        {
+          "label": "C",
+          "content": "需要掌握定义和两个公理，分别是显示偏好弱公理和显示偏好强公理"
+        },
+        {
+          "label": "D",
+          "content": "需要掌握定义、三个公理，分别是显示偏好弱公理、显示偏好强公理和另一个未提及的公理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到应对考试需要掌握显示偏好的哪些方面",
+        "提示2：明确提到除了定义，公理部分是有区分的",
+        "提示3：注意视频中提及公理的数量和具体名称"
+      ]
+    }
+  ],
+  "count": 5
+}

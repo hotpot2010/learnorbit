@@ -1,0 +1,532 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电阻串并联原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个复杂电路中，运用基尔霍夫定律分析时，已知某节点处三条支路电流分别为 $I_1$、$I_2$ 和 $I_3$，其中 $I_1 = 3A$ 流入节点，$I_2 = 2A$ 流出节点，那么 $I_3$ 的情况是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "大小为 $1A$，流入节点"
+        },
+        {
+          "label": "B",
+          "content": "大小为 $1A$，流出节点"
+        },
+        {
+          "label": "C",
+          "content": "大小为 $5A$，流入节点"
+        },
+        {
+          "label": "D",
+          "content": "大小为 $5A$，流出节点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据基尔霍夫电流定律，流入节点的电流之和等于流出节点的电流之和",
+        "提示2：规定流入节点的电流为正，流出节点的电流为负，列出电流方程",
+        "提示3：将已知的电流值代入方程求解 $I_3$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：等效电阻计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个复杂电路中，需要运用戴维南定理来求解等效电阻。已知该电路中有一个电压源 $U = 10V$，内阻不计，还有两个电阻 $R_1 = 5\\Omega$ 和 $R_2 = 10\\Omega$，它们与电压源的连接关系较为复杂。现把电压源置零后，发现 $R_1$ 和 $R_2$ 是并联关系，那么该电路的等效电阻 $R_{eq}$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{10}{3}\\Omega$"
+        },
+        {
+          "label": "B",
+          "content": "$5\\Omega$"
+        },
+        {
+          "label": "C",
+          "content": "$10\\Omega$"
+        },
+        {
+          "label": "D",
+          "content": "$15\\Omega$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确当电压源置零（短路处理）后，求等效电阻就是求并联电阻的总电阻",
+        "提示2：对于两个并联电阻 $R_1$ 和 $R_2$，其等效电阻公式为 $R_{eq}=\\frac{R_1\\times R_2}{R_1 + R_2}$",
+        "提示3：将 $R_1 = 5\\Omega$ 和 $R_2 = 10\\Omega$ 代入公式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：节点提缩法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电路分析中，最核心且最难的计算依据是以下哪个定律？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "欧姆定律"
+        },
+        {
+          "label": "B",
+          "content": "基尔霍夫定律"
+        },
+        {
+          "label": "C",
+          "content": "叠加定理"
+        },
+        {
+          "label": "D",
+          "content": "戴维南定理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：仔细回顾视频中提到的电路分析里最核心且最难的计算依据",
+        "提示2：明确每个选项所代表定律的特点和应用场景",
+        "提示3：结合视频强调的关键内容进行判断"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：惠斯通电桥",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在复杂电路计算中，最核心且最难的计算依据是 ___  。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "基尔霍夫定律",
+      "hints": [
+        "提示1：注意视频中提到的核心计算依据",
+        "提示2：围绕知识点所涉及的电路分析重点内容思考",
+        "提示3：抓住关键语句‘最核心的一个计算’进行回忆"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路断开判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个复杂电路中，运用基尔霍夫定律（视频中提到的最核心的计算）来分析。已知一个包含三个电阻 $R_1$、$R_2$、$R_3$ 串联的部分电路，电源电压为 $U$，当电路正常工作时，通过 $R_1$ 的电流为 $I$。若突然发现 $R_2$ 两端电压变为 $0$，以下哪种情况可能发生（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$R_1$ 断路"
+        },
+        {
+          "label": "B",
+          "content": "$R_2$ 断路"
+        },
+        {
+          "label": "C",
+          "content": "$R_2$ 短路"
+        },
+        {
+          "label": "D",
+          "content": "$R_3$ 断路"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先明确串联电路的特点，电流处处相等，总电压等于各电阻两端电压之和",
+        "提示2：分析各个选项中电阻出现故障时，对电路中电压和电流的影响",
+        "提示3：当 $R_2$ 两端电压变为 $0$ 时，结合基尔霍夫定律思考可能的故障情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电源等效变换",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电路分析中，运用戴维南定理求解某支路电流时，以下关于戴维南等效电路的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "戴维南等效电路是一个电压源 $U_{oc}$ 和一个电阻 $R_{eq}$ 串联的电路，其中 $U_{oc}$ 是该支路断开时的开路电压，$R_{eq}$ 是除源后电路的等效电阻"
+        },
+        {
+          "label": "B",
+          "content": "戴维南等效电路是一个电流源 $I_{sc}$ 和一个电阻 $R_{eq}$ 并联的电路，其中 $I_{sc}$ 是该支路短路时的短路电流，$R_{eq}$ 是除源后电路的等效电阻"
+        },
+        {
+          "label": "C",
+          "content": "戴维南等效电路是一个电压源 $U_{oc}$ 和一个电阻 $R_{eq}$ 并联的电路，其中 $U_{oc}$ 是该支路断开时的开路电压，$R_{eq}$ 是除源后电路的等效电阻"
+        },
+        {
+          "label": "D",
+          "content": "戴维南等效电路是一个电流源 $I_{sc}$ 和一个电阻 $R_{eq}$ 串联的电路，其中 $I_{sc}$ 是该支路短路时的短路电流，$R_{eq}$ 是除源后电路的等效电阻"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆戴维南定理的基本概念，明确其等效电路的组成形式",
+        "提示2：区分电压源串联电阻和电流源并联电阻的不同等效电路类型（分别对应戴维南和诺顿等效电路）",
+        "提示3：确定 $U_{oc}$ 和 $R_{eq}$ 的物理意义，$U_{oc}$ 是开路电压，$R_{eq}$ 是除源后的等效电阻"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：等效变换规则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电路分析中，以下哪个定理是第二章电路分析方法中最核心且最难的计算定理？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "基尔霍夫定律"
+        },
+        {
+          "label": "B",
+          "content": "叠加定理"
+        },
+        {
+          "label": "C",
+          "content": "戴维南定理"
+        },
+        {
+          "label": "D",
+          "content": "诺顿定理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到第二章电路分析方法里最核心的定理名称",
+        "提示2：明确视频所指出的关键定理",
+        "提示3：根据视频内容直接找出对应定理"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：等效计算示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电路分析中，使用戴维南定理进行等效计算是非常重要的。已知一个含源二端网络，其开路电压 $U_{oc} = 10\\mathrm{V}$，等效电阻 $R_{eq} = 5\\Omega$，当外接负载电阻 $R_L = 5\\Omega$ 时，负载上的电流 $I_L$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1\\mathrm{A}$"
+        },
+        {
+          "label": "B",
+          "content": "$2\\mathrm{A}$"
+        },
+        {
+          "label": "C",
+          "content": "$0.5\\mathrm{A}$"
+        },
+        {
+          "label": "D",
+          "content": "$1.5\\mathrm{A}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据戴维南定理，含源二端网络可以等效为一个电压源 $U_{oc}$ 和一个电阻 $R_{eq}$ 串联的电路。",
+        "提示2：当外接负载电阻 $R_L$ 时，可根据欧姆定律 $I = \\frac{U}{R}$ 计算负载电流，此时总电阻为 $R_{eq}+R_L$。",
+        "提示3：将已知的 $U_{oc}$、$R_{eq}$ 和 $R_L$ 的值代入公式进行计算。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：KVL方程应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个复杂电路中，有三个电阻 $R_1$、$R_2$、$R_3$ 串联，电源电动势为 $E$，内阻不计。已知 $R_1 = 2\\Omega$，$R_2 = 3\\Omega$，$R_3 = 5\\Omega$，$E = 10V$。根据基尔霍夫电压定律（KVL），下列关于各电阻两端电压 $U_1$、$U_2$、$U_3$ 的计算正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$U_1 = 2V$，$U_2 = 3V$，$U_3 = 5V$"
+        },
+        {
+          "label": "B",
+          "content": "$U_1 = 1V$，$U_2 = 2V$，$U_3 = 3V$"
+        },
+        {
+          "label": "C",
+          "content": "$U_1 = 3V$，$U_2 = 4V$，$U_3 = 3V$"
+        },
+        {
+          "label": "D",
+          "content": "$U_1 = 4V$，$U_2 = 3V$，$U_3 = 3V$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先根据串联电路的特点，求出电路中的电流 $I$，串联电路电流处处相等，$I = \\frac{E}{R_{总}}$，其中 $R_{总}=R_1 + R_2 + R_3$",
+        "提示2：然后根据欧姆定律 $U = IR$ 分别计算各电阻两端的电压",
+        "提示3：最后根据计算结果选择正确答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：解题技巧思路",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电路分析中，某一章节涉及到的电路里最重要且最难的计算依据是以下哪个定理？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "欧姆定律"
+        },
+        {
+          "label": "B",
+          "content": "基尔霍夫定律"
+        },
+        {
+          "label": "C",
+          "content": "叠加定理"
+        },
+        {
+          "label": "D",
+          "content": "戴维南定理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的该章节电路分析里最核心的计算依据。",
+        "提示2：明确指出的那个定理是解题关键。",
+        "提示3：根据视频内容，重点关注提到的特定定理名称。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：支路电流法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电路分析中，以下哪个是运用支路电流法进行计算时最核心的理论？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "欧姆定律"
+        },
+        {
+          "label": "B",
+          "content": "基尔霍夫定律"
+        },
+        {
+          "label": "C",
+          "content": "焦耳定律"
+        },
+        {
+          "label": "D",
+          "content": "安培定律"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的支路电流法最核心的计算理论",
+        "提示2：思考各定律在电路分析中的作用",
+        "提示3：明确哪个定律与支路电流法的核心计算紧密相关"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：叠加定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个复杂电路中，运用叠加定理计算某支路电流时，当一个独立电压源单独作用，该支路电流为 $I_1 = 2A$；当另一个独立电流源单独作用，该支路电流为 $I_2 = -3A$。则两个电源共同作用时，该支路电流 $I$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1A$"
+        },
+        {
+          "label": "B",
+          "content": "$-1A$"
+        },
+        {
+          "label": "C",
+          "content": "$5A$"
+        },
+        {
+          "label": "D",
+          "content": "$-5A$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确叠加定理的内容，即多个电源共同作用时，某支路的响应（电流或电压）等于各个独立电源单独作用时在该支路产生的响应的代数和",
+        "提示2：根据已知条件确定各个电源单独作用时该支路的电流值",
+        "提示3：将各个电源单独作用时的电流值进行代数相加，注意电流的方向，负号表示与参考方向相反"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电源等效定理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在复杂电路中运用戴维南定理进行计算时，若已知一个有源二端网络的开路电压 $U_{oc}=10V$，等效电阻 $R_{eq}=5\\Omega$，当外接一个 $R = 5\\Omega$ 的负载电阻时，负载电阻上的电流 $I$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1A$"
+        },
+        {
+          "label": "B",
+          "content": "$2A$"
+        },
+        {
+          "label": "C",
+          "content": "$0.5A$"
+        },
+        {
+          "label": "D",
+          "content": "$1.5A$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确戴维南定理的应用，将有源二端网络等效为一个电压源和一个电阻串联的形式",
+        "提示2：根据欧姆定律 $I = \\frac{U}{R}$ 来计算电流，这里的 $U$ 是等效电压源的电压，$R$ 是等效电阻和负载电阻之和",
+        "提示3：计算等效电阻和负载电阻之和，再用等效电压源的电压除以总电阻得到电流"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：有源二端网络",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电路分析中，应用戴维南定理来简化有源二端网络时，以下关于其难度描述正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "在整个电路中难度较低，属于基础知识点"
+        },
+        {
+          "label": "B",
+          "content": "在整个电路中难度中等，有一定挑战性"
+        },
+        {
+          "label": "C",
+          "content": "在整个电路中应该有三星级的难度，是最核心也是最难的"
+        },
+        {
+          "label": "D",
+          "content": "在整个电路中几乎没有难度，很容易掌握"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对戴维南定理在电路计算里的难度描述",
+        "提示2：注意视频强调的核心和难度程度相关表述",
+        "提示3：根据视频内容判断各选项的正确性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：例题求解过程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电路分析中，以下哪个定理是第二章电路分析方法里最核心且最难的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "基尔霍夫定律"
+        },
+        {
+          "label": "B",
+          "content": "叠加定理"
+        },
+        {
+          "label": "C",
+          "content": "戴文宁定理"
+        },
+        {
+          "label": "D",
+          "content": "欧姆定律"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中明确提到的该章节最核心且最难的定理",
+        "提示2：注意视频中关于电路分析核心计算的关键信息",
+        "提示3：该定理强调了二端线性有源网络的等效电路求解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：最大功率问题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个复杂电路中，应用戴维南定理求解某负载电阻 $R_L$ 获得最大功率的条件。已知该电路的戴维南等效电压为 $U_{oc}$，等效电阻为 $R_{eq}$，则当负载电阻 $R_L$ 满足什么条件时，它能获得最大功率？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$R_L = 0$"
+        },
+        {
+          "label": "B",
+          "content": "$R_L = R_{eq}$"
+        },
+        {
+          "label": "C",
+          "content": "$R_L \\to +\\infty$"
+        },
+        {
+          "label": "D",
+          "content": "$R_L = \\frac{R_{eq}}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾戴维南定理和功率的计算公式，负载功率 $P_L = I^2R_L$，其中 $I = \\frac{U_{oc}}{R_{eq} + R_L}$。",
+        "提示2：将电流公式代入功率公式，得到 $P_L$ 关于 $R_L$ 的函数，然后对其求导。",
+        "提示3：令导数为零，求出使功率最大时 $R_L$ 的值。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电路知识总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个复杂电路中，运用基尔霍夫定律进行计算是非常关键的。已知一个包含多个电阻和电源的闭合回路，其中有三个节点，两个独立的闭合回路。根据基尔霍夫电流定律（KCL）和基尔霍夫电压定律（KVL），以下哪个选项是正确描述该电路方程数量的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "2个KCL方程和2个KVL方程"
+        },
+        {
+          "label": "B",
+          "content": "3个KCL方程和2个KVL方程"
+        },
+        {
+          "label": "C",
+          "content": "2个KCL方程和3个KVL方程"
+        },
+        {
+          "label": "D",
+          "content": "3个KCL方程和3个KVL方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确基尔霍夫电流定律（KCL）和基尔霍夫电压定律（KVL）的内容，KCL是指对于电路中的任意一个节点，流入节点的电流之和等于流出节点的电流之和；KVL是指在任何一个闭合回路中，各段电阻上的电压降的代数和等于电动势的代数和。",
+        "提示2：对于KCL方程数量，独立的KCL方程数等于节点数减1。",
+        "提示3：对于KVL方程数量，独立的KVL方程数等于独立的闭合回路数。"
+      ]
+    }
+  ],
+  "count": 17
+}

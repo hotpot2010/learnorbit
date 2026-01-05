@@ -1,0 +1,517 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：IS曲线定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的 $IS - LM$ 模型中，关于 $IS$ 曲线，以下哪个知识点是需要重点掌握的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$IS$ 曲线的斜率计算与弹性分析"
+        },
+        {
+          "label": "B",
+          "content": "$IS$ 曲线的含义、推导、斜率以及移动"
+        },
+        {
+          "label": "C",
+          "content": "$IS$ 曲线与供给曲线的关系"
+        },
+        {
+          "label": "D",
+          "content": "$IS$ 曲线在国际市场的应用理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的对于 $IS$ 曲线这个知识点需要重点掌握的内容",
+        "提示2：明确视频里列举的关键要点",
+        "提示3：对比各个选项与视频重点内容是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：IS曲线推导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在IS - LM模型中，IS曲线推导过程涉及到产品市场的均衡。已知投资函数 $I = 100 - 2r$（其中 $r$ 为利率），消费函数 $C = 50 + 0.8Y$（其中 $Y$ 为国民收入），政府购买 $G = 20$，则IS曲线的表达式为？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$Y = 850 - 10r$"
+        },
+        {
+          "label": "B",
+          "content": "$Y = 750 - 10r$"
+        },
+        {
+          "label": "C",
+          "content": "$Y = 850 - 20r$"
+        },
+        {
+          "label": "D",
+          "content": "$Y = 750 - 20r$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：产品市场均衡条件是 $Y = C + I + G$",
+        "提示2：将已知的消费函数、投资函数和政府购买代入均衡条件",
+        "提示3：通过移项和化简得出IS曲线表达式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：IS曲线含义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的IS - LM模型中，IS曲线主要涉及的关键知识点不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS曲线的含义"
+        },
+        {
+          "label": "B",
+          "content": "IS曲线的推导"
+        },
+        {
+          "label": "C",
+          "content": "IS曲线的缩放"
+        },
+        {
+          "label": "D",
+          "content": "IS曲线的斜率"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的IS曲线需要掌握的关键知识点。",
+        "提示2：视频指出了应掌握IS曲线的几个方面，在选项中进行对比。",
+        "提示3：重点关注与含义、推导、斜率和移动相关的内容，排除正确项获得答案。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：IS曲线推导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在IS - LM模型中，IS曲线推导过程涉及到产品市场均衡，以下关于IS曲线推导的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS曲线推导只考虑了投资和储蓄的关系，与利率无关"
+        },
+        {
+          "label": "B",
+          "content": "在推导IS曲线时，投资是利率的减函数，储蓄是收入的增函数，通过产品市场均衡条件 $I = S$ 来推导"
+        },
+        {
+          "label": "C",
+          "content": "IS曲线推导中，利率上升会使投资增加，进而使均衡收入增加"
+        },
+        {
+          "label": "D",
+          "content": "IS曲线推导不涉及产品市场的均衡条件，只考虑货币市场的情况"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾IS曲线推导的基本原理，它是基于产品市场均衡的",
+        "提示2：明确投资和储蓄与利率、收入的关系",
+        "提示3：思考利率变动对投资和均衡收入的影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：图形推导方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 ISL 模型中，对于 IS 曲线这个知识点，以下哪一项不属于需要掌握的要点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS 曲线的含义"
+        },
+        {
+          "label": "B",
+          "content": "IS 曲线的斜率计算方法"
+        },
+        {
+          "label": "C",
+          "content": "IS 曲线的平移规律"
+        },
+        {
+          "label": "D",
+          "content": "IS 曲线与 LM 曲线的交点坐标"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示 1：回顾视频中提到的 IS 曲线需要掌握的要点内容",
+        "提示 2：明确视频中指出的四个要点分别是什么",
+        "提示 3：将选项与视频中提到的要点进行逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：IS曲线推导图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在IS - LM模型中，对于IS曲线这个知识点，以下哪个不属于必须掌握的要点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS曲线的含义"
+        },
+        {
+          "label": "B",
+          "content": "IS曲线的斜率变化趋势"
+        },
+        {
+          "label": "C",
+          "content": "IS曲线的动态调整过程"
+        },
+        {
+          "label": "D",
+          "content": "IS曲线的平移规律"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的IS曲线必须掌握的要点内容",
+        "提示2：视频明确指出了几个要点，将选项与视频内容进行一一比对",
+        "提示3：注意准确记忆视频中提到的关于IS曲线的几个关键方面"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：IS曲线含义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在IS - LM模型中，IS曲线主要研究的是宏观经济学中关于国民收入决定的内容，以下对于IS曲线相关内容理解正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS曲线主要关注的是商品市场均衡，它表示在不同利率水平下，使得投资等于储蓄（$I = S$）时的国民收入水平组合"
+        },
+        {
+          "label": "B",
+          "content": "IS曲线是用来描述货币市场均衡状态的曲线，与商品市场无关"
+        },
+        {
+          "label": "C",
+          "content": "IS曲线的推导只与利率有关，与国民收入无关"
+        },
+        {
+          "label": "D",
+          "content": "IS曲线以外的点表示商品市场和货币市场同时达到均衡"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：明确IS曲线是用于分析商品市场均衡的工具",
+        "提示2：思考IS曲线推导过程中涉及的变量关系",
+        "提示3：理解IS曲线内外点所代表的市场状态"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：IS曲线推导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在IS - LM模型中，对于IS曲线这个知识点，以下哪一项不属于需要掌握的要点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS曲线的含义"
+        },
+        {
+          "label": "B",
+          "content": "IS曲线的推导"
+        },
+        {
+          "label": "C",
+          "content": "IS曲线的斜率与弹性的关系研究"
+        },
+        {
+          "label": "D",
+          "content": "IS曲线的移动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的对于IS曲线知识点需要掌握的要点有哪些",
+        "提示2：视频中明确指出了几个关键要点，逐一与选项进行对比",
+        "提示3：注意选项中是否有超出视频所讲要点范围的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：IS曲线斜率影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在IS - LM模型中，关于IS曲线，以下哪个不属于需要掌握的关键要点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS曲线的含义"
+        },
+        {
+          "label": "B",
+          "content": "IS曲线的推导"
+        },
+        {
+          "label": "C",
+          "content": "IS曲线的弹性"
+        },
+        {
+          "label": "D",
+          "content": "IS曲线的移动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的IS曲线需要掌握的关键要点。",
+        "提示2：视频明确指出了几个关键方面，逐一与选项进行对比。",
+        "提示3：注意不要被干扰项迷惑，准确判断哪个选项不在关键要点范围内。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：IS曲线斜率影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在IS - LM模型中，对于IS曲线这个知识点，以下哪个不属于需要掌握的要点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS曲线的含义"
+        },
+        {
+          "label": "B",
+          "content": "IS曲线的推导"
+        },
+        {
+          "label": "C",
+          "content": "IS曲线的平移规律（视频中表述为移动）"
+        },
+        {
+          "label": "D",
+          "content": "IS曲线与总供给曲线的交点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的IS曲线需要掌握的要点",
+        "提示2：明确视频中指出的是含义、推导、斜率以及移动这几个关键内容",
+        "提示3：分析每个选项是否在视频强调的要点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三部门经济分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 IS - LM 模型中，对于 IS 曲线这个知识点，以下哪一项不属于需要掌握的要点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS 曲线的含义"
+        },
+        {
+          "label": "B",
+          "content": "IS 曲线的推导"
+        },
+        {
+          "label": "C",
+          "content": "IS 曲线的斜率计算方法"
+        },
+        {
+          "label": "D",
+          "content": "IS 曲线与总供给曲线的关系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示 1：回顾视频中提到的对于 IS 曲线需要掌握的要点内容",
+        "提示 2：明确视频中指出的四个要点分别是什么",
+        "提示 3：将选项与视频中提到的要点进行逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：is曲线斜率分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在IS - LM模型中，关于IS曲线，以下哪个不是需要掌握的关键要点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS曲线的含义"
+        },
+        {
+          "label": "B",
+          "content": "IS曲线的推导"
+        },
+        {
+          "label": "C",
+          "content": "IS曲线的凹凸性"
+        },
+        {
+          "label": "D",
+          "content": "IS曲线的移动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的IS曲线需要掌握的关键要点",
+        "提示2：视频明确指出需要掌握的要点有含义、推导、斜率以及移动等",
+        "提示3：逐一对比选项与视频中提到的要点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：比例税下is曲线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在IS - LM模型中，对于IS曲线，以下哪个方面不属于需要掌握的关键要点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS曲线的含义"
+        },
+        {
+          "label": "B",
+          "content": "IS曲线的推导"
+        },
+        {
+          "label": "C",
+          "content": "IS曲线的斜率计算方法"
+        },
+        {
+          "label": "D",
+          "content": "IS曲线的颜色"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的IS曲线需要掌握的关键要点",
+        "提示2：明确视频中列举的几个方面",
+        "提示3：思考颜色是否与经济模型中IS曲线的核心知识相关"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：is曲线的移动",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在IS - LM模型中，关于IS曲线，以下哪个方面不属于需要掌握的关键要点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS曲线的含义"
+        },
+        {
+          "label": "B",
+          "content": "IS曲线的推导"
+        },
+        {
+          "label": "C",
+          "content": "IS曲线的颜色"
+        },
+        {
+          "label": "D",
+          "content": "IS曲线的移动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的IS曲线需要掌握的关键要点",
+        "提示2：明确视频里指出的几个关键方面",
+        "提示3：逐一对比选项与视频中提到的要点是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：财政政策与IS线移动",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在ISL模型中，关于IS曲线需要掌握的要点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "IS曲线的含义"
+        },
+        {
+          "label": "B",
+          "content": "IS曲线与LM曲线的交点求解"
+        },
+        {
+          "label": "C",
+          "content": "IS曲线的推导"
+        },
+        {
+          "label": "D",
+          "content": "IS曲线的斜率以及移动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中所提到的对于IS曲线需要掌握的要点。",
+        "提示2：明确要点包含IS曲线的含义、推导、斜率和移动等方面。",
+        "提示3：判断每个选项是否在这些要点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：IS线含义推导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在IS-LM模型中，IS曲线的推导涉及到一些关键因素，对于IS曲线，以下哪个是其推导过程中重点考虑的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "商品市场的均衡，即投资等于储蓄（$I = S$）"
+        },
+        {
+          "label": "B",
+          "content": "货币市场的均衡，即货币需求等于货币供给（$L = M$）"
+        },
+        {
+          "label": "C",
+          "content": "劳动力市场的均衡，即劳动力需求等于劳动力供给"
+        },
+        {
+          "label": "D",
+          "content": "国际收支的均衡，即出口等于进口"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于IS曲线推导的相关内容，明确其主要基于哪个市场的均衡",
+        "提示2：IS曲线与商品市场密切相关，思考商品市场均衡的条件",
+        "提示3：其他选项分别对应不同市场的均衡情况，判断哪个与IS曲线推导直接相关"
+      ]
+    }
+  ],
+  "count": 16
+}

@@ -19,6 +19,7 @@ from .file_upload_service import FileUploadService
 from .result_merger_service import ResultMergerService
 from .volcano_service import VolcanoService
 from .doubao_service import DoubaoService
+from .prompt_config_service import prompt_config_service
 from ..database import get_db_session, init_db, test_connection
 from ..models.offline_video import OfflineVideoTask
 from dotenv import load_dotenv
@@ -2489,7 +2490,7 @@ class OfflineVideoService:
             knowledge_points: 知识点列表
             transcript_text: 完整逐字稿文本
             video_title: 视频标题
-            locale: 语言环境 (zh/en)
+            locale: 语言环境 (仅支持 zh)
             subject: 学科类型 (math/programming)
             
         Returns:
@@ -2515,122 +2516,21 @@ class OfflineVideoService:
                 
                 print(f"💪 生成练习 {idx+1}/{len(knowledge_points)}: {kp_name}")
                 
-                # 构建练习生成 prompt
+                # 从配置服务获取练习生成 prompt（使用和线上版本相同的提示词）
+                prompt_template = prompt_config_service.get_exercise_prompt(subject=subject, locale=locale)
+                
+                # 格式化提示词模板
                 if subject == 'math':
-                    # 数学题型 prompt
-                    if locale == 'en':
-                        prompt = f"""You are an experienced mathematics teacher. Please generate a math exercise based on the following video knowledge point.
-
-Knowledge Point Name: {kp_name}
-Knowledge Point Content: {transcript_segment}
-
-Please generate an exercise with the following requirements:
-1. Exercise Type: Randomly choose either [Multiple Choice] or [Fill in the Blank]
-2. Difficulty: Suitable for middle/high school level with appropriate differentiation
-3. The question should be directly related to the specific knowledge point explained in the video
-4. The question should have practical application value, not too simple
-5. If there are formulas, use LaTeX format (wrapped with $), **Note: In JSON, backslashes must be escaped, written as double backslashes \\\\, e.g., \\\\frac, \\\\sin**
-6. Provide detailed analysis and solution steps
-
-Please return in JSON format as follows:
-
-**Multiple Choice Format:**
-{{{{
-  "type": "multiple_choice",
-  "title": "Knowledge Point Practice: {kp_name}",
-  "description": "Complete the following exercise based on the video content",
-  "difficulty": "intermediate",
-  "question": "Question content (LaTeX formula example: $\\\\frac{{{{1}}}}{{{{2}}}}$ or $\\\\sin x$)",
-  "choices": [
-    {{{{"label": "A", "content": "Option A content"}}}},
-    {{{{"label": "B", "content": "Option B content"}}}},
-    {{{{"label": "C", "content": "Option C content"}}}},
-    {{{{"label": "D", "content": "Option D content"}}}}
-  ],
-  "answer_type": "single",
-  "solution": "B",
-  "hints": ["Hint 1", "Hint 2", "Hint 3"]
-}}}}
-
-**Fill in the Blank Format:**
-{{{{
-  "type": "fill_blank",
-  "title": "Knowledge Point Practice: {kp_name}",
-  "description": "Complete the following exercise based on the video content",
-  "difficulty": "intermediate",
-  "question": "Question content, use ___ to indicate blank positions (LaTeX example: $\\\\frac{{{{1}}}}{{{{2}}}}$)",
-  "blanks": 2,
-  "answer_type": "text",
-  "solution": "Answer1;Answer2",
-  "hints": ["Hint 1", "Hint 2", "Hint 3"]
-}}}}
-
-Return only JSON, no other explanatory text."""
-                    else:
-                        prompt = f"""你是一位资深的数学教师，需要根据以下视频知识点生成一道练习题。
-
-知识点名称：{kp_name}
-知识点内容：{transcript_segment}
-
-请生成一道练习题，要求：
-1. 题型：随机选择【选择题】或【填空题】其中之一
-2. 难度：适配中考/高考水平，有一定区分度
-3. 题目要结合视频中讲解的具体知识点
-4. 题目要有实际应用价值，不要过于简单
-5. 如果有公式，使用 LaTeX 格式（用 $ 包裹），**注意：JSON中反斜杠必须转义，写成双反斜杠 \\\\ 例如 \\\\frac、\\\\sin**
-6. 提供详细的解析和解题步骤
-
-请以 JSON 格式返回，格式如下：
-
-**选择题格式：**
-{{{{
-  "type": "multiple_choice",
-  "title": "知识点练习：{kp_name}",
-  "description": "根据视频内容，完成以下练习题",
-  "difficulty": "intermediate",
-  "question": "题目内容（LaTeX公式示例：$\\\\frac{{{{1}}}}{{{{2}}}}$ 或 $\\\\sin x$）",
-  "choices": [
-    {{{{"label": "A", "content": "选项A内容"}}}},
-    {{{{"label": "B", "content": "选项B内容"}}}},
-    {{{{"label": "C", "content": "选项C内容"}}}},
-    {{{{"label": "D", "content": "选项D内容"}}}}
-  ],
-  "answer_type": "single",
-  "solution": "B",
-  "hints": ["提示1", "提示2", "提示3"]
-}}}}
-
-**填空题格式：**
-{{{{
-  "type": "fill_blank",
-  "title": "知识点练习：{kp_name}",
-  "description": "根据视频内容，完成以下练习题",
-  "difficulty": "intermediate",
-  "question": "题目内容，用 ___ 表示填空位置（LaTeX示例：$\\\\frac{{{{1}}}}{{{{2}}}}$）",
-  "blanks": 2,
-  "answer_type": "text",
-  "solution": "答案1;答案2",
-  "hints": ["提示1", "提示2", "提示3"]
-}}}}
-
-只返回 JSON，不要其他说明文字。"""
-                else:
-                    # 编程题型 prompt（默认）
-                    if locale == 'en':
-                        prompt = f"""You are a professional programming education expert. Please generate a programming exercise for the knowledge point based on the video content.
-
-Knowledge Point: {kp_name}
-Video Title: {video_title}
-Context: {transcript_segment}
-
-Please generate an exercise in JSON format. Choose the appropriate type and generate the exercise."""
-                    else:
-                        prompt = f"""你是一位专业的编程教学专家。请根据视频内容为知识点生成一道编程练习题。
-
-知识点：{kp_name}
-视频标题：{video_title}
-
-请根据知识点难度选择合适的题型并生成练习题。必须严格按照以下JSON格式返回。只输出 JSON，不要其他内容。"""
+                    prompt = prompt_template.format(
+                        knowledge_point_name=kp_name,
+                        transcript_segment=transcript_segment
+                    )
+                else:  # programming
+                    prompt = prompt_template.format(
+                        knowledge_point_name=kp_name,
+                        video_title=video_title or '未知',
+                        transcript_segment=transcript_segment
+                    )
                 
                 # 调用 LLM 生成练习
                 exercise_json = await self.llm_service.generate_outline(
@@ -3141,6 +3041,41 @@ Please generate an exercise in JSON format. Choose the appropriate type and gene
             import traceback
             traceback.print_exc()
             raise
+    
+    def clear_cache(self, task_id: Optional[str] = None) -> Dict[str, Any]:
+        """
+        清除任务缓存
+        
+        Args:
+            task_id: 如果指定，只清除该任务的缓存；否则清除所有缓存
+            
+        Returns:
+            清除结果统计
+        """
+        if task_id:
+            if task_id in self.tasks_cache:
+                del self.tasks_cache[task_id]
+                print(f"✅ 已清除任务 {task_id} 的缓存")
+                return {
+                    "success": True,
+                    "message": f"已清除任务 {task_id} 的缓存",
+                    "cleared_count": 1
+                }
+            else:
+                return {
+                    "success": True,
+                    "message": f"任务 {task_id} 不在缓存中",
+                    "cleared_count": 0
+                }
+        else:
+            count = len(self.tasks_cache)
+            self.tasks_cache.clear()
+            print(f"✅ 已清除所有任务缓存（共 {count} 个）")
+            return {
+                "success": True,
+                "message": f"已清除所有任务缓存",
+                "cleared_count": count
+            }
     
     def sync_from_files(self) -> Dict[str, Any]:
         """

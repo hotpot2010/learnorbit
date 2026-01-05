@@ -1,0 +1,421 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：实际与名义利率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的国民收入决定 is - LM 模型中，以下哪一个不属于该模型章节涉及的知识点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投资的决定"
+        },
+        {
+          "label": "B",
+          "content": "消费函数的推导"
+        },
+        {
+          "label": "C",
+          "content": "is 曲线"
+        },
+        {
+          "label": "D",
+          "content": "利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的国民收入决定 is - LM 模型章节的知识点",
+        "提示2：明确每个选项与视频所讲知识点的关联",
+        "提示3：判断哪个选项不在视频所提及的知识点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：利率与投资关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在国民收入决定的 IS - LM 模型中，以下哪个属于该模型章节里关于投资决定这一小节所涉及的知识点相关范畴（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "消费函数的推导"
+        },
+        {
+          "label": "B",
+          "content": "IS 曲线的移动因素"
+        },
+        {
+          "label": "C",
+          "content": "货币供给的变化"
+        },
+        {
+          "label": "D",
+          "content": "政府购买的乘数效应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先明确视频中提到的该章节知识点有投资的决定、IS 曲线等",
+        "提示2：思考每个选项与投资决定及 IS 曲线等知识点的关联",
+        "提示3：分析哪个选项是与投资决定这一小节紧密相关的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：资本边际效率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频讲解的宏观经济学第14章国民收入的决定is - LM模型中，以下哪个不属于这一章提到的知识点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投资的决定"
+        },
+        {
+          "label": "B",
+          "content": "通货膨胀率的决定"
+        },
+        {
+          "label": "C",
+          "content": "IS曲线"
+        },
+        {
+          "label": "D",
+          "content": "利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的宏观经济学第14章的知识点列表",
+        "提示2：明确各选项对应的概念是否在知识点列表中出现",
+        "提示3：视频提及的知识点有投资的决定、IS曲线、利率的决定、ISM曲线、is - LM曲线以及凯恩斯的基本理论框架"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：资金编辑效率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的国民收入决定的 $IS - LM$ 模型中，以下哪个不属于该章节的主要知识点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投资的决定"
+        },
+        {
+          "label": "B",
+          "content": "消费函数的推导"
+        },
+        {
+          "label": "C",
+          "content": "利率的决定"
+        },
+        {
+          "label": "D",
+          "content": "$IS - LM$ 曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的国民收入决定的 $IS - LM$ 模型章节的知识点",
+        "提示2：明确视频中列举的几个关键知识点内容",
+        "提示3：逐一对比选项与视频中提到的知识点是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：限额与现值",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学中，关于国民收入决定的 is - LM 模型这一章，以下哪个知识点不属于该章所包含的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投资的决定"
+        },
+        {
+          "label": "B",
+          "content": "消费函数的推导"
+        },
+        {
+          "label": "C",
+          "content": "is 曲线"
+        },
+        {
+          "label": "D",
+          "content": "利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的 is - LM 模型这一章包含的知识点",
+        "提示2：明确每个选项所涉及的内容是否在视频列举的范围内",
+        "提示3：视频中提到该章知识点有投资的决定、is 曲线、利率的决定等"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：贴现与贴现率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的国民收入决定 is - LM 模型中，以下哪个不是该章节的知识点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投资的决定"
+        },
+        {
+          "label": "B",
+          "content": "总供给曲线的移动"
+        },
+        {
+          "label": "C",
+          "content": "利率的决定"
+        },
+        {
+          "label": "D",
+          "content": "is 曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的该章节知识点内容",
+        "提示2：逐一分析每个选项是否在视频所讲的知识点范围内",
+        "提示3：视频中明确提到了投资的决定、is 曲线、利率的决定等内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：本金与贴现率对比",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的 IS - LM 模型中，关于国民收入决定章节里，以下哪个不属于该章节提到的知识点范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投资的决定"
+        },
+        {
+          "label": "B",
+          "content": "消费函数的推导"
+        },
+        {
+          "label": "C",
+          "content": "IS 曲线"
+        },
+        {
+          "label": "D",
+          "content": "利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的该章节知识点有哪些",
+        "提示2：明确视频里具体列举的关键内容",
+        "提示3：将选项与视频中提到的知识点逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：资本边际效率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在国民收入决定的 is - LM 模型中，以下哪个不属于该章节重点知识点范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投资的决定"
+        },
+        {
+          "label": "B",
+          "content": "消费函数的推导"
+        },
+        {
+          "label": "C",
+          "content": "is 曲线"
+        },
+        {
+          "label": "D",
+          "content": "利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的该章节重点知识点的框架",
+        "提示2：明确视频中列举的知识点有投资的决定、is 曲线、利率的决定等",
+        "提示3：判断每个选项是否在视频所提及的知识点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：资本边际效率曲线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的国民收入决定 is - LM 模型中，关于投资的决定这一知识点，以下哪个不属于该章节所涉及的知识点范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投资的决定因素"
+        },
+        {
+          "label": "B",
+          "content": "成本与收益的关系"
+        },
+        {
+          "label": "C",
+          "content": "国家税收政策的调整"
+        },
+        {
+          "label": "D",
+          "content": "资本的边际效率曲线的影响"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于投资的决定这一章节所介绍的知识点结构",
+        "提示2：思考各个选项与投资决定直接的关联程度",
+        "提示3：判断哪个选项超出了视频所提及的投资决定相关的知识点范畴"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：资本与投资效率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的国民收入决定的 $is - LM$ 模型中，以下哪个不属于该章节的知识点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投资的决定"
+        },
+        {
+          "label": "B",
+          "content": "货币供给的决定"
+        },
+        {
+          "label": "C",
+          "content": "$is$ 曲线"
+        },
+        {
+          "label": "D",
+          "content": "利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的 $is - LM$ 模型章节的知识点。",
+        "提示2：视频中明确列举了几个重要的知识点，可以根据这些进行判断。",
+        "提示3：注意对比选项和视频中提到的知识点，找出不符合的那一项。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：效率曲线含义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学国民收入决定的 $is - LM$ 模型相关知识中，以下哪个不属于该章节包含的知识点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投资的决定"
+        },
+        {
+          "label": "B",
+          "content": "消费函数的推导"
+        },
+        {
+          "label": "C",
+          "content": "利率的决定"
+        },
+        {
+          "label": "D",
+          "content": "IS 曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的国民收入决定 $is - LM$ 模型这一章的知识点。",
+        "提示2：明确视频中所列举的具体知识点有哪些。",
+        "提示3：将选项与视频中提到的知识点进行逐一对比。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：收益率与投资",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的国民收入决定的 $is - LM$ 模型中，关于投资的决定、$is$ 曲线、利率的决定等知识点。以下哪个是该模型中首先涉及到的知识点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投资的决定"
+        },
+        {
+          "label": "B",
+          "content": "$is$ 曲线"
+        },
+        {
+          "label": "C",
+          "content": "利率的决定"
+        },
+        {
+          "label": "D",
+          "content": "$is - LM$ 曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中讲解的 $is - LM$ 模型知识点的顺序",
+        "提示2：明确提到该模型知识点中第一个出现的内容",
+        "提示3：结合视频所说的顺序来判断选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：托宾Q理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的国民收入决定is - LM模型中，以下哪个不属于该章节的知识点范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投资的决定"
+        },
+        {
+          "label": "B",
+          "content": "消费函数的推导"
+        },
+        {
+          "label": "C",
+          "content": "is曲线"
+        },
+        {
+          "label": "D",
+          "content": "利率的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的is - LM模型章节的知识点",
+        "提示2：明确各选项与视频中所讲知识点的关联",
+        "提示3：逐一分析每个选项是否属于该章节的知识点"
+      ]
+    }
+  ],
+  "count": 13
+}

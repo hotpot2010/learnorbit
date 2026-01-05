@@ -1,0 +1,261 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：AD曲线要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 $AD - AS$ 模型中，要进行 $AD - AS$ 分析，前提是需要弄清楚以下哪些内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "仅 $AD$ 曲线"
+        },
+        {
+          "label": "B",
+          "content": "仅 $AS$ 曲线"
+        },
+        {
+          "label": "C",
+          "content": "$AD$ 曲线和 $AS$ 曲线"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于进行 $AD - AS$ 分析的前提条件描述",
+        "提示2：视频提到弄清楚某些内容后才能进行 $AD - AS$ 分析，思考是哪些内容",
+        "提示3：结合视频可知与 $AD$ 曲线和 $AS$ 曲线都有关"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：islm与adas区别",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 $AD - AS$ 模型中，若要进行完整的 $AD - AS$ 分析，需要先弄清楚以下哪些内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "仅 $AD$ 曲线"
+        },
+        {
+          "label": "B",
+          "content": "仅 $AS$ 曲线"
+        },
+        {
+          "label": "C",
+          "content": "$AD$ 曲线和 $AS$ 曲线都要弄清楚"
+        },
+        {
+          "label": "D",
+          "content": "既不需要 $AD$ 曲线也不需要 $AS$ 曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于进行 $AD - AS$ 分析的前提条件",
+        "提示2：明确 $AD - AS$ 模型包含 $AD$ 曲线和 $AS$ 曲线",
+        "提示3：思考要进行完整分析，对这两条曲线的要求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：供需曲线应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 $AD - AS$ 模型中，对于理解宏观经济中国民收入的决定起着关键作用。以下关于该模型主要知识点的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "该模型主要由总需求曲线（$AD$）和总供给曲线（$AS$）组成，只需理解其中一条曲线就能进行 $AD - AS$ 分析"
+        },
+        {
+          "label": "B",
+          "content": "该模型主要知识点分为三块，其中总需求曲线就是 $AD - AS$ 模型中的 $AD$，总供给曲线就是 $AD - AS$ 模型中的 $AS$，理解这两条曲线后才能进行 $AD - AS$ 分析"
+        },
+        {
+          "label": "C",
+          "content": "该模型重点只在总需求曲线（$AD$），理解了它就能完全掌握国民收入的决定"
+        },
+        {
+          "label": "D",
+          "content": "该模型的总供给曲线（$AS$）与总需求曲线（$AD$）没有关联，各自独立影响国民收入的决定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确视频中提到 $AD - AS$ 模型中主要知识点的构成情况",
+        "提示2：思考进行 $AD - AS$ 分析需要对 $AD$ 和 $AS$ 两条曲线有怎样的理解",
+        "提示3：理解 $AD$ 和 $AS$ 曲线在决定国民收入过程中的相互关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：总需求概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 $AD - AS$ 模型中，要进行 $AD - AS$ 分析，前提是要弄清楚以下哪些内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "仅需弄清楚 $AD$ 曲线"
+        },
+        {
+          "label": "B",
+          "content": "仅需弄清楚 $AS$ 曲线"
+        },
+        {
+          "label": "C",
+          "content": "需要弄清楚 $AD$ 曲线和 $AS$ 曲线"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到进行 $AD - AS$ 分析的前置条件",
+        "提示2：视频中明确说明了要对哪个部分都弄清楚之后才能进行 $AD - AS$ 分析",
+        "提示3：结合视频中对 $AD$ 曲线和 $AS$ 曲线的描述来判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：财富效应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在宏观经济学的 $AD - AS$ 模型（adas 模型）中，$AD$ 曲线和 $AS$ 曲线是重要的组成部分。当我们理解了 $AD$ 曲线和 $AS$ 曲线之后，下一步要进行的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单独分析 $AD$ 曲线"
+        },
+        {
+          "label": "B",
+          "content": "单独分析 $AS$ 曲线"
+        },
+        {
+          "label": "C",
+          "content": "进行 $AD - AS$ 综合分析（adas 分析）"
+        },
+        {
+          "label": "D",
+          "content": "重新研究 $AD$ 曲线和 $AS$ 曲线的定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：注意视频中提到理解 $AD$ 和 $AS$ 之后的下一步操作",
+        "提示2：关键信息是理解两者后要进行综合分析",
+        "提示3：回顾视频原文内容来确定答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：利率效应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 $AD - AS$ 模型中，以下关于总需求曲线（$AD$）和总供给曲线（$AS$）的说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只了解 $AD$ 曲线就可以进行 $AD - AS$ 分析"
+        },
+        {
+          "label": "B",
+          "content": "掌握 $AD$ 和 $AS$ 曲线后才能进行 $AD - AS$ 分析"
+        },
+        {
+          "label": "C",
+          "content": "总需求曲线就是 $AD - AS$ 模型中的 $AS$ 曲线"
+        },
+        {
+          "label": "D",
+          "content": "进行 $AD - AS$ 分析不需要考虑 $AD$ 和 $AS$ 曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中关于 $AD - AS$ 模型分析的条件",
+        "提示2：明确总需求曲线和总供给曲线在模型中的表示",
+        "提示3：思考进行 $AD - AS$ 分析与 $AD$、$AS$ 曲线的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：IS - LM曲线变化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 $AD - AS$ 模型中，以下关于总需求曲线（$AD$）和总供给曲线（$AS$）的说法，正确的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只需要理解总需求曲线（$AD$）就可以进行 $AD - AS$ 分析"
+        },
+        {
+          "label": "B",
+          "content": "只需要理解总供给曲线（$AS$）就可以进行 $AD - AS$ 分析"
+        },
+        {
+          "label": "C",
+          "content": "需要把总需求曲线（$AD$）和总供给曲线（$AS$）都弄明白才能进行 $AD - AS$ 分析"
+        },
+        {
+          "label": "D",
+          "content": "进行 $AD - AS$ 分析与总需求曲线（$AD$）和总供给曲线（$AS$）无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于进行 $AD - AS$ 分析的条件",
+        "提示2：明确总需求曲线（$AD$）和总供给曲线（$AS$）在分析中的作用",
+        "提示3：思考两者与 $AD - AS$ 分析的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：AD曲线移动",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 $AD - AS$ 模型中，当我们理解了总需求曲线 $AD$ 和总供给曲线 $AS$ 之后，接下来要进行的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单独分析 $AD$ 曲线"
+        },
+        {
+          "label": "B",
+          "content": "单独分析 $AS$ 曲线"
+        },
+        {
+          "label": "C",
+          "content": "进行 $AD - AS$ 综合分析"
+        },
+        {
+          "label": "D",
+          "content": "分析其他经济模型"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：注意视频中提到理解 $AD$ 和 $AS$ 之后的下一步操作",
+        "提示2：思考整体的分析流程，是在对两条曲线都理解后进行综合",
+        "提示3：回忆视频中关于知识点连贯性的描述"
+      ]
+    }
+  ],
+  "count": 8
+}

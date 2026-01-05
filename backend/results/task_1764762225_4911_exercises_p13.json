@@ -1,0 +1,101 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Python执行模式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于Python执行模式的描述，正确的是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "Python只有命令行模式一种执行模式"
+        },
+        {
+          "label": "B",
+          "content": "命令行模式下，Python解释器会读取完整个文件后再执行命令"
+        },
+        {
+          "label": "C",
+          "content": "交互模式下，输入一行命令后，Python会立即执行并展示该行的运行结果"
+        },
+        {
+          "label": "D",
+          "content": "命令行模式下，不能逐行执行文件中的命令"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：视频中明确提到Python有两种执行模式",
+        "提示2：了解命令行模式和交互模式的执行特点，即命令行模式要保存并运行整个文件，解释器会逐行解析和执行；交互模式输入一行就立即执行并展示结果",
+        "提示3：思考每个选项与两种模式执行特点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：交互模式优势",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在Python编程中，以下哪种描述是交互模式区别于命令行模式的特点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "需要编写完所有命令并保存整个文件后才能运行"
+        },
+        {
+          "label": "B",
+          "content": "Python解释器会一行一行对文件进行解析和执行"
+        },
+        {
+          "label": "C",
+          "content": "输入一行命令后，Python立即执行并展示该行的运行结果"
+        },
+        {
+          "label": "D",
+          "content": "运行时必须读取完整个文件才能执行某一行命令"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先明确命令行模式和交互模式的定义和特点",
+        "提示2：回顾视频中对交互模式特点的描述",
+        "提示3：逐一分析每个选项，看哪个符合交互模式的特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：交互模式操作",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 Python 中，以下关于执行模式的描述，正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "命令行模式下，编写好命令后保存并运行整个文件，Python 解释器会逐行对文件进行解析和执行"
+        },
+        {
+          "label": "B",
+          "content": "交互模式下，需要编写完整个文件后才能看到运行结果"
+        },
+        {
+          "label": "C",
+          "content": "命令行模式下，输入一行后，Python 立即执行并展示那一行的运行结果"
+        },
+        {
+          "label": "D",
+          "content": "交互模式下，Python 解释器必须读完整个文件才能执行某一行命令"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对命令行模式和交互模式的定义和特点",
+        "提示2：明确命令行模式是保存并运行整个文件，交互模式是输入一行执行一行",
+        "提示3：根据两种模式的特点来判断每个选项的正确性"
+      ]
+    }
+  ],
+  "count": 3
+}

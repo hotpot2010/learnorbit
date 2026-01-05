@@ -1,0 +1,165 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：面向过程编程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于面向对象编程（OOP）的说法，正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只要对着对象写代码就算是面向对象编程，理解它的难度比找一个对象低"
+        },
+        {
+          "label": "B",
+          "content": "理解面向对象编程的难度不见得比找一个对象低，本视频会详细讲解具体的OOP代码"
+        },
+        {
+          "label": "C",
+          "content": "理解面向对象编程的难度不见得比找一个对象低，本视频仅用Python做简单示范语法讲解"
+        },
+        {
+          "label": "D",
+          "content": "本视频的目的是帮助你编写具体的OOP代码，会涉及详细的代码讲解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于理解面向对象编程难度的描述",
+        "提示2：明确视频讲解的内容范围，是否涉及具体代码讲解",
+        "提示3：仔细对比每个选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：面向对象编程介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于面向对象编程（oop）的说法，正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "让对象坐着，对面写代码就算是面向对象编程，所以它很容易理解"
+        },
+        {
+          "label": "B",
+          "content": "视频会详细讲解具体的 oop 代码"
+        },
+        {
+          "label": "C",
+          "content": "零基础在学习编程的路上，面向对象编程是一个绕不过的坎，且完全理解它难度可能不亚于找一个对象"
+        },
+        {
+          "label": "D",
+          "content": "视频不会用 Python 做任何示例语法讲解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细理解视频中对面向对象编程（oop）学习难度的描述",
+        "提示2：注意视频讲解内容的范围，是否包含具体代码和示例语法",
+        "提示3：分析每个选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：对象与类的方法、属性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于面向对象编程（OOP），以下说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只要对着对象写代码就算是完全理解面向对象编程了"
+        },
+        {
+          "label": "B",
+          "content": "理解面向对象编程的难度不低于找一个对象"
+        },
+        {
+          "label": "C",
+          "content": "本视频会详细讲解具体的 OOP 代码"
+        },
+        {
+          "label": "D",
+          "content": "面向对象编程和面向过程编程没有任何关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中对面向对象编程概念理解难度的描述",
+        "提示2：注意视频中关于本视频讲解内容范围的说明",
+        "提示3：分析每个选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：面向对象特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于面向对象编程（OOP）的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只要对着对象写代码就算是完全理解面向对象编程了"
+        },
+        {
+          "label": "B",
+          "content": "理解面向对象编程的难度比找一个对象还要低"
+        },
+        {
+          "label": "C",
+          "content": "本视频主要帮助理解OOP概念，不涉及讲解具体的OOP代码，仅用Python做简单示范语法讲解"
+        },
+        {
+          "label": "D",
+          "content": "面向对象编程和面向过程编程没有任何关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对于面向对象编程理解难度的描述",
+        "提示2：明确视频的讲解重点",
+        "提示3：思考面向对象编程和其他编程方式是否有联系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：面向对象多态",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于面向对象编程（OOP），以下说法正确的是：",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只要对着对象写代码就算完全理解面向对象编程了"
+        },
+        {
+          "label": "B",
+          "content": "理解面向对象编程的难度比找一个对象低"
+        },
+        {
+          "label": "C",
+          "content": "本视频的目的是帮助理解OOP概念，仅用Python做简单示范语法讲解，不涉及具体的OOP代码讲解"
+        },
+        {
+          "label": "D",
+          "content": "面向对象编程和面向过程编程没有任何关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于面向对象编程概念理解难度的描述",
+        "提示2：注意视频提到的本视频讲解OOP的范围",
+        "提示3：分析每个选项与视频内容的匹配度"
+      ]
+    }
+  ],
+  "count": 5
+}

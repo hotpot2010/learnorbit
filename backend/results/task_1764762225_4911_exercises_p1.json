@@ -1,0 +1,101 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：课程开发缘由",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到一些人对掌握编程技能很向往，但迟迟不敢开始的原因是他们脑海中的既有印象包含以下哪些关键词？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "困难、抽象、烧脑"
+        },
+        {
+          "label": "B",
+          "content": "枯燥、乏味、耗时"
+        },
+        {
+          "label": "C",
+          "content": "复杂、多变、难学"
+        },
+        {
+          "label": "D",
+          "content": "危险、昂贵、无用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的人们脑海中关于编程的既有印象相关内容",
+        "提示2：在视频特定的描述区间中寻找关键词",
+        "提示3：对比各选项与视频内容是否一致"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：课程特色亮点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到一些人对掌握编程技能很向往，但迟迟不敢开始，原因是他们脑海中的既有印象包含以下哪些关键词？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "困难、抽象、烧脑"
+        },
+        {
+          "label": "B",
+          "content": "枯燥、复杂、耗时"
+        },
+        {
+          "label": "C",
+          "content": "无聊、低效、危险"
+        },
+        {
+          "label": "D",
+          "content": "乏味、单调、昂贵"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的导致人们不敢开始编程的既有印象关键词",
+        "提示2：在视频的 00:05 - 00:15 时间段内寻找相关内容",
+        "提示3：将每个选项与视频内容进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：课程学习建议",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到一些人对掌握编程技能很向往，但迟迟不敢开始，原因是他们脑海中的既有印象包含以下哪些关键词？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "困难、抽象、烧脑"
+        },
+        {
+          "label": "B",
+          "content": "简单、具体、轻松"
+        },
+        {
+          "label": "C",
+          "content": "复杂、混乱、枯燥"
+        },
+        {
+          "label": "D",
+          "content": "有趣、实用、高效"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的导致人们不敢开始编程的既有印象关键词",
+        "提示2：从选项中找出与视频内容匹配的关键词组合",
+        "提示3：注意每个选项中关键词的含义是否与视频描述一致"
+      ]
+    }
+  ],
+  "count": 3
+}

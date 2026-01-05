@@ -1,0 +1,223 @@
+{
+  "exercises": [
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：简单极限求法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$4$",
+      "hints": [
+        "提示1：对分子进行因式分解",
+        "提示2：将分子 $x^2 - 4$ 分解为 $(x + 2)(x - 2)$",
+        "提示3：约去分子分母相同的非零因子 $(x - 2)$ 后再求极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷比无穷解法一",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to +\\infty} \\frac{3x^2 + 2x - 1}{2x^2 - x + 3}$ 的值。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{3}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{2}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$1$"
+        },
+        {
+          "label": "D",
+          "content": "$0$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：当 $x \\to +\\infty$ 时，对于 $\\frac{多项式}{多项式}$ 形式的极限，可通过分子分母同时除以最高次幂来求解",
+        "提示2：本题中分子分母的最高次幂为 $x^2$，将分子分母同时除以 $x^2$",
+        "提示3：分别计算分子分母各项在 $x \\to +\\infty$ 时的极限，再求整个式子的极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：洛必达法则求极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 1} \\frac{x^2 - 1}{\\ln x}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$2$",
+      "hints": [
+        "提示1：判断当 $x \\to 1$ 时，原式是否为 $\\frac{0}{0}$ 型未定式",
+        "提示2：若是 $\\frac{0}{0}$ 型未定式，可使用洛必达法则，对分子分母分别求导",
+        "提示3：求导后再求极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：等价无穷小替换",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 0} \\frac{\\tan 2x}{\\sin 3x}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{2}{3}$",
+      "hints": [
+        "提示1：当 $x \\to 0$ 时，$\\tan x \\sim x$，$\\sin x \\sim x$",
+        "提示2：利用等价无穷小替换将 $\\tan 2x$ 和 $\\sin 3x$ 进行替换",
+        "提示3：替换后化简式子并求极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：洛必达法则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 0} \\frac{e^x - 1 - x}{x^2}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{1}{2}$",
+      "hints": [
+        "提示1：当 $x \\to 0$ 时，该极限为 $\\frac{0}{0}$ 型，可使用洛必达法则",
+        "提示2：对分子分母分别求导，分子求导为 $(e^x - 1 - x)' = e^x - 1$，分母求导为 $(x^2)' = 2x$",
+        "提示3：再次判断求导后的极限类型，若仍为 $\\frac{0}{0}$ 型，可继续使用洛必达法则"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：1的无穷次方型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to \\infty} (1 + \\frac{2}{x})^x$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$e$"
+        },
+        {
+          "label": "B",
+          "content": "$e^2$"
+        },
+        {
+          "label": "C",
+          "content": "$1$"
+        },
+        {
+          "label": "D",
+          "content": "$\\infty$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆重要极限公式 $\\lim_{n \\to \\infty} (1 + \\frac{1}{n})^n = e$",
+        "提示2：对原式进行变形，使其符合重要极限公式的形式",
+        "提示3：令 $t = \\frac{x}{2}$，则 $x = 2t$，当 $x \\to \\infty$ 时，$t \\to \\infty$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：零乘无穷型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 0^+} x\\ln x$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$0$",
+      "hints": [
+        "提示1：将 $x\\ln x$ 变形为 $\\frac{\\ln x}{\\frac{1}{x}}$，使其成为 $\\frac{\\infty}{\\infty}$ 型",
+        "提示2：使用洛必达法则，对分子分母分别求导",
+        "提示3：求导后再求极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限类型判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "不存在"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先对分子进行因式分解",
+        "提示2：然后约去分子分母的公因式",
+        "提示3：最后将 $x = 2$ 代入化简后的式子计算极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限存在性判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}$ 的值。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$4$"
+        },
+        {
+          "label": "C",
+          "content": "$0$"
+        },
+        {
+          "label": "D",
+          "content": "不存在"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先对分子进行因式分解",
+        "提示2：约去分子分母的公因式",
+        "提示3：将 $x = 2$ 代入化简后的式子求极限"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：导数极限计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "计算极限 $\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$4$",
+      "hints": [
+        "提示1：对分子进行因式分解",
+        "提示2：利用平方差公式 $a^2 - b^2 = (a + b)(a - b)$，这里 $a = x$，$b = 2$",
+        "提示3：约去分子分母的公因式后再求极限"
+      ]
+    }
+  ],
+  "count": 10
+}

@@ -1,0 +1,165 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：变量命名硬性规则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个是符合 Python 变量命名硬性规则的变量名？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "2num"
+        },
+        {
+          "label": "B",
+          "content": "num@1"
+        },
+        {
+          "label": "C",
+          "content": "num_1"
+        },
+        {
+          "label": "D",
+          "content": "num 1"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频内容，变量名只能由文字、数字、下划线组成",
+        "提示2：变量名不能有除了下划线之外的符号，也不能有空格",
+        "提示3：变量名不能以数字开头"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：避免使用拼音命名",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个变量名在 Python 中是合法且符合良好命名规范的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "123abc"
+        },
+        {
+          "label": "B",
+          "content": "abc@123"
+        },
+        {
+          "label": "C",
+          "content": "student_age"
+        },
+        {
+          "label": "D",
+          "content": "aae"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的变量命名的硬性规则，变量只能由文字、数字、下划线组成，不能有除了下划线之外的符号",
+        "提示2：变量名不能有空格，且不能数字开头",
+        "提示3：变量名应尽量取得易于理解和记忆"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：英文命名原因",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个变量名是符合 Python 变量命名的硬性规则且相对易理解和记忆的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1number"
+        },
+        {
+          "label": "B",
+          "content": "user_name"
+        },
+        {
+          "label": "C",
+          "content": "user@name"
+        },
+        {
+          "label": "D",
+          "content": "abc"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的 Python 变量命名硬性规则，即只能由文字、数字、下划线组成，不能有除下划线以外的符号，不能有空格，且不能数字开头",
+        "提示2：考虑变量名的易理解和记忆性，尽量能体现变量的用途",
+        "提示3：逐一分析每个选项是否符合上述要求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：英文命名规范",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个变量名符合 Python 的变量命名规范且是一个比较好的命名？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "2num"
+        },
+        {
+          "label": "B",
+          "content": "num@ber"
+        },
+        {
+          "label": "C",
+          "content": "number"
+        },
+        {
+          "label": "D",
+          "content": "num ber"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的变量命名的硬性规则，即只能由文字、数字、下划线组成，不能有除了下划线之外的符号，不能有空格以及不能数字开头",
+        "提示2：考虑好的变量名应该易于理解和记忆",
+        "提示3：逐一分析每个选项是否符合上述要求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：变量名注意事项",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个是符合 Python 变量命名规则且是较好命名的变量名？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "123abc"
+        },
+        {
+          "label": "B",
+          "content": "abc@123"
+        },
+        {
+          "label": "C",
+          "content": "student_age"
+        },
+        {
+          "label": "D",
+          "content": "aae"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的变量命名的硬性规则，即只能由文字、数字、下划线组成，不能有除了下划线之外的符号，不能有空格以及不能数字开头",
+        "提示2：考虑较好的变量名应该易于理解和记忆",
+        "提示3：逐一分析每个选项是否符合规则和要求"
+      ]
+    }
+  ],
+  "count": 5
+}

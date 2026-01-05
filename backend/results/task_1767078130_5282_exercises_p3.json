@@ -1,0 +1,180 @@
+{
+  "exercises": [
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：求导规律总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = \\frac{2x + 1}{x - 2}$，求它的导数 $f'(x)$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$-\\frac{5}{(x - 2)^2}$",
+      "hints": [
+        "提示1：使用除法求导公式 $(\\frac{u}{v})' = \\frac{u'v - uv'}{v^2}$",
+        "提示2：确定 $u = 2x + 1$ 和 $v = x - 2$ ，分别求出 $u'$ 和 $v'$",
+        "提示3：将 $u$、$v$、$u'$ 和 $v'$ 代入除法求导公式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三角函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = \\sin(2x) + \\cos(x)$，求 $f'(x)$ 的值是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2\\cos(2x) - \\sin(x)$"
+        },
+        {
+          "label": "B",
+          "content": "$\\cos(2x) - \\sin(x)$"
+        },
+        {
+          "label": "C",
+          "content": "$2\\cos(2x) + \\sin(x)$"
+        },
+        {
+          "label": "D",
+          "content": "$\\cos(2x) + \\sin(x)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据加法求导法则 $(u + v)' = u' + v'$，分别对 $\\sin(2x)$ 和 $\\cos(x)$ 求导",
+        "提示2：对于复合函数 $\\sin(2x)$ 求导，设 $u = 2x$，先对 $\\sin(u)$ 关于 $u$ 求导，再乘以 $u$ 关于 $x$ 的导数",
+        "提示3：根据求导公式 $(\\sin x)' = \\cos x$，$(\\cos x)' = -\\sin x$ 进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：莱布尼茨公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=x^2\\sin x$，求 $f'(x)$ 的结果是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2x\\sin x + x^2\\cos x$"
+        },
+        {
+          "label": "B",
+          "content": "$2x\\sin x - x^2\\cos x$"
+        },
+        {
+          "label": "C",
+          "content": "$x^2\\cos x$"
+        },
+        {
+          "label": "D",
+          "content": "$2x\\cos x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频提到的求导知识，本题可使用乘积的求导法则 $(uv)' = u'v+uv'$",
+        "提示2：设 $u = x^2$，$v = \\sin x$，分别求出 $u'$ 和 $v'$",
+        "提示3：$x^n$ 的导数为 $nx^{n - 1}$，$\\sin x$ 的导数为 $\\cos x$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数n阶导数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = x^2\\sin x$，则 $f(x)$ 的一阶导数 $f'(x)$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2x\\sin x + x^2\\cos x$"
+        },
+        {
+          "label": "B",
+          "content": "$2x\\sin x - x^2\\cos x$"
+        },
+        {
+          "label": "C",
+          "content": "$x^2\\cos x$"
+        },
+        {
+          "label": "D",
+          "content": "$2x\\cos x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据乘积的求导法则 $(uv)' = u'v + uv'$ 来计算",
+        "提示2：设 $u = x^2$，$v = \\sin x$，分别求出 $u'$ 和 $v'$",
+        "提示3：$u'$ 根据幂函数求导公式 $(x^n)' = nx^{n - 1}$ 计算，$v'$ 根据三角函数求导公式 $(\\sin x)' = \\cos x$ 计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：隐函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = f(x)$ 由方程 $x^2 + y^2 = 25$ 确定，求 $\\frac{dy}{dx}$ 在点 $(3, 4)$ 处的值。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$-\\frac{3}{4}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3}{4}$"
+        },
+        {
+          "label": "C",
+          "content": "$-\\frac{4}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{4}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：对方程 $x^2 + y^2 = 25$ 两边同时对 $x$ 求导",
+        "提示2：使用复合函数求导法则，$y$ 是关于 $x$ 的函数，对 $y^2$ 求导时要乘以 $\\frac{dy}{dx}$",
+        "提示3：将求导后的式子整理，解出 $\\frac{dy}{dx}$，再代入点 $(3, 4)$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：参数方程求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = 2x^3 + 3x^2 - 5x + 1$，求 $f'(1)$ 的值是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$4$"
+        },
+        {
+          "label": "B",
+          "content": "$6$"
+        },
+        {
+          "label": "C",
+          "content": "$8$"
+        },
+        {
+          "label": "D",
+          "content": "$10$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先根据求导公式 $(X^n)' = nX^{n - 1}$ 对函数 $f(x)$ 求导",
+        "提示2：分别对函数中的每一项求导后再相加",
+        "提示3：将 $x = 1$ 代入导函数中计算结果"
+      ]
+    }
+  ],
+  "count": 6
+}

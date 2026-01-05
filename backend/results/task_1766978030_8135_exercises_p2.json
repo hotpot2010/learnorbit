@@ -1,0 +1,357 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：弹性基本概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "弹性是指因变量对自变量变动的反应程度。在经济学中，若某商品的需求量 $Q$ 是价格 $P$ 的函数，即 $Q = f(P)$，那么当价格 $P$ 发生变化时，需求量 $Q$ 会相应改变。以下哪个选项最能体现弹性的概念？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "价格 $P$ 变化的绝对值大小"
+        },
+        {
+          "label": "B",
+          "content": "需求量 $Q$ 变化的绝对值大小"
+        },
+        {
+          "label": "C",
+          "content": "需求量 $Q$ 的变化量与价格 $P$ 的变化量的比值"
+        },
+        {
+          "label": "D",
+          "content": "需求量 $Q$ 的变动百分比与价格 $P$ 的变动百分比的比值"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：根据视频中弹性的基本概念，思考弹性强调的是因变量和自变量怎样的反应程度",
+        "提示2：弹性关注的是相对变化，而不是绝对变化",
+        "提示3：分析每个选项，看哪个选项体现了因变量和自变量的相对变动关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：需求弹性含义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "弹性是经济学中一个重要的概念，它指的是因变量对自变量变动的反应程度。以下关于弹性概念的理解，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "弹性只考虑因变量的变化，不考虑自变量的变化"
+        },
+        {
+          "label": "B",
+          "content": "弹性是指自变量对因变量变动的反应程度"
+        },
+        {
+          "label": "C",
+          "content": "弹性是指因变量对自变量变动的反应程度，比如价格变动引起的需求量的变动程度"
+        },
+        {
+          "label": "D",
+          "content": "弹性与因变量和自变量的变动都无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对弹性基本概念的定义，明确是因变量对自变量的反应程度",
+        "提示2：思考弹性概念在实际经济现象中的应用，如价格和需求量的关系",
+        "提示3：分析每个选项与弹性概念定义的匹配程度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：弹性与斜率关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知弹性是指因变量对自变量变动的反应程度，那么当自变量增加 $10\\%$ 时，因变量增加 $20\\%$ ，该弹性系数为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.5$"
+        },
+        {
+          "label": "B",
+          "content": "$1$"
+        },
+        {
+          "label": "C",
+          "content": "$2$"
+        },
+        {
+          "label": "D",
+          "content": "$1.5$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：弹性系数的计算公式为弹性系数 = $\\frac{因变量的变动百分比}{自变量的变动百分比}$",
+        "提示2：在本题中，明确给出自变量增加 $10\\%$ ，因变量增加 $20\\%$ ，代入公式计算",
+        "提示3：根据公式计算 $\\frac{20\\%}{10\\%}$ 的值即可得到弹性系数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：影响需求弹性因素",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "弹性是经济学中的重要概念，它指的是因变量对自变量变动的反应程度。以下关于弹性概念的理解，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "弹性只与因变量的变化有关，与自变量无关"
+        },
+        {
+          "label": "B",
+          "content": "弹性是指自变量对因变量变动的反应程度"
+        },
+        {
+          "label": "C",
+          "content": "弹性是因变量对自变量变动的反应程度"
+        },
+        {
+          "label": "D",
+          "content": "弹性与因变量和自变量的变动都无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对弹性基本概念的定义",
+        "提示2：明确弹性描述的是因变量和自变量之间的关系",
+        "提示3：注意区分因变量和自变量在弹性概念中的作用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：需求弹性分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "弹性是经济学中的重要概念，它表示因变量对自变量变动的反应程度。若某商品的需求量 $Q$ 与价格 $P$ 之间的关系为 $Q = 100 - 2P$，当价格从 $P_1 = 20$ 变动到 $P_2 = 25$ 时，该商品需求的价格弹性（弧弹性）为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$-\\frac{2}{3}$"
+        },
+        {
+          "label": "B",
+          "content": "$-\\frac{3}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$-\\frac{4}{5}$"
+        },
+        {
+          "label": "D",
+          "content": "$-\\frac{5}{4}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先根据需求函数求出价格变动前后的需求量 $Q_1$ 和 $Q_2$",
+        "提示2：弧弹性公式为 $E_d = -\\frac{\\Delta Q}{\\Delta P}\\cdot\\frac{\\frac{P_1 + P_2}{2}}{\\frac{Q_1 + Q_2}{2}}$",
+        "提示3：分别计算出 $\\Delta Q$、$\\Delta P$、$\\frac{P_1 + P_2}{2}$ 和 $\\frac{Q_1 + Q_2}{2}$ 的值，再代入弧弹性公式计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：弹性公式讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "弹性是指因变量对自变量变动的反应程度，已知某商品的需求量 $Q$ 是价格 $P$ 的函数，设需求量的变动率为 $\\frac{\\Delta Q}{Q}$，价格的变动率为 $\\frac{\\Delta P}{P}$，那么该商品需求的价格弹性  $E_d$ 为以下哪种式子（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$E_d = \\frac{\\Delta Q}{\\Delta P}$"
+        },
+        {
+          "label": "B",
+          "content": "$E_d = \\frac{\\Delta P}{\\Delta Q}$"
+        },
+        {
+          "label": "C",
+          "content": "$E_d = \\frac{\\frac{\\Delta Q}{Q}}{\\frac{\\Delta P}{P}}$"
+        },
+        {
+          "label": "D",
+          "content": "$E_d = \\frac{\\frac{\\Delta P}{P}}{\\frac{\\Delta Q}{Q}}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据弹性的定义，弹性是因变量变动率与自变量变动率的比值",
+        "提示2：在需求价格弹性中，需求量是因变量，价格是自变量",
+        "提示3：结合题目中给出的需求量变动率 $\\frac{\\Delta Q}{Q}$ 和价格变动率 $\\frac{\\Delta P}{P}$ 来确定需求价格弹性的公式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：弹性计算示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在经济学中，弹性表示因变量对自变量变动的反应程度。已知某商品的需求量 $Q$ 与价格 $P$ 之间的函数关系为 $Q = 100 - 2P$，当价格从 $P_1 = 20$ 变动到 $P_2 = 25$ 时，该商品需求的价格弹性为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$-\\frac{2}{3}$"
+        },
+        {
+          "label": "B",
+          "content": "$-\\frac{3}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$-\\frac{4}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$-\\frac{3}{4}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先根据需求价格弹性公式 $E_d = \\frac{\\frac{\\Delta Q}{Q}}{\\frac{\\Delta P}{P}}$，这里 $\\Delta Q = Q_2 - Q_1$，$\\Delta P = P_2 - P_1$，$P$ 取价格的平均值 $\\frac{P_1 + P_2}{2}$，$Q$ 取需求量的平均值 $\\frac{Q_1 + Q_2}{2}$",
+        "提示2：先求出 $Q_1$ 和 $Q_2$ 的值，将 $P_1 = 20$ 和 $P_2 = 25$ 分别代入 $Q = 100 - 2P$ 中",
+        "提示3：再计算 $\\Delta Q$、$\\Delta P$、$Q$ 和 $P$ 的值，最后代入公式计算需求价格弹性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：弹性分类讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在经济学中，弹性是一个很重要的概念。弹性指的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "自变量对因变量变动的反应程度"
+        },
+        {
+          "label": "B",
+          "content": "因变量对自变量变动的反应程度"
+        },
+        {
+          "label": "C",
+          "content": "自变量与因变量的变动比例关系"
+        },
+        {
+          "label": "D",
+          "content": "因变量与自变量的变动乘积关系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对弹性基本概念的讲解",
+        "提示2：明确弹性是描述因变量和自变量之间谁对谁的反应程度",
+        "提示3：重点关注‘因变量对自变量变动的反应程度’这一关键表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：需求收入弹性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "弹性是经济学中重要的概念，它指因变量对自变量变动的反应程度。假设某种商品的需求量 $Q$ 是消费者收入 $I$ 的函数，即 $Q = f(I)$，当消费者收入从 $I_1$ 增加到 $I_2$ 时，需求量从 $Q_1$ 增加到 $Q_2$，那么需求收入弹性 $E_I$ 可以近似表示为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{\\frac{Q_2 - Q_1}{Q_1}}{\\frac{I_2 - I_1}{I_1}}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{\\frac{I_2 - I_1}{I_1}}{\\frac{Q_2 - Q_1}{Q_1}}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{Q_2 - Q_1}{I_2 - I_1}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{I_2 - I_1}{Q_2 - Q_1}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频中弹性的基本概念，需求收入弹性是需求量变动的百分比对收入变动的百分比的反应程度",
+        "提示2：先分别计算需求量变动的百分比和收入变动的百分比",
+        "提示3：需求量变动的百分比为 $\\frac{Q_2 - Q_1}{Q_1}$，收入变动的百分比为 $\\frac{I_2 - I_1}{I_1}$，需求收入弹性是前者除以后者"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：需求交叉弹性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "弹性是经济学中的重要概念，它指因变量对自变量变动的反应程度。若有两种商品 $A$ 和 $B$，商品 $A$ 的需求量变动百分比为 $20\\%$，商品 $B$ 的价格变动百分比为 $10\\%$，那么商品 $A$ 对商品 $B$ 的需求交叉弹性 $E_{AB}$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.5$"
+        },
+        {
+          "label": "B",
+          "content": "$1$"
+        },
+        {
+          "label": "C",
+          "content": "$2$"
+        },
+        {
+          "label": "D",
+          "content": "$4$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先明确需求交叉弹性的计算公式 $E_{AB}=\\frac{\\text{商品 }A\\text{ 的需求量变动百分比}}{\\text{商品 }B\\text{ 的价格变动百分比}}$",
+        "提示2：将题目中给出的商品 $A$ 的需求量变动百分比和商品 $B$ 的价格变动百分比代入公式",
+        "提示3：计算得出结果并与选项进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：需求弹性总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "弹性是经济学中一个重要的概念，它表示因变量对自变量变动的反应程度。假设某种商品的需求量 $Q$ 是价格 $P$ 的函数，即 $Q = f(P)$，那么需求的价格弹性 $E_d$ 可以表示为 $E_d = \\frac{\\frac{\\Delta Q}{Q}}{\\frac{\\Delta P}{P}}$，其中 $\\Delta Q$ 是需求量的变动量，$\\Delta P$ 是价格的变动量。当价格从 $P_1$ 上升到 $P_2$ 时，需求量从 $Q_1$ 下降到 $Q_2$，以下关于需求价格弹性的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "若 $|E_d| > 1$，说明需求量对价格变动的反应不敏感，属于缺乏弹性"
+        },
+        {
+          "label": "B",
+          "content": "若 $|E_d| = 1$，说明需求量和价格的变动幅度相同，属于单位弹性"
+        },
+        {
+          "label": "C",
+          "content": "若 $|E_d| < 1$，说明需求量对价格变动的反应敏感，属于富有弹性"
+        },
+        {
+          "label": "D",
+          "content": "需求价格弹性与需求量和价格的变动方向无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确需求价格弹性 $|E_d|$ 的大小与需求量对价格变动反应敏感程度的关系",
+        "提示2：当 $|E_d| > 1$ 时，需求量变动幅度大于价格变动幅度；当 $|E_d| = 1$ 时，需求量和价格变动幅度相同；当 $|E_d| < 1$ 时，需求量变动幅度小于价格变动幅度",
+        "提示3：需求价格弹性是有正负之分的，其正负反映了需求量和价格的变动方向关系"
+      ]
+    }
+  ],
+  "count": 11
+}

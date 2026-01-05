@@ -1,0 +1,389 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：垄断市场定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到每次说的“垄断”，指的是以下哪种市场类型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "完全垄断市场"
+        },
+        {
+          "label": "B",
+          "content": "垄断竞争市场"
+        },
+        {
+          "label": "C",
+          "content": "寡头垄断市场"
+        },
+        {
+          "label": "D",
+          "content": "完全竞争市场"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对“垄断”的具体定义说明",
+        "提示2：注意区分不同类型的市场结构特点",
+        "提示3：明确视频强调的是哪种垄断类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：需求曲线讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习市场相关知识时，提到的“垄断”通常指的是哪种类型的市场？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "完全垄断市场"
+        },
+        {
+          "label": "B",
+          "content": "垄断竞争市场"
+        },
+        {
+          "label": "C",
+          "content": "寡头垄断市场"
+        },
+        {
+          "label": "D",
+          "content": "自由竞争市场"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中对于“垄断”的定义说明",
+        "提示2：视频明确指出每次提到的“垄断”具体所指",
+        "提示3：与其他类型的市场进行区分，排除不符合的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：收益曲线分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习市场相关知识时，提到的“垄断”通常指的是以下哪种情况？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "完全垄断"
+        },
+        {
+          "label": "B",
+          "content": "垄断竞争"
+        },
+        {
+          "label": "C",
+          "content": "寡头垄断"
+        },
+        {
+          "label": "D",
+          "content": "自由竞争"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中对于“垄断”概念的明确说明",
+        "提示2：视频中强调了每次提到的“垄断”具体所指",
+        "提示3：注意区分不同市场类型的特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：需求曲线中点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习市场相关知识时，提到的“垄断”通常指的是以下哪种情况？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "完全垄断"
+        },
+        {
+          "label": "B",
+          "content": "垄断竞争"
+        },
+        {
+          "label": "C",
+          "content": "寡头垄断"
+        },
+        {
+          "label": "D",
+          "content": "自由竞争市场"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对“垄断”概念的明确说明",
+        "提示2：注意区分不同类型的市场结构",
+        "提示3：视频强调了每次提到的“垄断”具体所指"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：需求弹性计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习市场相关知识时，提到的“垄断”概念，通常指的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "完全垄断"
+        },
+        {
+          "label": "B",
+          "content": "垄断竞争"
+        },
+        {
+          "label": "C",
+          "content": "寡头垄断"
+        },
+        {
+          "label": "D",
+          "content": "自由竞争市场"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对于“垄断”概念的明确说明",
+        "提示2：视频强调了每次提到的“垄断”具体所指",
+        "提示3：注意与其他市场类型进行区分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：TR曲线绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习相关市场知识时，提到的“垄断”通常指的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "完全垄断"
+        },
+        {
+          "label": "B",
+          "content": "垄断竞争"
+        },
+        {
+          "label": "C",
+          "content": "两者都包括"
+        },
+        {
+          "label": "D",
+          "content": "两者都不包括"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对“垄断”这一概念的明确说明",
+        "提示2：视频强调了每次提到的“垄断”具体所指",
+        "提示3：注意区分完全垄断和垄断竞争的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：垄断厂商条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "我们平时所说的垄断，指的是以下哪种市场类型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "完全垄断市场"
+        },
+        {
+          "label": "B",
+          "content": "垄断竞争市场"
+        },
+        {
+          "label": "C",
+          "content": "完全竞争市场"
+        },
+        {
+          "label": "D",
+          "content": "寡头垄断市场"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：视频中明确提到了平时所说的垄断的具体所指",
+        "提示2：要注意与其他类似市场类型进行区分",
+        "提示3：回顾视频内容，判断哪种市场类型符合平时所说的垄断的定义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：短期均衡盈亏判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在分析市场情况时，提到的“垄断”通常指的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "完全垄断"
+        },
+        {
+          "label": "B",
+          "content": "垄断竞争"
+        },
+        {
+          "label": "C",
+          "content": "寡头垄断"
+        },
+        {
+          "label": "D",
+          "content": "自然垄断"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对‘垄断’概念的明确说明",
+        "提示2：注意区分不同类型的垄断市场",
+        "提示3：视频中强调了所提到的‘垄断’具体指向"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：供给曲线不存在原因",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到每次说的垄断指的是什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "完全垄断"
+        },
+        {
+          "label": "B",
+          "content": "垄断竞争"
+        },
+        {
+          "label": "C",
+          "content": "寡头垄断"
+        },
+        {
+          "label": "D",
+          "content": "自然垄断"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中关于垄断定义的描述",
+        "提示2：视频明确区分了不同类型的垄断概念",
+        "提示3：关注提到每次说的垄断是哪种具体类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：垄断厂商供给曲线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到每次说到的垄断指的是以下哪种情况？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "完全垄断"
+        },
+        {
+          "label": "B",
+          "content": "垄断竞争"
+        },
+        {
+          "label": "C",
+          "content": "两者都是"
+        },
+        {
+          "label": "D",
+          "content": "两者都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中对于垄断概念的明确说明",
+        "提示2：视频中强调了每次说的垄断的具体所指",
+        "提示3：注意区分完全垄断和垄断竞争的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：厂商长期利润",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在经济学中，提到的“垄断”通常指的是以下哪种情况？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "完全垄断"
+        },
+        {
+          "label": "B",
+          "content": "垄断竞争"
+        },
+        {
+          "label": "C",
+          "content": "寡头垄断"
+        },
+        {
+          "label": "D",
+          "content": "自由竞争"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中对于“垄断”概念的明确界定",
+        "提示2：注意视频强调每次提到的“垄断”所指的具体类型",
+        "提示3：排除与视频所指概念不符的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：价格歧视",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到每次说的“垄断”指的是什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "完全垄断"
+        },
+        {
+          "label": "B",
+          "content": "垄断竞争"
+        },
+        {
+          "label": "C",
+          "content": "完全竞争"
+        },
+        {
+          "label": "D",
+          "content": "寡头垄断"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对‘垄断’的定义说明",
+        "提示2：注意视频明确指出的是哪种垄断类型",
+        "提示3：重点关注‘每次说的这个垄断’相关表述"
+      ]
+    }
+  ],
+  "count": 12
+}

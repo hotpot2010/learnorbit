@@ -540,7 +540,8 @@
         
         <!-- Prompt配置Tab -->
         <div class="tab-content" id="promptTab" style="display: none;">
-            <div style="margin-bottom: 20px;">
+            <!-- 知识点 Prompt -->
+            <div style="margin-bottom: 30px;">
                 <h3 style="margin-bottom: 10px;">📝 知识点生成 Prompt</h3>
                 <p style="color: #666; font-size: 14px; margin-bottom: 15px;">
                     自定义知识点提取的 Prompt，修改后保存即可生效。系统会在提取知识点时使用此 Prompt。
@@ -555,11 +556,62 @@
                     line-height: 1.6;
                     resize: vertical;
                 "></textarea>
+                <div style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button class="btn-success" onclick="savePrompt()">💾 保存配置</button>
+                    <button class="btn-secondary" onclick="resetPrompt()">🔄 重置为默认</button>
+                    <button class="btn-primary" onclick="loadPrompt()">📥 重新加载</button>
+                </div>
             </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-success" onclick="savePrompt()">💾 保存配置</button>
-                <button class="btn-secondary" onclick="resetPrompt()">🔄 重置为默认</button>
-                <button class="btn-primary" onclick="loadPrompt()">📥 重新加载</button>
+            
+            <!-- 练习 Prompt -->
+            <div>
+                <h3 style="margin-bottom: 10px;">💪 练习生成 Prompt</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 15px;">
+                    自定义练习生成的 Prompt，修改后保存即可生效。系统会在生成练习时使用此 Prompt。
+                </p>
+                
+                <!-- 选择器 -->
+                <div style="margin-bottom: 15px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                    <label style="font-weight: 500;">学科类型：</label>
+                    <select id="exerciseSubjectSelect" onchange="loadExercisePrompt()" style="
+                        padding: 8px 12px;
+                        border: 2px solid #ddd;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        cursor: pointer;
+                    ">
+                        <option value="math">数学 (Math)</option>
+                        <option value="programming">编程 (Programming)</option>
+                    </select>
+                    
+                    <label style="font-weight: 500; margin-left: 20px;">语言：</label>
+                    <select id="exerciseLocaleSelect" onchange="loadExercisePrompt()" style="
+                        padding: 8px 12px;
+                        border: 2px solid #ddd;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        cursor: pointer;
+                    ">
+                        <option value="zh">中文</option>
+                    </select>
+                </div>
+                
+                <textarea id="exercisePromptEditor" rows="25" style="
+                    width: 100%;
+                    padding: 15px;
+                    border: 2px solid #ddd;
+                    border-radius: 4px;
+                    font-family: 'Consolas', 'Monaco', monospace;
+                    font-size: 14px;
+                    line-height: 1.6;
+                    resize: vertical;
+                "></textarea>
+                
+                <div style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button class="btn-success" onclick="saveExercisePrompt()">💾 保存配置</button>
+                    <button class="btn-secondary" onclick="resetExercisePrompt()">🔄 重置为默认</button>
+                    <button class="btn-primary" onclick="loadExercisePrompt()">📥 重新加载</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1757,6 +1809,10 @@
                 if (!document.getElementById('promptEditor').value) {
                     loadPrompt();
                 }
+                // 首次打开时加载练习 Prompt
+                if (!document.getElementById('exercisePromptEditor').value) {
+                    loadExercisePrompt();
+                }
             }
         }
         
@@ -1827,6 +1883,86 @@
             } catch (error) {
                 console.error('重置 Prompt 失败:', error);
                 alert('重置 Prompt 失败: ' + error.message);
+            }
+        }
+        
+        // ==================== 练习提示词配置管理 ====================
+        async function loadExercisePrompt() {
+            try {
+                const subject = document.getElementById('exerciseSubjectSelect').value;
+                const locale = document.getElementById('exerciseLocaleSelect').value;
+                
+                const response = await fetch(`${API_BASE}/exercise-prompt?subject=${subject}&locale=${locale}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('exercisePromptEditor').value = data.prompt;
+                    console.log('✅ 练习提示词加载成功');
+                } else {
+                    alert('加载练习提示词失败');
+                }
+            } catch (error) {
+                console.error('加载练习提示词失败:', error);
+                alert('加载练习提示词失败: ' + error.message);
+            }
+        }
+        
+        async function saveExercisePrompt() {
+            const subject = document.getElementById('exerciseSubjectSelect').value;
+            const locale = document.getElementById('exerciseLocaleSelect').value;
+            const prompt = document.getElementById('exercisePromptEditor').value;
+            
+            if (!prompt.trim()) {
+                alert('练习提示词不能为空');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/exercise-prompt`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ subject, locale, prompt })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`✅ 练习提示词保存成功！\n\n后续${subject === 'math' ? '数学' : '编程'}练习生成将使用新的提示词。`);
+                } else {
+                    alert('保存练习提示词失败');
+                }
+            } catch (error) {
+                console.error('保存练习提示词失败:', error);
+                alert('保存练习提示词失败: ' + error.message);
+            }
+        }
+        
+        async function resetExercisePrompt() {
+            const subject = document.getElementById('exerciseSubjectSelect').value;
+            const locale = document.getElementById('exerciseLocaleSelect').value;
+            
+            if (!confirm(`确定要重置${subject === 'math' ? '数学' : '编程'}练习提示词为默认值吗？`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/exercise-prompt/reset?subject=${subject}&locale=${locale}`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('exercisePromptEditor').value = data.prompt;
+                    alert('✅ 已重置为默认练习提示词');
+                } else {
+                    alert('重置练习提示词失败');
+                }
+            } catch (error) {
+                console.error('重置练习提示词失败:', error);
+                alert('重置练习提示词失败: ' + error.message);
             }
         }
     </script>

@@ -1,0 +1,148 @@
+{
+  "exercises": [
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：滑动摩擦力计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m = 5\\text{kg}$ 的物体在水平地面上滑动，物体与地面间的动摩擦因数 $\\mu = 0.3$，求物体受到的滑动摩擦力大小为 ___ N 。（$g$ 取 $10\\text{m/s}^2$）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "15",
+      "hints": [
+        "提示1：滑动摩擦力的计算公式为 $f = \\mu N$",
+        "提示2：在水平地面上，物体对地面的压力大小等于物体的重力大小，即 $N = mg$",
+        "提示3：将 $m = 5\\text{kg}$，$\\mu = 0.3$，$g = 10\\text{m/s}^2$ 代入公式计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：拉力最小值求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个质量为 $m = 5kg$ 的物体静止在水平地面上，物体与地面间的动摩擦因数 $\\mu = 0.3$。现用一个与水平方向成 $\\theta = 30^\\circ$ 角的拉力 $F$ 拉物体，使物体做匀速直线运动，求拉力 $F$ 的最小值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{15\\sqrt{3}}{2 + \\sqrt{3}}N$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{15}{2 + \\sqrt{3}}N$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{15\\sqrt{3}}{2 - \\sqrt{3}}N$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{15}{2 - \\sqrt{3}}N$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：对物体进行受力分析，将拉力 $F$ 分解为水平和竖直方向的分力",
+        "提示2：根据物体做匀速直线运动，列出水平和竖直方向的平衡方程",
+        "提示3：利用三角函数关系化简方程，求出拉力 $F$ 的表达式，再求其最小值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：摩擦角概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在考试中，关于摩擦角的考查形式主要是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只考小题，以解答题为主"
+        },
+        {
+          "label": "B",
+          "content": "只考大题，与其他内容综合考查"
+        },
+        {
+          "label": "C",
+          "content": "常考小题，以选择填空为主，偶尔考大题，考大题时一般和其他内容综合考查"
+        },
+        {
+          "label": "D",
+          "content": "只考选择题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于摩擦角考查形式的描述",
+        "提示2：明确提到常考小题以及考大题时的情况",
+        "提示3：注意区分各种题型在考查中的占比和综合情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：滑动摩擦平衡",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在中考物理考试中，关于滑动摩擦平衡的考点，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只考小题，不考大题"
+        },
+        {
+          "label": "B",
+          "content": "只以选择题和填空题的形式考查"
+        },
+        {
+          "label": "C",
+          "content": "偶尔会考查大题，考查大题时一般会和其他内容进行综合考查"
+        },
+        {
+          "label": "D",
+          "content": "只考查选择题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于滑动摩擦平衡考点的考查题型相关内容",
+        "提示2：明确提到了小题和大题的考查情况",
+        "提示3：注意考查大题时的特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：物体受力分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在考试中，关于“物体受力分析”这一知识点，以下哪种考察方式是错误的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "常以选择题形式考察"
+        },
+        {
+          "label": "B",
+          "content": "常以填空题形式考察"
+        },
+        {
+          "label": "C",
+          "content": "不会以大题形式考察"
+        },
+        {
+          "label": "D",
+          "content": "考大题时一般会和其他内容综合考查"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的该知识点在考试中的考察题型",
+        "提示2：明确选择题、填空题是常见小题考察形式，同时也有关于大题的考察描述",
+        "提示3：注意分析每个选项与视频内容的匹配度"
+      ]
+    }
+  ],
+  "count": 5
+}

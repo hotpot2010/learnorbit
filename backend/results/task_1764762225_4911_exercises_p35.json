@@ -1,0 +1,198 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Unit Test基础",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "Python自带的Unit Test测试库不具备以下哪个功能？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "自动找出所有测试用例并运行"
+        },
+        {
+          "label": "B",
+          "content": "一次性展示所有测试结果"
+        },
+        {
+          "label": "C",
+          "content": "直接修复未通过测试的代码"
+        },
+        {
+          "label": "D",
+          "content": "给出未通过测试的详情"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于Python自带Unit Test测试库功能的描述",
+        "提示2：注意区分该库能实现的功能和不能实现的功能",
+        "提示3：仔细分析每个选项是否符合视频中提到的功能"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Set Up方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "Python自带的测试库在单元测试中具有重要作用，以下关于它的描述错误的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "可以自动找出和运行所有测试用例"
+        },
+        {
+          "label": "B",
+          "content": "只能一次性展示部分测试结果"
+        },
+        {
+          "label": "C",
+          "content": "会给出未通过测试的详情"
+        },
+        {
+          "label": "D",
+          "content": "大大提高了我们进行单元测试的效率"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对于Python自带测试库的功能描述。",
+        "提示2：思考每个选项与视频内容是否相符。",
+        "提示3：特别关注测试结果展示这一关键信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：编写测试程序",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 Python 的 unit test 测试框架中，Test case 类里除了常用的 assert equal 方法外，以下哪个方法与 assert 参数一 is true 类似？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "assert false"
+        },
+        {
+          "label": "B",
+          "content": "assert true"
+        },
+        {
+          "label": "C",
+          "content": "assert in"
+        },
+        {
+          "label": "D",
+          "content": "assert out"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到的 Test case 类里除 assert equal 外可用于测试的方法",
+        "提示2：关注与 assert 参数一 is true 类似的方法描述",
+        "提示3：从选项中找出符合该描述的方法"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：测试方法示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 Python 的 unit test 测试框架中，Test case 类里除了常用的 assert equal 之外，以下哪种方法可以用来进行测试，且与 assert 参数一 is true 类似？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "assert false"
+        },
+        {
+          "label": "B",
+          "content": "assert true"
+        },
+        {
+          "label": "C",
+          "content": "assert not in"
+        },
+        {
+          "label": "D",
+          "content": "assert equal"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的除 assert equal 外可用于测试的方法",
+        "提示2：明确哪种方法与 assert 参数一 is true 类似",
+        "提示3：对每个选项进行分析，排除不符合的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：使用Setup优化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "Python自带的unittest测试库在单元测试中有很多优势，并且Test case类里有多种可用于测试的方法。以下关于unittest测试库和Test case类方法的描述，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "unittest测试库只能逐个运行测试用例，不能一次性展示所有测试结果"
+        },
+        {
+          "label": "B",
+          "content": "Test case类里只有assert equal这一种测试方法"
+        },
+        {
+          "label": "C",
+          "content": "assert true方法类似于assert参数一 is true"
+        },
+        {
+          "label": "D",
+          "content": "assert的in方法和assert equal方法完全相同"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于unittest测试库的功能描述，判断其能否一次性展示所有测试结果",
+        "提示2：明确Test case类里除了assert equal还有其他测试方法",
+        "提示3：注意视频中对assert true方法的解释",
+        "提示4：思考不同测试方法的特点，判断assert的in方法和assert equal方法是否相同"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：单元测试运行",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于 Python 自带的单元测试库，以下说法错误的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "可以自动找出和运行所有测试用例"
+        },
+        {
+          "label": "B",
+          "content": "能一次性展示所有测试结果，并给出未通过测试的详情"
+        },
+        {
+          "label": "C",
+          "content": "Test case 类里只有 assert equal 这一种测试方法"
+        },
+        {
+          "label": "D",
+          "content": "assert true 方法类似于 assert 参数一 is true"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于 Python 自带单元测试库的功能描述",
+        "提示2：注意 Test case 类里除了常用的方法，还有其他可用的测试方法",
+        "提示3：仔细分析每个选项与视频知识点的匹配度"
+      ]
+    }
+  ],
+  "count": 6
+}

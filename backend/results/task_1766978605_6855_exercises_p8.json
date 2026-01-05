@@ -1,0 +1,641 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正项级数概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列级数中，属于正项级数的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sum_{n = 1}^{\\infty} (-1)^n \\frac{1}{n}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sum_{n = 1}^{\\infty} \\frac{1}{n^2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sum_{n = 1}^{\\infty} \\sin(n)$"
+        },
+        {
+          "label": "D",
+          "content": "$\\sum_{n = 1}^{\\infty} (-1)^{n + 1}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "正项级数是指级数的每一项都大于零",
+        "分析每个选项中级数的每一项的正负性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：级数敛散判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "判断正项级数 $\\sum_{n = 1}^{\\infty} \\frac{n}{n^2 + 1}$ 的敛散性 ",
+      "choices": [
+        {
+          "label": "A",
+          "content": "收敛"
+        },
+        {
+          "label": "B",
+          "content": "发散"
+        },
+        {
+          "label": "C",
+          "content": "无法判断"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "可使用比较判别法",
+        "与常见的 $p$-级数进行比较",
+        "考虑 $p$-级数 $\\sum_{n = 1}^{\\infty} \\frac{1}{n}$ 的敛散性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：比值根值法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于正项级数 $\\sum_{n = 1}^{\\infty} a_n$，已知 $\\lim_{n \\to \\infty} \\frac{a_{n + 1}}{a_n} = \\frac{3}{2}$，则该级数（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "绝对收敛"
+        },
+        {
+          "label": "B",
+          "content": "条件收敛"
+        },
+        {
+          "label": "C",
+          "content": "发散"
+        },
+        {
+          "label": "D",
+          "content": "无法判断敛散性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "根据比值判别法来判断级数的敛散性",
+        "当 $\\lim_{n \\to \\infty} \\frac{a_{n + 1}}{a_n} > 1$ 时，级数的敛散性如何",
+        "本题中 $\\lim_{n \\to \\infty} \\frac{a_{n + 1}}{a_n} = \\frac{3}{2} > 1$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：常见极限结论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列哪个级数是正项级数，并且需要判断其敛散性？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sum_{n = 1}^{\\infty} (-1)^n\\frac{1}{n}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sum_{n = 1}^{\\infty} \\frac{1}{n}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sum_{n = 1}^{\\infty} (-1)^n$"
+        },
+        {
+          "label": "D",
+          "content": "$\\sum_{n = 1}^{\\infty} \\sin(n)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "正项级数要求每一项都大于0",
+        "判断敛散性可以使用常见的级数敛散性判断方法，如p - 级数的结论"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求数列极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "判断正项级数 $\\sum_{n = 1}^{\\infty}\\frac{1}{n^2}$ 的敛散性",
+      "choices": [
+        {
+          "label": "A",
+          "content": "发散"
+        },
+        {
+          "label": "B",
+          "content": "收敛"
+        },
+        {
+          "label": "C",
+          "content": "无法判断"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "可以使用 $p$ -级数的敛散性判断法则",
+        "当 $p>1$ 时，$\\sum_{n = 1}^{\\infty}\\frac{1}{n^p}$ 收敛",
+        "本题中 $p = 2$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：多项式开方极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "判断正项级数 $\\sum_{n = 1}^{\\infty}\\frac{n}{n^2 + 1}$ 的敛散性，以下正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "该级数收敛"
+        },
+        {
+          "label": "B",
+          "content": "该级数发散"
+        },
+        {
+          "label": "C",
+          "content": "无法判断敛散性"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "可使用比较判别法来判断正项级数的敛散性",
+        "考虑与常见的 $p - $级数 $\\sum_{n = 1}^{\\infty}\\frac{1}{n}$ 进行比较",
+        "当 $n$ 足够大时，分析级数通项的大小关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：阶乘开方极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "判断正项级数 $\\sum_{n = 1}^{\\infty}\\frac{n!}{n^n}$ 的敛散性，以下结论正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "该级数收敛"
+        },
+        {
+          "label": "B",
+          "content": "该级数发散"
+        },
+        {
+          "label": "C",
+          "content": "无法判断该级数的敛散性"
+        },
+        {
+          "label": "D",
+          "content": "该级数条件收敛"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "可使用比值判别法来判断正项级数的敛散性",
+        "比值判别法公式为 $\\lim_{n \\to \\infty}\\frac{u_{n + 1}}{u_n}=\\rho$，当 $\\rho<1$ 时级数收敛，$\\rho>1$ 时级数发散，$\\rho = 1$ 时无法判断",
+        "先求出 $u_{n+1}$ 与 $u_n$ 的表达式，再计算极限 $\\lim_{n \\to \\infty}\\frac{u_{n + 1}}{u_n}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：比值法解题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于正项级数 $\\sum_{n = 1}^{\\infty} a_n$，已知 $\\lim_{n \\to \\infty} \\frac{a_{n + 1}}{a_n} = \\frac{1}{2}$，则该级数（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一定发散"
+        },
+        {
+          "label": "B",
+          "content": "一定收敛"
+        },
+        {
+          "label": "C",
+          "content": "可能收敛也可能发散"
+        },
+        {
+          "label": "D",
+          "content": "无法判断敛散性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "根据比值判别法来判断正项级数的敛散性",
+        "比值判别法中，当极限值小于1时级数收敛，大于1时级数发散，等于1时无法判断",
+        "本题中极限值为\\(\\frac{1}{2}\\)，据此判断级数敛散性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：莱布尼茨判别法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列正项级数中，收敛的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sum_{n = 1}^{\\infty}\\frac{1}{n}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sum_{n = 1}^{\\infty}\\frac{1}{n^2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sum_{n = 1}^{\\infty}\\sqrt{n}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\sum_{n = 1}^{\\infty}n$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "可根据正项级数收敛的判别方法来判断。",
+        "对于$p$ - 级数$\\sum_{n = 1}^{\\infty}\\frac{1}{n^p}$，当$p>1$时收敛，当$p\\leq1$时发散。",
+        "对于通项趋于无穷大的级数一定是发散的。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：交错级数分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列级数中，属于正项级数的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sum_{n = 1}^{\\infty} (-1)^n\\frac{1}{n}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sum_{n = 1}^{\\infty} \\frac{1}{n^2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sum_{n = 1}^{\\infty} (-1)^{n + 1}\\frac{n}{n + 1}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\sum_{n = 1}^{\\infty} \\sin(n)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "正项级数是指级数的每一项都大于等于0",
+        "分析每个选项中级数的每一项的正负性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：级数敛散判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "判断正项级数 $\\sum_{n = 1}^{\\infty}\\frac{1}{n^2 + 1}$ 的敛散性，以下结论正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "该级数发散"
+        },
+        {
+          "label": "B",
+          "content": "该级数收敛"
+        },
+        {
+          "label": "C",
+          "content": "无法判断敛散性"
+        },
+        {
+          "label": "D",
+          "content": "敛散性与 $n$ 取值有关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "可使用正项级数的比较判别法",
+        "寻找一个已知敛散性的级数与给定级数作比较",
+        "常见的 $p -$ 级数 $\\sum_{n = 1}^{\\infty}\\frac{1}{n^p}$，当 $p>1$ 时收敛，当 $p\\leq1$ 时发散"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：幂级数定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列级数中，属于正项级数的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sum_{n = 1}^{\\infty} (-1)^n\\frac{1}{n}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sum_{n = 1}^{\\infty}\\frac{1}{n}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sum_{n = 1}^{\\infty} (-1)^n n$"
+        },
+        {
+          "label": "D",
+          "content": "$\\sum_{n = 1}^{\\infty}\\sin(n)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "正项级数是指各项都是正数或零的级数",
+        "分析每个选项中级数的每一项的正负性",
+        "判断各项是否都大于等于零"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：幂级数求和",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于正项级数 $\\sum_{n = 1}^{\\infty} \\frac{1}{n^2}$，以下关于其敛散性的判断正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "该级数发散"
+        },
+        {
+          "label": "B",
+          "content": "该级数收敛"
+        },
+        {
+          "label": "C",
+          "content": "无法判断其敛散性"
+        },
+        {
+          "label": "D",
+          "content": "以上说法都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "可以使用 $p -$ 级数的敛散性判断方法",
+        "对于 $p -$ 级数 $\\sum_{n = 1}^{\\infty} \\frac{1}{n^p}$，当 $p>1$ 时级数收敛，当 $p\\leq1$ 时级数发散",
+        "分析所给级数中 $p$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：复杂幂级数求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "判断正项级数 $\\sum_{n = 1}^{\\infty}\\frac{n}{n^2 + 1}$ 的敛散性。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "收敛"
+        },
+        {
+          "label": "B",
+          "content": "发散"
+        },
+        {
+          "label": "C",
+          "content": "无法判断"
+        },
+        {
+          "label": "D",
+          "content": "条件收敛"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "可以使用比较判别法来判断该正项级数的敛散性。",
+        "找一个已知敛散性的级数与给定级数进行比较。",
+        "考虑与调和级数 $\\sum_{n = 1}^{\\infty}\\frac{1}{n}$ 进行比较。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：常见幂级数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列级数中，属于正项级数的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sum_{n = 1}^{\\infty} (-1)^n\\frac{1}{n}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sum_{n = 1}^{\\infty} \\frac{1}{n^2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sum_{n = 1}^{\\infty} (-1)^{n - 1}\\frac{1}{n}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\sum_{n = 1}^{\\infty} \\frac{(-1)^n}{n^2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "正项级数是指各项均为正数的级数",
+        "判断级数各项的正负性",
+        "分析每个选项中级数的通项符号"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：级数变换规律",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "判断正项级数 $\\sum_{n = 1}^{\\infty}\\frac{1}{n^2 + 1}$ 的敛散性",
+      "choices": [
+        {
+          "label": "A",
+          "content": "发散"
+        },
+        {
+          "label": "B",
+          "content": "收敛"
+        },
+        {
+          "label": "C",
+          "content": "无法判断"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "可使用比较判别法来判断该正项级数的敛散性",
+        "找到一个已知敛散性的级数与给定级数进行比较",
+        "考虑 $p$ -级数 $\\sum_{n = 1}^{\\infty}\\frac{1}{n^p}$ 的敛散性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：收敛域求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于正项级数 $\\sum_{n = 1}^{\\infty} \\frac{1}{n^p}$，当 $p$ 满足什么条件时级数收敛？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$p < 1$"
+        },
+        {
+          "label": "B",
+          "content": "$p > 1$"
+        },
+        {
+          "label": "C",
+          "content": "$p \\leq 1$"
+        },
+        {
+          "label": "D",
+          "content": "$p \\geq 1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回顾正项级数收敛性的判别方法",
+        "考虑幂级数的性质",
+        "通过比较判别法来判断级数的收敛性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求核函数方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列级数中，属于正项级数的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\sum_{n = 1}^{\\infty} (-1)^n \\frac{1}{n}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\sum_{n = 1}^{\\infty} \\frac{1}{n^2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sum_{n = 1}^{\\infty} \\sin(n)$"
+        },
+        {
+          "label": "D",
+          "content": "$\\sum_{n = 1}^{\\infty} (-1)^{n + 1} \\frac{n}{n + 1}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "正项级数是指级数的每一项都大于等于0",
+        "分析每个选项中级数的每一项的正负性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：积分求导关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于正项级数 $\\sum_{n = 1}^{\\infty} a_n$，以下哪种情况能确定该级数收敛？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "当 $\\lim_{n \\to \\infty} a_n = 0$ 时"
+        },
+        {
+          "label": "B",
+          "content": "当 $\\lim_{n \\to \\infty} \\frac{a_{n + 1}}{a_n} < 1$ 时"
+        },
+        {
+          "label": "C",
+          "content": "当 $\\lim_{n \\to \\infty} \\frac{a_{n + 1}}{a_n} = 1$ 时"
+        },
+        {
+          "label": "D",
+          "content": "当 $a_n$ 单调递减时"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回忆正项级数收敛性的判别方法",
+        "比值判别法是判断正项级数收敛性的重要方法",
+        "注意极限值与收敛性的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：幂级数展开",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "判断正项级数 $\\sum_{n = 1}^{\\infty}\\frac{n}{2^n}$ 的敛散性。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "发散"
+        },
+        {
+          "label": "B",
+          "content": "收敛"
+        },
+        {
+          "label": "C",
+          "content": "无法判断"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "可使用比值判别法来判断正项级数的敛散性",
+        "比值判别法公式为 $\\lim_{n\\to\\infty}\\frac{u_{n + 1}}{u_n}=\\rho$，根据 $\\rho$ 的值判断敛散性",
+        "当 $\\rho<1$ 时，级数收敛；当 $\\rho>1$ 时，级数发散；当 $\\rho = 1$ 时，无法判断"
+      ]
+    }
+  ],
+  "count": 20
+}

@@ -118,6 +118,7 @@ interface KnowledgePoint {
   validationResult?: ValidationResult;  // 答案验证结果
   isValidating?: boolean;  // 是否正在验证答案
   searchResults?: SearchResult[];  // 搜索结果引用列表
+  partIndex?: number;  // 所属分P索引（多P视频时使用）
 }
 
 // 答案验证结果类型
@@ -784,7 +785,12 @@ export default function VideoNotesPrototypePage() {
   });
   const [analysisResult, setAnalysisResult] = useState<VideoAnalysisResult | null>(null);
   const [knowledgePoints, setKnowledgePoints] = useState<KnowledgePoint[]>([]);
+  // 存储所有分P的知识点数据（key: partIndex, value: KnowledgePoint[]）
+  // 用于在切换分P时保留用户编辑的内容
+  const [partsKnowledgePointsMap, setPartsKnowledgePointsMap] = useState<Map<number, KnowledgePoint[]>>(new Map());
   const [cdnVideoUrl, setCdnVideoUrl] = useState<string>('');
+  // 🔧 修复：标志位，用于在加载分P时禁用自动同步
+  const isLoadingPartRef = useRef(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const youtubePlayerRef = useRef<any>(null); // YouTube Player API实例
   const youtubeVideoIdRef = useRef<string>(''); // 当前YouTube视频ID（用于截图）
@@ -1112,10 +1118,24 @@ export default function VideoNotesPrototypePage() {
                   }
                 }
                 
-                setKnowledgePoints(finalKpArray);
-                console.log(`✅ 设置 ${finalKpArray.length} 个知识点`);
+                // 🔧 修复：为知识点添加 partIndex 标识（初始加载时是第0个分P）
+                const finalKpArrayWithPartIndex = finalKpArray.map(kp => ({
+                  ...kp,
+                  partIndex: 0
+                }));
+                
+                setKnowledgePoints(finalKpArrayWithPartIndex);
+                
+                // 🔧 修复：保存到缓存
+                setPartsKnowledgePointsMap(prev => {
+                  const newMap = new Map(prev);
+                  newMap.set(0, finalKpArrayWithPartIndex);
+                  return newMap;
+                });
+                
+                console.log(`✅ 设置 ${finalKpArrayWithPartIndex.length} 个知识点`);
                 // 自动全部展开
-                const allIndexes = finalKpArray.map((_, idx) => idx);
+                const allIndexes = finalKpArrayWithPartIndex.map((_, idx) => idx);
                 setExpandedKnowledgePoints(new Set(allIndexes));
                 setIsAllExpanded(true);
               } else {
@@ -1506,6 +1526,31 @@ export default function VideoNotesPrototypePage() {
     }
   }, []); // 只在组件挂载时执行一次
 
+  // 🔧 修复：自动同步 knowledgePoints 到缓存（当用户编辑知识点时）
+  // 注意：在加载分P时禁用自动同步，避免覆盖新加载的数据
+  useEffect(() => {
+    // 如果正在加载分P，跳过自动同步
+    if (isLoadingPartRef.current) {
+      return;
+    }
+    
+    if (knowledgePoints.length > 0 && currentPartIndex !== undefined) {
+      // 确保所有知识点都有 partIndex
+      const kpsWithPartIndex = knowledgePoints.map(kp => ({
+        ...kp,
+        partIndex: kp.partIndex !== undefined ? kp.partIndex : currentPartIndex
+      }));
+      
+      // 同步更新缓存
+      setPartsKnowledgePointsMap(prev => {
+        const newMap = new Map(prev);
+        newMap.set(currentPartIndex, kpsWithPartIndex);
+        console.log(`💾 自动同步分P ${currentPartIndex + 1} 的数据到缓存 (${kpsWithPartIndex.length} 个知识点)`);
+        return newMap;
+      });
+    }
+  }, [knowledgePoints, currentPartIndex]); // 当知识点或当前分P变化时同步
+
   // 加载已保存的笔记（当知识点加载完成后）
   useEffect(() => {
     if (knowledgePoints.length > 0 && processedTaskData?.task_id && saveStatus === 'unsaved') {
@@ -1522,6 +1567,26 @@ export default function VideoNotesPrototypePage() {
   
   // 加载单个分P
   const loadPart = async (part: PartInfo, partIndex: number) => {
+    // 🔧 修复：设置加载标志，禁用自动同步
+    isLoadingPartRef.current = true;
+    
+    // 🔧 修复：切换分P前，先保存当前分P的数据到 Map 中
+    const previousPartIndex = currentPartIndex;
+    if (previousPartIndex !== partIndex && knowledgePoints.length > 0) {
+      console.log(`💾 切换分P前，保存当前分P (P${previousPartIndex + 1}) 的数据到缓存`);
+      // 确保所有知识点都有 partIndex
+      const kpWithPartIndex = knowledgePoints.map(kp => ({
+        ...kp,
+        partIndex: kp.partIndex !== undefined ? kp.partIndex : previousPartIndex
+      }));
+      setPartsKnowledgePointsMap(prev => {
+        const newMap = new Map(prev);
+        newMap.set(previousPartIndex, kpWithPartIndex);
+        console.log(`✅ 已保存分P ${previousPartIndex + 1} 的数据 (${kpWithPartIndex.length} 个知识点)`);
+        return newMap;
+      });
+    }
+    
     setLoadingPartIndex(partIndex);
     setCurrentPartIndex(partIndex);
     
@@ -1649,16 +1714,58 @@ export default function VideoNotesPrototypePage() {
                 }
               }
               
-              setKnowledgePoints(finalKpArray);
-              console.log(`✅ 设置 ${finalKpArray.length} 个知识点`);
+              // 🔧 修复：为知识点添加 partIndex 标识
+              const kpArrayWithPartIndex = finalKpArray.map(kp => ({
+                ...kp,
+                partIndex: partIndex
+              }));
+              
+              // 🔧 修复：先检查缓存中是否有该分P的数据（包含用户编辑）
+              setPartsKnowledgePointsMap(prev => {
+                const cachedKps = prev.get(partIndex);
+                if (cachedKps && cachedKps.length > 0) {
+                  console.log(`✅ 从缓存加载分P ${partIndex + 1} 的数据（包含用户编辑）`);
+                  setKnowledgePoints(cachedKps);
+                  return prev;
+                } else {
+                  // 缓存中没有，使用新加载的数据
+                  const newMap = new Map(prev);
+                  newMap.set(partIndex, kpArrayWithPartIndex);
+                  setKnowledgePoints(kpArrayWithPartIndex);
+                  return newMap;
+                }
+              });
+              
+              console.log(`✅ 设置 ${kpArrayWithPartIndex.length} 个知识点`);
               // 自动全部展开
-              const allIndexes = finalKpArray.map((_, idx) => idx);
+              const allIndexes = kpArrayWithPartIndex.map((_, idx) => idx);
               setExpandedKnowledgePoints(new Set(allIndexes));
               setIsAllExpanded(true);
+              
+              // 🔧 修复：加载已保存的笔记并合并（延迟执行，确保 knowledgePoints 已更新）
+              setTimeout(() => {
+                if (processedTaskDataRef.current?.task_id) {
+                  loadSavedNoteForPart(processedTaskDataRef.current.task_id, partIndex).finally(() => {
+                    // 加载完成后，重新启用自动同步
+                    isLoadingPartRef.current = false;
+                  });
+                } else {
+                  // 如果没有 task_id，直接重新启用自动同步
+                  isLoadingPartRef.current = false;
+                }
+              }, 100);
             } else {
               console.log(`ℹ️ P${partIndex + 1} 知识点数据为空（可能视频内容较少或无教学内容）`);
+              // 重新启用自动同步
+              isLoadingPartRef.current = false;
             }
+          } else {
+            // 如果没有知识点URL，重新启用自动同步
+            isLoadingPartRef.current = false;
           }
+        } else {
+          // 如果没有知识点URL，重新启用自动同步
+          isLoadingPartRef.current = false;
         }
         
         setLoadingPartIndex(null);
@@ -1705,7 +1812,40 @@ export default function VideoNotesPrototypePage() {
         // 按时间排序知识点
         const sortedPoints = sortKnowledgePointsByTime(points);
         console.log('✅ 知识点已按时间排序');
-        setKnowledgePoints(sortedPoints);
+        
+        // 🔧 修复：为知识点添加 partIndex 标识
+        const sortedPointsWithPartIndex = sortedPoints.map(kp => ({
+          ...kp,
+          partIndex: partIndex
+        }));
+        
+        // 🔧 修复：先检查缓存中是否有该分P的数据
+        setPartsKnowledgePointsMap(prev => {
+          const cachedKps = prev.get(partIndex);
+          if (cachedKps && cachedKps.length > 0) {
+            console.log(`✅ 从缓存加载分P ${partIndex + 1} 的数据（包含用户编辑）`);
+            setKnowledgePoints(cachedKps);
+            return prev;
+          } else {
+            const newMap = new Map(prev);
+            newMap.set(partIndex, sortedPointsWithPartIndex);
+            setKnowledgePoints(sortedPointsWithPartIndex);
+            return newMap;
+          }
+        });
+        
+        // 🔧 修复：加载已保存的笔记并合并（延迟执行，确保 knowledgePoints 已更新）
+        setTimeout(() => {
+          if (processedTaskDataRef.current?.task_id) {
+            loadSavedNoteForPart(processedTaskDataRef.current.task_id, partIndex).finally(() => {
+              // 加载完成后，重新启用自动同步
+              isLoadingPartRef.current = false;
+            });
+          } else {
+            // 如果没有 task_id，直接重新启用自动同步
+            isLoadingPartRef.current = false;
+          }
+        }, 100);
         
         // 🎬 直接使用缓存的视频URL
         console.log('🎬 [loadPart] 检查缓存中的视频URL...');
@@ -4698,18 +4838,81 @@ export default function VideoNotesPrototypePage() {
     setSaveStatus('saving');
     
     try {
+      // 🔧 修复：先确保当前分P的数据已保存到缓存
+      const wasLoading = isLoadingPartRef.current;
+      isLoadingPartRef.current = false; // 临时启用同步，确保当前数据已缓存
+      
+      // 手动同步当前分P的数据到缓存
+      if (knowledgePoints.length > 0) {
+        const kpWithPartIndex = knowledgePoints.map(kp => ({
+          ...kp,
+          partIndex: kp.partIndex !== undefined ? kp.partIndex : currentPartIndex
+        }));
+        setPartsKnowledgePointsMap(prev => {
+          const newMap = new Map(prev);
+          newMap.set(currentPartIndex, kpWithPartIndex);
+          return newMap;
+        });
+      }
+      
+      // 等待状态更新完成
+      await new Promise(resolve => setTimeout(resolve, 50));
+      
+      // 🔧 修复：合并所有分P的数据（包括当前分P和缓存中的其他分P）
+      // 直接使用当前的缓存状态和当前分P的数据构建
+      const latestCache = new Map(partsKnowledgePointsMap);
+      
+      // 确保当前分P的数据也在缓存中（使用最新的 knowledgePoints）
+      if (knowledgePoints.length > 0) {
+        const kpWithPartIndex = knowledgePoints.map(kp => ({
+          ...kp,
+          partIndex: kp.partIndex !== undefined ? kp.partIndex : currentPartIndex
+        }));
+        latestCache.set(currentPartIndex, kpWithPartIndex);
+      }
+      
+      // 更新缓存状态（确保数据已保存）
+      setPartsKnowledgePointsMap(latestCache);
+      
+      // 从最新的缓存中收集所有分P的数据
+      const allKnowledgePointNotes: Array<{
+        partIndex: number;
+        knowledgePointName: string;
+        startTime: string;
+        endTime: string;
+        qaList?: any[];
+        screenshots?: string[];
+        exercises?: any[];
+        searchResults?: any[];
+        customNote?: string;
+      }> = [];
+      
+      console.log(`💾 准备保存笔记，缓存中有 ${latestCache.size} 个分P的数据`);
+      latestCache.forEach((kps, partIdx) => {
+        console.log(`📝 收集分P ${partIdx + 1} 的数据: ${kps.length} 个知识点`);
+        kps.forEach(kp => {
+          allKnowledgePointNotes.push({
+            partIndex: partIdx,
+            knowledgePointName: kp.name,
+            startTime: kp.start_time,
+            endTime: kp.end_time,
+            qaList: kp.qaList || [],
+            screenshots: kp.screenshots || [],
+            exercises: kp.exercises || [],
+            searchResults: kp.searchResults || [],
+            customNote: kp.note,
+          });
+        });
+      });
+      
+      console.log(`✅ 总共收集了 ${allKnowledgePointNotes.length} 个知识点的笔记数据`);
+      
+      // 恢复之前的加载状态
+      isLoadingPartRef.current = wasLoading;
+      
       // 准备用户笔记数据
       const userNotesData = {
-        knowledgePointNotes: knowledgePoints.map(kp => ({
-          knowledgePointName: kp.name,
-          startTime: kp.start_time,
-          endTime: kp.end_time,
-          qaList: kp.qaList || [],
-          screenshots: kp.screenshots || [],
-          exercises: kp.exercises || [],
-          searchResults: kp.searchResults || [],
-          customNote: kp.note, // 如果用户修改了笔记
-        })),
+        knowledgePointNotes: allKnowledgePointNotes,
       };
       
       const response = await fetch('/api/video-notes', {
@@ -4748,8 +4951,8 @@ export default function VideoNotesPrototypePage() {
     }
   };
 
-  // 加载已保存的笔记
-  const loadSavedNote = async (taskId: string) => {
+  // 加载已保存的笔记（针对特定分P）
+  const loadSavedNoteForPart = async (taskId: string, partIndex: number) => {
     try {
       const response = await fetch(`/api/video-notes?taskId=${taskId}`);
       const data = await response.json();
@@ -4760,36 +4963,53 @@ export default function VideoNotesPrototypePage() {
         setSaveStatus('saved');
         setLastSavedAt(new Date(userNote.updatedAt));
         
-        console.log('✅ 加载已保存的笔记:', userNote.id);
+        console.log(`✅ 加载已保存的笔记 (分P ${partIndex + 1}):`, userNote.id);
         
-        // 合并用户笔记数据到知识点
+        // 🔧 修复：合并用户笔记数据到知识点（考虑 partIndex）
         const userNoteData = userNote.userNotesData;
         if (userNoteData && userNoteData.knowledgePointNotes) {
-          setKnowledgePoints(prev => prev.map(kp => {
-            // 查找匹配的用户笔记
-            const userKP = userNoteData.knowledgePointNotes.find(
-              (un: any) => un.knowledgePointName === kp.name &&
-                          un.startTime === kp.start_time &&
-                          un.endTime === kp.end_time
-            );
-            
-            if (userKP) {
-              // 合并用户数据
+          // 🔧 修复：先更新当前显示的知识点
+          setKnowledgePoints(prev => {
+            const updated = prev.map(kp => {
+              // 🔧 修复：查找匹配的用户笔记（必须匹配 partIndex、name、startTime、endTime）
+              const userKP = userNoteData.knowledgePointNotes.find(
+                (un: any) => {
+                  // 兼容旧数据：如果 partIndex 未定义，默认匹配第0个分P
+                  const partIndexMatch = (un.partIndex === undefined && partIndex === 0) || un.partIndex === partIndex;
+                  const nameMatch = un.knowledgePointName === kp.name;
+                  const timeMatch = un.startTime === kp.start_time && un.endTime === kp.end_time;
+                  return partIndexMatch && nameMatch && timeMatch;
+                }
+              );
+              
+              if (userKP) {
+                // 合并用户数据（优先使用用户保存的数据）
+                return {
+                  ...kp,
+                  qaList: userKP.qaList || kp.qaList || [],
+                  screenshots: userKP.screenshots || kp.screenshots || [],
+                  exercises: userKP.exercises || kp.exercises || [],
+                  searchResults: userKP.searchResults || kp.searchResults || [],
+                  note: userKP.customNote !== undefined ? userKP.customNote : kp.note,
+                  partIndex: partIndex, // 确保 partIndex 存在
+                };
+              }
+              
               return {
                 ...kp,
-                qaList: userKP.qaList || kp.qaList,
-                screenshots: [
-                  ...(kp.screenshots || []),
-                  ...(userKP.screenshots || [])
-                ],
-                exercises: userKP.exercises || kp.exercises,
-                searchResults: userKP.searchResults || kp.searchResults,
-                note: userKP.customNote || kp.note,
+                partIndex: partIndex, // 确保 partIndex 存在
               };
-            }
+            });
             
-            return kp;
-          }));
+            // 🔧 修复：同步更新缓存
+            setPartsKnowledgePointsMap(prev => {
+              const newMap = new Map(prev);
+              newMap.set(partIndex, updated);
+              return newMap;
+            });
+            
+            return updated;
+          });
         }
       } else {
         setSaveStatus('unsaved');
@@ -4797,6 +5017,11 @@ export default function VideoNotesPrototypePage() {
     } catch (error) {
       console.error('加载已保存笔记失败:', error);
     }
+  };
+  
+  // 加载已保存的笔记（兼容旧代码，默认加载第一个分P）
+  const loadSavedNote = async (taskId: string) => {
+    await loadSavedNoteForPart(taskId, 0);
   };
 
   // 关闭练习卡片（不添加到笔记）

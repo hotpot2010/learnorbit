@@ -1,0 +1,886 @@
+{
+  "task_id": "task_1767078185_9035",
+  "bilibili_url": "https://www.bilibili.com/video/BV1864y1T7Ks/?vd_source=c56a4db010f073556475172c7b3fbedf",
+  "video_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数",
+  "steps": {
+    "asr": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "download": {
+      "error": null,
+      "result": null,
+      "status": "running",
+      "message": "正在处理第 88/101 个分P: 第十一章3 格林公式及应用",
+      "progress": 78,
+      "retry_count": 0
+    },
+    "exercises": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "transcode": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "screenshots": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "knowledge_points": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    }
+  },
+  "video_url": null,
+  "transcoded_video_url": null,
+  "asr_result_url": null,
+  "knowledge_points_result_url": null,
+  "screenshots_result_url": null,
+  "exercises_result_url": null,
+  "video_info": {
+    "bv_id": "BV1864y1T7Ks",
+    "title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数",
+    "duration": 0,
+    "uploader": "",
+    "thumbnail": "",
+    "like_count": 0,
+    "view_count": 0,
+    "description": "",
+    "upload_date": "",
+    "thumbnail_cdn": "https://file.gsxservice.com/3411138341_s1r7rv87.jpg"
+  },
+  "is_series": true,
+  "series_parts": [
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=1",
+      "bv_id": "BV1864y1T7Ks_p1",
+      "duration": 252.214,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p01 开场白",
+      "part_title": "开场白",
+      "part_number": 1
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=2",
+      "bv_id": "BV1864y1T7Ks_p2",
+      "duration": 5364.714,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p02 第一章1 映射与函数",
+      "part_title": "第一章1 映射与函数",
+      "part_number": 2
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=3",
+      "bv_id": "BV1864y1T7Ks_p3",
+      "duration": 4352.347,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p03 第一章2 数列的极限",
+      "part_title": "第一章2 数列的极限",
+      "part_number": 3
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=4",
+      "bv_id": "BV1864y1T7Ks_p4",
+      "duration": 4744.811,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p04 第一章3 函数的极限",
+      "part_title": "第一章3 函数的极限",
+      "part_number": 4
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=5",
+      "bv_id": "BV1864y1T7Ks_p5",
+      "duration": 1855.111,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p05 第一章4 无穷小与无穷大",
+      "part_title": "第一章4 无穷小与无穷大",
+      "part_number": 5
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=6",
+      "bv_id": "BV1864y1T7Ks_p6",
+      "duration": 5239.791,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p06 第一章5 极限运算法则",
+      "part_title": "第一章5 极限运算法则",
+      "part_number": 6
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=7",
+      "bv_id": "BV1864y1T7Ks_p7",
+      "duration": 7658.474,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p07 第一章6 极限存在与两个重要极限",
+      "part_title": "第一章6 极限存在与两个重要极限",
+      "part_number": 7
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=8",
+      "bv_id": "BV1864y1T7Ks_p8",
+      "duration": 2640.665,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p08 第一章7 无穷小的比较",
+      "part_title": "第一章7 无穷小的比较",
+      "part_number": 8
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=9",
+      "bv_id": "BV1864y1T7Ks_p9",
+      "duration": 2675.263,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p09 第一章8 连续性与间断点",
+      "part_title": "第一章8 连续性与间断点",
+      "part_number": 9
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=10",
+      "bv_id": "BV1864y1T7Ks_p10",
+      "duration": 2767.168,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p10 第一章9 连续函数的运算和初等函数连续性",
+      "part_title": "第一章9 连续函数的运算和初等函数连续性",
+      "part_number": 10
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=11",
+      "bv_id": "BV1864y1T7Ks_p11",
+      "duration": 1293.583,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p11 第一章10 闭区间上连续函数的性质",
+      "part_title": "第一章10 闭区间上连续函数的性质",
+      "part_number": 11
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=12",
+      "bv_id": "BV1864y1T7Ks_p12",
+      "duration": 6482.732,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p12 第一章习题课",
+      "part_title": "第一章习题课",
+      "part_number": 12
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=13",
+      "bv_id": "BV1864y1T7Ks_p13",
+      "duration": 4499.283,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p13 第二章1 导数的概念",
+      "part_title": "第二章1 导数的概念",
+      "part_number": 13
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=14",
+      "bv_id": "BV1864y1T7Ks_p14",
+      "duration": 3902.229,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p14 第二章2 函数的求导法则",
+      "part_title": "第二章2 函数的求导法则",
+      "part_number": 14
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=15",
+      "bv_id": "BV1864y1T7Ks_p15",
+      "duration": 2633.165,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p15 第二章3 高阶导数",
+      "part_title": "第二章3 高阶导数",
+      "part_number": 15
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=16",
+      "bv_id": "BV1864y1T7Ks_p16",
+      "duration": 3706.624,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p16 第二章4 隐函数及参数方程求导",
+      "part_title": "第二章4 隐函数及参数方程求导",
+      "part_number": 16
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=17",
+      "bv_id": "BV1864y1T7Ks_p17",
+      "duration": 5562.548,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p17 第二章5 函数的微分",
+      "part_title": "第二章5 函数的微分",
+      "part_number": 17
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=18",
+      "bv_id": "BV1864y1T7Ks_p18",
+      "duration": 5155.247,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p18 第二章习题课",
+      "part_title": "第二章习题课",
+      "part_number": 18
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=19",
+      "bv_id": "BV1864y1T7Ks_p19",
+      "duration": 3599.882,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p19 第三章1 微分中值定理",
+      "part_title": "第三章1 微分中值定理",
+      "part_number": 19
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=20",
+      "bv_id": "BV1864y1T7Ks_p20",
+      "duration": 3637.452,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p20 第三章2 洛必达法则",
+      "part_title": "第三章2 洛必达法则",
+      "part_number": 20
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=21",
+      "bv_id": "BV1864y1T7Ks_p21",
+      "duration": 5458.755,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p21 第三章3 泰勒公式",
+      "part_title": "第三章3 泰勒公式",
+      "part_number": 21
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=22",
+      "bv_id": "BV1864y1T7Ks_p22",
+      "duration": 4553.92,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p22 第三章4 单调性与凹凸性",
+      "part_title": "第三章4 单调性与凹凸性",
+      "part_number": 22
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=23",
+      "bv_id": "BV1864y1T7Ks_p23",
+      "duration": 4450.196,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p23 第三章5 极值与最大值最小值",
+      "part_title": "第三章5 极值与最大值最小值",
+      "part_number": 23
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=24",
+      "bv_id": "BV1864y1T7Ks_p24",
+      "duration": 1627.927,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p24 第三章6 函数图形的描绘",
+      "part_title": "第三章6 函数图形的描绘",
+      "part_number": 24
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=25",
+      "bv_id": "BV1864y1T7Ks_p25",
+      "duration": 3130.653,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p25 第三章7 曲率",
+      "part_title": "第三章7 曲率",
+      "part_number": 25
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=26",
+      "bv_id": "BV1864y1T7Ks_p26",
+      "duration": 5130.007,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p26 第三章习题课",
+      "part_title": "第三章习题课",
+      "part_number": 26
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=27",
+      "bv_id": "BV1864y1T7Ks_p27",
+      "duration": 3492.048,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p27 第四章1 不定积分的概念与性质",
+      "part_title": "第四章1 不定积分的概念与性质",
+      "part_number": 27
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=28",
+      "bv_id": "BV1864y1T7Ks_p28",
+      "duration": 9010.201,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p28 第四章2 换元积分法",
+      "part_title": "第四章2 换元积分法",
+      "part_number": 28
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=29",
+      "bv_id": "BV1864y1T7Ks_p29",
+      "duration": 2596.176,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p29 第四章3 分部积分法",
+      "part_title": "第四章3 分部积分法",
+      "part_number": 29
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=30",
+      "bv_id": "BV1864y1T7Ks_p30",
+      "duration": 4026.456,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p30 第四章4 有理函数的积分",
+      "part_title": "第四章4 有理函数的积分",
+      "part_number": 30
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=31",
+      "bv_id": "BV1864y1T7Ks_p31",
+      "duration": 10467.416,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p31 第四章习题课",
+      "part_title": "第四章习题课",
+      "part_number": 31
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=32",
+      "bv_id": "BV1864y1T7Ks_p32",
+      "duration": 4379.306,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p32 第五章1 定积分的概念与性质",
+      "part_title": "第五章1 定积分的概念与性质",
+      "part_number": 32
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=33",
+      "bv_id": "BV1864y1T7Ks_p33",
+      "duration": 3969.149,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p33 第五章2 微积分基本公式",
+      "part_title": "第五章2 微积分基本公式",
+      "part_number": 33
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=34",
+      "bv_id": "BV1864y1T7Ks_p34",
+      "duration": 4662.311,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p34 第五章3 定积分的换元法和分部积分法",
+      "part_title": "第五章3 定积分的换元法和分部积分法",
+      "part_number": 34
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=35",
+      "bv_id": "BV1864y1T7Ks_p35",
+      "duration": 2282.103,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p35 第五章4 反常积分",
+      "part_title": "第五章4 反常积分",
+      "part_number": 35
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=36",
+      "bv_id": "BV1864y1T7Ks_p36",
+      "duration": 3101.396,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p36 第五章5 反常积分的审敛法与伽马函数",
+      "part_title": "第五章5 反常积分的审敛法与伽马函数",
+      "part_number": 36
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=37",
+      "bv_id": "BV1864y1T7Ks_p37",
+      "duration": 5739.066,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p37 第五章习题课",
+      "part_title": "第五章习题课",
+      "part_number": 37
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=38",
+      "bv_id": "BV1864y1T7Ks_p38",
+      "duration": 811.537,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p38 第六章1 定积分的元素法",
+      "part_title": "第六章1 定积分的元素法",
+      "part_number": 38
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=39",
+      "bv_id": "BV1864y1T7Ks_p39",
+      "duration": 9457.974,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p39 第六章2 定积分的几何应用",
+      "part_title": "第六章2 定积分的几何应用",
+      "part_number": 39
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=40",
+      "bv_id": "BV1864y1T7Ks_p40",
+      "duration": 1998.123,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p40 第六章3 定积分的物理应用",
+      "part_title": "第六章3 定积分的物理应用",
+      "part_number": 40
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=41",
+      "bv_id": "BV1864y1T7Ks_p41",
+      "duration": 3648.667,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p41 第六章习题课",
+      "part_title": "第六章习题课",
+      "part_number": 41
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=42",
+      "bv_id": "BV1864y1T7Ks_p42",
+      "duration": 1579.931,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p42 第七章1 微分方程的基本概念",
+      "part_title": "第七章1 微分方程的基本概念",
+      "part_number": 42
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=43",
+      "bv_id": "BV1864y1T7Ks_p43",
+      "duration": 1711.263,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p43 第七章2 可分离变量的微分方程",
+      "part_title": "第七章2 可分离变量的微分方程",
+      "part_number": 43
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=44",
+      "bv_id": "BV1864y1T7Ks_p44",
+      "duration": 1766.202,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p44 第七章3 齐次方程及其解法",
+      "part_title": "第七章3 齐次方程及其解法",
+      "part_number": 44
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=45",
+      "bv_id": "BV1864y1T7Ks_p45",
+      "duration": 2609.876,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p45 第七章4 一阶线性微分方程",
+      "part_title": "第七章4 一阶线性微分方程",
+      "part_number": 45
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=46",
+      "bv_id": "BV1864y1T7Ks_p46",
+      "duration": 2953.972,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p46 第七章5 可降阶的高阶微分方程",
+      "part_title": "第七章5 可降阶的高阶微分方程",
+      "part_number": 46
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=47",
+      "bv_id": "BV1864y1T7Ks_p47",
+      "duration": 2911.433,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p47 第七章6 高阶线性微分方程",
+      "part_title": "第七章6 高阶线性微分方程",
+      "part_number": 47
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=48",
+      "bv_id": "BV1864y1T7Ks_p48",
+      "duration": 2411.438,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p48 第七章7 常系数齐次线性微分方程",
+      "part_title": "第七章7 常系数齐次线性微分方程",
+      "part_number": 48
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=49",
+      "bv_id": "BV1864y1T7Ks_p49",
+      "duration": 4544.469,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p49 第七章8 常系数非齐次线性微分方程",
+      "part_title": "第七章8 常系数非齐次线性微分方程",
+      "part_number": 49
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=50",
+      "bv_id": "BV1864y1T7Ks_p50",
+      "duration": 4413.997,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p50 第七章习题课",
+      "part_title": "第七章习题课",
+      "part_number": 50
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=51",
+      "bv_id": "BV1864y1T7Ks_p51",
+      "duration": 6692.222,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p51 第八章1 向量及其运算",
+      "part_title": "第八章1 向量及其运算",
+      "part_number": 51
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=52",
+      "bv_id": "BV1864y1T7Ks_p52",
+      "duration": 5589.205,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p52 第八章2 数量积 向量积",
+      "part_title": "第八章2 数量积 向量积",
+      "part_number": 52
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=53",
+      "bv_id": "BV1864y1T7Ks_p53",
+      "duration": 2109.277,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p53 第八章3 平面及其方程",
+      "part_title": "第八章3 平面及其方程",
+      "part_number": 53
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=54",
+      "bv_id": "BV1864y1T7Ks_p54",
+      "duration": 2737.284,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p54 第八章4 空间直线及其方程",
+      "part_title": "第八章4 空间直线及其方程",
+      "part_number": 54
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=55",
+      "bv_id": "BV1864y1T7Ks_p55",
+      "duration": 6105.222,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p55 第八章5 曲面及其方程",
+      "part_title": "第八章5 曲面及其方程",
+      "part_number": 55
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=56",
+      "bv_id": "BV1864y1T7Ks_p56",
+      "duration": 2982.579,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p56 第八章6 空间曲线及其方程",
+      "part_title": "第八章6 空间曲线及其方程",
+      "part_number": 56
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=57",
+      "bv_id": "BV1864y1T7Ks_p57",
+      "duration": 4052.81,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p57 第八章习题课",
+      "part_title": "第八章习题课",
+      "part_number": 57
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=58",
+      "bv_id": "BV1864y1T7Ks_p58",
+      "duration": 81.966,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p58 摆线",
+      "part_title": "摆线",
+      "part_number": 58
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=59",
+      "bv_id": "BV1864y1T7Ks_p59",
+      "duration": 135.836,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p59 心形线",
+      "part_title": "心形线",
+      "part_number": 59
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=60",
+      "bv_id": "BV1864y1T7Ks_p60",
+      "duration": 87.26,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p60 星形线",
+      "part_title": "星形线",
+      "part_number": 60
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=61",
+      "bv_id": "BV1864y1T7Ks_p61",
+      "duration": 87.445,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p61 双纽线",
+      "part_title": "双纽线",
+      "part_number": 61
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=62",
+      "bv_id": "BV1864y1T7Ks_p62",
+      "duration": 108.668,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p62 玫瑰线",
+      "part_title": "玫瑰线",
+      "part_number": 62
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=63",
+      "bv_id": "BV1864y1T7Ks_p63",
+      "duration": 80.805,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p63 箕舌线",
+      "part_title": "箕舌线",
+      "part_number": 63
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=64",
+      "bv_id": "BV1864y1T7Ks_p64",
+      "duration": 4923.373,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p64 第九章1 多元函数基本概念",
+      "part_title": "第九章1 多元函数基本概念",
+      "part_number": 64
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=65",
+      "bv_id": "BV1864y1T7Ks_p65",
+      "duration": 3841.392,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p65 第九章2 偏导数",
+      "part_title": "第九章2 偏导数",
+      "part_number": 65
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=66",
+      "bv_id": "BV1864y1T7Ks_p66",
+      "duration": 4294.228,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p66 第九章3 全微分",
+      "part_title": "第九章3 全微分",
+      "part_number": 66
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=67",
+      "bv_id": "BV1864y1T7Ks_p67",
+      "duration": 5247.872,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p67 第九章4 多元复合函数求导",
+      "part_title": "第九章4 多元复合函数求导",
+      "part_number": 67
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=68",
+      "bv_id": "BV1864y1T7Ks_p68",
+      "duration": 4474.368,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p68 第九章5 隐函数求导",
+      "part_title": "第九章5 隐函数求导",
+      "part_number": 68
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=69",
+      "bv_id": "BV1864y1T7Ks_p69",
+      "duration": 5199.853,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p69 第九章6 多元微分的几何应用",
+      "part_title": "第九章6 多元微分的几何应用",
+      "part_number": 69
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=70",
+      "bv_id": "BV1864y1T7Ks_p70",
+      "duration": 3642.63,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p70 第九章7 方向导数与梯度",
+      "part_title": "第九章7 方向导数与梯度",
+      "part_number": 70
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=71",
+      "bv_id": "BV1864y1T7Ks_p71",
+      "duration": 5482.532,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p71 第九章8 多元函数的极值",
+      "part_title": "第九章8 多元函数的极值",
+      "part_number": 71
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=72",
+      "bv_id": "BV1864y1T7Ks_p72",
+      "duration": 6390.363,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p72 第九章习题课",
+      "part_title": "第九章习题课",
+      "part_number": 72
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=73",
+      "bv_id": "BV1864y1T7Ks_p73",
+      "duration": 1785.8,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p73 第十章1 二重积分的概念与性质",
+      "part_title": "第十章1 二重积分的概念与性质",
+      "part_number": 73
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=74",
+      "bv_id": "BV1864y1T7Ks_p74",
+      "duration": 6344.155,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p74 第十章2 二重积分的计算",
+      "part_title": "第十章2 二重积分的计算",
+      "part_number": 74
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=75",
+      "bv_id": "BV1864y1T7Ks_p75",
+      "duration": 6261.144,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p75 第十章3 三重积分",
+      "part_title": "第十章3 三重积分",
+      "part_number": 75
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=76",
+      "bv_id": "BV1864y1T7Ks_p76",
+      "duration": 4570.499,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p76 第十章4 重积分的应用",
+      "part_title": "第十章4 重积分的应用",
+      "part_number": 76
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=77",
+      "bv_id": "BV1864y1T7Ks_p77",
+      "duration": 6751.433,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p77 第十章习题课",
+      "part_title": "第十章习题课",
+      "part_number": 77
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=78",
+      "bv_id": "BV1864y1T7Ks_p78",
+      "duration": 265.403,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p78 立体图-圆锥面与平面",
+      "part_title": "立体图-圆锥面与平面",
+      "part_number": 78
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=79",
+      "bv_id": "BV1864y1T7Ks_p79",
+      "duration": 105.557,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p79 立体图-圆锥面与球面1",
+      "part_title": "立体图-圆锥面与球面1",
+      "part_number": 79
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=80",
+      "bv_id": "BV1864y1T7Ks_p80",
+      "duration": 104.582,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p80 立体图-圆锥面与球面2",
+      "part_title": "立体图-圆锥面与球面2",
+      "part_number": 80
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=81",
+      "bv_id": "BV1864y1T7Ks_p81",
+      "duration": 112.616,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p81 立体图-抛物面与平面",
+      "part_title": "立体图-抛物面与平面",
+      "part_number": 81
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=82",
+      "bv_id": "BV1864y1T7Ks_p82",
+      "duration": 102.492,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p82 立体图-抛物面与球面",
+      "part_title": "立体图-抛物面与球面",
+      "part_number": 82
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=83",
+      "bv_id": "BV1864y1T7Ks_p83",
+      "duration": 172.802,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p83 立体图-球面与柱面与平面",
+      "part_title": "立体图-球面与柱面与平面",
+      "part_number": 83
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=84",
+      "bv_id": "BV1864y1T7Ks_p84",
+      "duration": 242.508,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p84 立体图-10章3节4题",
+      "part_title": "立体图-10章3节4题",
+      "part_number": 84
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=85",
+      "bv_id": "BV1864y1T7Ks_p85",
+      "duration": 179.443,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p85 立体图-10章3节7题",
+      "part_title": "立体图-10章3节7题",
+      "part_number": 85
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=86",
+      "bv_id": "BV1864y1T7Ks_p86",
+      "duration": 2822.524,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p86 第十一章1 对弧长的曲线积分",
+      "part_title": "第十一章1 对弧长的曲线积分",
+      "part_number": 86
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=87",
+      "bv_id": "BV1864y1T7Ks_p87",
+      "duration": 4054.575,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p87 第十一章2 对坐标的曲线积分",
+      "part_title": "第十一章2 对坐标的曲线积分",
+      "part_number": 87
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=88",
+      "bv_id": "BV1864y1T7Ks_p88",
+      "duration": 6392.244,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p88 第十一章3 格林公式及应用",
+      "part_title": "第十一章3 格林公式及应用",
+      "part_number": 88
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=89",
+      "bv_id": "BV1864y1T7Ks_p89",
+      "duration": 3780.696,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p89 第十一章4 对面积的曲面积分",
+      "part_title": "第十一章4 对面积的曲面积分",
+      "part_number": 89
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=90",
+      "bv_id": "BV1864y1T7Ks_p90",
+      "duration": 5686.334,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p90 第十一章5 对坐标的曲面积分",
+      "part_title": "第十一章5 对坐标的曲面积分",
+      "part_number": 90
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=91",
+      "bv_id": "BV1864y1T7Ks_p91",
+      "duration": 3969.125,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p91 第十一章6 高斯公式",
+      "part_title": "第十一章6 高斯公式",
+      "part_number": 91
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=92",
+      "bv_id": "BV1864y1T7Ks_p92",
+      "duration": 2007.364,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p92 第十一章7 斯托克斯公式",
+      "part_title": "第十一章7 斯托克斯公式",
+      "part_number": 92
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=93",
+      "bv_id": "BV1864y1T7Ks_p93",
+      "duration": 4665.515,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p93 第十一章习题课",
+      "part_title": "第十一章习题课",
+      "part_number": 93
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=94",
+      "bv_id": "BV1864y1T7Ks_p94",
+      "duration": 1952.008,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p94 第十二章1 常数项级数的概念与性质",
+      "part_title": "第十二章1 常数项级数的概念与性质",
+      "part_number": 94
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=95",
+      "bv_id": "BV1864y1T7Ks_p95",
+      "duration": 5235.263,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p95 第十二章2 常数项级数的审敛法",
+      "part_title": "第十二章2 常数项级数的审敛法",
+      "part_number": 95
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=96",
+      "bv_id": "BV1864y1T7Ks_p96",
+      "duration": 7109.322,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p96 第十二章3 幂级数",
+      "part_title": "第十二章3 幂级数",
+      "part_number": 96
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=97",
+      "bv_id": "BV1864y1T7Ks_p97",
+      "duration": 4254.638,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p97 第十二章4 函数展开成幂级数",
+      "part_title": "第十二章4 函数展开成幂级数",
+      "part_number": 97
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=98",
+      "bv_id": "BV1864y1T7Ks_p98",
+      "duration": 4480.963,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p98 第十二章5 傅里叶级数",
+      "part_title": "第十二章5 傅里叶级数",
+      "part_number": 98
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=99",
+      "bv_id": "BV1864y1T7Ks_p99",
+      "duration": 1276.934,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p99 第十二章6 一般周期函数的傅立叶级数",
+      "part_title": "第十二章6 一般周期函数的傅立叶级数",
+      "part_number": 99
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=100",
+      "bv_id": "BV1864y1T7Ks_p100",
+      "duration": 6390.874,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p100 第十二章习题课",
+      "part_title": "第十二章习题课",
+      "part_number": 100
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1864y1T7Ks?p=101",
+      "bv_id": "BV1864y1T7Ks_p101",
+      "duration": 3347.899,
+      "full_title": "【梨米特】同济版《高等数学》全程教学视频｜纯干货知识点解析，应该是全网最细｜微积分 | 高数 p101 第十三章 差分方程",
+      "part_title": "第十三章 差分方程",
+      "part_number": 101
+    }
+  ],
+  "created_at": "2025-12-30T15:04:07",
+  "updated_at": "2026-01-02T08:45:29.839955"
+}

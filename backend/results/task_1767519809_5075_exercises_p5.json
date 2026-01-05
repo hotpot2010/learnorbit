@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平衡常数定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $2A(g) + B(s) \\rightleftharpoons 3C(g)$，在一定温度下达到平衡。下列关于该反应平衡常数 $K$ 的表达式正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$K = \\frac{[C]^3}{[A]^2[B]}$"
+        },
+        {
+          "label": "B",
+          "content": "$K = \\frac{[C]^3}{[A]^2}$"
+        },
+        {
+          "label": "C",
+          "content": "$K = \\frac{[A]^2[B]}{[C]^3}$"
+        },
+        {
+          "label": "D",
+          "content": "$K = \\frac{[A]^2}{[C]^3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频内容，平衡常数 $K$ 等于生成物浓度幂之积比上反应物浓度幂之积。",
+        "提示2：注意在平衡常数表达式中，不能选择固体或纯液体的物质。本题中 $B$ 为固体，不应出现在平衡常数表达式中。",
+        "提示3：一定要选择平衡时的浓度来计算平衡常数。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：例题计算讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $2SO_2(g) + O_2(g) \\rightleftharpoons 2SO_3(g)$，下列关于平衡常数 $K$ 的计算，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "若某时刻测得 $c(SO_2) = 0.1 mol/L$，$c(O_2) = 0.05 mol/L$，$c(SO_3) = 0.2 mol/L$，则 $K = \\frac{0.2^2}{0.1^2 \\times 0.05}$"
+        },
+        {
+          "label": "B",
+          "content": "平衡时，$c(SO_2) = 0.1 mol/L$，$c(O_2) = 0.05 mol/L$，$c(SO_3) = 0.2 mol/L$，则 $K = \\frac{0.2^2}{0.1^2 \\times 0.05}$"
+        },
+        {
+          "label": "C",
+          "content": "平衡时，$c(SO_2) = 0.1 mol/L$，$c(O_2) = 0.05 mol/L$，$c(SO_3) = 0.2 mol/L$，且反应中有固体催化剂，$K = \\frac{0.2^2}{0.1^2 \\times 0.05 \\times [催化剂]}$"
+        },
+        {
+          "label": "D",
+          "content": "平衡时，$c(SO_2) = 0.1 mol/L$，$c(O_2) = 0.05 mol/L$，$c(SO_3) = 0.2 mol/L$，则 $K = \\frac{0.2}{0.1 \\times 0.05}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频，平衡常数 $K$ 是用平衡时生成物浓度幂之积比上反应物浓度幂之积来计算",
+        "提示2：计算时，固体和纯液体不列入平衡常数的表达式中",
+        "提示3：注意浓度的幂次要与化学方程式中的系数一致"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：实验题分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于反应 $2A(g) + B(s) \\rightleftharpoons 3C(g) + D(l)$，下列关于平衡常数 $K$ 的计算，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$K = \\frac{[C]^3[D]}{[A]^2[B]}$"
+        },
+        {
+          "label": "B",
+          "content": "$K = \\frac{[C]^3}{[A]^2}$"
+        },
+        {
+          "label": "C",
+          "content": "$K = \\frac{[A]^2[B]}{[C]^3[D]}$"
+        },
+        {
+          "label": "D",
+          "content": "$K = \\frac{[A]^2}{[C]^3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频，平衡常数 $K$ 等于生成物浓度幂之积比上反应物浓度幂之积",
+        "提示2：注意在计算平衡常数时，不能选择固体和纯液体物质的浓度",
+        "提示3：本题中 $B$ 为固体，$D$ 为纯液体，不应出现在平衡常数表达式中"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平衡移动判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于反应 $2SO_2(g) + O_2(g) \\rightleftharpoons 2SO_3(g)$，在某温度下达到平衡时，$SO_2$、$O_2$、$SO_3$ 的浓度分别为 $0.2mol/L$、$0.1mol/L$、$0.2mol/L$。若将反应体系中的 $SO_3$ 浓度变为 $0.3mol/L$，此时该反应的浓度商 $Q_c$ 与平衡常数 $K$ 的关系及反应方向判断正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$Q_c > K$，反应向逆反应方向进行"
+        },
+        {
+          "label": "B",
+          "content": "$Q_c < K$，反应向正反应方向进行"
+        },
+        {
+          "label": "C",
+          "content": "$Q_c = K$，反应处于平衡状态"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先根据平衡常数 $K$ 和浓度商 $Q_c$ 的定义式，写出该反应的 $K$ 和 $Q_c$ 的表达式",
+        "提示2：平衡常数 $K$ 用平衡时各物质的浓度计算，浓度商 $Q_c$ 用改变条件后各物质的浓度计算",
+        "提示3：比较 $Q_c$ 和 $K$ 的大小，若 $Q_c > K$，反应向逆反应方向进行；若 $Q_c < K$，反应向正反应方向进行；若 $Q_c = K$，反应处于平衡状态"
+      ]
+    }
+  ],
+  "count": 4
+}

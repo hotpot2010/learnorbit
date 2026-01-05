@@ -640,6 +640,24 @@ async def delete_task(task_id: str):
         raise HTTPException(status_code=500, detail=f"删除任务失败: {str(e)}")
 
 
+@router.post("/cache/clear")
+async def clear_cache(task_id: Optional[str] = None):
+    """
+    清除任务缓存
+    
+    Args:
+        task_id: 可选，如果指定则只清除该任务的缓存；否则清除所有缓存
+        
+    Returns:
+        清除结果
+    """
+    try:
+        result = offline_video_service.clear_cache(task_id)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"清除缓存失败: {str(e)}")
+
+
 # ==================== Prompt 配置管理 ====================
 
 class SavePromptRequest(BaseModel):
@@ -711,4 +729,125 @@ async def reset_prompt():
             raise HTTPException(status_code=500, detail="重置失败")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"重置 Prompt 失败: {str(e)}")
+
+
+# ==================== 练习提示词配置管理 ====================
+
+class SaveExercisePromptRequest(BaseModel):
+    """保存练习提示词请求"""
+    subject: str  # math/programming
+    locale: str  # zh
+    prompt: str
+
+
+@router.get("/exercise-prompt")
+async def get_exercise_prompt(subject: str = "math", locale: str = "zh"):
+    """
+    获取练习生成提示词
+    
+    Args:
+        subject: 学科类型 (math/programming)
+        locale: 语言环境 (仅支持 zh)
+        
+    Returns:
+        当前提示词配置
+    """
+    try:
+        prompt = prompt_config_service.get_exercise_prompt(subject=subject, locale=locale)
+        return {
+            "success": True,
+            "subject": subject,
+            "locale": locale,
+            "prompt": prompt
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"获取练习提示词失败: {str(e)}")
+
+
+@router.get("/exercise-prompt/all")
+async def get_all_exercise_prompts():
+    """
+    获取所有练习提示词配置
+    
+    Returns:
+        所有提示词配置
+    """
+    try:
+        prompts = prompt_config_service.get_all_exercise_prompts()
+        return {
+            "success": True,
+            "prompts": prompts
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"获取所有练习提示词失败: {str(e)}")
+
+
+@router.post("/exercise-prompt")
+async def save_exercise_prompt(request: SaveExercisePromptRequest):
+    """
+    保存练习生成提示词
+    
+    Args:
+        request: 包含学科、语言和提示词的请求
+        
+    Returns:
+        保存结果
+    """
+    try:
+        if request.subject not in ['math', 'programming']:
+            raise HTTPException(status_code=400, detail="subject 必须是 'math' 或 'programming'")
+        if request.locale != 'zh':
+            raise HTTPException(status_code=400, detail="locale 仅支持 'zh'")
+        
+        success = prompt_config_service.save_exercise_prompt(
+            subject=request.subject,
+            locale=request.locale,
+            prompt=request.prompt
+        )
+        
+        if success:
+            return {
+                "success": True,
+                "message": f"练习提示词已保存 ({request.subject}/{request.locale})"
+            }
+        else:
+            raise HTTPException(status_code=500, detail="保存失败")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"保存练习提示词失败: {str(e)}")
+
+
+@router.post("/exercise-prompt/reset")
+async def reset_exercise_prompt(subject: str = "math", locale: str = "zh"):
+    """
+    重置练习提示词为默认值
+    
+    Args:
+        subject: 学科类型 (math/programming)
+        locale: 语言环境 (仅支持 zh)
+        
+    Returns:
+        重置结果
+    """
+    try:
+        if subject not in ['math', 'programming']:
+            raise HTTPException(status_code=400, detail="subject 必须是 'math' 或 'programming'")
+        if locale != 'zh':
+            raise HTTPException(status_code=400, detail="locale 仅支持 'zh'")
+        
+        success = prompt_config_service.reset_exercise_prompt(subject=subject, locale=locale)
+        
+        if success:
+            return {
+                "success": True,
+                "message": f"练习提示词已重置为默认值 ({subject}/{locale})",
+                "prompt": prompt_config_service.get_exercise_prompt(subject=subject, locale=locale)
+            }
+        else:
+            raise HTTPException(status_code=500, detail="重置失败")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"重置练习提示词失败: {str(e)}")
 

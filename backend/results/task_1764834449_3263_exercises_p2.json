@@ -1,0 +1,1184 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：直线斜率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知直线 $l$ 经过点 $A(2,3)$ 和 $B(4,m)$，且直线 $l$ 的斜率为 $2$，则 $m$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$5$"
+        },
+        {
+          "label": "B",
+          "content": "$6$"
+        },
+        {
+          "label": "C",
+          "content": "$7$"
+        },
+        {
+          "label": "D",
+          "content": "$8$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据过两点 $(x_1,y_1)$，$(x_2,y_2)$ 的直线斜率公式 $k = \\frac{y_2 - y_1}{x_2 - x_1}$",
+        "提示2：将点 $A(2,3)$ 和 $B(4,m)$ 以及斜率 $k = 2$ 代入公式",
+        "提示3：得到方程 $2 = \\frac{m - 3}{4 - 2}$，然后求解 $m$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：导数的本质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = x^2 + 3x + 2$，则函数在 $x = 1$ 处的导数 $f'(1)$ 表示的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "函数 $f(x)$ 在 $x = 1$ 处的函数值"
+        },
+        {
+          "label": "B",
+          "content": "函数 $f(x)$ 图像在 $x = 1$ 处的切线斜率"
+        },
+        {
+          "label": "C",
+          "content": "函数 $f(x)$ 在区间 $[0, 1]$ 上的平均变化率"
+        },
+        {
+          "label": "D",
+          "content": "函数 $f(x)$ 在 $x = 1$ 处的瞬时加速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾导数的几何意义",
+        "提示2：明确函数值、切线斜率、平均变化率和瞬时加速度的概念",
+        "提示3：根据导数的定义和性质判断每个选项"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：导数符号含义",
+      "error": "Invalid \\escape: line 6 column 45 (char 169)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：导数的意义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=x^3 - 3x^2 + 2$，则函数在 $x = 2$ 处的导数 $f'(2)$ 表示的意义是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "函数 $f(x)$ 在 $x = 2$ 处的函数值"
+        },
+        {
+          "label": "B",
+          "content": "函数 $f(x)$ 在 $x = 2$ 处的切线的斜率"
+        },
+        {
+          "label": "C",
+          "content": "函数 $f(x)$ 在 $x = 2$ 处的切线方程"
+        },
+        {
+          "label": "D",
+          "content": "函数 $f(x)$ 在 $x = 2$ 处的瞬时速度为 $0$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾导数的几何意义和物理意义",
+        "提示2：导数的几何意义是函数在某一点处切线的斜率",
+        "提示3：导数的物理意义在运动学中可表示瞬时速度，但本题未涉及运动学情境"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：复合函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = \\sin(2x^2 + 3)$，则它的导数 $y'$ 是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$4x\\cos(2x^2 + 3)$"
+        },
+        {
+          "label": "B",
+          "content": "$\\cos(2x^2 + 3)$"
+        },
+        {
+          "label": "C",
+          "content": "$2x\\cos(2x^2 + 3)$"
+        },
+        {
+          "label": "D",
+          "content": "$4x\\sin(2x^2 + 3)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：设 $u = 2x^2 + 3$，则原函数 $y = \\sin u$，根据复合函数求导法则 $y'_x=y'_u\\cdot u'_x$",
+        "提示2：先对 $y = \\sin u$ 关于 $u$ 求导，再对 $u = 2x^2 + 3$ 关于 $x$ 求导",
+        "提示3：根据求导公式 $(\\sin x)' = \\cos x$，$(x^n)' = nx^{n - 1}$ 进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：链式法则引入",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于导数的说法，符合视频观点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高中学习过导数后，对导数的理解会更深入，学习效果更好"
+        },
+        {
+          "label": "B",
+          "content": "高中学习导数可能会因为先入为主的观念，反而不利于后续对导数的深入理解"
+        },
+        {
+          "label": "C",
+          "content": "导数问题非常复杂，高中所学根本无法应对"
+        },
+        {
+          "label": "D",
+          "content": "高中学习导数对后续学习没有任何帮助"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到‘其实你们还不如不学’以及‘因为有一个先入为主’这些关键信息",
+        "提示2：分析每个选项与视频观点的契合度",
+        "提示3：思考高中学习导数可能带来的影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：链式法则应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $y = \\sin(2x^2 + 3x)$，求 $y$ 关于 $x$ 的导数 $y'$ 是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(4x + 3)\\cos(2x^2 + 3x)$"
+        },
+        {
+          "label": "B",
+          "content": "$\\cos(2x^2 + 3x)$"
+        },
+        {
+          "label": "C",
+          "content": "$(2x^2 + 3x)\\cos(2x^2 + 3x)$"
+        },
+        {
+          "label": "D",
+          "content": "$(4x + 3)\\sin(2x^2 + 3x)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：设 $u = 2x^2 + 3x$，则 $y = \\sin u$，使用链式法则 $y'_x = y'_u \\cdot u'_x$",
+        "提示2：先对 $y = \\sin u$ 关于 $u$ 求导，再对 $u = 2x^2 + 3x$ 关于 $x$ 求导",
+        "提示3：根据求导公式 $(\\sin x)' = \\cos x$，$(x^n)' = nx^{n - 1}$ 进行计算"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：可导性判断",
+      "error": "Invalid \\escape: line 6 column 66 (char 189)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数在0点可导性判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=\\begin{cases}x^2\\sin\\frac{1}{x}, & x\\neq0 \\\\ 0, & x = 0\\end{cases}$，判断函数 $f(x)$ 在 $x = 0$ 处是否可导？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "可导，导数为1"
+        },
+        {
+          "label": "B",
+          "content": "可导，导数为0"
+        },
+        {
+          "label": "C",
+          "content": "不可导"
+        },
+        {
+          "label": "D",
+          "content": "无法确定是否可导"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据函数在一点可导的定义，需要判断极限 $\\lim_{x \\to 0}\\frac{f(x) - f(0)}{x - 0}$ 是否存在",
+        "提示2：将 $f(x)$ 和 $f(0)$ 代入极限式子中进行化简",
+        "提示3：利用无穷小量与有界函数的乘积为无穷小量来计算极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：乘积法则适用条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于函数 $y = (x^2 + 1)(2x - 3)$，若要使用乘积法则求导，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只要两个函数都有导数，就可以直接使用乘积法则求导，此函数满足条件可直接用"
+        },
+        {
+          "label": "B",
+          "content": "因为这两个函数形式简单，不需要用乘积法则，直接展开求导更方便，所以不能用乘积法则"
+        },
+        {
+          "label": "C",
+          "content": "使用乘积法则求导时，要先判断两个函数在定义域内是否可导，此函数中两个函数在定义域内都可导，所以可以使用乘积法则"
+        },
+        {
+          "label": "D",
+          "content": "只有复杂函数才能使用乘积法则，此函数不满足条件，不能使用乘积法则"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：明确乘积法则的适用条件，即两个函数在定义域内都要可导",
+        "提示2：分析选项A，虽然两个函数有导数，但不能忽略定义域内可导的前提",
+        "提示3：选项B中，能否用乘积法则与函数形式是否简单无关",
+        "提示4：选项D，乘积法则的使用与函数复杂与否没有必然联系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：利用导数定义求极限",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 在 $x = 2$ 处可导，且 $f(2) = 3$，$f'(2) = 2$，则 $\\lim_{h \\to 0} \\frac{f(2 + 3h) - f(2)}{h}$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$3$"
+        },
+        {
+          "label": "C",
+          "content": "$6$"
+        },
+        {
+          "label": "D",
+          "content": "$9$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据导数的定义 $f'(x_0)=\\lim_{\\Delta x \\to 0} \\frac{f(x_0 + \\Delta x) - f(x_0)}{\\Delta x}$",
+        "提示2：对 $\\lim_{h \\to 0} \\frac{f(2 + 3h) - f(2)}{h}$ 进行变形，使其符合导数定义的形式",
+        "提示3：将变形后的式子与已知条件 $f'(2) = 2$ 结合计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：切线近似计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=x^2$，利用切线近似计算 $f(2.01)$ 的近似值，以下哪个选项最接近？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$4.01$"
+        },
+        {
+          "label": "B",
+          "content": "$4.02$"
+        },
+        {
+          "label": "C",
+          "content": "$4.03$"
+        },
+        {
+          "label": "D",
+          "content": "$4.04$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先求出函数 $f(x)=x^2$ 在某点处的切线方程",
+        "提示2：选择离 $x = 2.01$ 较近且容易计算的点，这里选 $x = 2$",
+        "提示3：根据切线近似公式 $f(x_0 + \\Delta x)\\approx f(x_0)+f'(x_0)\\Delta x$ 进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：导数应用：面积近似",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "某函数 $f(x)$ 在区间 $[a,b]$ 上可导，已知在 $x_0$ 处的导数 $f'(x_0)=2$，当自变量 $x$ 在 $x_0$ 附近有一个很小的增量 $\\Delta x = 0.01$ 时，函数值的近似增量 $\\Delta y$ 约为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.01$"
+        },
+        {
+          "label": "B",
+          "content": "$0.02$"
+        },
+        {
+          "label": "C",
+          "content": "$0.03$"
+        },
+        {
+          "label": "D",
+          "content": "$0.04$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据导数的定义，函数在某点的导数可以近似表示函数值的增量与自变量增量的比值",
+        "提示2：导数的近似公式为 $\\Delta y\\approx f'(x_0)\\cdot\\Delta x$",
+        "提示3：将已知的 $f'(x_0)$ 和 $\\Delta x$ 的值代入公式计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：微分的应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=x^3 - 3x + 1$，利用微分的知识估算 $f(2.01)$ 的值，以下哪个选项最接近估算结果？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3.03$"
+        },
+        {
+          "label": "B",
+          "content": "$3.06$"
+        },
+        {
+          "label": "C",
+          "content": "$3.09$"
+        },
+        {
+          "label": "D",
+          "content": "$3.12$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先求出函数 $f(x)$ 的导数 $f'(x)$",
+        "提示2：根据微分公式 $\\Delta y\\approx f'(x_0)\\Delta x$ 来估算函数值的变化",
+        "提示3：令 $x_0 = 2$，$\\Delta x = 0.01$，计算 $f(2.01)\\approx f(2)+f'(2)\\Delta x$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：莱布尼茨公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = x^2\\sin x$，利用求导相关知识（可结合莱布尼茨公式 $(uv)^{(n)} = \\sum_{k = 0}^{n}C_{n}^{k}u^{(n - k)}v^{(k)}$）求 $f''(x)$ 的值，以下选项正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2\\sin x + 4x\\cos x - x^2\\sin x$"
+        },
+        {
+          "label": "B",
+          "content": "$2\\sin x - 4x\\cos x + x^2\\sin x$"
+        },
+        {
+          "label": "C",
+          "content": "$2\\sin x + 2x\\cos x - x^2\\sin x$"
+        },
+        {
+          "label": "D",
+          "content": "$2\\sin x - 2x\\cos x + x^2\\sin x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：令 $u = x^2$，$v = \\sin x$，根据莱布尼茨公式求二阶导数时 $n = 2$",
+        "提示2：分别求出 $u' = 2x$，$u'' = 2$，$v' = \\cos x$，$v'' = -\\sin x$",
+        "提示3：将上述值代入莱布尼茨公式 $(uv)'' = C_{2}^{0}u^{(2)}v + C_{2}^{1}u^{(1)}v^{(1)} + C_{2}^{2}u^{(0)}v^{(2)}$ 进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：隐函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知隐函数 $x^2 + y^2 = 25$，求 $\\frac{dy}{dx}$ 在点 $(3, 4)$ 处的值。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$-\\frac{3}{4}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3}{4}$"
+        },
+        {
+          "label": "C",
+          "content": "$-\\frac{4}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{4}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：对等式 $x^2 + y^2 = 25$ 两边同时对 $x$ 求导",
+        "提示2：根据求导法则，$x^2$ 对 $x$ 求导为 $2x$，$y^2$ 对 $x$ 求导需要使用链式法则，结果为 $2y\\frac{dy}{dx}$，常数 25 对 $x$ 求导为 0",
+        "提示3：整理求导后的等式，得到关于 $\\frac{dy}{dx}$ 的表达式，再将点 $(3, 4)$ 代入求解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：隐函数求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知隐函数 $x^2 + y^2 = 25$，求 $\\frac{dy}{dx}$ 在点 $(3, 4)$ 处的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$-\\frac{3}{4}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3}{4}$"
+        },
+        {
+          "label": "C",
+          "content": "$-\\frac{4}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{4}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：对隐函数 $x^2 + y^2 = 25$ 两边同时对 $x$ 求导",
+        "提示2：利用求导公式 $(x^n)' = nx^{n - 1}$ 和复合函数求导法则",
+        "提示3：求出 $\\frac{dy}{dx}$ 的表达式后，将点 $(3, 4)$ 代入求解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：隐函数求导应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知隐函数 $x^2 + y^2 = 25$，求 $\\frac{dy}{dx}$ 在点 $(3, 4)$ 处的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$-\\frac{3}{4}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3}{4}$"
+        },
+        {
+          "label": "C",
+          "content": "$-\\frac{4}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{4}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：对隐函数 $x^2 + y^2 = 25$ 两边同时对 $x$ 求导",
+        "提示2：求导时注意 $y$ 是关于 $x$ 的函数，使用复合函数求导法则",
+        "提示3：求出 $\\frac{dy}{dx}$ 的表达式后，将点 $(3, 4)$ 代入求解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：参数方程求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "设曲线的参数方程为 $\\begin{cases}x = t - \\sin t \\\\ y = 1 - \\cos t \\end{cases}$，则 $\\frac{dy}{dx}$ 在 $t = \\frac{\\pi}{2}$ 处的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sqrt{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{\\sqrt{2}}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据参数方程求导公式 $\\frac{dy}{dx} = \\frac{\\frac{dy}{dt}}{\\frac{dx}{dt}}$",
+        "提示2：分别对 $x = t - \\sin t$ 和 $y = 1 - \\cos t$ 关于 $t$ 求导",
+        "提示3：将 $t = \\frac{\\pi}{2}$ 代入求导后的式子计算 $\\frac{dy}{dx}$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：参数方程求导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知参数方程 $\\begin{cases}x = t^2 + 1 \\\\ y = 2t - 3 \\end{cases}$，则 $\\frac{dy}{dx}$ 等于（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{t}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{2}{2t}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{1}{t^2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{2}{t}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据参数方程求导公式 $\\frac{dy}{dx}=\\frac{\\frac{dy}{dt}}{\\frac{dx}{dt}}$",
+        "提示2：分别对 $x$ 和 $y$ 关于 $t$ 求导",
+        "提示3：将求导结果代入公式进行计算并化简"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极坐标概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于高中所学导数，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高中学习导数非常复杂，没有简单的方法掌握"
+        },
+        {
+          "label": "B",
+          "content": "高中学习的导数其实相对来说是非常简单的"
+        },
+        {
+          "label": "C",
+          "content": "高中学习导数完全没有必要，学了还不如不学"
+        },
+        {
+          "label": "D",
+          "content": "导数在高中知识体系中没有任何应用价值"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中对导数学习难度的描述",
+        "提示2：分析每个选项与视频中观点是否相符",
+        "提示3：视频提到导数相对来说很简单"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：角度正负调整",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=x^3 - 3x + 1$，其导数为 $f'(x)$，则函数 $f(x)$ 在区间 $[-2,2]$ 上的单调递增区间是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$[-2,-1]$ 和 $[1,2]$"
+        },
+        {
+          "label": "B",
+          "content": "$[-1,1]$"
+        },
+        {
+          "label": "C",
+          "content": "$[-2,2]$"
+        },
+        {
+          "label": "D",
+          "content": "$(-\\infty,-1)$ 和 $(1,+\\infty)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先对函数 $f(x)$ 求导，根据求导公式 $(X^n)' = nX^{n - 1}$ 求出 $f'(x)$",
+        "提示2：令 $f'(x)>0$，解这个不等式，得到函数的单调递增区间",
+        "提示3：结合给定区间 $[-2,2]$ 确定最终的单调递增区间"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：坐标方程转换",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知直线的参数方程为 $\\begin{cases}x = 1 + t\\cos\\frac{\\pi}{6}\\\\y = 2 + t\\sin\\frac{\\pi}{6}\\end{cases}$（$t$ 为参数），将其转化为普通方程，以下哪个选项正确？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y - 2 = \\frac{\\sqrt{3}}{3}(x - 1)$"
+        },
+        {
+          "label": "B",
+          "content": "$y - 2 = \\sqrt{3}(x - 1)$"
+        },
+        {
+          "label": "C",
+          "content": "$y - 1 = \\frac{\\sqrt{3}}{3}(x - 2)$"
+        },
+        {
+          "label": "D",
+          "content": "$y - 1 = \\sqrt{3}(x - 2)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先利用参数方程中 $\\cos\\frac{\\pi}{6}$ 和 $\\sin\\frac{\\pi}{6}$ 的值，得出 $x$ 和 $y$ 关于 $t$ 的表达式",
+        "提示2：由 $x = 1 + t\\cos\\frac{\\pi}{6}$ 求出 $t$ 关于 $x$ 的表达式，$y = 2 + t\\sin\\frac{\\pi}{6}$ 也求出 $t$ 关于 $y$ 的表达式",
+        "提示3：让两个关于 $t$ 的表达式相等，进而得到直线的普通方程"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极坐标切线斜率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知在极坐标中有曲线 $r = \\theta + 1$，求当 $\\theta = \\frac{\\pi}{4}$ 时该曲线切线的斜率大致情况为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "斜率为负且绝对值较大"
+        },
+        {
+          "label": "B",
+          "content": "斜率为正且值较小"
+        },
+        {
+          "label": "C",
+          "content": "斜率为 0"
+        },
+        {
+          "label": "D",
+          "content": "斜率不存在"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先回顾极坐标下求切线斜率的相关导数知识",
+        "提示2：将极坐标方程转化为导数形式求斜率",
+        "提示3：代入 $\\theta = \\frac{\\pi}{4}$ 计算斜率并判断正负和大小"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：[多项式函数]",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知多项式函数 $f(x)=3x^3 - 2x^2 + 5x - 1$，求其导数 $f'(x)$ 在 $x = 2$ 处的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$25$"
+        },
+        {
+          "label": "B",
+          "content": "$27$"
+        },
+        {
+          "label": "C",
+          "content": "$29$"
+        },
+        {
+          "label": "D",
+          "content": "$31$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据求导公式 $(X^n)' = nX^{n - 1}$ 对多项式函数 $f(x)$ 求导",
+        "提示2：分别对 $f(x)$ 中的每一项求导后相加得到 $f'(x)$",
+        "提示3：将 $x = 2$ 代入 $f'(x)$ 计算出具体的值"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：多项式逼近应用",
+      "error": "Invalid \\escape: line 18 column 22 (char 639)"
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：泰勒系数求法",
+      "error": "Invalid \\escape: line 6 column 59 (char 183)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：泰勒近似条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 在 $x = 0$ 处可导，且 $f(0)=0$，$f'(0)=1$，利用导数的定义及泰勒近似条件，当 $x$ 趋近于 $0$ 时，$f(x)$ 近似等于以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$x$"
+        },
+        {
+          "label": "B",
+          "content": "$x^2$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{1}{2}x$"
+        },
+        {
+          "label": "D",
+          "content": "$2x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据导数的定义 $f'(x_0)=\\lim_{x \\to x_0}\\frac{f(x)-f(x_0)}{x - x_0}$",
+        "提示2：在本题中 $x_0 = 0$，$f(0)=0$，$f'(0)=1$，代入导数定义式",
+        "提示3：当 $x$ 趋近于 $0$ 时，进行泰勒近似"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：任意点泰勒展开",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = e^x$ 在 $x = 2$ 处进行泰勒展开，其泰勒展开式的前三项为 $a + b(x - 2) + c(x - 2)^2$，则 $a + b + c$ 的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{5}{2}e^2$",
+      "hints": [
+        "提示1：根据泰勒展开公式 $f(x)=\\sum_{n = 0}^{\\infty}\\frac{f^{(n)}(x_0)}{n!}(x - x_0)^n$，先求出 $f(x) = e^x$ 的各阶导数",
+        "提示2：分别计算 $f(2)$，$f'(2)$，$f''(2)$ 的值",
+        "提示3：根据泰勒展开式的前三项求出 $a$，$b$，$c$ 的值，再计算 $a + b + c$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：常见函数泰勒展开",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 在 $x = 0$ 处的泰勒展开式为 $f(x)=1 + 2x+3x^2 + o(x^2)$，则 $\\lim_{x \\to 0}\\frac{f(x)-1 - 2x}{x^2}$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$3$"
+        },
+        {
+          "label": "D",
+          "content": "$4$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据已知的泰勒展开式 $f(x)=1 + 2x+3x^2 + o(x^2)$ 代入极限式子中",
+        "提示2：对代入后的式子进行化简",
+        "提示3：根据高阶无穷小的性质计算极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：泰勒展开与奇偶性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)$ 可导，且其泰勒展开式为 $f(x)=a_0 + a_1x + a_2x^2 + a_3x^3 + \\cdots$，若 $f(x)$ 为奇函数，则下列说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$a_0 = 0$，$a_2 = 0$，$a_4 = 0$，$\\cdots$"
+        },
+        {
+          "label": "B",
+          "content": "$a_1 = 0$，$a_3 = 0$，$a_5 = 0$，$\\cdots$"
+        },
+        {
+          "label": "C",
+          "content": "$a_0 = 0$，$a_1 = 0$，$a_2 = 0$，$\\cdots$"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据奇函数的定义 $f(-x)=-f(x)$",
+        "提示2：将 $f(x)=a_0 + a_1x + a_2x^2 + a_3x^3 + \\cdots$ 中的 $x$ 替换为 $-x$ 得到 $f(-x)$ 的表达式",
+        "提示3：对比 $f(-x)$ 和 $-f(x)$ 的各项系数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：泰勒展开导数验证",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = x^3 + 2x^2 - 3x + 1$，利用导数的知识，当 $x$ 从 $1$ 变化到 $1 + \\Delta x$ 时，函数的增量 $\\Delta y$ 近似为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(3x^2 + 4x - 3)\\Delta x$"
+        },
+        {
+          "label": "B",
+          "content": "$(3 + 4 - 3)\\Delta x$"
+        },
+        {
+          "label": "C",
+          "content": "$(3x^2 + 4x - 3)(\\Delta x)^2$"
+        },
+        {
+          "label": "D",
+          "content": "$(3 + 4 - 3)(\\Delta x)^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先求出函数 $f(x)$ 的导数 $f'(x)$",
+        "提示2：根据导数的定义，函数的增量 $\\Delta y$ 近似为 $f'(x_0)\\Delta x$，这里 $x_0 = 1$",
+        "提示3：将 $x = 1$ 代入导数表达式中"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：1/(1-x)泰勒展开",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "函数 $f(x)=\\frac{1}{1 - 2x}$ 在 $x = 0$ 处展开的泰勒级数的前三项为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$1 + 2x+4x^2$",
+      "hints": [
+        "提示1：已知 $\\frac{1}{1 - x}$ 的泰勒展开式为 $\\sum_{n = 0}^{\\infty}x^n=1 + x+x^2+x^3+\\cdots$，$|x| < 1$",
+        "提示2：将函数 $f(x)=\\frac{1}{1 - 2x}$ 中的 $2x$ 看作 $\\frac{1}{1 - x}$ 展开式中的 $x$",
+        "提示3：代入展开式并写出前三项"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：幂级数变量替换",
+      "error": "Invalid \\escape: line 16 column 24 (char 488)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：1/(1+x²)级数展开",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x)=\\frac{1}{1 + x^2}$，其在 $x = 0$ 处的幂级数展开式为 $\\sum_{n = 0}^{\\infty} (-1)^n x^{2n}$，那么函数 $g(x)=\\frac{x^2}{1 + x^2}$ 在 $x = 0$ 处的幂级数展开式的前三项为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$x^2 - x^4 + x^6$"
+        },
+        {
+          "label": "B",
+          "content": "$1 - x^2 + x^4$"
+        },
+        {
+          "label": "C",
+          "content": "$x^2 + x^4 + x^6$"
+        },
+        {
+          "label": "D",
+          "content": "$1 + x^2 + x^4$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先根据已知的 $f(x)$ 的幂级数展开式，找出 $g(x)$ 与 $f(x)$ 的关系",
+        "提示2：将 $g(x)$ 变形为 $x^2\\cdot f(x)$ 的形式",
+        "提示3：把 $f(x)$ 的幂级数展开式代入 $g(x)$ 中，然后计算前三项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：莱布尼茨公式求π",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于导数学习，视频中老师认为高中学习过导数的同学存在的问题是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "学习导数很简单，没有任何问题"
+        },
+        {
+          "label": "B",
+          "content": "学了还不如不学，有先入为主的观念"
+        },
+        {
+          "label": "C",
+          "content": "对导数知识掌握得非常熟练"
+        },
+        {
+          "label": "D",
+          "content": "在考试中导数题都能做对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中老师对高中学习过导数同学的看法和相关表述",
+        "提示2：尤其关注老师提到的‘还不如不学’等内容",
+        "提示3：通过分析各选项与视频内容的匹配度来作答"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：级数收敛速度及验证",
+      "error": "Invalid \\escape: line 16 column 25 (char 444)"
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：泰勒公式基本类型",
+      "error": "Invalid \\escape: line 16 column 39 (char 620)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：泰勒公式应用条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在使用泰勒公式求极限 $\\lim_{x \\to 0} \\frac{e^x - 1 - x}{x^2}$ 时，需要函数满足一定的条件。以下关于该极限使用泰勒公式的条件，说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "函数 $e^x$ 在 $x = 0$ 处不需要有导数"
+        },
+        {
+          "label": "B",
+          "content": "函数 $e^x$ 在 $x = 0$ 处至少有二阶导数"
+        },
+        {
+          "label": "C",
+          "content": "函数 $e^x$ 在 $x = 0$ 处只需有一阶导数"
+        },
+        {
+          "label": "D",
+          "content": "以上说法都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾泰勒公式的定义和使用条件",
+        "提示2：明确泰勒公式展开的阶数与函数导数阶数的关系",
+        "提示3：分析本题中极限分母的次数与泰勒公式展开阶数的联系"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：泰勒公式应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知函数 $f(x) = e^x$，利用泰勒公式求 $f(x)$ 在 $x = 0$ 处的三阶泰勒展开式为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$1 + x + \\frac{x^2}{2} + \\frac{x^3}{6}$",
+      "hints": [
+        "提示1：泰勒公式为 $f(x)=\\sum_{n = 0}^{\\infty}\\frac{f^{(n)}(a)}{n!}(x - a)^n$，本题中 $a = 0$",
+        "提示2：先求出 $f(x)=e^x$ 的各阶导数",
+        "提示3：将 $x = 0$ 代入各阶导数，再代入泰勒公式并取到三阶项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：极限计算方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "求极限 $\\lim_{x \\to 0} \\frac{e^x - 1 - x}{x^2}$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$1$"
+        },
+        {
+          "label": "C",
+          "content": "$2$"
+        },
+        {
+          "label": "D",
+          "content": "不存在"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：使用泰勒级数展开 $e^x = 1 + x + \\frac{x^2}{2!} + O(x^3)$",
+        "提示2：将展开式代入原式化简分子",
+        "提示3：约分并取极限"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：展开阶数选择",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在求极限 $\\lim_{x \\to 0} \\frac{e^x - 1 - x - \\frac{x^2}{2}}{x^3}$ 时，关于展开阶数的选择，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只需将 $e^x$ 展开到一阶即可"
+        },
+        {
+          "label": "B",
+          "content": "需要将 $e^x$ 展开到二阶"
+        },
+        {
+          "label": "C",
+          "content": "需要将 $e^x$ 展开到三阶"
+        },
+        {
+          "label": "D",
+          "content": "将 $e^x$ 展开到四阶更合适"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据极限的形式，要使分子分母的阶数相匹配，才能求出极限值",
+        "提示2：回顾 $e^x$ 的泰勒展开式 $e^x = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + O(x^4)$",
+        "提示3：分析展开到不同阶数时代入极限式子的情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：无穷小阶判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知当 $x \\to 0$ 时，$f(x) = 3x^2 + 2x^3$ 是 $g(x) = x^n$ 的同阶无穷小，则 $n$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$3$"
+        },
+        {
+          "label": "D",
+          "content": "$4$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据同阶无穷小的定义，若 $\\lim_{x \\to 0} \\frac{f(x)}{g(x)} = C$（$C$ 为非零常数），则 $f(x)$ 与 $g(x)$ 是同阶无穷小",
+        "提示2：计算 $\\lim_{x \\to 0} \\frac{3x^2 + 2x^3}{x^n}$",
+        "提示3：对分子提取公因式 $x^2$，然后化简极限式子，根据极限值为非零常数确定 $n$ 的值"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：泰勒展开求导数",
+      "error": "Invalid \\escape: line 6 column 44 (char 164)"
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：球表面积推导",
+      "error": "Invalid \\escape: line 17 column 24 (char 554)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：圆台面积计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个圆台的上底面半径为 $2\\text{cm}$，下底面半径为 $5\\text{cm}$，母线长为 $6\\text{cm}$，则该圆台的侧面积为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$42\\pi\\text{ cm}^2$"
+        },
+        {
+          "label": "B",
+          "content": "$36\\pi\\text{ cm}^2$"
+        },
+        {
+          "label": "C",
+          "content": "$30\\pi\\text{ cm}^2$"
+        },
+        {
+          "label": "D",
+          "content": "$24\\pi\\text{ cm}^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆圆台侧面积公式 $S = \\pi (r + R)l$，其中 $r$ 为上底面半径，$R$ 为下底面半径，$l$ 为母线长",
+        "提示2：将题目中的上底面半径、下底面半径和母线长代入公式",
+        "提示3：准确计算出结果"
+      ]
+    }
+  ],
+  "count": 46
+}

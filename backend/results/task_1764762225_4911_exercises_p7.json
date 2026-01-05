@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：字符串连接",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "若要将字符串 $\\text{\"Hello\"}$、$\\text{\" \"} $（一个空格）和 $\\text{\"World\"}$ 连接成一个更长的字符串并输出，以下哪个表达式是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\text{\"Hello\" - \" \" + \"World\"}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\text{\"Hello\" + \" \" + \"World\"}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\text{\"Hello\" * \" \" * \"World\"}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\text{\"Hello\" / \" \" / \"World\"}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频内容，字符串连接是用加号 $+$ 来实现的",
+        "提示2：回顾视频中提到的将多个字符串用加号连接成一个更长字符串的方法",
+        "提示3：分析每个选项中的运算符是否符合字符串连接的规则"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：单双引号转义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "若要输出字符串 “Hello world”，以下哪个字符串拼接方式是正确的 ？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "\"Hello\" + \"world\""
+        },
+        {
+          "label": "B",
+          "content": "\"Hello\" + \" \" + \"world\""
+        },
+        {
+          "label": "C",
+          "content": "\"Hello world\" + \"\""
+        },
+        {
+          "label": "D",
+          "content": "\"Hello\" - \" \" + \"world\""
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频，字符串可以用加号连接成一个更长的字符串",
+        "提示2：要使输出的字符串 “Hello” 和 “world” 中间有空格，需要在拼接时添加空格字符串",
+        "提示3：注意字符串拼接只能使用加号，不能使用减号"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：字符串换行",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知有字符串 $s1 = \"Hello\"$，$s2 = \" world\"$，$s3 = \"!\"$，若使用 $s1 + s2 + s3$ 进行字符串连接后打印，输出结果是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "\"Hello world!\""
+        },
+        {
+          "label": "B",
+          "content": "\"Hello world !\""
+        },
+        {
+          "label": "C",
+          "content": "\"Helloworld!\""
+        },
+        {
+          "label": "D",
+          "content": "\"Hello! world\""
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频内容，多个字符串使用加号连接后会按顺序拼接成一个更长的字符串",
+        "提示2：注意 $s2$ 中前面有一个空格",
+        "提示3：按照 $s1 + s2 + s3$ 的顺序依次拼接字符串"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：实例演示",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "若要将字符串 \"Hello\" 和 \"World\" 连接起来，并且中间有一个空格，以下哪种方式是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "\"Hello\" + \"World\""
+        },
+        {
+          "label": "B",
+          "content": "\"Hello\" + \" \" + \"World\""
+        },
+        {
+          "label": "C",
+          "content": "\"Hello\" - \" \" + \"World\""
+        },
+        {
+          "label": "D",
+          "content": "\"Hello\" * \" \" + \"World\""
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频，字符串连接使用加号 +",
+        "提示2：要使连接后的字符串中间有空格，需要在两个字符串之间添加表示空格的字符串",
+        "提示3：逐一分析每个选项中字符串连接的方式是否能满足中间有空格的要求"
+      ]
+    }
+  ],
+  "count": 4
+}

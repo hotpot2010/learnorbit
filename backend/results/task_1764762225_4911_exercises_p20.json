@@ -1,0 +1,69 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Python for循环",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在Python中，有一个包含公司员工体温自报信息的列表 $temperatures = [36.5, 37.2, 38.1, 37.8, 39.0]$，要找出其中体温高于38度的员工体温，以下哪个代码可以实现？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "python\nfor temp in temperatures:\n    if temp > 38:\n        print(temp)\n"
+        },
+        {
+          "label": "B",
+          "content": "python\nfor i in range(len(temperatures)):\n    if temperatures[i] < 38:\n        print(temperatures[i])\n"
+        },
+        {
+          "label": "C",
+          "content": "python\nfor temp in temperatures:\n    if temp < 38:\n        print(temp)\n"
+        },
+        {
+          "label": "D",
+          "content": "python\nfor i in temperatures:\n    if i < 38:\n        print(i)\n"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：要找出体温高于38度的员工体温，需要使用for循环遍历列表。",
+        "提示2：在循环中，需要使用条件判断语句来筛选出体温高于38度的元素。",
+        "提示3：注意条件判断中的比较符号应该是大于号"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：for与range结合",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在Python中，已知一个公司员工的体温列表 $temperatures = [36.5, 37.2, 38.1, 36.8, 39.0]$，要找出体温高于 $38$ 度的员工数量，以下代码正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "python\ncount = 0\nfor temp in temperatures:\n    if temp > 38:\n        count = count + 1\nprint(count)\n"
+        },
+        {
+          "label": "B",
+          "content": "python\ncount = 0\nfor i in range(len(temperatures)):\n    if temperatures[i] < 38:\n        count = count + 1\nprint(count)\n"
+        },
+        {
+          "label": "C",
+          "content": "python\ncount = 0\nfor temp in temperatures:\n    if temp < 38:\n        count = count + 1\nprint(count)\n"
+        },
+        {
+          "label": "D",
+          "content": "python\ncount = 0\nfor i in range(temperatures):\n    if temperatures[i] > 38:\n        count = count + 1\nprint(count)\n"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确题目要求是找出体温高于 $38$ 度的员工数量，那么判断条件应该是体温大于 $38$ 度",
+        "提示2：使用 `for` 循环遍历列表时，可以直接遍历元素，也可以通过 `range` 结合索引来遍历",
+        "提示3：检查代码中的判断条件和循环方式是否正确"
+      ]
+    }
+  ],
+  "count": 2
+}

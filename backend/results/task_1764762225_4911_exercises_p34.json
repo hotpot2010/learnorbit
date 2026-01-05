@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Bug概念起源",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在1947年，一位名叫格蕾丝·赫柏的计算机科学家发现机器发生故障的原因是有只虫子飞进继电器里被电死，导致硬件出现问题。在英语里虫子是“bug”，后来这个词在计算机领域被用来表示程序错误。那么请问，bug这个词最初是因为什么被引入计算机领域的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "程序本身存在的逻辑错误"
+        },
+        {
+          "label": "B",
+          "content": "计算机硬件被虫子破坏导致故障"
+        },
+        {
+          "label": "C",
+          "content": "程序员输入代码时的笔误"
+        },
+        {
+          "label": "D",
+          "content": "计算机软件与硬件不兼容"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的bug这个词被引入计算机领域的具体事件",
+        "提示2：关注导致机器故障的直接原因",
+        "提示3：明确最初使用bug这个词是和什么情况相关"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：测试的意义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在计算机领域中，术语 “bug” 最初来源于 1947 年一位名叫格蕾丝·赫柏的计算机科学家发现的硬件故障，当时是因为有只虫子飞进继电器里被电死导致硬件出现问题。现在 “bug” 被用来表示程序错误，那么以下哪种情况最能体现 “bug” 在现代计算机领域的含义？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "计算机的硬盘因为使用时间过长而损坏"
+        },
+        {
+          "label": "B",
+          "content": "程序运行时突然崩溃，提示内存溢出错误"
+        },
+        {
+          "label": "C",
+          "content": "电脑的显示器出现了坏点"
+        },
+        {
+          "label": "D",
+          "content": "鼠标的电池没电了导致无法正常使用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频内容，“bug” 在计算机领域是用来表示程序错误的。",
+        "提示2：分析每个选项，判断是硬件问题还是程序问题。",
+        "提示3：只有程序出现错误的选项才符合 “bug” 在现代计算机领域的含义。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Assert语句测试",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在计算机领域，术语“bug”的起源与以下哪个事件相关？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1947年一只虫子进入继电器被电死导致机器硬件出现问题"
+        },
+        {
+          "label": "B",
+          "content": "程序员编写代码时的拼写错误"
+        },
+        {
+          "label": "C",
+          "content": "计算机软件的算法设计缺陷"
+        },
+        {
+          "label": "D",
+          "content": "计算机网络连接不稳定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于“bug”起源的描述",
+        "提示2：重点关注提到的时间和具体事件",
+        "提示3：明确“bug”最初与硬件故障的关联"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Unit test测试库",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "1947年，一位名叫格蕾斯的计算机科学家发现机器出现故障的原因是有只虫子钻进继电器里被电死，导致硬件出现问题。在英语里“虫子”是“bug”，后来这个词在计算机领域被用来表示程序错误。那么以下关于“bug”的说法正确的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "“bug”只在1947年那次事件中表示机器故障，之后不再使用该含义"
+        },
+        {
+          "label": "B",
+          "content": "“bug”在计算机领域仅指硬件故障"
+        },
+        {
+          "label": "C",
+          "content": "“bug”在计算机领域常用来表示程序错误"
+        },
+        {
+          "label": "D",
+          "content": "“bug”与计算机领域的错误没有关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细阅读视频中关于“bug”在计算机领域用途的描述",
+        "提示2：明确“bug”在计算机领域所代表的错误类型",
+        "提示3：判断每个选项与视频内容是否相符"
+      ]
+    }
+  ],
+  "count": 4
+}

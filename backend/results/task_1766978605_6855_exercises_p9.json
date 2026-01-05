@@ -1,0 +1,645 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：可分离变量方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列方程中，属于可分离变量的一阶微分方程是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y' = \\frac{x + y}{x - y}$"
+        },
+        {
+          "label": "B",
+          "content": "$y' = \\frac{x + y^2}{x^2 + y}$"
+        },
+        {
+          "label": "C",
+          "content": "$y' = x\\sin y$"
+        },
+        {
+          "label": "D",
+          "content": "$y' + \\frac{y}{x} = e^x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "可分离变量的一阶微分方程可表示为 $y' = f(x)g(y)$ 的形式",
+        "将每个选项的方程变形，看是否能化成上述形式",
+        "对选项进行逐一分析判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：齐次方程求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程且变量可分离类型的微分方程是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y' = x + y$"
+        },
+        {
+          "label": "B",
+          "content": "$y' = \\frac{y}{x}$"
+        },
+        {
+          "label": "C",
+          "content": "$y'' + y = 0$"
+        },
+        {
+          "label": "D",
+          "content": "$y' = x^2 + y^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "先判断是否为一阶方程，再看是否变量可分离",
+        "一阶方程是指方程中导数的最高阶为一阶",
+        "变量可分离是指能将方程变形为 $f(y)dy = g(x)dx$ 的形式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：方程求解实例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程且变量可分离类型的微分方程是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y' + y = x$"
+        },
+        {
+          "label": "B",
+          "content": "$y' = \\frac{y}{x}$"
+        },
+        {
+          "label": "C",
+          "content": "$y'' + y = 0$"
+        },
+        {
+          "label": "D",
+          "content": "$y' = y^2 + x^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "先判断是否为一阶方程，再看是否变量可分离。一阶方程只含一阶导数，变量可分离是指能将方程化为 $f(y)dy = g(x)dx$ 的形式。",
+        "逐一分析各选项，判断其是否满足一阶方程和变量可分离的条件。",
+        "对于选项B，尝试将其变形为变量可分离的形式。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：一阶线性定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程常见三种类型之一的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "二阶方程"
+        },
+        {
+          "label": "B",
+          "content": "变量可分离"
+        },
+        {
+          "label": "C",
+          "content": "四次方程"
+        },
+        {
+          "label": "D",
+          "content": "非线性方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回顾视频中提到的一阶方程包含的常见三种类型",
+        "注意题目问的是一阶方程常见类型",
+        "逐一分析每个选项是否符合视频中所讲的类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：方程通解推导",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程中变量可分离类型的微分方程是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y' + y = x$"
+        },
+        {
+          "label": "B",
+          "content": "$y' = xy$"
+        },
+        {
+          "label": "C",
+          "content": "$y'' + y' + y = 0$"
+        },
+        {
+          "label": "D",
+          "content": "$y^3 + y = 1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "先明确变量可分离的一阶微分方程的形式，再逐一分析选项。",
+        "变量可分离的一阶微分方程可表示为$g(y)dy = f(x)dx$的形式。",
+        "判断每个选项能否转化为这种形式。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：积分因子法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程常见类型的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "变量不可分离"
+        },
+        {
+          "label": "B",
+          "content": "变量可分离"
+        },
+        {
+          "label": "C",
+          "content": "二阶线性方程"
+        },
+        {
+          "label": "D",
+          "content": "四次方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回顾视频中提到的一阶方程常见类型有哪些",
+        "视频中明确指出了一种常见类型的名称",
+        "关注与变量相关的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：一阶方程求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪个方程属于一阶方程中变量可分离的类型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y' = x + y$"
+        },
+        {
+          "label": "B",
+          "content": "$y' = xy$"
+        },
+        {
+          "label": "C",
+          "content": "$y'' + y' = 0$"
+        },
+        {
+          "label": "D",
+          "content": "$y' = x^3 + y^3$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "变量可分离的一阶方程可以写成 $y' = f(x)g(y)$ 的形式",
+        "判断每个选项是否能写成上述形式",
+        "对选项进行变形分析"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二阶方程概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于视频中提到的一阶方程类型的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "二阶线性方程"
+        },
+        {
+          "label": "B",
+          "content": "变量可分离方程"
+        },
+        {
+          "label": "C",
+          "content": "四阶方程"
+        },
+        {
+          "label": "D",
+          "content": "非线性方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回顾视频中提到的一阶方程包含的类型",
+        "明确每种类型的具体名称",
+        "逐一分析选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：特征方程法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于视频中提到的一阶方程常见类型的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "二阶线性方程"
+        },
+        {
+          "label": "B",
+          "content": "变量可分离方程"
+        },
+        {
+          "label": "C",
+          "content": "四次方程"
+        },
+        {
+          "label": "D",
+          "content": "非线性方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回忆视频中提到的一阶方程常见类型有哪些",
+        "视频中明确指出其中一种类型是变量可分离",
+        "逐一分析每个选项是否符合视频所讲内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：齐次方程通解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程中变量可分离类型的微分方程是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y' = x + y$"
+        },
+        {
+          "label": "B",
+          "content": "$y' = \\frac{y}{x}$"
+        },
+        {
+          "label": "C",
+          "content": "$y' + 2y = x$"
+        },
+        {
+          "label": "D",
+          "content": "$y'' + y = 0$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "先明确变量可分离的微分方程的形式，再依次分析每个选项",
+        "变量可分离的微分方程可表示为 $g(y)dy = f(x)dx$ 的形式",
+        "逐一将选项变形，看是否能化成变量可分离的形式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：非齐次方程解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程中变量可分离类型的微分方程是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{dy}{dx}=x + y$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{dy}{dx}=xy$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{d^2y}{dx^2}+y = 0$"
+        },
+        {
+          "label": "D",
+          "content": "$y'+3y = e^x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "变量可分离的一阶微分方程可表示为$g(y)dy = f(x)dx$的形式",
+        "判断每个选项能否转化为变量可分离的形式",
+        "注意区分一阶方程和高阶方程"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求解第一题通解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程中变量可分离类型的微分方程是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{dy}{dx}=x + y$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{dy}{dx}=xy$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{d^2y}{dx^2}+y = 0$"
+        },
+        {
+          "label": "D",
+          "content": "$y' + 2y = x^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "首先明确变量可分离的微分方程形式是能将变量 $x$ 和 $y$ 分别放在等式两边。",
+        "对于一阶微分方程，判断其是否能分离变量。",
+        "分析每个选项能否写成 $f(y)dy = g(x)dx$ 的形式。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：第一题特解假设",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程常见类型的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "二阶线性方程"
+        },
+        {
+          "label": "B",
+          "content": "变量可分离方程"
+        },
+        {
+          "label": "C",
+          "content": "四阶方程"
+        },
+        {
+          "label": "D",
+          "content": "非线性方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回忆视频中提到的一阶方程常见的类型",
+        "视频中明确指出了一种常见类型",
+        "关注与变量相关的类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：第一题待定系数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程中常见类型的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "二元二次方程"
+        },
+        {
+          "label": "B",
+          "content": "变量可分离方程"
+        },
+        {
+          "label": "C",
+          "content": "一元四次方程"
+        },
+        {
+          "label": "D",
+          "content": "反比例方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回顾视频中提到的一阶方程包含的常见类型",
+        "明确各个选项方程的特征",
+        "将选项与视频知识点进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：第一题非齐通解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程常见类型的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "二次方程"
+        },
+        {
+          "label": "B",
+          "content": "变量可分离方程"
+        },
+        {
+          "label": "C",
+          "content": "四次方程"
+        },
+        {
+          "label": "D",
+          "content": "五次方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回顾视频中提到的一阶方程常见类型",
+        "注意题目中强调的常见类型",
+        "排除不属于常见一阶方程类型的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求解第二题通解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程中常见类型的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "二次方程"
+        },
+        {
+          "label": "B",
+          "content": "变量可分离方程"
+        },
+        {
+          "label": "C",
+          "content": "四次方程"
+        },
+        {
+          "label": "D",
+          "content": "五次方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回忆视频中提到的一阶方程常见类型有哪些",
+        "注意视频中明确指出的类型",
+        "排除不符合视频内容的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：第二题特解假设",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程常见类型的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "变量可分离方程"
+        },
+        {
+          "label": "B",
+          "content": "二阶线性方程"
+        },
+        {
+          "label": "C",
+          "content": "四次方程"
+        },
+        {
+          "label": "D",
+          "content": "五次方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "回顾视频中提到的一阶方程常见类型有哪些",
+        "视频中明确指出了一阶方程常见类型包含变量可分离方程",
+        "注意区分不同阶数和次数的方程类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：第二题待定系数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程且变量可分离类型的微分方程是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y' = x + y$"
+        },
+        {
+          "label": "B",
+          "content": "$y' = xy$"
+        },
+        {
+          "label": "C",
+          "content": "$y'' + y = 0$"
+        },
+        {
+          "label": "D",
+          "content": "$y' = x^2 + y^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "先判断是否为一阶方程，一阶方程只含有一阶导数；再判断变量是否可分离，即能否将方程变形为 $f(y)dy = g(x)dx$ 的形式。",
+        "逐一分析每个选项，看是否满足一阶方程和变量可分离这两个条件。",
+        "对于选项B，尝试将其变形为变量可分离的形式。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：第二题非齐通解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程中常见类型的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "二次方程"
+        },
+        {
+          "label": "B",
+          "content": "变量可分离方程"
+        },
+        {
+          "label": "C",
+          "content": "四次方程"
+        },
+        {
+          "label": "D",
+          "content": "五次方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回忆视频中提到的一阶方程常见类型",
+        "视频里明确指出了一阶方程常见类型有变量可分离等",
+        "排除不属于视频所讲类型的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：微分方程考试",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于一阶方程中常见类型的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "二阶线性方程"
+        },
+        {
+          "label": "B",
+          "content": "变量可分离方程"
+        },
+        {
+          "label": "C",
+          "content": "四阶方程"
+        },
+        {
+          "label": "D",
+          "content": "非线性方程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "回忆视频中提到的一阶方程常见类型",
+        "视频中明确指出了一阶方程常见类型包含变量可分离方程",
+        "逐一分析每个选项是否符合一阶方程常见类型的描述"
+      ]
+    }
+  ],
+  "count": 20
+}
