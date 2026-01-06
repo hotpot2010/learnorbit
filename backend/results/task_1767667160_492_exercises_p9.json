@@ -1,0 +1,294 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数组概念定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于数组的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数组是一种数据结构，可用于存储一组不同类型的数据"
+        },
+        {
+          "label": "B",
+          "content": "数组中的元素在内存中是随机存放的"
+        },
+        {
+          "label": "C",
+          "content": "数组是通过下标来访问元素的，下标从 1 开始"
+        },
+        {
+          "label": "D",
+          "content": "数组是一种数据结构，用于存储一组相同类型的数据，元素在内存中连续存放，通过从 0 开始的下标访问元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示 1：回顾视频中数组的概念和定义，明确数组存储数据的类型特点",
+        "提示 2：思考数组元素在内存中的存放方式",
+        "提示 3：牢记数组访问元素的方式以及下标的起始值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数组声明初始化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于数组的描述，错误的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数组是一种数据结构，用于存储一组相同类型的数据"
+        },
+        {
+          "label": "B",
+          "content": "数组中的元素在内存中是连续存放的"
+        },
+        {
+          "label": "C",
+          "content": "数组是通过下标来访问元素的，下标从1开始"
+        },
+        {
+          "label": "D",
+          "content": "若有数组 $a$，可以通过 $a[0]$ 访问其第一个元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中数组的概念、元素存储方式和下标访问规则",
+        "提示2：明确数组下标是从0开始的",
+        "提示3：逐一分析每个选项与视频知识点是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数组真题讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于数组的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数组是一种数据结构，用于存储一组不同类型的数据"
+        },
+        {
+          "label": "B",
+          "content": "数组中的元素在内存中是随机存放的"
+        },
+        {
+          "label": "C",
+          "content": "数组通过下标访问元素，下标从 1 开始"
+        },
+        {
+          "label": "D",
+          "content": "数组是一种数据结构，用于存储一组相同类型的数据，元素在内存中连续存放，通过从 0 开始的下标访问元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示 1：回顾视频中对数组概念和定义的描述",
+        "提示 2：明确数组存储数据的类型特点",
+        "提示 3：注意数组元素在内存中的存放方式和下标的起始值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数组元素访问",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个整数数组 $arr$ 用于存储学生的考试成绩，数组长度为 10。要访问数组中第 5 个学生的成绩，应该使用以下哪个下标？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3$"
+        },
+        {
+          "label": "B",
+          "content": "$4$"
+        },
+        {
+          "label": "C",
+          "content": "$5$"
+        },
+        {
+          "label": "D",
+          "content": "$6$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确数组是通过下标来访问元素的",
+        "提示2：数组的下标是从 0 开始的",
+        "提示3：计算第 5 个元素对应的下标需要减去 1"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二维数组定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个数组 $a$ 用于存储学生的考试成绩，每个学生有 3 门课程的成绩，共存储了 5 个学生的成绩。关于该数组的说法，以下正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "该数组不是一种数据结构"
+        },
+        {
+          "label": "B",
+          "content": "数组中的元素在内存中是不连续存放的"
+        },
+        {
+          "label": "C",
+          "content": "要访问第 3 个学生的第 2 门课程成绩，数组下标应该是 $a[2][1]$"
+        },
+        {
+          "label": "D",
+          "content": "数组可以存储不同类型的数据，如成绩和学生姓名"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中数组的概念，明确数组是一种数据结构",
+        "提示2：注意数组元素在内存中的存放特点是连续的",
+        "提示3：牢记数组下标是从 0 开始的，据此计算访问元素的下标",
+        "提示4：数组只能存储相同类型的数据"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求数组平均值",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知数组 $a = [2, 4, 6, 8, 10]$，要访问数组中的第 3 个元素，应该使用以下哪个下标？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$3$"
+        },
+        {
+          "label": "D",
+          "content": "$4$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到数组是通过下标来访问元素的，且下标是从 0 开始",
+        "提示2：思考第 1 个元素对应的下标是多少，依次类推第 3 个元素的下标",
+        "提示3：第 1 个元素的下标为 0，那么第 2 个元素下标为 1，第 3 个元素下标为 2"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数组求和与均值",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "有一个数组 $a = [3, 5, 7, 9, 11]$，以下关于数组的说法错误的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数组 $a$ 是一种数据结构，用于存储同一类型的数据"
+        },
+        {
+          "label": "B",
+          "content": "数组 $a$ 中的元素在内存中是连续存放的"
+        },
+        {
+          "label": "C",
+          "content": "访问数组 $a$ 中第 3 个元素的下标是 3"
+        },
+        {
+          "label": "D",
+          "content": "数组 $a$ 可以通过下标来访问元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于数组的定义和特点",
+        "提示2：明确数组下标是从 0 开始的",
+        "提示3：分析每个选项与数组知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：筛选并输出",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个数组 $a$ 存储了一组整数，若要访问数组中的第 5 个元素，应该使用以下哪个下标？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$4$"
+        },
+        {
+          "label": "B",
+          "content": "$5$"
+        },
+        {
+          "label": "C",
+          "content": "$6$"
+        },
+        {
+          "label": "D",
+          "content": "$3$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于数组访问元素的知识点，数组是通过下标来访问元素的",
+        "提示2：明确数组下标的起始值",
+        "提示3：思考数组下标与元素位置的对应关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：控制输出格式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于数组的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数组是一种数据结构，用于存储一组不同类型的数据"
+        },
+        {
+          "label": "B",
+          "content": "数组中的元素在内存中是随机存放的"
+        },
+        {
+          "label": "C",
+          "content": "数组通过下标来访问元素，下标从 1 开始"
+        },
+        {
+          "label": "D",
+          "content": "数组是一种数据结构，用于存储一组相同类型的数据，元素在内存中连续存放，下标从 0 开始"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中关于数组的概念和定义",
+        "提示2：明确数组存储数据的类型特点",
+        "提示3：思考数组元素在内存中的存放方式以及下标的起始值"
+      ]
+    }
+  ],
+  "count": 9
+}

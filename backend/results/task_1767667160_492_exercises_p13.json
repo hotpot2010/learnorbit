@@ -1,0 +1,741 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：C语言程序入口",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的期末试卷和整理的期末冲刺资料会放在哪里供大家领取？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "课程资料区"
+        },
+        {
+          "label": "B",
+          "content": "讨论区"
+        },
+        {
+          "label": "C",
+          "content": "个人消息通知"
+        },
+        {
+          "label": "D",
+          "content": "学习群文件"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回忆视频中关于资料领取位置的描述",
+        "提示2：注意提到的关键区域名称",
+        "提示3：定位到视频中明确指出放置资料的区域"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：C程序工作流程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的期末试卷和整理的期末冲刺资料会放在哪里供大家领取？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "课程资料区"
+        },
+        {
+          "label": "B",
+          "content": "讨论区"
+        },
+        {
+          "label": "C",
+          "content": "作业提交区"
+        },
+        {
+          "label": "D",
+          "content": "学习公告区"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于资料放置位置的描述",
+        "提示2：重点关注提到的具体区域名称",
+        "提示3：视频中有明确指出是哪个区域会放置资料"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：表达式求值",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，已知变量 $a = 5$，$b = 3$，$c = 2$，那么表达式 $a + b * c - (a + b) / c$ 的值是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$10$"
+        },
+        {
+          "label": "B",
+          "content": "$11$"
+        },
+        {
+          "label": "C",
+          "content": "$12$"
+        },
+        {
+          "label": "D",
+          "content": "$13$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据 C 语言运算符优先级，先计算乘法和除法",
+        "提示2：再计算加法和减法",
+        "提示3：注意整数除法的结果是取整"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数组下标引用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言中，有一个数组 `int arr[5] = {1, 3, 5, 7, 9};`，要访问数组中第3个元素（从1开始计数），以下正确的下标引用是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$arr[2]$"
+        },
+        {
+          "label": "B",
+          "content": "$arr[3]$"
+        },
+        {
+          "label": "C",
+          "content": "$arr[4]$"
+        },
+        {
+          "label": "D",
+          "content": "$arr[5]$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：在C语言中，数组的下标是从0开始计数的",
+        "提示2：要访问第n个元素（从1开始计数），对应的下标应该是n - 1",
+        "提示3：本题中要访问第3个元素，计算其对应的下标"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二维数组定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，若要定义一个 3 行 4 列的二维整型数组，以下哪种定义方式是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "int arr[3,4];"
+        },
+        {
+          "label": "B",
+          "content": "int arr[3][4];"
+        },
+        {
+          "label": "C",
+          "content": "int arr(3)(4);"
+        },
+        {
+          "label": "D",
+          "content": "int arr[4][3];"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示 1：在 C 语言中，二维数组的定义格式是 `类型 数组名[行数][列数];`",
+        "提示 2：注意区分逗号和括号在数组定义中的使用",
+        "提示 3：明确行数和列数的顺序在定义时的要求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：结构体与指针",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言中，定义一个结构体 `Student` 包含 `name`（字符数组，长度为20）、`age`（整数）和 `score`（浮点数），现有一个指向 `Student` 结构体的指针 `stuPtr`，若要访问结构体中的 `age` 成员，以下正确的方式是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$stuPtr.age$"
+        },
+        {
+          "label": "B",
+          "content": "$(*stuPtr).age$"
+        },
+        {
+          "label": "C",
+          "content": "$stuPtr->name$"
+        },
+        {
+          "label": "D",
+          "content": "$stuPtr[0].score$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：当使用指针访问结构体成员时，有两种常用的方式",
+        "提示2：一种是先对指针解引用，再用 `.` 操作符；另一种是直接用 `->` 操作符",
+        "提示3：分析每个选项是否符合这两种访问方式且是否访问的是 `age` 成员"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数组指针概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言中，若有定义 `int a[3][4]`，以下哪个选项可以正确表示数组 `a` 的首地址？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$a$"
+        },
+        {
+          "label": "B",
+          "content": "$&a$"
+        },
+        {
+          "label": "C",
+          "content": "$*a$"
+        },
+        {
+          "label": "D",
+          "content": "$a[0]$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：明确数组名在C语言中的含义，它在大多数情况下代表数组首元素的地址",
+        "提示2：分析每个选项所代表的地址含义，注意数组指针和普通指针的区别",
+        "提示3：对于二维数组 `a[3][4]`，思考 $a$、$&a$、$*a$、$a[0]$ 分别指向哪里"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：程序运行分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "老师会把哪两项内容放在评论区供大家领取？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "期末试卷和期末冲刺资料"
+        },
+        {
+          "label": "B",
+          "content": "期末试卷和平时作业答案"
+        },
+        {
+          "label": "C",
+          "content": "C语言重点和期末冲刺资料"
+        },
+        {
+          "label": "D",
+          "content": "C语言重点和平时作业答案"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到放在评论区的内容",
+        "提示2：关注视频中关于资料的描述",
+        "提示3：明确提到的两项资料是关键"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：循环结束判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言考试中，试卷和整理的期末冲刺资料都放在评论区，小明想要获取这些资料，下列做法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "在视频播放区寻找资料"
+        },
+        {
+          "label": "B",
+          "content": "去评论区领取资料"
+        },
+        {
+          "label": "C",
+          "content": "向老师的私人邮箱索要资料"
+        },
+        {
+          "label": "D",
+          "content": "在视频介绍区查找资料"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到资料放置的具体位置",
+        "提示2：明确说明资料放在评论区",
+        "提示3：根据这一关键信息来选择正确答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：取余输出判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言期末考试题中常涉及取余运算结果判断，若有以下代码 `int a = 13; int b = 5; int c = a % b;`，那么变量 `c` 的值是（  ）。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$3$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$5$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：在C语言中，`%` 为取余运算符",
+        "提示2：要明确取余运算的含义，即计算两数相除的余数",
+        "提示3：计算 $13$ 除以 $5$ 的余数即可得到 `c` 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数组逆序输出",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，有一个数组 $arr = [1, 2, 3, 4, 5]$，若要将其逆序输出，以下哪种方法是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "使用一个循环，从数组的最后一个元素开始，依次输出每个元素，直到第一个元素"
+        },
+        {
+          "label": "B",
+          "content": "将数组元素两两交换，直到数组的中间位置"
+        },
+        {
+          "label": "C",
+          "content": "先将数组元素全部复制到一个新数组，然后反向输出新数组的元素"
+        },
+        {
+          "label": "D",
+          "content": "以上方法都可以"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：思考不同的数组逆序输出的思路",
+        "提示2：分析每个选项所描述的方法是否能实现数组逆序输出",
+        "提示3：考虑不同方法的实现步骤和可行性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二维数组遍历",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个二维数组 $a[3][4]$，若要对其进行遍历并输出每个元素的值，以下哪种循环结构是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "for(int i = 0; i < 3; i++) { for(int j = 0; j < 4; j++) { cout << a[i][j]; } }"
+        },
+        {
+          "label": "B",
+          "content": "for(int i = 0; i < 4; i++) { for(int j = 0; j < 3; j++) { cout << a[i][j]; } }"
+        },
+        {
+          "label": "C",
+          "content": "for(int i = 1; i <= 3; i++) { for(int j = 1; j <= 4; j++) { cout << a[i][j]; } }"
+        },
+        {
+          "label": "D",
+          "content": "for(int i = 0; i < 3; i++) { for(int j = 0; j < 3; j++) { cout << a[i][j]; } }"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：二维数组 $a[m][n]$ 中，$m$ 表示行数，$n$ 表示列数",
+        "提示2：数组的下标是从 0 开始的，所以行数的遍历范围是从 0 到 $m - 1$，列数的遍历范围是从 0 到 $n - 1$",
+        "提示3：分析每个选项中循环变量的范围是否符合二维数组的遍历要求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：全局变量输出",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言期末考试中，老师讲解的试卷和整理的期末冲刺资料会放在哪里供大家领取？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "课程资料区"
+        },
+        {
+          "label": "B",
+          "content": "讨论区"
+        },
+        {
+          "label": "C",
+          "content": "作业提交区"
+        },
+        {
+          "label": "D",
+          "content": "公告栏"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回忆视频中关于资料放置位置的描述",
+        "提示2：重点关注提到的特定区域名称",
+        "提示3：视频中有明确指出资料会放在一个与交流相关的区域"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：代码求值讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "老师会将期末试卷和整理的期末冲刺资料放在哪里供大家领取？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "学习群"
+        },
+        {
+          "label": "B",
+          "content": "评论区"
+        },
+        {
+          "label": "C",
+          "content": "网盘"
+        },
+        {
+          "label": "D",
+          "content": "邮箱"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中老师提到资料放置位置的相关内容",
+        "提示2：关注视频中明确指出的放置地点关键词",
+        "提示3：视频里有提到一个特定的区域用于放置资料"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：奇数和编程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，要判断一个整数 $n$ 是否为奇数，以下哪个代码逻辑是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "if (n % 2 == 0) { printf(\"是奇数\"); } else { printf(\"不是奇数\"); }"
+        },
+        {
+          "label": "B",
+          "content": "if (n % 2 != 0) { printf(\"是奇数\"); } else { printf(\"不是奇数\"); }"
+        },
+        {
+          "label": "C",
+          "content": "if (n / 2 == 0) { printf(\"是奇数\"); } else { printf(\"不是奇数\"); }"
+        },
+        {
+          "label": "D",
+          "content": "if (n / 2 != 0) { printf(\"是奇数\"); } else { printf(\"不是奇数\"); }"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：奇数的定义是不能被 2 整除的整数",
+        "提示2：在 C 语言中，判断整除与否通常使用取模运算符 %",
+        "提示3：思考取模运算结果为多少时表示不能被 2 整除"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：选择法排序题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "使用选择法对数组 $[5, 3, 8, 4, 2]$ 进行升序排序，在第一轮选择中，需要将哪个元素与数组的第一个元素交换？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$3$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$5$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：选择法排序的基本思想是每一轮从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置",
+        "提示2：第一轮需要在整个数组中找出最小的元素",
+        "提示3：比较数组中每个元素的大小，确定最小元素的位置"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：选择法核心思路",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "老师提到的这套期末试卷和整理的期末冲刺资料会放在哪里供大家领取？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "课程资料区"
+        },
+        {
+          "label": "B",
+          "content": "讨论区"
+        },
+        {
+          "label": "C",
+          "content": "作业提交区"
+        },
+        {
+          "label": "D",
+          "content": "学习公告区"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中老师关于资料领取位置的表述",
+        "提示2：重点关注提到的具体区域名称",
+        "提示3：在视频中寻找与资料放置位置相关的关键词"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：选择法代码实现",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言的期末考试中，有一道关于选择法排序的题目。已知选择法排序的基本思想是每一轮从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置。现有一个数组 $a = [5, 3, 8, 4, 2]$，经过第一轮选择法排序后，数组的顺序是以下哪种情况？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$[2, 3, 8, 4, 5]$"
+        },
+        {
+          "label": "B",
+          "content": "$[3, 5, 8, 4, 2]$"
+        },
+        {
+          "label": "C",
+          "content": "$[5, 3, 2, 4, 8]$"
+        },
+        {
+          "label": "D",
+          "content": "$[2, 5, 3, 8, 4]$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：明确选择法排序第一轮的操作是找出数组中最小的元素。",
+        "提示2：将最小元素与数组的第一个元素交换位置。",
+        "提示3：在数组 $a = [5, 3, 8, 4, 2]$ 中找出最小元素并与第一个元素交换"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：选择法排序",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "用选择法对数组 $[3, 1, 4, 2]$ 进行升序排序，在第一轮比较和交换后，数组变为以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$[1, 3, 4, 2]$"
+        },
+        {
+          "label": "B",
+          "content": "$[1, 4, 3, 2]$"
+        },
+        {
+          "label": "C",
+          "content": "$[2, 1, 4, 3]$"
+        },
+        {
+          "label": "D",
+          "content": "$[3, 1, 2, 4]$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：选择法排序的第一轮是从数组的第一个元素开始，依次与后面的元素比较，找到最小的元素。",
+        "提示2：将找到的最小元素与第一个元素交换位置。",
+        "提示3：在数组 $[3, 1, 4, 2]$ 中，最小元素是 $1$，它与第一个元素 $3$ 交换位置。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数编程题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言的期末考试试卷中，对于一道函数编程题，若要求编写一个函数 $f(x)$ 实现对任意输入的整数 $x$ 进行平方后再加 $1$ 的操作，以下哪个函数定义是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "int f(int x) { return x * x + 1; }"
+        },
+        {
+          "label": "B",
+          "content": "void f(int x) { return x * x + 1; }"
+        },
+        {
+          "label": "C",
+          "content": "int f(x) { return x * x + 1; }"
+        },
+        {
+          "label": "D",
+          "content": "int f(int x) { x * x + 1; }"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先分析函数的返回值类型，根据题目要返回计算结果，应该是整数类型。",
+        "提示2：函数定义时参数需要明确指定类型，要检查参数类型是否正确定义。",
+        "提示3：函数体中要有返回语句来返回计算结果。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：统计整数题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一份 C 语言期末试卷中，有一道统计整数的题目。已知在一个数组 $a$ 中存储了若干整数，要统计其中正整数、负整数和零的个数。以下哪个代码片段可以正确实现这个功能？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "c\nint positive = 0, negative = 0, zero = 0;\nfor (int i = 0; i < n; i++) {\n    if (a[i] > 0) {\n        positive++;\n    } else if (a[i] < 0) {\n        negative++;\n    } else {\n        zero++;\n    }\n}\n"
+        },
+        {
+          "label": "B",
+          "content": "c\nint positive = 0, negative = 0, zero = 0;\nfor (int i = 0; i < n; i++) {\n    if (a[i] >= 0) {\n        positive++;\n    } else if (a[i] < 0) {\n        negative++;\n    }\n}\n"
+        },
+        {
+          "label": "C",
+          "content": "c\nint positive = 0, negative = 0, zero = 0;\nfor (int i = 0; i < n; i++) {\n    if (a[i] > 0) {\n        positive++;\n    } else if (a[i] <= 0) {\n        negative++;\n    }\n}\n"
+        },
+        {
+          "label": "D",
+          "content": "c\nint positive = 0, negative = 0, zero = 0;\nfor (int i = 0; i < n; i++) {\n    if (a[i] > 0) {\n        positive++;\n    } else if (a[i] < 0) {\n        zero++;\n    } else {\n        negative++;\n    }\n}\n"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：要分别统计正整数、负整数和零的个数，需要对数组中的每个元素进行判断",
+        "提示2：正整数是大于 0 的数，负整数是小于 0 的数，零就是等于 0 的数",
+        "提示3：检查每个选项中的判断条件是否能正确区分正整数、负整数和零"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：整数分类统计",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言考试中，有一道题目要求对一组整数进行分类统计，给出一组整数：1, -2, 3, -4, 5, -6, 7, -8, 9, -10。将这些整数分为正整数和负整数两类并统计数量，以下哪个选项是正确的正整数和负整数数量组合？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正整数5个，负整数5个"
+        },
+        {
+          "label": "B",
+          "content": "正整数6个，负整数4个"
+        },
+        {
+          "label": "C",
+          "content": "正整数4个，负整数6个"
+        },
+        {
+          "label": "D",
+          "content": "正整数7个，负整数3个"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：明确正整数是大于0的整数，负整数是小于0的整数",
+        "提示2：依次判断给定的每个整数是正整数还是负整数",
+        "提示3：分别统计正整数和负整数的个数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：奇数求和编程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在使用 C 语言编程实现计算 1 到 100 之间所有奇数的和时，以下哪个代码逻辑是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "使用一个 `for` 循环，从 1 开始，步长为 2，将每次循环的数累加到一个变量中。"
+        },
+        {
+          "label": "B",
+          "content": "使用一个 `for` 循环，从 0 开始，步长为 1，判断每次循环的数是否为奇数，如果是则累加到一个变量中。"
+        },
+        {
+          "label": "C",
+          "content": "使用一个 `while` 循环，从 1 开始，每次循环后加 1，将每次循环的数累加到一个变量中。"
+        },
+        {
+          "label": "D",
+          "content": "使用一个 `do - while` 循环，从 0 开始，每次循环后加 2，将每次循环的数累加到一个变量中。"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示 1：要计算 1 到 100 之间所有奇数的和，需要确保循环只遍历奇数。",
+        "提示 2：步长的设置很关键，步长为 2 可以直接遍历奇数。",
+        "提示 3：判断是否为奇数的操作会增加代码的复杂度，尽量避免不必要的判断。"
+      ]
+    }
+  ],
+  "count": 23
+}

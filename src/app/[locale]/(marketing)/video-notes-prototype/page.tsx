@@ -5813,7 +5813,7 @@ export default function VideoNotesPrototypePage() {
                               <div className="flex-1 min-w-0">
                                 <NoteEditor 
                                   key={`${index}-${point.start_time}-${currentPartIndex}`}
-                                  content={point.note || ''}
+                                  content={autoWrapLatex(point.note || '')}
                                   onChange={(newMarkdown) => {
                                     setKnowledgePoints(prev => prev.map((p, i) => 
                                       i === index ? { ...p, note: newMarkdown } : p

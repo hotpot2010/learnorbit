@@ -1,0 +1,262 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数基本概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列对应关系中，能构成函数的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "集合 $A = \\{ -1, 0, 1\\}$，$B = \\{ 0, 1\\}$，对应关系 $f$：$A$ 中的数平方后对应 $B$ 中的数"
+        },
+        {
+          "label": "B",
+          "content": "集合 $A = \\{ 0, 1\\}$，$B = \\{ -1, 0, 1\\}$，对应关系 $f$：$A$ 中的数开方后对应 $B$ 中的数"
+        },
+        {
+          "label": "C",
+          "content": "集合 $A = \\{ \\text{三角形}\\}$，$B = \\{ \\text{圆}\\}$，对应关系 $f$：每一个三角形对应它的外接圆"
+        },
+        {
+          "label": "D",
+          "content": "集合 $A = \\{ \\text{平面直角坐标系中的点}\\}$，$B = \\{ (x, y) | x \\in R, y \\in R\\}$，对应关系 $f$：$A$ 中的点与它的坐标对应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：根据函数的定义，设 $A$，$B$ 是非空实数集，如果对于集合 $A$ 中的任意一个实数 $x$，按照某种确定的对应关系 $f$，在集合 $B$ 中都有唯一确定的数 $y$ 和它对应，就称 $f$：$A \\to B$ 是集合 $A$ 到集合 $B$ 的一个函数",
+        "提示2：判断每个选项中集合 $A$ 中的元素是否在集合 $B$ 中有唯一确定的对应元素",
+        "提示3：对于选项B，注意开方运算会得到两个值；对于选项C，集合 $A$ 不是数集"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数声明与定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于函数基本概念的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "对于任意两个变量 $x$ 和 $y$，只要有对应关系就是函数关系"
+        },
+        {
+          "label": "B",
+          "content": "函数的定义域和值域一定是数集"
+        },
+        {
+          "label": "C",
+          "content": "函数 $y = \\sqrt{x - 1}$ 与 $y = \\frac{x - 1}{\\sqrt{x - 1}}$ 是同一函数"
+        },
+        {
+          "label": "D",
+          "content": "函数 $y = f(x)$ 中，$f(x)$ 可以理解为 $f$ 与 $x$ 的乘积"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾函数的定义，判断选项A是否满足函数定义的要求",
+        "提示2：明确函数定义域和值域的概念，分析选项B",
+        "提示3：判断两个函数是否为同一函数，需要看定义域和对应法则是否都相同，分析选项C",
+        "提示4：理解函数符号 $y = f(x)$ 的含义，判断选项D"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数参数与返回值",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于函数的基本概念描述，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "函数是一种固定不变的数值"
+        },
+        {
+          "label": "B",
+          "content": "函数是描述两个变量之间对应关系的数学工具"
+        },
+        {
+          "label": "C",
+          "content": "函数就是一个单独的变量"
+        },
+        {
+          "label": "D",
+          "content": "函数只能用于解决几何问题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾函数的基本定义",
+        "提示2：思考函数在变量关系中的作用",
+        "提示3：分析每个选项与函数定义的匹配程度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数调用方式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在函数的考查内容中，未来选择题可能考查的重点是以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "函数的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "函数的导数计算"
+        },
+        {
+          "label": "C",
+          "content": "函数的积分应用"
+        },
+        {
+          "label": "D",
+          "content": "函数的图像绘制"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的未来选择题考查的重点内容",
+        "提示2：视频明确指出了一项重点考查方向",
+        "提示3：从视频中关于未来选择题考查的描述里去寻找答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：嵌套函数位置",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列选项中，能准确体现函数基本概念应用的是（已知函数 $f(x)=2x + 1$，当 $x=3$ 时）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直接得出结果为 $x$ 和 $f(x)$ 的和"
+        },
+        {
+          "label": "B",
+          "content": "先明确 $x = 3$，代入函数计算得出 $f(3)=2\\times3 + 1 = 7$"
+        },
+        {
+          "label": "C",
+          "content": "把 $f(x)$ 当作常数来计算 $x$ 的值"
+        },
+        {
+          "label": "D",
+          "content": "随意取一个与 $3$ 无关的值代入函数计算"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾函数基本概念，对于给定函数 $f(x)$，$x$ 是自变量，$f(x)$ 是因变量",
+        "提示2：当给定 $x$ 的具体值时，将其代入函数表达式计算 $f(x)$ 的值",
+        "提示3：根据函数定义判断每个选项是否符合正确计算步骤"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数组名传参",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于函数基本概念的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "函数就是一种简单的数学运算，只包含加减乘除"
+        },
+        {
+          "label": "B",
+          "content": "函数是两个非空数集之间的一种对应关系，对于集合 $A$ 中的任意一个数 $x$，在集合 $B$ 中都有唯一确定的数 $y$ 与之对应"
+        },
+        {
+          "label": "C",
+          "content": "函数只能用公式来表示，不能用图像或表格表示"
+        },
+        {
+          "label": "D",
+          "content": "只要是两个数集之间有对应关系，就可以称为函数"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾函数的基本定义，明确函数是怎样的一种对应关系",
+        "提示2：思考函数的表示方法有哪些",
+        "提示3：判断每个选项是否符合函数的定义和性质"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：质数判断编程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于函数基本概念的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "函数是一种特殊的映射，对于定义域内的每一个自变量 $x$，都有唯一确定的因变量 $y$ 与之对应"
+        },
+        {
+          "label": "B",
+          "content": "函数的定义域和值域一定是数集，且定义域可以为空集"
+        },
+        {
+          "label": "C",
+          "content": "若两个函数的定义域和值域相同，则这两个函数一定是同一函数"
+        },
+        {
+          "label": "D",
+          "content": "函数 $y = f(x)$ 中，$f(x)$ 表示 $f$ 与 $x$ 的乘积"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾函数的基本定义，明确函数与映射的关系以及函数定义域、值域的性质",
+        "提示2：思考同一函数的判定条件，不仅仅取决于定义域和值域",
+        "提示3：理解函数表达式 $y = f(x)$ 中 $f(x)$ 的含义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：质数判断代码",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于函数基本概念的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "函数就是一种简单的数学计算式子"
+        },
+        {
+          "label": "B",
+          "content": "函数是两个非空数集之间的一种对应关系，对于集合A中的任意一个数x，在集合B中都有唯一确定的数f(x)与之对应"
+        },
+        {
+          "label": "C",
+          "content": "函数只是在数学教材中存在，没有实际应用价值"
+        },
+        {
+          "label": "D",
+          "content": "函数与方程没有任何联系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾函数的严格定义来判断选项",
+        "提示2：思考函数在实际生活中的应用以及与方程的关系",
+        "提示3：明确函数不仅仅是简单的计算式子"
+      ]
+    }
+  ],
+  "count": 8
+}

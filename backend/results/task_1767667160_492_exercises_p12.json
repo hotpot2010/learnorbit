@@ -1,0 +1,229 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：文件概念与指针",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，以下关于文件的描述正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "文件只能存储在内存中，通过普通变量操作"
+        },
+        {
+          "label": "B",
+          "content": "文件是存储在外部存储器上的数据集合，在 C 语言中需通过文件指针操作文件"
+        },
+        {
+          "label": "C",
+          "content": "文件在 C 语言中不需要任何特殊方式操作，可直接读写"
+        },
+        {
+          "label": "D",
+          "content": "文件是存储在外部存储器上的数据集合，但在 C 语言中可以不通过文件指针操作文件"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对文件概念的描述，明确文件的存储位置",
+        "提示2：思考在 C 语言中操作文件的方式",
+        "提示3：排除不符合视频知识点的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：文件打开方式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，要操作存储在外部存储设备上的数据集合（即文件），我们需要通过什么来进行操作？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数组"
+        },
+        {
+          "label": "B",
+          "content": "文件指针"
+        },
+        {
+          "label": "C",
+          "content": "结构体"
+        },
+        {
+          "label": "D",
+          "content": "函数指针"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到在 C 语言里操作文件的关键要素",
+        "提示2：明确指出了操作文件需要借助特定的指针",
+        "提示3：思考哪个选项与操作文件直接相关"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：文件读写示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，要操作存储在外部存储设备上的数据集合（即文件），需要通过什么来操作？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数组"
+        },
+        {
+          "label": "B",
+          "content": "文件指针"
+        },
+        {
+          "label": "C",
+          "content": "结构体"
+        },
+        {
+          "label": "D",
+          "content": "函数指针"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于 C 语言操作文件的关键信息",
+        "提示2：视频中明确提到了操作文件的特定元素",
+        "提示3：重点关注在 C 语言里用于操作文件的工具"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：文件关闭方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，要操作存储在外部存储设备上的数据集合（即文件），需要通过什么来操作文件？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数组指针"
+        },
+        {
+          "label": "B",
+          "content": "函数指针"
+        },
+        {
+          "label": "C",
+          "content": "文件指针"
+        },
+        {
+          "label": "D",
+          "content": "结构体指针"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的在 C 语言里操作文件的关键要素",
+        "提示2：注意强调的是专门用于操作文件的一种指针",
+        "提示3：结合知识点中‘在 C 语言中，我们需要通过文件指针来操作我们的一个文件’进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：文件读写函数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言中，要操作存储在外部存储设备上的数据集合（即文件），我们需要通过什么来操作文件？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数组指针"
+        },
+        {
+          "label": "B",
+          "content": "文件指针"
+        },
+        {
+          "label": "C",
+          "content": "函数指针"
+        },
+        {
+          "label": "D",
+          "content": "结构体指针"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到在C语言里操作文件的关键要素",
+        "提示2：注意题干强调的是在C语言中操作文件的方式",
+        "提示3：明确文件指针在文件操作中的作用"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：期末真题讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，要操作存储在外部存储设备上的数据集合（即文件），需要通过什么来进行操作？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数组指针"
+        },
+        {
+          "label": "B",
+          "content": "文件指针"
+        },
+        {
+          "label": "C",
+          "content": "函数指针"
+        },
+        {
+          "label": "D",
+          "content": "结构体指针"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于 C 语言操作文件的关键信息",
+        "提示2：明确不同指针类型的用途，思考哪种指针与文件操作相关",
+        "提示3：视频中提到在 C 语言里操作文件需要借助特定的指针"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：文件部分考点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言中，要操作存储在外部存储设备上的数据集合（即文件），需要通过什么来进行操作？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "数组指针"
+        },
+        {
+          "label": "B",
+          "content": "文件指针"
+        },
+        {
+          "label": "C",
+          "content": "函数指针"
+        },
+        {
+          "label": "D",
+          "content": "结构体指针"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到在C语言里操作文件的关键元素",
+        "提示2：明确题目强调的是操作文件所需的指针类型",
+        "提示3：根据视频内容，在C语言中操作文件是通过特定的指针，可直接对应答案"
+      ]
+    }
+  ],
+  "count": 7
+}

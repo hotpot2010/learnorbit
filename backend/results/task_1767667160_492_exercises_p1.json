@@ -1,0 +1,102 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：课程介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于本次三小时C语言期末冲刺课程的描述，错误的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "该课程是完全免费的"
+        },
+        {
+          "label": "B",
+          "content": "该课程能帮助大家期末必过，但学完课程的同学期末不一定能通过考试"
+        },
+        {
+          "label": "C",
+          "content": "老师会用三个半小时的时间带大家速通C语言"
+        },
+        {
+          "label": "D",
+          "content": "建议大家收藏视频，防止需要时找不到"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细对照视频中关于课程时间的描述",
+        "提示2：注意课程对考试的帮助以及视频保存的建议",
+        "提示3：确认每个选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：课程内容",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于本次三小时 C 语言期末冲刺课的描述，正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "课程需要付费才能完整学习"
+        },
+        {
+          "label": "B",
+          "content": "学习该视频不一定能帮助学生通过期末测试"
+        },
+        {
+          "label": "C",
+          "content": "老师会用两个小时的时间带大家速通 C 语言"
+        },
+        {
+          "label": "D",
+          "content": "课程主要目的是帮助大家复习 C 语言，助力通过考试"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：注意视频中提到课程是否免费的信息",
+        "提示2：思考视频中关于课程对考试帮助的描述",
+        "提示3：明确老师带大家速通 C 语言的时间"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：冲刺资料",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于泡泡的三小时C语言期末冲刺课，以下说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "课程需要付费才能观看"
+        },
+        {
+          "label": "B",
+          "content": "学习该视频不一定能保证期末考试通过"
+        },
+        {
+          "label": "C",
+          "content": "老师会用两小时的时间带大家速通C语言"
+        },
+        {
+          "label": "D",
+          "content": "该课程主要是为了让大家预习C语言"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到课程是否免费",
+        "提示2：思考学习视频和考试通过之间的关系",
+        "提示3：明确老师带大家速通C语言的时间",
+        "提示4：判断课程的目的是复习还是预习"
+      ]
+    }
+  ],
+  "count": 3
+}

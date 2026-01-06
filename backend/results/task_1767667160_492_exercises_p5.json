@@ -1,0 +1,421 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：算术运算符",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知除法运算符两侧的操作数都为整数，以下运算结果符合视频中所讲规则的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$10 \\div 3$ 的结果"
+        },
+        {
+          "label": "B",
+          "content": "$15 \\div 5$ 的结果"
+        },
+        {
+          "label": "C",
+          "content": "$12 \\div 4.5$ 的结果"
+        },
+        {
+          "label": "D",
+          "content": "$9.5 \\div 3$ 的结果"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频，除法运算符两侧操作数都应为整数，先据此排除不符合的选项",
+        "提示2：再判断剩余选项的运算结果是否为整数",
+        "提示3：$10 \\div 3 = \\frac{10}{3}$，$15 \\div 5 = 3$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：单目运算符",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知在特定运算规则下，除法运算符两侧操作数都为整数，最终结果也为整数。现有表达式 $a \\div b$，已知 $a = 17$，要使结果为整数，那么 $b$ 可能的值是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$3$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$17$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：根据视频知识点，要使 $a \\div b$ 的结果为整数，$a$ 必须能被 $b$ 整除",
+        "提示2：判断每个选项中的 $b$ 是否能整除 $a$，即看 $a$ 除以 $b$ 是否没有余数",
+        "提示3：分别计算 $17$ 除以每个选项中的数，看哪个结果是整数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：赋值运算符",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在满足视频所讲运算规则的情况下，计算 $15 \\div 4$ 的结果是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3$"
+        },
+        {
+          "label": "B",
+          "content": "$3.75$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{15}{4}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频内容，除法运算符两侧操作数都为整数时，结果也为整数",
+        "提示2：按照整数除法规则进行计算",
+        "提示3：$15 \\div 4$ 就是求 15 里面包含几个 4"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：强制类型转换",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在整数除法运算中，若运算符两侧操作数都为整数，结果也为整数。那么计算 $17 \\div 5$ 的结果是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3$"
+        },
+        {
+          "label": "B",
+          "content": "$3.4$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：明确视频中提到的整数除法规则，即运算符两侧为整数时结果为整数",
+        "提示2：按照整数除法舍去小数部分",
+        "提示3：计算 $17 \\div 5$ 的商的整数部分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：关系运算符",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在数学计算中，对于除法运算符，若其两侧的操作数都为整数，结果也为整数。那么计算 $15 \\div 4$ 的结果是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3$"
+        },
+        {
+          "label": "B",
+          "content": "$3.75$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{15}{4}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：题目明确指出除法运算符两侧操作数为整数时结果也为整数",
+        "提示2：不要按照常规的小数除法来计算",
+        "提示3：用 $15$ 除以 $4$ 取整数商"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：条件运算符",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在整数运算中，对于除法运算符，如果运算符两侧的操作数均为整数，结果也为整数。那么计算 $17 \\div 3$ 的结果是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$5$"
+        },
+        {
+          "label": "B",
+          "content": "$5.67$"
+        },
+        {
+          "label": "C",
+          "content": "$6$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{17}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频知识点，除法运算符两侧操作数为整数时，结果是整数",
+        "提示2：计算 $17 \\div 3$ 时，要取整数商",
+        "提示3：不要将结果写成小数或分数形式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：条件运算符",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在数学运算中，对于除法运算符，如果参与运算的两个操作数都为整数，结果也为整数。那么计算 $17 \\div 3$ 的结果是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$5$"
+        },
+        {
+          "label": "B",
+          "content": "$5.666...$"
+        },
+        {
+          "label": "C",
+          "content": "$6$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{17}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频知识点，除法运算符两侧操作数为整数时，结果也为整数",
+        "提示2：计算 $17 \\div 3$ 时，需取整数部分",
+        "提示3：不要将结果表示为小数或分数形式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：逻辑运算符概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于算术运算符中除法运算的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "除法运算符两侧的操作数可以为小数，结果也可以为小数"
+        },
+        {
+          "label": "B",
+          "content": "除法运算符两侧的操作数必须都为整数，但结果可以为小数"
+        },
+        {
+          "label": "C",
+          "content": "除法运算符两侧的操作数都为整数，结果也为整数"
+        },
+        {
+          "label": "D",
+          "content": "除法运算符一侧的操作数为整数，另一侧为小数，结果为整数"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于除法运算符的描述，明确其两侧操作数和结果的类型要求",
+        "提示2：注意视频强调的是两侧操作数和结果都为整数",
+        "提示3：依次分析每个选项是否符合视频所讲的知识点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：逻辑运算例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在数学运算中，对于除法运算符，若其两侧操作数都为整数，结果也为整数。那么计算 $15 \\div 4$ 的结果，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3$"
+        },
+        {
+          "label": "B",
+          "content": "$3.75$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{15}{4}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频内容，除法运算符两侧操作数为整数时，结果也为整数",
+        "提示2：对 $15 \\div 4$ 进行整数除法运算",
+        "提示3：计算 $15$ 除以 $4$ 的商，不考虑余数部分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：期末真题讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个算式中，除法运算符两边的操作数都为整数，且最终结果也是整数。已知算式 $a \\div b = c$ （$a$、$b$、$c$ 均为整数），若 $a = 24$，则 $b$ 不可能是以下哪个值？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$3$"
+        },
+        {
+          "label": "C",
+          "content": "$5$"
+        },
+        {
+          "label": "D",
+          "content": "$6$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频知识点，除法运算中两边操作数和结果都为整数，所以 $b$ 必须是 $a$ 的因数",
+        "提示2：判断 $24$ 能否被每个选项整除",
+        "提示3：若不能整除，则该选项即为答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：闰年代码题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在整数运算中，对于除法运算符，若参与运算的两个数为整数，结果也为整数。现有算式 $a \\div b$，其中 $a = 25$，$b$ 为整数且满足 $3 < b < 8$，则 $a \\div b$ 可能的结果是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$3$"
+        },
+        {
+          "label": "B",
+          "content": "$4$"
+        },
+        {
+          "label": "C",
+          "content": "$5$"
+        },
+        {
+          "label": "D",
+          "content": "$6$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先确定 $b$ 可能的取值",
+        "提示2：分别计算不同 $b$ 取值时 $a \\div b$ 的结果",
+        "提示3：根据结果为整数这一条件进行筛选"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：运算符号和表达式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在数学运算中，对于除法运算符，若其两侧操作数均为整数，结果也为整数。现有一个除法运算 $a \\div b$，已知 $a = 15$，且运算结果为整数，那么 $b$ 可能是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$3$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$7$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频知识点，要使 $a \\div b$ 的结果为整数，$b$ 必须是 $a$ 的因数",
+        "提示2：分别分析每个选项，看哪个数能整除 $15$",
+        "提示3：计算 $15$ 除以每个选项的值，判断是否为整数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：逗号表达式运算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知在数学运算中，除法运算符两侧操作数均为整数时，结果也为整数。那么计算 $10 \\div 3 + 5 \\div 2$ 的结果是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$5$"
+        },
+        {
+          "label": "B",
+          "content": "$6$"
+        },
+        {
+          "label": "C",
+          "content": "$7$"
+        },
+        {
+          "label": "D",
+          "content": "$8$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先分别计算 $10 \\div 3$ 和 $5 \\div 2$ 的结果，注意结果为整数",
+        "提示2：$10 \\div 3$ 向下取整得到整数结果，$5 \\div 2$ 同样向下取整得到整数结果",
+        "提示3：将两个整数结果相加得到最终答案"
+      ]
+    }
+  ],
+  "count": 13
+}

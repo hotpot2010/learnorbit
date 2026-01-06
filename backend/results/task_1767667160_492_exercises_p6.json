@@ -1,0 +1,389 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：程序结构类型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "结构化程序有三种基本结构，以下哪种结构在考试中出现频率相对较低？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "顺序结构"
+        },
+        {
+          "label": "B",
+          "content": "选择结构"
+        },
+        {
+          "label": "C",
+          "content": "循环结构"
+        },
+        {
+          "label": "D",
+          "content": "分支结构"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：明确视频中提到结构化程序的三种基本结构是什么",
+        "提示2：注意视频中提及考试中出现频率最多的结构类型",
+        "提示3：剩下的即为出现频率相对较低的结构类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：if语句形式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "结构化程序有三种结构，其中在考试中最常考的结构组合是以下哪一组？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "顺序结构和选择结构"
+        },
+        {
+          "label": "B",
+          "content": "顺序结构和循环结构"
+        },
+        {
+          "label": "C",
+          "content": "选择结构和循环结构"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的结构化程序的三种结构分别是什么",
+        "提示2：注意视频中明确指出了考试中最常考的结构组合",
+        "提示3：找到对应的结构组合来确定答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：期末真题解析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "结构化程序有三种结构，在考试中最常考的结构是以下哪两种的组合？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "顺序结构和选择结构"
+        },
+        {
+          "label": "B",
+          "content": "顺序结构和循环结构"
+        },
+        {
+          "label": "C",
+          "content": "选择结构和循环结构"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的结构化程序的三种结构",
+        "提示2：注意视频中强调的考试中最常考的结构类型",
+        "提示3：从三种结构里找出最常考的两种"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：读程序题分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "结构化程序有三种结构，在考试中最常考的结构组合是以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "顺序结构和选择结构"
+        },
+        {
+          "label": "B",
+          "content": "选择结构和循环结构"
+        },
+        {
+          "label": "C",
+          "content": "顺序结构和循环结构"
+        },
+        {
+          "label": "D",
+          "content": "顺序结构、选择结构和循环结构"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到的结构化程序的三种结构分别是什么",
+        "提示2：关注视频中关于考试常考结构的描述",
+        "提示3：从三种结构中找出常考的结构组合"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：控制语句考点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "结构化程序有三种结构，其中在考试中最常考的结构组合是以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "顺序结构和选择结构"
+        },
+        {
+          "label": "B",
+          "content": "选择结构和循环结构"
+        },
+        {
+          "label": "C",
+          "content": "顺序结构和循环结构"
+        },
+        {
+          "label": "D",
+          "content": "顺序结构、选择结构和循环结构"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先明确结构化程序的三种结构分别是什么",
+        "提示2：再根据视频内容找出考试中最常考的结构类型",
+        "提示3：对比选项与视频中提到的常考结构进行选择"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：上网费用计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "结构化程序有三种结构，在考试中最常考的结构是以下哪种组合？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "顺序结构和选择结构"
+        },
+        {
+          "label": "B",
+          "content": "顺序结构和循环结构"
+        },
+        {
+          "label": "C",
+          "content": "选择结构和循环结构"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回忆视频中提到的结构化程序的三种结构分别是什么",
+        "提示2：明确视频中指出考试最常考的是哪两种结构",
+        "提示3：对比选项和视频内容进行选择"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：switch结构讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "结构化程序有三种结构，以下不属于这三种结构的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "顺序结构"
+        },
+        {
+          "label": "B",
+          "content": "选择结构"
+        },
+        {
+          "label": "C",
+          "content": "循环结构"
+        },
+        {
+          "label": "D",
+          "content": "递归结构"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的结构化程序的三种结构",
+        "提示2：明确顺序结构、选择结构和循环结构是视频所讲的内容",
+        "提示3：判断哪个选项不在这三种结构范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：switch实例分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "结构化程序有三种结构，在考试中最常考的结构类型是以下哪种组合？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "顺序结构和选择结构"
+        },
+        {
+          "label": "B",
+          "content": "选择结构和循环结构"
+        },
+        {
+          "label": "C",
+          "content": "顺序结构和循环结构"
+        },
+        {
+          "label": "D",
+          "content": "顺序结构、选择结构和循环结构"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确视频中提到结构化程序的三种结构分别是什么",
+        "提示2：注意题目问的是考试中最常考的结构组合",
+        "提示3：从视频中找出关于常考结构的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：控制语句考点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "结构化程序有三种结构，在考试中出现最多的是以下哪种组合？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "顺序结构和选择结构"
+        },
+        {
+          "label": "B",
+          "content": "顺序结构和循环结构"
+        },
+        {
+          "label": "C",
+          "content": "选择结构和循环结构"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到的结构化程序的三种结构分别是什么",
+        "提示2：明确视频中指出考试中出现最多的结构组合",
+        "提示3：将选项与知识点进行对应判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：switch解题思路",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "结构化程序有三种结构，其中考试中最常考的结构组合是以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "顺序结构和选择结构"
+        },
+        {
+          "label": "B",
+          "content": "顺序结构和循环结构"
+        },
+        {
+          "label": "C",
+          "content": "选择结构和循环结构"
+        },
+        {
+          "label": "D",
+          "content": "顺序结构、选择结构和循环结构"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的结构化程序的三种结构分别是什么",
+        "提示2：注意题目问的是考试中最常考的结构组合",
+        "提示3：从视频中找出关于常考结构组合的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：switch case特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "结构化程序有三种结构，其中考试中最常考的结构是以下哪一组？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "顺序结构和选择结构"
+        },
+        {
+          "label": "B",
+          "content": "选择结构和循环结构"
+        },
+        {
+          "label": "C",
+          "content": "顺序结构和循环结构"
+        },
+        {
+          "label": "D",
+          "content": "顺序结构、选择结构和循环结构"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先明确结构化程序的三种结构分别是什么",
+        "提示2：再从视频中找到考试最常考的结构描述",
+        "提示3：对比选项与视频中描述的内容进行选择"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：代码运行验证",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "结构化程序有三种结构，其中考试中最常考的结构是以下哪两种的组合？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "顺序结构和选择结构"
+        },
+        {
+          "label": "B",
+          "content": "顺序结构和循环结构"
+        },
+        {
+          "label": "C",
+          "content": "选择结构和循环结构"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先明确结构化程序的三种结构分别是什么",
+        "提示2：再从视频中找出考试中最常考的结构类型",
+        "提示3：对比选项，找出正确答案"
+      ]
+    }
+  ],
+  "count": 12
+}

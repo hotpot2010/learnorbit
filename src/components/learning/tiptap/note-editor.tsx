@@ -11,6 +11,7 @@ import {
   Bold, Italic, Underline as UnderlineIcon, 
   Highlighter, Sigma
 } from 'lucide-react'
+import { autoWrapLatex } from '@/lib/math-renderer'
 
 interface NoteEditorProps {
   content: string;
@@ -37,8 +38,17 @@ turndownService.addRule('math', {
 // Simple pre-processor for $...$ to custom HTML
 const preProcessMarkdown = (md: string) => {
   if (!md) return '';
-  return md.replace(/(?<!\\)\$([^\$]+)(?<!\\)\$/g, (match, latex) => {
-    // 修复用户反馈的 ~ 显示问题，替换为 \sim
+  // 🔧 修复：先使用 autoWrapLatex 处理未包裹的数学表达式（如 X~U(a,b)）
+  const processedMd = autoWrapLatex(md);
+  
+  // 🔧 修复：使用更精确的正则表达式，避免误匹配
+  // 匹配 $...$ 格式的数学公式，但排除已经处理过的 HTML 标签
+  return processedMd.replace(/(?<!\\)\$([^\$<>]+)(?<!\\)\$/g, (match, latex) => {
+    // 跳过已经是 HTML 标签的内容
+    if (latex.includes('<span') || latex.includes('</span>')) {
+      return match;
+    }
+    // 修复用户反馈的 ~ 显示问题，替换为 \sim（双重保险）
     const fixedLatex = latex.replace(/~/g, '\\sim ');
     return `<span data-type="math" data-latex="${fixedLatex}"></span>`;
   });

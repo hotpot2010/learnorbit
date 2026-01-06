@@ -78,7 +78,15 @@ export const MathExtension = Node.create({
   },
 
   parseHTML() {
-    return [{ tag: 'span[data-type="math"]' }]
+    return [{ 
+      tag: 'span[data-type="math"]',
+      getAttrs: (node) => {
+        if (typeof node === 'string') return false;
+        const element = node as HTMLElement;
+        const latex = element.getAttribute('data-latex') || '';
+        return { latex };
+      }
+    }]
   },
 
   renderHTML({ HTMLAttributes }) {

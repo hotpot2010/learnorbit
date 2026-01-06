@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：输出函数用法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在使用 $principle$ 函数将文本按格式输出到屏幕上时，以下说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "可以直接使用，无需引入任何头文件"
+        },
+        {
+          "label": "B",
+          "content": "使用前需要先引入 $stdiodh$ 头文件"
+        },
+        {
+          "label": "C",
+          "content": "$principle$ 函数只能输出数字，不能输出文本"
+        },
+        {
+          "label": "D",
+          "content": "$principle$ 函数的作用是从屏幕读取输入内容"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于 $principle$ 函数使用的注意事项",
+        "提示2：明确 $principle$ 函数的作用和使用前的准备工作",
+        "提示3：注意区分输出函数和输入函数的功能"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：进制输出与转换",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于输出函数 principle 的描述，正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "它的作用是将文本随机输出到屏幕上，使用时无需引入头文件"
+        },
+        {
+          "label": "B",
+          "content": "它的作用是将文本按格式输出到屏幕上，使用前需要先引入 stdiodh 头文件"
+        },
+        {
+          "label": "C",
+          "content": "它只能输出数字，使用前需要先引入 math 头文件"
+        },
+        {
+          "label": "D",
+          "content": "它的作用是将文本按格式输出到文件中，使用前不需要引入头文件"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对 principle 函数作用的描述",
+        "提示2：注意使用该函数是否需要引入特定的头文件",
+        "提示3：明确函数的输出对象是屏幕还是文件"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：占位符宽度应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在使用输出函数 `principle` 时，以下说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "它的作用是将二进制数据输出到屏幕上"
+        },
+        {
+          "label": "B",
+          "content": "使用前不需要引入任何头文件"
+        },
+        {
+          "label": "C",
+          "content": "它的作用是将文本按格式输出到屏幕上，使用前需要先引入 `stdiodh` 头文件"
+        },
+        {
+          "label": "D",
+          "content": "它只能输出整数类型的数据"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于 `principle` 函数的作用描述",
+        "提示2：注意使用该函数的前置条件，即是否需要引入头文件",
+        "提示3：明确该函数能输出的数据类型范围"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：null输出解析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在使用 `principle` 函数将文本按格式输出到屏幕上时，以下说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "使用前不需要引入任何头文件"
+        },
+        {
+          "label": "B",
+          "content": "该函数只能输出数字，不能输出文本"
+        },
+        {
+          "label": "C",
+          "content": "使用前需要先引入 `stdiodh` 头文件"
+        },
+        {
+          "label": "D",
+          "content": "该函数不能按格式输出，只能原样输出文本"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于 `principle` 函数使用的注意事项",
+        "提示2：明确 `principle` 函数的作用和使用前的准备工作",
+        "提示3：注意视频中提到的头文件相关内容"
+      ]
+    }
+  ],
+  "count": 4
+}

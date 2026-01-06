@@ -1,0 +1,358 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：标识符概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言编程中，以下哪个不属于标识符的范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "变量的名称"
+        },
+        {
+          "label": "B",
+          "content": "函数的名称"
+        },
+        {
+          "label": "C",
+          "content": "程序中的注释内容"
+        },
+        {
+          "label": "D",
+          "content": "自定义结构体的名称"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频，思考标识符是用于编程时给哪些元素命名的",
+        "提示2：明确注释在程序中的作用，判断其是否为用于编程对象的命名",
+        "提示3：回顾变量、函数、自定义结构体在编程中是否需要命名，以及这些名称是否属于标识符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：标识符例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言编程中，以下哪个不属于标识符的范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "变量的名称"
+        },
+        {
+          "label": "B",
+          "content": "函数的参数"
+        },
+        {
+          "label": "C",
+          "content": "常量的值"
+        },
+        {
+          "label": "D",
+          "content": "结构体的名称"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频内容，思考标识符是用于什么的名称",
+        "提示2：明确变量名、函数名等属于标识符，判断各选项是否符合标识符定义",
+        "提示3：常量的值是具体的数据，并非用于编程时起的名称"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：C语言程序",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言编程中，以下哪一项不属于标识符的应用场景？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "给变量命名"
+        },
+        {
+          "label": "B",
+          "content": "给函数命名"
+        },
+        {
+          "label": "C",
+          "content": "给注释内容命名"
+        },
+        {
+          "label": "D",
+          "content": "给数组命名"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于标识符的定义，思考其用途",
+        "提示2：明确注释在C语言中的作用，它是否需要标识符",
+        "提示3：考虑变量、函数和数组在编程时是否需要命名"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：进制概念及题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言编程中，以下属于标识符的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "int"
+        },
+        {
+          "label": "B",
+          "content": "myVariable"
+        },
+        {
+          "label": "C",
+          "content": "123abc"
+        },
+        {
+          "label": "D",
+          "content": "@function"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：标识符是用户编程时使用的名称，要符合一定规则",
+        "提示2：C 语言中标识符不能是关键字，如 int 是关键字",
+        "提示3：标识符只能由字母、数字和下划线组成，且不能以数字开头",
+        "提示4：标识符不能包含特殊符号，如 @ 等"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数据类型讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言编程中，以下哪个不属于标识符的范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "变量的名称"
+        },
+        {
+          "label": "B",
+          "content": "函数的名称"
+        },
+        {
+          "label": "C",
+          "content": "注释的内容"
+        },
+        {
+          "label": "D",
+          "content": "结构体的名称"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中标识符的定义，它是用户编程时使用的名称",
+        "提示2：分析每个选项是否是在编程中用于标识某个对象的名称",
+        "提示3：思考注释在编程中的作用，它是否符合标识符的定义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：实数表示形式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言编程中，以下属于标识符的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "3abc"
+        },
+        {
+          "label": "B",
+          "content": "int"
+        },
+        {
+          "label": "C",
+          "content": "abc123"
+        },
+        {
+          "label": "D",
+          "content": "void"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：标识符是用户编程时使用的名称",
+        "提示2：标识符不能以数字开头",
+        "提示3：C语言中的关键字不能作为标识符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：字符类型知识",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言编程中，以下不属于标识符的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "变量名"
+        },
+        {
+          "label": "B",
+          "content": "函数名"
+        },
+        {
+          "label": "C",
+          "content": "C语言的关键字"
+        },
+        {
+          "label": "D",
+          "content": "用户自定义的对象名"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先明确视频中对标识符的定义",
+        "提示2：思考每个选项是否符合用户编程时使用的名称这一特征",
+        "提示3：C语言的关键字有其特定用途，与标识符的定义有区别"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：字符ASCII值",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言编程中，以下属于标识符的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "int"
+        },
+        {
+          "label": "B",
+          "content": "myVariable"
+        },
+        {
+          "label": "C",
+          "content": "3num"
+        },
+        {
+          "label": "D",
+          "content": "@symbol"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中标识符的定义，它是用户编程时使用的名称",
+        "提示2：标识符不能是C语言的关键字，如int是关键字",
+        "提示3：标识符只能由字母、数字和下划线组成，且不能以数字开头，也不能包含特殊符号"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：程序输出结果",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言编程中，以下哪个不属于标识符的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "变量的名称"
+        },
+        {
+          "label": "B",
+          "content": "函数的返回值类型"
+        },
+        {
+          "label": "C",
+          "content": "函数的名称"
+        },
+        {
+          "label": "D",
+          "content": "结构体的名称"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对标识符的定义，思考标识符是用于什么的名称",
+        "提示2：分析每个选项，判断其是否是编程时用户使用的名称",
+        "提示3：函数的返回值类型是一种数据类型，并非用户编程时用于命名的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：字符串知识点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言编程中，以下哪个不属于标识符的范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "变量的名称"
+        },
+        {
+          "label": "B",
+          "content": "函数的返回值类型"
+        },
+        {
+          "label": "C",
+          "content": "函数的名称"
+        },
+        {
+          "label": "D",
+          "content": "自定义结构体的名称"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对标识符的定义，明确其是用户编程时使用的名称",
+        "提示2：思考每个选项是否是用于命名的内容",
+        "提示3：函数的返回值类型是一种数据类型的规定，并非用于命名的名称"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：考点总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言编程中，以下属于标识符的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "int"
+        },
+        {
+          "label": "B",
+          "content": "sum_1"
+        },
+        {
+          "label": "C",
+          "content": "3num"
+        },
+        {
+          "label": "D",
+          "content": "void"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频，标识符是用户编程时使用的名字，用于给变量、函数等命名",
+        "提示2：标识符不能是C语言的关键字",
+        "提示3：标识符的命名规则一般要求以字母或下划线开头，不能以数字开头"
+      ]
+    }
+  ],
+  "count": 11
+}

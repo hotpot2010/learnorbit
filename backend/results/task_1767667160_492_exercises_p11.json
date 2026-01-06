@@ -1,0 +1,197 @@
+{
+  "exercises": [
+    {
+      "type": "选择题",
+      "title": "知识点练习：结构体定义声明",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，定义一个结构体来表示一个人的信息，其中包含姓名（字符串）、年龄（整数）和身高（浮点数），以下正确的定义方式是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "struct person { char name[20]; int age; float height; };"
+        },
+        {
+          "label": "B",
+          "content": "struct { char name; int age; float height; } person;"
+        },
+        {
+          "label": "C",
+          "content": "person { char name[20]; int age; float height; } struct;"
+        },
+        {
+          "label": "D",
+          "content": "struct person { char name; int age; float height; }"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：结构体定义的一般形式是 struct 结构体名 { 成员列表 }; ",
+        "提示2：注意成员类型要与题目要求匹配，姓名是字符串，要用字符数组表示",
+        "提示3：检查结构体定义的语法是否正确"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：结构体成员访问",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知定义了一个结构体 `struct person`，以下哪种方式可以正确访问该结构体变量 `p` 的成员 `name`？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "`p.name`"
+        },
+        {
+          "label": "B",
+          "content": "`person.name`"
+        },
+        {
+          "label": "C",
+          "content": "`name.p`"
+        },
+        {
+          "label": "D",
+          "content": "`name(p)`"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：要访问结构体变量的成员，需要使用结构体变量名",
+        "提示2：结构体成员访问的一般形式是 结构体变量名.成员名",
+        "提示3：分析每个选项是否符合结构体成员访问的正确形式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：结构体真题练习",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言中，定义一个结构体类型名为`struct student`，包含`name`（字符数组，长度为20）、`age`（整数）、`score`（浮点数）三个成员，以下定义正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "struct student { char name[20]; int age; float score; };"
+        },
+        {
+          "label": "B",
+          "content": "struct { char name[20]; int age; float score; } student;"
+        },
+        {
+          "label": "C",
+          "content": "student { char name[20]; int age; float score; };"
+        },
+        {
+          "label": "D",
+          "content": "struct student { char name; int age; float score; };"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：C语言中结构体定义的基本语法是 `struct 结构体名 { 成员列表 };`",
+        "提示2：注意成员类型和名称的正确书写，字符数组要指定长度",
+        "提示3：分析每个选项是否符合结构体定义的规范"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：字符串常量赋值",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言中，定义一个结构体 `struct person` 包含一个字符串成员 `name`，以下哪种方式是正确的结构体变量定义和字符串成员赋值？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "`struct person { char name[20]; }; struct person p; p.name = \"John\";`"
+        },
+        {
+          "label": "B",
+          "content": "`struct person { char *name; }; struct person p; p.name = \"John\";`"
+        },
+        {
+          "label": "C",
+          "content": "`struct person { char name[20]; }; struct person p; *p.name = \"John\";`"
+        },
+        {
+          "label": "D",
+          "content": "`struct person { char *name; }; struct person p; *p.name = \"John\";`"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：在C语言中，数组名是一个常量指针，不能直接被赋值",
+        "提示2：对于字符指针，可以直接指向一个字符串常量",
+        "提示3：分析每个选项中结构体成员的类型和赋值方式是否符合C语言的语法规则"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：字符串赋值要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言中，定义了一个结构体 `struct person`，以下关于结构体字符串赋值的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "可以直接使用 `=` 对结构体中的字符串数组进行赋值"
+        },
+        {
+          "label": "B",
+          "content": "需要使用 `strcpy` 函数对结构体中的字符串数组进行赋值"
+        },
+        {
+          "label": "C",
+          "content": "结构体中的字符串指针可以直接用字符串常量赋值，不需要考虑内存管理问题"
+        },
+        {
+          "label": "D",
+          "content": "以上说法都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：思考C语言中字符串数组和字符串指针的赋值方式有何不同",
+        "提示2：回顾 `strcpy` 函数的作用和使用场景",
+        "提示3：考虑字符串指针使用字符串常量赋值时可能存在的内存管理问题"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：预处理替换规则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言中，若要定义一个结构体类型，以下哪种定义方式符合视频中提到的定义思路？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "int person { name; age; };"
+        },
+        {
+          "label": "B",
+          "content": "struct person { char name[20]; int age; };"
+        },
+        {
+          "label": "C",
+          "content": "person struct { name; age; };"
+        },
+        {
+          "label": "D",
+          "content": "struct { char name; int age; } person;"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的结构体定义方式，是使用 `struct` 关键字。",
+        "提示2：结构体定义时，要明确结构体的名称和成员的类型。",
+        "提示3：分析每个选项中结构体定义的语法是否正确"
+      ]
+    }
+  ],
+  "count": 6
+}

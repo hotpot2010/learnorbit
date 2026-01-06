@@ -1,0 +1,389 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：while循环要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "程序控制语句中循环部分有三种基本的循环结构，以下哪种不是视频中提到的循环结构？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "while循环"
+        },
+        {
+          "label": "B",
+          "content": "do while循环"
+        },
+        {
+          "label": "C",
+          "content": "foreach循环"
+        },
+        {
+          "label": "D",
+          "content": "for循环"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到的三种基本循环结构的名称",
+        "提示2：逐一对比选项与视频内容",
+        "提示3：注意题目问的是‘不是’视频中提到的循环结构"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：do-while循环要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在编程中，循环结构有多种基本形式。已知有三种基本循环结构，分别是 $while$ 循环、$do-while$ 循环和 $for$ 循环。以下关于这三种循环结构特点的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$while$ 循环先执行循环体，再判断条件；$do-while$ 循环先判断条件，再执行循环体；$for$ 循环适用于已知循环次数的情况。"
+        },
+        {
+          "label": "B",
+          "content": "$while$ 循环先判断条件，再执行循环体；$do-while$ 循环先执行循环体，再判断条件；$for$ 循环适用于已知循环次数的情况。"
+        },
+        {
+          "label": "C",
+          "content": "$while$ 循环和 $do-while$ 循环都是先判断条件，再执行循环体；$for$ 循环适用于未知循环次数的情况。"
+        },
+        {
+          "label": "D",
+          "content": "$while$ 循环和 $do-while$ 循环都是先执行循环体，再判断条件；$for$ 循环适用于未知循环次数的情况。"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾 $while$ 循环、$do-while$ 循环和 $for$ 循环的基本执行流程。",
+        "提示2：明确三种循环结构在判断条件和执行循环体顺序上的区别。",
+        "提示3：思考 $for$ 循环在实际应用中更适合的场景。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：for循环要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在程序控制语句的循环部分，有三种基本的循环结构，以下哪种不属于这三种循环结构？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "while循环"
+        },
+        {
+          "label": "B",
+          "content": "do while循环"
+        },
+        {
+          "label": "C",
+          "content": "foreach循环"
+        },
+        {
+          "label": "D",
+          "content": "for循环"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的三种基本循环结构",
+        "提示2：明确每种循环结构的名称",
+        "提示3：逐一分析选项，判断哪个不是视频中提到的循环结构"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：break和continue",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下不属于视频中提到的基本循环结构的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "while循环"
+        },
+        {
+          "label": "B",
+          "content": "do while循环"
+        },
+        {
+          "label": "C",
+          "content": "foreach循环"
+        },
+        {
+          "label": "D",
+          "content": "for循环"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的基本循环结构有哪些",
+        "提示2：逐一分析每个选项是否在视频中被提及",
+        "提示3：视频中明确提到的循环结构为while循环、do while循环和for循环"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：for循环真题讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在控制语句的循环部分中，以下哪种不属于基本的循环结构？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "well循环"
+        },
+        {
+          "label": "B",
+          "content": "while循环"
+        },
+        {
+          "label": "C",
+          "content": "do well循环"
+        },
+        {
+          "label": "D",
+          "content": "for循环"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的基本循环结构有哪些",
+        "提示2：明确每个选项与视频中知识点的对应关系",
+        "提示3：找出不属于视频中所讲基本循环结构的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求前N项和",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在程序控制语句的循环部分中，以下哪种不是视频所提到的基本循环结构？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "well循环"
+        },
+        {
+          "label": "B",
+          "content": "while循环"
+        },
+        {
+          "label": "C",
+          "content": "do well循环"
+        },
+        {
+          "label": "D",
+          "content": "for循环"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的三种基本循环结构的名称",
+        "提示2：逐一对比选项中的循环结构和视频内容",
+        "提示3：找出不在视频所提范围内的循环结构"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：3倍数求和",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在编程控制语句的循环部分，以下哪种不是视频中提到的基本循环结构？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "while循环"
+        },
+        {
+          "label": "B",
+          "content": "do while循环"
+        },
+        {
+          "label": "C",
+          "content": "if循环"
+        },
+        {
+          "label": "D",
+          "content": "for循环"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的基本循环结构有哪些",
+        "提示2：逐一分析每个选项是否在视频中被提及",
+        "提示3：视频中明确指出了三种基本循环结构，不在其中的即为答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求质数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的控制语句中循环部分的基本循环结构不包含以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "while循环"
+        },
+        {
+          "label": "B",
+          "content": "do while循环"
+        },
+        {
+          "label": "C",
+          "content": "foreach循环"
+        },
+        {
+          "label": "D",
+          "content": "for循环"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中所列举的基本循环结构种类",
+        "提示2：逐一对比选项与视频提及的循环结构",
+        "提示3：视频中提到了三种基本循环结构，从中排除不属于的那一项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：质数判断方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的基本循环结构不包含以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "well 循环"
+        },
+        {
+          "label": "B",
+          "content": "while 循环"
+        },
+        {
+          "label": "C",
+          "content": "do well 循环"
+        },
+        {
+          "label": "D",
+          "content": "for 循环"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示 1：仔细回顾视频中提到的三种基本循环结构的名称",
+        "提示 2：对比选项中的名称和视频里的表述",
+        "提示 3：找出视频中未提及的循环结构名称"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：区分质数标记",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在控制语句的循环部分，以下哪种不属于视频中提到的基本循环结构？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "well循环"
+        },
+        {
+          "label": "B",
+          "content": "while循环"
+        },
+        {
+          "label": "C",
+          "content": "do well循环"
+        },
+        {
+          "label": "D",
+          "content": "for循环"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的三种基本循环结构的名称",
+        "提示2：逐一对比选项与视频内容",
+        "提示3：排除视频中明确提到的循环结构，剩下的即为答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：代码输出要求",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在控制语句的循环部分，以下哪种不属于视频中提到的基本循环结构？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "well 循环"
+        },
+        {
+          "label": "B",
+          "content": "while 循环"
+        },
+        {
+          "label": "C",
+          "content": "do well 循环"
+        },
+        {
+          "label": "D",
+          "content": "for 循环"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中所提到的三种基本循环结构",
+        "提示2：在选项中找出与视频提到的循环结构不一致的选项",
+        "提示3：视频中提到的循环结构有 well 循环、do well 循环和 for 循环"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：期末真题考点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在控制语句的循环部分，有三种基本的循环结构，以下哪种不属于这三种循环结构？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "well循环"
+        },
+        {
+          "label": "B",
+          "content": "do while循环"
+        },
+        {
+          "label": "C",
+          "content": "while循环"
+        },
+        {
+          "label": "D",
+          "content": "for循环"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到的三种基本循环结构的名称",
+        "提示2：将选项与视频中讲解的内容进行对比",
+        "提示3：注意区分选项中类似的循环结构名称"
+      ]
+    }
+  ],
+  "count": 12
+}

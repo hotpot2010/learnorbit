@@ -1,0 +1,165 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：scanf 函数基础",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，若要从键盘读取用户输入的数据，应该使用以下哪个函数？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "`printf` 函数"
+        },
+        {
+          "label": "B",
+          "content": "`scanf` 函数"
+        },
+        {
+          "label": "C",
+          "content": "`getchar` 函数"
+        },
+        {
+          "label": "D",
+          "content": "`putchar` 函数"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的用于读取用户键盘输入的函数",
+        "提示2：分析每个选项函数的功能，`printf` 主要用于输出，`getchar` 用于读取单个字符，`putchar` 用于输出单个字符",
+        "提示3：根据视频明确指出的函数来选择答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：控制台输入格式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言中，若要读取用户的键盘输入，通常会使用以下哪个函数？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "`printf`"
+        },
+        {
+          "label": "B",
+          "content": "`scanf`"
+        },
+        {
+          "label": "C",
+          "content": "`getchar`"
+        },
+        {
+          "label": "D",
+          "content": "`putchar`"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的用于读取用户键盘输入的函数",
+        "提示2：分析每个选项函数的功能，`printf`主要用于输出，`getchar`用于读取单个字符，`putchar`用于输出单个字符",
+        "提示3：根据知识点确定正确答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：scanf 与指针",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在C语言中，若要读取用户从键盘输入的数据，通常会使用的函数是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "printf"
+        },
+        {
+          "label": "B",
+          "content": "scanf"
+        },
+        {
+          "label": "C",
+          "content": "getchar"
+        },
+        {
+          "label": "D",
+          "content": "puts"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的用于读取用户键盘输入的函数",
+        "提示2：思考每个选项函数的功能和用途",
+        "提示3：排除用于输出或其他功能的函数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：scanf 限制长度",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，若要读取用户的键盘输入，通常会使用以下哪个函数？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "`printf`"
+        },
+        {
+          "label": "B",
+          "content": "`scanf`"
+        },
+        {
+          "label": "C",
+          "content": "`getchar`"
+        },
+        {
+          "label": "D",
+          "content": "`putchar`"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到读取用户的键盘输入会用到的函数",
+        "提示2：`printf` 函数主要用于输出信息，`putchar` 用于输出单个字符",
+        "提示3：`getchar` 是获取单个字符的输入，但不符合本题描述的读取用户键盘输入的通用场景"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：scanf 例题分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在 C 语言中，若要读取用户的键盘输入，通常会使用以下哪个函数？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "`printf`"
+        },
+        {
+          "label": "B",
+          "content": "`scanf`"
+        },
+        {
+          "label": "C",
+          "content": "`getchar`"
+        },
+        {
+          "label": "D",
+          "content": "`putchar`"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到用于读取用户键盘输入的函数",
+        "提示2：明确每个选项函数的功能，`printf` 主要用于输出，`getchar` 用于读取单个字符，`putchar` 用于输出单个字符",
+        "提示3：根据知识点确定正确答案"
+      ]
+    }
+  ],
+  "count": 5
+}
