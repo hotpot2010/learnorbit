@@ -1,0 +1,166 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：沉淀溶解平衡",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "沉淀溶解平衡研究的对象是难溶强电解质，将固体 $AgCl$ 放入水中，会达到动态平衡状态。下列关于难溶强电解质的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "难溶强电解质溶液中离子浓度很高"
+        },
+        {
+          "label": "B",
+          "content": "难溶强电解质在水中完全不溶解"
+        },
+        {
+          "label": "C",
+          "content": "难溶强电解质溶液中存在离子"
+        },
+        {
+          "label": "D",
+          "content": "难溶强电解质放入水中不会达到动态平衡"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频，难溶强电解质的难溶性意味着溶液浓度非常低，据此判断选项A",
+        "提示2：难溶并非完全不溶，只是溶解度很小，据此判断选项B",
+        "提示3：强电解质在溶液中会电离出离子，据此判断选项C",
+        "提示4：像固体 $AgCl$ 放入水中会达到动态平衡，据此判断选项D"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：溶度积常数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于难溶强电解质，以下关于沉淀溶解平衡的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "难溶强电解质的溶液浓度很高，且溶液中不存在离子"
+        },
+        {
+          "label": "B",
+          "content": "难溶强电解质的溶液浓度很低，但溶液中存在离子"
+        },
+        {
+          "label": "C",
+          "content": "难溶强电解质放入水中不会发生任何反应"
+        },
+        {
+          "label": "D",
+          "content": "沉淀溶解平衡不是动态平衡"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于难溶强电解质的定义，明确其溶液浓度特点",
+        "提示2：思考强电解质在溶液中的存在形式",
+        "提示3：考虑沉淀溶解平衡的性质"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：沉淀生成计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知氯化银（$AgCl$）是难溶强电解质，其溶度积常数 $K_{sp}(AgCl)=1.8\\times10^{-10}$。向含有 $0.01mol/L$ $Cl^-$ 的溶液中加入 $AgNO_3$ 固体，当开始产生 $AgCl$ 沉淀时，溶液中 $Ag^+$ 的浓度为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.8\\times10^{-8}mol/L$"
+        },
+        {
+          "label": "B",
+          "content": "$1.8\\times10^{-10}mol/L$"
+        },
+        {
+          "label": "C",
+          "content": "$1.8\\times10^{-12}mol/L$"
+        },
+        {
+          "label": "D",
+          "content": "$1.8\\times10^{-6}mol/L$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据溶度积常数的定义，对于 $AgCl$ 沉淀溶解平衡 $AgCl(s)\\rightleftharpoons Ag^+(aq)+Cl^-(aq)$，$K_{sp}(AgCl)=[Ag^+][Cl^-]$",
+        "提示2：已知 $K_{sp}(AgCl)$ 和 $[Cl^-]$ 的值，可通过公式计算 $[Ag^+]$",
+        "提示3：将已知数据代入公式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：沉淀溶解转化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在沉淀溶解平衡中，研究的对象是难溶强电解质，将固体氯化银放入水中，会建立动态平衡。已知氯化银的溶度积常数 $K_{sp}(AgCl)=1.8\\times10^{-10}$，在某溶液中 $c(Cl^-)=0.01mol/L$，则该溶液中 $c(Ag^+)$ 为多少时会有氯化银沉淀生成？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.8\\times10^{-8}mol/L$"
+        },
+        {
+          "label": "B",
+          "content": "$1.8\\times10^{-12}mol/L$"
+        },
+        {
+          "label": "C",
+          "content": "$1.8\\times10^{-10}mol/L$"
+        },
+        {
+          "label": "D",
+          "content": "$1.8\\times10^{-6}mol/L$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：当离子积 $Q_{c}>K_{sp}$ 时，会有沉淀生成",
+        "提示2：对于氯化银的沉淀溶解平衡 $AgCl(s)\\rightleftharpoons Ag^+(aq)+Cl^-(aq)$，离子积 $Q_{c}=c(Ag^+)\\cdot c(Cl^-)$",
+        "提示3：已知 $K_{sp}(AgCl)$ 和 $c(Cl^-)$，根据 $Q_{c}>K_{sp}$ 计算 $c(Ag^+)$ 的范围"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：沉淀溶解计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知 $AgCl$ 是难溶强电解质，在一定温度下，将固体 $AgCl$ 放入水中达到沉淀溶解平衡，下列说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "达到平衡时，溶液中 $Ag^+$ 和 $Cl^-$ 的浓度相等且保持不变"
+        },
+        {
+          "label": "B",
+          "content": "达到平衡时，固体 $AgCl$ 的质量不再改变，说明该平衡是静态平衡"
+        },
+        {
+          "label": "C",
+          "content": "升高温度，$AgCl$ 的溶解度减小，因为 $AgCl$ 的溶解是放热过程"
+        },
+        {
+          "label": "D",
+          "content": "向溶液中加入少量 $NaCl$ 固体，$AgCl$ 的溶解度增大，因为 $Cl^-$ 浓度增大使平衡正向移动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：沉淀溶解平衡是动态平衡，达到平衡时，正逆反应速率相等",
+        "提示2：$AgCl$ 的溶解平衡为 $AgCl(s) \\rightleftharpoons Ag^+(aq) + Cl^-(aq)$，根据平衡移动原理分析",
+        "提示3：一般来说，物质的溶解过程是吸热的，升高温度有利于溶解"
+      ]
+    }
+  ],
+  "count": 5
+}

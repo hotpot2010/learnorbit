@@ -1,0 +1,325 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：刚体运动描述",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本课程主要是讲解机械手的一些运动以及它的一些操作，若一个机械手在平面内做刚体运动，其运动可以分解为平移和转动。已知机械手的一个端点初始坐标为 $(x_1,y_1)$，经过平移 $\\Delta x$ 和 $\\Delta y$ 后，又绕某点逆时针旋转了 $\\theta$ 角度，那么该端点最终坐标 $(x_2,y_2)$ 的计算过程中，以下哪个步骤是正确的（不考虑具体计算结果，只看步骤逻辑）？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "先计算平移后的坐标 $(x_1 + \\Delta x,y_1 + \\Delta y)$，再直接用旋转矩阵 $\\begin{bmatrix}\\cos\\theta & -\\sin\\theta \\\\ \\sin\\theta & \\cos\\theta\\end{bmatrix}$ 乘以平移后的坐标向量 $\\begin{bmatrix}x_1 + \\Delta x \\\\ y_1 + \\Delta y\\end{bmatrix}$ 得到最终坐标"
+        },
+        {
+          "label": "B",
+          "content": "先计算平移后的坐标 $(x_1 + \\Delta x,y_1 + \\Delta y)$，再将平移后的坐标减去旋转中心点坐标，然后用旋转矩阵 $\\begin{bmatrix}\\cos\\theta & -\\sin\\theta \\\\ \\sin\\theta & \\cos\\theta\\end{bmatrix}$ 乘以所得向量，最后再加上旋转中心点坐标得到最终坐标"
+        },
+        {
+          "label": "C",
+          "content": "先直接用旋转矩阵 $\\begin{bmatrix}\\cos\\theta & -\\sin\\theta \\\\ \\sin\\theta & \\cos\\theta\\end{bmatrix}$ 乘以初始坐标向量 $\\begin{bmatrix}x_1 \\\\ y_1\\end{bmatrix}$，再加上平移量 $(\\Delta x,\\Delta y)$ 得到最终坐标"
+        },
+        {
+          "label": "D",
+          "content": "先将初始坐标减去旋转中心点坐标，用旋转矩阵 $\\begin{bmatrix}\\cos\\theta & -\\sin\\theta \\\\ \\sin\\theta & \\cos\\theta\\end{bmatrix}$ 乘以所得向量，然后加上平移量 $(\\Delta x,\\Delta y)$ 得到最终坐标"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：刚体的平移和旋转运动是有先后顺序的，一般先平移后旋转",
+        "提示2：在进行旋转操作时，需要先将坐标原点移到旋转中心点",
+        "提示3：旋转操作完成后，要将坐标原点移回原来的位置"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：建立坐标系法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学中，若要研究机械手臂的运动，建立合适的坐标系非常重要。已知一个机械手臂在平面内运动，其末端执行器的位置可以用坐标 $(x,y)$ 表示。现在有一个简单的机械手臂模型，它在初始时刻的位置为 $(0,0)$，第一次运动是沿 $x$ 轴正方向移动 $3$ 个单位长度，第二次运动是沿与 $x$ 轴正方向成 $60^\\circ$ 角的方向移动 $2$ 个单位长度。那么此时末端执行器的坐标为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(4,\\sqrt{3})$"
+        },
+        {
+          "label": "B",
+          "content": "$(3 + \\sqrt{3},1)$"
+        },
+        {
+          "label": "C",
+          "content": "$(4,1)$"
+        },
+        {
+          "label": "D",
+          "content": "$(3 + \\sqrt{3},\\sqrt{3})$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先分析第一次运动后末端执行器的坐标",
+        "提示2：再根据三角函数知识，计算第二次运动在 $x$ 轴和 $y$ 轴方向上的位移分量",
+        "提示3：将两次运动在 $x$ 轴和 $y$ 轴上的位移分别相加，得到最终坐标"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：运动状态确定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课主要讲解的内容是关于（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人的理论知识"
+        },
+        {
+          "label": "B",
+          "content": "机械手的一些运动以及操作"
+        },
+        {
+          "label": "C",
+          "content": "人体运动学的规律"
+        },
+        {
+          "label": "D",
+          "content": "电子电路的设计"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本节课重点讲解方向",
+        "提示2：视频中明确指出了围绕某一特定事物的相关内容",
+        "提示3：从视频内容可知是与机械操作相关的对象"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：质心运动度量",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本课程主要讲解的是关于哪种设备的运动以及操作？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人"
+        },
+        {
+          "label": "B",
+          "content": "机械手臂"
+        },
+        {
+          "label": "C",
+          "content": "医疗设备"
+        },
+        {
+          "label": "D",
+          "content": "自动化机器"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本课程主要讲解内容",
+        "提示2：重点关注与运动和操作相关的设备名称",
+        "提示3：视频中有明确指出是要讲解的某种设备的运动及操作"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：向量两种用法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术教学课程中，对于机械手腕动作的分析里，若已知某机械臂的运动向量 $\\vec{a}=(2,3)$ 用于表示位置移动方向，另一个向量 $\\vec{b}=( - 1,2)$ 用于表示力的作用方向，那么向量 $\\vec{a}$ 和向量 $\\vec{b}$ 的数量积 $\\vec{a}\\cdot\\vec{b}$ 是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$4$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$ - 2$"
+        },
+        {
+          "label": "D",
+          "content": "$ - 4$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据向量数量积的坐标运算公式，若 $\\vec{m}=(x_1,y_1)$，$\\vec{n}=(x_2,y_2)$，则 $\\vec{m}\\cdot\\vec{n}=x_1x_2 + y_1y_2$",
+        "提示2：确定本题中 $\\vec{a}=(2,3)$ 里的 $x_1 = 2$，$y_1 = 3$；$\\vec{b}=( - 1,2)$ 里的 $x_2=-1$，$y_2 = 2$",
+        "提示3：将对应坐标值代入数量积公式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：转动描述方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本课程主要是要给同学们讲解机械手腕的一些运动以及它的一些操作，那么在描述机械手腕转动时，若机械手腕绕 $z$ 轴逆时针旋转 $\\theta$ 角度，其旋转矩阵 $R_z(\\theta)$ 为以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\begin{bmatrix}\\cos\\theta & -\\sin\\theta & 0 \\\\ \\sin\\theta & \\cos\\theta & 0 \\\\ 0 & 0 & 1\\end{bmatrix}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\begin{bmatrix}\\cos\\theta & \\sin\\theta & 0 \\\\ -\\sin\\theta & \\cos\\theta & 0 \\\\ 0 & 0 & 1\\end{bmatrix}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\begin{bmatrix}1 & 0 & 0 \\\\ 0 & \\cos\\theta & -\\sin\\theta \\\\ 0 & \\sin\\theta & \\cos\\theta\\end{bmatrix}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\begin{bmatrix}\\cos\\theta & 0 & -\\sin\\theta \\\\ 0 & 1 & 0 \\\\ \\sin\\theta & 0 & \\cos\\theta\\end{bmatrix}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆空间中绕坐标轴旋转的旋转矩阵公式",
+        "提示2：明确绕 $z$ 轴逆时针旋转时旋转矩阵的形式",
+        "提示3：注意旋转方向和各元素的正负关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：向量投影概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知向量 $\\vec{a}=(1,2)$，$\\vec{b}=(3, - 1)$，则向量 $\\vec{a}$ 在向量 $\\vec{b}$ 上的投影为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{\\sqrt{10}}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{\\sqrt{5}}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{\\sqrt{10}}{10}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{\\sqrt{5}}{5}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先明确向量投影的计算公式，向量 $\\vec{a}$ 在向量 $\\vec{b}$ 上的投影为 $\\frac{\\vec{a}\\cdot\\vec{b}}{|\\vec{b}|}$",
+        "提示2：计算向量 $\\vec{a}$ 与向量 $\\vec{b}$ 的数量积 $\\vec{a}\\cdot\\vec{b}$",
+        "提示3：计算向量 $\\vec{b}$ 的模 $|\\vec{b}|$，再代入投影公式计算结果"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：简单旋转矩阵",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学相关课程中，机械手腕的运动研究常涉及简单旋转矩阵。已知一个二维平面上的点 $P(x,y)$ 绕原点逆时针旋转 $\\theta$ 角度，旋转矩阵为 $R = \\begin{bmatrix}\\cos\\theta & -\\sin\\theta \\\\ \\sin\\theta & \\cos\\theta\\end{bmatrix}$，若点 $P(1,0)$ 绕原点逆时针旋转 $60^{\\circ}$，旋转后的点 $P'$ 的坐标是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(\\frac{1}{2},\\frac{\\sqrt{3}}{2})$"
+        },
+        {
+          "label": "B",
+          "content": "$(\\frac{\\sqrt{3}}{2},\\frac{1}{2})$"
+        },
+        {
+          "label": "C",
+          "content": "$(-\\frac{1}{2},\\frac{\\sqrt{3}}{2})$"
+        },
+        {
+          "label": "D",
+          "content": "$(\\frac{1}{2},-\\frac{\\sqrt{3}}{2})$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确旋转矩阵的应用，点 $P(x,y)$ 绕原点旋转后的坐标 $P'(x',y')$ 可通过矩阵乘法 $\\begin{bmatrix}x' \\\\ y'\\end{bmatrix}=R\\begin{bmatrix}x \\\\ y\\end{bmatrix}$ 计算",
+        "提示2：已知 $\\theta = 60^{\\circ}$，则 $\\cos\\theta=\\frac{1}{2}$，$\\sin\\theta = \\frac{\\sqrt{3}}{2}$",
+        "提示3：将 $x = 1$，$y = 0$ 以及 $\\cos\\theta$ 和 $\\sin\\theta$ 的值代入矩阵乘法公式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：复杂投影求矩阵",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学臂的运动中，若一个向量 $\\vec{v}=(1,2,3)$ 在某一复杂投影变换下，其投影矩阵 $P$ 满足 $P\\vec{v}$ 得到的新向量的第一个分量为原向量第一个分量的 $2$ 倍，第二个分量为原向量第二个分量的 $-1$ 倍，第三个分量为原向量第三个分量的 $\\frac{1}{2}$ 倍，那么投影矩阵 $P$ 可能是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\begin{pmatrix}2 & 0 & 0 \\\\ 0 & -1 & 0 \\\\ 0 & 0 & \\frac{1}{2}\\end{pmatrix}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\begin{pmatrix}2 & 1 & 0 \\\\ 0 & -1 & 1 \\\\ 0 & 0 & \\frac{1}{2}\\end{pmatrix}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\begin{pmatrix}2 & 0 & 1 \\\\ 0 & -1 & 0 \\\\ 1 & 0 & \\frac{1}{2}\\end{pmatrix}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\begin{pmatrix}1 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 1\\end{pmatrix}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据矩阵乘法的规则，设投影矩阵 $P = \\begin{pmatrix}a & b & c \\\\ d & e & f \\\\ g & h & i\\end{pmatrix}$，计算 $P\\vec{v}=\\begin{pmatrix}a & b & c \\\\ d & e & f \\\\ g & h & i\\end{pmatrix}\\begin{pmatrix}1 \\\\ 2 \\\\ 3\\end{pmatrix}=\\begin{pmatrix}a + 2b+3c \\\\ d + 2e + 3f \\\\ g+2h + 3i\\end{pmatrix}$。",
+        "提示2：结合题目中投影后新向量各分量与原向量各分量的关系来确定矩阵元素的值。",
+        "提示3：因为新向量的第一个分量为原向量第一个分量的 $2$ 倍，即 $a + 2b+3c=2\\times1 = 2$；第二个分量为原向量第二个分量的 $-1$ 倍，即 $d + 2e + 3f=-1\\times2=-2$；第三个分量为原向量第三个分量的 $\\frac{1}{2}$ 倍，即 $g+2h + 3i=\\frac{1}{2}\\times3 = \\frac{3}{2}$，逐一分析选项。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：旋转矩阵练习",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学中，机械手臂的运动常涉及旋转矩阵。已知一个二维平面上的旋转矩阵 $R(\\theta)=\\begin{bmatrix}\\cos\\theta & -\\sin\\theta \\\\ \\sin\\theta & \\cos\\theta\\end{bmatrix}$，当机械手臂绕原点逆时针旋转 $60^{\\circ}$ 时，点 $P(2, 0)$ 经过旋转后的坐标为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(1, \\sqrt{3})$"
+        },
+        {
+          "label": "B",
+          "content": "$(\\sqrt{3}, 1)$"
+        },
+        {
+          "label": "C",
+          "content": "$(-1, \\sqrt{3})$"
+        },
+        {
+          "label": "D",
+          "content": "$(\\sqrt{3}, -1)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先确定旋转角度 $\\theta$ 的值，因为是逆时针旋转 $60^{\\circ}$，所以 $\\theta = 60^{\\circ}$，将其转化为弧度制 $\\theta = \\frac{\\pi}{3}$",
+        "提示2：根据旋转矩阵公式 $R(\\theta)=\\begin{bmatrix}\\cos\\theta & -\\sin\\theta \\\\ \\sin\\theta & \\cos\\theta\\end{bmatrix}$，计算出旋转矩阵 $R(\\frac{\\pi}{3})$",
+        "提示3：设点 $P(2, 0)$ 对应的列向量为 $\\vec{v}=\\begin{bmatrix}2 \\\\ 0\\end{bmatrix}$，旋转后的向量 $\\vec{v}' = R(\\frac{\\pi}{3})\\vec{v}$，通过矩阵乘法计算出旋转后的向量坐标"
+      ]
+    }
+  ],
+  "count": 10
+}

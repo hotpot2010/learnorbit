@@ -1,0 +1,1329 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：指令概念介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z 老师本次分享的课程是关于哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母课程"
+        },
+        {
+          "label": "C",
+          "content": "电子电路基础"
+        },
+        {
+          "label": "D",
+          "content": "计算机编程基础"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细在视频中寻找老师提到的课程名称",
+        "提示2：重点关注老师说分享哪门课程期末冲刺课的部分",
+        "提示3：根据视频中明确表述来选择答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：操作数类型讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z 老师此次分享的课程是为了帮助大家在考前高效通过哪门课程？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母课程"
+        },
+        {
+          "label": "C",
+          "content": "电子技术基础课程"
+        },
+        {
+          "label": "D",
+          "content": "物理实验课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的课程名称相关内容",
+        "提示2：明确老师分享课程的目标所针对的具体课程",
+        "提示3：在视频逐字稿中查找关键课程名称信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：指令描述规定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z 老师本次课程要分享的是哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母老师团队课程"
+        },
+        {
+          "label": "C",
+          "content": "期末冲刺通用课程"
+        },
+        {
+          "label": "D",
+          "content": "未提及的课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细在视频逐字稿中寻找关于课程名称的描述",
+        "提示2：关注老师提到要分享的课程具体是什么",
+        "提示3：明确提到的课程名称才是正确答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：寻址概念介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的课程是为了帮助大家在考前达成什么目标？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "轻松通过考试"
+        },
+        {
+          "label": "B",
+          "content": "高分速成该门课，避免挂科"
+        },
+        {
+          "label": "C",
+          "content": "掌握所有知识点"
+        },
+        {
+          "label": "D",
+          "content": "提高学习兴趣"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于课程目标的描述",
+        "提示2：关注与考前目标相关的语句",
+        "提示3：对比各选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：立即寻址讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术这门课程的期末冲刺课中，老师主要讲解的这一章有几个主要内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1个"
+        },
+        {
+          "label": "B",
+          "content": "2个"
+        },
+        {
+          "label": "C",
+          "content": "3个"
+        },
+        {
+          "label": "D",
+          "content": "4个"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：关注视频中提到的这一章主要内容的数量相关表述",
+        "提示2：在视频中查找‘本章主要有几个主要内容’的关键信息",
+        "提示3：注意听清数字信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：直接寻址讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "老师本次分享的课程是为了帮助大家在考前高效通过哪门课程？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母课程"
+        },
+        {
+          "label": "C",
+          "content": "考前冲刺课程"
+        },
+        {
+          "label": "D",
+          "content": "未知课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到的具体课程名称",
+        "提示2：从老师的表述中寻找关键信息",
+        "提示3：明确老师分享课程的目的所针对的课程"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：立即数寻址",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术课程中，老师本次课主要讲解内容有两个方面，以下关于本次课内容的说法，最符合视频信息的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "主要讲解立即数寻址的全部知识"
+        },
+        {
+          "label": "B",
+          "content": "只讲解了单片机原理，未涉及接口技术"
+        },
+        {
+          "label": "C",
+          "content": "本次课包含两个主要讲解内容，但未明确具体内容"
+        },
+        {
+          "label": "D",
+          "content": "重点是帮助大家避免挂科，不涉及课程具体知识讲解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细分析视频中提到的本次课讲解内容的描述",
+        "提示2：明确视频是否说明了具体讲解的两个内容是什么",
+        "提示3：判断每个选项与视频信息的匹配程度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：寄存器寻址",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术这门课程的期末冲刺课中，老师提到本节课主要讲解的内容有几个？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1个"
+        },
+        {
+          "label": "B",
+          "content": "2个"
+        },
+        {
+          "label": "C",
+          "content": "3个"
+        },
+        {
+          "label": "D",
+          "content": "4个"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：关注视频中老师提到的本节课主要讲解内容的数量相关表述",
+        "提示2：仔细听老师说“本节主要有几个”这样的关键语句",
+        "提示3：从视频逐字稿中查找对应信息"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：寄存器间接寻址",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术中，寄存器间接寻址是重要的寻址方式。若某寄存器存储的地址为 $0x20$，该地址存储的数据为 $0x30$，通过寄存器间接寻址获取的数据是 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$0x30$",
+      "hints": [
+        "提示1：明确寄存器间接寻址的概念，它是通过寄存器中存储的地址去访问相应存储单元的数据",
+        "提示2：已知寄存器存储的地址为 $0x20$，需要关注该地址存储的数据",
+        "提示3：找到地址 $0x20$ 所存储的数据即为所求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：变址寻址",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术课程中，变址寻址常用于访问数组元素。若有一个数组 $a$，其首地址存于寄存器 $R0$ 中，数组元素的偏移量存于寄存器 $R1$ 中，那么通过变址寻址访问数组元素的地址表达式是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$R0 + R1$"
+        },
+        {
+          "label": "B",
+          "content": "$R0 - R1$"
+        },
+        {
+          "label": "C",
+          "content": "$R0 \\times R1$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{R0}{R1}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：变址寻址是通过基址寄存器和变址寄存器的值相加来得到操作数的有效地址",
+        "提示2：在本题中，基址寄存器是存放数组首地址的 $R0$，变址寄存器是存放偏移量的 $R1$",
+        "提示3：根据变址寻址的原理来确定地址表达式"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：相对寻址",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次单片机原理及接口技术课程的期末冲刺课的目的是帮助大家在考前高速度完成这门课，并避免 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "挂科",
+      "hints": [
+        "提示1：可从视频中查找关于课程目的的相关表述",
+        "提示2：注意视频中提到避免的情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：位寻址",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的课程是为了帮助大家在考前实现什么目标？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "提高该门课程成绩，避免挂科"
+        },
+        {
+          "label": "B",
+          "content": "熟悉课程内容框架"
+        },
+        {
+          "label": "C",
+          "content": "掌握位寻址的所有细节"
+        },
+        {
+          "label": "D",
+          "content": "提前预习课程知识"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到的关于帮助大家在考前达成的具体目标相关表述",
+        "提示2：明确课程的主要目的是与考试成绩和挂科情况有关",
+        "提示3：逐一分析每个选项与视频中内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：寻址总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z 老师要讲解的单片机原理及接口技术这门课程的期末冲刺课，这一章主要讲解的内容数量是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1个"
+        },
+        {
+          "label": "B",
+          "content": "2个"
+        },
+        {
+          "label": "C",
+          "content": "3个"
+        },
+        {
+          "label": "D",
+          "content": "4个"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：关注视频中提到的这一章主要内容的数量描述",
+        "提示2：在视频中找到明确说明这一章主要内容个数的语句",
+        "提示3：重点留意[00:21 - 00:23]这段时间的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：指令分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的课程是为了帮助大家在考前快速通过哪门课程？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母课程"
+        },
+        {
+          "label": "C",
+          "content": "考前冲刺课程"
+        },
+        {
+          "label": "D",
+          "content": "未知课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的具体课程名称",
+        "提示2：注意课程是有明确指向的",
+        "提示3：在视频中查找与帮助考前快速通过相关的课程信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：代码指令解读",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z老师本次分享的课程是为了帮助大家在考前高效通过哪门课程，避免挂科？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术这门课程的期末冲刺课"
+        },
+        {
+          "label": "B",
+          "content": "数学字母老师团队的基础课程"
+        },
+        {
+          "label": "C",
+          "content": "一门未提及具体名称的课程"
+        },
+        {
+          "label": "D",
+          "content": "单片机原理的入门课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细聆听视频中提到的课程名称和分享课程的目的",
+        "提示2：关注老师明确说明的帮助大家通过考试的课程",
+        "提示3：排除未在视频中明确提及的课程选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：片外数据传送",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到老师要分享的课程是关于哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母老师团队课程"
+        },
+        {
+          "label": "C",
+          "content": "电子技术基础"
+        },
+        {
+          "label": "D",
+          "content": "计算机编程基础"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回忆视频中老师提到的课程名称",
+        "提示2：注意关键信息是关于哪门课程的期末冲刺课",
+        "提示3：在视频中查找明确提及的课程名称表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：片内到片外传送",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z 老师本次分享的课程是关于哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母"
+        },
+        {
+          "label": "C",
+          "content": "电子电路基础"
+        },
+        {
+          "label": "D",
+          "content": "计算机编程基础"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示 1：关注视频中提到的课程名称",
+        "提示 2：在 00:08 - 00:11 秒的内容中寻找答案",
+        "提示 3：明确老师分享的是哪门课程的期末冲刺课"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数据交换指令",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次单片机原理及接口技术课程的期末冲刺课，这一章主要讲解的内容数量是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1个"
+        },
+        {
+          "label": "B",
+          "content": "2个"
+        },
+        {
+          "label": "C",
+          "content": "3个"
+        },
+        {
+          "label": "D",
+          "content": "4个"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：关注视频中提到的这一章主要讲解内容的数量相关表述",
+        "提示2：寻找‘本章主要有几个’这样的关键语句",
+        "提示3：根据关键语句确定答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：对战操作原则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z 老师本次分享的课程是为了帮助大家在考前实现什么目标？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "快速掌握单片机原理及接口技术这门课程的所有知识"
+        },
+        {
+          "label": "B",
+          "content": "在单片机原理及接口技术这门课程考试中高分速成并避免挂科"
+        },
+        {
+          "label": "C",
+          "content": "仅了解这门课程的期末冲刺课内容"
+        },
+        {
+          "label": "D",
+          "content": "在所有课程考试中都取得高分"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中老师提到的分享课程的目的相关内容",
+        "提示2：重点关注与考试目标有关的表述",
+        "提示3：将每个选项与视频内容进行细致对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：入栈出栈操作",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个栈的入栈序列是1, 2, 3, 4，以下哪个出栈序列是不可能的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "4, 3, 2, 1"
+        },
+        {
+          "label": "B",
+          "content": "3, 4, 2, 1"
+        },
+        {
+          "label": "C",
+          "content": "2, 4, 1, 3"
+        },
+        {
+          "label": "D",
+          "content": "1, 2, 3, 4"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：栈的特点是后进先出（LIFO），根据入栈序列分析每个选项的出栈过程是否符合栈的特性。",
+        "提示2：对于选项A，入栈顺序为1, 2, 3, 4，全部入栈后依次出栈，可得到4, 3, 2, 1。",
+        "提示3：对于选项B，先入栈1, 2, 3，3出栈，再入栈4，4出栈，然后2出栈，最后1出栈，可得到3, 4, 2, 1。",
+        "提示4：对于选项C，若要2先出栈，需先入栈1, 2，2出栈；接着4出栈，意味着1, 3, 4都已入栈，此时栈顶元素是4，4出栈后栈顶元素是3，应该3先出栈，而不是1先出栈，所以该出栈序列不可能。",
+        "提示5：对于选项D，入栈一个元素就出栈一个元素，可得到1, 2, 3, 4。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：算术运算讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术这门课程的期末冲刺课中，老师提到某章主要有两个内容。假设这两个内容分别在考试中占比为 $x$ 和 $y$，且 $x + y = 1$，$x$ 比 $y$ 多 $0.2$，那么 $x$ 的值是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.4$"
+        },
+        {
+          "label": "B",
+          "content": "$0.5$"
+        },
+        {
+          "label": "C",
+          "content": "$0.6$"
+        },
+        {
+          "label": "D",
+          "content": "$0.7$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据已知条件列出方程组",
+        "提示2：将两个方程联立求解",
+        "提示3：通过消元法先求出 $x$ 的值"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：乘除指令",
+      "error": "Extra data: line 22 column 1 (char 602)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：自增自减",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术中，若一个变量 $x$ 初始值为 $5$，执行语句 $y = ++x + x++$ 后，$y$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$10$"
+        },
+        {
+          "label": "B",
+          "content": "$11$"
+        },
+        {
+          "label": "C",
+          "content": "$12$"
+        },
+        {
+          "label": "D",
+          "content": "$13$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先明确前置自增和后置自增的区别，前置自增是先将变量的值加 $1$ 再使用，后置自增是先使用变量的值再加 $1$",
+        "提示2：分析 $++x$ 时，$x$ 先自增为 $6$ 再参与运算",
+        "提示3：分析 $x++$ 时，先使用 $x$ 当前的值 $6$ 参与运算，然后 $x$ 再自增为 $7$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：十进制调整",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术这门课程的期末冲刺课中，z老师提到本节课主要讲解的内容板块数量是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1个"
+        },
+        {
+          "label": "B",
+          "content": "2个"
+        },
+        {
+          "label": "C",
+          "content": "3个"
+        },
+        {
+          "label": "D",
+          "content": "4个"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中老师提到的本节课主要讲解内容的数量相关表述",
+        "提示2：重点关注时间区间 [00:21 - 00:23] 的内容",
+        "提示3：按照视频原话来确定答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：练习题讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z老师本次分享课程的目的不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "分享单片机原理及接口技术这门课程的期末冲刺课"
+        },
+        {
+          "label": "B",
+          "content": "帮助大家在考前快速完成这门课的学习并通过考试"
+        },
+        {
+          "label": "C",
+          "content": "让大家在考试中获得满分"
+        },
+        {
+          "label": "D",
+          "content": "帮助大家避免挂科"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中z老师提到的本次分享课程的目的",
+        "提示2：明确视频里表述的是帮助大家高分速成课程和避免挂科，而不是获得满分",
+        "提示3：对每个选项与视频内容进行逐一比对"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：逻辑运算指令",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z老师本次课程是关于哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母课程"
+        },
+        {
+          "label": "C",
+          "content": "逻辑运算指令课程"
+        },
+        {
+          "label": "D",
+          "content": "未提及的课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细在视频内容中寻找课程名称相关信息",
+        "提示2：关注提到的课程全称",
+        "提示3：对比各选项与视频中出现的课程名称是否一致"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Psw标志位总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z老师本次分享的课程是哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母课程"
+        },
+        {
+          "label": "C",
+          "content": "未明确提及课程名称"
+        },
+        {
+          "label": "D",
+          "content": "多门课程的综合冲刺课"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的课程具体名称",
+        "提示2：关注描述课程关键信息的语句",
+        "提示3：视频中明确有说出课程的完整名称"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：逻辑运算讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z 老师此次分享的课程是关于哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母课程"
+        },
+        {
+          "label": "C",
+          "content": "逻辑运算课程"
+        },
+        {
+          "label": "D",
+          "content": "计算机基础课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细在视频内容中找到关于课程名称的描述",
+        "提示2：注意关键语句中提到的课程具体名称",
+        "提示3：排除与视频内容不相关的课程选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：逻辑运算例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "老师要帮助大家在期末考试中取得高分，避免挂科，已知这是针对单片机原理及接口技术这门课程的期末冲刺课，那老师主要讲解的章节内容个数是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1个"
+        },
+        {
+          "label": "B",
+          "content": "2个"
+        },
+        {
+          "label": "C",
+          "content": "3个"
+        },
+        {
+          "label": "D",
+          "content": "4个"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到本章节主要内容的个数描述",
+        "提示2：仔细听关于章节内容数量的关键信息",
+        "提示3：在视频中找到与章节内容个数直接相关的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：逻辑指令总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z 老师讲解的课程是为了帮助大家在考前（  ），避免挂科。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高速度完成这门课"
+        },
+        {
+          "label": "B",
+          "content": "高分数速成这门课"
+        },
+        {
+          "label": "C",
+          "content": "高质量完成这门课"
+        },
+        {
+          "label": "D",
+          "content": "高效率学习这门课"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于老师授课目的的表述",
+        "提示2：在视频中找到与帮助大家在考前达到的效果相关的语句",
+        "提示3：对比各个选项与原文表述的一致性"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：移位操作讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术中，若一个 8 位二进制数 $x = 01010101_2$，将其左移 2 位后得到的二进制数为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "0101010100",
+      "hints": [
+        "提示1：理解左移操作的规则，左移 $n$ 位就是将二进制数整体向左移动 $n$ 位",
+        "提示2：左移后右边空出的位用 0 补齐",
+        "提示3：可以先写出原二进制数，再按照左移规则进行操作"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：控制转移指令",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z老师本次分享的课程是关于哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数字字母课程"
+        },
+        {
+          "label": "C",
+          "content": "控制转移指令课程"
+        },
+        {
+          "label": "D",
+          "content": "未提及的某门课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到的课程名称",
+        "提示2：仔细听关于分享课程的描述",
+        "提示3：定位视频中介绍课程内容的部分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：条件转移指令",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的课程是为了帮助大家在考前高效通过哪门课程，避免挂科？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母专项课程"
+        },
+        {
+          "label": "C",
+          "content": "计算机编程基础"
+        },
+        {
+          "label": "D",
+          "content": "电子电路设计"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中明确提到的课程名称",
+        "提示2：重点关注老师说的帮助大家通过考试的课程"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数值判断与循环",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术这门课程的期末冲刺课中，某章节主要讲解两部分内容。若第一部分内容占比为 $\\frac{3}{5}$，第二部分内容的知识点数量是第一部分的 $\\frac{2}{3}$ 还多 2 个。已知该章节总知识点数量为 20 个，那么第二部分内容的知识点数量是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "6 个"
+        },
+        {
+          "label": "B",
+          "content": "8 个"
+        },
+        {
+          "label": "C",
+          "content": "10 个"
+        },
+        {
+          "label": "D",
+          "content": "12 个"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先根据第一部分内容占比求出第一部分的知识点数量",
+        "提示2：再根据第二部分内容与第一部分内容知识点数量的关系列出式子",
+        "提示3：计算出第二部分内容的知识点数量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：循环函数讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术这门课程的期末冲刺课中，老师提到这一章主要讲解的内容有两个方面。假设这两个方面分别为 $A$ 和 $B$，已知完成 $A$ 部分需要掌握 $3$ 种基础技能，完成 $B$ 部分需要掌握 $4$ 种基础技能，且完成整个章节的学习至少需要掌握其中 $5$ 种基础技能，那么以下哪种情况是符合要求的学习方案？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "掌握 $A$ 部分的 $2$ 种基础技能和 $B$ 部分的 $2$ 种基础技能"
+        },
+        {
+          "label": "B",
+          "content": "掌握 $A$ 部分的 $3$ 种基础技能和 $B$ 部分的 $2$ 种基础技能"
+        },
+        {
+          "label": "C",
+          "content": "掌握 $A$ 部分的 $1$ 种基础技能和 $B$ 部分的 $3$ 种基础技能"
+        },
+        {
+          "label": "D",
+          "content": "掌握 $A$ 部分的 $2$ 种基础技能和 $B$ 部分的 $1$ 种基础技能"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确完成整个章节学习至少需要掌握 $5$ 种基础技能",
+        "提示2：分别计算每个选项中掌握的基础技能总数",
+        "提示3：判断哪个选项的技能总数大于等于 $5$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：指令与操作",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z老师讲解的课程是关于哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母课程"
+        },
+        {
+          "label": "C",
+          "content": "计算机基础课程"
+        },
+        {
+          "label": "D",
+          "content": "物理实验课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细聆听视频中提到的课程具体名称",
+        "提示2：视频中有明确指出要分享的课程名字",
+        "提示3：关注课程名字相关的关键语句"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：程序题讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "Z 老师本次分享的课程是为了帮助大家在考前（  ），避免挂科。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "快速掌握单片机原理及接口技术这门课程的所有知识"
+        },
+        {
+          "label": "B",
+          "content": "高分数速成单片机原理及接口技术这门课程"
+        },
+        {
+          "label": "C",
+          "content": "了解单片机原理及接口技术这门课程的基础概念"
+        },
+        {
+          "label": "D",
+          "content": "学会单片机原理及接口技术这门课程的编程技巧"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中老师提到的分享课程的目的",
+        "提示2：关注视频中关于帮助大家在考前达到的效果的描述",
+        "提示3：将每个选项与视频内容进行对比分析"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：奇偶标志位判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到老师要帮助大家在考前快速掌握哪门课程，避免挂科？答案为___。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "单片机原理及接口技术",
+      "hints": [
+        "提示1：重点关注老师提到课程名称的语句",
+        "提示2：在讲解分享课程的语句中查找相应信息",
+        "提示3：明确老师助力的具体课程"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：循环左移运算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术中，对于一个 8 位二进制数 $x = 01010110$，进行 3 位循环左移运算后，结果是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$10110010$"
+        },
+        {
+          "label": "B",
+          "content": "$10101100$"
+        },
+        {
+          "label": "C",
+          "content": "$01001011$"
+        },
+        {
+          "label": "D",
+          "content": "$00101101$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：循环左移是将二进制数的最左边若干位移动到最右边",
+        "提示2：先确定要移动的位数，本题是 3 位",
+        "提示3：逐步进行左移操作并将移出的位放到右边"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：取反操作解答",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "z老师所分享的课程是关于哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母课程"
+        },
+        {
+          "label": "C",
+          "content": "电子电路基础"
+        },
+        {
+          "label": "D",
+          "content": "计算机编程基础"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细在视频内容中寻找关于课程名称的描述",
+        "提示2：关注老师提到分享的课程具体名称",
+        "提示3：定位视频中关于课程名称的关键语句"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：逻辑或运算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术课程中，对于某个逻辑判断，设条件 $A$ 和条件 $B$，逻辑或运算表示只要 $A$ 或者 $B$ 中有一个成立，整个判断结果就为真。现在已知条件 $A$：某引脚电平为高电平；条件 $B$：某寄存器的值大于 10。当出现以下哪种情况时，逻辑或运算结果为真？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "引脚电平为低电平且寄存器的值为 8"
+        },
+        {
+          "label": "B",
+          "content": "引脚电平为高电平且寄存器的值为 5"
+        },
+        {
+          "label": "C",
+          "content": "引脚电平为低电平且寄存器的值为 12"
+        },
+        {
+          "label": "D",
+          "content": "选项 B 和选项 C 都正确"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：明确逻辑或运算的规则，即只要条件 $A$ 或者条件 $B$ 中有一个成立，结果就为真。",
+        "提示2：对每个选项分别判断条件 $A$ 和条件 $B$ 是否成立。",
+        "提示3：在选项 B 中，条件 $A$ 成立；在选项 C 中，条件 $B$ 成立。"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：逻辑与运算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术中，逻辑与运算在数据处理中有重要应用。已知两个二进制数 $A = 1011$ 和 $B = 1101$，进行逻辑与运算 $A \\land B$ 的结果是 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "1001",
+      "hints": [
+        "提示1：逻辑与运算规则是对应位都为1时结果为1，否则为0",
+        "提示2：从二进制数的最高位开始逐位进行逻辑与运算",
+        "提示3：依次计算每一位的与运算结果并组合起来得到最终结果"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：逻辑运算解题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到z老师要帮助大家在考前高效通过的课程是 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "单片机原理及接口技术这门课程的期末冲刺课",
+      "hints": [
+        "提示1：仔细阅读视频中关于课程的描述内容",
+        "提示2：注意关键信息的提取，明确是哪门课程的冲刺课"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数据交换方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术这门课程的期末冲刺课中，老师提到本节主要讲解的内容数量是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1个"
+        },
+        {
+          "label": "B",
+          "content": "2个"
+        },
+        {
+          "label": "C",
+          "content": "3个"
+        },
+        {
+          "label": "D",
+          "content": "4个"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：关注视频中老师提到的本节主要讲解内容的数量相关表述",
+        "提示2：在视频中有明确指出具体的数量",
+        "提示3：仔细回忆视频中关于内容数量的描述语句"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：内部数据相加",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "老师本次分享的课程是关于哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学字母课程"
+        },
+        {
+          "label": "C",
+          "content": "电子技术基础"
+        },
+        {
+          "label": "D",
+          "content": "计算机编程基础"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回忆视频中老师提到的课程名称",
+        "提示2：重点关注关于课程的关键描述部分",
+        "提示3：从视频里找出明确说明的课程名称来进行选择"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：内外数据传输",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的课程名称是 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "单片机原理及接口技术这门课程的期末冲刺课",
+      "hints": [
+        "提示1：在视频逐字稿中仔细查找关于课程名称的描述",
+        "提示2：重点关注老师介绍课程的部分"
+      ]
+    }
+  ],
+  "count": 46
+}

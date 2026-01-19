@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：视图表达规范",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在实际生产设计中，对于一个结构复杂的机件，以下关于视图选择的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只能选择视图来表达机件结构，因为国家标准规定视图最常用"
+        },
+        {
+          "label": "B",
+          "content": "可以随意选择视图、剖面图、断面图等，无需考虑机件结构"
+        },
+        {
+          "label": "C",
+          "content": "应该根据机件结构进行分析，选择合适的视图、剖面图、断面图等进行表达"
+        },
+        {
+          "label": "D",
+          "content": "组合体的结构形状只能通过三视图来表达，不能用其他视图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的视图表达规范，明确选择视图的依据",
+        "提示2：思考不同视图的适用情况以及组合体视图表达的方式",
+        "提示3：分析每个选项与视频知识点的契合度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：基本视图讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘制复杂的机件结构图形时，国家标准规定了多种视图来表达，以下不属于国家标准规定视图的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "视图"
+        },
+        {
+          "label": "B",
+          "content": "剖视图"
+        },
+        {
+          "label": "C",
+          "content": "立体图"
+        },
+        {
+          "label": "D",
+          "content": "断面图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的国家标准规定的视图类型",
+        "提示2：视频中明确列举了几种用于表达机件结构的视图",
+        "提示3：将选项与视频中列举的视图类型进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：向视图介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘制复杂的机件结构图形时，国家标准规定了多种图样来表示，以下不属于国家标准规定图样的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "视图"
+        },
+        {
+          "label": "B",
+          "content": "剖视图"
+        },
+        {
+          "label": "C",
+          "content": "投影图"
+        },
+        {
+          "label": "D",
+          "content": "断面图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的国家标准规定的图样类型",
+        "提示2：明确视频中列举的具体图样名称",
+        "提示3：将选项与视频中内容进行逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：视图投影方向判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在实际生产设计中，要表示一个复杂的机件结构，国家规定了多种视图，以下哪种视图不属于国家规定用于表示机件结构的视图？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "视图"
+        },
+        {
+          "label": "B",
+          "content": "剖视图"
+        },
+        {
+          "label": "C",
+          "content": "剖面图"
+        },
+        {
+          "label": "D",
+          "content": "透视图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到国家规定用于表示机件结构的视图类型",
+        "提示2：视频中明确列举了一些视图类型，对比各选项进行判断",
+        "提示3：注意题目问的是不属于规定视图的选项"
+      ]
+    }
+  ],
+  "count": 4
+}

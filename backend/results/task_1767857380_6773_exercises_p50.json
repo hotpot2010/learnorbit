@@ -1,0 +1,37 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：图纸作业步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在进行图纸作业时，将图纸固定在图板上，通常使用什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "普通胶带"
+        },
+        {
+          "label": "B",
+          "content": "视角上的胶带"
+        },
+        {
+          "label": "C",
+          "content": "强力胶水"
+        },
+        {
+          "label": "D",
+          "content": "图钉"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回忆视频中关于固定图纸在图板上的描述",
+        "提示2：关注提到的物品名称",
+        "提示3：排除明显不符合视频内容的选项"
+      ]
+    }
+  ],
+  "count": 1
+}

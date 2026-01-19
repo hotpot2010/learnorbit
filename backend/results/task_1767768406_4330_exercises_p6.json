@@ -1,0 +1,261 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：外螺纹绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在螺纹与螺杆连接的相关考试中，以下哪种情况不属于常见考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "给出螺纹代号，要求写出其含义"
+        },
+        {
+          "label": "B",
+          "content": "给出一个错误的螺纹，要求改正"
+        },
+        {
+          "label": "C",
+          "content": "计算螺纹的螺距 $P$ 和导程 $S$ 的比值"
+        },
+        {
+          "label": "D",
+          "content": "给出一个螺杆，要求补画相关部分"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的常见考点有哪些",
+        "提示2：逐一分析每个选项是否在视频所讲的考点范围内",
+        "提示3：注意视频中未涉及的考点即为答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：内螺纹绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在题型为绘制螺纹、改正错误螺纹、写出螺纹代码含义、补画锥销连接的题目中，出现了锥螺纹代号 M20，表示的含义是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "普通粗牙螺纹，公称直径 20mm，螺距为标准值"
+        },
+        {
+          "label": "B",
+          "content": "普通细牙螺纹，公称直径 20mm，螺距为标准值"
+        },
+        {
+          "label": "C",
+          "content": "梯形螺纹，公称直径 20mm，螺距为标准值"
+        },
+        {
+          "label": "D",
+          "content": "锯齿形螺纹，公称直径 20mm，螺距为标准值"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先要了解常见螺纹代号的表示规则",
+        "提示2：M 一般代表普通螺纹",
+        "提示3：没有标注螺距时，粗牙螺纹的螺距为标准值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：螺纹配合绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在螺纹与锥销连接这类题目中，对于给定的一个螺纹代码“M20×2 - 5g6g - S”，以下哪个是对其含义的正确解释？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "M 表示普通螺纹，20 是公称直径，2 是螺距，5g 是中径公差带代号，6g 是顶径公差带代号，S 表示短旋合长度"
+        },
+        {
+          "label": "B",
+          "content": "M 表示梯形螺纹，20 是公称直径，2 是导程，5g 是顶径公差带代号，6g 是中径公差带代号，S 表示长旋合长度"
+        },
+        {
+          "label": "C",
+          "content": "M 表示普通螺纹，20 是小径，2 是螺距，5g 是牙侧角偏差代号，6g 是旋向代号，S 表示中等旋合长度"
+        },
+        {
+          "label": "D",
+          "content": "M 表示英制螺纹，20 是大径，2 是导程，5g 是旋向代号，6g 是牙侧角偏差代号，S 表示短旋合长度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确螺纹代码中各部分代表的基本类型，M 通常代表某种常见的螺纹类型",
+        "提示2：接着分析数字和字母组合在螺纹参数里的含义，如数字代表直径、螺距等，字母代表公差带代号、旋合长度等",
+        "提示3：根据常见的螺纹代码规则来判断每个选项中各项参数解释是否正确"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：普氏图绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在考试题目中，关于榫卯与榫槽连接部分，以下哪种考查方式是不会出现的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "要求画出榫卯的形状"
+        },
+        {
+          "label": "B",
+          "content": "给出一个榫卯代码，要求解释其含义"
+        },
+        {
+          "label": "C",
+          "content": "给出一个榫卯，要求计算其体积"
+        },
+        {
+          "label": "D",
+          "content": "给出一个榫槽，要求补画完整"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的关于榫卯与榫槽连接部分的考查要点",
+        "提示2：明确考查要点主要集中在形状绘制、代码含义解释和补画方面",
+        "提示3：分析每个选项是否符合视频中提到的考查方式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：螺纹标注含义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知题目中给出一个螺纹代码，要求写出它的含义，这属于课程6中螺纹与螺纹连接的哪类考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "画出它的一个螺纹"
+        },
+        {
+          "label": "B",
+          "content": "改正螺纹错误"
+        },
+        {
+          "label": "C",
+          "content": "写出螺纹代码的含义"
+        },
+        {
+          "label": "D",
+          "content": "补画螺纹连接部分"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细分析题目所描述的要求是写出螺纹代码的含义",
+        "提示2：回顾视频中提到的螺纹与螺纹连接的考点类型",
+        "提示3：将题目要求与各个选项进行对应匹配"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：螺纹示例解析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在课程6关于螺纹与螺杆连接的题目中，以下不属于常见考点的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "画出给定螺纹的图形"
+        },
+        {
+          "label": "B",
+          "content": "根据螺纹代号写出其含义"
+        },
+        {
+          "label": "C",
+          "content": "计算螺纹的螺距 $P$"
+        },
+        {
+          "label": "D",
+          "content": "对给定螺杆连接进行补画"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的课程6螺纹与螺杆连接题目的考点内容",
+        "提示2：逐一分析每个选项是否在视频提到的考点范围内",
+        "提示3：视频中主要强调了画螺纹、改错误螺纹、解读螺纹代号含义和螺杆连接补画等考点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：各类螺纹介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在题目中，关于螺纹与螺杆连接部分，常见的考点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "画出螺纹的图形"
+        },
+        {
+          "label": "B",
+          "content": "改正错误的螺纹"
+        },
+        {
+          "label": "C",
+          "content": "计算螺纹的扭矩"
+        },
+        {
+          "label": "D",
+          "content": "解释螺纹代码的含义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于螺纹与螺杆连接部分考点的内容",
+        "提示2：明确提到的考点有画螺纹、改错误螺纹和解释螺纹代码含义",
+        "提示3：看哪个选项不在视频提及的考点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：螺纹连接绘图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在螺纹与螺杆连接相关题目中，以下不属于常见考点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "给出螺纹代号，写出其含义"
+        },
+        {
+          "label": "B",
+          "content": "根据给定的螺杆，补画图形"
+        },
+        {
+          "label": "C",
+          "content": "计算螺纹的螺距 $P$ 和导程 $S$ 的比值"
+        },
+        {
+          "label": "D",
+          "content": "画出给定螺纹的图形"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的螺纹与螺杆连接部分的常见考点",
+        "提示2：逐一分析每个选项是否在视频所讲考点范围内",
+        "提示3：注意题目问的是不属于常见考点的选项"
+      ]
+    }
+  ],
+  "count": 8
+}

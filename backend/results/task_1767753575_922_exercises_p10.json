@@ -1,0 +1,212 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：氧化还原概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于氧化数，以下说法正确的是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧化数就是质子数"
+        },
+        {
+          "label": "B",
+          "content": "氧化数是一个客观的、只能为正的数值"
+        },
+        {
+          "label": "C",
+          "content": "氧化数实际上就是电荷数，是人为性的、可正可负的"
+        },
+        {
+          "label": "D",
+          "content": "氧化数和原子的最外层电子数没有关系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频内容明确氧化数的定义",
+        "提示2：思考氧化数的性质，如是否人为规定、正负情况等",
+        "提示3：对比各选项与视频中关于氧化数描述的一致性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：原电池原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于视频中提到的氧化数，下列说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧化数就是离子所带的电荷数"
+        },
+        {
+          "label": "B",
+          "content": "氧化数是一个客观存在的、只能为正的数值"
+        },
+        {
+          "label": "C",
+          "content": "氧化数实际上就是电荷数，它是人为性的，可正可负"
+        },
+        {
+          "label": "D",
+          "content": "氧化数与化合价完全相同，没有区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中对氧化数的定义描述",
+        "提示2：明确氧化数的性质，如是否人为定义、正负情况等",
+        "提示3：区分氧化数与离子电荷数、化合价的不同概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电极电势理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于视频中提到的氧化数，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧化数就是离子所带电荷数"
+        },
+        {
+          "label": "B",
+          "content": "氧化数只能为正"
+        },
+        {
+          "label": "C",
+          "content": "氧化数是人为规定的，可正可负"
+        },
+        {
+          "label": "D",
+          "content": "氧化数和电子数是同一个概念"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对氧化数的定义",
+        "提示2：明确氧化数与电荷数、电子数的关系",
+        "提示3：注意氧化数的正负性特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电极电势应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于氧化数，下列说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧化数就是离子所带的电荷数，一定为正整数"
+        },
+        {
+          "label": "B",
+          "content": "氧化数是人为规定的，可正可负"
+        },
+        {
+          "label": "C",
+          "content": "氧化数和化合价完全相同，没有区别"
+        },
+        {
+          "label": "D",
+          "content": "氧化数只能为整数，不能为分数"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对氧化数概念的描述",
+        "提示2：明确氧化数是人为规定的以及其正负性特点",
+        "提示3：思考氧化数与离子电荷数、化合价的区别"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：非标准电极电势计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在氧化还原反应中，关于氧化数的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧化数就是离子所带电荷数，只能为正"
+        },
+        {
+          "label": "B",
+          "content": "氧化数是人为规定的，可正可负"
+        },
+        {
+          "label": "C",
+          "content": "氧化数和化合价完全相同，没有区别"
+        },
+        {
+          "label": "D",
+          "content": "氧化数只能为整数，不能为小数"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对氧化数的定义",
+        "提示2：明确氧化数的性质，特别是其正负性",
+        "提示3：对比氧化数与其他相关概念的区别"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：溶液酸度影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于氧化数的说法，以下正确的是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧化数就是电子数，是客观存在且只能为正"
+        },
+        {
+          "label": "B",
+          "content": "氧化数是一种人为规定，可正可负"
+        },
+        {
+          "label": "C",
+          "content": "氧化数和化合价完全相同，没有区别"
+        },
+        {
+          "label": "D",
+          "content": "氧化数只在氧化还原反应与原电池中才有意义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频内容明确氧化数的定义",
+        "提示2：思考氧化数的性质，如是否是人为规定、取值范围等",
+        "提示3：分析每个选项与视频中知识点的匹配度"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：加入试剂影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在氧化还原反应概念中，氧化数实际上指的是 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "电荷数",
+      "hints": [
+        "提示1：参考视频中对氧化数的定义描述",
+        "提示2：思考氧化数与哪个概念直接相关",
+        "提示3：注意视频中明确指出氧化数实际所指的内容"
+      ]
+    }
+  ],
+  "count": 7
+}

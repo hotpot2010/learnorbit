@@ -1,0 +1,69 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：明细栏介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于明细栏的描述，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "明细栏一般存在于零件图中"
+        },
+        {
+          "label": "B",
+          "content": "明细栏主要由序号、代号、名称、数量、材料、质量、备注等组成"
+        },
+        {
+          "label": "C",
+          "content": "零件图中也有明细栏"
+        },
+        {
+          "label": "D",
+          "content": "明细栏不包含材料这一组成部分"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于明细栏存在位置的描述",
+        "提示2：明确明细栏的组成部分",
+        "提示3：对比选项与视频知识点进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：图线知识讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于明细栏的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "明细栏只存在于零件图中"
+        },
+        {
+          "label": "B",
+          "content": "明细栏一般由序号、代号、名称、数量、材料、质量、备注等组成"
+        },
+        {
+          "label": "C",
+          "content": "零件图和装配图中都一定有明细栏"
+        },
+        {
+          "label": "D",
+          "content": "明细栏只包含序号和名称两个要素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中关于明细栏存在位置的描述",
+        "提示2：明确明细栏的组成要素",
+        "提示3：对比各选项与视频知识点是否相符"
+      ]
+    }
+  ],
+  "count": 2
+}

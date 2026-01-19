@@ -1,0 +1,197 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：相贯线特殊情况",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "两个正交圆柱或者正交的圆柱与圆锥相贯，它们的相贯线是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "开放的空间曲线"
+        },
+        {
+          "label": "B",
+          "content": "封闭的平面曲线"
+        },
+        {
+          "label": "C",
+          "content": "封闭的空间曲线"
+        },
+        {
+          "label": "D",
+          "content": "开放的平面曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于两个正交圆柱或正交的圆柱与圆锥相贯线的描述",
+        "提示2：明确相贯线是封闭还是开放的",
+        "提示3：判断相贯线是空间曲线还是平面曲线"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：同轴回转体相贯",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "两个正交的圆柱或者正交的圆柱与圆锥相贯，其相贯线的形状是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "开放的空间曲线"
+        },
+        {
+          "label": "B",
+          "content": "封闭的平面曲线"
+        },
+        {
+          "label": "C",
+          "content": "封闭的空间曲线"
+        },
+        {
+          "label": "D",
+          "content": "开放的平面曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于两个正交的圆柱或正交的圆柱与圆锥相贯线形状的描述",
+        "提示2：明确相贯线是空间曲线还是平面曲线",
+        "提示3：判断相贯线是开放的还是封闭的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：圆柱与球同轴相贯",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于两回转体相交，特别是正交的圆柱与圆柱或者正交的圆柱与圆锥相贯线的描述，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "相贯线是开放的空间曲线"
+        },
+        {
+          "label": "B",
+          "content": "相贯线是封闭的平面曲线"
+        },
+        {
+          "label": "C",
+          "content": "相贯线是封闭的空间曲线"
+        },
+        {
+          "label": "D",
+          "content": "相贯线是开放的平面曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于正交的圆柱与圆柱或者正交的圆柱与圆锥相贯线的特征描述",
+        "提示2：明确相贯线是空间曲线还是平面曲线",
+        "提示3：判断相贯线是封闭的还是开放的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二次曲面公切球面相贯",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当两个正圆柱或正交的圆柱与圆锥相贯时，它们的相贯线是以下哪种类型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "开放的空间曲线"
+        },
+        {
+          "label": "B",
+          "content": "封闭的平面曲线"
+        },
+        {
+          "label": "C",
+          "content": "封闭的空间曲线"
+        },
+        {
+          "label": "D",
+          "content": "开放的平面曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于两个正圆柱或正交的圆柱与圆锥相贯时相贯线的描述",
+        "提示2：明确相贯线是封闭还是开放，是在空间还是平面",
+        "提示3：注意视频中提到的相贯线是封闭的空间曲线这一关键信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：圆柱相交情况",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪种情况的相贯线形状符合视频中所讲的典型相关性类型，且相贯线为封闭的空间曲线？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "两个斜交圆柱相交"
+        },
+        {
+          "label": "B",
+          "content": "两个正交圆柱相交"
+        },
+        {
+          "label": "C",
+          "content": "圆柱与圆锥斜交"
+        },
+        {
+          "label": "D",
+          "content": "圆柱与棱柱相交"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的符合典型相关性类型相贯线的情况",
+        "提示2：注意是正交的圆柱或者正交的圆柱与圆锥相贯",
+        "提示3：明确相贯线为封闭的空间曲线这一特征，结合选项判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：特殊相交直线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪种情况的相贯线是符合视频中所讲规律的典型相关性质类型，且相贯线是封闭的空间曲线？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "两个倾斜相交的棱柱"
+        },
+        {
+          "label": "B",
+          "content": "两个正交互的圆柱相贯"
+        },
+        {
+          "label": "C",
+          "content": "一个三棱柱与一个三棱锥相交"
+        },
+        {
+          "label": "D",
+          "content": "一个正方体与一个圆锥相交"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到符合典型相关性质类型相贯线情况",
+        "提示2：视频中明确指出两种典型情况为两个正交圆柱或正交的圆柱与圆锥相贯",
+        "提示3：判断各选项情况是否与视频中描述一致"
+      ]
+    }
+  ],
+  "count": 6
+}

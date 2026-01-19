@@ -1,0 +1,69 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：组合体分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知某组合体的主视图和左视图，要补画俯视图。该组合体主视图只有一个封闭线框，以下哪种分析方法更合适？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "形体分析法"
+        },
+        {
+          "label": "B",
+          "content": "不能用形体分析法，需进一步观察"
+        },
+        {
+          "label": "C",
+          "content": "先使用形体分析法，再观察调整"
+        },
+        {
+          "label": "D",
+          "content": "只根据主视图绘制俯视图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到主视图只有一个封闭线框时形体分析法的适用性",
+        "提示2：注意视频中对于这种情况的分析结论",
+        "提示3：明确不能盲目使用形体分析法，要结合观察"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：绘图步骤讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知组合体的主视图和左视图，要补画俯视图，该组合体的主视图只有一个闭合线框，以下哪种方法不适用？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "形体分析法"
+        },
+        {
+          "label": "B",
+          "content": "线面分析法"
+        },
+        {
+          "label": "C",
+          "content": "投影规律法"
+        },
+        {
+          "label": "D",
+          "content": "特征视图法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中针对主视图只有一个闭合线框的组合体分析所提到的方法",
+        "提示2：视频中明确指出了某种方法在此情况下不适用",
+        "提示3：找到视频中描述主视图和该方法联系的部分进行判断"
+      ]
+    }
+  ],
+  "count": 2
+}

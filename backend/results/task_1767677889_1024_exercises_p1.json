@@ -1,0 +1,453 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：单片机定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程会讲解哪方面的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机的原理及接口技术这门课的基础知识"
+        },
+        {
+          "label": "B",
+          "content": "单片机的原理及接口技术这门课的期末冲刺知识"
+        },
+        {
+          "label": "C",
+          "content": "单片机的原理及接口技术这门课的中期复习知识"
+        },
+        {
+          "label": "D",
+          "content": "单片机的原理及接口技术这门课的课后拓展知识"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的课程类型",
+        "提示2：重点关注与课程学习阶段相关的描述",
+        "提示3：视频明确说明了是哪一阶段的课程内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：单片机结构原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程老师主要会讲解关于单片机的哪些内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机的基本结构和应用案例"
+        },
+        {
+          "label": "B",
+          "content": "单片机的基本结构和存储相关内容"
+        },
+        {
+          "label": "C",
+          "content": "单片机的接口技术和编程方法"
+        },
+        {
+          "label": "D",
+          "content": "单片机的历史和发展趋势"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到老师要讲解的内容顺序",
+        "提示2：重点关注最初提到的讲解内容相关描述",
+        "提示3：结合视频里明确指出的两个方面来选择答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：引脚名称定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程老师要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机的基本结构"
+        },
+        {
+          "label": "B",
+          "content": "单片机的原理及接口技术期末冲刺课"
+        },
+        {
+          "label": "C",
+          "content": "单片机的引脚名称定义"
+        },
+        {
+          "label": "D",
+          "content": "帮助大家在考前高分速成这门课"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中老师提到要讲解的内容",
+        "提示2：明确视频中列举的具体讲解要点",
+        "提示3：对比各个选项与视频内容，找出未提及的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：时序周期关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程是单片机原理及接口技术这门课的期末冲刺课，老师首先会讲解的内容是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机的基本结构"
+        },
+        {
+          "label": "B",
+          "content": "单片机的接口技术"
+        },
+        {
+          "label": "C",
+          "content": "单片机的应用案例"
+        },
+        {
+          "label": "D",
+          "content": "单片机的编程方法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到老师讲解内容的顺序",
+        "提示2：找到老师首先要讲解的内容描述",
+        "提示3：结合视频中明确表述的信息来选择答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：指令周期分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程是关于单片机原理及接口技术这门课的期末冲刺课，以下哪项内容是老师首先会讲解的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机的指令周期分类"
+        },
+        {
+          "label": "B",
+          "content": "单片机的基本结构"
+        },
+        {
+          "label": "C",
+          "content": "单片机的接口技术应用"
+        },
+        {
+          "label": "D",
+          "content": "单片机的编程方法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：关注视频中老师提到的首先要讲解的内容",
+        "提示2：在介绍课程讲解内容时，有明确指出第一个讲解的要点",
+        "提示3：回到视频中关于课程内容安排的描述进行查找"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：使用周期公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程是关于哪门课的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学建模"
+        },
+        {
+          "label": "C",
+          "content": "电子电路基础"
+        },
+        {
+          "label": "D",
+          "content": "计算机编程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到的课程名称相关内容",
+        "提示2：重点关注关于这门期末冲刺课的描述",
+        "提示3：从视频中直接寻找对应的课程名称"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：存储器介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程是关于单片机原理及接口技术这门课的期末冲刺课，课程中首先会讲解的内容是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机的存储器相关知识"
+        },
+        {
+          "label": "B",
+          "content": "单片机的基本结构"
+        },
+        {
+          "label": "C",
+          "content": "单片机的接口技术应用"
+        },
+        {
+          "label": "D",
+          "content": "单片机的编程方法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意题目中提到的首先讲解的内容，需要在视频中找到对应信息",
+        "提示2：视频明确说明了课程内容的先后顺序",
+        "提示3：定位到视频中关于课程内容讲解顺序的描述进行选择"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数据存储器",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程老师要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机的基本结构"
+        },
+        {
+          "label": "B",
+          "content": "单片机的原理及接口技术这门课的期末冲刺课"
+        },
+        {
+          "label": "C",
+          "content": "数据存储器的高级算法"
+        },
+        {
+          "label": "D",
+          "content": "单片机的存储相关内容（推测后续会讲）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中老师提到的要讲解的内容",
+        "提示2：明确视频中未提及的项目所对应的选项",
+        "提示3：逐一分析每个选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：PSW寄存器",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程是单片机原理及接口技术这门课的期末冲刺课，以下关于本次课程讲解内容的说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只讲解单片机的基本结构"
+        },
+        {
+          "label": "B",
+          "content": "只讲解单片机的存储相关内容"
+        },
+        {
+          "label": "C",
+          "content": "先讲解单片机的基本结构，接着会讲解其他内容（未完整提及）"
+        },
+        {
+          "label": "D",
+          "content": "不讲解单片机的基本结构和存储相关内容"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中提到的课程讲解顺序",
+        "提示2：视频明确说明了先讲的内容和接下来要讲的开头部分",
+        "提示3：判断每个选项是否与视频内容相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：SFR寄存器介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程是关于哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学建模"
+        },
+        {
+          "label": "C",
+          "content": "电子电路基础"
+        },
+        {
+          "label": "D",
+          "content": "编程语言基础"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到的课程名称",
+        "提示2：重点关注关于期末冲刺课所对应的课程描述",
+        "提示3：在视频中查找明确指出的课程名称信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数据指针讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程是关于哪门课的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学建模"
+        },
+        {
+          "label": "C",
+          "content": "数据指针讲解"
+        },
+        {
+          "label": "D",
+          "content": "电子电路基础"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：关注视频中提到的课程名称",
+        "提示2：明确是哪门课的期末冲刺课",
+        "提示3：在视频中查找相关表述来确定答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：堆栈原理说明",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程是关于单片机原理及接口技术这门课的期末冲刺课，老师首先会讲解的内容是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机的接口技术"
+        },
+        {
+          "label": "B",
+          "content": "单片机的基本结构"
+        },
+        {
+          "label": "C",
+          "content": "单片机的存储原理"
+        },
+        {
+          "label": "D",
+          "content": "单片机的编程方法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到老师讲解内容的先后顺序",
+        "提示2：关注视频里明确说明首先要讲解的部分",
+        "提示3：在视频给定的信息中寻找关于讲解内容起始点的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：程序计数器知识",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程是单片机原理及接口技术这门课的期末冲刺课，老师首先会讲解的内容是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机的基本结构"
+        },
+        {
+          "label": "B",
+          "content": "单片机的存储"
+        },
+        {
+          "label": "C",
+          "content": "单片机的接口技术"
+        },
+        {
+          "label": "D",
+          "content": "单片机的原理"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到老师讲解内容的顺序",
+        "提示2：明确老师首先要讲解的内容",
+        "提示3：在视频中查找相关表述来确定答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：课堂练习讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程老师主要为大家带来的是哪门课程的期末冲刺课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "数学建模课程"
+        },
+        {
+          "label": "C",
+          "content": "电子电路基础课程"
+        },
+        {
+          "label": "D",
+          "content": "计算机编程课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中明确提到的课程名称",
+        "提示2：在讲解课程相关内容时老师会说明课程的具体信息",
+        "提示3：仔细回顾视频中关于课程的描述"
+      ]
+    }
+  ],
+  "count": 14
+}

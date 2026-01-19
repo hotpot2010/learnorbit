@@ -1,0 +1,97 @@
+{
+  "task_id": "task_1767518861_5153",
+  "bilibili_url": "https://www.bilibili.com/video/BV1bR4y1p7jS?buvid=Y844958E8F557F0A495AB9651542EE512CCB&from_spmid=search.search-result.0.0&is_story_h5=false&mid=HUXWRyJrbG1BbCNNdLV32Q%3D%3D&plat_id=116&share_from=ugc&share_medium=iphone&share_plat=ios&share_session_id=7D5860AE-1AA4-48DE-8EB9-5A005BCF9BEC&share_source=WEIXIN&share_tag=s_i&spmid=united.player-video-detail.0.0&timestamp=1767512753&unique_k=A865hnu&up_id=1103798045&vd_source=406c2915ecba48ec3702134471f44902",
+  "video_title": "分析化学 第4章 酸碱滴定法 4-1溶液中的酸碱平衡",
+  "steps": {
+    "asr": {
+      "error": null,
+      "result": {
+        "result_url": "https://file.gsxservice.com/3422955187_jiloa9nh.txt",
+        "transcript_length": 31922
+      },
+      "status": "success",
+      "message": "ASR识别完成，逐字稿长度: 31922 字符",
+      "progress": 100,
+      "retry_count": 0
+    },
+    "download": {
+      "error": null,
+      "result": {
+        "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_BV1bR4y1p7jS.mp4",
+        "video_url": "https://file.gsxservice.com/3422941101_apu9uvnr.mp4"
+      },
+      "status": "success",
+      "message": "视频上传成功",
+      "progress": 100,
+      "retry_count": 0
+    },
+    "exercises": {
+      "error": null,
+      "result": {
+        "result_url": "https://file.gsxservice.com/3423067762_rauekkgj.json",
+        "exercises_count": 20,
+        "knowledge_points_count": 20
+      },
+      "status": "success",
+      "message": "✅ 练习生成完成（共20道练习题）",
+      "progress": 100,
+      "retry_count": 0
+    },
+    "transcode": {
+      "error": "视频上传到云点播失败",
+      "result": null,
+      "status": "failed",
+      "message": "执行失败: 视频上传到云点播失败",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "screenshots": {
+      "error": null,
+      "result": {
+        "result_url": "https://file.gsxservice.com/3422981887_1nme1yt1.json",
+        "screenshots_count": 20,
+        "knowledge_points_count": 20
+      },
+      "status": "success",
+      "message": "✅ 截图生成完成（共20张截图）",
+      "progress": 100,
+      "retry_count": 0
+    },
+    "knowledge_points": {
+      "error": null,
+      "result": {
+        "result_url": "https://file.gsxservice.com/3422972760_woanqler.json",
+        "knowledge_points_count": 20
+      },
+      "status": "success",
+      "message": "知识点生成完成，共 20 个知识点",
+      "progress": 100,
+      "retry_count": 0
+    }
+  },
+  "video_url": "https://file.gsxservice.com/3422941101_apu9uvnr.mp4",
+  "transcoded_video_url": null,
+  "asr_result_url": "https://file.gsxservice.com/3422955187_jiloa9nh.txt",
+  "knowledge_points_result_url": "https://file.gsxservice.com/3422972760_woanqler.json",
+  "screenshots_result_url": "https://file.gsxservice.com/3422981887_1nme1yt1.json",
+  "exercises_result_url": "https://file.gsxservice.com/3423067762_rauekkgj.json",
+  "vod_file_id": null,
+  "vod_play_url": null,
+  "vod_cover_url": null,
+  "video_info": {
+    "bv_id": "BV1bR4y1p7jS",
+    "title": "分析化学 第4章 酸碱滴定法 4-1溶液中的酸碱平衡",
+    "duration": 3389.718,
+    "uploader": "分析化学小课堂",
+    "thumbnail": "http://i1.hdslb.com/bfs/archive/85f07dc2abe58642ef47ac98665aa60aa77936c2.jpg",
+    "like_count": 1827,
+    "view_count": 96629,
+    "description": "",
+    "upload_date": "20210925",
+    "thumbnail_cdn": "https://file.gsxservice.com/3422889827_hn9srevk.jpg"
+  },
+  "is_series": false,
+  "series_parts": [],
+  "created_at": "2026-01-04T17:27:49",
+  "updated_at": "2026-01-16T16:45:47.704656"
+}

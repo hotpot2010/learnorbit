@@ -1,0 +1,165 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖视图分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪种是用剖切平面完全切开肢体所得到的视图？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "全剖视图"
+        },
+        {
+          "label": "B",
+          "content": "半剖视图"
+        },
+        {
+          "label": "C",
+          "content": "局部剖视图"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中对不同剖视图类型的定义",
+        "提示2：明确每个选项所代表的剖视图的特征",
+        "提示3：关注题干中‘完全切开肢体’这一关键信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：全剖视图讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于剖视图类型的描述，哪种是全剖视图的定义？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "用剖切平面完全切开机件所得到的视图"
+        },
+        {
+          "label": "B",
+          "content": "用剖切平面部分切开机件所得到的视图"
+        },
+        {
+          "label": "C",
+          "content": "用剖切平面切开一半机件所得到的视图"
+        },
+        {
+          "label": "D",
+          "content": "用剖切平面切开三分之一机件所得到的视图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中全剖视图的定义",
+        "提示2：明确全剖视图是完全切开机件得到的视图",
+        "提示3：对比各选项与定义的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：半剖视图讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视图通常分为三类，其中用剖切平面完全切开机件所得到的视图被称为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "全剖视图"
+        },
+        {
+          "label": "B",
+          "content": "半剖视图"
+        },
+        {
+          "label": "C",
+          "content": "局部剖视图"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于视图分类的内容",
+        "提示2：明确每种视图的定义",
+        "提示3：根据“用剖切平面完全切开机件所得到的视图”这一描述来判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：局部剖切视图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "剖切视图一般分为三类，其中用剖切平面完全切开机件所得到的视图被称为什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "全剖切视图"
+        },
+        {
+          "label": "B",
+          "content": "半剖切视图"
+        },
+        {
+          "label": "C",
+          "content": "局部剖切视图"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对剖切视图分类的讲解",
+        "提示2：明确每种剖切视图的定义",
+        "提示3：根据“用剖切平面完全切开机件所得到的视图”这一描述来选择对应选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖切视图分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "用剖切平面完全切开机件所得到的视图是以下哪种剖切视图？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "全剖视图"
+        },
+        {
+          "label": "B",
+          "content": "半剖视图"
+        },
+        {
+          "label": "C",
+          "content": "局部剖视图"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对不同剖切视图的定义",
+        "提示2：明确全剖视图的特征是用剖切平面完全切开机件",
+        "提示3：逐一分析每个选项与定义的匹配度"
+      ]
+    }
+  ],
+  "count": 5
+}

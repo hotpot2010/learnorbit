@@ -1,0 +1,229 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：卤族元素介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于卤族元素的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "卤族元素是指第二主族的氟、氯、溴、碘、砹这些元素"
+        },
+        {
+          "label": "B",
+          "content": "卤族元素单质的氧化性都很弱"
+        },
+        {
+          "label": "C",
+          "content": "氟气在常温下容易发生燃烧"
+        },
+        {
+          "label": "D",
+          "content": "卤族元素不包含氟元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中卤族元素的定义，明确其所在主族和包含的元素",
+        "提示2：考虑卤族元素单质的氧化性特点",
+        "提示3：注意视频中对氟气性质的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：重要化合物反应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列关于卤族元素单质氧化性的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "卤族元素单质氧化性都很弱"
+        },
+        {
+          "label": "B",
+          "content": "卤族元素中氟气在常温下不容易发生燃烧反应"
+        },
+        {
+          "label": "C",
+          "content": "卤族元素是指第三主族氟、氯、溴、碘、砹这几个元素"
+        },
+        {
+          "label": "D",
+          "content": "卤族元素单质氧化性强弱与元素原子半径大小有关，原子半径越小，氧化性越强"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：根据视频，氟气在常温下容易发生燃烧反应，思考卤族元素单质氧化性强弱情况",
+        "提示2：明确卤族元素的定义，判断选项C是否正确",
+        "提示3：结合元素周期律，分析卤族元素原子半径与氧化性的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：卤化物溶解性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列关于卤族元素的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "卤族元素是指第二主族的元素"
+        },
+        {
+          "label": "B",
+          "content": "卤族元素单质的氧化性与卤素本身无关"
+        },
+        {
+          "label": "C",
+          "content": "氟气在常温下不易发生燃烧反应"
+        },
+        {
+          "label": "D",
+          "content": "卤族元素一般指氟（$\\text{F}$）、氯（$\\text{Cl}$）、溴（$\\text{Br}$）、碘（$\\text{I}$）、砹（$\\text{At}$）这几个元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中卤族元素的定义",
+        "提示2：考虑卤族元素单质氧化性的相关因素",
+        "提示3：明确氟气在常温下的化学性质"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：氧族元素化合物",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的卤族元素是指哪些元素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "碳、氮、氧、氟、氖"
+        },
+        {
+          "label": "B",
+          "content": "氟、氯、溴、碘、砹"
+        },
+        {
+          "label": "C",
+          "content": "锂、钠、钾、铷、铯"
+        },
+        {
+          "label": "D",
+          "content": "氦、氖、氩、氪、氙"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对卤族元素的定义",
+        "提示2：明确卤族元素是指第三主族的相关元素",
+        "提示3：对照选项逐一分析，找出符合卤族元素定义的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三价钴离子鉴定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下属于卤族元素的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧（$O$）"
+        },
+        {
+          "label": "B",
+          "content": "氟（$F$）"
+        },
+        {
+          "label": "C",
+          "content": "碳（$C$）"
+        },
+        {
+          "label": "D",
+          "content": "铁（$Fe$）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到卤族元素是指第三主族氟、氯、溴、碘、砹这几个元素",
+        "提示2：逐一分析每个选项中的元素是否属于卤族元素",
+        "提示3：明确卤族元素在元素周期表中的位置和具体种类"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：硫化合物性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于卤族元素的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "卤族元素是指第二主族的元素"
+        },
+        {
+          "label": "B",
+          "content": "卤族元素对应的单质都不具有氧化性"
+        },
+        {
+          "label": "C",
+          "content": "卤族元素包含氟、氯、溴、碘、砹等元素"
+        },
+        {
+          "label": "D",
+          "content": "氢气和卤族元素的单质反应时都需要高温条件"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频内容，明确卤族元素的定义",
+        "提示2：思考卤族元素单质的化学性质，主要是氧化性",
+        "提示3：结合氢气和卤族元素单质反应的条件，特别是氢气和氟气反应的条件"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：硫代硫酸根知识",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列属于视频中提到的卤族元素的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧（$O$）"
+        },
+        {
+          "label": "B",
+          "content": "氯（$Cl$）"
+        },
+        {
+          "label": "C",
+          "content": "氮（$N$）"
+        },
+        {
+          "label": "D",
+          "content": "碳（$C$）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到卤族元素是指哪些元素",
+        "提示2：视频中明确指出卤族元素是第三主族的氟、氯、溴、碘、砹这几个元素",
+        "提示3：逐一分析每个选项中的元素是否属于卤族元素"
+      ]
+    }
+  ],
+  "count": 7
+}

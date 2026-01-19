@@ -1,0 +1,261 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：形体分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘制组合体三视图时，形体分析的第一步是要做什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直接绘制三视图"
+        },
+        {
+          "label": "B",
+          "content": "观察组合体的颜色"
+        },
+        {
+          "label": "C",
+          "content": "看这个组合体可以看作是几部分构成的，每一部分都是一个什么样的基本立体"
+        },
+        {
+          "label": "D",
+          "content": "测量组合体的尺寸"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于绘制组合体三视图时形体分析的步骤",
+        "提示2：明确形体分析的首要任务是对组合体的结构进行剖析",
+        "提示3：思考每个选项与形体分析第一步的关联性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：选主视图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个组合体由若干部分组成，要画出它的三视图，第一步需要进行形体分析，以下关于形体分析的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只需要看这个组合体可以看成是几部分组成的，不需要考虑每一部分是什么样的基本立体"
+        },
+        {
+          "label": "B",
+          "content": "只需要考虑每一部分是什么样的基本立体，不需要看这个组合体可以看成是几部分组成的"
+        },
+        {
+          "label": "C",
+          "content": "既要查看这个组合体可以看成是几部分组成的，又要明确每一部分是什么样的基本立体"
+        },
+        {
+          "label": "D",
+          "content": "以上说法都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于形体分析的步骤描述",
+        "提示2：视频中提到要查看组合体的组成部分以及每部分的基本立体情况",
+        "提示3：结合这两个方面来判断选项的正确性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：画组合体视图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在画组合体的三视图时，第一步应该进行的操作是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直接绘制视图"
+        },
+        {
+          "label": "B",
+          "content": "确定视图比例"
+        },
+        {
+          "label": "C",
+          "content": "形体分析"
+        },
+        {
+          "label": "D",
+          "content": "选择视图方向"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中画组合体三视图的步骤顺序",
+        "提示2：明确第一步操作的关键要点",
+        "提示3：思考哪个选项是进行后续操作的基础"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：底板截交线绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘制组合体三视图时，第一步应该进行的操作是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直接绘制视图"
+        },
+        {
+          "label": "B",
+          "content": "尺寸标注"
+        },
+        {
+          "label": "C",
+          "content": "形体分析"
+        },
+        {
+          "label": "D",
+          "content": "确定投影方向"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中绘制组合体三视图的步骤顺序",
+        "提示2：第一步操作是对组合体的结构进行分析",
+        "提示3：思考哪个选项符合对组合体结构进行初步处理的操作"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：立板小孔投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘制组合体的三视图时，第一步需要进行的操作是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直接绘制视图"
+        },
+        {
+          "label": "B",
+          "content": "进行形体分析"
+        },
+        {
+          "label": "C",
+          "content": "测量尺寸"
+        },
+        {
+          "label": "D",
+          "content": "选择绘图工具"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中绘制组合体三视图的步骤",
+        "提示2：明确第一步的关键操作是什么",
+        "提示3：思考哪个选项符合绘制前的首要操作"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：小圆柱孔投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘制组合体三视图时，第一步需要进行的操作是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直接绘制视图"
+        },
+        {
+          "label": "B",
+          "content": "进行尺寸标注"
+        },
+        {
+          "label": "C",
+          "content": "形体分析"
+        },
+        {
+          "label": "D",
+          "content": "选择投影方向"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中绘制组合体三视图的步骤顺序",
+        "提示2：明确第一步所提到的关键操作",
+        "提示3：思考哪个选项与视频中第一步强调的内容相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轮廓线加深",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "绘制组合体三视图时，第一步需要进行的操作是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "轮廓线加深"
+        },
+        {
+          "label": "B",
+          "content": "绘制视图框架"
+        },
+        {
+          "label": "C",
+          "content": "形体分析"
+        },
+        {
+          "label": "D",
+          "content": "标注尺寸"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中绘制组合体三视图的步骤讲解",
+        "提示2：思考第一步强调的是什么操作",
+        "提示3：明确形体分析在绘制过程中的先后顺序"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：组合体绘图步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "绘制组合体三视图时，第一步应该进行什么操作？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直接绘制视图"
+        },
+        {
+          "label": "B",
+          "content": "尺寸标注"
+        },
+        {
+          "label": "C",
+          "content": "形体分析"
+        },
+        {
+          "label": "D",
+          "content": "选择投影方向"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中绘制组合体三视图的步骤顺序",
+        "提示2：视频中明确提到了第一步的操作名称",
+        "提示3：第一步操作是对组合体的结构进行分析"
+      ]
+    }
+  ],
+  "count": 8
+}

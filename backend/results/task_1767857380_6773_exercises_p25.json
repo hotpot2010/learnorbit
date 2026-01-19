@@ -1,0 +1,229 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正交圆柱圆锥交线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个轴线铅垂放置的圆锥体与一个水平的圆柱体正交，且圆柱体从圆锥体一侧贯穿而出时，它们的交线会呈现出怎样的特征？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "呈现出不规则的曲线，无明显对称特征"
+        },
+        {
+          "label": "B",
+          "content": "形成两侧不对称的曲线"
+        },
+        {
+          "label": "C",
+          "content": "形成两侧相对称的曲线"
+        },
+        {
+          "label": "D",
+          "content": "形成一条直线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于正交的圆柱体和圆锥体交线的描述",
+        "提示2：注意视频中提到圆柱体从圆锥体一侧贯穿而出后交线的特征",
+        "提示3：关注交线是否具有对称性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：柱锥相贯线求法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个轴线铅垂放置的圆锥体与一个水平的圆柱体正交，且圆柱体从圆锥体一端贯穿而出时，所形成的相贯线具有什么特征？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "是一条封闭的曲线，但不具有对称性"
+        },
+        {
+          "label": "B",
+          "content": "是两条互不相关的曲线"
+        },
+        {
+          "label": "C",
+          "content": "形成两侧相对称的曲线"
+        },
+        {
+          "label": "D",
+          "content": "形成的相贯线是不规则的折线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中关于圆锥体和圆柱体正交相贯的演示内容",
+        "提示2：注意视频中提到的圆柱体贯穿圆锥体后的情况",
+        "提示3：明确视频里对相贯线特征的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：特殊点投影求法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个轴线铅垂放置的圆锥体与一个水平的圆柱体正交所形成的相贯线，若圆柱体从圆锥体一侧贯穿而出，那么相贯线会呈现出怎样的特征？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "形成一侧不规则的曲线"
+        },
+        {
+          "label": "B",
+          "content": "形成两侧相互对称的曲线"
+        },
+        {
+          "label": "C",
+          "content": "形成三条相互平行的直线"
+        },
+        {
+          "label": "D",
+          "content": "形成一个圆形"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的圆柱体贯穿圆锥体后相贯线的特征描述",
+        "提示2：注意视频中强调的相贯线的对称性",
+        "提示3：排除明显不符合视频讲解特征的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求特殊点投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个轴线铅垂放置的圆锥体与一个水平的圆柱体正交所形成的相贯线，若圆柱体从圆锥体一侧贯穿而出，那么相贯线会呈现出以下哪种特征？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "上下不对称的曲线"
+        },
+        {
+          "label": "B",
+          "content": "两侧对称的曲线"
+        },
+        {
+          "label": "C",
+          "content": "一条直线"
+        },
+        {
+          "label": "D",
+          "content": "不规则的封闭图形"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的正交的圆柱体和圆锥体相贯，且圆柱体贯穿圆锥体的情况",
+        "提示2：注意视频中关于相贯线对称性的描述",
+        "提示3：排除不符合视频内容的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：相贯线投影特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个轴线铅垂放置的圆锥体与一个水平的圆柱体正交通贯，且圆柱体从圆锥体一侧贯穿而出时，相贯线会呈现怎样的特征？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "形成一侧不对称的相贯线"
+        },
+        {
+          "label": "B",
+          "content": "形成上下不对称的相贯线"
+        },
+        {
+          "label": "C",
+          "content": "形成两侧相对称的相贯线"
+        },
+        {
+          "label": "D",
+          "content": "不形成相贯线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的当水平圆柱体与铅垂圆锥体相贯且圆柱体贯穿而出的情况",
+        "提示2：关注相贯线的对称性特征",
+        "提示3：明确相贯线的形成和视频中描述的一致时的特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：圆柱孔截交形式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个轴线垂直放置的圆锥体与一个水平的圆柱体相贯，且圆柱体从圆锥体一侧贯穿而出时，相贯线会呈现怎样的特征？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "呈现不规则曲线，无明显对称特征"
+        },
+        {
+          "label": "B",
+          "content": "形成两侧不对称的曲线"
+        },
+        {
+          "label": "C",
+          "content": "形成两侧相对称的曲线"
+        },
+        {
+          "label": "D",
+          "content": "形成一条直线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的圆柱体从圆锥体一侧贯穿而出后的相贯线情况",
+        "提示2：注意视频中强调的相贯线的对称性",
+        "提示3：明确相贯线是曲线而非直线"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：相贯分析求解法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个轴线铅垂放置的圆锥体与一个水平的圆柱体相贯且圆柱体从圆锥体一侧贯穿而出时，相贯线会呈现什么样的特征？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "呈现不规则曲线，无明显规律"
+        },
+        {
+          "label": "B",
+          "content": "形成两侧相对称的形状"
+        },
+        {
+          "label": "C",
+          "content": "形成单侧的凸起形状"
+        },
+        {
+          "label": "D",
+          "content": "相贯线为直线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的圆柱体贯穿圆锥体后相贯线的情况",
+        "提示2：注意视频中提到的相贯线的对称性特征",
+        "提示3：排除不符合视频描述的选项"
+      ]
+    }
+  ],
+  "count": 7
+}

@@ -1,0 +1,197 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面截球体交线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个球体半径为 $R$，有一个平面与该球体相交，无论这个平面和球体的相对位置如何，也不管这个平面是什么类型的平面，那么该平面与球体表面的交线形状是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "圆"
+        },
+        {
+          "label": "B",
+          "content": "椭圆"
+        },
+        {
+          "label": "C",
+          "content": "抛物线"
+        },
+        {
+          "label": "D",
+          "content": "双曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于平面截球体交线的关键知识点",
+        "提示2：明确无论平面与球体的相对位置和平面类型如何，交线的特征",
+        "提示3：根据所学知识判断各种曲线的形成条件，排除不符合的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截球两种情况",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当平面与球体相交时，无论平面与球体的相对位置如何，也不管平面是什么类型的平面，平面截球体与球体表面的交线是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "线段"
+        },
+        {
+          "label": "B",
+          "content": "圆"
+        },
+        {
+          "label": "C",
+          "content": "椭圆"
+        },
+        {
+          "label": "D",
+          "content": "曲线但不一定是圆"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于平面与球体相交的内容",
+        "提示2：思考平面截球体的几何性质",
+        "提示3：无论平面位置和类型如何，其与球体表面的交线都具有特定规律"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：半球截口实例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个球体，无论用何种平面去截这个球体，其截交线一定是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直线"
+        },
+        {
+          "label": "B",
+          "content": "圆"
+        },
+        {
+          "label": "C",
+          "content": "椭圆"
+        },
+        {
+          "label": "D",
+          "content": "抛物线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于平面截球体的知识点，不管平面和球体的相对位置以及平面类型如何",
+        "提示2：思考平面与球体表面的截交线的形状特点",
+        "提示3：逐一分析每个选项，判断哪个符合截交线的特征"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：半球水平投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个平面与球体相交时，以下关于截交线的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "截交线的形状与平面和球体的相对位置有关，只有特定位置才是圆"
+        },
+        {
+          "label": "B",
+          "content": "截交线的形状只与平面的类型有关，与相对位置无关"
+        },
+        {
+          "label": "C",
+          "content": "无论平面和球体的相对位置如何，也不管平面是什么类型的平面，截交线都是圆"
+        },
+        {
+          "label": "D",
+          "content": "只有当平面是水平平面时，截交线才是圆"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于平面和球体相交时截交线的描述",
+        "提示2：明确视频强调的是不管相对位置和平面类型",
+        "提示3：思考截交线的本质特征"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：半球侧面投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个平面与一个球体相交时，关于它们的交线，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "交线的形状取决于平面与球体的相对位置"
+        },
+        {
+          "label": "B",
+          "content": "交线的形状取决于平面的类型"
+        },
+        {
+          "label": "C",
+          "content": "无论平面与球体的相对位置如何，也不管平面是什么类型，交线都是一个圆"
+        },
+        {
+          "label": "D",
+          "content": "只有当平面经过球心时，交线才是一个圆"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于平面与球体相交的知识点，明确交线的性质与平面和球体的哪些因素有关",
+        "提示2：理解视频中提到的“无论平面与球体的相对位置如何，也不管平面是什么类型”这一关键信息",
+        "提示3：思考不同情况下平面与球体相交的交线形状"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截回转体解法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当平面与球体相交时，无论平面和球体的相对位置如何，也不管平面是什么类型的平面，平面截球体和球体表面的截交线是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "三角形"
+        },
+        {
+          "label": "B",
+          "content": "圆形"
+        },
+        {
+          "label": "C",
+          "content": "正方形"
+        },
+        {
+          "label": "D",
+          "content": "梯形"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于平面截球体的知识点，关注截交线的形状特点",
+        "提示2：思考不同形状的平面从不同位置截球体后，其表面形成的截交线",
+        "提示3：根据知识点可知，无论平面与球体的相对位置和平面类型如何，截交线的形状是固定的"
+      ]
+    }
+  ],
+  "count": 6
+}

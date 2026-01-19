@@ -1,0 +1,421 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：氧化还原反应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在氧化还原反应 $3Cu + 8HNO_3 = 3Cu(NO_3)_2 + 2NO + 4H_2O$ 中，当有 $1.5mol Cu$ 被氧化时，被还原的 $HNO_3$ 的物质的量是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.5mol$"
+        },
+        {
+          "label": "B",
+          "content": "$1mol$"
+        },
+        {
+          "label": "C",
+          "content": "$2mol$"
+        },
+        {
+          "label": "D",
+          "content": "$4mol$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先分析该氧化还原反应中硝酸的作用，一部分硝酸起酸性作用，一部分硝酸起氧化剂作用",
+        "提示2：找出被还原的硝酸与铜的物质的量的关系",
+        "提示3：根据铜的物质的量计算被还原的硝酸的物质的量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电化学电池",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个电化学电池中，发生了氧化还原反应 $Zn + Cu^{2+} = Zn^{2+} + Cu$。已知该反应的电极电势相关知识，以下关于此电化学电池的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "锌电极是正极，发生氧化反应"
+        },
+        {
+          "label": "B",
+          "content": "铜电极是负极，发生还原反应"
+        },
+        {
+          "label": "C",
+          "content": "电子从锌电极流向铜电极"
+        },
+        {
+          "label": "D",
+          "content": "该反应的方向与电极电势无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据氧化还原反应中元素化合价的变化判断正负极",
+        "提示2：明确氧化反应和还原反应分别在哪个电极发生",
+        "提示3：了解电子在电化学电池中的流动方向与电极电势的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电池图示解读",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电化学基础中，对于氧化还原反应 $MnO_4^- + Fe^{2+} + H^+ \\longrightarrow Mn^{2+} + Fe^{3+} + H_2O$ 的配平，以下哪个选项是正确的配平系数比（按反应物顺序）？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1:5:8$"
+        },
+        {
+          "label": "B",
+          "content": "$1:2:4$"
+        },
+        {
+          "label": "C",
+          "content": "$2:5:16$"
+        },
+        {
+          "label": "D",
+          "content": "$2:10:8$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先确定氧化还原反应中得失电子的情况，$MnO_4^-$ 中 $Mn$ 元素从 $+7$ 价降到 $+2$ 价，得到 $5$ 个电子；$Fe^{2+}$ 从 $+2$ 价升到 $+3$ 价，失去 $1$ 个电子。",
+        "提示2：根据得失电子守恒，确定 $MnO_4^-$ 和 $Fe^{2+}$ 的系数比。",
+        "提示3：再根据电荷守恒和原子守恒配平 $H^+$ 和 $H_2O$ 的系数。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电极反应书写",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在原电池中，发生氧化反应的电极是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正极"
+        },
+        {
+          "label": "B",
+          "content": "负极"
+        },
+        {
+          "label": "C",
+          "content": "阴极"
+        },
+        {
+          "label": "D",
+          "content": "阳极"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确氧化反应和还原反应的概念，氧化反应是失去电子的反应，还原反应是得到电子的反应",
+        "提示2：在原电池中，负极发生氧化反应，正极发生还原反应",
+        "提示3：而阴极和阳极是电解池中的概念，与本题原电池的情境不符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电极电势原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于课时8电化学基础的考点，说法错误的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "考点包含氧化还原反应及其配平"
+        },
+        {
+          "label": "B",
+          "content": "考点包含电化学电池和电极电势"
+        },
+        {
+          "label": "C",
+          "content": "考点不包含氧化还原反应的方向和限度"
+        },
+        {
+          "label": "D",
+          "content": "考点包含电势图及其应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的课时8电化学基础的5个考点内容",
+        "提示2：逐一分析每个选项与视频考点的对应关系",
+        "提示3：注意判断选项中‘包含’或‘不包含’的描述是否与视频一致"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：能斯特方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下属于课时 8 电化学基础的考点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧化还原反应及其配平"
+        },
+        {
+          "label": "B",
+          "content": "化学反应速率"
+        },
+        {
+          "label": "C",
+          "content": "化学平衡常数"
+        },
+        {
+          "label": "D",
+          "content": "化学物质的量计算"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的课时 8 电化学基础的考点内容",
+        "提示2：明确考点包含氧化还原反应及配平、电化学电池、电极电势、氧化还原反应的方向和限度、电势图及其应用",
+        "提示3：对比各选项与考点内容进行选择"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电极反应计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个氧化还原反应 $Fe + Cu^{2+} = Fe^{2+} + Cu$ 中，若有 $0.2mol$ 的 $Fe$ 完全反应，转移的电子数为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.2N_A$"
+        },
+        {
+          "label": "B",
+          "content": "$0.4N_A$"
+        },
+        {
+          "label": "C",
+          "content": "$0.6N_A$"
+        },
+        {
+          "label": "D",
+          "content": "$0.8N_A$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先确定铁在反应中的化合价变化",
+        "提示2：根据铁的物质的量和化合价变化计算转移电子的物质的量",
+        "提示3：再根据阿伏伽德罗常数 $N_A$ 计算转移电子数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：能斯特方程应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电化学基础中，以下哪个不属于课时 8 的考查点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧化还原反应及其配平"
+        },
+        {
+          "label": "B",
+          "content": "化学反应速率"
+        },
+        {
+          "label": "C",
+          "content": "电极电势"
+        },
+        {
+          "label": "D",
+          "content": "氧化还原反应的方向和限度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的课时 8 的考查点有哪些",
+        "提示2：逐一对比选项与视频中列出的考查点",
+        "提示3：找出不在考查点范围内的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：氧化还原判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于反应 $2KMnO_4 + 16HCl = 2KCl + 2MnCl_2 + 5Cl_2\\uparrow + 8H_2O$，下列说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧化剂是 $HCl$，还原剂是 $KMnO_4$"
+        },
+        {
+          "label": "B",
+          "content": "氧化产物是 $Cl_2$，还原产物是 $MnCl_2$"
+        },
+        {
+          "label": "C",
+          "content": "每生成 $1mol Cl_2$ 转移电子的物质的量为 $1mol$"
+        },
+        {
+          "label": "D",
+          "content": "该反应中 $HCl$ 只体现还原性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确氧化剂、还原剂、氧化产物、还原产物的概念",
+        "提示2：分析各元素化合价的变化，化合价升高的元素所在的反应物为还原剂，对应的产物为氧化产物；化合价降低的元素所在的反应物为氧化剂，对应的产物为还原产物",
+        "提示3：根据化合价的变化计算转移电子的物质的量，以及判断 $HCl$ 在反应中体现的性质"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：反应方向实例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下不属于课时 8 考察点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧化还原反应及其配平"
+        },
+        {
+          "label": "B",
+          "content": "化学平衡常数的计算"
+        },
+        {
+          "label": "C",
+          "content": "电极电势"
+        },
+        {
+          "label": "D",
+          "content": "氧化还原反应的方向和限度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的课时 8 的考察点有哪些",
+        "提示2：逐一分析每个选项是否在考察点范围内",
+        "提示3：注意题干问的是不属于考察点的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电势图及应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电化学中，关于电极电势和氧化还原反应方向的判断，下列说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电极电势越高，其氧化态的氧化能力越强，对应的还原态的还原能力越弱"
+        },
+        {
+          "label": "B",
+          "content": "氧化还原反应总是自发地从电极电势低的物质向电极电势高的物质进行"
+        },
+        {
+          "label": "C",
+          "content": "当两个氧化还原电对组成原电池时，电极电势低的电对的氧化态在电池反应中作氧化剂"
+        },
+        {
+          "label": "D",
+          "content": "电极电势只与电极本身的性质有关，与溶液的浓度和温度无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾电极电势的概念和氧化还原反应的基本原理",
+        "提示2：明确氧化态和还原态在电极电势中的关系",
+        "提示3：思考氧化还原反应自发进行的方向与电极电势的联系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电势图求电极电势",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电化学基础中，以下不属于课时 8 考查点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氧化还原反应及其配平"
+        },
+        {
+          "label": "B",
+          "content": "化学平衡常数的计算"
+        },
+        {
+          "label": "C",
+          "content": "电极电势"
+        },
+        {
+          "label": "D",
+          "content": "电势图及其应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的课时 8 的考查点有哪些",
+        "提示2：明确每个选项所涉及的知识点是否在考查点范围内",
+        "提示3：逐一对比选项与视频中提及的考查点内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：判断歧化反应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在电化学基础的学习中，涉及到氧化还原反应的配平。对于反应 $Cl_2 + 2NaOH = NaCl + NaClO + H_2O$，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "该反应不是氧化还原反应"
+        },
+        {
+          "label": "B",
+          "content": "该反应中 $Cl_2$ 仅作氧化剂"
+        },
+        {
+          "label": "C",
+          "content": "该反应中 $Cl_2$ 既作氧化剂又作还原剂"
+        },
+        {
+          "label": "D",
+          "content": "该反应中 $NaOH$ 作还原剂"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先判断反应中元素化合价是否发生变化，以此确定是否为氧化还原反应",
+        "提示2：分析 $Cl_2$ 中氯元素化合价的变化情况，判断其在反应中的作用",
+        "提示3：观察 $NaOH$ 中各元素化合价是否改变，确定其是否为还原剂"
+      ]
+    }
+  ],
+  "count": 13
+}

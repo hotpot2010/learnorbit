@@ -1,0 +1,293 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：系统与环境",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在热化学实验中，研究某化学反应时，将反应容器内的物质看作一个整体，那么这个整体属于（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "系统"
+        },
+        {
+          "label": "B",
+          "content": "环境"
+        },
+        {
+          "label": "C",
+          "content": "既属于系统又属于环境"
+        },
+        {
+          "label": "D",
+          "content": "既不属于系统也不属于环境"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于系统和环境的基本概念",
+        "提示2：明确系统是我们所研究的对象",
+        "提示3：这里研究的是反应容器内的物质，思考它符合系统还是环境的定义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：供热与热学能",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在热化学学习中，涉及到一些术语和基本概念，假如一个化学反应中我们研究的对象是某特定的反应物和生成物，那么这个对象属于下列哪个概念呢？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "系统"
+        },
+        {
+          "label": "B",
+          "content": "环境"
+        },
+        {
+          "label": "C",
+          "content": "反应焓变"
+        },
+        {
+          "label": "D",
+          "content": "反应热计算"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的术语和基本概念，明确系统和环境的定义",
+        "提示2：系统是我们研究的对象，环境是系统之外与之相关的部分",
+        "提示3：反应焓变和反应热计算是另外的知识点，与这里说的研究对象概念不同"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：供热例题分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下不属于本节课课时单包含的考点的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "热化学涉及到的术语和基本概念"
+        },
+        {
+          "label": "B",
+          "content": "供热热力学能下的相关内容"
+        },
+        {
+          "label": "C",
+          "content": "化学反应速率的计算"
+        },
+        {
+          "label": "D",
+          "content": "反应焓变以及反应热的计算"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的课时单包含的考点有哪些",
+        "提示2：明确各个选项所涉及的内容是否在考点范围内",
+        "提示3：对比选项与视频中提到的考点进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：反应焓变",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在热化学中，涉及到系统和环境等基本概念，关于反应焓变，下列说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "反应焓变与系统和环境无关"
+        },
+        {
+          "label": "B",
+          "content": "反应焓变只与反应物的初始状态有关"
+        },
+        {
+          "label": "C",
+          "content": "反应焓变是化学反应中能量变化的一种体现，与反应物和生成物的能量有关"
+        },
+        {
+          "label": "D",
+          "content": "反应焓变的计算不需要考虑热化学的专业术语和基本概念"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：理解系统和环境是热化学中的基本概念，反应焓变与它们存在联系",
+        "提示2：反应焓变取决于反应物和生成物的能量差，而不是单一的初始状态",
+        "提示3：热化学的专业术语和基本概念是准确计算反应焓变的基础"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：标准摩尔生成焓",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "化学热力学的课时单包含4个考点，以下不属于其中考点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "化学热力学涉及到的术语和基本概念"
+        },
+        {
+          "label": "B",
+          "content": "供热热力学能"
+        },
+        {
+          "label": "C",
+          "content": "化学反应速率的计算"
+        },
+        {
+          "label": "D",
+          "content": "反应焓变以及反应热的计算"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的课时单包含的4个考点内容",
+        "提示2：明确每个选项是否在考点范围内",
+        "提示3：注意选项C与视频中考点的对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：标准摩尔燃烧焓",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在热化学中，以下关于反应热计算的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "反应热只与体系有关，与环境无关"
+        },
+        {
+          "label": "B",
+          "content": "反应热的计算不需要考虑体系和环境的概念"
+        },
+        {
+          "label": "C",
+          "content": "反应热的计算与体系和环境的相互作用有关"
+        },
+        {
+          "label": "D",
+          "content": "反应热的计算只与反应物的初始状态有关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的体系和环境的概念，思考它们与反应热的关系",
+        "提示2：反应热是体系与环境之间能量交换的体现",
+        "提示3：分析每个选项，判断其是否符合热化学中反应热计算的原理"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：标准摩尔反应焓",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在热化学学习中，以下不属于本节课时单包含的考点的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "热化学涉及到的术语和基本概念"
+        },
+        {
+          "label": "B",
+          "content": "供热热力学能"
+        },
+        {
+          "label": "C",
+          "content": "化学反应的速率计算"
+        },
+        {
+          "label": "D",
+          "content": "反应焓变以及反应热的计算"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的课时单包含的考点内容",
+        "提示2：明确每个考点的具体表述",
+        "提示3：对比选项与视频中考点信息进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：热化学方程计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在热化学中，已知一个反应体系与环境之间存在热量交换，对于反应热的计算，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "反应热只与体系的始态有关，与终态无关"
+        },
+        {
+          "label": "B",
+          "content": "反应热的计算不需要考虑体系和环境的区分"
+        },
+        {
+          "label": "C",
+          "content": "反应热的计算与反应的焓变密切相关，且与体系的状态变化有关"
+        },
+        {
+          "label": "D",
+          "content": "反应热就是体系与环境之间交换的所有能量，不只是热量"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾热化学中反应热的基本概念，反应热与体系的状态变化相关",
+        "提示2：明确体系和环境的区分在热化学计算中的重要性",
+        "提示3：思考反应热和焓变之间的联系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：生成焓计算反应焓",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在热化学中，关于反应热计算的知识点很重要。已知一个反应体系中涉及到系统和环境的概念，若一个化学反应在某条件下，反应物的总焓为 $H_1$，生成物的总焓为 $H_2$，则该反应的反应热 $\\Delta H$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$H_1 - H_2$"
+        },
+        {
+          "label": "B",
+          "content": "$H_2 - H_1$"
+        },
+        {
+          "label": "C",
+          "content": "$H_1 + H_2$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{H_1 + H_2}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据反应热的定义来分析，反应热是生成物的总焓与反应物的总焓之差",
+        "提示2：明确反应物总焓和生成物总焓在反应热计算中的关系",
+        "提示3：按照反应热的计算公式进行判断"
+      ]
+    }
+  ],
+  "count": 9
+}

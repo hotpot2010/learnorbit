@@ -1,0 +1,262 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：组合体基础概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于组合体的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "由若干基本立体所组成的简单立体，称为组合体"
+        },
+        {
+          "label": "B",
+          "content": "组合体是相对于基本立体而言的，它是由若干基本立体所组成的复杂立体"
+        },
+        {
+          "label": "C",
+          "content": "组合体就是基本立体，没有区别"
+        },
+        {
+          "label": "D",
+          "content": "组合体只研究其组成方式，不涉及三视图的画法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中组合体的定义，明确组合体与基本立体的关系",
+        "提示2：思考组合体的构成特点以及学习组合体需要掌握的内容",
+        "提示3：对每个选项进行分析，判断其是否符合组合体的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：组合体构成方式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于组合体的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "由若干基本立体组成的图形叫组合体，它与基本立体没有关系"
+        },
+        {
+          "label": "B",
+          "content": "组合体是相对于基本立体而言的，是由若干基本立体构成的复杂图形"
+        },
+        {
+          "label": "C",
+          "content": "组合体就是一个单独的立体图形，和基本立体无关"
+        },
+        {
+          "label": "D",
+          "content": "组合体只研究其构成方式，不研究其三视图的画法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对组合体的定义，明确组合体与基本立体的关系",
+        "提示2：思考组合体在学习过程中涉及的内容，除了构成方式还有什么",
+        "提示3：分析每个选项，判断其是否符合视频所讲的知识点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：画组合体视图方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于组合体的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "由若干基本形体所组成的简单形体称为组合体"
+        },
+        {
+          "label": "B",
+          "content": "组合体是相对于基本形体而言的"
+        },
+        {
+          "label": "C",
+          "content": "组合体的组成方式与组合体三视图的画法无关"
+        },
+        {
+          "label": "D",
+          "content": "画组合体视图不需要掌握基本概念"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中组合体的定义来判断选项A",
+        "提示2：根据视频提到组合体与基本形体的关系判断选项B",
+        "提示3：思考组合体的组成方式和三视图画法之间的联系判断选项C",
+        "提示4：结合视频中提到画组合体视图需要掌握基本概念判断选项D"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：视图交线情况",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "由若干基本体组合而成的复杂形体称为组合体，它是相对基本立体而言的。现有一个组合体由一个正方体和一个圆柱体组合而成，在绘制这个组合体的三视图时，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "无论正方体和圆柱体如何组合，三视图中都不会出现曲线与直线的交线"
+        },
+        {
+          "label": "B",
+          "content": "当正方体与圆柱体相切组合时，主视图中两者的交线一定是一条直线"
+        },
+        {
+          "label": "C",
+          "content": "若正方体与圆柱体相交组合，俯视图中可能出现曲线与直线的交线"
+        },
+        {
+          "label": "D",
+          "content": "组合体的三视图中，每个视图的交线数量一定相同"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先明确组合体的概念以及不同组合方式下交线的特点",
+        "提示2：分析正方体和圆柱体不同组合方式（相切、相交等）在各个视图中的表现",
+        "提示3：考虑曲线与直线交线在不同视图中出现的可能性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：相贯线简化画法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "由若干基本题构成的复杂题被称为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "组合体"
+        },
+        {
+          "label": "B",
+          "content": "基本体"
+        },
+        {
+          "label": "C",
+          "content": "复合体"
+        },
+        {
+          "label": "D",
+          "content": "结构体"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对相关概念的定义",
+        "提示2：明确提到由若干基本题构成的复杂题的特定称谓",
+        "提示3：对比各个选项与视频知识点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：组合体视图步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于组合体的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "组合体是由单一基本例题构成的复杂例题"
+        },
+        {
+          "label": "B",
+          "content": "组合体是相对于基本立体而言的，由若干基本例题所构成的复杂例题"
+        },
+        {
+          "label": "C",
+          "content": "组合体只研究其构成方式，不研究其三视图的画法"
+        },
+        {
+          "label": "D",
+          "content": "画组合体视图不需要掌握基本概念"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中组合体的定义，明确其构成方式",
+        "提示2：思考画组合体视图需要掌握的内容",
+        "提示3：逐一分析每个选项与视频知识点是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：组合体构成",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于组合体的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "由若干基本形体构成的简单形体称为组合体"
+        },
+        {
+          "label": "B",
+          "content": "组合体是相对于基本形体而言的"
+        },
+        {
+          "label": "C",
+          "content": "组合体的学习只需要掌握组合体的构成方式即可"
+        },
+        {
+          "label": "D",
+          "content": "组合体和基本形体没有任何关系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对组合体的定义，明确组合体是由什么构成的",
+        "提示2：思考组合体与基本形体的相对关系",
+        "提示3：注意视频中提到的组合体学习的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：主视图投影方向",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "由若干基本形体所构成的复杂形体，我们称之为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "基本形体"
+        },
+        {
+          "label": "B",
+          "content": "组合体"
+        },
+        {
+          "label": "C",
+          "content": "复杂体"
+        },
+        {
+          "label": "D",
+          "content": "多面体"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对相关概念的定义",
+        "提示2：明确由基本形体构成的复杂形体的特定称谓",
+        "提示3：对比各个选项与视频中知识点的匹配度"
+      ]
+    }
+  ],
+  "count": 8
+}

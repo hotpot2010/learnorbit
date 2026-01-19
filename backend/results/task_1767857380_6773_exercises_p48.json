@@ -1,0 +1,69 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：绘图工具介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘图过程中，绘图纸需要通过什么固定到绘图板上？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "图钉"
+        },
+        {
+          "label": "B",
+          "content": "胶水"
+        },
+        {
+          "label": "C",
+          "content": "胶带"
+        },
+        {
+          "label": "D",
+          "content": "夹子"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中关于绘图纸固定方式的描述",
+        "提示2：关注视频中提到的具体固定工具",
+        "提示3：排除未在视频中提及的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：绘图工具使用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘图过程中，若要将绘图纸固定在绘图板上，应该采用以下哪种方式？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "用图钉直接钉在绘图板上"
+        },
+        {
+          "label": "B",
+          "content": "通过胶带纸固定在绘图板上"
+        },
+        {
+          "label": "C",
+          "content": "使用胶水粘贴在绘图板上"
+        },
+        {
+          "label": "D",
+          "content": "将绘图纸放在绘图板上自然平放"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到的固定绘图纸到绘图板的具体方法",
+        "提示2：思考各种固定方式的可行性和对绘图的影响",
+        "提示3：视频中明确指出了一种固定绘图纸的方式"
+      ]
+    }
+  ],
+  "count": 2
+}

@@ -1,0 +1,324 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：铜化合物性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在过渡金属 2 的学习中，主要涉及的考察点不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "铜族元素"
+        },
+        {
+          "label": "B",
+          "content": "锌族元素"
+        },
+        {
+          "label": "C",
+          "content": "铁族元素"
+        },
+        {
+          "label": "D",
+          "content": "蓝系 R 系元素相关小知识"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示 1：回顾视频中提到的过渡金属 2 的主要考察点内容",
+        "提示 2：明确视频中指出的几个考察点分别是什么",
+        "提示 3：将选项与视频中的考察点进行逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：铜配离子转化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于过渡金属部分涉及的铜族元素，以下关于铜的重要化合物及相关内容的说法正确的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "铜在过渡金属中不重要"
+        },
+        {
+          "label": "B",
+          "content": "过渡金属 2 只包含铜族元素和锌族元素"
+        },
+        {
+          "label": "C",
+          "content": "学习铜族元素应先从铜的有关重要化合物和方程式入手"
+        },
+        {
+          "label": "D",
+          "content": "视频未提及对学习铜族元素的方法指导"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：注意视频中对铜族元素学习的描述",
+        "提示2：明确过渡金属 2 包含的内容",
+        "提示3：判断每个选项与视频中知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：铜价态转变",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在过渡金属的相关知识中，涉及到铜族元素，其中铜是铜族元素里最重要的元素。已知铜有多种重要化合物，下列关于铜的化合物的反应中，体现铜价态转变的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$CuO + H_2 \\stackrel{\\Delta}{=} Cu + H_2O$"
+        },
+        {
+          "label": "B",
+          "content": "$Cu + 2AgNO_3 = Cu(NO_3)_2 + 2Ag$"
+        },
+        {
+          "label": "C",
+          "content": "$2Cu + O_2 \\stackrel{\\Delta}{=} 2CuO$"
+        },
+        {
+          "label": "D",
+          "content": "以上都是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：分析每个选项中铜元素反应前后的价态变化",
+        "提示2：明确铜常见的价态有 $0$ 价、$+1$ 价、$+2$ 价",
+        "提示3：根据化学反应方程式判断铜元素是否发生了价态转变"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：过渡金属 2 相关知识",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列关于过渡金属 2 部分的主要考点，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第一是铁系元素，第二是铜系元素，最后再补充一个关于蓝色系 R 系元素的一个小知识"
+        },
+        {
+          "label": "B",
+          "content": "第一是铜系元素，第二是锌系元素，最后再补充一个关于蓝色系 R 系元素的一个小知识"
+        },
+        {
+          "label": "C",
+          "content": "第一是锌系元素，第二是铜系元素，最后再补充一个关于蓝色系 R 系元素的一个小知识"
+        },
+        {
+          "label": "D",
+          "content": "第一是铁系元素，第二是锌系元素，最后再补充一个关于蓝色系 R 系元素的一个小知识"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示 1：回忆视频中提到过渡金属 2 部分主要剩余的两个考点内容",
+        "提示 2：注意考点顺序和具体元素系的名称"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：汞化合物特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在过渡金属2的学习中，主要涉及的考察点不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "铜族元素"
+        },
+        {
+          "label": "B",
+          "content": "锌族元素"
+        },
+        {
+          "label": "C",
+          "content": "铁族元素"
+        },
+        {
+          "label": "D",
+          "content": "蓝系R系元素的小知识"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到过渡金属2主要涉及的考察点有哪些",
+        "提示2：明确视频中指出的考察点具体内容，与选项进行对比",
+        "提示3：视频中提到主要考察点为铜族元素、锌族元素和蓝系R系元素的小知识"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：氯化铊氧化还原",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在过渡金属 2 的学习中，涉及到铜族元素等知识点，下列关于铜的重要化合物的说法正确的是（已知铜常见化合价有 +1、+2）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "在 $CuO$ 中铜元素显 +1 价"
+        },
+        {
+          "label": "B",
+          "content": "在 $Cu_2O$ 中铜元素显 +2 价"
+        },
+        {
+          "label": "C",
+          "content": "氧化亚铜（$Cu_2O$）中铜元素显 +1 价，且在一定条件下可发生氧化还原反应转化为 $CuO$"
+        },
+        {
+          "label": "D",
+          "content": "铜的化合物都不具有氧化性和还原性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据化合物中各元素化合价代数和为零来判断铜的化合价",
+        "提示2：考虑铜的常见化合价 +1、+2，结合化合物的化学式分析，并且判断氧化亚铜是否能发生氧化还原反应",
+        "提示3：分析铜化合物中铜元素的化合价是否可以发生变化来判断其氧化性和还原性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：铊盐与氨反应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到过渡金属2主要涉及的考察点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "铜族元素"
+        },
+        {
+          "label": "B",
+          "content": "锌族元素"
+        },
+        {
+          "label": "C",
+          "content": "铁族元素"
+        },
+        {
+          "label": "D",
+          "content": "蓝系R系元素的小知识"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于过渡金属2考察点的具体内容",
+        "提示2：明确提到的考察点有铜族元素、锌族元素和蓝系R系元素的小知识",
+        "提示3：逐一对比选项与视频内容，找出不包含的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：一价二价铊转化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频提到过渡金属2主要涉及两个考点，以下属于其中考点的元素是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "铜族元素"
+        },
+        {
+          "label": "B",
+          "content": "铁族元素"
+        },
+        {
+          "label": "C",
+          "content": "镍族元素"
+        },
+        {
+          "label": "D",
+          "content": "锰族元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到过渡金属2的两个考点所包含的元素",
+        "提示2：视频明确指出考点包含铜族元素",
+        "提示3：根据视频信息直接判断选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：蓝系元素收缩",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习过渡金属 2 的内容时，涉及到几个重要考点，以下哪个是视频中提到的考点之一？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "铜系元素"
+        },
+        {
+          "label": "B",
+          "content": "铁系元素"
+        },
+        {
+          "label": "C",
+          "content": "锰系元素"
+        },
+        {
+          "label": "D",
+          "content": "铬系元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的过渡金属 2 的考点内容",
+        "提示2：视频明确指出过渡金属 2 主要剩余两个考点，其中之一是关键信息",
+        "提示3：对照选项，找出与视频中考点表述一致的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：镧系收缩现象",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到过渡金属2主要剩下两个考点，以下选项中属于这两个考点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "铜族元素和锌族元素"
+        },
+        {
+          "label": "B",
+          "content": "铁族元素和铂族元素"
+        },
+        {
+          "label": "C",
+          "content": "碱金属元素和碱土金属元素"
+        },
+        {
+          "label": "D",
+          "content": "卤素元素和稀有气体元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的过渡金属2的两个考点具体内容",
+        "提示2：明确各选项中元素族的类别，与视频内容进行匹配",
+        "提示3：在视频里明确指出过渡金属2的两个考点是某两类元素，注意准确记忆"
+      ]
+    }
+  ],
+  "count": 10
+}

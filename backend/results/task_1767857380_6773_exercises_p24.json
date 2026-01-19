@@ -1,0 +1,229 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：相贯线定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于相贯线的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "空间中任意两个立体图形的交线都叫相贯线"
+        },
+        {
+          "label": "B",
+          "content": "只有两个基本立体相交，它们表面的交线才叫相贯线"
+        },
+        {
+          "label": "C",
+          "content": "三个及以上基本立体相交形成的图形，不存在相贯线"
+        },
+        {
+          "label": "D",
+          "content": "相贯线只与两个基本立体相交的情况有关，与立体的形状无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中相贯线的定义，明确是两个或两个以上基本立体相交的情况",
+        "提示2：思考相贯线与立体图形数量和形状的关系",
+        "提示3：分析每个选项是否符合相贯线的定义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：相贯线性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于相贯线的定义，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "两个或两个以上的基本立体相交形成的立体叫做相贯线"
+        },
+        {
+          "label": "B",
+          "content": "两个立体相交，它们表面的交线叫做相贯线"
+        },
+        {
+          "label": "C",
+          "content": "两个立体相交叫做相贯线"
+        },
+        {
+          "label": "D",
+          "content": "两个立体表面的线叫做相贯线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中相贯线的定义，明确相贯线是与立体相交的什么有关",
+        "提示2：注意区分立体相交形成的立体、立体相交这个行为、立体表面的线和立体表面的交线的概念",
+        "提示3：根据定义判断每个选项是否准确描述了相贯线"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：相贯线求法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "两个立体相交又称为两个立体相贯，它们表面的交线我们称为相贯线。以下关于相贯线的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "相贯线一定是平面曲线"
+        },
+        {
+          "label": "B",
+          "content": "相贯线是两个立体表面的分界线，可能是空间曲线或平面曲线"
+        },
+        {
+          "label": "C",
+          "content": "相贯线只能是空间曲线"
+        },
+        {
+          "label": "D",
+          "content": "相贯线与立体的形状没有关系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中相贯线的定义和性质",
+        "提示2：思考不同形状的立体相交时相贯线的可能情况",
+        "提示3：分析每个选项与相贯线实际特征的符合程度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：基本回转体相贯",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知空间中两个立体相交，它们表面的交线被称为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "相交线"
+        },
+        {
+          "label": "B",
+          "content": "重合线"
+        },
+        {
+          "label": "C",
+          "content": "相贯线"
+        },
+        {
+          "label": "D",
+          "content": "连接线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于两个立体相交时表面交线的名称",
+        "提示2：注意关键概念“两个立体相交”和“表面交线”",
+        "提示3：在视频里明确给出了该交线的准确称呼"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正交圆柱相贯线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于相贯线的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "空间立体只能由两个基本立体相交形成"
+        },
+        {
+          "label": "B",
+          "content": "两立体相交就是两立体相贯，它们表面的交线就是相贯线"
+        },
+        {
+          "label": "C",
+          "content": "相贯线的学习只需要掌握其定义即可"
+        },
+        {
+          "label": "D",
+          "content": "相贯线只有一种形式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于空间立体形成的描述",
+        "提示2：明确两立体相交和相贯线的定义",
+        "提示3：思考相贯线学习所包含的内容以及相贯线的形式特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：相贯线作图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于相贯线的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "相贯线是一个立体表面的曲线"
+        },
+        {
+          "label": "B",
+          "content": "两个以上基本立体相交形成的立体不能有相贯线"
+        },
+        {
+          "label": "C",
+          "content": "相贯线是两个立体表面的交线"
+        },
+        {
+          "label": "D",
+          "content": "研究相贯线与立体大小无关，只研究其形状就行"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中相贯线的定义，明确相贯线和立体相交的关系",
+        "提示2：思考相贯线是由几个立体形成的以及在什么位置",
+        "提示3：再次确认相贯线研究的方向"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：圆柱孔相贯线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "两个立体相交也称为两个立体相贯，它们表面的交线我们称为相贯线。那么以下关于相贯线的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "相贯线只研究其形状，不研究性质和相关作图方法"
+        },
+        {
+          "label": "B",
+          "content": "相贯线的定义不重要，只需掌握其形状即可"
+        },
+        {
+          "label": "C",
+          "content": "我们主要学习相贯线的性质、形状以及相关的作图方法和定义"
+        },
+        {
+          "label": "D",
+          "content": "相贯线的性质和形状是相互独立的，没有关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的关于相贯线的学习内容",
+        "提示2：明确相贯线的学习包括定义、性质、形状和作图方法等方面",
+        "提示3：分析每个选项与视频知识点是否相符"
+      ]
+    }
+  ],
+  "count": 7
+}

@@ -1,0 +1,293 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：路易斯理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "根据路易斯理论，下列哪种情况最有可能通过共用电子对形成共价键？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "金属钠（$Na$）和非金属氯（$Cl$）的原子之间"
+        },
+        {
+          "label": "B",
+          "content": "相同元素氢（$H$）的原子之间"
+        },
+        {
+          "label": "C",
+          "content": "金属镁（$Mg$）和非金属氧（$O$）的原子之间"
+        },
+        {
+          "label": "D",
+          "content": "金属铝（$Al$）和非金属氟（$F$）的原子之间"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾路易斯理论，共价键是在同种元素的原子之间以及电负性相近的不同元素的原子之间通过共用电子对形成的",
+        "提示2：分析各选项中元素的类型，金属和非金属元素电负性差异通常较大",
+        "提示3：判断各选项是否符合路易斯理论中形成共价键的条件"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：共价键本质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "根据路易斯理论，下列哪种情况最有可能形成共价键？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "活泼金属与活泼非金属的原子之间"
+        },
+        {
+          "label": "B",
+          "content": "同种元素的原子之间"
+        },
+        {
+          "label": "C",
+          "content": "金属阳离子与自由电子之间"
+        },
+        {
+          "label": "D",
+          "content": "不同元素且电负性差值很大的原子之间"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中路易斯理论对形成共价键的条件描述",
+        "提示2：共价键是通过共用电子对形成的，想想哪种情况符合这种成键方式",
+        "提示3：活泼金属与活泼非金属易形成离子键，金属阳离子与自由电子形成金属键，电负性差值大的原子间也倾向于形成离子键"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：共价键要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "根据路易斯理论，下列哪种情况可以形成共价键？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "金属元素与非金属元素的原子之间"
+        },
+        {
+          "label": "B",
+          "content": "同种元素的原子之间"
+        },
+        {
+          "label": "C",
+          "content": "电负性相差很大的不同元素的原子之间"
+        },
+        {
+          "label": "D",
+          "content": "稀有气体元素的原子之间"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中路易斯理论对形成共价键条件的描述",
+        "提示2：明确同种元素原子、不同元素原子在电负性方面的关系与形成共价键的联系",
+        "提示3：分析各选项中原子的性质是否符合形成共价键的条件"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：共价键类型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "根据路易斯理论，下列物质中通过共用电子对形成共价键的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$NaCl$"
+        },
+        {
+          "label": "B",
+          "content": "$H_2$"
+        },
+        {
+          "label": "C",
+          "content": "$MgO$"
+        },
+        {
+          "label": "D",
+          "content": "$KBr$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：路易斯理论认为，同种元素的原子之间以及电负性相近的不同元素的原子之间，可以通过共用电子对形成分子，通过共用电子对形成的化学键叫做共价键。",
+        "提示2：分析各选项中物质的元素组成，判断元素之间是通过共用电子对还是得失电子形成化学键。",
+        "提示3：一般来说，金属元素与非金属元素组成的化合物，通常是通过得失电子形成离子键；非金属元素之间组成的化合物，通常是通过共用电子对形成共价键。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：键参数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "根据路易斯理论，下列哪种情况可以形成共价键？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "不同种元素且电负性相差较大的原子之间"
+        },
+        {
+          "label": "B",
+          "content": "同种元素的原子之间"
+        },
+        {
+          "label": "C",
+          "content": "任意两种元素的原子之间"
+        },
+        {
+          "label": "D",
+          "content": "金属元素与非金属元素的原子之间"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中路易斯理论对形成共价键的条件描述",
+        "提示2：明确同种元素原子以及电负性相近的不同元素原子之间的情况",
+        "提示3：分析各选项是否符合路易斯理论中形成共价键的条件"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：杂化轨道理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "根据路易斯理论，下列哪种情况可以形成共价键？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "不同种元素的原子之间，电负性相差很大时"
+        },
+        {
+          "label": "B",
+          "content": "同种元素的原子之间以及电负性相近的不同种元素的原子之间，通过共用电子对"
+        },
+        {
+          "label": "C",
+          "content": "不同种元素的原子之间，电子得失时"
+        },
+        {
+          "label": "D",
+          "content": "金属元素与非金属元素的原子之间"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中路易斯理论的内容，明确形成共价键的条件",
+        "提示2：注意是同种元素原子间以及电负性相近的不同元素原子间",
+        "提示3：形成共价键的方式是共用电子对"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：杂化轨道理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "根据路易斯理论，下列哪种情况可以形成共价键？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "电负性相差很大的不同元素的原子之间"
+        },
+        {
+          "label": "B",
+          "content": "同种元素的原子之间"
+        },
+        {
+          "label": "C",
+          "content": "任意两种元素的原子之间"
+        },
+        {
+          "label": "D",
+          "content": "金属元素与非金属元素的原子之间"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中路易斯理论的内容，明确形成共价键的条件",
+        "提示2：注意是同种元素原子之间以及电负性相近的不同元素原子之间",
+        "提示3：分析每个选项是否符合形成共价键的条件"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：价层电子对互斥理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "根据路易斯理论，下列哪种情况可以形成共价键？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "不同种元素且电负性相差很大的原子之间"
+        },
+        {
+          "label": "B",
+          "content": "同种元素的原子之间"
+        },
+        {
+          "label": "C",
+          "content": "任意两种元素的原子之间"
+        },
+        {
+          "label": "D",
+          "content": "金属元素与非金属元素的原子之间"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中路易斯理论对形成共价键的原子的描述",
+        "提示2：路易斯理论指出同种元素的原子之间以及电负性相近的不同元素的原子之间可形成共价键",
+        "提示3：分析各选项中原子的情况是否符合路易斯理论"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：分子轨道理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "根据路易斯理论，下列哪种情况可以形成共价键？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "不同元素的原子之间，电负性相差很大时"
+        },
+        {
+          "label": "B",
+          "content": "同种元素的原子之间"
+        },
+        {
+          "label": "C",
+          "content": "电负性相差很大的不同元素的离子之间"
+        },
+        {
+          "label": "D",
+          "content": "金属元素与非金属元素的原子之间"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中路易斯理论的内容，明确形成共价键的条件",
+        "提示2：注意是同种元素的原子之间以及电负性相近的不同元素的原子之间",
+        "提示3：分析每个选项是否符合形成共价键的条件"
+      ]
+    }
+  ],
+  "count": 9
+}

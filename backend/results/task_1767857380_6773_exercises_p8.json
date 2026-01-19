@@ -1,0 +1,389 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面几何定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面几何中，研究平面问题时，不涉及以下哪个方面？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "各种位置关系"
+        },
+        {
+          "label": "B",
+          "content": "平面的投影性质"
+        },
+        {
+          "label": "C",
+          "content": "平面的面积计算"
+        },
+        {
+          "label": "D",
+          "content": "平面与投影面的夹角问题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的研究平面问题所涉及的方面",
+        "提示2：逐一分析每个选项是否在视频中被提及",
+        "提示3：视频中主要强调了位置、投影性质、平面内取点取线方法以及平面与投影面夹角等内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面位置关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间中，已知平面 $\\alpha$ 的投影面为 $\\beta$，平面 $\\alpha$ 内有一点 $A$ 和一条直线 $l$，关于平面位置关系，以下说法错误的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "若要研究平面 $\\alpha$ 的投影性质，需先了解平面在几何上的定义"
+        },
+        {
+          "label": "B",
+          "content": "平面 $\\alpha$ 的投影性质与平面 $\\alpha$ 内取点取线的方法无关"
+        },
+        {
+          "label": "C",
+          "content": "平面 $\\alpha$ 与投影面 $\\beta$ 的夹角是研究平面位置关系的重要内容"
+        },
+        {
+          "label": "D",
+          "content": "平面 $\\alpha$ 的几何元素表示方法有助于我们研究平面问题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于平面位置关系所涉及的知识点，包括平面投影性质、平面内取点取线方法等",
+        "提示2：思考平面内取点取线方法与平面投影性质之间的联系",
+        "提示3：逐一分析每个选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投影面平行面",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究平面问题时，以下不属于主要研究内容的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "各种位置平面的投影性质"
+        },
+        {
+          "label": "B",
+          "content": "平面的实际应用场景（非视频提及的实际性）"
+        },
+        {
+          "label": "C",
+          "content": "平面内取点取线的方法"
+        },
+        {
+          "label": "D",
+          "content": "平面与投影面的夹角问题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的研究平面问题的主要内容",
+        "提示2：明确视频中列举的几个关键研究方向，如投影性质、取点取线方法等",
+        "提示3：对比各选项与视频内容，找出不符合的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正平面投影特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "学习平面的投影，不需要了解以下哪个方面的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "各种位置平面的投影性质"
+        },
+        {
+          "label": "B",
+          "content": "平面的实形"
+        },
+        {
+          "label": "C",
+          "content": "平面在几何上的定义"
+        },
+        {
+          "label": "D",
+          "content": "平面与坐标轴的夹角"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到学习平面投影需要了解的内容",
+        "提示2：分析每个选项与视频知识点的相关性",
+        "提示3：视频中主要提到了平面投影性质、平面实形、平面几何定义等方面，未提及平面与坐标轴夹角"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正平面投影特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究平面问题时，以下不属于主要研究内容的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "各种位置平面的投影性质"
+        },
+        {
+          "label": "B",
+          "content": "平面的虚实情况"
+        },
+        {
+          "label": "C",
+          "content": "平面内取点取线的方法"
+        },
+        {
+          "label": "D",
+          "content": "平面与投影面的夹角问题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的研究平面问题的主要内容",
+        "提示2：明确每个选项是否在视频所讲的研究范围内",
+        "提示3：视频中提到主要研究各种位置平面的投影性质、平面的实形、平面内取点取线的方法以及平面与投影面的夹角问题"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：水平面投影特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究平面问题时，以下不属于主要研究范畴的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "各种位置平面的投影性质"
+        },
+        {
+          "label": "B",
+          "content": "平面的实形"
+        },
+        {
+          "label": "C",
+          "content": "平面与坐标轴的夹角问题"
+        },
+        {
+          "label": "D",
+          "content": "平面在代数上的定义方式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的研究平面问题的主要内容",
+        "提示2：明确视频中指出的研究范畴包括投影性质、实形、取点取线方法和与投影面夹角等",
+        "提示3：判断每个选项是否在视频提及的研究范畴内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投影面平行面总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究平面问题时，以下不属于主要研究范畴的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "各种位置平面的投影性质"
+        },
+        {
+          "label": "B",
+          "content": "平面的实际应用场景（如建筑设计中的平面布局）"
+        },
+        {
+          "label": "C",
+          "content": "平面内取点取线的方法"
+        },
+        {
+          "label": "D",
+          "content": "平面与投影面的夹角问题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的研究平面问题的主要内容",
+        "提示2：明确视频里列举的研究范畴有投影性质、平面的实形、平面内取点取线方法和平面与投影面夹角问题等",
+        "提示3：对比选项，看哪个不在视频所提及的主要研究范畴内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投影面垂直面分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究平面问题时，以下不属于主要研究内容的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "各种位置平面的投影性质"
+        },
+        {
+          "label": "B",
+          "content": "平面的实形"
+        },
+        {
+          "label": "C",
+          "content": "平面与坐标轴的夹角问题"
+        },
+        {
+          "label": "D",
+          "content": "平面内取点取线的方法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的研究平面问题的主要内容",
+        "提示2：明确各个选项与视频内容的匹配度",
+        "提示3：视频中提到主要研究各种位置平面的投影性质、平面的实形、平面内取点取线的方法以及平面与投影面的倾角问题，而非平面与坐标轴的夹角问题"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：铅垂面投影特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究平面问题时，不包含以下哪个方面的研究内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "各种位置平面的投影特性"
+        },
+        {
+          "label": "B",
+          "content": "平面的实际形状"
+        },
+        {
+          "label": "C",
+          "content": "平面内取点取线的方法"
+        },
+        {
+          "label": "D",
+          "content": "平面的面积计算"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的研究平面问题包含的方面",
+        "提示2：逐一分析每个选项是否在视频所提及的研究内容范围内",
+        "提示3：明确视频中未涉及平面面积计算的相关内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正垂面投影特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究平面问题时，以下不属于主要研究内容的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "各种位置平面的投影特性"
+        },
+        {
+          "label": "B",
+          "content": "平面的实形"
+        },
+        {
+          "label": "C",
+          "content": "平面与坐标轴的夹角问题"
+        },
+        {
+          "label": "D",
+          "content": "平面内取点取线的方法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的研究平面问题的主要内容",
+        "提示2：明确每个选项与视频内容的匹配度",
+        "提示3：注意题目问的是不属于主要研究内容的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投影面垂直面投影规律",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在讨论平面问题时，以下不属于主要讨论内容的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "各种位置平面的投影性质"
+        },
+        {
+          "label": "B",
+          "content": "平面的方向向量计算"
+        },
+        {
+          "label": "C",
+          "content": "平面内取点取线的方法"
+        },
+        {
+          "label": "D",
+          "content": "平面与投影面的夹角问题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到的讨论平面问题的主要内容",
+        "提示2：对比各选项与视频中提到的内容是否相符",
+        "提示3：明确视频重点围绕平面的投影性质、平面内操作以及与投影面夹角等方面"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：一般位置平面投影特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究平面问题时，以下不属于主要研究范畴的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "各种位置平面的投影特性"
+        },
+        {
+          "label": "B",
+          "content": "平面的实形"
+        },
+        {
+          "label": "C",
+          "content": "平面与直线的夹角问题"
+        },
+        {
+          "label": "D",
+          "content": "平面内取点取线的方法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的研究平面问题的主要内容",
+        "提示2：明确视频中列举的研究范畴，与选项进行逐一对比",
+        "提示3：注意题目问的是不属于研究范畴的选项"
+      ]
+    }
+  ],
+  "count": 12
+}

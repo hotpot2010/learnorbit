@@ -1,0 +1,421 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：氮平衡概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "蛋白质的消化与吸收和氨基酸代谢中，主要要求掌握的内容是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一些简单的计算方法"
+        },
+        {
+          "label": "B",
+          "content": "一些重要的反应"
+        },
+        {
+          "label": "C",
+          "content": "一些复杂的实验操作"
+        },
+        {
+          "label": "D",
+          "content": "一些生物的生理结构"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于蛋白质消化与吸收以及氨基酸代谢要求掌握内容的相关描述",
+        "提示2：注意视频中提到的关键信息点，是关于某种特定类型的内容",
+        "提示3：结合知识点缩小选择范围，判断哪个选项符合主要要求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：蛋白质营养",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在蛋白质的消化与吸收以及氨基酸代谢过程中，以下哪类反应属于需要掌握的重要反应？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "蛋白质的水解反应"
+        },
+        {
+          "label": "B",
+          "content": "糖的氧化反应"
+        },
+        {
+          "label": "C",
+          "content": "脂肪的乳化反应"
+        },
+        {
+          "label": "D",
+          "content": "核酸的合成反应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：思考视频中提到的蛋白质消化与吸收和氨基酸代谢相关的反应",
+        "提示2：分析每个选项与蛋白质消化、吸收及氨基酸代谢的关联性",
+        "提示3：蛋白质在体内消化过程中会发生水解反应生成氨基酸，这与视频中强调的知识点相关"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：必需氨基酸",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "蛋白质的消化与吸收和氨基酸代谢中，需要重点掌握的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "蛋白质的结构组成"
+        },
+        {
+          "label": "B",
+          "content": "重要的反应"
+        },
+        {
+          "label": "C",
+          "content": "氨基酸的种类"
+        },
+        {
+          "label": "D",
+          "content": "蛋白质的合成场所"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于蛋白质消化与吸收和氨基酸代谢的重点要求",
+        "提示2：注意视频中提到要掌握的关键内容",
+        "提示3：视频明确指出重点是一些重要的反应"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：蛋白消化吸收",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "蛋白质的消化与吸收和氨基酸代谢中，大纲要求掌握的主要是以下哪种内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一些简单的概念"
+        },
+        {
+          "label": "B",
+          "content": "所有的化学反应"
+        },
+        {
+          "label": "C",
+          "content": "一些重要的反应"
+        },
+        {
+          "label": "D",
+          "content": "蛋白质的结构组成"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于大纲要求掌握内容的描述",
+        "提示2：关注视频提到的重点关键词，如“重要的反应”",
+        "提示3：排除与视频内容不符的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：蛋白降解途径",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在蛋白质的消化与吸收和氨基酸代谢中，需要重点掌握的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一些重要的反应"
+        },
+        {
+          "label": "B",
+          "content": "所有的反应"
+        },
+        {
+          "label": "C",
+          "content": "部分次要的反应"
+        },
+        {
+          "label": "D",
+          "content": "一些不重要的反应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于蛋白质的消化与吸收和氨基酸代谢需要掌握的内容描述",
+        "提示2：注意关键词“重点掌握”",
+        "提示3：从选项中找出与视频描述相符的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：转氨基作用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "蛋白质的消化与吸收以及氨基酸代谢中重点需要掌握的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "各种消化酶的具体结构"
+        },
+        {
+          "label": "B",
+          "content": "重要的反应"
+        },
+        {
+          "label": "C",
+          "content": "蛋白质的空间构象变化过程"
+        },
+        {
+          "label": "D",
+          "content": "氨基酸的全部合成途径"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于蛋白质的消化与吸收和氨基酸代谢的要求描述",
+        "提示2：明确视频强调需要重点掌握的核心内容",
+        "提示3：对比各选项与视频中重点内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：尿素循环过程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "蛋白质的消化与吸收和氨基酸代谢中，大纲要求掌握的主要是以下哪种内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "蛋白质的结构特点"
+        },
+        {
+          "label": "B",
+          "content": "重要的反应"
+        },
+        {
+          "label": "C",
+          "content": "蛋白质的合成场所"
+        },
+        {
+          "label": "D",
+          "content": "氨基酸的种类"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于蛋白质的消化与吸收和氨基酸代谢的大纲要求相关内容",
+        "提示2：注意视频中强调的重点词汇",
+        "提示3：结合选项与视频内容进行匹配"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：尿素生成调节",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "蛋白质的消化与吸收和氨基酸代谢中，大纲要求掌握的内容是以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一些重要的反应"
+        },
+        {
+          "label": "B",
+          "content": "所有的反应过程"
+        },
+        {
+          "label": "C",
+          "content": "部分反应的现象"
+        },
+        {
+          "label": "D",
+          "content": "反应的中间产物"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于蛋白质的消化与吸收和氨基酸代谢大纲要求的描述",
+        "提示2：明确视频提到大纲要求掌握的重点内容表述",
+        "提示3：对比各选项与视频内容进行选择"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：氨基酸脱羧基",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "蛋白质的消化与吸收和氨基酸代谢中需要重点掌握的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "所有的化学反应"
+        },
+        {
+          "label": "B",
+          "content": "重要的反应"
+        },
+        {
+          "label": "C",
+          "content": "简单的反应"
+        },
+        {
+          "label": "D",
+          "content": "复杂的反应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到了对于蛋白质的消化与吸收和氨基酸代谢的重点掌握要求",
+        "提示2：注意视频中强调的是重点掌握的反应类型",
+        "提示3：回顾视频中明确指出的要掌握的反应属性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：甲硫氨酸循环",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "蛋白质的消化与吸收和氨基酸代谢中，大纲要求掌握的主要是以下哪种内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一些简单的概念"
+        },
+        {
+          "label": "B",
+          "content": "一些重要的反应"
+        },
+        {
+          "label": "C",
+          "content": "所有的化学反应"
+        },
+        {
+          "label": "D",
+          "content": "蛋白质的结构组成"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于蛋白质的消化与吸收和氨基酸代谢的大纲要求内容",
+        "提示2：注意视频中强调的重点内容",
+        "提示3：明确大纲要求掌握的是特定类型的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：苯丙/酪氨酸代谢",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "蛋白质的消化与吸收和氨基酸代谢中，大纲要求掌握的主要是以下哪类内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一些简单的概念"
+        },
+        {
+          "label": "B",
+          "content": "所有的反应步骤"
+        },
+        {
+          "label": "C",
+          "content": "重要的反应"
+        },
+        {
+          "label": "D",
+          "content": "蛋白质的结构组成"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于大纲要求掌握内容的描述",
+        "提示2：注意提到的是对蛋白质消化与吸收和氨基酸代谢方面的要求",
+        "提示3：明确关键信息是重要的反应"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：支链氨基酸分解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在蛋白质的消化与吸收和氨基酸代谢中，要求掌握的重要内容是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "所有的反应过程"
+        },
+        {
+          "label": "B",
+          "content": "重要的反应"
+        },
+        {
+          "label": "C",
+          "content": "简单的反应"
+        },
+        {
+          "label": "D",
+          "content": "复杂的反应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于蛋白质的消化与吸收和氨基酸代谢的要求",
+        "提示2：注意视频中提到的是要掌握重要的内容",
+        "提示3：从选项中找出与重要内容对应的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：物质代谢转化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在蛋白质的消化与吸收和氨基酸代谢过程中，以下哪个是需要重点掌握的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "蛋白质消化与吸收和氨基酸代谢的概念"
+        },
+        {
+          "label": "B",
+          "content": "蛋白质消化与吸收和氨基酸代谢的重要反应"
+        },
+        {
+          "label": "C",
+          "content": "蛋白质消化与吸收和氨基酸代谢的所有细节"
+        },
+        {
+          "label": "D",
+          "content": "蛋白质消化与吸收和氨基酸代谢的发现历史"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中提到重点掌握的内容与某些特定方面相关",
+        "提示2：关注视频中关于重点要求掌握的描述",
+        "提示3：回顾视频中对于这部分内容重点的强调"
+      ]
+    }
+  ],
+  "count": 13
+}

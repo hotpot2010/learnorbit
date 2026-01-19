@@ -12,6 +12,7 @@ from ...services.offline_video_service import (
     StepType
 )
 from ...services.prompt_config_service import prompt_config_service
+from ...services.vod_sign_service import vod_sign_service
 
 router = APIRouter(prefix="/offline-video", tags=["offline-video"])
 
@@ -850,4 +851,44 @@ async def reset_exercise_prompt(subject: str = "math", locale: str = "zh"):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"重置练习提示词失败: {str(e)}")
+
+
+class GetVodPsignRequest(BaseModel):
+    """获取VOD播放签名请求"""
+    file_id: str
+    app_id: Optional[int] = None
+    expire_time: Optional[int] = None  # 过期时间（秒）
+
+
+@router.post("/vod/psign")
+async def get_vod_psign(request: GetVodPsignRequest):
+    """
+    获取腾讯云点播播放签名（psign）
+    
+    Args:
+        request: 包含 file_id 的请求
+        
+    Returns:
+        播放签名和相关信息
+    """
+    try:
+        psign = vod_sign_service.generate_play_sign(
+            file_id=request.file_id,
+            app_id=request.app_id,
+            expire_time=request.expire_time
+        )
+        
+        if not psign:
+            raise HTTPException(status_code=500, detail="生成播放签名失败")
+        
+        app_id = request.app_id or vod_sign_service.sub_app_id
+        
+        return {
+            "success": True,
+            "psign": psign,
+            "app_id": app_id,
+            "file_id": request.file_id
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 

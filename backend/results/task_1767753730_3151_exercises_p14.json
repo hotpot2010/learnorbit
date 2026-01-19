@@ -1,0 +1,229 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：元素化学学习",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素化学的学习中，对于知识的掌握方式，以下哪种描述是符合视频讲解的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "全部靠理解"
+        },
+        {
+          "label": "B",
+          "content": "全部靠记忆"
+        },
+        {
+          "label": "C",
+          "content": "7分靠记忆，3分靠理解"
+        },
+        {
+          "label": "D",
+          "content": "3分靠记忆，7分靠理解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于元素化学学习时记忆和理解所占比例的描述",
+        "提示2：明确视频提到的是记忆和理解各占的具体分数",
+        "提示3：根据视频内容直接判断正确选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：稀有气体特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素化学的学习中，对于稀有气体和 s 区元素的学习方法，以下哪种说法是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "主要靠理解，记忆占 3 分，理解占 7 分"
+        },
+        {
+          "label": "B",
+          "content": "主要靠记忆，记忆占 7 分，理解占 3 分"
+        },
+        {
+          "label": "C",
+          "content": "记忆和理解各占 5 分"
+        },
+        {
+          "label": "D",
+          "content": "不需要记忆，只需要理解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于元素化学学习方法的描述",
+        "提示2：注意提到的记忆和理解所占的比例",
+        "提示3：明确是记忆为主还是理解为主"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：氢气性质检验",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到元素化学的学习方法，以下哪种描述最符合视频讲解内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "主要靠理解，记忆占 3 分，理解占 7 分"
+        },
+        {
+          "label": "B",
+          "content": "主要靠记忆，记忆占 7 分，理解占 3 分"
+        },
+        {
+          "label": "C",
+          "content": "记忆和理解各占 5 分"
+        },
+        {
+          "label": "D",
+          "content": "完全不需要理解，只需要记忆"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于元素化学学习方法的描述",
+        "提示2：明确记忆和理解在元素化学学习中的占比",
+        "提示3：对比各选项与视频内容是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：碱金属等特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素化学的学习中，老师提到学习方法主要是几分靠记忆，几分靠理解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "6分靠记忆，4分靠理解"
+        },
+        {
+          "label": "B",
+          "content": "7分靠记忆，3分靠理解"
+        },
+        {
+          "label": "C",
+          "content": "8分靠记忆，2分靠理解"
+        },
+        {
+          "label": "D",
+          "content": "9分靠记忆，1分靠理解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中老师提到的元素化学学习方法的具体比例",
+        "提示2：重点关注记忆和理解所占的分数",
+        "提示3：在视频中找到明确表述记忆和理解比例的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：过氧化物反应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素化学的学习中，对于元素化学的学习方法，视频中提到主要是几分成记忆，几分成理解呢？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "6分记，4分理解"
+        },
+        {
+          "label": "B",
+          "content": "7分记，3分理解"
+        },
+        {
+          "label": "C",
+          "content": "8分记，2分理解"
+        },
+        {
+          "label": "D",
+          "content": "5分记，5分理解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中关于元素化学学习方法里记忆和理解所占比例的描述",
+        "提示2：重点关注视频中提到的具体分数比例",
+        "提示3：在视频中找到明确说明记忆和理解分别占比的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：氢氧化物性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素化学的学习中，对于元素化学知识的掌握方式，以下说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "全部靠理解"
+        },
+        {
+          "label": "B",
+          "content": "全部靠记忆"
+        },
+        {
+          "label": "C",
+          "content": "7分靠记忆，3分靠理解"
+        },
+        {
+          "label": "D",
+          "content": "3分靠记忆，7分靠理解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于元素化学知识掌握方式的描述",
+        "提示2：注意视频中提到的记忆和理解所占的比例",
+        "提示3：对比各选项与视频内容进行选择"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：离子检验方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素化学的学习中，对于元素化学知识掌握的比例说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "2分靠理解，8分靠记忆"
+        },
+        {
+          "label": "B",
+          "content": "3分靠理解，7分靠记忆"
+        },
+        {
+          "label": "C",
+          "content": "4分靠理解，6分靠记忆"
+        },
+        {
+          "label": "D",
+          "content": "5分靠理解，5分靠记忆"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中关于元素化学学习时记忆和理解所占比例的描述",
+        "提示2：明确视频提到的是几分靠记忆，几分靠理解",
+        "提示3：根据视频内容准确选择答案"
+      ]
+    }
+  ],
+  "count": 7
+}

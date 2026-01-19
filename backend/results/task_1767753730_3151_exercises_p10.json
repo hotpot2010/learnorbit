@@ -1,0 +1,325 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：微观粒子特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课时 9 关于原子结构及元素周期性包含的考点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "原子结构的有关概念"
+        },
+        {
+          "label": "B",
+          "content": "原子核中质子的分布"
+        },
+        {
+          "label": "C",
+          "content": "原子中电子的分布"
+        },
+        {
+          "label": "D",
+          "content": "原子性质的周期性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到课时 9 包含的三个考点内容",
+        "提示2：将选项与视频中考点逐一进行比对",
+        "提示3：注意题目问的是不包括的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：量子数讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课时 9 关于原子结构及元素周期性包含的考点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "原子结构的有关概念"
+        },
+        {
+          "label": "B",
+          "content": "原子中电子的运动轨迹"
+        },
+        {
+          "label": "C",
+          "content": "原子中电子的分布"
+        },
+        {
+          "label": "D",
+          "content": "原子性质的周期性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示 1：回顾视频中提到课时 9 包含的三个考点内容",
+        "提示 2：明确每个选项与视频考点的对应关系",
+        "提示 3：找出不符合视频考点的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨道能量考点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课时9包含的考点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "原子结构的有关概念"
+        },
+        {
+          "label": "B",
+          "content": "原子核中质子的分布"
+        },
+        {
+          "label": "C",
+          "content": "原子中电子的分布"
+        },
+        {
+          "label": "D",
+          "content": "原子性质的周期性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的课时9包含的三个考点内容",
+        "提示2：逐一对比选项与视频中考点的表述",
+        "提示3：注意题目问的是不包括的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：量子态参数分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课时 9 中原子结构及元素周期性包含的三个考点不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "原子结构的有关概念"
+        },
+        {
+          "label": "B",
+          "content": "原子核的组成成分"
+        },
+        {
+          "label": "C",
+          "content": "原子中电子的分布"
+        },
+        {
+          "label": "D",
+          "content": "原子性质的周期性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的课时 9 包含的三个考点内容",
+        "提示2：逐一对比选项与视频中所讲的三个考点",
+        "提示3：找出不在三个考点范围内的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电子分布原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列关于课时 9 包含的考点，说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "仅包含原子结构的相关概念和原子性质的周期性两个考点"
+        },
+        {
+          "label": "B",
+          "content": "包含原子结构的相关概念、原子中电子的分布和原子性质的周期性三个考点"
+        },
+        {
+          "label": "C",
+          "content": "只涉及原子中电子的分布这一个考点"
+        },
+        {
+          "label": "D",
+          "content": "包含原子结构的相关概念、原子核的组成和原子性质的周期性三个考点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到课时 9 包含的考点有哪些",
+        "提示2：明确每个考点的具体内容，与选项进行逐一对比",
+        "提示3：视频中清晰指出课时 9 包含三个考点，思考这三个考点分别是什么"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：第四周期电子排布",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于课时9包含的考点，说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只包含原子结构的相关概念和原子中电子的分布两个考点"
+        },
+        {
+          "label": "B",
+          "content": "包含原子结构的相关概念、原子中电子的分布和原子性质的周期性三个考点"
+        },
+        {
+          "label": "C",
+          "content": "包含原子结构的相关概念、原子中质子的分布和原子性质的周期性三个考点"
+        },
+        {
+          "label": "D",
+          "content": "包含原子结构的相关概念、原子中中子的分布和原子性质的周期性三个考点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到课时9包含的考点内容",
+        "提示2：明确考点是围绕原子结构、电子分布和原子性质周期性展开的",
+        "提示3：注意区分电子、质子和中子的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：核外电子排布",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列关于原子结构及相关知识点的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "原子结构只包含原子核和核外电子，与视频中的三个考点无关"
+        },
+        {
+          "label": "B",
+          "content": "原子中电子的分布是均匀的，不遵循任何规律"
+        },
+        {
+          "label": "C",
+          "content": "原子结构的相关概念、原子中电子的分布、原子性质的周期性是课时9的三个考点"
+        },
+        {
+          "label": "D",
+          "content": "原子性质没有周期性，是完全随机的"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的课时9包含的三个考点",
+        "提示2：明确原子结构及电子分布等概念的基本特点",
+        "提示3：思考原子性质是否具有周期性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：元素周期表分区",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课时9包含的三个考点中，以下不属于这三个考点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "原子结构的有关概念"
+        },
+        {
+          "label": "B",
+          "content": "原子中电子的分布"
+        },
+        {
+          "label": "C",
+          "content": "原子的质量大小"
+        },
+        {
+          "label": "D",
+          "content": "原子性质的周期性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的课时9包含的三个考点内容",
+        "提示2：逐一对比选项与视频中考点的表述",
+        "提示3：找出与视频考点不相符的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：第一电离能",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习原子结构及元素周期性的知识中，以下属于课时9包含的考点的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "原子结构的相关概念、原子核外电子的排布、原子性质的周期性"
+        },
+        {
+          "label": "B",
+          "content": "原子结构的相关概念、原子的质量、原子性质的周期性"
+        },
+        {
+          "label": "C",
+          "content": "原子结构的相关概念、原子核外电子的排布、原子的半径"
+        },
+        {
+          "label": "D",
+          "content": "原子的化合价、原子核外电子的排布、原子性质的周期性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中提到课时9包含的三个考点内容",
+        "提示2：逐一分析每个选项中的内容是否与视频中提到的考点一致",
+        "提示3：重点关注原子结构、电子排布和原子性质周期性这些关键信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电负性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于课时9包含的考点，说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只包含原子结构的相关概念和原子中电子的分布两个考点"
+        },
+        {
+          "label": "B",
+          "content": "包含原子结构的相关概念、原子中电子的分布、原子性质的周期性三个考点"
+        },
+        {
+          "label": "C",
+          "content": "包含原子结构的相关概念、原子中质子的分布、原子性质的周期性三个考点"
+        },
+        {
+          "label": "D",
+          "content": "包含原子结构的相关概念、原子中中子的分布、原子性质的周期性三个考点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到课时9包含的考点内容",
+        "提示2：明确考点是围绕原子结构、电子分布和原子性质周期性这几个方面",
+        "提示3：注意区分电子、质子、中子，视频中明确提到的是电子分布"
+      ]
+    }
+  ],
+  "count": 10
+}

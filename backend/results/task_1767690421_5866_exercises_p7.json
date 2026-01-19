@@ -1,0 +1,1236 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，上一次课程中提到的规划轨迹的方法，本质上是利用以下哪种方式进行轨迹规划？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式的方式"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式的方式"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式的方式"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式的方式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的上一次课程所讲的轨迹规划方式",
+        "提示2：注意视频中明确指出该方式与某种多项式相关",
+        "提示3：确定具体是几次多项式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二次多项式应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若使用三次多项式 $q(t)=a_3t^3 + a_2t^2 + a_1t + a_0$ 来规划轨迹，已知初始时刻 $t = 0$ 时，位置 $q(0)=0$，速度 $q'(0)=1$，在时刻 $t = 1$ 时，位置 $q(1)=2$，速度 $q'(1)=3$，则系数 $a_2$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$3$"
+        },
+        {
+          "label": "D",
+          "content": "$4$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先对三次多项式 $q(t)=a_3t^3 + a_2t^2 + a_1t + a_0$ 求导，得到速度函数 $q'(t)$",
+        "提示2：将初始时刻 $t = 0$ 和 $t = 1$ 时的位置和速度条件分别代入 $q(t)$ 和 $q'(t)$ 中，得到关于系数 $a_0,a_1,a_2,a_3$ 的方程组",
+        "提示3：解方程组求出 $a_2$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹优化设计",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，使用 $q$ big no 的方式规划轨迹，本质上是利用哪种多项式来规划轨迹？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的 $q$ big no 方式规划轨迹的本质",
+        "提示2：视频中有明确指出 $q$ big no 方式规划轨迹与某种多项式的等价关系",
+        "提示3：仔细思考哪种多项式与 $q$ big no 方式规划轨迹对应"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：等速段速度",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，已知可以使用三次多项式的方式来规划轨迹。若某段轨迹的位置函数为 $s(t)=at^3 + bt^2 + ct + d$（$t$ 为时间），当 $t = 0$ 时，位置 $s(0)=0$，速度 $v(0)=v_0$；当 $t = T$ 时，位置 $s(T)=s_T$，速度 $v(T)=v_T$。那么系数 $a$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{2(v_T + v_0)T - 4(s_T - v_0T)}{T^3}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{2(v_T - v_0)T - 4(s_T - v_0T)}{T^3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{2(v_T + v_0)T + 4(s_T - v_0T)}{T^3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{2(v_T - v_0)T + 4(s_T - v_0T)}{T^3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先对位置函数 $s(t)$ 求导得到速度函数 $v(t)$",
+        "提示2：根据已知条件 $s(0)=0$，$v(0)=v_0$，$s(T)=s_T$，$v(T)=v_T$ 列出关于系数 $a$、$b$、$c$、$d$ 的方程",
+        "提示3：通过联立方程求解出系数 $a$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二次多项式运动",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，已知在之前的课程里学习了用某种方式来规划轨迹，这种方式本质上是利用了哪种多项式来规划轨迹？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到的之前课程采用的规划轨迹方式及对应的多项式形式",
+        "提示2：关注视频中明确说明的本质上利用的多项式类型",
+        "提示3：视频中明确表示用某种方式规划轨迹等同于利用某种多项式，注意相关表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：加速度下限情况",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，使用三次多项式的方式规划轨迹时，若已知起始位置 $x_0$、终止位置 $x_1$ 和运动总时间 $t_1$，则三次多项式一般形式为 $x(t)=a_0 + a_1t + a_2t^2 + a_3t^3$，其中 $x(t)$ 表示 $t$ 时刻的位置。若起始速度为 $v_0$，终止速度为 $v_1$，那么以下哪个条件用于确定多项式系数是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$x(0)=x_0, x(t_1)=x_1, \\dot{x}(0)=v_0, \\dot{x}(t_1)=v_1$"
+        },
+        {
+          "label": "B",
+          "content": "$x(0)=x_0, x(t_1)=x_1, \\ddot{x}(0)=0, \\ddot{x}(t_1)=0$"
+        },
+        {
+          "label": "C",
+          "content": "$\\dot{x}(0)=v_0, \\dot{x}(t_1)=v_1, \\ddot{x}(0)=a_0, \\ddot{x}(t_1)=a_1$"
+        },
+        {
+          "label": "D",
+          "content": "$x(0)=0, x(t_1)=0, \\dot{x}(0)=v_0, \\dot{x}(t_1)=v_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确三次多项式 $x(t)$ 中各变量的物理意义，$x(t)$ 表示位置，$\\dot{x}(t)$ 表示速度，$\\ddot{x}(t)$ 表示加速度。",
+        "提示2：根据已知的起始位置、终止位置、起始速度和终止速度来确定对应的边界条件。",
+        "提示3：起始时刻 $t = 0$ 时，位置为 $x_0$，速度为 $v_0$；终止时刻 $t = t_1$ 时，位置为 $x_1$，速度为 $v_1$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：加速度不足影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，已知可以使用三次多项式的方式来规划轨迹，若某机器人在运动过程中其位移 $s(t)$ 满足三次多项式 $s(t)=at^3 + bt^2 + ct + d$，其中 $t$ 为时间，在 $t = 0$ 时，$s(0)=0$，$t = 1$ 时，$s(1)=1$，且初始速度为 $0$，末速度为 $0$，那么 $a$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$-2$"
+        },
+        {
+          "label": "C",
+          "content": "$1$"
+        },
+        {
+          "label": "D",
+          "content": "$-1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先根据已知条件列出关于 $a$、$b$、$c$、$d$ 的方程",
+        "提示2：速度 $v(t)$ 是位移 $s(t)$ 的导数，即 $v(t)=s'(t)$",
+        "提示3：对 $s(t)=at^3 + bt^2 + ct + d$ 求导得到 $v(t)=3at^2 + 2bt + c$，再结合初始速度和末速度为 $0$ 列出方程求解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹图形分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若采用视频中提到的利用三次多项式的方式来规划轨迹，已知某段轨迹的起点位置为 $P_0$，终点位置为 $P_1$，起点速度为 $v_0$，终点速度为 $v_1$，则该三次多项式 $s(t)=at^3 + bt^2 + ct + d$（$t$ 为时间）中，系数 $a$、$b$、$c$、$d$ 的确定需要用到以下哪些条件组合？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "仅 $P_0$ 和 $P_1$"
+        },
+        {
+          "label": "B",
+          "content": "$P_0$、$P_1$ 和 $v_0$"
+        },
+        {
+          "label": "C",
+          "content": "$P_0$、$P_1$、$v_0$ 和 $v_1$"
+        },
+        {
+          "label": "D",
+          "content": "仅 $v_0$ 和 $v_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：对于三次多项式 $s(t)=at^3 + bt^2 + ct + d$，有四个未知系数 $a$、$b$、$c$、$d$，需要四个独立的条件来确定。",
+        "提示2：起点位置和终点位置可以确定轨迹的起始和结束位置信息，起点速度和终点速度可以确定轨迹在起始和结束时刻的运动状态。",
+        "提示3：将这些条件代入三次多项式及其导数式可以列出方程组求解系数。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划特点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，上一次课程中老师教大家使用的轨迹规划方法，本质上是利用以下哪种方式来规划轨迹？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式的方式"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式的方式"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式的方式"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式的方式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到的上一次课程所教的轨迹规划方式",
+        "提示2：注意视频中明确指出了利用某种多项式的方式来规划轨迹",
+        "提示3：准确找到视频中提及的多项式次数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：加速度特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在运动轨迹规划中，若要使用 $q_{big\\ no}$ 的方式规划轨迹，实际上是利用以下哪种方式规划轨迹？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式的方式"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式的方式"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式的方式"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式的方式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于 $q_{big\\ no}$ 方式规划轨迹的相关内容",
+        "提示2：注意视频中提到的与 $q_{big\\ no}$ 方式等价的轨迹规划方式",
+        "提示3：明确提到的多项式次数是解题关键"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：特殊情况分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若采用视频中提到的方法，已知某段轨迹规划函数是三次多项式 $f(x)=ax^3 + bx^2 + cx + d$，当 $x = 0$ 时，$f(0)=0$；当 $x = 1$ 时，$f(1)=2$，且在 $x = 0$ 和 $x = 1$ 处的速度均为 $0$，那么 $a$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$4$"
+        },
+        {
+          "label": "C",
+          "content": "$6$"
+        },
+        {
+          "label": "D",
+          "content": "$8$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先对三次多项式 $f(x)=ax^3 + bx^2 + cx + d$ 求导，得到速度函数 $v(x)$",
+        "提示2：根据已知条件 $f(0)=0$，$f(1)=2$，$v(0)=0$，$v(1)=0$ 列出方程组",
+        "提示3：解方程组求出 $a$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：一般轨迹规划",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，上一次课程中教授的轨迹规划方法是以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "使用二次多项式的方式来规划轨迹"
+        },
+        {
+          "label": "B",
+          "content": "使用三次多项式的方式来规划轨迹"
+        },
+        {
+          "label": "C",
+          "content": "使用四次多项式的方式来规划轨迹"
+        },
+        {
+          "label": "D",
+          "content": "使用一次多项式的方式来规划轨迹"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到了上一次课程教授的轨迹规划方式",
+        "提示2：可以在视频相关内容中查找是用几次多项式规划轨迹",
+        "提示3：关注视频里关于轨迹规划方法的具体描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：路径参数设定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，上一次课程教大家用 $q_{big\\ no}$ 的方式规划轨迹，这种方式等同于以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "使用一次多项式的方式规划轨迹"
+        },
+        {
+          "label": "B",
+          "content": "使用二次多项式的方式规划轨迹"
+        },
+        {
+          "label": "C",
+          "content": "使用三次多项式的方式规划轨迹"
+        },
+        {
+          "label": "D",
+          "content": "使用四次多项式的方式规划轨迹"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的 $q_{big\\ no}$ 方式规划轨迹的等价表述",
+        "提示2：注意题目中明确指出的等价关系",
+        "提示3：在视频中寻找与 $q_{big\\ no}$ 方式规划轨迹等价的多项式次数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：直线段速度计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若采用三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 来规划轨迹，已知在 $t = 0$ 时，位置 $q(0)=0$，速度 $q'(0)=v_0$；在 $t = T$ 时，位置 $q(T)=S$，速度 $q'(T)=v_T$。则 $a_3$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{2(v_T + v_0)}{T^3}-\\frac{6S}{T^4}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{2(v_T - v_0)}{T^3}-\\frac{6S}{T^4}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{2(v_T + v_0)}{T^3}-\\frac{3S}{T^4}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{2(v_T - v_0)}{T^3}-\\frac{3S}{T^4}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先对三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 求导，得到速度函数 $q'(t)$",
+        "提示2：将 $t = 0$ 和 $t = T$ 分别代入 $q(t)$ 和 $q'(t)$，结合已知条件列出方程组",
+        "提示3：通过解方程组求出 $a_3$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二次式方程确定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在轨迹规划中，若已知一种轨迹规划方法是利用三次多项式 $f(t)=at^3 + bt^2 + ct + d$ 的形式来进行规划，当 $t = 0$ 时，$f(0)=1$；当 $t = 1$ 时，$f(1)=3$；当 $t = 2$ 时，$f(2)=7$；当 $t = 3$ 时，$f(3)=13$。则该三次多项式中 $b$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$"
+        },
+        {
+          "label": "B",
+          "content": "$0$"
+        },
+        {
+          "label": "C",
+          "content": "$-1$"
+        },
+        {
+          "label": "D",
+          "content": "$2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：将已知的 $t$ 值代入三次多项式 $f(t)=at^3 + bt^2 + ct + d$ 中，得到关于 $a$、$b$、$c$、$d$ 的方程组",
+        "提示2：先根据 $f(0)=1$ 求出 $d$ 的值",
+        "提示3：再将 $d$ 的值代入其他方程，联立求解出 $b$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：计算时间方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若采用三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 来规划轨迹，已知初始时刻 $t = 0$ 时，位置 $q(0)=0$，速度 $q'(0)=0$，终点时刻 $t = T$ 时，位置 $q(T)=L$，速度 $q'(T)=0$，则系数 $a_3$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{2L}{T^3}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3L}{T^3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{4L}{T^3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{6L}{T^3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先对三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 求导，得到速度函数 $q'(t)$",
+        "提示2：将初始条件 $t = 0$ 时，$q(0)=0$，$q'(0)=0$ 和终点条件 $t = T$ 时，$q(T)=L$，$q'(T)=0$ 分别代入 $q(t)$ 和 $q'(t)$ 中，得到关于系数 $a_0,a_1,a_2,a_3$ 的方程组",
+        "提示3：解方程组求出 $a_3$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：头尾段设定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在路径规划中，使用视频中提到的方法，是利用哪种方式来规划轨迹的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式的方式"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式的方式"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式的方式"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式的方式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的规划轨迹的具体方法",
+        "提示2：注意视频中明确指出的多项式次数",
+        "提示3：找到与视频内容对应的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹计算方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若采用视频中提到的方法，即利用三次多项式 $q(t)=a_3t^3 + a_2t^2 + a_1t + a_0$ 来规划轨迹，已知初始时刻 $t = 0$ 时，位置 $q(0)=0$，速度 $q'(0)=1$，末时刻 $t = 1$ 时，位置 $q(1)=2$，速度 $q'(1)=3$，则 $a_2$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$3$"
+        },
+        {
+          "label": "D",
+          "content": "$4$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先对三次多项式 $q(t)=a_3t^3 + a_2t^2 + a_1t + a_0$ 求导，得到速度函数 $q'(t)$",
+        "提示2：将初始时刻和末时刻的位置、速度条件分别代入 $q(t)$ 和 $q'(t)$ 中，得到关于 $a_0$、$a_1$、$a_2$、$a_3$ 的方程组",
+        "提示3：解方程组求出 $a_2$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：末端轨迹处理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若采用之前课程所教的方法，是利用哪种方式来规划轨迹？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式的方式"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式的方式"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式的方式"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式的方式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的上一次课程所教的轨迹规划方法",
+        "提示2：注意视频中明确指出的多项式次数",
+        "提示3：根据视频内容直接找到对应的多项式方式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹计算要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若采用视频中提到的方法，即利用三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 来规划轨迹，已知初始时刻 $t = 0$ 时，位置 $q(0)=0$，速度 $q'(0)=1$，终点时刻 $t = 1$ 时，位置 $q(1)=2$，速度 $q'(1)=3$，则系数 $a_2$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$3$"
+        },
+        {
+          "label": "D",
+          "content": "$4$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先对三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 求导，得到速度函数 $q'(t)$",
+        "提示2：将初始时刻和终点时刻的位置、速度条件分别代入 $q(t)$ 和 $q'(t)$ 中，得到关于系数 $a_0$、$a_1$、$a_2$、$a_3$ 的方程组",
+        "提示3：解方程组求出 $a_2$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：加速度影响因素",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若采用视频中提到的三次多项式的方式来规划轨迹，已知某段轨迹的位移 $s(t)$ 满足三次多项式 $s(t)=at^3 + bt^2 + ct + d$，当 $t = 0$ 时，位移为 $0$，速度为 $v_0$，加速度为 $a_0$，那么系数 $a$、$b$、$c$、$d$ 分别为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$a=\\frac{a_0}{6}, b = \\frac{v_0}{2}, c = v_0, d = 0$"
+        },
+        {
+          "label": "B",
+          "content": "$a=\\frac{a_0}{6}, b = \\frac{a_0}{2}, c = v_0, d = 0$"
+        },
+        {
+          "label": "C",
+          "content": "$a=\\frac{a_0}{3}, b = \\frac{v_0}{2}, c = v_0, d = 0$"
+        },
+        {
+          "label": "D",
+          "content": "$a=\\frac{a_0}{3}, b = \\frac{a_0}{2}, c = v_0, d = 0$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先根据 $t = 0$ 时位移为 $0$，代入位移公式 $s(t)=at^3 + bt^2 + ct + d$ 求出 $d$ 的值",
+        "提示2：对位移公式求一阶导数得到速度公式 $v(t)=s'(t)=3at^2 + 2bt + c$，再根据 $t = 0$ 时速度为 $v_0$ 求出 $c$ 的值",
+        "提示3：对速度公式求一阶导数得到加速度公式 $a(t)=v'(t)=6at + 2b$，根据 $t = 0$ 时加速度为 $a_0$ 求出 $b$ 的值，最后根据加速度公式求出 $a$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：手部动力学分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若采用视频中提到的方法进行轨迹规划，以下哪种多项式形式与之对应？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式 $ax + b$"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式 $ax^2 + bx + c$"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式 $ax^3 + bx^2 + cx + d$"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式 $ax^4 + bx^3 + cx^2 + dx + e$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的轨迹规划方法是利用哪种多项式形式",
+        "提示2：明确视频中强调的是几次多项式",
+        "提示3：根据提示信息，从选项中找出对应的多项式形式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：多轴运动参数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，使用 $q_{big\\_no}$ 的方式规划轨迹，其实质是利用以下哪种方式来规划轨迹？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式的方式"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式的方式"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式的方式"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式的方式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于 $q_{big\\_no}$ 方式规划轨迹的相关描述",
+        "提示2：视频中明确说明了 $q_{big\\_no}$ 方式规划轨迹的实质",
+        "提示3：重点关注与多项式次数相关的信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划问题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人轨迹规划中，若采用视频中提到的方法，以下哪种多项式形式可用于轨迹规划？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式 $ax + b$"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式 $ax^2 + bx + c$"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式 $ax^3 + bx^2 + cx + d$"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式 $ax^4 + bx^3 + cx^2 + dx + e$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的用于轨迹规划的多项式次数",
+        "提示2：视频明确指出是用特定方式，即三次多项式来规划轨迹",
+        "提示3：根据此信息对选项进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：任务设计环境",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，上一次课程提到使用的规划方法本质上是利用以下哪种方式来规划轨迹？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式的方式"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式的方式"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式的方式"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式的方式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的上一次课程所教授的轨迹规划方法",
+        "提示2：注意视频中明确指出的多项式次数",
+        "提示3：在讲解中提到了使用q big no的方式规划轨迹等同于利用某种次数多项式方式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：编程注意事项",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若采用视频中提到的方法，以下哪种表述是正确的运动轨迹规划方式？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "使用二次多项式的方式来规划轨迹"
+        },
+        {
+          "label": "B",
+          "content": "使用 $q$ big no 的方式，也就是利用三次多项式的方式来规划轨迹"
+        },
+        {
+          "label": "C",
+          "content": "使用一次多项式的方式来规划轨迹"
+        },
+        {
+          "label": "D",
+          "content": "使用四次多项式的方式来规划轨迹"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的轨迹规划方法",
+        "提示2：明确提到使用 $q$ big no 的方式以及对应的多项式次数",
+        "提示3：根据视频内容直接判断选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：直线段轨迹计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若使用三次多项式 $q(t)=a_3t^3 + a_2t^2 + a_1t + a_0$ 来规划轨迹，已知初始时刻 $t = 0$ 时，位置 $q(0)=0$，速度 $q'(0)=0$，在时刻 $t = T$ 时，位置 $q(T)=S$，速度 $q'(T)=0$，则系数 $a_3$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{2S}{T^3}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{-2S}{T^3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{4S}{T^3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{-4S}{T^3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先对三次多项式 $q(t)=a_3t^3 + a_2t^2 + a_1t + a_0$ 求导，得到速度函数 $q'(t)$",
+        "提示2：将初始条件 $t = 0$ 代入 $q(t)$ 和 $q'(t)$，求出 $a_0$ 和 $a_1$ 的值",
+        "提示3：再将 $t = T$ 代入 $q(t)$ 和 $q'(t)$，结合前面求出的值，解出 $a_3$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二次段轨迹计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若使用三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 来规划轨迹，已知初始时刻 $t = 0$ 时，位置 $q(0)=0$，速度 $q'(0)=1$；在时刻 $t = 1$ 时，位置 $q(1)=2$，速度 $q'(1)=3$。则 $a_3$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$3$"
+        },
+        {
+          "label": "D",
+          "content": "$4$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先对三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 求导，得到速度函数 $q'(t)$",
+        "提示2：将初始时刻和 $t = 1$ 时刻的位置和速度条件分别代入 $q(t)$ 和 $q'(t)$ 中，得到关于 $a_0,a_1,a_2,a_3$ 的方程组",
+        "提示3：解方程组求出 $a_3$ 的值"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：轨迹规划限制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人轨迹规划中，若已知可用 $q$ 大 $n$ （假设为一种特定方法）的方式来规划轨迹，其本质是利用 ______ 的方式来规划轨迹。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "三次多项式",
+      "hints": [
+        "提示1：回想视频中提到的关于 $q$ 大 $n$ 的规划方式的等价表述",
+        "提示2：关注逐字稿中对其进行解释的内容",
+        "提示3：明确指出的是一种多项式的形式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：手部运动难点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，上一次课程教大家使用的轨迹规划方法本质上是利用以下哪种方式进行的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式的方式"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式的方式"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式的方式"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式的方式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的上一次课程所教的轨迹规划方法",
+        "提示2：明确提到了使用q big no的方式，其本质有对应的多项式形式",
+        "提示3：注意视频中直接给出的本质方式描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，使用 $q$ big no 的方式进行轨迹规划，实际上是利用以下哪种方式来规划轨迹？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式的方式"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式的方式"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式的方式"
+        },
+        {
+          "label": "D",
+          "content": "四次多项式的方式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的 $q$ big no 方式和对应多项式的关系",
+        "提示2：视频中明确说明了 $q$ big no 方式与某种多项式方式等同",
+        "提示3：找到该等同的多项式次数即可得出答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：速度计算方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若采用三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 来规划轨迹，其中 $q(t)$ 表示位置，$t$ 表示时间。已知在 $t = 0$ 时，$q(0)=0$，$q'(0)=5$；在 $t = 2$ 时，$q(2)=20$，$q'(2)=10$，那么 $a_3$ 的值是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{5}{4}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{5}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{3}{4}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{3}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先对 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 求导，得到速度函数 $q'(t)$",
+        "提示2：将 $t = 0$ 和 $t = 2$ 分别代入 $q(t)$ 和 $q'(t)$，列出方程组",
+        "提示3：解方程组求出 $a_3$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：加速度计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若使用三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 来规划轨迹，已知初始时刻 $t = 0$ 时，位置 $q(0)=0$，速度 $q'(0)=0$，在时刻 $t = T$ 时，位置 $q(T)=S$，速度 $q'(T)=V$。则加速度 $q''(t)$ 在 $t = \\frac{T}{2}$ 时的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{12(S - \\frac{VT}{2})}{T^2}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{6(S - \\frac{VT}{2})}{T^2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{12(S - VT)}{T^2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{6(S - VT)}{T^2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先对三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 求一阶导数 $q'(t)$ 和二阶导数 $q''(t)$",
+        "提示2：根据已知条件 $q(0)=0$，$q'(0)=0$，$q(T)=S$，$q'(T)=V$ 确定多项式的系数 $a_0$，$a_1$，$a_2$，$a_3$",
+        "提示3：将 $t = \\frac{T}{2}$ 代入二阶导数 $q''(t)$ 中计算加速度的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：方程书写要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在轨迹规划中，使用三次多项式 $q(t)=a_3t^3 + a_2t^2 + a_1t + a_0$ 来规划轨迹，已知轨迹在 $t = 0$ 时的位置为 $q(0)=1$，速度为 $q'(0)=2$，在 $t = 1$ 时的位置为 $q(1)=3$，速度为 $q'(1)=4$，则 $a_3$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$3$"
+        },
+        {
+          "label": "D",
+          "content": "$4$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先对三次多项式 $q(t)=a_3t^3 + a_2t^2 + a_1t + a_0$ 求导，得到速度函数 $q'(t)$",
+        "提示2：将 $t = 0$ 和 $t = 1$ 分别代入 $q(t)$ 和 $q'(t)$，根据已知条件列出方程组",
+        "提示3：解方程组求出 $a_3$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹方程时段",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人医学的轨迹规划中，上一次课程教大家使用的轨迹规划方法可以等价于以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "使用一次多项式的方式来规划轨迹"
+        },
+        {
+          "label": "B",
+          "content": "使用二次多项式的方式来规划轨迹"
+        },
+        {
+          "label": "C",
+          "content": "使用三次多项式的方式来规划轨迹"
+        },
+        {
+          "label": "D",
+          "content": "使用四次多项式的方式来规划轨迹"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的上一次课程所教的轨迹规划方式",
+        "提示2：关注视频里提到的等价表述",
+        "提示3：明确哪种多项式方式与所教方法等价"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹方程计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知某物体的运动轨迹规划采用三次多项式的方式，其轨迹方程为 $s(t)=at^3 + bt^2 + ct + d$，其中 $s(t)$ 表示位移，$t$ 表示时间。当 $t = 0$ 时，$s(0)=0$；当 $t = 1$ 时，$s(1)=2$；当 $t = 2$ 时，$s(2)=8$；当 $t = 3$ 时，$s(3)=24$。则 $a$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{1}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{2}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：将已知的 $t$ 值和对应的 $s(t)$ 值代入轨迹方程 $s(t)=at^3 + bt^2 + ct + d$ 中，得到方程组",
+        "提示2：当 $t = 0$ 时，可先求出 $d$ 的值",
+        "提示3：再将 $d$ 的值代入其他方程，联立求解出 $a$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹参数记录",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学中进行轨迹规划时，视频中提到上一次课程教大家使用的轨迹规划方法是基于什么原理？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "二次多项式的方式"
+        },
+        {
+          "label": "B",
+          "content": "三次多项式的方式"
+        },
+        {
+          "label": "C",
+          "content": "四次多项式的方式"
+        },
+        {
+          "label": "D",
+          "content": "五次多项式的方式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到上一次课程教的轨迹规划具体方式",
+        "提示2：注意关键词‘三次’，在辨别选项时进行重点考虑",
+        "提示3：视频中明确表明是利用某种多项式的方式来规划轨迹，仔细对比选项中的多项式次数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：[轨迹绘制验证]",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若采用视频中提到的方法进行轨迹规划，以下哪种数学形式与之对应？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一次多项式 $y = ax + b$"
+        },
+        {
+          "label": "B",
+          "content": "二次多项式 $y = ax^2 + bx + c$"
+        },
+        {
+          "label": "C",
+          "content": "三次多项式 $y = ax^3 + bx^2 + cx + d$"
+        },
+        {
+          "label": "D",
+          "content": "指数函数 $y = a^x$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的轨迹规划方法是利用哪种数学形式",
+        "提示2：明确提到是利用三次多项式的方式来规划轨迹",
+        "提示3：依次分析每个选项的多项式次数是否符合要求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹计算与验证",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，已知某段轨迹可以用三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 来表示。若初始时刻 $t = 0$ 时，位置 $q(0)=0$，速度 $q'(0)=5$；在时刻 $t = 2$ 时，位置 $q(2)=10$，速度 $q'(2)=8$，则系数 $a_2$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$1$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{3}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先对三次多项式 $q(t)=a_0 + a_1t + a_2t^2 + a_3t^3$ 求导，得到速度函数 $q'(t)$",
+        "提示2：将初始时刻 $t = 0$ 和 $t = 2$ 的位置与速度条件分别代入 $q(t)$ 和 $q'(t)$ 中，得到关于系数 $a_0$、$a_1$、$a_2$、$a_3$ 的方程组",
+        "提示3：解方程组求出 $a_2$ 的值"
+      ]
+    }
+  ],
+  "count": 39
+}

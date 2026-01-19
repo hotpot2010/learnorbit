@@ -555,6 +555,35 @@ export const usersAPI = {
   },
 };
 
+/**
+ * VOD 播放签名响应类型
+ */
+export interface VodPsignResponse {
+  success: boolean;
+  psign: string;
+  app_id: number;
+  file_id: string;
+}
+
+/**
+ * VOD API
+ */
+export const vodAPI = {
+  /**
+   * 获取 VOD 播放签名（psign）
+   */
+  getPsign: async (fileId: string, appId?: number, expireTime?: number): Promise<VodPsignResponse> => {
+    return callBackendAPI<VodPsignResponse>('/open-api/offline-video/vod/psign', {
+      method: 'POST',
+      body: JSON.stringify({
+        file_id: fileId,
+        app_id: appId,
+        expire_time: expireTime,
+      }),
+    });
+  },
+};
+
 export default {
   courses: coursesAPI,
   videoNotes: videoNotesAPI,
@@ -564,5 +593,6 @@ export default {
   publicCourses: publicCoursesAPI,
   payment: paymentAPI,
   users: usersAPI,
+  vod: vodAPI,
 };
 

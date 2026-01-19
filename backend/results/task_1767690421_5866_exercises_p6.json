@@ -1,0 +1,1406 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人操作中，轨迹可以理解为以下哪个选项所描述的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人整体的运动方向和速度"
+        },
+        {
+          "label": "B",
+          "content": "机械手腕的末端点或操作点的位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "机器人的工作时间和效率"
+        },
+        {
+          "label": "D",
+          "content": "机器人的外观和材质"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义描述",
+        "提示2：重点关注与机械手腕末端点或操作点相关的物理量",
+        "提示3：排除与位置、速度、加速度无关的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：理想轨迹介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术中，轨迹可以理解为以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人手臂的起始点"
+        },
+        {
+          "label": "B",
+          "content": "机器人手臂的中间点"
+        },
+        {
+          "label": "C",
+          "content": "机器人手臂的末端点或我们比较在意的操作点，及其位置、速度或加速度"
+        },
+        {
+          "label": "D",
+          "content": "机器人手臂的固定支撑点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中对轨迹的定义",
+        "提示2：明确轨迹与机器人手臂特定点及相关物理量的关系",
+        "提示3：逐一分析每个选项是否符合视频中对轨迹的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平滑路径规划",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手臂的路径规划中，轨迹可以理解为机器人手臂末端点或者我们比较在意的操作点的一些物理量，以下哪个不属于轨迹所包含的物理量？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置"
+        },
+        {
+          "label": "B",
+          "content": "加速度"
+        },
+        {
+          "label": "C",
+          "content": "温度"
+        },
+        {
+          "label": "D",
+          "content": "速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义，明确轨迹所涉及的物理量",
+        "提示2：思考机器人手臂末端点或操作点通常会关注哪些运动相关的物理量",
+        "提示3：逐一分析每个选项，判断其是否符合轨迹所包含物理量的范畴"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹定义要素",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机械臂运动中，轨迹可以理解为机械手腕的特定点的相关信息，以下不属于轨迹范畴的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械手腕末端点的位置"
+        },
+        {
+          "label": "B",
+          "content": "我们比较在意的操作点的速度"
+        },
+        {
+          "label": "C",
+          "content": "机械手臂的长度"
+        },
+        {
+          "label": "D",
+          "content": "我们比较在意的操作点的加速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义，轨迹与特定点的某些物理量相关",
+        "提示2：分析每个选项中的物理量是否符合定义中提到的类别",
+        "提示3：定义中涉及到特定点的位置、速度和加速度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划空间",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "机械手腕的轨迹可以理解为以下哪个选项所描述的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械手腕的起始点的位置、速度或加速度"
+        },
+        {
+          "label": "B",
+          "content": "机械手腕的末端点或操作点的位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "机械手腕的中间点的位置、速度或加速度"
+        },
+        {
+          "label": "D",
+          "content": "机械手腕的所有点的平均位置、速度或加速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义描述",
+        "提示2：明确提到轨迹是机械手腕的末端点或操作点相关",
+        "提示3：对比各选项，看哪个符合视频中对轨迹的定义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：关节空间规划",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "轨迹可以理解为机械手腕的末端点，或者是我们比较在意的操作点，它不包含以下哪个要素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置"
+        },
+        {
+          "label": "B",
+          "content": "加速度"
+        },
+        {
+          "label": "C",
+          "content": "时间"
+        },
+        {
+          "label": "D",
+          "content": "速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对轨迹要素的描述",
+        "提示2：明确提到了位置、速度和加速度与轨迹相关",
+        "提示3：逐一分析每个选项是否在视频所讲的轨迹要素范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "轨迹可以理解为机械手腕的末端点或者我们比较在意的操作点的哪些参数？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置"
+        },
+        {
+          "label": "B",
+          "content": "速度"
+        },
+        {
+          "label": "C",
+          "content": "加速度"
+        },
+        {
+          "label": "D",
+          "content": "以上都是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义描述",
+        "提示2：注意提到了末端点或操作点的多个参数",
+        "提示3：明确这些参数具体包含哪些"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正运动学应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "轨迹可以理解为机械手臂末端点或操作点的哪些物理量的相关描述？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置、加速度"
+        },
+        {
+          "label": "B",
+          "content": "位置、速度、加速度"
+        },
+        {
+          "label": "C",
+          "content": "速度、加速度"
+        },
+        {
+          "label": "D",
+          "content": "位置、速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义",
+        "提示2：明确轨迹涉及到机械手臂末端点或操作点的相关物理量",
+        "提示3：注意要包含所有提到的物理量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：条件设定要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学中，轨迹可以理解为机械手腕的相关要素，以下哪个不属于轨迹所涉及的要素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械手腕的末端点"
+        },
+        {
+          "label": "B",
+          "content": "机械手腕的颜色"
+        },
+        {
+          "label": "C",
+          "content": "我们比较在意的操作点的位置"
+        },
+        {
+          "label": "D",
+          "content": "操作点的加速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义，明确轨迹所包含的要素",
+        "提示2：思考每个选项与轨迹定义中提到的要素是否相关",
+        "提示3：颜色与位置、速度、加速度等轨迹要素并无直接关联"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划实现",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手臂操作中，轨迹可以理解为以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人手臂的整体长度"
+        },
+        {
+          "label": "B",
+          "content": "机械手腕的末端点或操作点的位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "机器人手臂的颜色和材质"
+        },
+        {
+          "label": "D",
+          "content": "机器人手臂的生产厂家"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义",
+        "提示2：明确轨迹与机械手腕末端点或操作点的关系",
+        "提示3：判断各选项是否符合轨迹的定义特征"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：关节空间轨迹规划",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动中，轨迹可以理解为机械手腕的末端点或操作点的哪些物理量？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置和加速度"
+        },
+        {
+          "label": "B",
+          "content": "速度和力"
+        },
+        {
+          "label": "C",
+          "content": "位置、速度或加速度"
+        },
+        {
+          "label": "D",
+          "content": "位移和扭矩"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义描述",
+        "提示2：明确提到了机械手腕末端点或操作点的几个关键物理量",
+        "提示3：注意与力、扭矩等无关"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：切割空间轨迹规划",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术中，轨迹指的是以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械手臂的整体形状"
+        },
+        {
+          "label": "B",
+          "content": "机械手腕的末端点或操作点的位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "机械手臂的颜色和材质"
+        },
+        {
+          "label": "D",
+          "content": "机械手臂的重量"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频，需要明确轨迹的定义相关内容",
+        "提示2：视频中提到轨迹可看作是某个点的一些物理量",
+        "提示3：排除与点的位置、速度、加速度无关的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划验证",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手臂的操作中，轨迹可以理解为以下哪个选项所描述的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人手臂的整体形状和大小"
+        },
+        {
+          "label": "B",
+          "content": "机器人手臂的颜色和材质"
+        },
+        {
+          "label": "C",
+          "content": "机器人手臂末端点或操作点的位置、速度或加速度"
+        },
+        {
+          "label": "D",
+          "content": "机器人手臂的生产厂家和型号"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义",
+        "提示2：明确轨迹与机器人手臂特定点的运动参数相关",
+        "提示3：排除与位置、速度、加速度无关的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动中，轨迹可以理解为机械手腕的末端点或操作点的哪些物理量？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置和时间"
+        },
+        {
+          "label": "B",
+          "content": "位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "速度和加速度"
+        },
+        {
+          "label": "D",
+          "content": "位置和速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义",
+        "提示2：明确轨迹所涉及的物理量",
+        "提示3：注意要包含所有提到的相关物理量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三次多项式规划",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术中，机械手腕的轨迹主要关注的是机械手腕的末端点或操作点的哪些物理量？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置和加速度"
+        },
+        {
+          "label": "B",
+          "content": "速度和位移"
+        },
+        {
+          "label": "C",
+          "content": "位置、速度和加速度"
+        },
+        {
+          "label": "D",
+          "content": "位移和加速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义，思考轨迹关注的物理量",
+        "提示2：明确位置、速度、加速度、位移等物理量的概念",
+        "提示3：根据视频内容判断哪个选项包含了轨迹关注的所有物理量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：时间坐标转换",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术中，关于轨迹的描述，以下正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "轨迹仅指机械手臂的末端点的位置"
+        },
+        {
+          "label": "B",
+          "content": "轨迹是我们比较在意的操作点的位置、速度和加速度"
+        },
+        {
+          "label": "C",
+          "content": "轨迹只和机械手臂的速度有关"
+        },
+        {
+          "label": "D",
+          "content": "轨迹和机械手臂的位置、速度、加速度都无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义",
+        "提示2：明确轨迹包含的要素有哪些",
+        "提示3：逐一分析每个选项与视频中定义的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：边界条件分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术中，对于机械手腕的轨迹规划，以下哪个描述最符合轨迹的定义？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械手腕的颜色和材质"
+        },
+        {
+          "label": "B",
+          "content": "机械手腕的末端点，或者我们比较在意的操作点，以及它的位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "机械手腕的制造工艺和成本"
+        },
+        {
+          "label": "D",
+          "content": "机械手腕的外观设计"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义描述",
+        "提示2：思考轨迹与哪些物理量相关",
+        "提示3：排除与位置、速度、加速度无关的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：速度条件分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术的轨迹规划过程中，轨迹指的是机械手臂末端点或者我们比较在意的操作点的相关物理量，以下哪个物理量不属于轨迹所涉及的范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置"
+        },
+        {
+          "label": "B",
+          "content": "速度"
+        },
+        {
+          "label": "C",
+          "content": "加速度"
+        },
+        {
+          "label": "D",
+          "content": "质量"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义，明确轨迹涉及的物理量有哪些",
+        "提示2：思考每个选项与轨迹定义中物理量的关联",
+        "提示3：判断哪个选项不属于轨迹所涉及的位置、速度或加速度范畴"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：联立求解与矩阵表示",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术中，机械手臂末端点的轨迹规划需要考虑其位置、速度和加速度。已知某机械手臂末端点在某一时刻的位置为 $P(x,y,z)$，速度为 $v = (v_x, v_y, v_z)$，加速度为 $a = (a_x, a_y, a_z)$。若经过时间 $t$ 后，该末端点的位置为 $P'(x',y',z')$，以下哪个公式可以计算 $P'$ 的位置？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$P' = P + v t$"
+        },
+        {
+          "label": "B",
+          "content": "$P' = P + v t+\\frac{1}{2}a t^2$"
+        },
+        {
+          "label": "C",
+          "content": "$P' = P + a t$"
+        },
+        {
+          "label": "D",
+          "content": "$P' = v t+\\frac{1}{2}a t^2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据物理学中的运动学公式，考虑初位置、速度和加速度对末位置的影响",
+        "提示2：初位置为 $P$，速度为 $v$，加速度为 $a$，时间为 $t$，需要综合考虑这些因素",
+        "提示3：完整的运动学公式是 $s = s_0 + v_0 t+\\frac{1}{2}a t^2$，这里 $s_0$ 对应 $P$，$v_0$ 对应 $v$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：矩阵求解系数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动中，轨迹规划主要关注机械手臂的末端点或操作点的一些物理量，以下哪个选项不属于轨迹规划关注的物理量？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置"
+        },
+        {
+          "label": "B",
+          "content": "温度"
+        },
+        {
+          "label": "C",
+          "content": "速度"
+        },
+        {
+          "label": "D",
+          "content": "加速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹规划关注物理量的描述",
+        "提示2：明确视频提到的是末端点或操作点的位置、速度和加速度",
+        "提示3：判断每个选项是否符合视频所讲的范围"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：中间点速度确定",
+      "error": "Invalid \\escape: line 17 column 49 (char 633)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：速度设定方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术臂的路径规划中，轨迹指的是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人手臂的起始点的位置、速度或加速度"
+        },
+        {
+          "label": "B",
+          "content": "机器人手臂的末端点或操作点的位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "机器人手臂中间某一点的位置、速度或加速度"
+        },
+        {
+          "label": "D",
+          "content": "机器人手臂整体的平均位置、速度或加速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义",
+        "提示2：明确轨迹与机器人手臂特定点的关系",
+        "提示3：关注定义中提到的是末端点或操作点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：加速度设定法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "轨迹规划主要关注机械手腕的末端点或操作点的哪些物理量？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置、速度和加速度"
+        },
+        {
+          "label": "B",
+          "content": "位移、速度和角速度"
+        },
+        {
+          "label": "C",
+          "content": "位置、角速度和角加速度"
+        },
+        {
+          "label": "D",
+          "content": "位移、线速度和线加速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对轨迹规划关注物理量的描述",
+        "提示2：明确提到了机械手腕末端点或操作点的相关物理量",
+        "提示3：视频中指出关注的是位置、速度和加速度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人的运动中，轨迹可以理解为机械手腕的末端点或者我们比较在意的操作点，以下哪个不属于轨迹所包含的要素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置"
+        },
+        {
+          "label": "B",
+          "content": "颜色"
+        },
+        {
+          "label": "C",
+          "content": "速度"
+        },
+        {
+          "label": "D",
+          "content": "加速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义",
+        "提示2：明确轨迹所包含的要素有哪些",
+        "提示3：逐一分析每个选项是否属于轨迹要素"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：未知参数设定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术中，对于机械手臂的轨迹规划，轨迹指的是以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械手臂的初始点"
+        },
+        {
+          "label": "B",
+          "content": "机械手臂的中间点"
+        },
+        {
+          "label": "C",
+          "content": "机械手臂的末端点或我们比较在意的操作点，及其位置、速度或加速度"
+        },
+        {
+          "label": "D",
+          "content": "机械手臂的旋转角度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义",
+        "提示2：明确轨迹与机械手臂特定点及相关物理量的关系",
+        "提示3：根据定义排除不符合的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：速度边界条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动规划中，轨迹通常指的是机械手腕的末端点或操作点的一些物理量，以下哪个不属于轨迹所包含的物理量？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置"
+        },
+        {
+          "label": "B",
+          "content": "加速度"
+        },
+        {
+          "label": "C",
+          "content": "质量"
+        },
+        {
+          "label": "D",
+          "content": "速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于轨迹的定义",
+        "提示2：明确轨迹所涉及的是末端点或操作点的位置、速度和加速度等物理量",
+        "提示3：判断哪个选项不属于轨迹所包含的物理量范畴"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：加速度连续性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手臂运动轨迹规划中，轨迹是指机器人手臂末端点或者操作点的相关物理量，以下哪个不属于轨迹所包含的物理量？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置"
+        },
+        {
+          "label": "B",
+          "content": "速度"
+        },
+        {
+          "label": "C",
+          "content": "位移"
+        },
+        {
+          "label": "D",
+          "content": "加速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义，明确轨迹包含的物理量",
+        "提示2：对比各选项与视频中提到的物理量进行判断",
+        "提示3：注意区分位移和位置、速度、加速度的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：代数解法求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动规划中，轨迹通常指的是机械手臂的末端点或者我们比较在意的操作点的相关物理量。以下哪个选项不属于轨迹所包含的物理量？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置"
+        },
+        {
+          "label": "B",
+          "content": "加速度"
+        },
+        {
+          "label": "C",
+          "content": "质量"
+        },
+        {
+          "label": "D",
+          "content": "速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义，明确轨迹所包含的物理量",
+        "提示2：思考位置、加速度、质量、速度这几个物理量与轨迹定义的关联",
+        "提示3：根据视频内容，轨迹包含末端点或操作点的位置、速度和加速度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：矩阵求解方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动中，对于机械手臂的轨迹规划，我们主要关注的是机械手臂的末端点，也就是我们比较在意的操作点，以下哪个选项不属于我们关注的信息？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "操作点的位置"
+        },
+        {
+          "label": "B",
+          "content": "操作点的颜色"
+        },
+        {
+          "label": "C",
+          "content": "操作点的速度"
+        },
+        {
+          "label": "D",
+          "content": "操作点的加速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于轨迹规划主要关注操作点的相关信息",
+        "提示2：明确提到关注的是操作点的位置、速度和加速度",
+        "提示3：判断哪个选项与视频中提到的关注点无关"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：矩阵求解条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "机械手臂的轨迹规划主要关注机械手臂末端点或者操作点的位置、速度和 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "加速度",
+      "hints": [
+        "提示1：回顾视频中关于轨迹概念的描述，看提到了哪些关键物理量。",
+        "提示2：注意视频中除了位置和速度之外还提到的量。",
+        "提示3：结合视频中描述轨迹时提到的三个重要要素来填空。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：路径规划设定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手臂的路径规划中，轨迹可以理解为以下哪种表述？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人手臂的起始点的位置、速度或加速度"
+        },
+        {
+          "label": "B",
+          "content": "机器人手臂的末端点，或者是我们比较在意的操作点的位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "机器人手臂的中间关节点的角度变化情况"
+        },
+        {
+          "label": "D",
+          "content": "机器人手臂的整体外观形状变化"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义描述",
+        "提示2：明确轨迹与机器人手臂特定点的关系",
+        "提示3：判断每个选项是否符合视频中关于轨迹的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：方程求解分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术领域，轨迹规划是一个重要概念。已知轨迹可以看作机械手腕的末端点或操作点，若某机械手腕末端点在平面直角坐标系中的位置随时间 $t$ 的函数为 $s(t)=3t^2 + 2t + 1$（单位：米），那么在 $t = 2$ 秒时，该末端点的速度是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$10$ 米/秒"
+        },
+        {
+          "label": "B",
+          "content": "$12$ 米/秒"
+        },
+        {
+          "label": "C",
+          "content": "$14$ 米/秒"
+        },
+        {
+          "label": "D",
+          "content": "$16$ 米/秒"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据物理学知识，位置函数对时间的导数就是速度函数",
+        "提示2：先对位置函数 $s(t)=3t^2 + 2t + 1$ 求导，得到速度函数 $v(t)$",
+        "提示3：将 $t = 2$ 代入速度函数 $v(t)$ 中计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：特殊情况示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术操作中，轨迹规划是一个重要环节。以下关于轨迹的描述，哪个最符合视频中对“轨迹”的定义？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人手臂运动的整体路径"
+        },
+        {
+          "label": "B",
+          "content": "机器人手术工具的末端点，或我们比较在意的操作点的位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "机器人手术过程中的所有动作集合"
+        },
+        {
+          "label": "D",
+          "content": "机器人手术时的能量消耗曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对“轨迹”的定义描述",
+        "提示2：明确轨迹与特定点的位置、速度和加速度相关",
+        "提示3：分析每个选项是否符合视频中对轨迹的定义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三次样条设定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学中，轨迹是我们关注的重要概念。以下关于轨迹的描述，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "轨迹仅指机械手腕的末端点的位置"
+        },
+        {
+          "label": "B",
+          "content": "轨迹是机械手腕的末端点或我们比较在意的操作点的位置、速度和加速度"
+        },
+        {
+          "label": "C",
+          "content": "轨迹只与机械手腕的速度有关"
+        },
+        {
+          "label": "D",
+          "content": "轨迹和机械手腕的位置、速度、加速度都无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义",
+        "提示2：明确轨迹包含的要素，是否只有位置，还是有其他要素",
+        "提示3：判断每个选项是否符合视频中对轨迹的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：手臂运动练习",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的轨迹可以理解为以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械手臂的起始点，及其位置、速度或加速度"
+        },
+        {
+          "label": "B",
+          "content": "机械手臂的末端点，及其位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "机械手臂的中间点，及其位置、速度或加速度"
+        },
+        {
+          "label": "D",
+          "content": "机械手臂的固定点，及其位置、速度或加速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义描述",
+        "提示2：明确提到轨迹可理解为机械手臂的某类点",
+        "提示3：关注该点的具体属性是末端点或我们比较在意的操作点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：手部工作空间",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术中，对于机械手腕的轨迹规划，以下对轨迹理解正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "仅指机械手腕的末端点的位置"
+        },
+        {
+          "label": "B",
+          "content": "仅指我们比较在意的操作点的速度"
+        },
+        {
+          "label": "C",
+          "content": "包括机械手腕的末端点或我们比较在意的操作点的位置、速度或加速度"
+        },
+        {
+          "label": "D",
+          "content": "只与机械手腕的加速度有关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义",
+        "提示2：轨迹的描述包含了多个要素，并非单一要素",
+        "提示3：明确轨迹涉及到位置、速度和加速度等方面"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手臂的轨迹规划中，轨迹指的是以下哪个选项所描述的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械手腕的质量和密度"
+        },
+        {
+          "label": "B",
+          "content": "机械手腕的末端点或操作点的位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "机械手腕的颜色和外观"
+        },
+        {
+          "label": "D",
+          "content": "机械手腕的材质和硬度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频内容，明确轨迹的定义",
+        "提示2：思考轨迹与机械手腕各属性的关联",
+        "提示3：排除与位置、速度、加速度无关的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：矩阵计算求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动规划中，轨迹通常可以理解为机械手臂的末端点或者我们比较在意的操作点，以下哪个物理量不属于轨迹所涉及的范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "位置"
+        },
+        {
+          "label": "B",
+          "content": "加速度"
+        },
+        {
+          "label": "C",
+          "content": "质量"
+        },
+        {
+          "label": "D",
+          "content": "速度"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于轨迹的定义，明确轨迹涉及的物理量",
+        "提示2：思考每个选项所代表的物理量与机械手臂末端点或操作点的关系",
+        "提示3：判断哪个选项的物理量不在视频所提及的轨迹范畴内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹绘制分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术中，对于机械手腕的轨迹，以下哪个描述是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "轨迹仅指机械手腕的末端点的位置"
+        },
+        {
+          "label": "B",
+          "content": "轨迹是指机械手腕的末端点或操作点的位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "轨迹只与机械手腕的速度有关"
+        },
+        {
+          "label": "D",
+          "content": "轨迹和机械手腕的末端点、操作点没有关系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义",
+        "提示2：明确轨迹涉及的要素不仅仅是位置，还有速度和加速度等",
+        "提示3：思考轨迹与机械手腕末端点和操作点的关联"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹模拟验证",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手术中，对于机械手腕的轨迹，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "轨迹仅指机械手腕的末端点位置"
+        },
+        {
+          "label": "B",
+          "content": "轨迹是机械手腕的末端点或操作点的位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "轨迹只与机械手腕的速度有关"
+        },
+        {
+          "label": "D",
+          "content": "轨迹和机械手腕的加速度无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义",
+        "提示2：明确轨迹包含的要素不仅仅是位置，还有速度和加速度等",
+        "提示3：分析每个选项是否符合轨迹的完整定义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：另一方法思路",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机械手臂的运动规划中，轨迹可以理解为以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械手臂的起始点及其速度、加速度"
+        },
+        {
+          "label": "B",
+          "content": "机械手臂的中间操作点及其位置、速度、加速度"
+        },
+        {
+          "label": "C",
+          "content": "机械手臂的末端点及其位置、速度、加速度"
+        },
+        {
+          "label": "D",
+          "content": "机械手臂的整体长度及其移动的总距离"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义描述",
+        "提示2：明确轨迹与机械手臂特定点的关系",
+        "提示3：关注定义中提到的点的位置、速度和加速度等要素"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：参数求解方法",
+      "error": "Invalid \\escape: line 17 column 49 (char 553)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：关节角度范围",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的轨迹是指什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械手腕的端点，或者我们比较在意的操作点的位置和速度"
+        },
+        {
+          "label": "B",
+          "content": "机械手臂的旋转角度"
+        },
+        {
+          "label": "C",
+          "content": "机械整体的移动路径"
+        },
+        {
+          "label": "D",
+          "content": "机械的工作时间和效率"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义描述",
+        "提示2：重点关注提到的端点、操作点以及相关物理量",
+        "提示3：逐一分析选项是否符合视频中轨迹的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹转换分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机械手臂的操作中，轨迹指的是以下哪个选项所描述的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械手臂的整体重量和材质"
+        },
+        {
+          "label": "B",
+          "content": "机械手腕部的颜色和外观"
+        },
+        {
+          "label": "C",
+          "content": "机械手臂末端点或操作点的位置、速度或加速度"
+        },
+        {
+          "label": "D",
+          "content": "机械手臂各个关节的角度范围"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于轨迹的定义相关内容",
+        "提示2：明确轨迹的描述主要涉及到特定点的一些运动相关参数",
+        "提示3：逐一分析每个选项是否与视频中轨迹的定义相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨迹规划技巧",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于轨迹的定义，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "轨迹就是机械手腕的起始点，及其位置、速度或加速度"
+        },
+        {
+          "label": "B",
+          "content": "轨迹是机械手腕的末端点，或者我们比较在意的操作点，及其位置、速度或加速度"
+        },
+        {
+          "label": "C",
+          "content": "轨迹仅指机械手腕末端点的位置，不涉及速度和加速度"
+        },
+        {
+          "label": "D",
+          "content": "轨迹指的是机械手腕的运动方向，与位置、速度和加速度无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对轨迹的定义描述",
+        "提示2：明确轨迹涉及的是机械手腕的哪些点以及相关物理量",
+        "提示3：逐一分析每个选项与视频定义的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：5次多项式求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动轨迹规划中，若用5次多项式 $s(t)=a_0 + a_1t + a_2t^2 + a_3t^3 + a_4t^4 + a_5t^5$ 来描述机械手臂末端点的位置，已知初始位置 $s(0)=0$，初始速度 $s'(0)=1$，初始加速度 $s''(0)=0$，终点位置 $s(T)=1$，终点速度 $s'(T)=0$，终点加速度 $s''(T)=0$，则 $a_3$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{10}{T^3}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{15}{T^3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{20}{T^3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{25}{T^3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先对 $s(t)$ 求一阶导数 $s'(t)$ 和二阶导数 $s''(t)$",
+        "提示2：根据已知的初始条件和终点条件列出方程组",
+        "提示3：通过解方程组求出 $a_3$ 的值"
+      ]
+    }
+  ],
+  "count": 46
+}

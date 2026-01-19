@@ -1,0 +1,138 @@
+{
+  "exercises": [
+    {
+      "type": "error",
+      "title": "练习题生成失败：平面截三棱锥",
+      "error": "Invalid \\escape: line 6 column 24 (char 148)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线求法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "平面与平面立体相交，求截交线的第二种典型情况是平面与哪种立体相交？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "棱柱体"
+        },
+        {
+          "label": "B",
+          "content": "棱锥体"
+        },
+        {
+          "label": "C",
+          "content": "圆柱体"
+        },
+        {
+          "label": "D",
+          "content": "圆锥体"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到了平面与平面立体相交求截交线的第二种典型情况",
+        "提示2：回顾视频中关于棱柱体和棱锥体与平面相交的相关内容",
+        "提示3：前面研究的是平面截切棱柱体，接下来研究的就是另一种典型平面立体"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究平面与立体相交求截交线时，已知棱柱体和棱锥体是平面立体的两种典型代表，之前研究了平面截切棱柱体，那么接下来要研究的是以下哪种情况的截交线作图？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平面与棱柱体相交的截交线作图"
+        },
+        {
+          "label": "B",
+          "content": "平面与棱锥体相交的截交线作图"
+        },
+        {
+          "label": "C",
+          "content": "曲面与棱柱体相交的截交线作图"
+        },
+        {
+          "label": "D",
+          "content": "曲面与棱锥体相交的截交线作图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到在研究完一种情况后，接下来要研究的内容",
+        "提示2：明确已经研究了平面截切棱柱体，按照逻辑推理接下来的研究内容",
+        "提示3：注意题目强调的是平面与立体相交的情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线水平投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在研究基本立体投影时，平面与平面立体相交求截交线有两种典型情况，其中一种是平面与棱柱体相交，另一种是以下哪种情况？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平面与球体相交"
+        },
+        {
+          "label": "B",
+          "content": "平面与棱锥体相交"
+        },
+        {
+          "label": "C",
+          "content": "平面与圆柱体相交"
+        },
+        {
+          "label": "D",
+          "content": "平面与圆锥体相交"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的平面立体的典型代表有哪些",
+        "提示2：明确除了棱柱体，另一个平面立体代表与平面相交是截交线的另一种典型情况",
+        "提示3：逐一分析选项，判断哪个是平面立体且符合视频所说内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线侧面投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习基本立体投影时，我们知道平面立体的两种典型代表截体进行平面截切时，以下哪种情况是接下来要研究截交线如何作图的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平面与棱柱体相交"
+        },
+        {
+          "label": "B",
+          "content": "平面与棱锥体相交"
+        },
+        {
+          "label": "C",
+          "content": "棱柱体与棱柱体相交"
+        },
+        {
+          "label": "D",
+          "content": "棱锥体与棱锥体相交"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确视频中提到的平面立体的两种典型代表是什么",
+        "提示2：回顾前面研究的是哪种立体的截切情况",
+        "提示3：根据前面的研究内容，推断接下来要研究的截切情况"
+      ]
+    }
+  ],
+  "count": 5
+}

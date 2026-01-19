@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：理想气体方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一定质量的理想气体，其压强 $p$ 与体积 $V$ 的乘积 $pV$ 等于 $nR$，现有一理想气体，其物质的量 $n = 2mol$，压强 $p = 3Pa$，体积 $V = 4m^3$，则 $R$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$4$"
+        },
+        {
+          "label": "C",
+          "content": "$6$"
+        },
+        {
+          "label": "D",
+          "content": "$8$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据理想气体状态方程 $pV = nR$ 进行分析",
+        "提示2：将已知的 $n$、$p$、$V$ 的值代入方程中",
+        "提示3：通过计算求出 $R$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：道尔顿分压定律",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个密闭容器中，有两种理想气体 A 和 B，它们的物质的量分别为 $n_A$ 和 $n_B$，容器的体积为 $V$，温度为 $T$。已知理想气体状态方程为 $pV = nRT$，根据道尔顿分压定律，混合气体的总压强 $p_{总}$ 与各气体分压 $p_A$、$p_B$ 的关系正确的是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$p_{总}=p_A + p_B$，其中 $p_A = \\frac{n_A RT}{V}$，$p_B = \\frac{n_B RT}{V}$"
+        },
+        {
+          "label": "B",
+          "content": "$p_{总}=p_A - p_B$，其中 $p_A = \\frac{n_A RT}{V}$，$p_B = \\frac{n_B RT}{V}$"
+        },
+        {
+          "label": "C",
+          "content": "$p_{总}=\\frac{p_A + p_B}{2}$，其中 $p_A = \\frac{n_A RT}{V}$，$p_B = \\frac{n_B RT}{V}$"
+        },
+        {
+          "label": "D",
+          "content": "$p_{总}=p_A \\times p_B$，其中 $p_A = \\frac{n_A RT}{V}$，$p_B = \\frac{n_B RT}{V}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾道尔顿分压定律的内容，混合气体的总压强等于各组分气体分压之和",
+        "提示2：根据理想气体状态方程 $pV = nRT$ 分别求出各气体的分压",
+        "提示3：分析各选项中总压强与分压的关系是否符合道尔顿分压定律"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：气体扩散定律",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知某理想气体的体积 $V = 2\\mathrm{L}$，物质的量 $n = 0.1\\mathrm{mol}$，温度 $T = 273\\mathrm{K}$，气体常数 $R = 0.082\\mathrm{L\\cdot atm\\cdot mol^{-1}\\cdot K^{-1}}$，则该气体的压强 $P$ 为多少（根据理想气体状态方程 $PV = nRT$）？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.12\\mathrm{atm}$"
+        },
+        {
+          "label": "B",
+          "content": "$1.13\\mathrm{atm}$"
+        },
+        {
+          "label": "C",
+          "content": "$1.14\\mathrm{atm}$"
+        },
+        {
+          "label": "D",
+          "content": "$1.15\\mathrm{atm}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确理想气体状态方程 $PV = nRT$。",
+        "提示2：将已知的 $V$、$n$、$T$、$R$ 的值代入方程。",
+        "提示3：通过计算求出压强 $P$ 的值。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：真实气体方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一定量的理想气体，其压强为 $p$，体积为 $V$，物质的量为 $n$，若该气体满足理想气体状态方程 $pV = nRT$（$R$ 为常数），当压强变为原来的 $2$ 倍，体积变为原来的 $\\frac{1}{3}$ 时，温度变为原来的多少倍？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{6}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{2}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{3}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$6$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：设原来的压强、体积、温度分别为 $p_1$、$V_1$、$T_1$，变化后的压强、体积、温度分别为 $p_2$、$V_2$、$T_2$",
+        "提示2：根据理想气体状态方程分别列出变化前后的等式 $p_1V_1 = nRT_1$ 和 $p_2V_2 = nRT_2$",
+        "提示3：结合已知条件 $p_2 = 2p_1$，$V_2 = \\frac{1}{3}V_1$，求出 $\\frac{T_2}{T_1}$ 的值"
+      ]
+    }
+  ],
+  "count": 4
+}

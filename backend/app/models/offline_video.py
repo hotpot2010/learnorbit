@@ -30,6 +30,11 @@ class OfflineVideoTask(Base):
     screenshots_result_url = Column(MEDIUMTEXT, nullable=True, comment='截图结果文件URL（单P为字符串，多P为JSON数组）')
     exercises_result_url = Column(MEDIUMTEXT, nullable=True, comment='练习结果文件URL（单P为字符串，多P为JSON数组）')
     
+    # 腾讯云点播（VOD）相关字段
+    vod_file_id = Column(MEDIUMTEXT, nullable=True, comment='云点播文件ID（单P为字符串，多P为JSON数组）')
+    vod_play_url = Column(MEDIUMTEXT, nullable=True, comment='云点播播放URL（单P为字符串，多P为JSON数组，带签名）')
+    vod_cover_url = Column(String(500), nullable=True, comment='云点播封面URL')
+    
     # 视频信息（JSON格式存储）
     video_info = Column(JSON, nullable=True, comment='视频详细信息')
     
@@ -69,6 +74,9 @@ class OfflineVideoTask(Base):
             "knowledge_points_result_url": parse_url_field(self.knowledge_points_result_url),
             "screenshots_result_url": parse_url_field(self.screenshots_result_url) if hasattr(self, 'screenshots_result_url') else None,
             "exercises_result_url": parse_url_field(self.exercises_result_url) if hasattr(self, 'exercises_result_url') else None,
+            "vod_file_id": parse_url_field(self.vod_file_id) if hasattr(self, 'vod_file_id') else None,
+            "vod_play_url": parse_url_field(self.vod_play_url) if hasattr(self, 'vod_play_url') else None,
+            "vod_cover_url": self.vod_cover_url if hasattr(self, 'vod_cover_url') else None,
             "video_info": self.video_info if isinstance(self.video_info, dict) else json.loads(self.video_info) if self.video_info else {},
             "is_series": bool(self.is_series),
             "series_parts": self.series_parts if isinstance(self.series_parts, list) else json.loads(self.series_parts) if self.series_parts else [],

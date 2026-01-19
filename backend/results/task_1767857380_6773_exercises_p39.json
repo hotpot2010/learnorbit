@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：局部视图概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "将机件上的部分结构向 6 个基本投影面之一投影，得到的视图被称为什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "基本视图"
+        },
+        {
+          "label": "B",
+          "content": "局部视图"
+        },
+        {
+          "label": "C",
+          "content": "剖视图"
+        },
+        {
+          "label": "D",
+          "content": "断面图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对不同视图类型的定义",
+        "提示2：重点关注机件部分结构投影后视图的名称",
+        "提示3：明确基本视图是将机件整体进行投影，而本题是部分结构投影"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：局部视图细节",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "将机件上的部分结构向 6 个基本投影面之一投影，得到的视图称为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "基本视图"
+        },
+        {
+          "label": "B",
+          "content": "局部视图"
+        },
+        {
+          "label": "C",
+          "content": "都有可能"
+        },
+        {
+          "label": "D",
+          "content": "都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对不同视图的定义",
+        "提示2：明确基本视图和局部视图的投影方式",
+        "提示3：根据题目中描述的投影方式，对应视频中的定义来选择答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：斜视图讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于局部视图和基本视图的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "局部视图是将机件整体向 6 个基本投影面之一投影得到的视图"
+        },
+        {
+          "label": "B",
+          "content": "基本视图是仅对局部结构做投影得到的视图"
+        },
+        {
+          "label": "C",
+          "content": "局部视图是将机件上的部分结构向 6 个基本投影面之一投影得到的视图"
+        },
+        {
+          "label": "D",
+          "content": "局部视图和基本视图之间没有任何联系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示 1：回顾视频中局部视图和基本视图的定义",
+        "提示 2：明确局部视图是对部分结构投影，基本视图是对机件整体投影",
+        "提示 3：注意局部视图和基本视图之间是存在联系的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：视图制作方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于局部视图和基本视图的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "局部视图是将机件整体向 6 个基本投影面之一投影得到的视图"
+        },
+        {
+          "label": "B",
+          "content": "基本视图是仅对局部结构做投影得到的视图"
+        },
+        {
+          "label": "C",
+          "content": "局部视图是将机件上的部分结构向 6 个基本投影面之一投影得到的视图"
+        },
+        {
+          "label": "D",
+          "content": "局部视图和基本视图之间没有任何联系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示 1：回顾视频中局部视图和基本视图的基本概念",
+        "提示 2：明确局部视图是对机件部分结构投影，基本视图是对机件整体投影",
+        "提示 3：注意两者之间存在一定联系"
+      ]
+    }
+  ],
+  "count": 4
+}

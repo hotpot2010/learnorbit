@@ -1,0 +1,358 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：过渡金属概述",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到将一些比较重要的元素概括为几类，以下哪种元素不在概括范围内？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "钛系元素"
+        },
+        {
+          "label": "B",
+          "content": "铬系元素"
+        },
+        {
+          "label": "C",
+          "content": "锰系元素"
+        },
+        {
+          "label": "D",
+          "content": "锂系元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的重要元素概括类别",
+        "提示2：明确包含的类别有钛系、钪系、铜系、钼系和铁系元素",
+        "提示3：逐一分析选项，对比视频内容找出不在范围内的元素"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：金属单质性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下属于视频中提到的重要元素概括的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "钛、钪、铜、钡、铁元素"
+        },
+        {
+          "label": "B",
+          "content": "钛、钪、铜、铍、铁元素"
+        },
+        {
+          "label": "C",
+          "content": "钛、钪、铜、镁、铁元素"
+        },
+        {
+          "label": "D",
+          "content": "钛、钪、铜、钙、铁元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的重要元素概括内容",
+        "提示2：明确视频中提到的元素有钛、钪、铜、铍、铁元素",
+        "提示3：逐一对比选项与视频内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：重要化合物",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下哪种元素属于视频中提到的重要元素概括范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "钠元素"
+        },
+        {
+          "label": "B",
+          "content": "钛元素"
+        },
+        {
+          "label": "C",
+          "content": "氯元素"
+        },
+        {
+          "label": "D",
+          "content": "氢元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中所概括的重要元素有哪些",
+        "提示2：视频中提到的重要元素包括钛、钪、锰、铬和铁元素等",
+        "提示3：逐一分析选项中的元素是否在视频提到的范畴内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：铁离子形态",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到将一些重要元素归纳为特定名称，其中不包括以下哪种元素类型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "钛族元素"
+        },
+        {
+          "label": "B",
+          "content": "铬族元素"
+        },
+        {
+          "label": "C",
+          "content": "锰族元素"
+        },
+        {
+          "label": "D",
+          "content": "镍族元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中所提到归纳的重要元素类型有哪些",
+        "提示2：视频中提到的元素类型包括钛族、钒族、铬族、锰族和铁族元素",
+        "提示3：与选项内容进行逐一比对，找出不在范围内的元素类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：铬化合物介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到将重要元素归纳为多个系列元素，以下哪个不属于视频提及的系列元素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "钛钪系列元素"
+        },
+        {
+          "label": "B",
+          "content": "锰系元素"
+        },
+        {
+          "label": "C",
+          "content": "镍系元素"
+        },
+        {
+          "label": "D",
+          "content": "铁系元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的重要元素系列归纳内容",
+        "提示2：明确视频中提及的系列元素具体有哪些",
+        "提示3：逐一对比选项与视频内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：锰元素讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到将一些比较重要的元素概括为钛系、钒系、锰系、铬系和铁系元素，以下哪种元素不属于这几类元素所涵盖的范围？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "锰（$Mn$）"
+        },
+        {
+          "label": "B",
+          "content": "铜（$Cu$）"
+        },
+        {
+          "label": "C",
+          "content": "铁（$Fe$）"
+        },
+        {
+          "label": "D",
+          "content": "钛（$Ti$）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的重要元素分类，即钛系、钒系、锰系、铬系和铁系元素。",
+        "提示2：分析每个选项中的元素是否属于这几类元素。",
+        "提示3：逐一判断选项，排除属于这几类元素的选项。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：铁系氧化物等",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到将一些比较重要的元素概括为钛系、钒系、铬系、锰系和某一系元素，请问这个系的元素对应的金属是以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "铜"
+        },
+        {
+          "label": "B",
+          "content": "铁"
+        },
+        {
+          "label": "C",
+          "content": "锌"
+        },
+        {
+          "label": "D",
+          "content": "铝"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的最后一个概括的元素系",
+        "提示2：明确视频里具体列举的几种元素系对应的金属",
+        "提示3：根据视频内容直接找出答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二氯化钴盐",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习过渡金属相关知识时，视频中提到将部分重要元素概括为钽、铌、钼、钨和铁元素，以下关于过渡金属的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "过渡金属都位于元素周期表的 d 区"
+        },
+        {
+          "label": "B",
+          "content": "钽、铌、钼、钨和铁元素都属于过渡金属，它们的价电子都排布在 d 轨道上"
+        },
+        {
+          "label": "C",
+          "content": "过渡金属的化合物通常具有颜色，是因为 d 电子跃迁导致的"
+        },
+        {
+          "label": "D",
+          "content": "过渡金属的化学性质都很活泼，在自然界中都以化合态存在"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾过渡金属在元素周期表中的位置，并非所有过渡金属都只位于 d 区",
+        "提示2：思考这些元素价电子的排布特点，铁元素价电子排布还涉及 s 轨道",
+        "提示3：明确过渡金属化合物有颜色的原因是 d 电子跃迁",
+        "提示4：考虑过渡金属的化学活泼性，有些过渡金属化学性质相对稳定，在自然界中有游离态"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：铁系配合物",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到将一些比较重要的元素概括为钛钪、钒铬、锰铁等元素，以下哪种元素不属于视频所概括的重要元素类别？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "钛（Ti）"
+        },
+        {
+          "label": "B",
+          "content": "铜（Cu）"
+        },
+        {
+          "label": "C",
+          "content": "铬（Cr）"
+        },
+        {
+          "label": "D",
+          "content": "铁（Fe）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中所概括的重要元素类别",
+        "提示2：明确提到的元素有钛钪、钒铬、锰铁等",
+        "提示3：逐一对比选项中的元素是否在这些类别中"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二价铁离子检测",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在过渡金属相关内容中，视频提到将一些比较重要的元素概括起来，以下哪种元素不在概括范围内？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "钛元素"
+        },
+        {
+          "label": "B",
+          "content": "铬元素"
+        },
+        {
+          "label": "C",
+          "content": "锰元素"
+        },
+        {
+          "label": "D",
+          "content": "铜元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回忆视频中提到概括的重要元素有哪些",
+        "提示2：视频中明确指出概括的元素包括钛、铬、镍、钴和铁元素",
+        "提示3：逐一对比选项中的元素与视频概括的元素"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二价钴离子检测",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在本次课程提到的过渡金属的内容中，下列不属于课程归纳的重要元素是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "钛元素"
+        },
+        {
+          "label": "B",
+          "content": "镍元素"
+        },
+        {
+          "label": "C",
+          "content": "铬元素"
+        },
+        {
+          "label": "D",
+          "content": "钾元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到归纳的重要元素有哪些",
+        "提示2：视频中提到这些元素为钛、钒、铬、锰和铁元素",
+        "提示3：逐一对比选项中的元素与视频归纳元素是否一致"
+      ]
+    }
+  ],
+  "count": 11
+}

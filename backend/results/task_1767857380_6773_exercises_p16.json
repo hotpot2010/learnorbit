@@ -1,0 +1,261 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个平面与一个立体相交时，立体表面和该平面所产生的交线被称为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "切线"
+        },
+        {
+          "label": "B",
+          "content": "截交线"
+        },
+        {
+          "label": "C",
+          "content": "割线"
+        },
+        {
+          "label": "D",
+          "content": "母线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对于平面与立体相交产生的线的定义",
+        "提示2：根据定义判断选项中哪个符合要求",
+        "提示3：切线是与曲线只有一个公共点的直线；割线是与曲线有两个或两个以上公共点的直线；母线是构成曲面的直线"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个平面与一个立体相交时，立体表面和该平面所产生的交线被称为什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "切线"
+        },
+        {
+          "label": "B",
+          "content": "截交线"
+        },
+        {
+          "label": "C",
+          "content": "法线"
+        },
+        {
+          "label": "D",
+          "content": "割线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于平面与立体相交产生交线的定义",
+        "提示2：明确截交线的概念是平面与立体表面的交线",
+        "提示3：对比各个选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线特点与求法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当平面与立体相交时，立体表面和截切平面所产生的交线被称作什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "截交线"
+        },
+        {
+          "label": "B",
+          "content": "相贯线"
+        },
+        {
+          "label": "C",
+          "content": "投影线"
+        },
+        {
+          "label": "D",
+          "content": "轮廓线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对于平面和立体相交产生的特定交线的定义",
+        "提示2：明确截交线是平面与立体表面相交产生的交线",
+        "提示3：相贯线是两立体相交产生的，投影线和轮廓线与平面截切立体的交线概念不符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线解法思路",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当平面与立体相交时，立体表面和截切平面所产生的交线被称为？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "截交线"
+        },
+        {
+          "label": "B",
+          "content": "切线"
+        },
+        {
+          "label": "C",
+          "content": "割线"
+        },
+        {
+          "label": "D",
+          "content": "交线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于平面和立体相交时产生的特定交线的定义",
+        "提示2：明确截交线的概念是平面与立体表面相交产生的交线",
+        "提示3：对比各个选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正四棱柱截交",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个平面与一个正四棱柱相交时，正四棱柱表面和该切割平面所产生的交线被称为什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "截交线"
+        },
+        {
+          "label": "B",
+          "content": "交面线"
+        },
+        {
+          "label": "C",
+          "content": "切割线"
+        },
+        {
+          "label": "D",
+          "content": "切面线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中平面和立体相交时产生的特定交线的名称",
+        "提示2：明确提到立体表面和切割平面所产生的交线的定义",
+        "提示3：根据定义来判断选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投影求解方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当平面与立体相交时，立体表面和切割平面所产生的交线被称为什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投影线"
+        },
+        {
+          "label": "B",
+          "content": "截交线"
+        },
+        {
+          "label": "C",
+          "content": "轮廓线"
+        },
+        {
+          "label": "D",
+          "content": "分界线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中平面与立体相交时产生的特定交线的定义",
+        "提示2：注意题目中提到的是立体表面和切割平面的交线",
+        "提示3：视频中明确给出了该交线的名称"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线水平投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当平面与立体相交时，立体表面和切割平面所产生的交线被称为什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "截交线"
+        },
+        {
+          "label": "B",
+          "content": "投影线"
+        },
+        {
+          "label": "C",
+          "content": "交线"
+        },
+        {
+          "label": "D",
+          "content": "切线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于平面与立体相交产生的特定交线的定义",
+        "提示2：明确截交线的概念是平面与立体表面相交产生的交线",
+        "提示3：对比各个选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线侧面投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当平面与立体相交时，立体表面和截切平面所产生的交线被称为什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "截交线"
+        },
+        {
+          "label": "B",
+          "content": "投影线"
+        },
+        {
+          "label": "C",
+          "content": "交光线"
+        },
+        {
+          "label": "D",
+          "content": "切线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于平面与立体相交产生的线的相关定义",
+        "提示2：重点关注立体表面和截切平面相交形成的线的名称",
+        "提示3：排除与截切平面和立体相交无关的选项"
+      ]
+    }
+  ],
+  "count": 8
+}

@@ -1,0 +1,197 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：常用显示器介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程讲解的常用显示器主要包含以下哪些类型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "LED、发光二极管、LCD"
+        },
+        {
+          "label": "B",
+          "content": "LED、OLED、LCD"
+        },
+        {
+          "label": "C",
+          "content": "CRT、LED、LCD"
+        },
+        {
+          "label": "D",
+          "content": "LED、等离子、LCD"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的常用显示器类型",
+        "提示2：视频中明确指出包含LED、发光二极管和LCD",
+        "提示3：对比各选项，找出与视频内容一致的答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：LED引脚及原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次单片机原理及接口技术课程的期末冲刺课中，这一章重点讲解的常用显示器不包含以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "LED发光二极管"
+        },
+        {
+          "label": "B",
+          "content": "LCD液晶显示器"
+        },
+        {
+          "label": "C",
+          "content": "OLED有机发光二极管显示器"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的这一章重点讲解的常用显示器有哪些",
+        "提示2：视频中明确指出的常用显示器为LED发光二极管和LCD液晶显示器",
+        "提示3：逐一分析每个选项，看哪个不在视频所提及的范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：7段LED选码计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术中，常用的显示器主要包括以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "LED发光二极管和LCD液晶显示器"
+        },
+        {
+          "label": "B",
+          "content": "OLED显示器和CRT显示器"
+        },
+        {
+          "label": "C",
+          "content": "等离子显示器和投影仪"
+        },
+        {
+          "label": "D",
+          "content": "电子墨水屏和数码管显示器"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的常用显示器类型",
+        "提示2：重点关注提到的LED和另一种显示器",
+        "提示3：排除视频未提及的显示器类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：显示器控制方式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程重点讲解的常用显示器不包括以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "LED"
+        },
+        {
+          "label": "B",
+          "content": "发光二极管"
+        },
+        {
+          "label": "C",
+          "content": "OLED"
+        },
+        {
+          "label": "D",
+          "content": "LCD"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的常用显示器类型",
+        "提示2：明确视频里重点讲解的显示器有哪些",
+        "提示3：逐一对比选项与视频内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：共阳极编码题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术中，常用的显示器不包括以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "LED发光二极管"
+        },
+        {
+          "label": "B",
+          "content": "LCD液晶显示器"
+        },
+        {
+          "label": "C",
+          "content": "OLED有机发光二极管显示器"
+        },
+        {
+          "label": "D",
+          "content": "以上都包括在常用显示器范围内"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的常用显示器类型",
+        "提示2：明确视频中列举的常用显示器有哪些",
+        "提示3：逐一对比选项和视频内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：共阴极编码题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "单片机原理及接口技术课程中，本节课重点讲解的常用显示器不包括以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "LED发光二极管"
+        },
+        {
+          "label": "B",
+          "content": "LCD液晶显示器"
+        },
+        {
+          "label": "C",
+          "content": "OLED有机发光二极管显示器"
+        },
+        {
+          "label": "D",
+          "content": "以上都不正确"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中提到的常用显示器种类",
+        "提示2：视频中明确指出了本节课重点讲解的常用显示器有LED和LCD",
+        "提示3：判断每个选项是否在视频所提及的范围内"
+      ]
+    }
+  ],
+  "count": 6
+}

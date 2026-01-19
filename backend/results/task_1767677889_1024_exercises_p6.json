@@ -1,0 +1,517 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：并行与串行通信",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕什么进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "并行口工作原理及工作方式"
+        },
+        {
+          "label": "B",
+          "content": "单片机原理及接口技术的期末冲刺课程的所有内容"
+        },
+        {
+          "label": "C",
+          "content": "串行口工作原理及工作方式"
+        },
+        {
+          "label": "D",
+          "content": "单片机硬件结构"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：注意视频中提到的本次课程讲解重点围绕的对象",
+        "提示2：明确提到是围绕某个端口展开，可排除与端口无关的选项",
+        "提示3：仔细确认是并行口还是串行口"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：串行通信方向",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程的重点围绕串行口的哪些方面进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "工作原理和工作方式"
+        },
+        {
+          "label": "B",
+          "content": "通信速率和通信协议"
+        },
+        {
+          "label": "C",
+          "content": "数据格式和传输距离"
+        },
+        {
+          "label": "D",
+          "content": "硬件连接和软件编程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的关于本次课程重点讲解的内容",
+        "提示2：关注围绕串行口讲解的具体方面",
+        "提示3：在视频中找到明确提及的重点讲解内容来确定答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：同步与异步通信",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕以下哪个内容进行工作原理和工作方式的讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "并行口"
+        },
+        {
+          "label": "B",
+          "content": "串行口"
+        },
+        {
+          "label": "C",
+          "content": "USB接口"
+        },
+        {
+          "label": "D",
+          "content": "HDMI接口"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的关键内容是围绕某个接口展开讲解",
+        "提示2：回顾视频中明确指出要讲解工作原理和工作方式的接口名称",
+        "提示3：在给定的选项中寻找与视频内容匹配的接口"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：波特率含义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机的串口通信中，波特率是一个重要的概念。若某串口通信的波特率为 9600bps，每个字符由 1 个起始位、8 个数据位、1 个停止位组成，不考虑校验位，那么该串口每分钟最多能传输多少个字符？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "9600个"
+        },
+        {
+          "label": "B",
+          "content": "57600个"
+        },
+        {
+          "label": "C",
+          "content": "11520个"
+        },
+        {
+          "label": "D",
+          "content": "7200个"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：先计算出传输一个字符所需的位数",
+        "提示2：根据波特率算出每秒传输的位数",
+        "提示3：结合前两步的结果，进一步计算出每分钟能传输的字符数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：波特率概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术中，若某串口的波特率为 $9600$ 波特，每个字符包含 $1$ 个起始位、$8$ 个数据位、$1$ 个停止位，不考虑校验位，那么该串口每秒最多能传输多少个字符？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$960$"
+        },
+        {
+          "label": "B",
+          "content": "$1200$"
+        },
+        {
+          "label": "C",
+          "content": "$9600$"
+        },
+        {
+          "label": "D",
+          "content": "$19200"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先计算传输一个字符所需的位数",
+        "提示2：用波特率除以传输一个字符所需的位数，得到每秒传输的字符数",
+        "提示3：波特率的单位是波特，即每秒传输的位数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：串口结构原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程重点围绕以下哪个内容进行工作原理和工作方式的讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理"
+        },
+        {
+          "label": "B",
+          "content": "接口技术"
+        },
+        {
+          "label": "C",
+          "content": "并行口"
+        },
+        {
+          "label": "D",
+          "content": "串行口"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：注意视频中提到的重点围绕的内容",
+        "提示2：关键信息在视频中关于本节课重点讲解内容的描述处",
+        "提示3：明确提到了围绕某一个接口进行工作原理和工作方式讲解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：串口控制寄存器",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕串口进行讲解，其中重点讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "串口工作原理"
+        },
+        {
+          "label": "B",
+          "content": "串口工作方式"
+        },
+        {
+          "label": "C",
+          "content": "串口数据的存储容量"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是重点讲解内容"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本次课程围绕串口重点讲解的内容",
+        "提示2：视频明确指出围绕串口的工作原理和工作方式进行讲解",
+        "提示3：判断选项中哪个内容未在重点讲解范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：通信参数介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕哪个内容展开工作原理和工作方式的讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理"
+        },
+        {
+          "label": "B",
+          "content": "接口技术"
+        },
+        {
+          "label": "C",
+          "content": "串行口"
+        },
+        {
+          "label": "D",
+          "content": "期末考试突击课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：关注视频中提到的本讲重点围绕的内容",
+        "提示2：注意题目问的是展开工作原理和工作方式讲解的内容",
+        "提示3：定位视频中相关表述进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电源控制讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕哪个内容进行工作原理及工作方式的讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理"
+        },
+        {
+          "label": "B",
+          "content": "接口技术"
+        },
+        {
+          "label": "C",
+          "content": "串行口"
+        },
+        {
+          "label": "D",
+          "content": "电源控制"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本次课程讲解重点围绕的内容",
+        "提示2：注意与讲解重点相关的关键信息",
+        "提示3：明确提到围绕某一内容进行工作原理及工作方式讲解的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：串口工作模式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕串口的哪方面进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "工作原理和工作方式"
+        },
+        {
+          "label": "B",
+          "content": "硬件结构和软件编程"
+        },
+        {
+          "label": "C",
+          "content": "通信协议和数据传输"
+        },
+        {
+          "label": "D",
+          "content": "接口标准和电气特性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到的本次课程重点讲解内容",
+        "提示2：回忆关于串口讲解围绕的核心方面",
+        "提示3：在视频中查找与选项相关的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：串口DR功能",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课主要围绕进行讲解的是以下哪个内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的期末冲刺课程"
+        },
+        {
+          "label": "B",
+          "content": "串口工作原理以及工作方式"
+        },
+        {
+          "label": "C",
+          "content": "单片机的编程方法"
+        },
+        {
+          "label": "D",
+          "content": "串口的硬件设计"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的本节课重点围绕的内容",
+        "提示2：重点关注关于具体讲解对象的描述",
+        "提示3：明确提到是围绕串口的相关方面进行讲解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：波特率原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕以下哪个内容进行工作原理和工作方式的讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "串行口"
+        },
+        {
+          "label": "C",
+          "content": "波特率原理"
+        },
+        {
+          "label": "D",
+          "content": "期末冲刺课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意题目问的是围绕哪个内容讲解工作原理和工作方式",
+        "提示2：回到视频中找到相关描述的语句",
+        "提示3：重点关注提到核心讲解内容的部分"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：波特率计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机串行口通信中，若已知某设备的时钟频率为 $f_{osc}=11.0592\\ MHz$，定时器工作在方式 2 下，定时器初值 $TH1 = TL1 = 0xFD$，则该设备的波特率为（ ）。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$9600\\ bit/s$"
+        },
+        {
+          "label": "B",
+          "content": "$4800\\ bit/s$"
+        },
+        {
+          "label": "C",
+          "content": "$2400\\ bit/s$"
+        },
+        {
+          "label": "D",
+          "content": "$1200\\ bit/s$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确在定时器工作方式2下，波特率计算公式为 $波特率 = \\frac{2^{SMOD}}{32} \\times \\frac{f_{osc}}{12 \\times (256 - TH1)}$，其中 $SMOD$ 为波特率倍增位，默认 $SMOD = 0$。",
+        "提示2：将已知的 $f_{osc}=11.0592\\ MHz$ 和 $TH1 = 0xFD$ 代入公式。",
+        "提示3：计算 $256 - TH1$ 的值，再进行后续计算。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：波特率练习",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程重点围绕串行口的哪方面进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "工作原理和工作方式"
+        },
+        {
+          "label": "B",
+          "content": "硬件结构和软件编程"
+        },
+        {
+          "label": "C",
+          "content": "通信协议和数据传输"
+        },
+        {
+          "label": "D",
+          "content": "信号处理和干扰抑制"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：关注视频中提到的本次课程围绕串行口讲解的重点内容",
+        "提示2：在视频特定时段明确指出了具体讲解范畴",
+        "提示3：仔细对比选项与视频所提及内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：参数代入计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机中，某串行口的工作模式下，数据传输速率计算公式为 $v = \\frac{f_{osc}}{12\\times(256 - TH1)}$，其中 $f_{osc}$ 为晶振频率，$TH1$ 为定时器初值。已知晶振频率 $f_{osc}=11.0592\\times10^6Hz$，若要使数据传输速率 $v = 9600bps$，则 $TH1$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$253$"
+        },
+        {
+          "label": "B",
+          "content": "$254$"
+        },
+        {
+          "label": "C",
+          "content": "$255$"
+        },
+        {
+          "label": "D",
+          "content": "$256$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先根据已知的公式 $v = \\frac{f_{osc}}{12\\times(256 - TH1)}$，将 $v = 9600bps$ 和 $f_{osc}=11.0592\\times10^6Hz$ 代入公式中。",
+        "提示2：然后通过移项、化简等步骤求解 $TH1$。",
+        "提示3：计算过程中注意单位的统一，$f_{osc}$ 的单位是 $Hz$，$v$ 的单位是 $bps$。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：参数计算与选择",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕以下哪个内容进行原理及工作方式的讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "并行口"
+        },
+        {
+          "label": "C",
+          "content": "串行口"
+        },
+        {
+          "label": "D",
+          "content": "单片机期末冲刺课程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：注意视频中提到的本次讲解围绕的核心内容",
+        "提示2：重点关注关于讲解核心的描述语句",
+        "提示3：与视频中提到的围绕讲解的内容进行匹配"
+      ]
+    }
+  ],
+  "count": 16
+}

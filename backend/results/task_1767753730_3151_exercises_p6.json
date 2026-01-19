@@ -1,0 +1,212 @@
+{
+  "exercises": [
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：标准平衡常数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $aA + bB \\rightleftharpoons cC + dD$，在一定温度下达到平衡时，其标准平衡常数 $K^\\theta$ 的表达式为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$K^\\theta = \\frac{(\\frac{p_C}{p^\\theta})^c(\\frac{p_D}{p^\\theta})^d}{(\\frac{p_A}{p^\\theta})^a(\\frac{p_B}{p^\\theta})^b}$",
+      "hints": [
+        "提示1：标准平衡常数是用各物质的相对分压来表示的",
+        "提示2：相对分压等于该物质的分压除以标准压力 $p^\\theta$",
+        "提示3：将各物质的相对分压按照化学计量数的幂次方进行运算，生成物在上，反应物在下"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：化学平衡移动",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $N_2(g) + 3H_2(g) \\rightleftharpoons 2NH_3(g)$，在一定温度下达到化学平衡状态。若保持其他条件不变，增大压强，下列说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平衡向逆反应方向移动，标准平衡常数 $K^\\theta$ 减小"
+        },
+        {
+          "label": "B",
+          "content": "平衡向正反应方向移动，标准平衡常数 $K^\\theta$ 不变"
+        },
+        {
+          "label": "C",
+          "content": "平衡不移动，标准平衡常数 $K^\\theta$ 增大"
+        },
+        {
+          "label": "D",
+          "content": "平衡向正反应方向移动，标准平衡常数 $K^\\theta$ 增大"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据勒夏特列原理判断增大压强时平衡的移动方向",
+        "提示2：明确反应前后气体分子数的变化情况",
+        "提示3：掌握标准平衡常数 $K^\\theta$ 只与温度有关，与压强等因素无关"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平衡移动原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $aA(g) + bB(g) \\rightleftharpoons cC(g) + dD(g)$，其标准平衡常数 $K^\\theta$ 的表达式为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$K^\\theta = \\frac{[C]^c[D]^d}{[A]^a[B]^b}$"
+        },
+        {
+          "label": "B",
+          "content": "$K^\\theta = \\frac{(p_C/p^\\theta)^c(p_D/p^\\theta)^d}{(p_A/p^\\theta)^a(p_B/p^\\theta)^b}$"
+        },
+        {
+          "label": "C",
+          "content": "$K^\\theta = \\frac{[A]^a[B]^b}{[C]^c[D]^d}$"
+        },
+        {
+          "label": "D",
+          "content": "$K^\\theta = \\frac{(p_A/p^\\theta)^a(p_B/p^\\theta)^b}{(p_C/p^\\theta)^c(p_D/p^\\theta)^d}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：标准平衡常数是用各物质的相对分压来表示的",
+        "提示2：对于气体反应，相对分压 $p_i/p^\\theta$ （$p_i$ 是气体 $i$ 的分压，$p^\\theta$ 是标准压力）",
+        "提示3：平衡常数表达式中，生成物的相对分压幂之积在分子，反应物的相对分压幂之积在分母"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：J与K关系判平衡",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $aA(g) + bB(g) \\rightleftharpoons cC(g) + dD(g)$，在一定温度下达到平衡时，其标准平衡常数为 $K^\\ominus$。若某时刻各物质的分压分别为 $p_A$、$p_B$、$p_C$、$p_D$，此时反应商 $J^\\ominus = \\frac{(\\frac{p_C}{p^\\ominus})^c(\\frac{p_D}{p^\\ominus})^d}{(\\frac{p_A}{p^\\ominus})^a(\\frac{p_B}{p^\\ominus})^b}$（$p^\\ominus$ 为标准压力）。当 $J^\\ominus > K^\\ominus$ 时，反应将（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "向正反应方向进行"
+        },
+        {
+          "label": "B",
+          "content": "向逆反应方向进行"
+        },
+        {
+          "label": "C",
+          "content": "处于平衡状态"
+        },
+        {
+          "label": "D",
+          "content": "无法判断反应方向"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确反应商 $J^\\ominus$ 和标准平衡常数 $K^\\ominus$ 的意义",
+        "提示2：根据 $J^\\ominus$ 与 $K^\\ominus$ 的大小关系来判断反应方向",
+        "提示3：当 $J^\\ominus > K^\\ominus$ 时，说明产物的相对分压过大，反应物的相对分压过小"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：合成氨条件分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一定温度下，合成氨反应 $N_2(g) + 3H_2(g) \\rightleftharpoons 2NH_3(g)$ 达到平衡，此时该反应的标准平衡常数表达式为？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$K^\\ominus = \\frac{[NH_3]^2}{[N_2][H_2]^3}$"
+        },
+        {
+          "label": "B",
+          "content": "$K^\\ominus = \\frac{p(NH_3)^2}{p(N_2)p(H_2)^3}$"
+        },
+        {
+          "label": "C",
+          "content": "$K^\\ominus = \\frac{(\\frac{p(NH_3)}{p^\\ominus})^2}{(\\frac{p(N_2)}{p^\\ominus})(\\frac{p(H_2)}{p^\\ominus})^3}$"
+        },
+        {
+          "label": "D",
+          "content": "$K^\\ominus = \\frac{[NH_3]^2 / c^\\ominus}{[N_2] / c^\\ominus [H_2]^3 / c^\\ominus}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：标准平衡常数 $K^\\ominus$ 是用相对分压或相对浓度来表示的",
+        "提示2：相对分压是用气体的分压除以标准压力 $p^\\ominus$",
+        "提示3：对于反应 $aA + bB \\rightleftharpoons cC + dD$，$K^\\ominus = \\frac{(\\frac{p_C}{p^\\ominus})^c(\\frac{p_D}{p^\\ominus})^d}{(\\frac{p_A}{p^\\ominus})^a(\\frac{p_B}{p^\\ominus})^b}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：化学反应熵变",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在化学平衡与吉布斯函数相关知识中，对于一个可逆反应 $aA + bB \\rightleftharpoons cC + dD$，其标准平衡常数 $K^\\theta$ 与化学平衡及移动、化学反应熵变、吉布斯函数判断及计算都有联系。若该反应在某温度下达到平衡时，各物质的浓度分别为 $[A]=1mol/L$，$[B]=2mol/L$，$[C]=3mol/L$，$[D]=4mol/L$，则以下关于标准平衡常数 $K^\\theta$ 的计算正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$K^\\theta = \\frac{[C]^c[D]^d}{[A]^a[B]^b}=\\frac{3^c \\times 4^d}{1^a \\times 2^b}$"
+        },
+        {
+          "label": "B",
+          "content": "$K^\\theta = \\frac{[A]^a[B]^b}{[C]^c[D]^d}=\\frac{1^a \\times 2^b}{3^c \\times 4^d}$"
+        },
+        {
+          "label": "C",
+          "content": "$K^\\theta = \\frac{[C]^c + [D]^d}{[A]^a + [B]^b}=\\frac{3^c + 4^d}{1^a + 2^b}$"
+        },
+        {
+          "label": "D",
+          "content": "$K^\\theta = \\frac{[A]^a + [B]^b}{[C]^c + [D]^d}=\\frac{1^a + 2^b}{3^c + 4^d}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确标准平衡常数的定义，它是生成物浓度幂之积与反应物浓度幂之积的比值",
+        "提示2：对于反应 $aA + bB \\rightleftharpoons cC + dD$，其标准平衡常数表达式中，各物质的浓度需要以其化学计量数为幂次",
+        "提示3：分清反应物和生成物的浓度在表达式中的位置"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：参数求解方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $aA(g) + bB(g) \\rightleftharpoons cC(g) + dD(g)$，在一定温度下达到平衡时，各物质的浓度分别为 $c(A) = 0.5mol/L$，$c(B) = 0.6mol/L$，$c(C) = 0.3mol/L$，$c(D) = 0.2mol/L$，该反应的标准平衡常数 $K^\\theta$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{0.3^c \\times 0.2^d}{0.5^a \\times 0.6^b}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{0.3 \\times 0.2}{0.5 \\times 0.6}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{0.5^a \\times 0.6^b}{0.3^c \\times 0.2^d}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{0.5 \\times 0.6}{0.3 \\times 0.2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确标准平衡常数的表达式，对于可逆反应 $aA(g) + bB(g) \\rightleftharpoons cC(g) + dD(g)$，$K^\\theta = \\frac{(\\frac{c(C)}{c^\\theta})^c (\\frac{c(D)}{c^\\theta})^d}{(\\frac{c(A)}{c^\\theta})^a (\\frac{c(B)}{c^\\theta})^b}$，其中 $c^\\theta$ 为标准浓度，通常 $c^\\theta = 1mol/L$",
+        "提示2：将各物质的浓度代入标准平衡常数表达式进行化简",
+        "提示3：注意浓度的幂次与化学计量数的关系"
+      ]
+    }
+  ],
+  "count": 7
+}

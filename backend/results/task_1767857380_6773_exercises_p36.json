@@ -1,0 +1,101 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：组合体尺寸标注原则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在进行组合体的尺寸标注时，以下哪种情况不符合标注原则？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "标注符合国家标准中关于尺寸标注的相关规定"
+        },
+        {
+          "label": "B",
+          "content": "尺寸注写正确清晰，但存在遗漏尺寸的情况"
+        },
+        {
+          "label": "C",
+          "content": "尺寸标注完整，既没有遗漏尺寸，也没有多余或重复尺寸"
+        },
+        {
+          "label": "D",
+          "content": "尺寸注写正确清晰，且标注完整"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中组合体尺寸标注的原则有哪些",
+        "提示2：明确尺寸标注完整的含义是既无遗漏尺寸，也无多余或重复尺寸",
+        "提示3：逐一分析每个选项是否符合这些原则"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：基本几何体尺寸标注",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在组合体的尺寸标注中，以下哪种情况不符合要求？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "尺寸标注符合国家标准中关于尺寸标注的相关规定"
+        },
+        {
+          "label": "B",
+          "content": "尺寸书写正确清晰，但存在遗漏尺寸的情况"
+        },
+        {
+          "label": "C",
+          "content": "尺寸标注完整，没有多余或重复尺寸"
+        },
+        {
+          "label": "D",
+          "content": "尺寸标注既符合国家标准，又书写正确清晰且完整"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中组合体尺寸标注的要求",
+        "提示2：明确尺寸标注要符合国家标准、书写清晰正确、标注完整",
+        "提示3：分析各选项是否满足这些要求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：带截交线相贯线标注",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在进行组合体的尺寸标注时，以下哪种做法不符合要求？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "严格遵循国家标准中关于尺寸标注的相关规定"
+        },
+        {
+          "label": "B",
+          "content": "尺寸标注书写时尽量保证字迹工整，但不用特别清晰"
+        },
+        {
+          "label": "C",
+          "content": "尺寸标注完整，既不遗漏尺寸，也不多余或重复标注尺寸"
+        },
+        {
+          "label": "D",
+          "content": "尺寸标注正确，符合实际的几何关系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于组合体尺寸标注的要求",
+        "提示2：明确尺寸标注书写、规范性、完整性等方面的要点",
+        "提示3：逐一分析每个选项是否符合视频中提到的要求"
+      ]
+    }
+  ],
+  "count": 3
+}

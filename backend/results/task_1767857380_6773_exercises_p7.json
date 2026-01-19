@@ -1,0 +1,266 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：空间两直线位置",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间中，已知直线 $a$ 和直线 $b$ 既不平行也没有公共点，那么直线 $a$ 和直线 $b$ 的位置关系是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平行"
+        },
+        {
+          "label": "B",
+          "content": "相交"
+        },
+        {
+          "label": "C",
+          "content": "异面"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中空间中两条直线的位置关系有哪几种",
+        "提示2：根据已知条件，直线既不平行也无公共点，分析排除不符合的选项",
+        "提示3：明确相交直线有公共点，平行直线无公共点且方向相同，从而确定正确答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：两直线平行投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间中，已知直线 $l_1$ 和直线 $l_2$，若直线 $l_1$ 与直线 $l_2$ 既不相交也没有公共点，那么这两条直线的位置关系是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "相交"
+        },
+        {
+          "label": "B",
+          "content": "平行"
+        },
+        {
+          "label": "C",
+          "content": "异面"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中空间中两条直线的位置关系有哪几种",
+        "提示2：明确相交、平行和异面直线的定义及特点",
+        "提示3：根据题目所给条件，判断直线 $l_1$ 和直线 $l_2$ 符合哪种位置关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：两直线相交投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间中，已知直线 $l_1$ 和直线 $l_2$，若直线 $l_1$ 和直线 $l_2$ 既不平行，也没有公共点，则它们的位置关系是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平行"
+        },
+        {
+          "label": "B",
+          "content": "相交"
+        },
+        {
+          "label": "C",
+          "content": "异面"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾空间中两直线的位置关系有平行、相交和异面三种",
+        "提示2：根据题目条件，直线 $l_1$ 和直线 $l_2$ 既不平行，说明不是平行关系",
+        "提示3：又因为它们没有公共点，所以也不是相交关系，那么只能是异面关系"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：空间两直线相交投影特性",
+      "error": "Invalid \\escape: line 6 column 25 (char 154)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：两直线相交判断方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间中，已知直线 $a$ 和直线 $b$，若直线 $a$ 与直线 $b$ 既不平行，且没有公共点，则直线 $a$ 与直线 $b$ 的位置关系是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平行"
+        },
+        {
+          "label": "B",
+          "content": "相交"
+        },
+        {
+          "label": "C",
+          "content": "异面"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中空间中两条直线的位置关系有哪几种",
+        "提示2：根据题目所给条件，逐一分析每种位置关系是否符合",
+        "提示3：已知直线既不平行且无公共点，排除平行和相交两种情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：特殊情况判断要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间中，已知直线 $l_1$ 和直线 $l_2$，若直线 $l_1$ 和直线 $l_2$ 既不平行，也没有公共点，那么这两条直线的位置关系是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平行"
+        },
+        {
+          "label": "B",
+          "content": "相交"
+        },
+        {
+          "label": "C",
+          "content": "异面"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中空间中两条直线的位置关系有哪几种",
+        "提示2：明确每种位置关系的特点，平行直线是没有公共点且方向相同或相反，相交直线有一个公共点",
+        "提示3：结合题目中直线既不平行也没有公共点的条件进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：综合例题求解思路",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间中，直线 $a$ 和直线 $b$ 的位置关系有三种情况。已知直线 $m$ 和直线 $n$ 既不平行，也不相交，那么直线 $m$ 和直线 $n$ 的位置关系是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平行"
+        },
+        {
+          "label": "B",
+          "content": "相交"
+        },
+        {
+          "label": "C",
+          "content": "异面"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的空间中两条直线的位置关系有哪几种",
+        "提示2：根据已知条件，排除不符合的位置关系",
+        "提示3：确定剩下的位置关系即为答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求ef直线投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间中，已知直线 $l_1$ 和直线 $l_2$，若直线 $l_1$ 与直线 $l_2$ 既不平行也没有公共点，则它们的位置关系是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平行"
+        },
+        {
+          "label": "B",
+          "content": "相交"
+        },
+        {
+          "label": "C",
+          "content": "异面"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中空间两条直线的位置关系有哪几种",
+        "提示2：分析平行、相交、异面三种位置关系的特点",
+        "提示3：根据题目中直线既不平行也没有公共点的条件进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：空间两直线相交",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间中，已知直线 $l_1$ 和直线 $l_2$，若直线 $l_1$ 与直线 $l_2$ 既不平行也不相交，则它们的位置关系是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平行"
+        },
+        {
+          "label": "B",
+          "content": "相交"
+        },
+        {
+          "label": "C",
+          "content": "异面"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中空间中两条直线的位置关系有几种",
+        "提示2：明确已知条件是直线既不平行也不相交",
+        "提示3：根据三种位置关系排除平行和相交，得出剩余的位置关系"
+      ]
+    }
+  ],
+  "count": 9
+}

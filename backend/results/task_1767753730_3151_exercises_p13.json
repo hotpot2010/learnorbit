@@ -1,0 +1,581 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：配合物基本概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在课程12中，老师总结的考点分为4个部分，其中第一部分是什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "价键理论"
+        },
+        {
+          "label": "C",
+          "content": "晶体场理论"
+        },
+        {
+          "label": "D",
+          "content": "配合物的结构和性质"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中老师对课程12考点的总结内容",
+        "提示2：明确提到的第一部分内容即为答案",
+        "提示3：注意题目问的是第一部分考点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：常见配体总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习课时12配合物的结构和性质中，老师将其考点总结为4个部分，以下不属于这4个部分的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "晶体场理论"
+        },
+        {
+          "label": "C",
+          "content": "配位键理论"
+        },
+        {
+          "label": "D",
+          "content": "氧化还原理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中老师总结的课时12配合物考点的4个部分内容",
+        "提示2：明确每个选项所涉及的理论是否在视频提及的4个部分中",
+        "提示3：逐一分析选项，排除属于4个部分的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：配位数计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "配合物是中学化学的重要知识点，以下关于配合物相关概念的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的中心离子只能是金属离子"
+        },
+        {
+          "label": "B",
+          "content": "配位数就是配位体的个数，二者概念完全相同"
+        },
+        {
+          "label": "C",
+          "content": "配合物中内界和外界之间主要以离子键结合"
+        },
+        {
+          "label": "D",
+          "content": "配合物的形成不涉及化学键的变化"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：思考配合物中心离子的组成情况",
+        "提示2：区分配位数和配位体个数的概念",
+        "提示3：考虑配合物内界和外界的结合方式以及形成过程中化学键的变化"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：配合物命名",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习配合物的结构和性质这一课时中，老师总结的考点分为4个部分，其中涉及到理论知识，做题时可能会让同学们感觉有难度的部分是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念和价键理论"
+        },
+        {
+          "label": "B",
+          "content": "价键理论和晶体场理论"
+        },
+        {
+          "label": "C",
+          "content": "配合物的基本概念和晶体场理论"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中老师总结的考点的4个部分分别是什么",
+        "提示2：明确提到涉及理论知识，做题有难度的是哪几个部分",
+        "提示3：根据视频内容，对比各选项进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：羰基配合物",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到课时12配合物的考点总结为4个部分，以下不属于这4个部分的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "离子键理论"
+        },
+        {
+          "label": "C",
+          "content": "价键理论"
+        },
+        {
+          "label": "D",
+          "content": "晶体场理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的课时12配合物考点的4个部分内容",
+        "提示2：明确各个理论在考点中的存在情况",
+        "提示3：逐一对比选项与视频中提及的考点内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：价键理论要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课时12配合物的结构和性质的考点总结为4个部分，其中不包括以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "价键理论"
+        },
+        {
+          "label": "C",
+          "content": "晶体场理论"
+        },
+        {
+          "label": "D",
+          "content": "氧化还原理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的课时12配合物考点的4个部分内容",
+        "提示2：明确视频中具体指出的考点部分有配合物的基本概念、价键理论、晶体场理论等",
+        "提示3：对比选项，找出不属于视频中考点总结部分的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：配位数与构型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课时12配合物的结构和性质的考点总结中，不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "价键理论"
+        },
+        {
+          "label": "C",
+          "content": "分子轨道理论"
+        },
+        {
+          "label": "D",
+          "content": "晶体场理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的课时12配合物结构和性质考点的四个部分",
+        "提示2：视频中明确指出的考点有配合物基本概念、价键理论和晶体场理论",
+        "提示3：根据上述提示，判断选项中哪个不属于提到的考点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：配合物类型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于课时12配合物的结构和性质，老师总结的考点不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "晶体场理论"
+        },
+        {
+          "label": "C",
+          "content": "配位键理论"
+        },
+        {
+          "label": "D",
+          "content": "杂化轨道理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中老师总结的课时12配合物考点包含哪几个部分",
+        "提示2：逐一对比选项与视频中提到的考点内容",
+        "提示3：注意排除视频中明确提到的考点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：轨道与磁性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课时12配合物的结构和性质的考点总结为4个部分，其中涉及到理论知识，做题时可能会有困难的部分不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "价键理论"
+        },
+        {
+          "label": "C",
+          "content": "晶体场理论"
+        },
+        {
+          "label": "D",
+          "content": "以上都涉及理论知识，做题都可能有困难"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到涉及理论知识，做题可能有困难的部分",
+        "提示2：明确视频中对各个考点部分的描述",
+        "提示3：对比选项与视频内容进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：亚铁离子分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习课时12配合物的结构和性质时，老师总结的考点包含以下部分，请问以下哪个不属于这些考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "价键理论"
+        },
+        {
+          "label": "C",
+          "content": "晶体场理论"
+        },
+        {
+          "label": "D",
+          "content": "氧化还原反应理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中老师总结的课时12考点包含哪几个部分",
+        "提示2：明确提到的考点有配合物的基本概念、价键理论、晶体场理论",
+        "提示3：逐一对比选项与视频中总结的考点内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：晶体场理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课时12配合物的结构和性质的考点总结为4个部分，其中不包括以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "现代价键理论"
+        },
+        {
+          "label": "C",
+          "content": "晶体场理论"
+        },
+        {
+          "label": "D",
+          "content": "分子轨道理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的课时12配合物考点的四个部分内容",
+        "提示2：明确已知的考点有配合物的基本概念、价键理论、晶体场理论等",
+        "提示3：逐一分析每个选项是否在视频提及的考点范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电子排布差异",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习课时 12 配合物的结构和性质时，其中涉及到理论知识较多的两部分分别是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念和价键理论"
+        },
+        {
+          "label": "B",
+          "content": "价键理论和晶体场理论"
+        },
+        {
+          "label": "C",
+          "content": "配合物的基本概念和晶体场理论"
+        },
+        {
+          "label": "D",
+          "content": "都不涉及理论知识"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到课时 12 的考点总结为 4 个部分",
+        "提示2：重点关注提到涉及理论知识的两部分内容",
+        "提示3：明确是哪两部分属于理论知识较多的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：Cfs能量计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课时12配合物的考点总结为4个部分，以下不属于这4个部分的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "晶体场理论"
+        },
+        {
+          "label": "C",
+          "content": "分子轨道理论"
+        },
+        {
+          "label": "D",
+          "content": "价键理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的课时12配合物考点的4个部分内容",
+        "提示2：明确视频中列举的具体理论名称",
+        "提示3：将选项与视频内容进行逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：高低自旋区分",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在配合物的学习中，涉及到多个理论知识，其中课程12的考点总结为4个部分，以下哪个不属于这4个部分？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "价键理论"
+        },
+        {
+          "label": "C",
+          "content": "分子轨道理论"
+        },
+        {
+          "label": "D",
+          "content": "晶体场理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到课程12考点总结的4个部分内容",
+        "提示2：明确视频中具体指出的考点部分有哪些",
+        "提示3：将选项与视频中提到的考点逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：晶体场理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课时12配合物的结构和性质的考点总结为4个部分，以下哪个选项不属于这4个部分？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "价键理论"
+        },
+        {
+          "label": "C",
+          "content": "分子轨道理论"
+        },
+        {
+          "label": "D",
+          "content": "晶体场理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到的课时12配合物考点的4个部分内容",
+        "提示2：明确每个选项对应的理论是否在视频提及的考点范围内",
+        "提示3：逐一分析每个选项，排除属于考点的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：配位离子题解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习课时12配合物的结构和性质时，老师总结的考点包含以下几个部分，请问以下哪个不属于这些考点？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "价键理论"
+        },
+        {
+          "label": "C",
+          "content": "分子轨道理论"
+        },
+        {
+          "label": "D",
+          "content": "晶体场理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中老师总结的课时12配合物考点的几个部分",
+        "提示2：明确视频里提到的考点具体内容",
+        "提示3：将选项与视频中提到的考点进行逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：配合稳定性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在配合物的学习中，涉及到多个重要知识点。下列关于课时12配合物的考点总结中，哪一项不属于老师总结的四个部分？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "晶体场理论"
+        },
+        {
+          "label": "C",
+          "content": "配合物的空间构型"
+        },
+        {
+          "label": "D",
+          "content": "价键理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中老师总结的课时12配合物的四个考点部分",
+        "提示2：明确每个选项对应的知识点是否在总结范围内",
+        "提示3：逐一对比选项与视频中提及的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：配合物稳定性计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "课时12中老师总结的考点分为4个部分，以下哪个不属于这4个部分？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "配合物的基本概念"
+        },
+        {
+          "label": "B",
+          "content": "晶体场理论"
+        },
+        {
+          "label": "C",
+          "content": "分子轨道理论"
+        },
+        {
+          "label": "D",
+          "content": "价键理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中老师总结的课时12的4个考点部分",
+        "提示2：明确每个选项对应的理论是否在这4个部分中",
+        "提示3：逐一对比选项与视频中提到的考点内容"
+      ]
+    }
+  ],
+  "count": 18
+}

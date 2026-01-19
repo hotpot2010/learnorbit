@@ -1,0 +1,293 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：溶解度与溶度积",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知 $AgCl$ 的溶度积 $K_{sp}(AgCl)=1.8\\times10^{-10}$，在 $0.1mol/L$ 的 $NaCl$ 溶液中，$AgCl$ 的溶解度（$mol/L$）为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.8\\times10^{-9}$"
+        },
+        {
+          "label": "B",
+          "content": "$1.8\\times10^{-10}$"
+        },
+        {
+          "label": "C",
+          "content": "$1.34\\times10^{-5}$"
+        },
+        {
+          "label": "D",
+          "content": "$1.8\\times10^{-11}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：设 $AgCl$ 在 $0.1mol/L$ 的 $NaCl$ 溶液中的溶解度为 $x mol/L$",
+        "提示2：根据 $AgCl$ 的溶解平衡 $AgCl(s) \\rightleftharpoons Ag^+(aq) + Cl^-(aq)$，结合溶液中 $Cl^-$ 的来源计算 $Cl^-$ 的浓度",
+        "提示3：再根据溶度积公式 $K_{sp}(AgCl)=[Ag^+][Cl^-]$ 进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：溶解度计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知 $AgCl$ 的溶度积 $K_{sp}=1.8\\times10^{-10}$，在 $0.1mol/L$ 的 $NaCl$ 溶液中，$AgCl$ 的溶解度为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.8\\times10^{-10}mol/L$"
+        },
+        {
+          "label": "B",
+          "content": "$1.8\\times10^{-9}mol/L$"
+        },
+        {
+          "label": "C",
+          "content": "$1.34\\times10^{-5}mol/L$"
+        },
+        {
+          "label": "D",
+          "content": "$1.34\\times10^{-4}mol/L$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先写出 $AgCl$ 的溶解平衡方程式 $AgCl(s) \\rightleftharpoons Ag^+(aq) + Cl^-(aq)$",
+        "提示2：根据溶度积公式 $K_{sp}=[Ag^+][Cl^-]$ 进行计算",
+        "提示3：注意溶液中 $Cl^-$ 的来源有两部分，$NaCl$ 完全电离产生的和 $AgCl$ 溶解产生的，由于 $AgCl$ 溶解度很小，可忽略其产生的 $Cl^-$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：溶解度比较",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知 $AgCl$ 的溶度积 $K_{sp}(AgCl)=1.8\\times10^{-10}$，$Ag_2CrO_4$ 的溶度积 $K_{sp}(Ag_2CrO_4)=2.0\\times10^{-12}$。在相同温度下，下列说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$AgCl$ 的溶解度大于 $Ag_2CrO_4$ 的溶解度"
+        },
+        {
+          "label": "B",
+          "content": "$AgCl$ 的溶解度小于 $Ag_2CrO_4$ 的溶解度"
+        },
+        {
+          "label": "C",
+          "content": "$AgCl$ 的溶解度等于 $Ag_2CrO_4$ 的溶解度"
+        },
+        {
+          "label": "D",
+          "content": "无法比较 $AgCl$ 和 $Ag_2CrO_4$ 的溶解度大小"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：分别设 $AgCl$ 和 $Ag_2CrO_4$ 的溶解度为 $S_1$ 和 $S_2$",
+        "提示2：根据溶度积的定义分别列出 $K_{sp}(AgCl)$ 和 $K_{sp}(Ag_2CrO_4)$ 与 $S_1$、$S_2$ 的关系",
+        "提示3：计算出 $S_1$ 和 $S_2$ 的值并比较大小"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：影响溶解度因素",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一定温度下，向饱和的氯化钠溶液中加入少量硝酸钾固体，充分搅拌后，下列关于溶液中氯化钠溶解度的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "增大"
+        },
+        {
+          "label": "B",
+          "content": "减小"
+        },
+        {
+          "label": "C",
+          "content": "不变"
+        },
+        {
+          "label": "D",
+          "content": "无法判断"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：溶解度是指在一定温度下，某固态物质在100g溶剂中达到饱和状态时所溶解的质量",
+        "提示2：影响固体物质溶解度的因素主要是温度和溶质、溶剂的性质",
+        "提示3：向饱和氯化钠溶液中加入硝酸钾固体，不影响氯化钠的溶解度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：四种效应讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在沉淀溶解平衡中，已知某难溶电解质 $AB_2$ 的溶度积为 $K_{sp}$，下列哪种因素不会影响其溶解度？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "温度的变化"
+        },
+        {
+          "label": "B",
+          "content": "加入含有 $A^{2+}$ 离子的强电解质"
+        },
+        {
+          "label": "C",
+          "content": "加入不与 $A^{2+}$ 和 $B^-$ 反应的中性盐"
+        },
+        {
+          "label": "D",
+          "content": "溶液的颜色变化"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：根据视频内容，影响溶解度的因素是需要重点考虑的，首先回顾一下影响溶解度的因素有哪些",
+        "提示2：温度会改变难溶电解质的溶解平衡，从而影响溶解度；同离子效应会使溶解度降低；盐效应也会对溶解度有一定影响",
+        "提示3：溶液颜色变化通常与物质的浓度、存在形式等光学性质相关，与沉淀溶解平衡中的溶解度并无直接关联"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：溶解度积规则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知 $AgCl$ 的溶度积 $K_{sp}(AgCl) = 1.8 \\times 10^{-10}$，在 $0.1mol/L$ 的 $NaCl$ 溶液中加入 $AgNO_3$ 固体，当开始产生 $AgCl$ 沉淀时，溶液中 $Ag^+$ 的浓度为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.8 \\times 10^{-9}mol/L$"
+        },
+        {
+          "label": "B",
+          "content": "$1.8 \\times 10^{-10}mol/L$"
+        },
+        {
+          "label": "C",
+          "content": "$1.8 \\times 10^{-11}mol/L$"
+        },
+        {
+          "label": "D",
+          "content": "$1.8 \\times 10^{-8}mol/L$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据溶度积的定义，对于 $AgCl$ 的溶解平衡 $AgCl(s) \\rightleftharpoons Ag^+(aq) + Cl^-(aq)$，溶度积 $K_{sp}(AgCl) = [Ag^+][Cl^-]$",
+        "提示2：已知 $NaCl$ 溶液的浓度为 $0.1mol/L$，则溶液中 $Cl^-$ 的浓度为 $0.1mol/L$",
+        "提示3：将 $K_{sp}(AgCl)$ 和 $[Cl^-]$ 的值代入溶度积公式，求解 $[Ag^+]$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：溶解度计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一定温度下，已知 $AgCl$ 的溶度积 $K_{sp}(AgCl)=1.8 \\times 10^{-10}$，现将 $0.1mol/L$ 的 $NaCl$ 溶液与等体积的 $AgNO_3$ 溶液混合，若要产生 $AgCl$ 沉淀，则 $AgNO_3$ 溶液的浓度至少为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.8 \\times 10^{-10}mol/L$"
+        },
+        {
+          "label": "B",
+          "content": "$1.8 \\times 10^{-9}mol/L$"
+        },
+        {
+          "label": "C",
+          "content": "$1.8 \\times 10^{-8}mol/L$"
+        },
+        {
+          "label": "D",
+          "content": "$1.8 \\times 10^{-7}mol/L$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确产生沉淀的条件是离子积 $Q_{c} \\geq K_{sp}$",
+        "提示2：混合后 $NaCl$ 溶液浓度变为原来的一半，根据 $NaCl$ 浓度求出混合后 $Cl^-$ 的浓度",
+        "提示3：再根据 $K_{sp}(AgCl)=c(Ag^+) \\cdot c(Cl^-)$ 计算 $Ag^+$ 的最低浓度，进而得到 $AgNO_3$ 溶液的最低浓度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：分步沉淀讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知 $K_{sp}(AgCl)=1.8\\times10^{-10}$，$K_{sp}(AgI)=8.5\\times10^{-17}$。在含有等物质的量浓度的 $Cl^-$ 和 $I^-$ 的混合溶液中，逐滴加入 $AgNO_3$ 溶液，下列说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "先生成 $AgCl$ 沉淀"
+        },
+        {
+          "label": "B",
+          "content": "先生成 $AgI$ 沉淀"
+        },
+        {
+          "label": "C",
+          "content": "同时生成 $AgCl$ 和 $AgI$ 沉淀"
+        },
+        {
+          "label": "D",
+          "content": "无法判断先生成哪种沉淀"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据溶度积常数 $K_{sp}$ 的大小判断沉淀的先后顺序",
+        "提示2：溶度积小的物质先达到沉淀溶解平衡，先析出沉淀",
+        "提示3：比较 $AgCl$ 和 $AgI$ 的 $K_{sp}$ 大小"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：分步沉淀问题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在含有 $Cl^-$ 和 $I^-$ 的混合溶液中，已知 $c(Cl^-) = 0.01 mol/L$，$c(I^-) = 0.001 mol/L$。向该溶液中逐滴加入 $AgNO_3$ 溶液，已知 $K_{sp}(AgCl) = 1.8 \\times 10^{-10}$，$K_{sp}(AgI) = 8.3 \\times 10^{-17}$，则下列说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "首先生成 $AgCl$ 沉淀"
+        },
+        {
+          "label": "B",
+          "content": "首先生成 $AgI$ 沉淀"
+        },
+        {
+          "label": "C",
+          "content": "同时生成 $AgCl$ 和 $AgI$ 沉淀"
+        },
+        {
+          "label": "D",
+          "content": "无法判断哪种沉淀先生成"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据溶度积常数 $K_{sp}$ 计算生成 $AgCl$ 和 $AgI$ 沉淀所需的 $Ag^+$ 浓度",
+        "提示2：生成沉淀时，所需 $Ag^+$ 浓度小的先沉淀",
+        "提示3：利用公式 $K_{sp} = c(Ag^+) \\times c(Cl^-)$ 或 $K_{sp} = c(Ag^+) \\times c(I^-)$ 进行计算"
+      ]
+    }
+  ],
+  "count": 9
+}

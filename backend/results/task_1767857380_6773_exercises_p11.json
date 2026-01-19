@@ -1,0 +1,357 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：立体的定义与分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习立体投影时，应该遵循的顺序是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "从复杂到简单，从组合体到基本立体"
+        },
+        {
+          "label": "B",
+          "content": "从简单到复杂，从基本立体到组合体"
+        },
+        {
+          "label": "C",
+          "content": "从简单到复杂，从组合体到基本立体"
+        },
+        {
+          "label": "D",
+          "content": "从复杂到简单，从基本立体到组合体"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回忆视频中关于学习立体投影顺序的描述",
+        "提示2：明确是从简单开始还是从复杂开始学习",
+        "提示3：确定是先学习基本立体还是先学习组合体"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：复杂立体构成",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习立体投影时，应该遵循的顺序是以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "从复杂到简单，从组合体到基本立体"
+        },
+        {
+          "label": "B",
+          "content": "从简单到复杂，从基本立体到组合体"
+        },
+        {
+          "label": "C",
+          "content": "从简单到复杂，从组合体到基本立体"
+        },
+        {
+          "label": "D",
+          "content": "从复杂到简单，从基本立体到组合体"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到了学习立体投影的顺序",
+        "提示2：思考学习通常是从易到难，从基础到综合的过程",
+        "提示3：回顾视频中关于顺序的描述，是从简单还是复杂开始，是先基本立体还是组合体"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面立体投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习立体投影时，应该遵循的顺序是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "从复杂到简单，从组合体到基本立体"
+        },
+        {
+          "label": "B",
+          "content": "从简单到复杂，从基本立体到组合体"
+        },
+        {
+          "label": "C",
+          "content": "从简单到复杂，从组合体到基本立体"
+        },
+        {
+          "label": "D",
+          "content": "从复杂到简单，从基本立体到组合体"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于学习立体投影顺序的描述",
+        "提示2：明确是从简单到复杂还是从复杂到简单",
+        "提示3：确定是先学基本立体还是先学组合体"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：棱柱体投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习立体投影时，应遵循的顺序是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "从复杂到简单，从组合体到基本立体"
+        },
+        {
+          "label": "B",
+          "content": "从简单到复杂，从基本立体到组合体"
+        },
+        {
+          "label": "C",
+          "content": "从简单到复杂，从组合体到基本立体"
+        },
+        {
+          "label": "D",
+          "content": "从复杂到简单，从基本立体到组合体"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于立体投影学习顺序的描述",
+        "提示2：注意是从简单还是复杂开始，以及基本立体和组合体的先后顺序",
+        "提示3：明确学习一般是从基础内容逐步过渡到复杂内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正棱柱放置与投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习立体投影时，遵循从简单到复杂，从基本立体到组合体的顺序。已知一个正三棱柱，当它水平放置时，其在水平面上的投影可能是以下哪种图形？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "三角形"
+        },
+        {
+          "label": "B",
+          "content": "矩形"
+        },
+        {
+          "label": "C",
+          "content": "梯形"
+        },
+        {
+          "label": "D",
+          "content": "圆形"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确正三棱柱的结构特征，它有两个全等的正三角形底面和三个矩形侧面。",
+        "提示2：考虑正三棱柱水平放置时，投影光线垂直照射水平面的情况。",
+        "提示3：分析各个选项，判断哪种图形符合正三棱柱水平放置时在水平面上的投影特征。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：底面投影绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习立体投影时，应遵循的顺序是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "从复杂到简单，从组合体到基本立体"
+        },
+        {
+          "label": "B",
+          "content": "从简单到复杂，从基本立体到组合体"
+        },
+        {
+          "label": "C",
+          "content": "从简单到复杂，从组合体到基本立体"
+        },
+        {
+          "label": "D",
+          "content": "从复杂到简单，从基本立体到组合体"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到的学习立体投影的顺序相关内容",
+        "提示2：明确是从简单到复杂，还是从复杂到简单",
+        "提示3：确定是先学习基本立体还是组合体"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：侧面投影绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习立体投影时，应该遵循的顺序是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "从复杂到简单，从组合体到基本立体"
+        },
+        {
+          "label": "B",
+          "content": "从简单到复杂，从组合体到基本立体"
+        },
+        {
+          "label": "C",
+          "content": "从简单到复杂，从基本立体到组合体"
+        },
+        {
+          "label": "D",
+          "content": "从复杂到简单，从基本立体到组合体"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到的学习立体投影的顺序相关内容",
+        "提示2：明确是从简单到复杂，还是从复杂到简单",
+        "提示3：确定是先学习基本立体还是先学习组合体"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正六棱柱投影绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程图样中，我们表达的对象一般是空间立体，学习立体投影应遵循一定顺序。以下哪个顺序是正确学习立体投影的顺序？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "从复杂到简单，从组合体到基本立体"
+        },
+        {
+          "label": "B",
+          "content": "从简单到复杂，从基本立体到组合体"
+        },
+        {
+          "label": "C",
+          "content": "从简单到复杂，从组合体到基本立体"
+        },
+        {
+          "label": "D",
+          "content": "从复杂到简单，从基本立体到组合体"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的学习立体投影的顺序相关内容",
+        "提示2：注意是从易到难的学习过程",
+        "提示3：判断是先学基本立体还是组合体"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投影可见性分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在掌握立体投影的学习过程中，应遵循的顺序是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "从复杂到简单，从组合体到基本立体"
+        },
+        {
+          "label": "B",
+          "content": "从简单到复杂，从基本立体到组合体"
+        },
+        {
+          "label": "C",
+          "content": "从组合体到基本立体，从简单到复杂"
+        },
+        {
+          "label": "D",
+          "content": "从基本立体到组合体，从复杂到简单"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于立体投影学习顺序的描述",
+        "提示2：明确是从简单到复杂，还是从复杂到简单",
+        "提示3：判断是先学习基本立体还是组合体"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：空间点投影求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习立体投影时，其学习顺序是从简单到复杂，从基本立体到组合体。若已知一个基本立体是正方体，它在某一投影面的投影可能是以下哪种图形？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "三角形"
+        },
+        {
+          "label": "B",
+          "content": "五边形"
+        },
+        {
+          "label": "C",
+          "content": "正方形"
+        },
+        {
+          "label": "D",
+          "content": "七边形"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：思考正方体的特征和投影的原理",
+        "提示2：分析正方体不同角度投影可能得到的图形",
+        "提示3：正方体投影一般会得到正方形、矩形等规则图形"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：空间点绘图法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习立体投影时，应该遵循的顺序是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "从复杂到简单，从组合体到基本立体"
+        },
+        {
+          "label": "B",
+          "content": "从简单到复杂，从基本立体到组合体"
+        },
+        {
+          "label": "C",
+          "content": "从简单到复杂，从组合体到基本立体"
+        },
+        {
+          "label": "D",
+          "content": "从复杂到简单，从基本立体到组合体"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到了学习立体投影的顺序规律",
+        "提示2：思考是从简单开始还是从复杂开始，以及先学基本立体还是组合体",
+        "提示3：回顾视频中关于学习顺序的描述进行判断"
+      ]
+    }
+  ],
+  "count": 11
+}

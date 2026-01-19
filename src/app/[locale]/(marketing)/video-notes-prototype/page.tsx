@@ -52,6 +52,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { NoteEditor } from '@/components/learning/tiptap/note-editor';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { trackKeyActionSafely } from '@/lib/key-actions-analytics';
+import TCPlayer, { TCPlayerInstance } from '@/components/video/tcplayer';
 
 // QA对类型定义
 interface QAPair {
@@ -792,8 +793,14 @@ export default function VideoNotesPrototypePage() {
   // 🔧 修复：标志位，用于在加载分P时禁用自动同步
   const isLoadingPartRef = useRef(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const youtubePlayerRef = useRef<any>(null); // YouTube Player API实例
+  const tcPlayerRef = useRef<TCPlayerInstance | null>(null); // TCPlayer 实例
+  const youtubePlayerRef = useRef<any>(null); // YouTube Player API实例（保留用于兼容）
   const youtubeVideoIdRef = useRef<string>(''); // 当前YouTube视频ID（用于截图）
+  
+  // VOD 相关状态
+  const [vodFileId, setVodFileId] = useState<string | null>(null);
+  const [vodAppId, setVodAppId] = useState<number | undefined>(1500025971);
+  
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [currentTime, setCurrentTime] = useState(0);
   const [currentKnowledgeIndex, setCurrentKnowledgeIndex] = useState(0);
@@ -1605,21 +1612,52 @@ export default function VideoNotesPrototypePage() {
       if (isProcessedVideoRef.current && processedTaskDataRef.current) {
         console.log(`✅ 从已处理数据中加载第 ${partIndex + 1} P`);
         
-        // 获取视频URL（优先使用转码后的视频）
-        const transcodedUrls = processedTaskDataRef.current.transcoded_video_url;
-        const videoUrls = transcodedUrls || processedTaskDataRef.current.video_url;
-        const isTranscoded = !!transcodedUrls;
+        // 🔥 优先检查 VOD 播放 URL
+        const vodPlayUrls = processedTaskDataRef.current.vod_play_url;
+        const vodFileIds = processedTaskDataRef.current.vod_file_id;
         
-        if (videoUrls) {
-          const videoUrlArray = typeof videoUrls === 'string' 
-            ? (videoUrls.startsWith('[') ? JSON.parse(videoUrls) : [videoUrls])
-            : videoUrls;
-          const videoUrl = Array.isArray(videoUrlArray) ? videoUrlArray[partIndex] : videoUrlArray;
-          if (videoUrl) {
-            // 确保使用 HTTPS
-            const secureVideoUrl = ensureHttps(videoUrl) as string;
-            setCdnVideoUrl(secureVideoUrl);
-            console.log(`✅ 设置视频URL (P${partIndex + 1}, ${isTranscoded ? '转码后' : '原始'}):`, secureVideoUrl);
+        if (vodPlayUrls && vodFileIds) {
+          // 解析 VOD 数据（可能是数组或字符串）
+          const vodPlayUrlArray = typeof vodPlayUrls === 'string' 
+            ? (vodPlayUrls.startsWith('[') ? JSON.parse(vodPlayUrls) : [vodPlayUrls])
+            : vodPlayUrls;
+          const vodFileIdArray = typeof vodFileIds === 'string'
+            ? (vodFileIds.startsWith('[') ? JSON.parse(vodFileIds) : [vodFileIds])
+            : vodFileIds;
+          
+          const vodPlayUrl = Array.isArray(vodPlayUrlArray) ? vodPlayUrlArray[partIndex] : vodPlayUrlArray;
+          const vodFileId = Array.isArray(vodFileIdArray) ? vodFileIdArray[partIndex] : vodFileIdArray;
+          
+          if (vodFileId && vodPlayUrl) {
+            console.log(`🎬 [VOD] 找到 VOD 播放 URL (P${partIndex + 1})`);
+            console.log(`🎬 [VOD] FileId:`, vodFileId);
+            console.log(`🎬 [VOD] Play URL:`, vodPlayUrl.substring(0, 150) + '...');
+            setVodFileId(vodFileId);
+            setCdnVideoUrl(''); // 清空普通 URL，优先使用 VOD
+            console.log(`✅ [VOD] 已设置 VOD FileId，将使用 TCPlayer VOD 模式播放`);
+            // 注意：vod_play_url 是带签名的完整 URL，但 TCPlayer VOD 模式只需要 fileId + psign
+            // 所以这里只设置 fileId，TCPlayer 会自动获取 psign
+          }
+        }
+        
+        // 如果没有 VOD，使用转码后的视频或原始视频
+        if (!vodFileIds || !vodPlayUrls) {
+          const transcodedUrls = processedTaskDataRef.current.transcoded_video_url;
+          const videoUrls = transcodedUrls || processedTaskDataRef.current.video_url;
+          const isTranscoded = !!transcodedUrls;
+          
+          if (videoUrls) {
+            const videoUrlArray = typeof videoUrls === 'string' 
+              ? (videoUrls.startsWith('[') ? JSON.parse(videoUrls) : [videoUrls])
+              : videoUrls;
+            const videoUrl = Array.isArray(videoUrlArray) ? videoUrlArray[partIndex] : videoUrlArray;
+            if (videoUrl) {
+              // 确保使用 HTTPS
+              const secureVideoUrl = ensureHttps(videoUrl) as string;
+              setCdnVideoUrl(secureVideoUrl);
+              setVodFileId(null); // 清空 VOD FileId
+              console.log(`✅ [普通URL] 设置视频URL (P${partIndex + 1}, ${isTranscoded ? '转码后' : '原始'}):`, secureVideoUrl);
+            }
           }
         }
         
@@ -2324,50 +2362,74 @@ export default function VideoNotesPrototypePage() {
   const handleTimeJump = (time: string) => {
     const seconds = timeToSeconds(time);
     
-    if (isYouTubeVideo()) {
-      // YouTube iframe播放器：使用YouTube API跳转
-      if (youtubePlayerRef.current) {
-        try {
-          youtubePlayerRef.current.seekTo(seconds, true);
-          youtubePlayerRef.current.playVideo();
-          setIsPlaying(true);
-          console.log('🎯 YouTube跳转到时间:', time, '(', seconds, '秒)');
-        } catch (error) {
-          console.error('❌ YouTube跳转失败:', error);
-        }
-      } else {
-        console.warn('⚠️ YouTube播放器未初始化，无法跳转时间');
+    // 优先使用 TCPlayer
+    if (tcPlayerRef.current) {
+      try {
+        tcPlayerRef.current.seek(seconds);
+        tcPlayerRef.current.play();
+        setIsPlaying(true);
+        console.log('🎯 TCPlayer跳转到时间:', time, '(', seconds, '秒)');
+        return;
+      } catch (error) {
+        console.error('❌ TCPlayer跳转失败:', error);
       }
-      return;
     }
     
+    // 兼容 YouTube
+    if (isYouTubeVideo() && youtubePlayerRef.current) {
+      try {
+        youtubePlayerRef.current.seekTo(seconds, true);
+        youtubePlayerRef.current.playVideo();
+        setIsPlaying(true);
+        console.log('🎯 YouTube跳转到时间:', time, '(', seconds, '秒)');
+        return;
+      } catch (error) {
+        console.error('❌ YouTube跳转失败:', error);
+      }
+    }
+    
+    // 兼容原生 video
     if (videoRef.current) {
       videoRef.current.currentTime = seconds;
       videoRef.current.play();
       setIsPlaying(true);
-      console.log('🎯 跳转到时间:', time, '(', seconds, '秒)');
+      console.log('🎯 原生video跳转到时间:', time, '(', seconds, '秒)');
     }
   };
   
   // 切换播放/暂停
   const togglePlay = () => {
-    if (isYouTubeVideo()) {
-      // YouTube iframe播放器：使用YouTube API控制播放
-      if (youtubePlayerRef.current) {
-        try {
-          if (isPlaying) {
-            youtubePlayerRef.current.pauseVideo();
-          } else {
-            youtubePlayerRef.current.playVideo();
-          }
-          setIsPlaying(!isPlaying);
-        } catch (error) {
-          console.error('❌ YouTube播放控制失败:', error);
+    // 优先使用 TCPlayer
+    if (tcPlayerRef.current) {
+      try {
+        if (isPlaying) {
+          tcPlayerRef.current.pause();
+        } else {
+          tcPlayerRef.current.play();
         }
+        setIsPlaying(!isPlaying);
+        return;
+      } catch (error) {
+        console.error('❌ TCPlayer播放控制失败:', error);
       }
-      return;
     }
     
+    // 兼容 YouTube
+    if (isYouTubeVideo() && youtubePlayerRef.current) {
+      try {
+        if (isPlaying) {
+          youtubePlayerRef.current.pauseVideo();
+        } else {
+          youtubePlayerRef.current.playVideo();
+        }
+        setIsPlaying(!isPlaying);
+        return;
+      } catch (error) {
+        console.error('❌ YouTube播放控制失败:', error);
+      }
+    }
+    
+    // 兼容原生 video
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
@@ -2380,24 +2442,35 @@ export default function VideoNotesPrototypePage() {
   
   // 改变播放速度
   const changePlaybackRate = (rate: number) => {
-    if (isYouTubeVideo()) {
-      // YouTube iframe播放器：使用YouTube API设置播放速度
-      if (youtubePlayerRef.current) {
-        try {
-          youtubePlayerRef.current.setPlaybackRate(rate);
-          setPlaybackRate(rate);
-          console.log('⚡ YouTube播放速度:', rate + 'x');
-        } catch (error) {
-          console.error('❌ YouTube播放速度设置失败:', error);
-        }
+    // 优先使用 TCPlayer
+    if (tcPlayerRef.current) {
+      try {
+        tcPlayerRef.current.setPlaybackRate(rate);
+        setPlaybackRate(rate);
+        console.log('⚡ TCPlayer播放速度:', rate + 'x');
+        return;
+      } catch (error) {
+        console.error('❌ TCPlayer播放速度设置失败:', error);
       }
-      return;
     }
     
+    // 兼容 YouTube
+    if (isYouTubeVideo() && youtubePlayerRef.current) {
+      try {
+        youtubePlayerRef.current.setPlaybackRate(rate);
+        setPlaybackRate(rate);
+        console.log('⚡ YouTube播放速度:', rate + 'x');
+        return;
+      } catch (error) {
+        console.error('❌ YouTube播放速度设置失败:', error);
+      }
+    }
+    
+    // 兼容原生 video
     if (videoRef.current) {
       videoRef.current.playbackRate = rate;
       setPlaybackRate(rate);
-      console.log('⚡ 播放速度:', rate + 'x');
+      console.log('⚡ 原生video播放速度:', rate + 'x');
     }
   };
   
@@ -2847,14 +2920,26 @@ export default function VideoNotesPrototypePage() {
       return '';
     }
     
-    if (!videoRef.current) {
-      console.log('⚠️ Video ref not available');
+    // 优先从 TCPlayer 获取 video 元素
+    let videoElement: HTMLVideoElement | null = null;
+    
+    if (tcPlayerRef.current) {
+      videoElement = tcPlayerRef.current.getVideoElement();
+    }
+    
+    // 兼容原生 video
+    if (!videoElement && videoRef.current) {
+      videoElement = videoRef.current;
+    }
+    
+    if (!videoElement) {
+      console.log('⚠️ Video element not available');
       return '';
     }
     
     try {
       const canvas = document.createElement('canvas');
-      const video = videoRef.current;
+      const video = videoElement;
       
       // 设置canvas大小为视频大小
       canvas.width = video.videoWidth || 640;
@@ -5483,61 +5568,62 @@ export default function VideoNotesPrototypePage() {
                   </p>
                 </div>
               </div>
-            ) : cdnVideoUrl ? (
+            ) : (vodFileId || cdnVideoUrl) ? (
               <div className="relative aspect-video bg-black">
-                {/* 检测是否为YouTube视频 */}
+                {/* 统一使用 TCPlayer */}
                 {(() => {
-                  const isYouTube = cdnVideoUrl.includes('youtube.com') || cdnVideoUrl.includes('youtu.be');
-                  const isEnglish = locale === 'en';
-                  
-                  // 英文模式且为YouTube视频：使用YouTube Player API
-                  if (isYouTube && isEnglish) {
-                    // 提取YouTube视频ID
-                    const videoIdMatch = cdnVideoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
-                    const videoId = videoIdMatch ? videoIdMatch[1] : '';
-                    
-                    if (videoId) {
-                      return (
-                        <div 
-                          id="youtube-player" 
-                          className="w-full h-full"
-                          style={{ minHeight: '400px' }}
-                        />
-                      );
-                    }
+                  // 优先使用 VOD 模式
+                  if (vodFileId) {
+                    console.log('🎬 [渲染] 渲染 TCPlayer VOD 模式，FileId:', vodFileId);
+                    return (
+                      <TCPlayer
+                        ref={tcPlayerRef}
+                        containerId={`tcplayer-${Date.now()}`}
+                        fileId={vodFileId}
+                        appId={vodAppId}
+                        onTimeUpdate={handleTimeUpdate}
+                        onPlay={() => setIsPlaying(true)}
+                        onPause={() => setIsPlaying(false)}
+                        onEnded={handleVideoEnded}
+                        onError={(error) => {
+                          console.error('TCPlayer 播放出错:', error);
+                        }}
+                        onReady={() => {
+                          console.log('✅ TCPlayer 准备就绪');
+                        }}
+                        controls={true}
+                        playbackRate={playbackRate}
+                        licenseUrl={process.env.NEXT_PUBLIC_VOD_LICENSE_URL}
+                        licenseKey={process.env.NEXT_PUBLIC_VOD_LICENSE_KEY}
+                      />
+                    );
                   }
                   
-                  // B站视频或中文模式：使用HTML5 video标签
-                  return (
-                    <div className="relative w-full h-full group">
-                    <video
-                      ref={videoRef}
-                      src={cdnVideoUrl}
-                        className="w-full h-full bg-black"
-                      controls
-                        playsInline
-                        webkit-playsinline="true"
-                        x5-playsinline="true"
-                        x5-video-player-type="h5-page"
-                      crossOrigin="anonymous"
-                      onPlay={() => setIsPlaying(true)}
-                      onPause={() => setIsPlaying(false)}
-                      onEnded={handleVideoEnded}
-                      onTimeUpdate={handleTimeUpdate}
-                        onError={(e) => {
-                          console.error('播放出错:', e);
-                          const error = (e.target as HTMLVideoElement).error;
-                          if (error && error.code === 4) {
-                            // 格式不支持
-                            console.warn('视频格式不支持');
-                          }
+                  // 如果没有 VOD，使用普通 URL
+                  if (cdnVideoUrl && cdnVideoUrl.trim()) {
+                    console.log('🎬 [渲染] 渲染 TCPlayer 普通 URL 模式，URL:', cdnVideoUrl.substring(0, 100) + '...');
+                    return (
+                      <TCPlayer
+                        ref={tcPlayerRef}
+                        containerId={`tcplayer-${Date.now()}`}
+                        url={cdnVideoUrl}
+                        onTimeUpdate={handleTimeUpdate}
+                        onPlay={() => setIsPlaying(true)}
+                        onPause={() => setIsPlaying(false)}
+                        onEnded={handleVideoEnded}
+                        onError={(error) => {
+                          console.error('TCPlayer 播放出错:', error);
                         }}
-                    >
-                      您的浏览器不支持 video 标签。
-                    </video>
-                      <VideoCompatibilityChecker videoRef={videoRef} />
-                    </div>
-                  );
+                        onReady={() => {
+                          console.log('✅ TCPlayer 准备就绪');
+                        }}
+                        controls={true}
+                        playbackRate={playbackRate}
+                      />
+                    );
+                  }
+                  
+                  return null;
                 })()}
                 
                 {/* 自定义播放速度控制 */}

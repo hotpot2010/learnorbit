@@ -1,0 +1,229 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖面图概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，若要表示一个零件特定部位的内部结构，通过假想一个剖切平面将零件的某一处切断，然后仅画出切断面的图形，这个图形被称为什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "剖面图"
+        },
+        {
+          "label": "B",
+          "content": "剖视图"
+        },
+        {
+          "label": "C",
+          "content": "平面图"
+        },
+        {
+          "label": "D",
+          "content": "立体图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对剖面图概念的定义",
+        "提示2：注意题目中强调的是仅画出切断面的图形",
+        "提示3：对比各选项与剖面图概念的契合度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖面图与剖视图区别",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "假设我们对一个机械部件进行假想剖切，使用剖切平面将其某处截断，如果只画出截断处的图形，这个图形被称为（  ）。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "剖视图"
+        },
+        {
+          "label": "B",
+          "content": "剖面图"
+        },
+        {
+          "label": "C",
+          "content": "零件图"
+        },
+        {
+          "label": "D",
+          "content": "装配图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中对不同图形概念的描述",
+        "提示2：关注只画出截断处图形这一关键信息",
+        "提示3：明确剖面图和剖视图的区别在于是否仅画截断处图形"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖面图分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "假设我们要表示一个机件的某个部位，若假想使用剖切平面把机件的某处切断，只画出断面的图形，这个图形被称为什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "剖视图"
+        },
+        {
+          "label": "B",
+          "content": "断面图"
+        },
+        {
+          "label": "C",
+          "content": "视图"
+        },
+        {
+          "label": "D",
+          "content": "立体图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中对不同图形概念的描述",
+        "提示2：明确题目中所描述的操作和图形特征，即假想剖切、只画断面图形",
+        "提示3：对比各选项与视频中概念的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：移出剖面图详解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "假设用剖切平面将机件的某处切断，仅画出断面的图形，这个图形被称为什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "剖视图"
+        },
+        {
+          "label": "B",
+          "content": "断面图"
+        },
+        {
+          "label": "C",
+          "content": "视图"
+        },
+        {
+          "label": "D",
+          "content": "立体图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对机件图形表示方法的讲解",
+        "提示2：重点关注用剖切平面切断机件后仅画断面图形的定义",
+        "提示3：对比各选项与视频中定义的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖面图标注规则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "假设要对一个机械零件进行表示，想象用剖切平面将零件的某处切断，仅画出断面的图形，这个图形被称为什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "剖视图"
+        },
+        {
+          "label": "B",
+          "content": "断面图"
+        },
+        {
+          "label": "C",
+          "content": "零件图"
+        },
+        {
+          "label": "D",
+          "content": "装配图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频中提到的概念，想象用剖切平面切断零件后只画断面图形的定义来判断",
+        "提示2：回顾视频中对不同图形概念的讲解，注意区分剖视图和断面图",
+        "提示3：剖视图和断面图的主要区别在于是否仅画断面图形"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截面标注省略",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "假设用剖切平面把机件的某处截断，仅画出截断处的图形，这个图形被称为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "剖视图"
+        },
+        {
+          "label": "B",
+          "content": "截面图"
+        },
+        {
+          "label": "C",
+          "content": "视图"
+        },
+        {
+          "label": "D",
+          "content": "立体图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对不同图形概念的讲解",
+        "提示2：注意题目中描述的是仅画出截断处的图形",
+        "提示3：明确各个选项所代表图形的定义与题目描述进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：重合截面图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "假设用剖切平面把机件的某处切断，仅画出断面的图形，这个图形被称为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "视图"
+        },
+        {
+          "label": "B",
+          "content": "剖视图"
+        },
+        {
+          "label": "C",
+          "content": "断面图"
+        },
+        {
+          "label": "D",
+          "content": "透视图"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对该图形的定义描述",
+        "提示2：明确各选项所代表图形的特点",
+        "提示3：根据“仅画出断面的图形”这一关键信息来判断"
+      ]
+    }
+  ],
+  "count": 7
+}

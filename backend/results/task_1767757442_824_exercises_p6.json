@@ -1,0 +1,869 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：压力调节",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的，且与哪种考试后的压力相关？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "学习方法，中考"
+        },
+        {
+          "label": "B",
+          "content": "压力调节，高考"
+        },
+        {
+          "label": "C",
+          "content": "兴趣培养，小升初考试"
+        },
+        {
+          "label": "D",
+          "content": "时间管理，期末考"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到班主任发朋友圈的核心内容",
+        "提示2：明确视频中指出与哪种考试之后的压力有关",
+        "提示3：将各选项与视频内容进行逐一比对"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：脂质概述",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "学习方法分享"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "假期安排"
+        },
+        {
+          "label": "D",
+          "content": "兴趣爱好展示"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任朋友圈内容的描述",
+        "提示2：视频中有明确指出朋友圈的主题",
+        "提示3：在视频开始部分查找相关信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：脂肪代谢",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "学习方法分享"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "高考志愿填报"
+        },
+        {
+          "label": "D",
+          "content": "课外活动安排"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任朋友圈的描述",
+        "提示2：关注视频中明确提到的朋友圈相关主题",
+        "提示3：对比各选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：甘油分解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的心情分享"
+        },
+        {
+          "label": "B",
+          "content": "压力调节相关"
+        },
+        {
+          "label": "C",
+          "content": "工作日常记录"
+        },
+        {
+          "label": "D",
+          "content": "兴趣爱好展示"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回忆视频中关于班主任朋友圈内容的描述",
+        "提示2：关注视频中提到的关键信息，如压力等",
+        "提示3：对比各个选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：脂肪酸活化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的假期安排"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "教学方法分享"
+        },
+        {
+          "label": "D",
+          "content": "班级活动通知"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任朋友圈的描述",
+        "提示2：注意视频中明确提到的朋友圈主题",
+        "提示3：在选项中寻找与视频描述相符的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：β-氧化过程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈的原因是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "分享生活趣事"
+        },
+        {
+          "label": "B",
+          "content": "进行压力调节相关内容的分享，因今年是高考，高考后压力较大"
+        },
+        {
+          "label": "C",
+          "content": "宣传班级活动"
+        },
+        {
+          "label": "D",
+          "content": "展示个人才艺"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：关注视频中提到的发朋友圈的相关背景信息",
+        "提示2：明确提到了和高考以及压力有关的内容",
+        "提示3：结合具体语句判断正确选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：脂肪酸氧化循环",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的学习计划"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "班级活动安排"
+        },
+        {
+          "label": "D",
+          "content": "兴趣爱好分享"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中对班主任朋友圈内容的描述",
+        "提示2：注意提到的关键信息与哪个选项相关",
+        "提示3：在视频中寻找与选项对应的具体表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：脂肪酸合成",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈关于什么的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的学习计划"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "高考志愿填报"
+        },
+        {
+          "label": "D",
+          "content": "班级活动安排"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：在视频中留意班主任发朋友圈的核心话题",
+        "提示2：重点关注与高考后相关的一个关键方面",
+        "提示3：回忆视频里明确提到的朋友圈主题内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：乙酰辅酶来源",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈的内容主要是关于什么的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的压力调节"
+        },
+        {
+          "label": "B",
+          "content": "教学经验分享"
+        },
+        {
+          "label": "C",
+          "content": "班级活动安排"
+        },
+        {
+          "label": "D",
+          "content": "学科知识讲解"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任朋友圈内容的描述",
+        "提示2：明确提到了与高考和压力相关的信息",
+        "提示3：判断每个选项是否符合视频中描述的朋友圈主题"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：脂肪酸合成",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈的主要原因是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "分享生活趣事"
+        },
+        {
+          "label": "B",
+          "content": "进行压力调节相关内容的分享"
+        },
+        {
+          "label": "C",
+          "content": "宣传班级活动"
+        },
+        {
+          "label": "D",
+          "content": "记录工作日常"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任发朋友圈的描述",
+        "提示2：关注提到的朋友圈内容的关键信息",
+        "提示3：明确视频中指出的发朋友圈的核心原因"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：脂肪酸合成题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的学习计划"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "高考的复习资料分享"
+        },
+        {
+          "label": "D",
+          "content": "班级活动安排"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任朋友圈内容的描述",
+        "提示2：注意其中提到的关键信息，和压力相关的内容",
+        "提示3：在视频中找到明确说明朋友圈主题的语句来确定答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：不饱和脂肪酸",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈的主要原因与以下哪个因素最相关？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "日常分享生活琐事"
+        },
+        {
+          "label": "B",
+          "content": "因高考后学生压力大进行心理疏导相关内容的分享"
+        },
+        {
+          "label": "C",
+          "content": "单纯展示个人兴趣爱好"
+        },
+        {
+          "label": "D",
+          "content": "宣传班级活动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任发朋友圈原因的相关描述",
+        "提示2：关注视频中提到的‘高考’和‘压力调节’等关键信息",
+        "提示3：从关键信息入手，分析各选项与视频内容的关联性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：选导师建议",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈的主要原因是什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "分享日常趣事"
+        },
+        {
+          "label": "B",
+          "content": "进行压力调节相关内容的分享"
+        },
+        {
+          "label": "C",
+          "content": "宣传班级活动"
+        },
+        {
+          "label": "D",
+          "content": "推荐学习资料"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任发朋友圈的描述",
+        "提示2：重点关注提到的朋友圈内容相关信息",
+        "提示3：视频中明确指出了朋友圈的主题"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：脂蛋白讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的学习计划"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "班级活动安排"
+        },
+        {
+          "label": "D",
+          "content": "学习方法分享"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任朋友圈内容的描述",
+        "提示2：注意提到的关键信息与选项进行匹配",
+        "提示3：视频中有明确指出朋友圈的主题"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：血脂蛋白知识",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的活动安排"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "教学方法分享"
+        },
+        {
+          "label": "D",
+          "content": "班级活动组织"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中明确提到班主任朋友圈的主题相关表述",
+        "提示2：在视频开头部分寻找关键信息",
+        "提示3：回忆关于朋友圈内容的具体描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：酮体和胆固醇",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈的主要原因与以下哪项相关？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "分享教学经验"
+        },
+        {
+          "label": "B",
+          "content": "进行压力调节相关内容的分享"
+        },
+        {
+          "label": "C",
+          "content": "宣传学校活动"
+        },
+        {
+          "label": "D",
+          "content": "推荐学习资料"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任发朋友圈的描述",
+        "提示2：关注视频中提到的发朋友圈的主题相关内容",
+        "提示3：视频明确指出了发朋友圈是关于某方面的内容，根据该内容进行选择"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：乙酰乙酰硫激酶",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的学习计划"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "班级活动安排"
+        },
+        {
+          "label": "D",
+          "content": "假期生活分享"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任朋友圈内容的描述",
+        "提示2：注意提到的关键信息与选项进行匹配",
+        "提示3：视频中明确指出了朋友圈的主题"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：乙酰辅酶A去向",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "工作安排"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "学习方法分享"
+        },
+        {
+          "label": "D",
+          "content": "娱乐活动通知"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任朋友圈内容的描述",
+        "提示2：明确提到了朋友圈是和某方面调节相关",
+        "提示3：结合当前背景是高考后压力大来思考"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：酮体与胆固醇合成",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈的原因是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "分享日常趣事"
+        },
+        {
+          "label": "B",
+          "content": "关于压力调节，因今年是高考，高考后压力较大"
+        },
+        {
+          "label": "C",
+          "content": "宣传班级活动"
+        },
+        {
+          "label": "D",
+          "content": "推荐学习资料"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任发朋友圈的相关描述",
+        "提示2：关注提到的发朋友圈的背景和原因",
+        "提示3：从高考和压力调节这些关键词入手"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：生化真题讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的饮食建议"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "高考志愿填报"
+        },
+        {
+          "label": "D",
+          "content": "学习方法分享"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任朋友圈内容的描述",
+        "提示2：明确提到了朋友圈内容和某一特定方面相关",
+        "提示3：在视频开头部分寻找关键信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：胆固醇合成调节",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的压力调节"
+        },
+        {
+          "label": "B",
+          "content": "学习方法分享"
+        },
+        {
+          "label": "C",
+          "content": "校园活动介绍"
+        },
+        {
+          "label": "D",
+          "content": "假期安排建议"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到班主任朋友圈的相关描述",
+        "提示2：关注与事件背景和主题相关的信息",
+        "提示3：明确提到了高考和压力调节的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：高考压力与内容记录",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈的主要原因和附带内容分别是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "分享生活趣事，附带一篇优美散文"
+        },
+        {
+          "label": "B",
+          "content": "关于压力调节，附带自己的随笔"
+        },
+        {
+          "label": "C",
+          "content": "庆祝高考结束，附带旅游照片"
+        },
+        {
+          "label": "D",
+          "content": "宣传学习资料，附带资料介绍"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任发朋友圈的描述，明确其主要提及的内容",
+        "提示2：关注提到的朋友圈主题和附带的额外内容",
+        "提示3：将每个选项与视频内容进行逐一比对"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：胆固醇酯",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的压力调节"
+        },
+        {
+          "label": "B",
+          "content": "高考的复习计划"
+        },
+        {
+          "label": "C",
+          "content": "班级的活动安排"
+        },
+        {
+          "label": "D",
+          "content": "学习方法的分享"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任朋友圈内容的描述",
+        "提示2：明确提到了与高考后相关的内容",
+        "提示3：重点关注压力调节这一关键信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：磷脂代谢",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的学习计划"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "高考志愿填报"
+        },
+        {
+          "label": "D",
+          "content": "假期活动安排"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任朋友圈内容的描述",
+        "提示2：注意视频中提到的关键信息与选项的匹配",
+        "提示3：重点关注和压力相关的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：磷脂合成途径",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈的内容主要是关于什么的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考备考经验分享"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "教学方法探讨"
+        },
+        {
+          "label": "D",
+          "content": "校园生活趣事"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任朋友圈内容的描述",
+        "提示2：关注视频中明确提到的朋友圈主题相关表述",
+        "提示3：在视频中找到与各选项对应的关键信息进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：甘油磷脂分解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈是关于什么内容的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高考后的学习计划"
+        },
+        {
+          "label": "B",
+          "content": "压力调节"
+        },
+        {
+          "label": "C",
+          "content": "班级活动安排"
+        },
+        {
+          "label": "D",
+          "content": "课外辅导推荐"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到班主任发朋友圈的相关描述",
+        "提示2：明确视频中提及的朋友圈具体内容方向",
+        "提示3：根据视频信息对每个选项进行判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：鞘磷脂合成",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到班主任发朋友圈的主要原因是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "分享日常趣事"
+        },
+        {
+          "label": "B",
+          "content": "进行压力调节相关内容的分享，因今年是高考，高考后压力较大"
+        },
+        {
+          "label": "C",
+          "content": "展示自己的文笔"
+        },
+        {
+          "label": "D",
+          "content": "宣传班级活动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于班主任发朋友圈的描述",
+        "提示2：注意提到的与今年高考和压力相关的内容",
+        "提示3：结合关键语句判断正确选项"
+      ]
+    }
+  ],
+  "count": 27
+}

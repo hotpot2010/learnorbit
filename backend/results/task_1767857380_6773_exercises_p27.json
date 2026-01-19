@@ -1,0 +1,101 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：形状对相贯线影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "影响两回转体相贯线形状、样式以及分布位置的主要因素不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "两回转体的形状"
+        },
+        {
+          "label": "B",
+          "content": "两回转体的颜色"
+        },
+        {
+          "label": "C",
+          "content": "两回转体的大小"
+        },
+        {
+          "label": "D",
+          "content": "两回转体的相互位置"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的影响相贯线形状的因素有哪些",
+        "提示2：明确视频里指出主要的影响因素是从回转体的几何特征方面考虑",
+        "提示3：判断选项中哪个不属于几何特征方面的因素"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：大小对相贯线影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "影响两回转体相贯线形状的主要因素不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "两回转体的形状"
+        },
+        {
+          "label": "B",
+          "content": "两回转体的大小"
+        },
+        {
+          "label": "C",
+          "content": "两回转体的颜色"
+        },
+        {
+          "label": "D",
+          "content": "两回转体的相互位置"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到的影响相贯线形状的主要因素有哪些",
+        "提示2：视频中明确指出影响相贯线形状的因素包括形状、大小和相互位置",
+        "提示3：逐一分析每个选项，看哪个不在视频所提及的因素范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：位置对相贯线影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "影响相贯线形状的主要因素不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "两个回转体的形状"
+        },
+        {
+          "label": "B",
+          "content": "两个回转体的大小"
+        },
+        {
+          "label": "C",
+          "content": "两个回转体的表面粗糙度"
+        },
+        {
+          "label": "D",
+          "content": "两个回转体的相互位置"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到的影响相贯线形状的主要因素有哪些",
+        "提示2：视频明确指出影响相贯线形状的因素有形状、大小和相互位置",
+        "提示3：逐一分析每个选项是否属于视频中提到的影响因素"
+      ]
+    }
+  ],
+  "count": 3
+}

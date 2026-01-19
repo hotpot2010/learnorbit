@@ -1,0 +1,197 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：按键工作原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要讲解的单片机原理及接口技术中，重点涉及的按键工作原理类型不包括以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "独立式"
+        },
+        {
+          "label": "B",
+          "content": "行列式"
+        },
+        {
+          "label": "C",
+          "content": "矩阵式扫描键盘式"
+        },
+        {
+          "label": "D",
+          "content": "触摸感应式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的本次课程重点讲解的按键工作原理类型",
+        "提示2：明确视频中指出的包含的几种类型",
+        "提示3：对比选项，找出不属于视频讲解范围内的类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：按键消抖方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要讲解的是哪种键盘的工作原理？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "独立式和行列式（矩阵式扫描键盘）"
+        },
+        {
+          "label": "B",
+          "content": "触摸式键盘"
+        },
+        {
+          "label": "C",
+          "content": "薄膜式键盘"
+        },
+        {
+          "label": "D",
+          "content": "机械键盘"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的重点讲解内容",
+        "提示2：视频明确指出了讲解的键盘类型",
+        "提示3：关注视频中关于键盘工作原理讲解的相关语句"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：键盘结构类型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程重点讲解的键盘工作原理涉及以下哪种结构类型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "独立式和行列式"
+        },
+        {
+          "label": "B",
+          "content": "矩阵式和薄膜式"
+        },
+        {
+          "label": "C",
+          "content": "机械轴式和电容式"
+        },
+        {
+          "label": "D",
+          "content": "导电橡胶式和光电式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本次课程重点讲解的内容",
+        "提示2：视频中明确指出重点讲解的结构类型有两种",
+        "提示3：关注与矩阵式扫描键盘工作原理相关的结构类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：行线电平决定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的这一讲重点讲解的内容不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "独立式"
+        },
+        {
+          "label": "B",
+          "content": "行列式"
+        },
+        {
+          "label": "C",
+          "content": "矩阵式扫描键盘的工作原理"
+        },
+        {
+          "label": "D",
+          "content": "单片机的编程技巧"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：仔细回顾视频中提到的这一讲重点讲解的内容",
+        "提示2：明确视频中指出的重点内容范围",
+        "提示3：将每个选项与视频重点内容进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：按键识别方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要讲解的按键识别方法中，涉及到的矩阵式扫描键盘工作原理包含以下哪种方式？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "独立式和行列式"
+        },
+        {
+          "label": "B",
+          "content": "串联式和并联式"
+        },
+        {
+          "label": "C",
+          "content": "单通道式和多通道式"
+        },
+        {
+          "label": "D",
+          "content": "模拟式和数字式"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的本次课程重点讲解的内容",
+        "提示2：关注关于矩阵式扫描键盘工作原理涉及的方式",
+        "提示3：在视频中寻找与矩阵式扫描键盘工作原理相关的具体表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：考试题型讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次单片机原理及接口技术的期末冲刺课程这章主要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "独立式"
+        },
+        {
+          "label": "B",
+          "content": "行列式"
+        },
+        {
+          "label": "C",
+          "content": "矩阵式扫描键盘的工作原理"
+        },
+        {
+          "label": "D",
+          "content": "单片机的编程技巧"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：仔细回顾视频中提到的这章主要讲解的内容",
+        "提示2：明确视频中指出的重点是独立式、行列式以及矩阵式扫描键盘的工作原理",
+        "提示3：判断每个选项是否在视频所讲的内容范围内"
+      ]
+    }
+  ],
+  "count": 6
+}

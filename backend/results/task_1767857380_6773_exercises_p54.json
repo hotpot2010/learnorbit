@@ -1,0 +1,42 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖面线绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘制三个半剖视图的剖面线时，以下操作正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直接使用三角板绘制，无需与丁字尺配合"
+        },
+        {
+          "label": "B",
+          "content": "将 $45^\\circ$ 三角板的斜边紧贴丁字尺的工作边，配合使用来绘制剖面线"
+        },
+        {
+          "label": "C",
+          "content": "只需要区分出哪些地方是剖切平面切过的断面，不需要使用工具绘制剖面线"
+        },
+        {
+          "label": "D",
+          "content": "使用 $30^\\circ$ 三角板与丁字尺配合绘制剖面线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中绘制剖面线时工具的使用方法",
+        "提示2：明确绘制剖面线需要区分剖切平面切过的断面，并使用特定工具配合",
+        "提示3：注意视频中提到的三角板角度是 $45^\\circ$"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：尺寸标注方法",
+      "error": "Invalid \\escape: line 10 column 80 (char 401)"
+    }
+  ],
+  "count": 2
+}

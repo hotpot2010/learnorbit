@@ -1,0 +1,746 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：汇编指令讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕哪个方向进行详细讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的期末复习中关于汇编语言程序设计，基于单片机展开"
+        },
+        {
+          "label": "B",
+          "content": "单片机的硬件结构"
+        },
+        {
+          "label": "C",
+          "content": "汇编语言的历史发展"
+        },
+        {
+          "label": "D",
+          "content": "高级编程语言的应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本次课程的主要内容",
+        "提示2：明确课程是基于单片机对特定内容进行讲解",
+        "提示3：关注视频中关于讲解方向的关键描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：程序顺序设计",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕哪种基础进行汇编语言程序设计的详细讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机"
+        },
+        {
+          "label": "B",
+          "content": "计算机主板"
+        },
+        {
+          "label": "C",
+          "content": "服务器"
+        },
+        {
+          "label": "D",
+          "content": "智能手机芯片"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到的进行详细讲解所基于的基础",
+        "提示2：重点关注与汇编语言程序设计讲解相关的设备",
+        "提示3：回顾视频中关于课程内容围绕的核心设备的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：练习题解答思路",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次期末复习课主要围绕单片机原理及接口技术展开，重点讲解的内容是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "汇编语言程序设计"
+        },
+        {
+          "label": "B",
+          "content": "C语言程序设计"
+        },
+        {
+          "label": "C",
+          "content": "Python语言程序设计"
+        },
+        {
+          "label": "D",
+          "content": "Java语言程序设计"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的重点讲解内容",
+        "提示2：视频中明确指出了围绕单片机进行详细讲解的具体内容",
+        "提示3：关注视频里与程序设计语言相关的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数据处理流程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次期末复习课主要围绕单片机原理及接口技术展开，重点讲解的是以下哪一项内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "汇编语言程序设计"
+        },
+        {
+          "label": "B",
+          "content": "C语言程序设计"
+        },
+        {
+          "label": "C",
+          "content": "Python语言程序设计"
+        },
+        {
+          "label": "D",
+          "content": "Java语言程序设计"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的重点讲解内容",
+        "提示2：视频明确指出围绕单片机进行详细讲解的特定语言程序设计",
+        "提示3：根据视频信息直接对应选项找出答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：分支判断结构",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机的汇编语言程序设计中，若有一个分支判断结构用于判断输入的整数 $x$ 是否能被 3 整除，以下哪种判断逻辑是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "若 $x \\bmod 3 = 0$，则执行分支 1；否则执行分支 2"
+        },
+        {
+          "label": "B",
+          "content": "若 $x \\div 3 = 0$，则执行分支 1；否则执行分支 2"
+        },
+        {
+          "label": "C",
+          "content": "若 $x + 3 = 0$，则执行分支 1；否则执行分支 2"
+        },
+        {
+          "label": "D",
+          "content": "若 $x - 3 = 0$，则执行分支 1；否则执行分支 2"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：判断一个数能否被另一个数整除，需要看余数是否为 0",
+        "提示2：$\\bmod$ 是取余运算符，用于计算余数",
+        "提示3：分析每个选项中的运算是否是判断能否被 3 整除的逻辑"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：程序设计思路",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要讲解的内容是基于哪种设备进行汇编语言程序设计的详细讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机"
+        },
+        {
+          "label": "B",
+          "content": "计算机"
+        },
+        {
+          "label": "C",
+          "content": "服务器"
+        },
+        {
+          "label": "D",
+          "content": "平板电脑"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到的基于某个设备进行详细讲解",
+        "提示2：回顾视频里关于讲解汇编语言程序设计依托的设备",
+        "提示3：从视频内容中寻找明确提到的设备名称"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：分支程序设计",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕单片机原理及接口技术的期末复习展开，重点讲解的是基于单片机进行的哪种程序设计？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "高级语言程序设计"
+        },
+        {
+          "label": "B",
+          "content": "汇编语言程序设计"
+        },
+        {
+          "label": "C",
+          "content": "Python 语言程序设计"
+        },
+        {
+          "label": "D",
+          "content": "Java 语言程序设计"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的重点讲解的程序设计语言",
+        "提示2：关注视频中关于本次课程重点内容的描述",
+        "提示3：在视频里有明确指出是基于单片机讲解的特定语言程序设计"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：循环程序讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕哪个方面进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的期末复习中汇编语言程序设计，基于单片机进行详细讲解"
+        },
+        {
+          "label": "B",
+          "content": "单片机的硬件组成"
+        },
+        {
+          "label": "C",
+          "content": "单片机的市场应用情况"
+        },
+        {
+          "label": "D",
+          "content": "单片机的历史发展"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的主要讲解内容",
+        "提示2：关注与课程主题相关的具体方面",
+        "提示3：视频明确指出了围绕汇编语言程序设计基于单片机进行讲解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求最大值算法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机汇编语言程序设计中，如果有一组数据 $\\{2, 5, 7, 3, 9\\}$，要找出其中的最大值，以下哪种思路最合理？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "先将第一个数设为最大值，然后依次与后面的数比较，如果后面的数比当前最大值大，则更新最大值"
+        },
+        {
+          "label": "B",
+          "content": "将所有数相加，然后除以数据个数，得到平均值，最大的数肯定比平均值大"
+        },
+        {
+          "label": "C",
+          "content": "将这些数从小到大排序，然后取最后一个数"
+        },
+        {
+          "label": "D",
+          "content": "随机选择一个数作为最大值，再与其他数比较，若其他数大则更换最大值，直到比较完所有数"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：求最大值的核心是通过比较来确定最大数",
+        "提示2：考虑哪种方法能高效且准确地找出最大值",
+        "提示3：分析每个选项在实际操作中的可行性和效率"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求最大值算法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机编程中，有一组数据 $x_1, x_2, \\cdots, x_{10}$，要找出其中的最大值。以下哪种思路是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "先将 $x_1$ 设为最大值，然后依次与 $x_2, x_3, \\cdots, x_{10}$ 比较，若遇到比当前最大值大的数，则更新最大值"
+        },
+        {
+          "label": "B",
+          "content": "直接将 $x_{10}$ 设为最大值，无需比较"
+        },
+        {
+          "label": "C",
+          "content": "将所有数相加，然后除以 10，得到的平均值就是最大值"
+        },
+        {
+          "label": "D",
+          "content": "随机选择一个数作为最大值，不进行比较"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：求最大值需要通过比较来确定",
+        "提示2：平均值是所有数的总和除以个数，不一定是最大值",
+        "提示3：随机选择或直接指定一个数不能保证是最大值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：编程练习题讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕单片机原理及接口技术的期末复习，重点讲解的是以下哪种内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "汇编语言程序设计"
+        },
+        {
+          "label": "B",
+          "content": "高级语言程序设计"
+        },
+        {
+          "label": "C",
+          "content": "数据库设计"
+        },
+        {
+          "label": "D",
+          "content": "算法设计"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的重点讲解内容",
+        "提示2：视频明确指出了围绕单片机进行详细讲解的具体方面",
+        "提示3：关注视频中关于课程内容的关键描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：多重复循环",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机编程中，若要实现一个功能，需要对一个数组 $a = [1, 2, 3, 4, 5]$ 进行操作，要求通过多重循环将数组中每个元素乘以其下标（下标从 0 开始），然后将结果累加到一个变量 $sum$ 中。以下哪个代码片段能正确实现该功能？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "python\nsum = 0\nfor i in range(len(a)):\n    for j in range(1):\n        sum += a[i] * i\n"
+        },
+        {
+          "label": "B",
+          "content": "python\nsum = 0\nfor i in range(len(a)):\n    for j in range(len(a)):\n        sum += a[i] * i\n"
+        },
+        {
+          "label": "C",
+          "content": "python\nsum = 0\nfor i in range(len(a)):\n    sum += a[i] * i\n"
+        },
+        {
+          "label": "D",
+          "content": "python\nsum = 0\nfor i in range(len(a)):\n    for j in range(i):\n        sum += a[i] * i\n"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：分析题目要求，只需要对数组中的每个元素进行一次乘以其下标的操作，然后累加到 $sum$ 中。",
+        "提示2：考虑多重循环的作用，外层循环用于遍历数组元素，内层循环若不需要额外的多次操作，只需执行一次即可。",
+        "提示3：检查每个选项中内层循环的次数是否符合要求。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：2ms延时程序",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要讲解的是基于哪种器件进行汇编语言程序设计的详细讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机"
+        },
+        {
+          "label": "B",
+          "content": "计算机"
+        },
+        {
+          "label": "C",
+          "content": "传感器"
+        },
+        {
+          "label": "D",
+          "content": "显示器"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到基于什么来进行详细讲解的内容",
+        "提示2：注意视频中重点强调的核心器件",
+        "提示3：在讲解汇编语言程序设计部分找相关信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：1秒延时程序",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕单片机原理及接口技术的期末复习展开，重点讲解的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "汇编语言程序设计"
+        },
+        {
+          "label": "B",
+          "content": "高级语言程序设计"
+        },
+        {
+          "label": "C",
+          "content": "C语言程序设计"
+        },
+        {
+          "label": "D",
+          "content": "Python语言程序设计"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到的重点讲解内容",
+        "提示2：回顾视频中关于课程内容的描述",
+        "提示3：明确指出的重点是基于单片机对某一编程语言的详细讲解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：子程序循环计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机编程中，若要实现一个子程序循环计算，已知循环变量 $i$ 初始值为 0，循环条件为 $i < 10$，每次循环 $i$ 自增 1，且在每次循环中要对变量 $x$ 进行 $x = x + 2i$ 的操作，初始 $x = 0$。那么当循环结束时，$x$ 的值为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$90$"
+        },
+        {
+          "label": "B",
+          "content": "$100$"
+        },
+        {
+          "label": "C",
+          "content": "$110$"
+        },
+        {
+          "label": "D",
+          "content": "$120$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确循环次数，根据循环条件确定 $i$ 的取值范围",
+        "提示2：根据每次循环的操作 $x = x + 2i$ 列出 $x$ 的累加表达式",
+        "提示3：利用等差数列求和公式 $S_n=\\frac{n(a_1 + a_n)}{2}$ 进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：子程序调用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕单片机原理及接口技术进行期末复习，重点讲解汇编语言程序设计。在一个单片机汇编程序中，若子程序调用语句为 `CALL SUB_PROC`，`SUB_PROC` 子程序中有一个循环结构，循环次数由寄存器 $R2$ 的值决定，$R2$ 初始值为 $10$，循环体中每次将寄存器 $A$ 的值加 $1$，寄存器 $A$ 初始值为 $0$。当子程序执行完毕后，寄存器 $A$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$10$"
+        },
+        {
+          "label": "B",
+          "content": "$11$"
+        },
+        {
+          "label": "C",
+          "content": "$9$"
+        },
+        {
+          "label": "D",
+          "content": "$20$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：明确循环次数由寄存器 $R2$ 的初始值决定",
+        "提示2：分析循环体中对寄存器 $A$ 的操作，每次加 $1$",
+        "提示3：根据循环次数和每次的操作计算最终寄存器 $A$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：循环左移运算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机编程中，对于一个 8 位二进制数 $10101100$ 进行 2 位的循环左移运算，结果是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$10110010$"
+        },
+        {
+          "label": "B",
+          "content": "$11001010$"
+        },
+        {
+          "label": "C",
+          "content": "$00101011$"
+        },
+        {
+          "label": "D",
+          "content": "$01011001$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：循环左移运算是将二进制数的左边若干位移动到右边",
+        "提示2：对于 8 位二进制数，移动的位数要考虑对 8 取模",
+        "提示3：先将左边 2 位取出，再将剩余位左移 2 位，最后把取出的 2 位放到右边"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：程序编写题解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要讲解的是基于什么来进行汇编语言程序设计的详细讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机"
+        },
+        {
+          "label": "B",
+          "content": "计算机"
+        },
+        {
+          "label": "C",
+          "content": "服务器"
+        },
+        {
+          "label": "D",
+          "content": "智能手表"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到的进行详细讲解所基于的设备",
+        "提示2：回顾视频里关于讲解内容依托基础的描述",
+        "提示3：在视频特定部分寻找与汇编语言程序设计依托设备相关信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：[循环取值问题]",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机编程中，若一个循环需要对数组 $a = [1, 3, 5, 7, 9]$ 进行取值操作，每次取一个值并进行加 2 后输出结果，循环结束的条件是所有值都被取完并处理，以下哪个选项是正确的输出序列 ？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$[3, 5, 7, 9, 11]$"
+        },
+        {
+          "label": "B",
+          "content": "$[4, 6, 8, 10, 12]$"
+        },
+        {
+          "label": "C",
+          "content": "$[2, 4, 6, 8, 10]$"
+        },
+        {
+          "label": "D",
+          "content": "$[1, 3, 5, 7, 9]$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确循环的操作是对数组中的每个值进行加 2 操作",
+        "提示2：依次对数组 $a$ 中的每个元素加 2",
+        "提示3：将处理后的结果依次排列得到输出序列"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：子程序调用题",
+      "error": "Extra data: line 22 column 1 (char 596)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：程序题做题思路",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要讲解的内容是基于哪种设备进行汇编语言程序设计的详细讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机"
+        },
+        {
+          "label": "B",
+          "content": "计算机"
+        },
+        {
+          "label": "C",
+          "content": "服务器"
+        },
+        {
+          "label": "D",
+          "content": "路由器"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到的基于某种设备进行详细讲解的内容",
+        "提示2：关注与汇编语言程序设计相关的设备描述",
+        "提示3：回顾视频里具体指出的设备名称"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：BCD码转ASCII码",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机编程中，若要将一个BCD码 $0101$ 转换为对应的ASCII码，转换后的结果是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0x35$"
+        },
+        {
+          "label": "B",
+          "content": "$0x25$"
+        },
+        {
+          "label": "C",
+          "content": "$0x45$"
+        },
+        {
+          "label": "D",
+          "content": "$0x55$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先明确BCD码 $0101$ 对应的十进制数是多少",
+        "提示2：思考十进制数转换为ASCII码的方法，通常是加上 $0x30$",
+        "提示3：计算出转换后的结果并与选项进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求最小值解题法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机的汇编语言程序设计中，若一个子程序的功能是求数组 $a[n]$ 中所有元素的最小值，以下哪个代码片段最有可能正确实现该功能（假设数组元素为整数）？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "asm\nMOV R0, #0\nMOV A, a[0]\nLOOP: CMP A, a[R0]\n    JGE NEXT\n    MOV A, a[R0]\nNEXT: INC R0\n    CJNE R0, #n, LOOP\nRET\n"
+        },
+        {
+          "label": "B",
+          "content": "asm\nMOV R0, #0\nMOV A, a[0]\nLOOP: CMP A, a[R0]\n    JLE NEXT\n    MOV A, a[R0]\nNEXT: INC R0\n    CJNE R0, #n, LOOP\nRET\n"
+        },
+        {
+          "label": "C",
+          "content": "asm\nMOV R0, #0\nMOV A, a[0]\nLOOP: CMP A, a[R0]\n    JNE NEXT\n    MOV A, a[R0]\nNEXT: INC R0\n    CJNE R0, #n, LOOP\nRET\n"
+        },
+        {
+          "label": "D",
+          "content": "asm\nMOV R0, #0\nMOV A, a[0]\nLOOP: CMP A, a[R0]\n    JMP NEXT\n    MOV A, a[R0]\nNEXT: INC R0\n    CJNE R0, #n, LOOP\nRET\n"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：要实现求最小值，需要不断比较当前最小值和数组中的元素",
+        "提示2：当当前元素比当前最小值小时，应更新最小值",
+        "提示3：注意条件跳转指令的含义，`JLE` 是小于等于跳转，`JGE` 是大于等于跳转，`JNE` 是不等于跳转，`JMP` 是无条件跳转"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：数值比较算法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的期末复习课主要讲解的内容是基于单片机进行哪方面的详细讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "汇编语言程序设计"
+        },
+        {
+          "label": "B",
+          "content": "C语言程序设计"
+        },
+        {
+          "label": "D",
+          "content": "Python语言程序设计"
+        },
+        {
+          "label": "C",
+          "content": "Java语言程序设计"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中提到的重点讲解内容",
+        "提示2：关注与单片机相关的编程语言",
+        "提示3：在视频中找到明确提及的讲解内容关键词"
+      ]
+    }
+  ],
+  "count": 24
+}

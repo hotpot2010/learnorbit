@@ -1,0 +1,261 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三面投影引入",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习三面投影相关知识时，我们之前学习的正投影概念用于表示的是以下哪种对象？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平面图形"
+        },
+        {
+          "label": "B",
+          "content": "二维线条"
+        },
+        {
+          "label": "C",
+          "content": "空间中的三维立体"
+        },
+        {
+          "label": "D",
+          "content": "一维点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中关于正投影概念应用对象的描述",
+        "提示2：重点关注提到正投影用来表示的内容",
+        "提示3：明确正投影在空间表示上的对象特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三面投影体系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习三面投影相关知识时，我们之前学过正投影的概念，正投影主要用于表达什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平面图形"
+        },
+        {
+          "label": "B",
+          "content": "二维物体"
+        },
+        {
+          "label": "C",
+          "content": "三维立体"
+        },
+        {
+          "label": "D",
+          "content": "曲线图形"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于正投影应用的描述",
+        "提示2：明确正投影的作用与表达对象的维度",
+        "提示3：找到视频中提到正投影用于表达哪种物体的语句"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三面投影形成",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，已知前面学习了正投影的概念，用正投影来表示的通常是什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平面图形"
+        },
+        {
+          "label": "B",
+          "content": "二维图形"
+        },
+        {
+          "label": "C",
+          "content": "三维立体"
+        },
+        {
+          "label": "D",
+          "content": "点和线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于正投影表示对象的描述",
+        "提示2：明确正投影与三维空间的联系",
+        "提示3：注意题目中强调的是用正投影表示的对象"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三面投影展开",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在学习正投影法和物体的三面投影图相关知识时，以下关于学习重点的说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只需要学习三面投影的概念"
+        },
+        {
+          "label": "B",
+          "content": "主要学习三面投影的概念、相关的投影规律和画图方法"
+        },
+        {
+          "label": "C",
+          "content": "只学习相关的投影规律和画图方法"
+        },
+        {
+          "label": "D",
+          "content": "只需要了解正投影的概念"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的这一节的学习重点内容",
+        "提示2：视频明确指出了具体的学习方面",
+        "提示3：需要综合考虑多个要点，而不是只关注某一个方面"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投影面展开法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正投影法中，用正投影来表示的通常是空间中的什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "二维平面图形"
+        },
+        {
+          "label": "B",
+          "content": "三维立体"
+        },
+        {
+          "label": "C",
+          "content": "一维线段"
+        },
+        {
+          "label": "D",
+          "content": "以上都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于正投影表示对象的相关内容",
+        "提示2：注意提到用正投影表示的是空间中的何种形态",
+        "提示3：明确视频中强调的维度信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投影对应关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正投影法中，我们学习了用正投影来表示空间中的三维立体。若一个正方体在正投影下得到其三面投影图，以下关于三面投影图的说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "三面投影图只能反映正方体的两个面的信息"
+        },
+        {
+          "label": "B",
+          "content": "三面投影图不能体现正投影的投影规律"
+        },
+        {
+          "label": "C",
+          "content": "学习三面投影图需要掌握其概念、相关投影规律和画图方法"
+        },
+        {
+          "label": "D",
+          "content": "三面投影图与正投影的概念无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的三面投影图的学习内容，明确其重点学习方向",
+        "提示2：思考三面投影图和正投影之间的联系以及它能反映的信息",
+        "提示3：结合视频中关于三面投影图的描述判断各选项的正确性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投影轴省略",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在正投影法的学习中，我们了解到用正投影来表示的对象是空间中的三维立体。那么在学习物体的三面投影图这一节时，主要学习的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "三面投影的概念"
+        },
+        {
+          "label": "B",
+          "content": "投影轴的绘制规范"
+        },
+        {
+          "label": "C",
+          "content": "相关的投影规律"
+        },
+        {
+          "label": "D",
+          "content": "绘图方法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于物体的三面投影图这一节所提及的主要学习内容",
+        "提示2：明确视频中指出的三个主要学习方面",
+        "提示3：对比各选项与视频内容，找出不符合的一项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：三面投影绘图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在三面投影绘图中，以下哪个是我们主要学习的内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单面投影的概念"
+        },
+        {
+          "label": "B",
+          "content": "三面投影的概念、相关投影规则和绘图方法"
+        },
+        {
+          "label": "C",
+          "content": "斜投影的绘图技巧"
+        },
+        {
+          "label": "D",
+          "content": "二维平面图形的表示方法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的这一节主要学习内容",
+        "提示2：注意强调的是三面投影相关内容",
+        "提示3：明确排除与三面投影无关的选项"
+      ]
+    }
+  ],
+  "count": 8
+}

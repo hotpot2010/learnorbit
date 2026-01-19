@@ -1,0 +1,229 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖切视图概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，剖切视图这一术语包含了两个动作，在汉语里 “剖” 一般代表着特定含义，以下对“剖”含义的解释正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "表示移动的意思"
+        },
+        {
+          "label": "B",
+          "content": "一般代表破裂、切开的意思"
+        },
+        {
+          "label": "C",
+          "content": "代表旋转的意思"
+        },
+        {
+          "label": "D",
+          "content": "代表放大的意思"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对“剖”这个字含义的讲解",
+        "提示2：注意提到“剖”在汉语里的一般代表意义相关内容",
+        "提示3：结合常见组词来辅助理解“剖”的含义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖切视图原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "“剖切视图”这个词包含了两个动作，其中“剖”在汉语中一般代表的意思是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "移动"
+        },
+        {
+          "label": "B",
+          "content": "破坏、切开"
+        },
+        {
+          "label": "C",
+          "content": "旋转"
+        },
+        {
+          "label": "D",
+          "content": "放大"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对“剖”这个字含义的讲解",
+        "提示2：注意提到的常见组词，从中推断其意思",
+        "提示3：思考“剖”在“解剖、剖析”等词中的含义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖切视图细节",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到剖切视图一词包含了两个动作，其中“剖”在汉语中一般代表的意思是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "行走"
+        },
+        {
+          "label": "B",
+          "content": "破坏、切开"
+        },
+        {
+          "label": "C",
+          "content": "观察"
+        },
+        {
+          "label": "D",
+          "content": "组合"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对“剖”这个字含义的讲解",
+        "提示2：注意提到的“剖”在汉语里一般代表的意思相关内容",
+        "提示3：结合常见组词来判断其意思"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖面图绘制要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到剖面图中的“剖”字，在汉语里一般代表的意思是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "打开"
+        },
+        {
+          "label": "B",
+          "content": "破坏、切开"
+        },
+        {
+          "label": "C",
+          "content": "观察"
+        },
+        {
+          "label": "D",
+          "content": "旋转"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中对“剖”字含义的讲解",
+        "提示2：注意提到的组词，如“解剖、剖析”等，这些词能反映“剖”的意思",
+        "提示3：从这些组词去推断“剖”在汉语里一般代表的意思"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖面图绘制示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "剖面图一词包含了两个动作，其中“剖”在汉语中一般代表的意思是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "切割、分开"
+        },
+        {
+          "label": "B",
+          "content": "连接、合并"
+        },
+        {
+          "label": "C",
+          "content": "弯曲、扭转"
+        },
+        {
+          "label": "D",
+          "content": "堆积、叠加"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中对“剖”字含义的讲解",
+        "提示2：注意提到的“剖”常组成的词语，如“解剖”“剖析”等",
+        "提示3：结合这些词语的意思来推断“剖”的含义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖面图表示材料",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在汉语中，“剖”这个字在剖面图中的意思通常代表什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "奔跑"
+        },
+        {
+          "label": "B",
+          "content": "破坏、切开"
+        },
+        {
+          "label": "C",
+          "content": "观察、查看"
+        },
+        {
+          "label": "D",
+          "content": "连接、组合"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：参考视频中对“剖”字含义的讲解",
+        "提示2：注意提到的常见组词，思考其表达的意思",
+        "提示3：结合剖面图的概念，分析“剖”字应有的含义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：剖面图绘制规则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到剖面图一词包含了两个动作，其中“剖”在汉语中一般代表的意思是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "移动"
+        },
+        {
+          "label": "B",
+          "content": "破坏、切开"
+        },
+        {
+          "label": "C",
+          "content": "旋转"
+        },
+        {
+          "label": "D",
+          "content": "放大"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对“剖”这个字含义的讲解",
+        "提示2：关注提到的“剖”在汉语中的一般代表意义",
+        "提示3：结合常见的与“剖”组成的词语来理解其含义"
+      ]
+    }
+  ],
+  "count": 7
+}

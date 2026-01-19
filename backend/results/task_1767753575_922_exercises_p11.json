@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：配位化合物概述",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于草酸氰亚铁离子 $[Fe(CN)_6]^{4-}$，下列说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "离子整体是外界，括号内是内界"
+        },
+        {
+          "label": "B",
+          "content": "氰根离子是中心离子"
+        },
+        {
+          "label": "C",
+          "content": "铁离子是配体"
+        },
+        {
+          "label": "D",
+          "content": "该离子中不存在内界外界之分"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中关于外界和内界的定义，明确二者的区别",
+        "提示2：根据中心离子和配体的概念来判断选项B和C",
+        "提示3：结合视频中对类似配位离子结构的讲解分析选项D"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：配位化合物构型",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于草酸银亚铁离子 $[Fe(C_2O_4)_n]^{m - }$（假设其结构与视频中讲解的类似），下列说法正确的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "银离子是外界，铁离子是中心离子，草酸根离子是配体"
+        },
+        {
+          "label": "B",
+          "content": "铁离子是外界，银离子是中心离子，草酸根离子是配体"
+        },
+        {
+          "label": "C",
+          "content": "铁离子是中心离子，草酸根离子是配体，外界可能是银离子"
+        },
+        {
+          "label": "D",
+          "content": "草酸根离子是中心离子，铁离子是配体，外界是银离子"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频，先明确中心离子、配体和外界的概念",
+        "提示2：中心离子一般是过渡金属离子，配体是能提供孤对电子的分子或离子",
+        "提示3：外界通常是简单离子，结合草酸银亚铁离子的结构判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：晶体场理论",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于配合物草酸氰亚铁离子，下列说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "铁离子是外界，草酸根离子是内界"
+        },
+        {
+          "label": "B",
+          "content": "铁是中心，草酸根离子是配体"
+        },
+        {
+          "label": "C",
+          "content": "氰离子是中心，铁是配体"
+        },
+        {
+          "label": "D",
+          "content": "草酸根离子是中心，铁是配体"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中关于配合物组成部分的定义，区分中心、配体、外界和内界",
+        "提示2：明确中心通常是具有空轨道的原子或离子，配体是提供孤对电子的分子或离子",
+        "提示3：结合草酸氰亚铁离子的结构进行分析"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：配位稳定性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于草酸氰亚铁离子，下列说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氰离子是外界，括号里面是内界"
+        },
+        {
+          "label": "B",
+          "content": "铁是配体"
+        },
+        {
+          "label": "C",
+          "content": "草酸根离子是配体"
+        },
+        {
+          "label": "D",
+          "content": "以上说法都错误"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：明确外界和内界的概念，根据视频判断它们分别是什么",
+        "提示2：了解中心原子和配体的定义，分析草酸氰亚铁离子中各部分的归属",
+        "提示3：结合视频内容，对每个选项进行逐一分析"
+      ]
+    }
+  ],
+  "count": 4
+}

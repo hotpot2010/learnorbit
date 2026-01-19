@@ -20,6 +20,8 @@ from .result_merger_service import ResultMergerService
 from .volcano_service import VolcanoService
 from .doubao_service import DoubaoService
 from .prompt_config_service import prompt_config_service
+from .vod_service import vod_service
+from .vod_sign_service import vod_sign_service
 from ..database import get_db_session, init_db, test_connection
 from ..models.offline_video import OfflineVideoTask
 from dotenv import load_dotenv
@@ -530,6 +532,9 @@ class OfflineVideoService:
                 knowledge_points_result_url = serialize_url_field(task.get('knowledge_points_result_url'))
                 screenshots_result_url = serialize_url_field(task.get('screenshots_result_url'))
                 exercises_result_url = serialize_url_field(task.get('exercises_result_url'))
+                vod_file_id = serialize_url_field(task.get('vod_file_id'))
+                vod_play_url = serialize_url_field(task.get('vod_play_url'))
+                vod_cover_url = task.get('vod_cover_url')
                 
                 if db_task:
                     # 更新现有任务
@@ -545,6 +550,13 @@ class OfflineVideoService:
                     db_task.screenshots_result_url = screenshots_result_url
                     if hasattr(db_task, 'exercises_result_url'):
                         db_task.exercises_result_url = exercises_result_url
+                    # VOD相关字段
+                    if hasattr(db_task, 'vod_file_id'):
+                        db_task.vod_file_id = vod_file_id
+                    if hasattr(db_task, 'vod_play_url'):
+                        db_task.vod_play_url = vod_play_url
+                    if hasattr(db_task, 'vod_cover_url'):
+                        db_task.vod_cover_url = vod_cover_url
                     db_task.video_info = task.get('video_info', {})
                     db_task.is_series = 1 if task.get('is_series') else 0
                     db_task.series_parts = task.get('series_parts', [])
@@ -569,6 +581,15 @@ class OfflineVideoService:
                     # 只有当数据库模型有该字段时才设置
                     if hasattr(OfflineVideoTask, 'exercises_result_url'):
                         task_data['exercises_result_url'] = exercises_result_url
+                    if hasattr(OfflineVideoTask, 'transcoded_video_url'):
+                        task_data['transcoded_video_url'] = transcoded_video_url
+                    # VOD相关字段
+                    if hasattr(OfflineVideoTask, 'vod_file_id'):
+                        task_data['vod_file_id'] = vod_file_id
+                    if hasattr(OfflineVideoTask, 'vod_play_url'):
+                        task_data['vod_play_url'] = vod_play_url
+                    if hasattr(OfflineVideoTask, 'vod_cover_url'):
+                        task_data['vod_cover_url'] = vod_cover_url
                     db_task = OfflineVideoTask(**task_data)
                     db.add(db_task)
                 
@@ -3176,23 +3197,28 @@ class OfflineVideoService:
     
     async def transcode_video(self, task_id: str):
         """
-        转码视频步骤：下载视频、转码成H.264、上传
+        上传视频到云点播（替换原来的转码功能）
+        使用API拉取上传，支持自适应码率
         
         Args:
             task_id: 任务ID
         """
         print(f"\n{'='*60}")
-        print(f"🎬 开始转码视频: {task_id}")
+        print(f"🎬 开始上传视频到云点播: {task_id}")
         print(f"{'='*60}\n")
         
         task = self.get_task(task_id)
         if not task:
             raise ValueError(f"任务不存在: {task_id}")
         
-        # 检查是否已有原视频
+        # 检查是否已有原视频URL
         video_url_data = task.get("video_url")
         if not video_url_data:
             raise ValueError("视频URL不存在，请先完成下载并上传步骤")
+        
+        # 获取封面图（使用数据库中已有的适配封面图）
+        video_info = task.get("video_info", {})
+        cover_url = video_info.get("thumbnail_cdn") or video_info.get("thumbnail", "")
         
         # 解析视频URL列表
         import json
@@ -3208,11 +3234,12 @@ class OfflineVideoService:
         
         is_series = task.get("is_series", False)
         series_parts = task.get("series_parts", [])
+        video_title = task.get("video_title", "")
         
         self._update_step_status(
             task_id, "transcode",
             TaskStatus.RUNNING, 0,
-            "开始转码视频"
+            "开始上传视频到云点播"
         )
         
         try:
@@ -3222,101 +3249,99 @@ class OfflineVideoService:
                 # 多P视频
                 print(f"📹 处理多P视频，共 {len(video_urls)} 个分P")
                 
-                transcoded_urls = []
+                vod_file_ids = []
+                vod_play_urls = []
                 part_results = []
                 total_parts = len(video_urls)
                 
                 for idx, video_url in enumerate(video_urls, 1):
                     try:
-                        print(f"\n--- 转码分P {idx}/{total_parts} ---")
+                        print(f"\n--- 上传分P {idx}/{total_parts} 到云点播 ---")
                         
-                        # 下载视频
-                        print(f"⬇️ 下载视频...")
-                        temp_video_path = os.path.join(
-                            self.results_dir,
-                            f"{task_id}_part{idx}_original.mp4"
-                        )
+                        # 获取分P标题
+                        part_title = f"{video_title} - P{idx}"
+                        if series_parts and len(series_parts) >= idx:
+                            part_info = series_parts[idx - 1]
+                            if isinstance(part_info, dict):
+                                part_title = part_info.get("title", part_title)
                         
-                        def download_video():
-                            response = requests.get(video_url, stream=True, timeout=300)
-                            response.raise_for_status()
-                            with open(temp_video_path, 'wb') as f:
-                                for chunk in response.iter_content(chunk_size=8192):
-                                    if chunk:
-                                        f.write(chunk)
-                            return temp_video_path
-                        
-                        await loop.run_in_executor(self.executor, download_video)
-                        print(f"✅ 视频下载完成: {temp_video_path}")
-                        
-                        # 转码视频
-                        print(f"🔄 转码视频为H.264...")
-                        transcoded_path = os.path.join(
-                            self.results_dir,
-                            f"{task_id}_part{idx}_h264.mp4"
-                        )
-                        
-                        def transcode_to_h264():
-                            import subprocess
-                            cmd = [
-                                'ffmpeg',
-                                '-i', temp_video_path,
-                                '-c:v', 'libx264',  # H.264编码器
-                                '-preset', 'medium',  # 编码速度
-                                '-crf', '23',  # 质量（18-28，越小质量越好）
-                                '-c:a', 'aac',  # 音频编码器
-                                '-b:a', '128k',  # 音频比特率
-                                '-movflags', '+faststart',  # 优化网页播放
-                                '-y',  # 覆盖输出文件
-                                transcoded_path
-                            ]
-                            
-                            result = subprocess.run(
-                                cmd,
-                                capture_output=True,
-                                text=True,
-                                timeout=1800  # 30分钟超时
-                            )
-                            
-                            if result.returncode != 0:
-                                raise Exception(f"FFmpeg转码失败: {result.stderr}")
-                            
-                            return transcoded_path
-                        
-                        await loop.run_in_executor(self.executor, transcode_to_h264)
-                        print(f"✅ 视频转码完成: {transcoded_path}")
-                        
-                        # 删除原始下载文件
-                        if os.path.exists(temp_video_path):
-                            os.remove(temp_video_path)
-                        
-                        # 上传转码后的视频
-                        print(f"📤 上传转码后的视频...")
+                        # 上传视频到云点播（使用API拉取上传）
+                        print(f"📤 上传视频到云点播（URL拉取）...")
                         upload_result = await loop.run_in_executor(
                             self.executor,
-                            self.file_upload_service.upload_file,
-                            transcoded_path,
-                            "file0",
-                            "video/mp4"
+                            vod_service.upload_video_by_url,
+                            video_url,
+                            part_title,
+                            cover_url if idx == 1 else None  # 只有第一个分P使用封面图
                         )
                         
-                        if not upload_result:
-                            raise Exception("转码视频上传失败")
+                        if not upload_result or not upload_result.get("task_id"):
+                            raise Exception("视频上传到云点播失败：未获取到任务ID")
                         
-                        transcoded_url = upload_result
-                        if not transcoded_url.startswith('http'):
-                            transcoded_url = f"https://file.gsxservice.com/{transcoded_url}"
+                        pull_task_id = upload_result["task_id"]
+                        print(f"✅ 视频拉取上传任务已创建: TaskId={pull_task_id}")
                         
-                        transcoded_urls.append(transcoded_url)
+                        # 拉取上传是异步操作，需要等待任务完成并查询FileId
+                        print(f"⏳ 等待拉取上传任务完成...")
+                        import time
+                        max_wait_time = 300  # 最多等待5分钟
+                        wait_interval = 5  # 每5秒查询一次
+                        elapsed_time = 0
+                        file_id = None
+                        
+                        while elapsed_time < max_wait_time:
+                            await asyncio.sleep(wait_interval)
+                            elapsed_time += wait_interval
+                            
+                            # 查询任务状态
+                            task_status_result = await loop.run_in_executor(
+                                self.executor,
+                                vod_service.query_pull_upload_task,
+                                pull_task_id
+                            )
+                            
+                            if task_status_result:
+                                status = task_status_result.get("status")
+                                file_id = task_status_result.get("file_id")
+                                
+                                print(f"   任务状态: {status}, FileId: {file_id or '未完成'}")
+                                
+                                # 如果任务完成（FINISH）且有FileId，退出循环
+                                # 注意：腾讯云API返回的状态是 "FINISH"，不是 "SUCCESS"
+                                if status == "FINISH" and file_id:
+                                    print(f"✅ 拉取上传任务完成: FileId={file_id}")
+                                    break
+                                elif status == "ABORTED":
+                                    raise Exception(f"拉取上传任务已终止: Status={status}")
+                                # PROCESSING 和 WAITING 状态继续等待
+                        
+                        if not file_id:
+                            raise Exception(f"拉取上传任务超时或未完成: TaskId={pull_task_id}")
+                        
+                        # 生成播放签名和播放URL
+                        play_sign = await loop.run_in_executor(
+                            self.executor,
+                            vod_sign_service.generate_play_sign,
+                            file_id
+                        )
+                        
+                        if not play_sign:
+                            raise Exception("生成播放签名失败")
+                        
+                        play_url = vod_sign_service.generate_play_url(file_id)
+                        if not play_url:
+                            raise Exception("生成播放URL失败")
+                        
+                        print(f"✅ 播放URL生成成功: {play_url[:100]}...")
+                        
+                        vod_file_ids.append(file_id)
+                        vod_play_urls.append(play_url)
                         part_results.append({
                             "part_number": idx,
                             "status": "success",
-                            "result_url": transcoded_url
+                            "file_id": file_id,
+                            "play_url": play_url
                         })
-                        
-                        # 删除转码后的本地文件
-                        if os.path.exists(transcoded_path):
-                            os.remove(transcoded_path)
                         
                         # 更新进度
                         progress = int((idx / total_parts) * 100)
@@ -3326,11 +3351,13 @@ class OfflineVideoService:
                             f"已完成 {idx}/{total_parts} 个分P"
                         )
                         
-                        print(f"✅ 分P {idx}/{total_parts} 转码完成: {transcoded_url}")
+                        print(f"✅ 分P {idx}/{total_parts} 上传完成: FileId={file_id}")
                         
                     except Exception as e:
                         error_msg = str(e)
-                        print(f"❌ 分P {idx}/{total_parts} 转码失败: {error_msg}")
+                        print(f"❌ 分P {idx}/{total_parts} 上传失败: {error_msg}")
+                        import traceback
+                        traceback.print_exc()
                         part_results.append({
                             "part_number": idx,
                             "status": "failed",
@@ -3343,12 +3370,17 @@ class OfflineVideoService:
                 success_count = sum(1 for r in part_results if r["status"] == "success")
                 
                 if success_count == 0:
-                    raise Exception("所有分P转码均失败")
+                    raise Exception("所有分P上传均失败")
                 
                 # 更新任务状态
                 final_status = TaskStatus.SUCCESS if success_count == total_parts else TaskStatus.PARTIAL_SUCCESS
                 
-                task["transcoded_video_url"] = json.dumps(transcoded_urls) if len(transcoded_urls) > 1 else (transcoded_urls[0] if transcoded_urls else None)
+                # 保存VOD相关字段
+                task["vod_file_id"] = json.dumps(vod_file_ids) if len(vod_file_ids) > 1 else (vod_file_ids[0] if vod_file_ids else None)
+                task["vod_play_url"] = json.dumps(vod_play_urls) if len(vod_play_urls) > 1 else (vod_play_urls[0] if vod_play_urls else None)
+                if cover_url:
+                    task["vod_cover_url"] = cover_url
+                
                 task["steps"]["transcode"]["result"] = {
                     "parts": part_results,
                     "total": total_parts,
@@ -3362,11 +3394,11 @@ class OfflineVideoService:
                 self._update_step_status(
                     task_id, "transcode",
                     final_status, 100,
-                    f"转码完成: {success_count}/{total_parts} 个分P成功"
+                    f"上传完成: {success_count}/{total_parts} 个分P成功"
                 )
                 
                 print(f"\n{'='*60}")
-                print(f"✅ 多P视频转码完成: {success_count}/{total_parts} 个分P成功")
+                print(f"✅ 多P视频上传完成: {success_count}/{total_parts} 个分P成功")
                 print(f"{'='*60}\n")
                 
             else:
@@ -3374,103 +3406,96 @@ class OfflineVideoService:
                 video_url = video_urls[0]
                 print(f"📹 处理单P视频")
                 
-                # 下载视频
-                print(f"⬇️ 下载视频...")
-                temp_video_path = os.path.join(
-                    self.results_dir,
-                    f"{task_id}_original.mp4"
-                )
-                
-                def download_video():
-                    response = requests.get(video_url, stream=True, timeout=300)
-                    response.raise_for_status()
-                    with open(temp_video_path, 'wb') as f:
-                        for chunk in response.iter_content(chunk_size=8192):
-                            if chunk:
-                                f.write(chunk)
-                    return temp_video_path
-                
-                await loop.run_in_executor(self.executor, download_video)
-                print(f"✅ 视频下载完成: {temp_video_path}")
-                
                 self._update_step_status(
                     task_id, "transcode",
-                    TaskStatus.RUNNING, 30,
-                    "视频下载完成，开始转码"
+                    TaskStatus.RUNNING, 20,
+                    "开始上传视频到云点播"
                 )
                 
-                # 转码视频
-                print(f"🔄 转码视频为H.264...")
-                transcoded_path = os.path.join(
-                    self.results_dir,
-                    f"{task_id}_h264.mp4"
+                # 上传视频到云点播（使用API拉取上传）
+                print(f"📤 上传视频到云点播（URL拉取）...")
+                upload_result = await loop.run_in_executor(
+                    self.executor,
+                    vod_service.upload_video_by_url,
+                    video_url,
+                    video_title,
+                    cover_url
                 )
                 
-                def transcode_to_h264():
-                    import subprocess
-                    cmd = [
-                        'ffmpeg',
-                        '-i', temp_video_path,
-                        '-c:v', 'libx264',  # H.264编码器
-                        '-preset', 'medium',  # 编码速度
-                        '-crf', '23',  # 质量（18-28，越小质量越好）
-                        '-c:a', 'aac',  # 音频编码器
-                        '-b:a', '128k',  # 音频比特率
-                        '-movflags', '+faststart',  # 优化网页播放
-                        '-y',  # 覆盖输出文件
-                        transcoded_path
-                    ]
+                if not upload_result or not upload_result.get("task_id"):
+                    raise Exception("视频上传到云点播失败：未获取到任务ID")
+                
+                pull_task_id = upload_result["task_id"]
+                print(f"✅ 视频拉取上传任务已创建: TaskId={pull_task_id}")
+                
+                # 拉取上传是异步操作，需要等待任务完成并查询FileId
+                print(f"⏳ 等待拉取上传任务完成...")
+                import time
+                max_wait_time = 300  # 最多等待5分钟
+                wait_interval = 5  # 每5秒查询一次
+                elapsed_time = 0
+                file_id = None
+                
+                while elapsed_time < max_wait_time:
+                    await asyncio.sleep(wait_interval)
+                    elapsed_time += wait_interval
                     
-                    result = subprocess.run(
-                        cmd,
-                        capture_output=True,
-                        text=True,
-                        timeout=1800  # 30分钟超时
+                    # 查询任务状态
+                    task_status_result = await loop.run_in_executor(
+                        self.executor,
+                        vod_service.query_pull_upload_task,
+                        pull_task_id
                     )
                     
-                    if result.returncode != 0:
-                        raise Exception(f"FFmpeg转码失败: {result.stderr}")
-                    
-                    return transcoded_path
+                    if task_status_result:
+                        status = task_status_result.get("status")
+                        file_id = task_status_result.get("file_id")
+                        
+                        print(f"   任务状态: {status}, FileId: {file_id or '未完成'}")
+                        
+                        # 如果任务完成（FINISH）且有FileId，退出循环
+                        # 注意：腾讯云API返回的状态是 "FINISH"，不是 "SUCCESS"
+                        if status == "FINISH" and file_id:
+                            print(f"✅ 拉取上传任务完成: FileId={file_id}")
+                            break
+                        elif status == "ABORTED":
+                            raise Exception(f"拉取上传任务已终止: Status={status}")
+                        # PROCESSING 和 WAITING 状态继续等待
                 
-                await loop.run_in_executor(self.executor, transcode_to_h264)
-                print(f"✅ 视频转码完成: {transcoded_path}")
-                
-                # 删除原始下载文件
-                if os.path.exists(temp_video_path):
-                    os.remove(temp_video_path)
+                if not file_id:
+                    raise Exception(f"拉取上传任务超时或未完成: TaskId={pull_task_id}")
                 
                 self._update_step_status(
                     task_id, "transcode",
                     TaskStatus.RUNNING, 70,
-                    "转码完成，开始上传"
+                    "视频上传成功，生成播放URL"
                 )
                 
-                # 上传转码后的视频
-                print(f"📤 上传转码后的视频...")
-                upload_result = await loop.run_in_executor(
+                # 生成播放签名和播放URL
+                play_sign = await loop.run_in_executor(
                     self.executor,
-                    self.file_upload_service.upload_file,
-                    transcoded_path,
-                    "file0",
-                    "video/mp4"
+                    vod_sign_service.generate_play_sign,
+                    file_id
                 )
                 
-                if not upload_result:
-                    raise Exception("转码视频上传失败")
+                if not play_sign:
+                    raise Exception("生成播放签名失败")
                 
-                transcoded_url = upload_result
-                if not transcoded_url.startswith('http'):
-                    transcoded_url = f"https://file.gsxservice.com/{transcoded_url}"
+                play_url = vod_sign_service.generate_play_url(file_id)
+                if not play_url:
+                    raise Exception("生成播放URL失败")
                 
-                # 删除转码后的本地文件
-                if os.path.exists(transcoded_path):
-                    os.remove(transcoded_path)
+                print(f"✅ 播放URL生成成功: {play_url[:100]}...")
                 
                 # 更新任务信息
-                task["transcoded_video_url"] = transcoded_url
+                task["vod_file_id"] = file_id
+                task["vod_play_url"] = play_url
+                if cover_url:
+                    task["vod_cover_url"] = cover_url
+                
                 task["steps"]["transcode"]["result"] = {
-                    "url": transcoded_url
+                    "file_id": file_id,
+                    "play_url": play_url
                 }
                 
                 # 先更新缓存，再更新步骤状态（因为_update_step_status会从缓存读取）
@@ -3479,11 +3504,11 @@ class OfflineVideoService:
                 self._update_step_status(
                     task_id, "transcode",
                     TaskStatus.SUCCESS, 100,
-                    "转码完成"
+                    "上传完成"
                 )
                 
                 print(f"\n{'='*60}")
-                print(f"✅ 单P视频转码完成: {transcoded_url}")
+                print(f"✅ 单P视频上传完成: FileId={file_id}")
                 print(f"{'='*60}\n")
                 
         except Exception as e:

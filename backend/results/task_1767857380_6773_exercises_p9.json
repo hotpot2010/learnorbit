@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：线点在平面条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知平面 $\\alpha$ 内有两点 $A$、$B$，直线 $l$ 经过点 $A$，且 $l \\parallel m$，$m$ 是平面 $\\alpha$ 内的一条直线，则以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直线 $l$ 一定在平面 $\\alpha$ 内"
+        },
+        {
+          "label": "B",
+          "content": "直线 $l$ 一定不在平面 $\\alpha$ 内"
+        },
+        {
+          "label": "C",
+          "content": "直线 $l$ 可能在平面 $\\alpha$ 内，也可能不在平面 $\\alpha$ 内"
+        },
+        {
+          "label": "D",
+          "content": "以上说法都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾直线在平面内的判定条件，视频中提到直线如果经过平面上的两个点，或者经过平面上一个点，同时平行于平面内的另外一条直线，那么这条直线一定在这个平面上",
+        "提示2：分析题目中直线 $l$ 的情况，直线 $l$ 经过平面 $\\alpha$ 内的点 $A$，且 $l \\parallel m$，$m$ 在平面 $\\alpha$ 内",
+        "提示3：根据判定条件判断直线 $l$ 与平面 $\\alpha$ 的位置关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：例题求解思路",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知平面 $\\alpha$ 内有两点 $A$、$B$，直线 $l$ 经过点 $A$，且 $l \\parallel BC$（$C$ 为平面 $\\alpha$ 内一点），则直线 $l$ 与平面 $\\alpha$ 的位置关系是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直线 $l$ 在平面 $\\alpha$ 外"
+        },
+        {
+          "label": "B",
+          "content": "直线 $l$ 与平面 $\\alpha$ 相交"
+        },
+        {
+          "label": "C",
+          "content": "直线 $l$ 在平面 $\\alpha$ 内"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾直线在平面内的判定条件",
+        "提示2：根据题目所给信息，判断直线 $l$ 是否满足直线在平面内的条件",
+        "提示3：视频中提到直线如果经过平面上的一个点，同时平行于平面内的另外一条直线，那么这条直线一定在这个平面上"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：例题具体作图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知平面 $\\alpha$ 内有两点 $A$、$B$，直线 $l$ 经过点 $A$，且直线 $l$ 平行于平面 $\\alpha$ 内另一条直线 $m$，则直线 $l$ 与平面 $\\alpha$ 的位置关系是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直线 $l$ 在平面 $\\alpha$ 外"
+        },
+        {
+          "label": "B",
+          "content": "直线 $l$ 与平面 $\\alpha$ 相交"
+        },
+        {
+          "label": "C",
+          "content": "直线 $l$ 在平面 $\\alpha$ 内"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾直线在平面内的判定条件",
+        "提示2：根据视频内容，直线若经过平面上的一个点，同时平行于平面内的另外一条直线，那么这条直线一定在这个平面上",
+        "提示3：分析题目中直线 $l$ 是否满足该判定条件"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面投影解题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知平面 $\\alpha$ 上有两点 $A$、$B$，直线 $l$ 经过点 $A$，且 $l \\parallel BC$（$BC$ 在平面 $\\alpha$ 内），则直线 $l$ 与平面 $\\alpha$ 的位置关系是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直线 $l$ 在平面 $\\alpha$ 外"
+        },
+        {
+          "label": "B",
+          "content": "直线 $l$ 与平面 $\\alpha$ 相交"
+        },
+        {
+          "label": "C",
+          "content": "直线 $l$ 在平面 $\\alpha$ 内"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾直线在平面上的条件，视频中提到直线如果经过平面上的一个点，同时平行于平面内的另外一条直线，那么这条直线一定在这个平面上",
+        "提示2：分析题目中直线 $l$ 经过平面 $\\alpha$ 上的点 $A$，且平行于平面 $\\alpha$ 内的直线 $BC$",
+        "提示3：根据上述条件判断直线 $l$ 与平面 $\\alpha$ 的位置关系"
+      ]
+    }
+  ],
+  "count": 4
+}

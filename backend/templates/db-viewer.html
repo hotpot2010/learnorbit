@@ -318,6 +318,9 @@
                                 <th>视频URL</th>
                                 <th>ASR结果URL</th>
                                 <th>知识点URL</th>
+                                <th>VOD文件ID</th>
+                                <th>VOD播放URL</th>
+                                <th>VOD封面URL</th>
                                 <th>创建时间</th>
                                 <th>更新时间</th>
                             </tr>
@@ -436,6 +439,27 @@
                     const asrStatus = steps.asr?.status || 'unknown';
                     const knowledgeStatus = steps.knowledge_points?.status || 'unknown';
                     
+                    // 处理VOD URL显示（可能是字符串或数组）
+                    const formatVodUrl = (url) => {
+                        if (!url) return '-';
+                        if (Array.isArray(url)) {
+                            return url.length > 0 ? `<a href="${url[0]}" target="_blank">查看 (${url.length}个)</a>` : '-';
+                        }
+                        if (typeof url === 'string' && url.length > 0) {
+                            return `<a href="${url}" target="_blank">查看</a>`;
+                        }
+                        return '-';
+                    };
+                    
+                    // 处理VOD文件ID显示（可能是字符串或数组）
+                    const formatVodFileId = (fileId) => {
+                        if (!fileId) return '-';
+                        if (Array.isArray(fileId)) {
+                            return fileId.length > 0 ? `${fileId[0]} (${fileId.length}个)` : '-';
+                        }
+                        return fileId || '-';
+                    };
+                    
                     return `
                         <tr>
                             <td>${task.task_id}</td>
@@ -447,6 +471,9 @@
                             <td>${task.video_url ? `<a href="${task.video_url}" target="_blank">查看</a>` : '-'}</td>
                             <td>${task.asr_result_url ? `<a href="${task.asr_result_url}" target="_blank">查看</a>` : '-'}</td>
                             <td>${task.knowledge_points_result_url ? `<a href="${task.knowledge_points_result_url}" target="_blank">查看</a>` : '-'}</td>
+                            <td>${formatVodFileId(task.vod_file_id)}</td>
+                            <td>${formatVodUrl(task.vod_play_url)}</td>
+                            <td>${task.vod_cover_url ? `<a href="${task.vod_cover_url}" target="_blank">查看</a>` : '-'}</td>
                             <td>${task.created_at ? new Date(task.created_at).toLocaleString('zh-CN') : '-'}</td>
                             <td>${task.updated_at ? new Date(task.updated_at).toLocaleString('zh-CN') : '-'}</td>
                         </tr>

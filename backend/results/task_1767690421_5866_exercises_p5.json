@@ -1,0 +1,1012 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：正反运动学定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的 inverse kinematics 主要是指什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "圆周运动学"
+        },
+        {
+          "label": "D",
+          "content": "直线运动学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中对 inverse kinematics 的解释",
+        "提示2：视频里提到 inverse kinematics 是要教大家手部的相关运动学",
+        "提示3：结合视频中关于这个概念和逆向运动学的关联来判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：逆运动求解原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的 inverse kinematics 主要是想教同学们什么内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "机器人医学"
+        },
+        {
+          "label": "D",
+          "content": "运动学基础"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中对 inverse kinematics 的解释",
+        "提示2：结合提到的要教同学们的内容来判断",
+        "提示3：重点关注与“逆向”相关的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：运动空间定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的本次课程要教授的主要内容 inverse kinematics 主要是想教同学们什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "手部的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "手部的反向运动学"
+        },
+        {
+          "label": "C",
+          "content": "腿部的正向运动学"
+        },
+        {
+          "label": "D",
+          "content": "腿部的反向运动学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的 inverse kinematics 相关解释",
+        "提示2：明确是关于哪个部位的运动学",
+        "提示3：判断是正向还是反向运动学"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：可达工作空间",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的 inverse kinematics 主要是教授同学们什么内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "手腕的逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "机器人的动力学"
+        },
+        {
+          "label": "D",
+          "content": "手腕的静力学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中对 inverse kinematics 的解释",
+        "提示2：关注与 inverse kinematics 相关的人体部位",
+        "提示3：明确正向运动学和逆向运动学的区别"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：灵活工作空间",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的本次课程要教授的主要内容是关于什么的知识？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人医学的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "机器人医学的逆向运动学（inverse kinematics）"
+        },
+        {
+          "label": "C",
+          "content": "机器人医学的动力学"
+        },
+        {
+          "label": "D",
+          "content": "机器人医学的静力学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的本次课程要进入的新单元的主要教学内容",
+        "提示2：明确提到了“inverse kinematics”这个关键信息",
+        "提示3：结合对“逆向运动学”的理解来选择"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：子空间概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的 inverse kinematics 主要是想教同学们什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "手腕的逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "手臂的正向运动学"
+        },
+        {
+          "label": "D",
+          "content": "腿部的逆向运动学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于 inverse kinematics 的讲解内容",
+        "提示2：明确提到了与哪个身体部位的逆向运动学相关",
+        "提示3：注意正向和逆向运动学的区别"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：手臂姿态确定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的新单元主要教授的 inverse kinematics 实际上是指什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "手臂的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "手臂的逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "腿部的逆向运动学"
+        },
+        {
+          "label": "D",
+          "content": "机器人的正向运动学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中对 inverse kinematics 的具体解释",
+        "提示2：明确提到是和手臂相关的运动学",
+        "提示3：区分正向和逆向运动学的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：工作空间可达性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的新单元主要教授的内容是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正运动学"
+        },
+        {
+          "label": "B",
+          "content": "逆向运动学（inverse kinematics）"
+        },
+        {
+          "label": "C",
+          "content": "机器人动力学"
+        },
+        {
+          "label": "D",
+          "content": "机器人控制理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中明确提到的新单元教授的主要内容",
+        "提示2：在视频中查找与选项相关的关键表述",
+        "提示3：重点关注提到的英文术语inverse kinematics"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：机械臂解的数量",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学中，逆运动学主要是研究什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械臂的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "手爪的逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "机器人的动力学"
+        },
+        {
+          "label": "D",
+          "content": "机械臂的轨迹规划"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对逆运动学的定义",
+        "提示2：明确逆运动学与手爪运动的关系",
+        "提示3：排除与逆运动学无关的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：解的可用性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学中，inverse kinematics（逆向运动学）主要是教授同学们关于什么的知识？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "手部的逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "机器人的动力学"
+        },
+        {
+          "label": "D",
+          "content": "手部的正向运动学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的inverse kinematics主要教授的内容",
+        "提示2：重点关注与手部运动学相关的描述",
+        "提示3：区分正向运动学和逆向运动学的概念"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：自由度配置",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的新单元主要教授的 inverse kinematics 实际上是指什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "手部的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "手部的逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "腿部的正向运动学"
+        },
+        {
+          "label": "D",
+          "content": "腿部的逆向运动学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于 inverse kinematics 的相关表述",
+        "提示2：注意提到是与哪个身体部位相关的运动学",
+        "提示3：明确正向和逆向运动学的区别，结合视频确定答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：机械臂解特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的 inverse kinematics 主要是教大家什么内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机械臂的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "手腕的逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "机械臂的动力学分析"
+        },
+        {
+          "label": "D",
+          "content": "手腕的静态力学特性"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中对 inverse kinematics 的解释",
+        "提示2：明确提到了与手腕运动学相关的内容",
+        "提示3：重点是逆向运动学，而非正向、动力学或静态力学"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：手部解选择原则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的本节课要教授的主要内容涉及手部的什么学科？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "动力学"
+        },
+        {
+          "label": "D",
+          "content": "静力学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回忆视频中提到的本节课要进入的新单元主要教授的内容",
+        "提示2：关注视频中关于手部运动学类型的描述",
+        "提示3：在给出的知识点里明确提到了要教的是手部的逆向运动学相关内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：手部求解方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的新单元主要教授的 inverse kinematics 实际上是指什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "手部的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "手部的逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "手臂的正向运动学"
+        },
+        {
+          "label": "D",
+          "content": "手臂的逆向运动学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中对于 inverse kinematics 的具体解释",
+        "提示2：明确提到了与手部相关的运动学",
+        "提示3：inverse 有逆向的意思"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面手部实例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程新单元主要教授的内容是关于手部的什么知识？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "手部动力学"
+        },
+        {
+          "label": "D",
+          "content": "手部静力学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的关键术语“inverse kinematics”",
+        "提示2：结合视频所说要教大家的手部相关运动学知识来判断",
+        "提示3：明确“inverse”对应的中文意思是“逆向”"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：几何法求解角度",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动学中，已知一个机械臂的末端位置坐标为 $(3, 4)$，机械臂由两段长度分别为 $l_1 = 2$ 和 $l_2 = 3$ 的连杆组成，使用几何法求解第一段连杆与 $x$ 轴正方向的夹角 $\\theta_1$ 最接近以下哪个值（角度制）？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$30^\\circ$"
+        },
+        {
+          "label": "B",
+          "content": "$45^\\circ$"
+        },
+        {
+          "label": "C",
+          "content": "$60^\\circ$"
+        },
+        {
+          "label": "D",
+          "content": "$75^\\circ$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先根据末端位置坐标求出末端点到原点的距离 $r$，使用勾股定理 $r = \\sqrt{x^2 + y^2}$，其中 $x = 3$，$y = 4$",
+        "提示2：然后利用余弦定理在由两段连杆和末端点到原点的线段构成的三角形中求解角度关系",
+        "提示3：最后结合三角函数求出第一段连杆与 $x$ 轴正方向的夹角 $\\theta_1$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：θ 三求解方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动学中，逆运动学是研究如何根据末端执行器的位置和姿态来求解关节变量。已知一个简单的机械臂在平面内运动，其末端执行器的位置坐标为 $(x,y)=(3,4)$，机械臂的两段连杆长度分别为 $L_1 = 2$ 和 $L_2 = 3$，那么求解关节角度 $\\theta_3$（假设这里的 $\\theta_3$ 是其中一个关键关节角度）的过程属于以下哪种研究范畴？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "动力学"
+        },
+        {
+          "label": "D",
+          "content": "静力学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对逆运动学的定义，明确其研究的方向",
+        "提示2：思考正向运动学、逆向运动学、动力学和静力学的区别",
+        "提示3：判断本题是已知末端位置求关节角度，还是已知关节角度求末端位置"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：实例计算角度",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动学中，已知末端执行器的位置 $P(x,y,z)$，要通过逆运动学计算关节角度。设机器人有三个转动关节，关节变量分别为 $\\theta_1$、$\\theta_2$、$\\theta_3$。若已知末端执行器在平面上的位置关系满足 $x = L_1\\cos\\theta_1+L_2\\cos(\\theta_1 + \\theta_2)$，$y = L_1\\sin\\theta_1+L_2\\sin(\\theta_1 + \\theta_2)$（$L_1$、$L_2$ 为连杆长度），当 $L_1 = 2$，$L_2 = 3$，$x = 4$，$y = 0$ 时，以下哪个可能是 $\\theta_1$ 的值（角度制）？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0^\\circ$"
+        },
+        {
+          "label": "B",
+          "content": "$30^\\circ$"
+        },
+        {
+          "label": "C",
+          "content": "$45^\\circ$"
+        },
+        {
+          "label": "D",
+          "content": "$60^\\circ$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：将已知的 $L_1$、$L_2$、$x$、$y$ 的值代入到 $x = L_1\\cos\\theta_1+L_2\\cos(\\theta_1 + \\theta_2)$ 和 $y = L_1\\sin\\theta_1+L_2\\sin(\\theta_1 + \\theta_2)$ 中。",
+        "提示2：对于 $y = 0$ 这个条件，可以利用三角函数的和角公式 $\\sin(A + B)=\\sin A\\cos B+\\cos A\\sin B$ 进行化简。",
+        "提示3：再结合 $x = 4$ 的条件，逐一将选项中的 $\\theta_1$ 值代入验证。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：坐标系转换求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学中，已知手部的某个位置和姿态，通过反运动学（inverse kinematics）来求解各关节的角度是一个重要问题。假设有一个简单的二维机器人手臂，手臂由两个连杆组成，连杆 $L_1 = 2$，连杆 $L_2 = 1$。手部的目标位置在笛卡尔坐标系下为 $(x,y)=(2,1)$，以下哪个选项最接近第一个关节的角度 $\\theta_1$（角度采用弧度制，精确到小数点后两位）？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.64$"
+        },
+        {
+          "label": "B",
+          "content": "$0.92$"
+        },
+        {
+          "label": "C",
+          "content": "$1.23$"
+        },
+        {
+          "label": "D",
+          "content": "$1.57$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：对于二维双连杆机器人手臂的反运动学问题，可先根据余弦定理求出第二个关节的角度 $\\theta_2$",
+        "提示2：再利用几何关系求出第一个关节的角度 $\\theta_1$，公式涉及三角函数的运算",
+        "提示3：根据已知的连杆长度 $L_1$、$L_2$ 和目标位置 $(x,y)$，通过 $r = \\sqrt{x^2 + y^2}$ 计算手部到原点的距离"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：复杂三角方程求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人手部的逆向运动学中，常常会遇到复杂三角方程。已知在某一模型中，方程 $2\\sin^2\\theta - 3\\cos\\theta = 0$，$\\theta \\in [0, 2\\pi]$，求 $\\theta$ 的值。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{\\pi}{3}, \\frac{5\\pi}{3}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{\\pi}{6}, \\frac{5\\pi}{6}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{\\pi}{4}, \\frac{3\\pi}{4}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{2\\pi}{3}, \\frac{4\\pi}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：利用三角函数的平方关系 $\\sin^2\\theta = 1 - \\cos^2\\theta$ 将方程转化为关于 $\\cos\\theta$ 的方程",
+        "提示2：求解转化后的一元二次方程得到 $\\cos\\theta$ 的值",
+        "提示3：根据 $\\theta$ 的取值范围 $\\theta \\in [0, 2\\pi]$ 确定 $\\theta$ 的具体值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：函数推导过程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的新单元主要教授的 inverse kinematics 本质上是指什么？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "手部的逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "人体的正向运动学"
+        },
+        {
+          "label": "D",
+          "content": "机械臂的逆向运动学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中对 inverse kinematics 的本质描述",
+        "提示2：关注提到的与该概念相关的具体身体部位",
+        "提示3：明确正向和逆向运动学的区别，结合视频内容判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：xyz表达式求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动学中，已知正运动学方程为 $T(\\theta_1, \\theta_2) = R_z(\\theta_1) \\cdot R_y(\\theta_2)$，其中 $R_z(\\theta)$ 是绕 $z$ 轴旋转 $\\theta$ 角度的旋转矩阵，$R_y(\\theta)$ 是绕 $y$ 轴旋转 $\\theta$ 角度的旋转矩阵。若已知末端执行器的位姿矩阵 $T$，要求解对应的关节角度 $\\theta_1$ 和 $\\theta_2$，这属于以下哪种问题？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正运动学问题"
+        },
+        {
+          "label": "B",
+          "content": "逆运动学问题"
+        },
+        {
+          "label": "C",
+          "content": "动力学问题"
+        },
+        {
+          "label": "D",
+          "content": "轨迹规划问题"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：正运动学是已知关节角度求末端执行器的位姿，而逆运动学是已知末端执行器的位姿求关节角度",
+        "提示2：动力学问题主要研究力和运动的关系，轨迹规划问题是规划机器人的运动路径",
+        "提示3：根据题目中已知末端执行器位姿求解关节角度的描述来判断问题类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：条件简化方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的新单元主要教授的内容“inverse kinematics”对应的中文是以下哪个？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "弹性运动学"
+        },
+        {
+          "label": "D",
+          "content": "圆周运动学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：关注视频中对于“inverse kinematics”后续的解释内容",
+        "提示2：明确提到要教同学们手部的相关运动学，再结合“inverse”的含义思考",
+        "提示3：“inverse”有相反、逆向的意思"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求解θ3方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人运动学中，逆向运动学是研究已知末端执行器的位置和姿态，求解各个关节变量的问题。假设一个机器人手臂有三个关节，已知末端执行器的位置和姿态后，需要求解关节变量 $\\theta_3$。已知通过一系列运动学方程推导得到关于 $\\theta_3$ 的方程为 $A\\sin\\theta_3 + B\\cos\\theta_3 = C$（其中 $A$、$B$、$C$ 为已知常数），以下哪种方法可以用来求解 $\\theta_3$？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直接使用 $\\theta_3 = \\arcsin(\\frac{C}{A})$ 求解"
+        },
+        {
+          "label": "B",
+          "content": "将方程变形为 $\\sqrt{A^2 + B^2}\\sin(\\theta_3 + \\varphi) = C$，其中 $\\tan\\varphi = \\frac{B}{A}$，然后求解 $\\theta_3$"
+        },
+        {
+          "label": "C",
+          "content": "使用 $\\theta_3 = \\arccos(\\frac{C}{B})$ 求解"
+        },
+        {
+          "label": "D",
+          "content": "将方程两边同时除以 $\\cos\\theta_3$，得到 $A\\tan\\theta_3 + B = C\\sec\\theta_3$，然后直接求解 $\\theta_3$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：对于形如 $A\\sin\\theta_3 + B\\cos\\theta_3 = C$ 的方程，不能简单地直接用反正弦或反余弦函数求解。",
+        "提示2：可以利用三角函数的辅助角公式 $a\\sin x + b\\cos x = \\sqrt{a^2 + b^2}\\sin(x + \\varphi)$，其中 $\\tan\\varphi = \\frac{b}{a}$ 来变形方程。",
+        "提示3：分析各个选项，判断其是否能正确求解方程 $A\\sin\\theta_3 + B\\cos\\theta_3 = C$。"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：求解θ1和θ2",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个机器人手臂的逆运动学问题中，若已知某状态下手臂末端的坐标为 $(x,y)$，手臂两段长度分别为 $L_1$ 和 $L_2$，根据逆运动学原理求解关节角度 $\\theta_1$ 和 $\\theta_2$ 的表达式。$\\theta_1$ = ___ ，$\\theta_2$ = ___ 。",
+      "blanks": 2,
+      "answer_type": "text",
+      "solution": "先根据余弦定理求 $\\theta_2$，$\\cos\\theta_2 = \\frac{x^2 + y^2 - L_1^2 - L_2^2}{2L_1L_2}$，$\\theta_2 = \\pm\\arccos(\\frac{x^2 + y^2 - L_1^2 - L_2^2}{2L_1L_2})$；再根据正切公式求 $\\theta_1$，$\\tan\\psi = \\frac{y}{x}$，$\\tan\\alpha=\\frac{L_2\\sin\\theta_2}{L_1 + L_2\\cos\\theta_2}$，$\\theta_1 = \\psi\\pm\\alpha = \\arctan(\\frac{y}{x})\\pm\\arctan(\\frac{L_2\\sin\\theta_2}{L_1 + L_2\\cos\\theta_2})$",
+      "hints": [
+        "提示1：利用余弦定理来建立关于 $\\theta_2$ 的方程",
+        "提示2：通过正切公式求解 $\\theta_1$ 时，要结合三角函数关系找到相关角度的表示",
+        "提示3：考虑手臂的几何结构和坐标关系进行推导"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求解θ4 - 6",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学中，我们开始进入一个新单元学习 inverse kinematics（逆向运动学），逆向运动学主要是研究手爪的逆向运动，已知一个简单的机器人手臂模型，有三个关节角度 $\\theta_1$、$\\theta_2$、$\\theta_3$ ，末端执行器的位置可以用坐标 $(x,y,z)$ 表示，若已知末端执行器坐标 $(1,2,0)$ ，在求解逆向运动学时，以下哪个对于逆向运动学的理解是正确的（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "逆向运动学是已知关节角度求末端执行器位置"
+        },
+        {
+          "label": "B",
+          "content": "逆向运动学是已知末端执行器位置求关节角度"
+        },
+        {
+          "label": "C",
+          "content": "逆向运动学与关节角度和末端执行器位置无关"
+        },
+        {
+          "label": "D",
+          "content": "逆向运动学只是研究手爪的正向运动"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频中对逆向运动学的介绍来分析每个选项",
+        "提示2：思考逆向运动学是从已知到未知的推导方向",
+        "提示3：明确逆向运动学与手爪运动以及关节角度和末端执行器位置的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：工具与坐标定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的新单元主要教授的 inverse kinematics ，其本质是教授同学们以下哪种内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "手部的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "手部的逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "机器人的正向运动学"
+        },
+        {
+          "label": "D",
+          "content": "机器人的逆向运动学"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于 inverse kinematics 的描述",
+        "提示2：明确提到是与手部相关的运动学",
+        "提示3：注意正向和逆向运动学的区别，视频强调的是逆向"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：物体取放任务",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的新单元主要教授的内容是以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "物体的直接运动学"
+        },
+        {
+          "label": "B",
+          "content": "手部的反向运动学（inverse kinematics）"
+        },
+        {
+          "label": "C",
+          "content": "机器人的动力学模型"
+        },
+        {
+          "label": "D",
+          "content": "医学中的运动轨迹规划"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中关于新单元教学内容的描述",
+        "提示2：注意提到的英文术语和对应的中文概念",
+        "提示3：重点关注与手部运动学相关的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：问题求解步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的新单元主要教授的内容是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人学的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "机器人学的逆向运动学（inverse kinematics）"
+        },
+        {
+          "label": "C",
+          "content": "机器人学的动力学"
+        },
+        {
+          "label": "D",
+          "content": "机器人学的控制理论"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中明确提到的新单元要教授的内容",
+        "提示2：重点关注关于inverse kinematics的描述",
+        "提示3：对比各选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：坐标系转换",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学中，逆运动学主要是研究什么的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人的正方向运动学"
+        },
+        {
+          "label": "B",
+          "content": "机器人手部的逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "机器人的动力学"
+        },
+        {
+          "label": "D",
+          "content": "机器人的传感器技术"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：视频中明确提到了本节课要教授的逆运动学相关内容",
+        "提示2：重点关注与逆运动学具体研究对象相关的表述",
+        "提示3：思考逆运动学和手部运动的联系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：矩阵推导求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人学中，逆运动学主要是研究什么的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "机器人的正向运动学"
+        },
+        {
+          "label": "B",
+          "content": "机器人手部的逆向运动学"
+        },
+        {
+          "label": "C",
+          "content": "机器人的动力学模型"
+        },
+        {
+          "label": "D",
+          "content": "机器人的传感器技术"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对逆运动学的定义",
+        "提示2：明确提到主要是教大家手部的逆向运动学",
+        "提示3：排除与逆向运动学无关的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：角度计算方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在机器人逆向运动学中，已知一个机械臂的关节角度关系满足 $\\cos\\alpha + \\sin\\alpha = \\frac{\\sqrt{2}}{2}$，且 $0 < \\alpha < \\frac{\\pi}{2}$，那么 $\\alpha$ 的值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{\\pi}{12}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{\\pi}{6}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{\\pi}{4}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{5\\pi}{12}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：对 $\\cos\\alpha + \\sin\\alpha$ 进行变形，可利用辅助角公式 $a\\sin x + b\\cos x = \\sqrt{a^2 + b^2}\\sin(x + \\varphi)$，这里 $a = 1$，$b = 1$",
+        "提示2：先将 $\\cos\\alpha + \\sin\\alpha$ 变形为 $\\sqrt{2}\\sin(\\alpha + \\frac{\\pi}{4})$",
+        "提示3：然后根据已知条件 $\\sqrt{2}\\sin(\\alpha + \\frac{\\pi}{4}) = \\frac{\\sqrt{2}}{2}$，求出 $\\sin(\\alpha + \\frac{\\pi}{4})$ 的值，再结合 $\\alpha$ 的取值范围求解 $\\alpha$"
+      ]
+    }
+  ],
+  "count": 32
+}

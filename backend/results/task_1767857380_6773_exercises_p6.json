@@ -1,0 +1,101 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：直线上点投影规律",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一条空间直线 $l$ 和一个空间点 $P$，若点 $P$ 的投影在直线 $l$ 的投影上，则以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点 $P$ 一定在直线 $l$ 上"
+        },
+        {
+          "label": "B",
+          "content": "点 $P$ 一定不在直线 $l$ 上"
+        },
+        {
+          "label": "C",
+          "content": "点 $P$ 可能在直线 $l$ 上，也可能不在直线 $l$ 上"
+        },
+        {
+          "label": "D",
+          "content": "以上说法都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的点和直线的位置关系有两种情况",
+        "提示2：思考点的投影和直线投影的关系与点和直线本身位置关系的联系",
+        "提示3：仅仅根据点的投影在直线投影上，不能确定点一定在直线上或者一定不在直线上"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求点投影例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "空间中有一条直线 $l$ 和一个点 $P$，已知点 $P$ 的投影情况符合直线上点的投影规律，那么点 $P$ 与直线 $l$ 的位置关系是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "点 $P$ 一定在直线 $l$ 上"
+        },
+        {
+          "label": "B",
+          "content": "点 $P$ 一定不在直线 $l$ 上"
+        },
+        {
+          "label": "C",
+          "content": "点 $P$ 可能在直线 $l$ 上，也可能不在直线 $l$ 上"
+        },
+        {
+          "label": "D",
+          "content": "无法确定点 $P$ 与直线 $l$ 的位置关系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的点与直线的位置关系有几种",
+        "提示2：明确直线上的点的投影规律所对应的点与直线的位置关系",
+        "提示3：根据已知条件点 $P$ 的投影情况符合直线上点的投影规律来判断位置关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：判断点线位置",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在空间直角坐标系中，直线 $l$ 的方程为 $\\frac{x - 1}{2} = \\frac{y + 2}{3} = \\frac{z - 3}{4}$，以下哪个点在直线 $l$ 上（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(3, 1, 7)$"
+        },
+        {
+          "label": "B",
+          "content": "$(2, 1, 6)$"
+        },
+        {
+          "label": "C",
+          "content": "$(4, 2, 9)$"
+        },
+        {
+          "label": "D",
+          "content": "$(5, 3, 11)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：设直线 $l$ 的方程 $\\frac{x - 1}{2} = \\frac{y + 2}{3} = \\frac{z - 3}{4}=t$，则可得到直线的参数方程 $x = 2t + 1$，$y = 3t - 2$，$z = 4t + 3$",
+        "提示2：将各选项中的点代入参数方程，看是否能找到满足条件的 $t$ 值",
+        "提示3：若代入后能使三个方程中的 $t$ 值相等，则该点在直线上"
+      ]
+    }
+  ],
+  "count": 3
+}

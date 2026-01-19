@@ -1,0 +1,197 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：球体三面投影原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于球体的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "球体和圆柱体、圆锥体一样，表面都有平面"
+        },
+        {
+          "label": "B",
+          "content": "球体表面完全是由球面单独围成的"
+        },
+        {
+          "label": "C",
+          "content": "球体不能放在三面投影体系内部进行投影"
+        },
+        {
+          "label": "D",
+          "content": "球体表面有一部分是平面，一部分是曲面"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对球体表面的描述，判断其是否有平面",
+        "提示2：明确球体能否在三面投影体系内进行投影",
+        "提示3：根据视频内容分析每个选项的正确性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：球体三面投影绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于球体的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "球体和圆柱体、圆锥体一样，表面都有平面"
+        },
+        {
+          "label": "B",
+          "content": "球体表面完全是由球面单独围成的，没有平面"
+        },
+        {
+          "label": "C",
+          "content": "球体不能放在三面投影体系内部进行投影"
+        },
+        {
+          "label": "D",
+          "content": "球体的投影与圆柱体、圆锥体的投影原理完全不同"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对球体表面特征的描述，判断选项A和B",
+        "提示2：结合视频中提到球体放在三面投影体系内的内容，分析选项C",
+        "提示3：思考常见几何体投影的基本原理，判断选项D"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：球体表面取点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于球体的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "球体和圆柱体、圆锥体一样，表面都有平面"
+        },
+        {
+          "label": "B",
+          "content": "球体完全是由球面单独围成的，表面没有平面"
+        },
+        {
+          "label": "C",
+          "content": "球体的三面投影形成原理与圆柱体、圆锥体不同，它不能放在三面投影体系内完成投影"
+        },
+        {
+          "label": "D",
+          "content": "球体的投影和圆柱体、圆锥体的投影没有任何区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于球体与圆柱体、圆锥体表面特征的对比",
+        "提示2：明确球体表面的组成结构",
+        "提示3：考虑球体在三面投影体系内的情况以及投影特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：球体K点定位",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于球体的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "球体和圆柱体、圆锥体一样，表面都有平面"
+        },
+        {
+          "label": "B",
+          "content": "球体是由球面和一个平面共同围成的"
+        },
+        {
+          "label": "C",
+          "content": "球体完全是由球面单独围成的，表面没有平面"
+        },
+        {
+          "label": "D",
+          "content": "球体的三面投影形成原理与圆柱体、圆锥体不同，且无法在三面投影体系内完成投影"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对球体特征的描述，明确球体与圆柱体、圆锥体的区别",
+        "提示2：思考球体是由什么面围成的",
+        "提示3：视频提到了球体可以放在三面投影体系内完成投影，据此判断选项D"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：K点投影作图",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列关于球体投影的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "球体和圆柱体、圆锥体一样，表面都有平面"
+        },
+        {
+          "label": "B",
+          "content": "球体的投影形成原理与其他旋转体完全不同"
+        },
+        {
+          "label": "C",
+          "content": "球体完全是由球面单独围成的，表面没有平面"
+        },
+        {
+          "label": "D",
+          "content": "球体不能放在三面投影体系内部进行投影"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于球体的特征描述，明确其与圆柱体、圆锥体的区别",
+        "提示2：思考球体投影形成原理的相关内容",
+        "提示3：考虑球体在三面投影体系中的放置情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：M点投影求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于球体的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "球体和圆柱体、圆锥体一样，表面都有平面"
+        },
+        {
+          "label": "B",
+          "content": "球体是由球面和一个平面共同围成的"
+        },
+        {
+          "label": "C",
+          "content": "球体完全是由球面单独围成的，其表面没有平面"
+        },
+        {
+          "label": "D",
+          "content": "以上描述都不正确"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对球体的特征描述",
+        "提示2：明确球体与圆柱体、圆锥体在表面构成上的区别",
+        "提示3：根据球体表面只有球面这一特点来判断选项"
+      ]
+    }
+  ],
+  "count": 6
+}

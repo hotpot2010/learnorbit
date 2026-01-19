@@ -1,0 +1,389 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：化学反应速率定义",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "化学反应速率通常用单位时间内反应物浓度的减少或生成物浓度的增加来表示，其常用单位不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "摩尔每立方米每秒"
+        },
+        {
+          "label": "B",
+          "content": "摩尔每升每分钟"
+        },
+        {
+          "label": "C",
+          "content": "克每升每秒"
+        },
+        {
+          "label": "D",
+          "content": "摩尔每立方分米每秒"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的化学反应速率的常用单位",
+        "提示2：明确化学反应速率是用物质的量浓度的变化来表示的",
+        "提示3：分析各选项的单位是否符合用物质的量浓度变化表示的特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平均反应速率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "化学反应速率通常用单位时间内反应物浓度的减少或生成物浓度的增加来表示。在某化学反应中，反应物 $A$ 在 $10 s$ 内浓度从 $2 mol/m^3$ 减少到 $1 mol/m^3$，则该反应在这段时间内以反应物 $A$ 表示的平均反应速率是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.1 mol/m^3 \\cdot s$"
+        },
+        {
+          "label": "B",
+          "content": "$0.2 mol/m^3 \\cdot s$"
+        },
+        {
+          "label": "C",
+          "content": "$0.01 mol/m^3 \\cdot s$"
+        },
+        {
+          "label": "D",
+          "content": "$0.02 mol/m^3 \\cdot s$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据化学反应速率的定义，平均反应速率 $v = \\frac{\\Delta c}{\\Delta t}$，其中 $\\Delta c$ 是浓度变化量，$\\Delta t$ 是时间变化量",
+        "提示2：计算反应物 $A$ 的浓度变化量 $\\Delta c$，用初始浓度减去末浓度",
+        "提示3：将浓度变化量和时间变化量代入公式计算反应速率"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：瞬时反应速率",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "化学反应速率通常用单位时间内反应物浓度的减少或生成物浓度的增加来表示，以下哪个是化学反应速率常用单位？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "摩尔每立方米每秒"
+        },
+        {
+          "label": "B",
+          "content": "克每升每分钟"
+        },
+        {
+          "label": "C",
+          "content": "千克每立方米每小时"
+        },
+        {
+          "label": "D",
+          "content": "米每秒"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的化学反应速率的常用单位",
+        "提示2：化学反应速率单位与物质的量浓度和时间有关",
+        "提示3：排除与物质的量浓度和时间无关或不常用的单位"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：速率方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "化学反应速率通常用单位时间内反应物浓度的减少或生成物浓度的增加来表示，以下哪个是它常用的单位？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$mol\\cdot m^{-3}\\cdot s^{-1}$"
+        },
+        {
+          "label": "B",
+          "content": "$g\\cdot m^{-3}\\cdot s^{-1}$"
+        },
+        {
+          "label": "C",
+          "content": "$mol\\cdot cm^{-3}\\cdot h^{-1}$"
+        },
+        {
+          "label": "D",
+          "content": "$g\\cdot cm^{-3}\\cdot min^{-1}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中提到的化学反应速率的常用单位",
+        "提示2：注意单位要包含物质的量浓度和时间",
+        "提示3：常用单位有摩尔每立方米每秒、摩尔每立方分米每秒、摩尔每立方分米每分钟等"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：反应级数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "化学反应速率通常用单位时间内反应物浓度的减少或生成物浓度的增加来表示，下列哪个是化学反应速率常用的单位？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "摩尔每立方米每秒"
+        },
+        {
+          "label": "B",
+          "content": "克每升每分钟"
+        },
+        {
+          "label": "C",
+          "content": "千克每立方米每小时"
+        },
+        {
+          "label": "D",
+          "content": "米每秒"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的化学反应速率的常用单位",
+        "提示2：注意单位要体现物质的量浓度和时间的关系",
+        "提示3：排除与物质的量浓度和时间无关的单位"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：速率常数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个化学反应中，能够用来表示化学反应速率的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单位时间内反应物物质的量的减少"
+        },
+        {
+          "label": "B",
+          "content": "单位体积内生成物物质的量的增加"
+        },
+        {
+          "label": "C",
+          "content": "单位时间内反应物浓度的减少或生成物浓度的增加"
+        },
+        {
+          "label": "D",
+          "content": "单位时间内生成气体的体积多少"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中化学反应速率的定义",
+        "提示2：明确化学反应速率是用单位时间内物质的变化来衡量",
+        "提示3：要注意是反应物浓度的减少或生成物浓度的增加才是化学反应速率的正确表达"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：反应机理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "化学反应速率通常用单位时间内反应物浓度的减少或生成物浓度的增加来表示，以下哪个是化学反应速率常用的单位？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "摩尔每立方米每秒"
+        },
+        {
+          "label": "B",
+          "content": "克每立方米每秒"
+        },
+        {
+          "label": "C",
+          "content": "千克每立方米每分钟"
+        },
+        {
+          "label": "D",
+          "content": "摩尔每升每分钟"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的化学反应速率的常用单位",
+        "提示2：注意单位要与浓度和时间相关，且浓度常以物质的量浓度表示",
+        "提示3：明确化学反应速率是用单位时间内反应物或生成物浓度的变化来衡量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：稳态近似法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "化学反应速率通常用单位时间内反应物浓度的减少或生成物浓度的增加来表示，那么下列哪个是化学反应速率常用的单位？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$mol/m^3\\cdot min$"
+        },
+        {
+          "label": "B",
+          "content": "$g/m^3\\cdot s$"
+        },
+        {
+          "label": "C",
+          "content": "$kg/m^3\\cdot min$"
+        },
+        {
+          "label": "D",
+          "content": "$mol/g\\cdot s$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频，化学反应速率常用单位与物质的量浓度和时间有关",
+        "提示2：回顾视频中提到的常用单位形式，是物质的量（摩尔）与体积和时间的组合",
+        "提示3：分析每个选项，看哪个符合视频中提到的常用单位格式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：反应级数特点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "化学反应速率通常用单位时间内反应物浓度的减少或生成物浓度的增加来表示，以下哪个是它常用的单位？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "摩尔每立方米每秒"
+        },
+        {
+          "label": "B",
+          "content": "克每升每秒"
+        },
+        {
+          "label": "C",
+          "content": "千克每立方米每分钟"
+        },
+        {
+          "label": "D",
+          "content": "毫克每毫升每秒"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中提到的化学反应速率常用单位",
+        "提示2：视频中明确给出了化学反应速率常用单位包含摩尔每立方米每秒等",
+        "提示3：将选项与视频中提到的常用单位进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：温度对速率影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个化学反应中，反应一段时间后，反应物 A 的浓度从 $2\\ mol/L$ 降到了 $1.5\\ mol/L$，用时 $10\\ s$，则该反应以反应物 A 表示的反应速率可能是以下哪个单位？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$mol/(m^3\\cdot s)$"
+        },
+        {
+          "label": "B",
+          "content": "$mol/(dm^3\\cdot min)$"
+        },
+        {
+          "label": "C",
+          "content": "$mol/(cm^3\\cdot s)$"
+        },
+        {
+          "label": "D",
+          "content": "以上都有可能"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的化学反应速率的常用单位",
+        "提示2：明确 $m^3$、$dm^3$、$cm^3$ 之间的换算关系",
+        "提示3：思考这些单位是否都可以用来表示化学反应速率"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：温度对反应速率影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个化学反应中，若用反应物浓度的减少来表示反应速率，已知某段时间内反应物的物质的量减少了 $0.2\\ mol$，反应容器体积为 $2\\ m^3$，反应时间为 $10\\ s$，则该反应的反应速率为多少（单位：$mol\\cdot m^{-3}\\cdot s^{-1}$）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.01$"
+        },
+        {
+          "label": "B",
+          "content": "$0.02$"
+        },
+        {
+          "label": "C",
+          "content": "$0.1$"
+        },
+        {
+          "label": "D",
+          "content": "$0.2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先根据物质的量和容器体积计算出反应物浓度的变化量",
+        "提示2：反应速率等于单位时间内反应物浓度的减少量",
+        "提示3：按照反应速率的计算公式 $v = \\frac{\\Delta c}{\\Delta t}$ 进行计算，其中 $\\Delta c$ 是浓度变化量，$\\Delta t$ 是时间变化量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：催化剂对反应影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个化学反应中，反应开始时反应物的物质的量浓度为 $2 \\mathrm{mol/L}$，经过 $10 \\mathrm{s}$ 后，反应物的物质的量浓度变为 $1.6 \\mathrm{mol/L}$，则该反应的化学反应速率用反应物浓度的减少来表示，其单位用 $\\mathrm{mol/(L \\cdot s)}$ 时，反应速率为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.04 \\mathrm{mol/(L \\cdot s)}$"
+        },
+        {
+          "label": "B",
+          "content": "$0.4 \\mathrm{mol/(L \\cdot s)}$"
+        },
+        {
+          "label": "C",
+          "content": "$0.004 \\mathrm{mol/(L \\cdot s)}$"
+        },
+        {
+          "label": "D",
+          "content": "$4 \\mathrm{mol/(L \\cdot s)}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频中化学反应速率的定义，用单位时间内反应物浓度的减少来表示反应速率",
+        "提示2：先计算出反应物浓度的减少量，再除以反应时间",
+        "提示3：注意单位的使用，本题要求速率单位为 $\\mathrm{mol/(L \\cdot s)}$"
+      ]
+    }
+  ],
+  "count": 12
+}

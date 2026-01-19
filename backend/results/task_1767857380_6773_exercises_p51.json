@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：视图底线绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘制三视图底线时，为了提高绘图效果，下列做法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "先从左视图开始绘制底线"
+        },
+        {
+          "label": "B",
+          "content": "只绘制主视图的底线，不考虑其他视图"
+        },
+        {
+          "label": "C",
+          "content": "可以多个视图同时绘制底线"
+        },
+        {
+          "label": "D",
+          "content": "先确定组合体的上表面投影线作为底线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中绘制视图底线的起始视图",
+        "提示2：思考提高绘图效果的具体方法",
+        "提示3：明确绘制底线时应确定的是哪个表面的投影线"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：圆柱投影绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘制三视图时，确定了中心线后，接着绘制各视图的底边。已知要绘制一个组合体的三视图，下列关于绘图步骤的说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "应先从左视图开始绘制各视图的底边"
+        },
+        {
+          "label": "B",
+          "content": "应先确定组合体底部平板下底面投影成的这条水平环（线），且先从主视图画起"
+        },
+        {
+          "label": "C",
+          "content": "为了提高绘图效果，只能一个视图一个视图依次绘制"
+        },
+        {
+          "label": "D",
+          "content": "组合体底部平板下底面在主视图投影成的这条线，在左视图没有对应投影"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的绘图起始视图",
+        "提示2：明确绘图过程中确定的关键线条",
+        "提示3：注意视频中提到的提高绘图效果的方法"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：半剖视图纸法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘制半剖视图纸时，确定了三视图的中心线后，接下来要绘制各个视图的底线，正确的绘制顺序和方法是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "先从左视图画起，逐个视图依次绘制"
+        },
+        {
+          "label": "B",
+          "content": "先从主视图画起，逐个视图依次绘制"
+        },
+        {
+          "label": "C",
+          "content": "先从主视图画起，为提高画图效果，可以多个视图同时画"
+        },
+        {
+          "label": "D",
+          "content": "先从左视图画起，为提高画图效果，可以多个视图同时画"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：注意视频中提到的起始绘制视图",
+        "提示2：思考提高画图效果的方法",
+        "提示3：回顾视频中关于绘制顺序和方法的描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：完整图形绘制",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在绘制三视图时，确定中心线之后接下来要做的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直接绘制组合体的轮廓"
+        },
+        {
+          "label": "B",
+          "content": "绘制各个视图的底线，先从主视图画起"
+        },
+        {
+          "label": "C",
+          "content": "绘制左视图的轮廓"
+        },
+        {
+          "label": "D",
+          "content": "绘制俯视图的底线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于绘制三视图的步骤顺序",
+        "提示2：明确确定中心线之后的操作内容",
+        "提示3：注意视频中提到是哪个视图先开始绘制底线"
+      ]
+    }
+  ],
+  "count": 4
+}

@@ -1,0 +1,355 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：绘图比例概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一幅地图上，量得 A、B 两地的图上距离是 5 厘米，而 A、B 两地的实际距离是 250 千米。那么该地图的绘图比例是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1:500000$"
+        },
+        {
+          "label": "B",
+          "content": "$1:5000000$"
+        },
+        {
+          "label": "C",
+          "content": "$1:50000$"
+        },
+        {
+          "label": "D",
+          "content": "$1:5000$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先要统一图上距离和实际距离的单位",
+        "提示2：根据绘图比例的定义，即图上距离与实际距离的比来计算",
+        "提示3：注意单位换算，1 千米 = 100000 厘米"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：比例分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一幅地图中，图上距离 $2$ 厘米表示实际距离 $40$ 千米，那么这幅地图的比例尺是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1:20$"
+        },
+        {
+          "label": "B",
+          "content": "$1:20000$"
+        },
+        {
+          "label": "C",
+          "content": "$1:2000000$"
+        },
+        {
+          "label": "D",
+          "content": "$1:200000$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先要统一图上距离和实际距离的单位",
+        "提示2：根据比例尺的定义，比例尺等于图上距离与实际距离的比",
+        "提示3：注意单位换算，$1$ 千米 $= 100000$ 厘米"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：比例系列规定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一幅地图中，地图上一个正方形区域的边长为 $5$ 厘米，该正方形区域所代表的实际区域边长为 $500$ 米，那么这幅地图的比例尺是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1:100$"
+        },
+        {
+          "label": "B",
+          "content": "$1:1000$"
+        },
+        {
+          "label": "C",
+          "content": "$1:10000$"
+        },
+        {
+          "label": "D",
+          "content": "$1:100000$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先明确比例尺的定义，即图上距离与实际距离的比",
+        "提示2：注意单位要统一，将实际距离的单位米换算为厘米",
+        "提示3：计算图上边长与实际边长的比值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：比例标注方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一幅地图中，地图上一个矩形区域的长为 $5$ 厘米，该矩形区域实际对应的场地长为 $50$ 米，那么这幅地图的比例是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1:10$"
+        },
+        {
+          "label": "B",
+          "content": "$1:100$"
+        },
+        {
+          "label": "C",
+          "content": "$1:1000$"
+        },
+        {
+          "label": "D",
+          "content": "$1:10000"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先要统一地图上长度和实际长度的单位",
+        "提示2：根据视频中比例的定义，即图中图形与其实物相应要素的线性尺寸之比来计算",
+        "提示3：将单位统一后，用地图上的长度比实际长度即可得到比例"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：比例使用场景",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一幅地图上，一个正方形区域的图上边长为 $5$ 厘米，该正方形区域实际对应的边长为 $500$ 米，那么这幅地图的比例尺是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1:100$"
+        },
+        {
+          "label": "B",
+          "content": "$1:1000$"
+        },
+        {
+          "label": "C",
+          "content": "$1:10000$"
+        },
+        {
+          "label": "D",
+          "content": "$1:100000$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先要统一图上距离和实际距离的单位",
+        "提示2：根据比例尺的定义，比例尺等于图上距离与实际距离的比",
+        "提示3：计算时注意单位换算，$1$ 米 $ = 100$ 厘米"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：比例标注位置",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知图纸上一个长方形的长为 $8cm$，该长方形实际的长为 $4m$，则该绘图比例为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$1:50$",
+      "hints": [
+        "提示1：首先统一单位，将实际长度的单位换算为厘米",
+        "提示2：回忆视频中绘图比例是图上图形与实际物体相应线性尺寸之比",
+        "提示3：计算图上长度与实际长度的比值并化为最简整数比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：图线字体要求",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知绘制图形中某线段的长度为 $5\\text{cm}$，其所表示的实际物体对应线段的长度为 $2\\text{m}$，则该绘图的比例是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1:40$"
+        },
+        {
+          "label": "B",
+          "content": "$1:4$"
+        },
+        {
+          "label": "C",
+          "content": "$4:1$"
+        },
+        {
+          "label": "D",
+          "content": "$40:1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确比例是图中图形与所表示的实际物体相应要素的线性尺寸之比",
+        "提示2：在计算比例时，要保证图上尺寸和实际尺寸的单位一致",
+        "提示3：将实际长度的单位 $\\text{m}$ 换算为 $\\text{cm}$ 后再进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：字体高度规范",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一幅工程图纸中，一个零件的图形长度为 $5$ 厘米，而该零件实际的长度为 $2$ 米。那么这幅图纸的比例尺是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1:40$"
+        },
+        {
+          "label": "B",
+          "content": "$1:400$"
+        },
+        {
+          "label": "C",
+          "content": "$40:1$"
+        },
+        {
+          "label": "D",
+          "content": "$400:1"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先要统一图上长度和实际长度的单位",
+        "提示2：根据比例尺的定义，比例尺等于图上距离与实际距离的比",
+        "提示3：计算时要注意单位换算，将米换算为厘米"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：比例尺概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一幅地图上，一个正方形湖泊的图形边长为 $5\\text{cm}$，该湖泊实际边长为 $500\\text{m}$，那么这幅地图的比例尺是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1:10000$"
+        },
+        {
+          "label": "B",
+          "content": "$1:1000$"
+        },
+        {
+          "label": "C",
+          "content": "$1:100$"
+        },
+        {
+          "label": "D",
+          "content": "$1:10$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确比例尺的定义为图上距离与实际距离的比",
+        "提示2：需要将实际距离的单位转化为和图上距离相同的单位，本题中把米转化为厘米",
+        "提示3：计算图上距离与实际距离的比值，进而得出比例尺"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：字母数字规范",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一幅地图中，量得 A、B 两地的图上距离是 5 厘米，而 A、B 两地的实际距离是 200 千米，那么该地图的比例尺是 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "1:4000000",
+      "hints": [
+        "提示1：根据比例尺的定义，比例尺等于图上距离与实际距离的比",
+        "提示2：先统一图上距离和实际距离的单位，将千米转化为厘米，1 千米 = 100000 厘米",
+        "提示3：计算两者的比值并化为最简形式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：字体与图幅关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一幅地图中，地图上某条道路的长度为 $5$ 厘米，而这条道路实际长度为 $500$ 米，那么该地图的比例尺是多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1:100$"
+        },
+        {
+          "label": "B",
+          "content": "$1:1000$"
+        },
+        {
+          "label": "C",
+          "content": "$1:10000$"
+        },
+        {
+          "label": "D",
+          "content": "$1:100000"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先要统一地图上长度和实际长度的单位",
+        "提示2：根据比例尺的定义，比例尺等于图上距离与实际距离的比",
+        "提示3：将实际距离 $500$ 米转化为厘米后再计算比例尺"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：书写示例要求",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一幅地图中，地图上一条线段的长度为 $5$ 厘米，它所表示的实际距离是 $200$ 米，那么这幅地图的比例尺是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1:40$"
+        },
+        {
+          "label": "B",
+          "content": "$1:4000$"
+        },
+        {
+          "label": "C",
+          "content": "$1:40000$"
+        },
+        {
+          "label": "D",
+          "content": "$1:400000$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先明确比例尺的定义，即图上距离与实际距离的比",
+        "提示2：要注意单位的统一，将实际距离的单位米换算为厘米",
+        "提示3：根据比例尺公式 $比例尺 = \\frac{图上距离}{实际距离}$ 进行计算"
+      ]
+    }
+  ],
+  "count": 12
+}

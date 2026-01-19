@@ -1,0 +1,261 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线特征",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "平面与回转体相交，一般情况下截交线是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "开放的平面曲线"
+        },
+        {
+          "label": "B",
+          "content": "封闭的空间曲线"
+        },
+        {
+          "label": "C",
+          "content": "封闭的平面曲线"
+        },
+        {
+          "label": "D",
+          "content": "开放的空间曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中平面与回转体相交时截交线的特征描述",
+        "提示2：明确截交线是封闭还是开放，是平面曲线还是空间曲线",
+        "提示3：视频中提到一般情况下截交线是封闭的，且所有点在同一平面内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线求法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "平面与回转体相交，一般情况下截交线具有什么特征？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "是开放的空间曲线"
+        },
+        {
+          "label": "B",
+          "content": "是封闭的平面曲线，且曲线上所有点在同一平面内，如圆、椭圆等"
+        },
+        {
+          "label": "C",
+          "content": "是封闭的空间曲线"
+        },
+        {
+          "label": "D",
+          "content": "是开放的平面曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于平面与回转体相交截交线特征的描述",
+        "提示2：注意截交线是否封闭以及是平面曲线还是空间曲线",
+        "提示3：明确截交线的典型示例，如圆、椭圆等"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面与圆柱相交",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "平面与旋转体相交，一般情况下截交线是封闭的平面曲线，以下哪种曲线可能是平面与旋转体相交的截交线？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "直线"
+        },
+        {
+          "label": "B",
+          "content": "空间曲线"
+        },
+        {
+          "label": "C",
+          "content": "椭圆"
+        },
+        {
+          "label": "D",
+          "content": "折线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据视频内容，明确平面与旋转体相交的截交线是封闭的平面曲线",
+        "提示2：分析每个选项，判断其是否符合封闭平面曲线的特征",
+        "提示3：思考直线、空间曲线、椭圆、折线的性质，看哪个符合要求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平面截圆柱交线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "平面与旋转体相交，一般情况下截交线是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "开放的平面曲线"
+        },
+        {
+          "label": "B",
+          "content": "封闭的空间曲线"
+        },
+        {
+          "label": "C",
+          "content": "封闭的平面曲线"
+        },
+        {
+          "label": "D",
+          "content": "开放的空间曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到平面与旋转体相交时截交线的特征",
+        "提示2：明确截交线是封闭还是开放，是平面曲线还是空间曲线",
+        "提示3：视频中指出一般情况下截交线是封闭的，且所有点在同一平面内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线投影求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "平面与回转体相交时，一般情况下截交线具有以下哪种特征？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "是一条开放的空间曲线"
+        },
+        {
+          "label": "B",
+          "content": "是一条封闭的平面曲线，曲线上所有点在同一平面内，如圆、椭圆、抛物线等"
+        },
+        {
+          "label": "C",
+          "content": "是一条封闭的空间曲线"
+        },
+        {
+          "label": "D",
+          "content": "是一条开放的平面曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于平面与回转体相交时截交线特征的描述",
+        "提示2：关注截交线是封闭还是开放，以及是平面曲线还是空间曲线",
+        "提示3：考虑截交线可能出现的具体形状，如圆、椭圆等"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：实例解题分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "平面与旋转体相交，一般情况下交线是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "开放的空间曲线"
+        },
+        {
+          "label": "B",
+          "content": "封闭的空间曲线"
+        },
+        {
+          "label": "C",
+          "content": "开放的平面曲线"
+        },
+        {
+          "label": "D",
+          "content": "封闭的平面曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中关于平面与旋转体相交交线的特征描述",
+        "提示2：注意区分平面曲线和空间曲线，以及开放曲线和封闭曲线的概念",
+        "提示3：视频中明确提到一般情况下交线是封闭的平面曲线"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求侧面投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个平面与一个旋转体相交时，一般情况下截交线是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "开放的平面曲线"
+        },
+        {
+          "label": "B",
+          "content": "封闭的空间曲线"
+        },
+        {
+          "label": "C",
+          "content": "封闭的平面曲线"
+        },
+        {
+          "label": "D",
+          "content": "开放的空间曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到平面与旋转体相交时截交线的特征",
+        "提示2：明确截交线是否封闭",
+        "提示3：确定截交线是在同一平面内还是空间中的曲线"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求截交线投影",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "平面与回转体相交，一般情况下截交线具有以下哪种特征？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "是一条开放的空间曲线"
+        },
+        {
+          "label": "B",
+          "content": "是一条封闭的平面曲线，且曲线上所有点在同一平面内，如圆、椭圆、抛物线等"
+        },
+        {
+          "label": "C",
+          "content": "是一条直线"
+        },
+        {
+          "label": "D",
+          "content": "是一条不封闭的平面曲线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于平面与回转体相交时截交线特征的描述",
+        "提示2：明确截交线是否封闭以及是否为平面曲线",
+        "提示3：思考常见的截交线形状"
+      ]
+    }
+  ],
+  "count": 8
+}

@@ -1,0 +1,1221 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：转录概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，关于DNA复制、RNA转录和蛋白质翻译这几个过程，下列说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "我们需要重点掌握RNA转录和蛋白质翻译自身的一些辅助因子，以及它们和DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "RNA转录和蛋白质翻译过程与DNA复制没有任何区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达中的描述",
+        "提示2：明确视频强调的对RNA转录和蛋白质翻译过程的学习重点",
+        "提示3：思考RNA转录、蛋白质翻译与DNA复制之间的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：复制与转录对比",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制和RNA转录的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制和RNA转录都包含了基因表达的全部内容，考点同样丰富"
+        },
+        {
+          "label": "B",
+          "content": "DNA复制是基因表达里内容最多、考点最丰富的部分，而RNA转录需要重点掌握其自身的一些辅助因子以及和DNA复制的区别"
+        },
+        {
+          "label": "C",
+          "content": "RNA转录是基因表达里内容最多、考点最丰富的部分，DNA复制只需了解基本概念即可"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制和RNA转录在基因表达中的重要性和考点丰富程度没有区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对DNA复制和RNA转录在基因表达中的描述",
+        "提示2：明确视频提到DNA复制在基因表达里的地位以及RNA转录需要重点掌握的内容",
+        "提示3：对比各选项与视频知识点是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：复制转录例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程中，主要掌握它们和DNA复制在某些辅助因子以及本质方面的区别"
+        },
+        {
+          "label": "C",
+          "content": "DNA复制和RNA转录都需要完全相同的辅助因子"
+        },
+        {
+          "label": "D",
+          "content": "蛋白质翻译和DNA复制没有任何关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于DNA复制在基因表达里的地位",
+        "提示2：关注RNA转录和蛋白质翻译需要重点掌握的内容",
+        "提示3：分析不同过程辅助因子和相互关联的情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：原核RNA聚合酶",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "DNA复制是基因表达里内容最多且考点最丰富的部分"
+        },
+        {
+          "label": "D",
+          "content": "RNA转录和蛋白质翻译与DNA复制没有任何区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达里的描述",
+        "提示2：明确视频强调对RNA转录和蛋白质翻译过程需要掌握的要点",
+        "提示3：思考RNA转录、蛋白质翻译与DNA复制之间的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：酪因子作用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于不同阶段重点掌握内容的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA 复制阶段重点掌握其与 RNA 转录和蛋白质翻译的区别"
+        },
+        {
+          "label": "B",
+          "content": "RNA 转录和蛋白质翻译阶段重点掌握其自身的一些辅助因子以及与 DNA 复制的区别"
+        },
+        {
+          "label": "C",
+          "content": "DNA 复制、RNA 转录和蛋白质翻译阶段都只需掌握各自的基本过程"
+        },
+        {
+          "label": "D",
+          "content": "RNA 转录和蛋白质翻译阶段重点掌握 DNA 复制的相关内容"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示 1：回顾视频中对基因表达不同阶段重点内容的描述",
+        "提示 2：明确 DNA 复制阶段和后续 RNA 转录及蛋白质翻译阶段的重点差异",
+        "提示 3：根据视频内容判断每个选项是否符合重点掌握的要求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：真核RNA聚合酶",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的一部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子和与DNA复制的区别"
+        },
+        {
+          "label": "C",
+          "content": "DNA复制是整个基因表达里内容最多，也是考点最丰富的一章"
+        },
+        {
+          "label": "D",
+          "content": "RNA转录和蛋白质翻译是基因表达过程中最核心的，不需要关注其他方面"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达中的描述",
+        "提示2：注意视频提到的RNA转录和蛋白质翻译需要重点掌握的内容",
+        "提示3：根据视频信息对每个选项进行分析判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：转录抑制剂",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "DNA复制是整个基因表达里内容最多、考点最丰富的一章"
+        },
+        {
+          "label": "D",
+          "content": "RNA转录和蛋白质翻译与DNA复制没有任何区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于DNA复制、RNA转录和蛋白质翻译在基因表达中的描述",
+        "提示2：明确视频提到的各过程的重点关注内容以及与DNA复制的关系",
+        "提示3：对每个选项进行分析，判断其是否与视频内容相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：转录过程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，涉及到DNA复制、RNA的转录以及蛋白质的翻译过程。以下关于这些过程的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA的转录和蛋白质的翻译过程不需要关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "重点掌握RNA转录和蛋白质翻译过程本身的一些辅助因子以及它们和DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "基因表达过程中，DNA复制、RNA转录和蛋白质翻译这三个过程的重要性和考点分布是一样的"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于DNA复制在基因表达里的地位描述",
+        "提示2：明确视频提到的RNA转录和蛋白质翻译过程需要重点掌握的内容",
+        "提示3：对比分析各个选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：RNA转录终止",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少，考点最少的一章"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程不需要关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "我们应重点掌握RNA转录和蛋白质翻译过程本身的一些辅助因子以及它们和DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "RNA转录和蛋白质翻译过程与DNA复制没有区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于DNA复制在基因表达中的地位描述",
+        "提示2：明确视频强调对RNA转录和蛋白质翻译过程的学习重点",
+        "提示3：思考RNA转录、蛋白质翻译与DNA复制之间的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：转录调控区域",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于各阶段的描述正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制阶段是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "DNA复制是整个基因表达里内容最多，也是考点最丰富的一章"
+        },
+        {
+          "label": "D",
+          "content": "RNA转录和蛋白质翻译过程与DNA复制没有任何区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达中的描述",
+        "提示2：注意视频提到的RNA转录和蛋白质翻译过程需要掌握的要点",
+        "提示3：明确视频中关于这几个过程之间关系的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：启动子关键区",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于各阶段的描述正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少，考点最少的章节"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子和与DNA复制的区别"
+        },
+        {
+          "label": "C",
+          "content": "DNA复制是整个基因表达里内容最多，也是考点最丰富的一章"
+        },
+        {
+          "label": "D",
+          "content": "RNA转录和蛋白质翻译过程不需要掌握任何关键内容"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制和RNA转录、蛋白质翻译过程在基因表达中的描述",
+        "提示2：明确视频中提到的DNA复制在基因表达中的特点",
+        "提示3：分析每个选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：转录调控过程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于基因表达相关内容的说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA 复制是基因表达里虽然内容多，但考点较少的一章"
+        },
+        {
+          "label": "B",
+          "content": "RNA 的转录和蛋白质的翻译过程主要应掌握它们自身的一些辅助因子以及与 DNA 复制的区别"
+        },
+        {
+          "label": "C",
+          "content": "基因表达主要重点在于 RNA 的转录和蛋白质的翻译，DNA 复制不是重点内容"
+        },
+        {
+          "label": "D",
+          "content": "RNA 的转录和蛋白质的翻译过程不需要关注辅助因子，只关注与 DNA 复制的区别即可"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对 DNA 复制在基因表达里的描述",
+        "提示2：明确视频提到的 RNA 转录和蛋白质翻译过程需要重点掌握的内容",
+        "提示3：分析每个选项与视频知识点是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：原核转录特点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是整个基因表达里内容最少，考点最少的一章"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程中，重点要掌握它们自身的一些辅助因子，以及和DNA复制的一些区别之处"
+        },
+        {
+          "label": "C",
+          "content": "DNA复制和RNA转录过程不需要辅助因子参与"
+        },
+        {
+          "label": "D",
+          "content": "基因表达过程中，蛋白质翻译比RNA转录更重要"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频，明确DNA复制、RNA转录和蛋白质翻译在基因表达中的内容丰富程度和考点情况",
+        "提示2：结合视频强调的对于RNA转录和蛋白质翻译的重点掌握内容",
+        "提示3：注意各个过程是否需要辅助因子以及它们在基因表达中的相对重要性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：真核转录调控",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "RNA转录和蛋白质翻译过程重点要掌握其自身的一些辅助因子以及与DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制、RNA转录和蛋白质翻译这三个过程没有任何关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达中的描述",
+        "提示2：明确视频里提到的RNA转录和蛋白质翻译过程的重点掌握内容",
+        "提示3：思考基因表达过程中各步骤之间的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：顺式作用元件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于各阶段重点内容的描述，正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少，考点最单一的一章"
+        },
+        {
+          "label": "B",
+          "content": "RNA的转录和蛋白质的翻译过程，重点掌握其本身的一些辅助因子以及和DNA复制的一些区别所在"
+        },
+        {
+          "label": "C",
+          "content": "RNA的转录和蛋白质的翻译过程，无需关注和DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "基因表达过程中，DNA复制、RNA转录、蛋白质翻译的重点内容都一样，没有区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达里的描述",
+        "提示2：明确视频中对于RNA转录和蛋白质翻译过程的重点内容说明",
+        "提示3：对比各选项与视频知识点的契合度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：反式作用因子",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于各环节的说法正确的是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA 复制是基因表达里内容最少且考点最少的一章"
+        },
+        {
+          "label": "B",
+          "content": "RNA 的转录和蛋白质的翻译这两个过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "我们要重点掌握 RNA 的转录和蛋白质的翻译过程本身的一些辅助因子以及它们和 DNA 复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "DNA 复制与 RNA 的转录和蛋白质的翻译没有任何关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示 1：回顾视频中对 DNA 复制和基因表达后续环节内容量及考点的描述",
+        "提示 2：注意视频中强调的需要重点掌握的内容方向",
+        "提示 3：思考基因表达各环节之间的联系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：转录终止修饰",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于各阶段的说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制阶段的考点最少"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程重点要掌握其自身的一些辅助因子以及和DNA复制的区别"
+        },
+        {
+          "label": "C",
+          "content": "基因表达中DNA复制的内容最少"
+        },
+        {
+          "label": "D",
+          "content": "RNA转录和蛋白质翻译过程考点比DNA复制更丰富"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对DNA复制、RNA转录和蛋白质翻译过程在基因表达里的描述",
+        "提示2：明确各阶段内容多少和考点丰富程度的表述",
+        "提示3：重点关注RNA转录和蛋白质翻译过程的重点掌握内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：转录对比",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，关于DNA复制、RNA转录和蛋白质翻译，下列说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程不需要关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "重点掌握RNA转录和蛋白质翻译过程自身的辅助因子以及它们与DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制和RNA转录、蛋白质翻译过程没有任何关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制、RNA转录和蛋白质翻译的描述",
+        "提示2：明确每个过程的特点以及重点关注内容",
+        "提示3：分析每个选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：RNA加工修饰",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少，考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程不需要关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "需要重点掌握RNA转录和蛋白质翻译自身的辅助因子以及它们和DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制、RNA转录和蛋白质翻译在基因表达里的重要性和考点数量都一样"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达里的描述",
+        "提示2：明确视频中对于RNA转录和蛋白质翻译的重点要求",
+        "提示3：对比各选项和视频知识点是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：mRNA剪接过程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制在基因表达里内容最少，考点也最少"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程主要需掌握其本身的一些辅助因子以及和DNA复制的区别"
+        },
+        {
+          "label": "C",
+          "content": "DNA复制和RNA转录、蛋白质翻译过程没有任何关联"
+        },
+        {
+          "label": "D",
+          "content": "RNA转录不需要辅助因子就能完成"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达中的描述",
+        "提示2：明确视频中提到的RNA转录和蛋白质翻译过程的重点掌握内容",
+        "提示3：思考DNA复制、RNA转录和蛋白质翻译之间的关系以及转录所需条件"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：可变剪接及判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于各阶段的说法正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "RNA转录和蛋白质翻译过程与DNA复制没有区别"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制是整个基因表达里内容最多，也是考点最丰富的一章"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达中的描述",
+        "提示2：注意视频提到的RNA转录和蛋白质翻译过程的重点",
+        "提示3：明确RNA转录、蛋白质翻译与DNA复制之间关系的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：RNA编辑",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，关于DNA复制、RNA转录和蛋白质翻译，以下说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的一部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "重点掌握RNA转录和蛋白质翻译过程本身的一些辅助因子以及它们和DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "RNA转录和蛋白质翻译与DNA复制没有任何区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达中的描述",
+        "提示2：关注视频中提到的RNA转录和蛋白质翻译过程需要重点掌握的内容",
+        "提示3：明确RNA转录和蛋白质翻译与DNA复制之间的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：翻译概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法正确的是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制的考点最少，是基因表达中最不重要的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程不需要关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "DNA复制是基因表达里内容最多且考点最丰富的部分"
+        },
+        {
+          "label": "D",
+          "content": "RNA转录和蛋白质翻译与DNA复制完全没有区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中对DNA复制在基因表达中作用的描述",
+        "提示2：明确视频提及的RNA转录和蛋白质翻译重点掌握内容",
+        "提示3：思考RNA转录、蛋白质翻译与DNA复制之间的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：密码子特征",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，关于DNA复制、RNA转录以及蛋白质翻译的相关描述，以下正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "我们重点要掌握RNA转录和蛋白质翻译自身的一些辅助因子以及它们和DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制与RNA转录、蛋白质翻译没有关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达里的地位描述",
+        "提示2：明确视频提到的RNA转录和蛋白质翻译过程的重点掌握内容",
+        "提示3：思考DNA复制、RNA转录和蛋白质翻译之间的联系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：起始密码子",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "RNA转录和蛋白质翻译过程与DNA复制有区别"
+        },
+        {
+          "label": "D",
+          "content": "基因表达只包含DNA复制、RNA转录和蛋白质翻译这三个过程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达里的描述",
+        "提示2：注意视频提到RNA转录和蛋白质翻译过程需要掌握的要点",
+        "提示3：明确视频中关于这几个过程之间关系的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：终止密码子",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子和与DNA复制的区别"
+        },
+        {
+          "label": "C",
+          "content": "DNA复制是整个基因表达里内容最多，也是考点最丰富的一章"
+        },
+        {
+          "label": "D",
+          "content": "基因表达只包括DNA复制、RNA转录和蛋白质翻译三个过程"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达中的描述",
+        "提示2：明确视频强调的RNA转录和蛋白质翻译需要重点掌握的内容",
+        "提示3：思考基因表达的完整过程以及各部分的特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：遗传密码特点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其自身的辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "我们重点要掌握RNA转录和蛋白质翻译过程自身的一些辅助因子以及它们和DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制与RNA转录和蛋白质翻译过程没有任何关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于DNA复制在基因表达中的地位",
+        "提示2：注意视频强调的RNA转录和蛋白质翻译过程的重点掌握内容",
+        "提示3：思考DNA复制与转录、翻译之间的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：院校招生情况",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的章节"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "DNA复制是整个基因表达里内容最多、考点最丰富的一章"
+        },
+        {
+          "label": "D",
+          "content": "RNA转录和蛋白质翻译与DNA复制没有任何区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达中的描述",
+        "提示2：明确视频中提到的RNA转录和蛋白质翻译过程的重点",
+        "提示3：对比分析各选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：遗传密码判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录以及蛋白质翻译的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "对于RNA转录和蛋白质翻译过程，重点要掌握其自身的一些辅助因子以及和DNA复制的区别"
+        },
+        {
+          "label": "C",
+          "content": "RNA转录和蛋白质翻译过程与DNA复制没有任何关联"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制过程不需要任何辅助因子"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中关于DNA复制在基因表达里的地位",
+        "提示2：明确对于RNA转录和蛋白质翻译过程的重点掌握内容",
+        "提示3：思考基因表达过程中各部分之间的联系以及是否需要辅助因子"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：密码子摆动性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少，考点最少的一部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程不需要关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "RNA转录和蛋白质翻译过程需要重点掌握其自身的一些辅助因子以及和DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制与RNA转录和蛋白质翻译过程没有任何关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达里的描述",
+        "提示2：明确视频中提到的RNA转录和蛋白质翻译过程的重点掌握内容",
+        "提示3：思考DNA复制与RNA转录和蛋白质翻译过程之间是否存在联系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：摆动性意义及易错点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于各阶段的描述正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制、RNA转录和蛋白质翻译这三个阶段在基因表达里的考点丰富程度相同"
+        },
+        {
+          "label": "B",
+          "content": "DNA复制是基因表达中内容最多、考点最丰富的阶段"
+        },
+        {
+          "label": "C",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子和与DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "基因表达过程中，RNA转录和蛋白质翻译比DNA复制更重要"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对基因表达各阶段内容和考点丰富程度的描述",
+        "提示2：明确每个阶段的重点关注内容",
+        "提示3：分析各选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：摆动性解题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "RNA转录和蛋白质翻译过程与DNA复制没有区别"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制是基因表达里内容最多且考点最丰富的部分"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达中的描述",
+        "提示2：明确视频中对于RNA转录和蛋白质翻译过程重点掌握内容的说明",
+        "提示3：注意视频提到的RNA转录和蛋白质翻译与DNA复制的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：蛋白质合成",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，错误的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最多、考点最丰富的一部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程中没有额外的辅助因子参与"
+        },
+        {
+          "label": "C",
+          "content": "我们需要重点掌握RNA转录和蛋白质翻译过程自身的一些辅助因子"
+        },
+        {
+          "label": "D",
+          "content": "要了解RNA转录和蛋白质翻译与DNA复制的区别所在"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据视频内容明确DNA复制在基因表达中的特点",
+        "提示2：视频提到需要重点掌握RNA转录和蛋白质翻译过程的辅助因子，思考其含义",
+        "提示3：判断每个选项是否与视频中讲解的知识点相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：起始合成要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程不需要关注其自身的辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "RNA转录和蛋白质翻译过程与DNA复制有区别，需要重点掌握这些区别"
+        },
+        {
+          "label": "D",
+          "content": "基因表达仅包括RNA转录和蛋白质翻译过程，不涉及DNA复制"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达里的描述",
+        "提示2：明确视频强调的RNA转录和蛋白质翻译过程的重点掌握内容",
+        "提示3：思考基因表达所包含的完整过程"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：核糖体结构功能",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下哪个阶段的知识点在考查中内容最多且考点最丰富？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制"
+        },
+        {
+          "label": "B",
+          "content": "RNA的转录"
+        },
+        {
+          "label": "C",
+          "content": "蛋白质的翻译"
+        },
+        {
+          "label": "D",
+          "content": "转录和翻译过程中的辅助因子"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回顾视频中关于基因表达各阶段考查情况的描述",
+        "提示2：明确指出哪个具体阶段是内容最多且考点最丰富的",
+        "提示3：注意每个选项与视频内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：起始过程因子",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于DNA复制、RNA转录和蛋白质翻译的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的一章"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程不需要关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "我们重点掌握RNA转录和蛋白质翻译自身的一些辅助因子以及它们和DNA复制的区别所在"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制与RNA转录和蛋白质翻译没有任何关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达中的描述",
+        "提示2：明确视频强调的RNA转录和蛋白质翻译过程需要重点掌握的内容",
+        "提示3：思考DNA复制与RNA转录和蛋白质翻译之间是否存在联系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：核糖体循环",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，以下关于不同过程的描述正确的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的部分"
+        },
+        {
+          "label": "B",
+          "content": "RNA的转录和蛋白质的翻译过程，重点要掌握其本身的一些辅助因子以及和DNA复制的区别"
+        },
+        {
+          "label": "C",
+          "content": "RNA的转录和蛋白质的翻译过程不需要辅助因子"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制与RNA转录和蛋白质翻译过程没有任何关联"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达中的地位描述",
+        "提示2：明确视频里提到RNA转录和蛋白质翻译过程需要重点掌握的内容",
+        "提示3：思考这些过程是否需要辅助因子以及它们之间是否有关联"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：延伸因子作用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在基因表达过程中，对于DNA复制、RNA转录以及蛋白质翻译这几个过程，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "DNA复制是基因表达里内容最少且考点最少的章节"
+        },
+        {
+          "label": "B",
+          "content": "RNA转录和蛋白质翻译过程无需关注其辅助因子"
+        },
+        {
+          "label": "C",
+          "content": "我们重点要掌握RNA转录和蛋白质翻译过程自身的一些辅助因子以及它们和DNA复制的区别"
+        },
+        {
+          "label": "D",
+          "content": "DNA复制、RNA转录和蛋白质翻译这三个过程没有任何关联和区别"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中对DNA复制在基因表达里的描述",
+        "提示2：明确视频强调的RNA转录和蛋白质翻译过程需要掌握的重点",
+        "提示3：思考这几个过程之间是否存在关联和区别"
+      ]
+    }
+  ],
+  "count": 38
+}

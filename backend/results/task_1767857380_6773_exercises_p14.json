@@ -1,0 +1,106 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：圆锥体结构",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "以下关于圆锥体结构的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "圆锥体由圆锥面和底面两个面共同围成，母线和旋转轴成的夹角等于 90°"
+        },
+        {
+          "label": "B",
+          "content": "圆锥体的底面是一个曲面，其实形是一个椭圆"
+        },
+        {
+          "label": "C",
+          "content": "圆锥体由圆锥面和底面两个面共同围成，母线和旋转轴成的夹角小于 90°"
+        },
+        {
+          "label": "D",
+          "content": "圆锥体只有圆锥面，没有底面"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中圆锥体的组成部分",
+        "提示2：明确母线和旋转轴夹角的范围",
+        "提示3：确定圆锥体底面的特征"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：圆锥体三面投影原理",
+      "error": "Invalid \\escape: line 8 column 60 (char 240)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：画圆锥体三面投影步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "圆锥面是由母线和旋转轴成一定夹角旋转形成，这个夹角需要满足什么条件？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "大于 $90^\\circ$"
+        },
+        {
+          "label": "B",
+          "content": "等于 $90^\\circ$"
+        },
+        {
+          "label": "C",
+          "content": "小于 $90^\\circ$"
+        },
+        {
+          "label": "D",
+          "content": "没有要求"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于圆锥面形成的相关内容",
+        "提示2：明确母线和旋转轴夹角与圆锥面形成的关系",
+        "提示3：注意视频中提到的夹角的具体要求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：圆锥体表面取点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于圆锥体，下列说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "圆锥体由圆锥面和底面两个面组成，母线和旋转轴的夹角可以等于 $90^\\circ$"
+        },
+        {
+          "label": "B",
+          "content": "圆锥体的底面是一个平面，其实际形状是一个椭圆"
+        },
+        {
+          "label": "C",
+          "content": "圆锥体由圆锥面和底面两个面共同围成，母线和旋转轴的夹角小于 $90^\\circ$"
+        },
+        {
+          "label": "D",
+          "content": "以上说法都不对"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中圆锥体的组成部分",
+        "提示2：明确母线和旋转轴夹角的范围",
+        "提示3：确认圆锥体底面的实际形状"
+      ]
+    }
+  ],
+  "count": 4
+}

@@ -39,6 +39,16 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3002",
     ]
     
+    # VOD (Tencent Cloud Video on Demand) Configuration
+    VOD_SECRET_ID: Optional[str] = None
+    VOD_SECRET_KEY: Optional[str] = None
+    VOD_PLAY_KEY: Optional[str] = None
+    VOD_LICENSE_URL: Optional[str] = None
+    VOD_LICENSE_KEY: Optional[str] = None
+    VOD_PROCEDURE: str = "LongVideoPreset"
+    VOD_REGION: str = "ap-beijing"  # 默认北京
+    VOD_SUB_APP_ID: int = 0
+    
     class Config:
         env_file = ".env"
         case_sensitive = True

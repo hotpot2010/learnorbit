@@ -1,0 +1,549 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：氮族元素概述",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "氮族元素在元素周期表中是指第几主族，且包含以下哪些元素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第三主族，包含氮、磷、砷等元素"
+        },
+        {
+          "label": "B",
+          "content": "第四主族，包含碳、硅、锗等元素"
+        },
+        {
+          "label": "C",
+          "content": "第五主族，包含氮、磷、砷等元素"
+        },
+        {
+          "label": "D",
+          "content": "第六主族，包含氧、硫、硒等元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到氮族元素在元素周期表中的主族位置",
+        "提示2：明确氮族元素具体包含的元素种类",
+        "提示3：逐一分析每个选项，与视频知识点进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：氮氧化物讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素是指第ⅤA族元素，以下属于氮族元素的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "碳（C）"
+        },
+        {
+          "label": "B",
+          "content": "氮（N）"
+        },
+        {
+          "label": "C",
+          "content": "氧（O）"
+        },
+        {
+          "label": "D",
+          "content": "氟（F）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确视频中提到氮族元素在元素周期表中是指第ⅤA族元素",
+        "提示2：回忆各选项元素在元素周期表中的族位置",
+        "提示3：碳是第ⅣA族元素，氧是第ⅥA族元素，氟是第ⅦA族元素"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：硝酸相关反应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列关于氮族元素的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氮族元素是指元素周期表中的第四主族元素"
+        },
+        {
+          "label": "B",
+          "content": "氮族元素包含氮、磷、砷、锑、铋这 5 种元素"
+        },
+        {
+          "label": "C",
+          "content": "氮族元素只包含氮和磷两种元素"
+        },
+        {
+          "label": "D",
+          "content": "氮族元素在元素周期表中处于第 6 主族"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示 1：回顾视频中关于氮族元素在元素周期表中位置的描述",
+        "提示 2：明确氮族元素包含的具体元素种类",
+        "提示 3：对比各选项与视频知识点的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：亚硝酸盐性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素是指（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第七主族元素"
+        },
+        {
+          "label": "B",
+          "content": "第四主族元素"
+        },
+        {
+          "label": "C",
+          "content": "第五主族元素"
+        },
+        {
+          "label": "D",
+          "content": "第六主族元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回想视频中关于氮族元素在元素周期表位置的描述",
+        "提示2：明确指出氮族元素是第几主族",
+        "提示3：根据描述排除错误选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：硼酸盐鉴定",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素属于第几主族，且包含哪几种元素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第三主族，包含氮、磷、砷、锑、铋"
+        },
+        {
+          "label": "B",
+          "content": "第四主族，包含碳、硅、锗、锡、铅"
+        },
+        {
+          "label": "C",
+          "content": "第五主族，包含氮、磷、砷、锑、铋"
+        },
+        {
+          "label": "D",
+          "content": "第六主族，包含氧、硫、硒、碲、钋"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于氮族元素在元素周期表中的位置描述",
+        "提示2：明确氮族元素具体包含的元素种类",
+        "提示3：将每个选项与视频知识点进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：碳族元素介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "氮族元素在元素周期表中是指第几位主族，且包含以下哪些元素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第五主族，包含氮、磷、砷、锑、铋"
+        },
+        {
+          "label": "B",
+          "content": "第四主族，包含碳、硅、锗、锡、铅"
+        },
+        {
+          "label": "C",
+          "content": "第六主族，包含氧、硫、硒、碲、钋"
+        },
+        {
+          "label": "D",
+          "content": "第三主族，包含硼、铝、镓、铟、铊"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：仔细回忆视频中关于氮族元素在元素周期表位置的描述",
+        "提示2：明确视频里提到的氮族元素具体包含哪些元素",
+        "提示3：将各选项与视频内容进行逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：硼单质反应",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素是指（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第Ⅲ主族元素"
+        },
+        {
+          "label": "B",
+          "content": "第Ⅳ主族元素"
+        },
+        {
+          "label": "C",
+          "content": "第Ⅴ主族元素"
+        },
+        {
+          "label": "D",
+          "content": "第Ⅵ主族元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中对氮族元素在元素周期表位置的描述",
+        "提示2：明确氮族元素对应的主族序号",
+        "提示3：根据视频内容，氮族元素是第Ⅴ主族元素"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二氯化锡溶液",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素属于第几主族，且下列元素中不属于氮族元素的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第五主族；氮"
+        },
+        {
+          "label": "B",
+          "content": "第五主族；硅"
+        },
+        {
+          "label": "C",
+          "content": "第六主族；磷"
+        },
+        {
+          "label": "D",
+          "content": "第六主族；铋"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆视频中提到的氮族元素在元素周期表中的位置",
+        "提示2：明确氮族元素包含哪些具体元素",
+        "提示3：逐一分析每个选项中主族信息和元素归属的正确性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：二氧化铅性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素是指第Ⅴ主族元素，以下元素不属于氮族元素的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氮（$N$）"
+        },
+        {
+          "label": "B",
+          "content": "磷（$P$）"
+        },
+        {
+          "label": "C",
+          "content": "氧（$O$）"
+        },
+        {
+          "label": "D",
+          "content": "砷（$As$）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：明确视频中提到氮族元素在元素周期表中是第Ⅴ主族元素",
+        "提示2：回忆氮族元素包含的具体元素",
+        "提示3：逐一分析选项中的元素是否属于氮族元素"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：硼族元素概述",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素属于第几主族，且包含以下哪些元素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第三主族，包含硼、铝、镓"
+        },
+        {
+          "label": "B",
+          "content": "第四主族，包含碳、硅、锗"
+        },
+        {
+          "label": "C",
+          "content": "第五主族，包含氮、磷、砷等5个元素"
+        },
+        {
+          "label": "D",
+          "content": "第六主族，包含氧、硫、硒"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到氮族元素在元素周期表中的主族位置",
+        "提示2：明确氮族元素具体包含的元素",
+        "提示3：对比各选项内容与视频知识点进行选择"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：硼的化合物",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素是指第ⅤA族元素，以下元素中不属于氮族元素的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氮（$N$）"
+        },
+        {
+          "label": "B",
+          "content": "磷（$P$）"
+        },
+        {
+          "label": "C",
+          "content": "硼（$B$）"
+        },
+        {
+          "label": "D",
+          "content": "砷（$As$）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：明确视频中提到氮族元素在元素周期表中是指第ⅤA族元素",
+        "提示2：回忆第ⅤA族包含的元素有氮、磷、砷等",
+        "提示3：判断每个选项中的元素是否属于第ⅤA族"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：硼砂水解原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素是指（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第五主族，包括氮、磷、砷、锑、铋这5个元素"
+        },
+        {
+          "label": "B",
+          "content": "第四主族，包括碳、硅、锗、锡、铅这5个元素"
+        },
+        {
+          "label": "C",
+          "content": "第三主族，包括硼、铝、镓、铟、铊这5个元素"
+        },
+        {
+          "label": "D",
+          "content": "第六主族，包括氧、硫、硒、碲、钋这5个元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：参考视频中对氮族元素的定义",
+        "提示2：明确氮族元素在元素周期表中的位置",
+        "提示3：记住氮族元素包含的具体元素"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：硼砂标定盐酸",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素是指第（  ）主族，以下哪个选项包含了氮族元素中的元素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第三主族，包含硼、铝等元素"
+        },
+        {
+          "label": "B",
+          "content": "第四主族，包含碳、硅等元素"
+        },
+        {
+          "label": "C",
+          "content": "第五主族，包含氮、磷等元素"
+        },
+        {
+          "label": "D",
+          "content": "第六主族，包含氧、硫等元素"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的氮族元素在元素周期表中的位置",
+        "提示2：明确氮族元素包含的具体元素",
+        "提示3：根据选项逐一分析其主族和包含元素是否符合氮族元素特征"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：硼卤化物特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素属于第几主族，且包含以下哪些元素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "第三主族，包含硼、铝、镓、铟、铊"
+        },
+        {
+          "label": "B",
+          "content": "第四主族，包含碳、硅、锗、锡、铅"
+        },
+        {
+          "label": "C",
+          "content": "第五主族，包含氮、磷、砷、锑、铋"
+        },
+        {
+          "label": "D",
+          "content": "第六主族，包含氧、硫、硒、碲、钋"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到氮族元素在元素周期表中的位置",
+        "提示2：明确氮族元素具体包含的元素",
+        "提示3：将各选项与视频知识点进行对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：铝的化合物转化",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素是指第ⅤA族元素，下列元素不属于氮族元素的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氮（$N$）"
+        },
+        {
+          "label": "B",
+          "content": "磷（$P$）"
+        },
+        {
+          "label": "C",
+          "content": "氧（$O$）"
+        },
+        {
+          "label": "D",
+          "content": "砷（$As$）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：明确视频中提到氮族元素是第ⅤA族元素，包含氮、磷等元素",
+        "提示2：查看各选项元素在元素周期表中的族位置",
+        "提示3：判断哪个元素不在第ⅤA族"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：元素价态稳定性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在元素周期表中，氮族元素是指第ⅤA 族元素，以下哪种元素不属于氮族元素？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氮（$N$）"
+        },
+        {
+          "label": "B",
+          "content": "磷（$P$）"
+        },
+        {
+          "label": "C",
+          "content": "氧（$O$）"
+        },
+        {
+          "label": "D",
+          "content": "砷（$As$）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：明确视频中提到氮族元素在元素周期表中是第ⅤA 族元素",
+        "提示2：回忆各选项元素在元素周期表中的位置",
+        "提示3：判断哪个元素不在第ⅤA 族"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：氢氧化物稳定性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "氮族元素在元素周期表中是指第五主族，以下元素不属于氮族元素的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "氮（$N$）"
+        },
+        {
+          "label": "B",
+          "content": "磷（$P$）"
+        },
+        {
+          "label": "C",
+          "content": "氧（$O$）"
+        },
+        {
+          "label": "D",
+          "content": "砷（$As$）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的氮族元素的定义",
+        "提示2：明确氮族元素包含哪些具体元素",
+        "提示3：逐一分析每个选项中的元素是否属于氮族元素"
+      ]
+    }
+  ],
+  "count": 17
+}

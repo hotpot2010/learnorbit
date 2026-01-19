@@ -1,0 +1,293 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：稀溶液依数性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "关于稀溶液依数性，下列说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "稀溶液依数性只与溶质的本性有关"
+        },
+        {
+          "label": "B",
+          "content": "稀溶液依数性只与溶质的粒子数目有关，与溶质本性无关"
+        },
+        {
+          "label": "C",
+          "content": "稀溶液依数性所产生的现象只有3种"
+        },
+        {
+          "label": "D",
+          "content": "理解稀溶液依数性不需要了解其适用条件"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中稀溶液依数性的概念，思考其与溶质哪些因素有关",
+        "提示2：明确视频中提到稀溶液依数性产生的现象个数",
+        "提示3：考虑学习稀溶液依数性是否需要了解适用条件"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：蒸气压下降公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "稀溶液的依数性包含多个方面，以下关于稀溶液依数性的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "稀溶液依数性只与溶质的种类有关"
+        },
+        {
+          "label": "B",
+          "content": "稀溶液依数性产生的现象只有 2 种"
+        },
+        {
+          "label": "C",
+          "content": "了解稀溶液依数性需要先明确其含义和适用条件"
+        },
+        {
+          "label": "D",
+          "content": "稀溶液依数性与溶质的物质的量浓度无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示 1：回顾视频中关于稀溶液依数性的基本概念，思考其与溶质种类、现象数量、含义及适用条件、溶质物质的量浓度的关系",
+        "提示 2：视频中提到要先了解稀溶液依数性的含义和适用条件",
+        "提示 3：稀溶液依数性是与溶质的粒子数有关，而不是溶质种类，且产生的现象有 4 种"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：蒸气压比较例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "稀溶液的依数性包含5个考点，其中第一个考点是需要了解稀溶液依数性的含义以及适用条件，下面4个现象是由于稀溶液的依数性所导致产生的。以下关于稀溶液依数性适用条件的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "溶质必须是电解质"
+        },
+        {
+          "label": "B",
+          "content": "溶液必须是极稀的"
+        },
+        {
+          "label": "C",
+          "content": "溶剂和溶质都必须是挥发性物质"
+        },
+        {
+          "label": "D",
+          "content": "溶质和溶剂之间必须发生化学反应"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾稀溶液依数性的定义和适用条件",
+        "提示2：分析每个选项与稀溶液依数性适用条件的匹配度",
+        "提示3：注意稀溶液依数性强调的是溶液的稀度对性质的影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：凝固点下降公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "稀溶液的依数性所导致产生的现象包含多个方面，以下哪个不属于稀溶液依数性导致的现象呢？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "溶液沸点升高"
+        },
+        {
+          "label": "B",
+          "content": "溶液凝固点降低"
+        },
+        {
+          "label": "C",
+          "content": "溶液颜色改变"
+        },
+        {
+          "label": "D",
+          "content": "溶液渗透压产生"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先明确稀溶液依数性的定义和其包含的主要现象类别",
+        "提示2：回顾视频中提到的稀溶液依数性导致的现象有哪些",
+        "提示3：分析每个选项现象产生的原因是否与稀溶液依数性相关"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：凝固点计算例题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "稀溶液的依数性包含特定含义和适用条件，以下哪种情况最符合稀溶液依数性的适用条件？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "浓溶液中溶质与溶剂发生化学反应的体系"
+        },
+        {
+          "label": "B",
+          "content": "稀溶液中溶质为挥发性物质的体系"
+        },
+        {
+          "label": "C",
+          "content": "稀溶液中溶质为非挥发性物质，且溶质与溶剂不发生化学反应的体系"
+        },
+        {
+          "label": "D",
+          "content": "任何浓度的溶液体系"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的稀溶液依数性的适用条件，思考对溶质和溶液浓度的要求",
+        "提示2：考虑溶质的挥发性以及溶质与溶剂是否发生反应对依数性的影响",
+        "提示3：明确稀溶液依数性通常是在特定的溶质和溶液条件下才成立的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：凝固点降低公式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "稀溶液的依数性所导致产生的现象与以下哪个因素密切相关？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "溶质的本性"
+        },
+        {
+          "label": "B",
+          "content": "溶质的粒子数"
+        },
+        {
+          "label": "C",
+          "content": "溶剂的本性"
+        },
+        {
+          "label": "D",
+          "content": "溶液的颜色"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中稀溶液依数性的概念，思考其主要取决于什么",
+        "提示2：稀溶液依数性是指与溶质的粒子数有关，而与溶质本性无关",
+        "提示3：分析每个选项，判断哪个选项符合稀溶液依数性的特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：沸点升高现象",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "稀溶液的依数性所导致的现象不包括以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "沸点升高"
+        },
+        {
+          "label": "B",
+          "content": "质量增加"
+        },
+        {
+          "label": "C",
+          "content": "凝固点降低"
+        },
+        {
+          "label": "D",
+          "content": "渗透压产生"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的稀溶液依数性所导致的现象相关内容",
+        "提示2：明确稀溶液依数性现象是由溶质粒子数决定的",
+        "提示3：分析每个选项是否属于稀溶液依数性导致的现象"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：渗透压及其计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "稀溶液的依数性包含其含义以及适用条件，以下关于稀溶液依数性适用条件的说法正确的是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只适用于电解质稀溶液"
+        },
+        {
+          "label": "B",
+          "content": "只适用于非电解质稀溶液"
+        },
+        {
+          "label": "C",
+          "content": "适用于所有稀溶液"
+        },
+        {
+          "label": "D",
+          "content": "只适用于浓溶液"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回忆稀溶液依数性的概念和适用范围",
+        "提示2：考虑电解质和非电解质在溶液中的不同行为",
+        "提示3：明确稀溶液和浓溶液的区别对依数性的影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：依数性考点总结",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "稀溶液的依数性课程包含5个考点，其中下面4个考点可以认为是由于稀溶液的依数性所导致产生的现象，那么以下哪个选项不属于稀溶液依数性考点范畴（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "了解稀溶液依数性的含义和适用条件"
+        },
+        {
+          "label": "B",
+          "content": "产生的某一种依数性现象考点"
+        },
+        {
+          "label": "C",
+          "content": "产生的另一种依数性现象考点"
+        },
+        {
+          "label": "D",
+          "content": "又一种依数性现象考点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：视频中明确提到课程的5个考点中，第一个考点是了解稀溶液依数性的含义和适用条件",
+        "提示2：后面4个考点是由于稀溶液依数性导致产生的现象",
+        "提示3：根据这个信息来判断选项中哪个不属于依数性现象考点"
+      ]
+    }
+  ],
+  "count": 9
+}

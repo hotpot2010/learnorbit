@@ -1,0 +1,229 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：[酸碱质子理论]",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在酸碱质子理论中，关于酸和碱的定义理解，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "凡是能给出质子 $H^+$ 的分子或离子都是酸"
+        },
+        {
+          "label": "B",
+          "content": "凡是能接受质子 $H^+$ 的分子或离子都是碱，所以酸和碱的定义与传统理论完全相同"
+        },
+        {
+          "label": "C",
+          "content": "在酸碱质子理论中，酸和碱是绝对的，一种物质只能是酸或者只能是碱"
+        },
+        {
+          "label": "D",
+          "content": "酸失去质子后形成的物质不能再称为酸"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾酸碱质子理论中酸和碱的定义",
+        "提示2：思考酸和碱在质子得失过程中的关系",
+        "提示3：对比酸碱质子理论和传统酸碱理论的区别"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：水的解离平衡",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在酸碱质子理论中，关于酸和碱的定义，下列说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "给出质子的物质是碱，接受质子的物质是酸"
+        },
+        {
+          "label": "B",
+          "content": "酸和碱的定义与水的解离平衡无关"
+        },
+        {
+          "label": "C",
+          "content": "给出质子的物质是酸，接受质子的物质是碱"
+        },
+        {
+          "label": "D",
+          "content": "酸和碱不能相互转化"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的酸碱质子理论是针对酸和碱定义的理论",
+        "提示2：思考酸和碱在质子转移过程中的作用",
+        "提示3：分析每个选项与酸碱质子理论的定义是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：一元弱酸pH计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知某一元弱酸HA的电离常数 $K_a = 1.0 \\times 10^{-5}$，将其配制成浓度为 $0.1 \\mathrm{mol/L}$ 的溶液，该溶液的pH值约为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2$"
+        },
+        {
+          "label": "B",
+          "content": "$3$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$5$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：对于一元弱酸HA的电离平衡 $HA \\rightleftharpoons H^+ + A^-$，其电离常数表达式为 $K_a = \\frac{[H^+][A^-]}{[HA]}$",
+        "提示2：因为是一元弱酸，电离程度较小，所以可以近似认为 $[HA] \\approx c$（初始浓度），且 $[H^+] = [A^-]$",
+        "提示3：根据上述近似关系，结合 $K_a$ 的值求出 $[H^+]$，再根据 $pH = -\\log[H^+]$ 计算pH值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：pH值计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知某弱酸 $HA$ 的电离常数 $K_a = 1.0 \\times 10^{-5}$，将 $0.1mol/L$ 的 $HA$ 溶液与等体积的 $0.05mol/L$ 的 $NaOH$ 溶液混合，混合后溶液的 $pH$ 值为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$4$"
+        },
+        {
+          "label": "B",
+          "content": "$5$"
+        },
+        {
+          "label": "C",
+          "content": "$6$"
+        },
+        {
+          "label": "D",
+          "content": "$7$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先分析混合后溶液的成分，判断溶液组成",
+        "提示2：根据弱酸的电离平衡常数 $K_a$ 计算 $H^+$ 浓度",
+        "提示3：利用 $pH = -\\log[H^+]$ 计算溶液的 $pH$ 值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：盐类水解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "室温下，下列溶液因盐类水解而使溶液$pH>7$的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$NaHCO_3$溶液"
+        },
+        {
+          "label": "B",
+          "content": "$NaCl$溶液"
+        },
+        {
+          "label": "C",
+          "content": "$NaHSO_4$溶液"
+        },
+        {
+          "label": "D",
+          "content": "$NH_4Cl$溶液"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：分析各物质所属类别，明确盐类水解的条件是盐中含有弱酸根离子或弱碱阳离子",
+        "提示2：写出能水解盐的水解方程式，判断水解后溶液的酸碱性",
+        "提示3：$NaHCO_3$中$HCO_3^-$会水解，$NaCl$是强酸强碱盐，$NaHSO_4$在水溶液中电离出氢离子，$NH_4Cl$中$NH_4^+$会水解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：滴定指示剂选择",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在酸碱平衡的学习中，涉及到多个重要知识点。以下关于酸碱质子理论的描述，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "该理论是针对酸和碱定义的理论，酸是能给出质子 $H^+$ 的物质，碱是能接受质子 $H^+$ 的物质"
+        },
+        {
+          "label": "B",
+          "content": "酸碱质子理论只适用于水溶液体系"
+        },
+        {
+          "label": "C",
+          "content": "在酸碱质子理论中，$H_2O$ 只能作为酸给出质子"
+        },
+        {
+          "label": "D",
+          "content": "根据酸碱质子理论，$HCl$ 是碱，因为它能接受质子 $H^+$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾视频中关于酸碱质子理论的定义，明确酸和碱的本质特征",
+        "提示2：思考酸碱质子理论的适用范围以及常见物质在该理论中的酸碱性表现",
+        "提示3：分析每个选项中对酸和碱的判断是否符合酸碱质子理论"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：缓冲溶液",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "下列关于课时6中四个考点的说法，正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "酸碱质子理论是对酸和盐定义的理论"
+        },
+        {
+          "label": "B",
+          "content": "课时6不包括缓冲溶液这一考点"
+        },
+        {
+          "label": "C",
+          "content": "课时6包含弱酸弱碱的解离平衡和溶液的 $pH$ 值这一考点"
+        },
+        {
+          "label": "D",
+          "content": "课时6不涉及盐类的水解考点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中课时6包含的四个考点具体内容",
+        "提示2：明确酸碱质子理论是针对什么进行定义的",
+        "提示3：逐一分析每个选项与视频知识点是否相符"
+      ]
+    }
+  ],
+  "count": 7
+}

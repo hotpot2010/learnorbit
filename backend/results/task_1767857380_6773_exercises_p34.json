@@ -1,0 +1,170 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：线性尺寸概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在标注直线段的线性尺寸时，以下哪种做法是正确的？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "尺寸线与被标注的线段垂直，且长度是被标注线段的一半"
+        },
+        {
+          "label": "B",
+          "content": "尺寸线与被标注的线段相交，且长度与被标注线段相等"
+        },
+        {
+          "label": "C",
+          "content": "尺寸线与被标注的线段平行，且长度与被标注线段相等"
+        },
+        {
+          "label": "D",
+          "content": "尺寸线与被标注的线段不平行，长度随意"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中关于标注直线段线性尺寸的原则",
+        "提示2：明确尺寸线与被标注线段的位置关系和长度关系",
+        "提示3：依据原则判断每个选项的正确性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：标注直线原则",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在给一个图形标注直线段的尺寸时，其中一条线段长度为 5cm，那么标注它的尺寸线应满足以下哪个条件？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "与该线段垂直，且长度为 5cm"
+        },
+        {
+          "label": "B",
+          "content": "与该线段平行，但长度不一定等于 5cm"
+        },
+        {
+          "label": "C",
+          "content": "与该线段平行，且长度为 5cm"
+        },
+        {
+          "label": "D",
+          "content": "与该线段相交，且长度为 5cm"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的标注直线段尺寸的原则",
+        "提示2：明确尺寸线与被标注线段的位置关系",
+        "提示3：注意尺寸线与被标注线段的长度关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：尺寸界线画法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在标注直线段的尺寸时，下列关于尺寸线的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "尺寸线应与被标注的线段平行，但长度可以任意"
+        },
+        {
+          "label": "B",
+          "content": "尺寸线应与被标注的线段垂直，且长度相等"
+        },
+        {
+          "label": "C",
+          "content": "尺寸线应与被标注的线段平行，且长度相等"
+        },
+        {
+          "label": "D",
+          "content": "尺寸线与被标注的线段的位置和长度关系没有要求"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中关于标注直线段尺寸时尺寸线的相关规则",
+        "提示2：明确尺寸线与被标注线段的位置关系",
+        "提示3：注意尺寸线与被标注线段的长度关系"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：对称图形标注",
+      "error": "Invalid \\escape: line 11 column 57 (char 451)"
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：尺寸线绘制要求",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在标注直线段的尺寸时，以下关于尺寸线的描述正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "尺寸线应与被标注的线段垂直且等长"
+        },
+        {
+          "label": "B",
+          "content": "尺寸线应与被标注的线段平行但长度任意"
+        },
+        {
+          "label": "C",
+          "content": "尺寸线应与被标注的线段平行且等长"
+        },
+        {
+          "label": "D",
+          "content": "尺寸线应与被标注的线段垂直且长度任意"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中关于标注直线段尺寸时尺寸线的绘制要求",
+        "提示2：明确尺寸线与被标注线段的位置关系",
+        "提示3：确定尺寸线与被标注线段的长度关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：尺寸数字标注",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在标注直线段的尺寸时，尺寸线应该满足以下哪个条件？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "与被标注的线段垂直，且比它长"
+        },
+        {
+          "label": "B",
+          "content": "与被标注的线段平行，但长度任意"
+        },
+        {
+          "label": "C",
+          "content": "与被标注的线段平行，且和它等长"
+        },
+        {
+          "label": "D",
+          "content": "与被标注的线段相交，且和它等长"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中关于标注直线段尺寸时尺寸线的要求",
+        "提示2：明确尺寸线与被标注线段的位置关系",
+        "提示3：关注尺寸线与被标注线段的长度关系"
+      ]
+    }
+  ],
+  "count": 6
+}

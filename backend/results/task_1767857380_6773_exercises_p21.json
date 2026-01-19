@@ -1,0 +1,133 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线投影特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当一个平面与圆锥体相交时，若该平面和圆锥体的轴线垂直，也就是和它的底面平行，那么截交线是以下哪种图形？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "圆形"
+        },
+        {
+          "label": "B",
+          "content": "椭圆形"
+        },
+        {
+          "label": "C",
+          "content": "三角形"
+        },
+        {
+          "label": "D",
+          "content": "矩形"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中提到的平面与圆锥体相交的特定情况，即平面和圆锥体轴线垂直且与底面平行的情形",
+        "提示2：思考这种情况下平面切割圆锥体所得到的截交线的形状特点",
+        "提示3：结合几何图形的基本特征来判断选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线取特殊点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当截切平面和圆锥体的轴线垂直，相当于和它的底面平行时，截交线的形状是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "圆形"
+        },
+        {
+          "label": "B",
+          "content": "椭圆形"
+        },
+        {
+          "label": "C",
+          "content": "三角形"
+        },
+        {
+          "label": "D",
+          "content": "矩形"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频中截切平面与圆锥体轴线的位置关系来判断截交线形状",
+        "提示2：当截切平面和圆锥体的轴线垂直且和底面平行时，可想象一下截切的过程",
+        "提示3：结合空间几何的知识，思考不同截切方式下圆锥体的截交线特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线取一般点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当截切平面和圆锥体的轴线垂直，相当于和它的底面平行，这样截切后得到的截交线形状是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "圆形"
+        },
+        {
+          "label": "B",
+          "content": "椭圆形"
+        },
+        {
+          "label": "C",
+          "content": "三角形"
+        },
+        {
+          "label": "D",
+          "content": "矩形"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据视频中截切平面与圆锥体轴线垂直且和底面平行的条件进行思考",
+        "提示2：想象用一个平面水平去截圆锥体，观察截交线的形状",
+        "提示3：回顾圆锥体的几何特征以及不同截切方式下截交线的特点"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：截交线投影结果",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "当截切平面和圆锥体的轴线垂直，相当于和它的底面平行，这样截切后得到的截交线形状是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "圆形"
+        },
+        {
+          "label": "B",
+          "content": "椭圆形"
+        },
+        {
+          "label": "C",
+          "content": "三角形"
+        },
+        {
+          "label": "D",
+          "content": "矩形"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回忆视频中截切平面与圆锥体不同位置关系时截交线的形状",
+        "提示2：考虑截切平面和圆锥体轴线垂直且与底面平行这种特殊情况",
+        "提示3：结合空间几何的知识想象截切后的图形"
+      ]
+    }
+  ],
+  "count": 4
+}

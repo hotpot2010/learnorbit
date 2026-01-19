@@ -1,0 +1,389 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：中断定义及过程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程关于单片机原理及接口技术期末突击课中，这一章主要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "中断的概念"
+        },
+        {
+          "label": "B",
+          "content": "中断源"
+        },
+        {
+          "label": "C",
+          "content": "单片机的编程技巧"
+        },
+        {
+          "label": "D",
+          "content": "终端控制的一些定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回忆视频中提到的这一章主要讲解的内容",
+        "提示2：明确视频指出的重点包含中断概念、中断源和终端控制定义",
+        "提示3：判断每个选项是否在视频提及的讲解内容范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：特殊功能寄存器",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次单片机原理及接口技术的期末冲刺课中，这一章主要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "中断的概念"
+        },
+        {
+          "label": "B",
+          "content": "特殊功能寄存器的详细分类"
+        },
+        {
+          "label": "C",
+          "content": "中断源"
+        },
+        {
+          "label": "D",
+          "content": "终端控制的一些定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的这一章主要讲解的内容",
+        "提示2：视频中明确指出了讲解的几个方面，对比选项进行判断",
+        "提示3：注意题目问的是不包括的内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：中断源讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次单片机原理及接口技术的期末冲刺课这一章主要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "中断的概念"
+        },
+        {
+          "label": "B",
+          "content": "中断源"
+        },
+        {
+          "label": "C",
+          "content": "单片机的硬件电路设计"
+        },
+        {
+          "label": "D",
+          "content": "终端控制的一些定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的这一章主要讲解的内容",
+        "提示2：明确视频中指出的知识点有中断概念、中断源和终端控制定义",
+        "提示3：对比选项与视频中知识点，找出不在范围内的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：中断触发方式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次单片机原理及接口技术的期末冲刺课，主要讲解内容不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "中断的概念"
+        },
+        {
+          "label": "B",
+          "content": "中断的触发频率"
+        },
+        {
+          "label": "C",
+          "content": "中断源"
+        },
+        {
+          "label": "D",
+          "content": "终端控制的一些定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本节课主要讲解内容",
+        "提示2：明确各项内容是否在视频提及的讲解范围内",
+        "提示3：视频中提到会讲解中断的概念、中断源以及终端控制的一些定义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：中断请求标志",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程关于单片机原理及接口技术的期末冲刺课，主要讲解内容不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "中断的概念"
+        },
+        {
+          "label": "B",
+          "content": "中断请求标志的数学计算方法"
+        },
+        {
+          "label": "C",
+          "content": "中断源"
+        },
+        {
+          "label": "D",
+          "content": "终端控制的一些定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本节课主要讲解内容",
+        "提示2：明确视频中提及的重点信息进行筛选",
+        "提示3：逐一对比选项和视频讲解内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定时器控制位",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的期末冲刺课"
+        },
+        {
+          "label": "B",
+          "content": "中断的概念"
+        },
+        {
+          "label": "C",
+          "content": "定时器的工作模式"
+        },
+        {
+          "label": "D",
+          "content": "中断源以及终端控制的一些定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课主要讲解内容",
+        "提示2：明确视频中列举的重点内容有哪些",
+        "提示3：逐一对比选项与视频内容，找出未提及的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：串口控制寄存器",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程《单片机原理及接口技术的期末冲刺课》主要讲解内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "讲解中断的概念"
+        },
+        {
+          "label": "B",
+          "content": "讲解中断源"
+        },
+        {
+          "label": "C",
+          "content": "讲解单片机的编程实操"
+        },
+        {
+          "label": "D",
+          "content": "讲解终端控制的一些定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本节课主要讲解的内容",
+        "提示2：视频中清晰列举了要讲解的重点内容，对比各选项进行判断",
+        "提示3：判断每个选项是否在视频中提到的讲解范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：串口中断标志",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "视频中提到的本节课核心内容不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "中断的概念"
+        },
+        {
+          "label": "B",
+          "content": "中断优先级的计算方法"
+        },
+        {
+          "label": "C",
+          "content": "中断源"
+        },
+        {
+          "label": "D",
+          "content": "终端控制的一些定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中所提及的本节课要讲解的主要内容",
+        "提示2：视频明确指出了几个核心内容，将选项与这些内容进行逐一比对",
+        "提示3：确定在视频中未被提到的选项即为答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：中断允许寄存器",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次单片机原理及接口技术的期末冲刺课中，这一章主要讲解的内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "中断的概念"
+        },
+        {
+          "label": "B",
+          "content": "中断源"
+        },
+        {
+          "label": "C",
+          "content": "中断允许寄存器的详细编程实现"
+        },
+        {
+          "label": "D",
+          "content": "终端控制的一些定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的这一章主要讲解内容",
+        "提示2：明确视频中列举的具体知识点",
+        "提示3：逐一对比选项与视频内容"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：中断优先级",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课中讲解的单片机原理及接口技术的重点内容不包括以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "中断的概念"
+        },
+        {
+          "label": "B",
+          "content": "中断源的讲解"
+        },
+        {
+          "label": "C",
+          "content": "中断优先级的计算方法"
+        },
+        {
+          "label": "D",
+          "content": "终端控制的一些定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课重点讲解内容有哪些",
+        "提示2：视频中明确说明了重点是介绍中断概念、中断源以及终端控制的定义",
+        "提示3：逐一核对选项与视频中重点内容是否相符"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：中断开启条件",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课主要讲解的内容不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "中断的概念"
+        },
+        {
+          "label": "B",
+          "content": "中断源"
+        },
+        {
+          "label": "C",
+          "content": "单片机的硬件电路设计"
+        },
+        {
+          "label": "D",
+          "content": "终端控制的一些定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的本节课主要讲解内容",
+        "提示2：明确视频中指出的重点包含中断概念、中断源和终端控制定义",
+        "提示3：逐一分析每个选项是否在讲解内容范围内"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：中断响应过程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程中，这一章主要讲解的内容不包含以下哪一项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "中断的概念"
+        },
+        {
+          "label": "B",
+          "content": "中断源"
+        },
+        {
+          "label": "C",
+          "content": "单片机的编程技巧"
+        },
+        {
+          "label": "D",
+          "content": "终端控制的一些定义"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的这一章主要讲解的内容",
+        "提示2：明确视频里列举的具体知识点",
+        "提示3：逐一对比选项与视频内容"
+      ]
+    }
+  ],
+  "count": 12
+}

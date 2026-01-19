@@ -1,0 +1,633 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定时器基本结构",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本章节主要围绕以下哪个内容进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "定时器计数器，编程结构及其应用"
+        },
+        {
+          "label": "C",
+          "content": "数学建模"
+        },
+        {
+          "label": "D",
+          "content": "考试冲刺技巧"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到本章节主要围绕的内容",
+        "提示2：重点关注[00:18 - 00:24]的表述",
+        "提示3：与选项进行逐一对比"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定时器核心原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本讲主要围绕定时器进行讲解，以下哪个不属于本讲讲解内容？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "定时器的计数原理"
+        },
+        {
+          "label": "B",
+          "content": "定时器的编程结构"
+        },
+        {
+          "label": "C",
+          "content": "定时器的应用场景"
+        },
+        {
+          "label": "D",
+          "content": "定时器的外观设计"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到本讲围绕定时器讲解的内容",
+        "提示2：视频中明确指出围绕定时器、编程结构以及它的一个应用进行讲解",
+        "提示3：逐一分析每个选项是否在讲解范围内"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：定时器工作方式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课主要围绕定时器、编程结构以及它的 ___ 进行讲解。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "应用",
+      "hints": [
+        "提示1：仔细回顾视频中关于本节课讲解内容的介绍部分",
+        "提示2：关注提到的围绕定时器讲解的几个方面信息",
+        "提示3：在视频时间 00:21 - 00:24 处可找到关键信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：计数器工作方式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本讲主要围绕以下哪些内容进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的考试技巧"
+        },
+        {
+          "label": "B",
+          "content": "定时器计数器、编程结构及其应用"
+        },
+        {
+          "label": "C",
+          "content": "单片机的硬件组成"
+        },
+        {
+          "label": "D",
+          "content": "单片机的通信协议"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本讲主要讲解内容",
+        "提示2：视频里明确指出了围绕的核心主题",
+        "提示3：对比各选项与视频中核心内容的匹配度"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定时器控制方式",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机原理及接口技术中，某章节主要围绕定时器、计数器展开讲解，关于其编程结构及应用。若一个定时器的定时时间 $T$ 与计数初值 $N$ 满足关系 $T=(2^n - N)\\times\\frac{1}{f_{osc}}$（其中 $n$ 为定时器位数，$f_{osc}$ 为晶振频率），当 $n = 16$，$f_{osc}=12\\ MHz$ 时，要实现 $1\\ ms$ 的定时，计数初值 $N$ 约为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$65536$"
+        },
+        {
+          "label": "B",
+          "content": "$64536$"
+        },
+        {
+          "label": "C",
+          "content": "$1000$"
+        },
+        {
+          "label": "D",
+          "content": "$5536$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：首先明确已知条件，将 $n = 16$，$f_{osc}=12\\ MHz$，$T = 1\\ ms$ 代入公式 $T=(2^n - N)\\times\\frac{1}{f_{osc}}$",
+        "提示2：对公式进行变形，求解 $N$ 的值",
+        "提示3：注意单位的换算，$1\\ MHz = 10^6\\ Hz$，$1\\ ms = 10^{-3}\\ s$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：工作方式寄存器",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本讲主要围绕定时器、编程结构以及它的一个应用进行讲解，这里的定时器编程结构可能涉及到工作方式寄存器的设置。若一个定时器的工作方式寄存器 $TMOD$ 的低四位用于控制定时器 $T0$，高四位用于控制定时器 $T1$，且 $TMOD$ 寄存器的值为 $0x21$（十六进制），以下关于定时器 $T0$ 和 $T1$ 的工作方式描述正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "定时器 $T0$ 工作在方式 1，定时器 $T1$ 工作在方式 2"
+        },
+        {
+          "label": "B",
+          "content": "定时器 $T0$ 工作在方式 2，定时器 $T1$ 工作在方式 1"
+        },
+        {
+          "label": "C",
+          "content": "定时器 $T0$ 工作在方式 3，定时器 $T1$ 工作在方式 0"
+        },
+        {
+          "label": "D",
+          "content": "定时器 $T0$ 工作在方式 0，定时器 $T1$ 工作在方式 3"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示 1：将十六进制数 $0x21$ 转换为二进制数",
+        "提示 2：根据 $TMOD$ 寄存器低四位控制定时器 $T0$，高四位控制定时器 $T1$ 的规则，分别确定 $T0$ 和 $T1$ 的控制位",
+        "提示 3：了解定时器不同工作方式对应的控制位组合来判断工作方式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：工作方式选择",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本章节主要围绕以下哪个内容进行展开讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理与接口技术的基础概念"
+        },
+        {
+          "label": "B",
+          "content": "定时计数器、编程结构及其应用"
+        },
+        {
+          "label": "C",
+          "content": "单片机的硬件电路设计"
+        },
+        {
+          "label": "D",
+          "content": "单片机的通信协议"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的本章节主要讲解内容",
+        "提示2：关注与视频原文表述相匹配的选项",
+        "提示3：明确提到了围绕定时计数器、编程结构及其应用展开"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：CTC功能",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本学期单片机原理及接口技术这门课的期末冲刺课将会围绕以下哪些内容进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "定时计数器、编程结构及其应用"
+        },
+        {
+          "label": "B",
+          "content": "CTD功能原理"
+        },
+        {
+          "label": "C",
+          "content": "单片机硬件电路设计"
+        },
+        {
+          "label": "D",
+          "content": "传感器原理与应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：注意视频中提到的本学期期末冲刺课重点讲解的内容范围",
+        "提示2：明确提到是围绕某几个特定内容进行讲解",
+        "提示3：在视频的特定时间点处准确找到相关信息"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：门控位设置",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本讲主要围绕以下哪个内容进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的期末重点总结"
+        },
+        {
+          "label": "B",
+          "content": "定时器、编程结构及其应用"
+        },
+        {
+          "label": "C",
+          "content": "门控位的详细编程实现"
+        },
+        {
+          "label": "D",
+          "content": "数学建模的方法与技巧"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到本讲主要围绕的核心内容描述",
+        "提示2：重点关注[00:18 - 00:24]的内容",
+        "提示3：对每个选项与视频核心内容进行匹配判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：控制寄存器讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕哪个组件展开讲解其编程结构以及应用？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "控制寄存器"
+        },
+        {
+          "label": "B",
+          "content": "定时器计数器"
+        },
+        {
+          "label": "C",
+          "content": "传感器"
+        },
+        {
+          "label": "D",
+          "content": "存储器"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本次课程主要讲解的组件",
+        "提示2：视频中明确指出围绕某一组件讲解编程结构和应用",
+        "提示3：注意区分不同组件，找到正确答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：[指令写入示例]",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕哪个内容进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的期末复习要点"
+        },
+        {
+          "label": "B",
+          "content": "定时器、编程结构及其应用"
+        },
+        {
+          "label": "C",
+          "content": "单片机的硬件组成和工作原理"
+        },
+        {
+          "label": "D",
+          "content": "编程算法和数据结构的应用"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本次课程主要讲解内容",
+        "提示2：视频明确指出了围绕的核心内容",
+        "提示3：注意与选项进行准确匹配"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：工作方式分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕以下哪些内容进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的期末突击课"
+        },
+        {
+          "label": "B",
+          "content": "定时计数器、编程结构及其应用"
+        },
+        {
+          "label": "C",
+          "content": "帮助大家避免挂科"
+        },
+        {
+          "label": "D",
+          "content": "以上都不是"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：关注视频中提到的本次课程主要讲解的核心内容",
+        "提示2：注意区分课程目标和具体讲解内容",
+        "提示3：在视频中找到明确提及的主要讲解内容描述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定时时间计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单片机中，若一个定时器的计数初值为 $N$，时钟周期为 $T$，定时器为 16 位定时器，那么该定时器的定时时间 $t$ 的计算公式为（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$t = (2^{16} - N) \\times T$"
+        },
+        {
+          "label": "B",
+          "content": "$t = (N - 2^{16}) \\times T$"
+        },
+        {
+          "label": "C",
+          "content": "$t = (2^{8} - N) \\times T$"
+        },
+        {
+          "label": "D",
+          "content": "$t = (N - 2^{8}) \\times T$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先明确 16 位定时器的最大计数值",
+        "提示2：思考计数初值 $N$ 和最大计数值的关系以及如何计算计数值",
+        "提示3：定时时间等于计数值乘以时钟周期"
+      ]
+    },
+    {
+      "type": "error",
+      "title": "练习题生成失败：例题分析求解",
+      "error": "生成大纲失败: "
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：查询方式编程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课主要围绕以下哪些内容进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的考试技巧"
+        },
+        {
+          "label": "B",
+          "content": "定时器、编程结构及其应用"
+        },
+        {
+          "label": "C",
+          "content": "单片机的硬件组成"
+        },
+        {
+          "label": "D",
+          "content": "编程的基础语法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的本次课主要讲解的核心内容",
+        "提示2：重点关注与课程内容直接相关的描述",
+        "提示3：回顾视频中提到的围绕讲解的具体事物"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：中断方式编程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本节课主要围绕以下哪个内容及其编程结构和应用进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术"
+        },
+        {
+          "label": "B",
+          "content": "定时计数器"
+        },
+        {
+          "label": "C",
+          "content": "中断方式编程"
+        },
+        {
+          "label": "D",
+          "content": "数学建模"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的本节课主要讲解围绕的核心内容",
+        "提示2：在视频中寻找与编程结构和应用相关的核心主题",
+        "提示3：根据视频内容直接判断选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定时方式讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕以下哪个内容进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的期末冲刺方法"
+        },
+        {
+          "label": "B",
+          "content": "定时计数器、编程结构及其应用"
+        },
+        {
+          "label": "C",
+          "content": "单片机的硬件组成"
+        },
+        {
+          "label": "D",
+          "content": "编程的通用算法"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的本章节主要围绕的讲解内容",
+        "提示2：定位视频中关于章节内容的描述语句",
+        "提示3：将选项与视频中描述的内容进行一一比对"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：方式二示例",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本讲主要围绕以下哪些内容进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术课程的期末冲刺方法"
+        },
+        {
+          "label": "B",
+          "content": "定时器、编程结构及其应用"
+        },
+        {
+          "label": "C",
+          "content": "单片机的硬件组成和工作原理"
+        },
+        {
+          "label": "D",
+          "content": "编程算法和数据结构"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到本讲主要围绕的核心内容",
+        "提示2：定位到视频中关于本讲内容的描述语句",
+        "提示3：根据相关描述与选项进行对比判断"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：定时器分工",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕以下哪些内容进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的所有章节内容"
+        },
+        {
+          "label": "B",
+          "content": "定时器计数器、编程结构以及它的一个应用"
+        },
+        {
+          "label": "C",
+          "content": "单片机原理及接口技术的考试技巧"
+        },
+        {
+          "label": "D",
+          "content": "数学建模的相关知识"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的本章节主要讲解内容",
+        "提示2：明确课程围绕的核心知识点",
+        "提示3：排除与视频核心内容无关的选项"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：初始化步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本次课程主要围绕以下哪些内容进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的期末冲刺要点"
+        },
+        {
+          "label": "B",
+          "content": "定时器、编程结构及其应用"
+        },
+        {
+          "label": "C",
+          "content": "单片机的硬件组成"
+        },
+        {
+          "label": "D",
+          "content": "单片机的通信协议"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：注意视频中提到的本次课程主要讲解内容的关键信息",
+        "提示2：重点关注和课程内容直接相关的描述",
+        "提示3：查找关于围绕讲解的具体事物的表述"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：技术初值计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "本讲主要围绕以下哪些内容进行讲解？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单片机原理及接口技术的考试技巧"
+        },
+        {
+          "label": "B",
+          "content": "定时器、编程结构及其应用"
+        },
+        {
+          "label": "C",
+          "content": "单片机的硬件组成"
+        },
+        {
+          "label": "D",
+          "content": "单片机的通信协议"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中提到的本讲主要讲解内容",
+        "提示2：视频中明确指出本讲围绕特定的几个方面展开",
+        "提示3：对比各选项与视频所讲内容是否一致"
+      ]
+    }
+  ],
+  "count": 21
+}

@@ -1,0 +1,645 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：化学反应判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态压强为 $p_1$，体积为 $V_1$，温度为 $T_1$。若压强变为原来的 $2$ 倍，温度变为原来的 $1.5$ 倍，那么体积变为原来的多少倍？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{3}{4}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{4}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{2}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{3}{2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据理想气体状态方程 $pV = nRT$，因为气体质量一定，所以物质的量 $n$ 不变，$R$ 为常量",
+        "提示2：分别列出变化前后的理想气体状态方程 $p_1V_1 = nRT_1$ 和 $p_2V_2 = nRT_2$",
+        "提示3：已知 $p_2 = 2p_1$，$T_2 = 1.5T_1$，将其代入方程求解 $\\frac{V_2}{V_1}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：熵变选择",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态下压强为 $P_1$，体积为 $V_1$，温度为 $T_1$。若压强变为原来的 $2$ 倍，温度变为原来的 $1.5$ 倍，根据理想气体状态方程 $pV = nRT$，则此时气体的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据理想气体状态方程 $pV = nRT$，对于一定质量的理想气体，$nR$ 是常数。",
+        "提示2：分别列出变化前后的理想气体状态方程。",
+        "提示3：将变化后的压强和温度代入方程，然后与初始方程对比求出体积关系。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：热动力学计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态下压强为 $p_1$，体积为 $V_1$，温度为 $T_1$。若压强变为原来的 $2$ 倍，温度变为原来的 $1.5$ 倍，那么变化后的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确理想气体状态方程 $pV = nRT$",
+        "提示2：因为是一定质量的理想气体，所以物质的量 $n$ 和常数 $R$ 不变",
+        "提示3：根据变化前后的状态列出两个方程，然后联立求解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平衡常数计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态下压强为 $P_1$，体积为 $V_1$，温度为 $T_1$。若压强变为原来的 2 倍，温度变为原来的 1.5 倍，此时气体的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据理想气体状态方程 $PV = nRT$，对于一定质量的理想气体，物质的量 $n$ 和常数 $R$ 不变。",
+        "提示2：分别列出变化前后的理想气体状态方程 $P_1V_1 = nRT_1$ 和 $P_2V_2 = nRT_2$。",
+        "提示3：已知 $P_2 = 2P_1$，$T_2 = 1.5T_1$，将其代入方程求解 $V_2$ 与 $V_1$ 的关系。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：化学平衡移动",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个密闭容器中，有一定量的理想气体，初始状态下压强为 $p_1$，体积为 $V_1$，温度为 $T_1$。若将温度升高到原来的 2 倍，压强增大到原来的 3 倍，那么此时气体的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{1}{6}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = 6V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据理想气体状态方程 $pV = nRT$，分别列出变化前后的方程",
+        "提示2：由于物质的量 $n$ 和常数 $R$ 不变，可通过两式相比来求解体积关系",
+        "提示3：将已知的温度和压强变化倍数代入进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：化学平衡移动",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态下压强为 $p_1$，体积为 $V_1$，温度为 $T_1$。若压强变为原来的 $2$ 倍，温度变为原来的 $1.5$ 倍，那么此时气体的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据理想气体状态方程 $pV = nRT$ 来分析气体状态变化",
+        "提示2：分别列出变化前后的理想气体状态方程",
+        "提示3：将变化后的压强和温度代入方程，与初始方程对比得出体积关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平衡常数性质",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态下压强为 $p_1$，温度为 $T_1$，体积为 $V_1$。若压强变为原来的 $2$ 倍，温度变为原来的 $1.5$ 倍，根据理想气体状态方程 $pV = nRT$，此时气体的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先写出理想气体状态方程在变化前后的表达式 $p_1V_1 = nRT_1$ 和 $p_2V_2 = nRT_2$",
+        "提示2：根据题目条件找出 $p_2$ 与 $p_1$、$T_2$ 与 $T_1$ 的关系",
+        "提示3：将变化后的压强和温度关系代入方程，然后通过两式相比求解 $V_2$ 与 $V_1$ 的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平衡常数计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态压强为 $p_1$，温度为 $T_1$，体积为 $V_1$。若压强变为原来的 $2$ 倍，温度变为原来的 $1.5$ 倍，那么变化后的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = 3V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{1}{3}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据理想气体状态方程 $pV = nRT$，分析变化前后的状态",
+        "提示2：分别列出变化前后的理想气体状态方程，然后相比",
+        "提示3：将已知的压强和温度变化关系代入方程求解体积关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：理想气体状态方程的应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态下压强为 $p_1$，体积为 $V_1$，温度为 $T_1$。若压强变为原来的 $2$ 倍，温度变为原来的 $3$ 倍，那么此时气体的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = 6V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{1}{6}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据理想气体状态方程 $pV = nRT$，由于气体质量一定，$n$ 和 $R$ 为常量",
+        "提示2：分别列出变化前后的理想气体状态方程 $p_1V_1 = nRT_1$ 和 $p_2V_2 = nRT_2$",
+        "提示3：已知 $p_2 = 2p_1$，$T_2 = 3T_1$，将其代入方程求解 $V_2$ 与 $V_1$ 的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：速率方程应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始压强为 $p_1$，体积为 $V_1$，温度为 $T_1$。若压强变为原来的 $2$ 倍，温度变为原来的 $3$ 倍，则此时气体的体积变为原来的多少倍？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{1}{6}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{1}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{3}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$6$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先明确理想气体状态方程为 $pV = nRT$",
+        "提示2：设变化前状态为 $p_1V_1 = nRT_1$，变化后状态为 $p_2V_2 = nRT_2$",
+        "提示3：将已知条件 $p_2 = 2p_1$，$T_2 = 3T_1$ 代入两个方程，然后相除求解 $\\frac{V_2}{V_1}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：化学催化剂知识",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态下压强为 $p_1$，体积为 $V_1$，温度为 $T_1$。若压强变为原来的 $2$ 倍，温度变为原来的 $1.5$ 倍，根据理想气体状态方程 $pV = nRT$，此时气体的体积 $V_2$ 为原来体积 $V_1$ 的多少倍？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{3}{4}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{4}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{3}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{2}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据理想气体状态方程 $pV = nRT$，分别列出变化前后的状态方程",
+        "提示2：因为气体质量一定，所以物质的量 $n$ 不变，$R$ 为常数也不变",
+        "提示3：将变化后的压强和温度关系代入方程，求解体积的变化倍数"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：理想气体状态方程应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态下压强为 $p_1$，体积为 $V_1$，温度为 $T_1$。经过变化后，压强变为原来的 2 倍，温度变为原来的 1.5 倍，则变化后的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据理想气体状态方程 $pV = nRT$，由于气体质量一定，$n$ 和 $R$ 为常量",
+        "提示2：分别列出变化前后的理想气体状态方程 $p_1V_1 = nRT_1$ 和 $p_2V_2 = nRT_2$",
+        "提示3：已知 $p_2 = 2p_1$，$T_2 = 1.5T_1$，将其代入方程求解 $V_2$ 与 $V_1$ 的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：缓冲溶液计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态下压强为 $p_1$，温度为 $T_1$，体积为 $V_1$。若压强变为原来的 2 倍，温度变为原来的 1.5 倍，那么此时气体的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据理想气体状态方程 $pV = nRT$，因为气体质量一定，所以物质的量 $n$ 不变，$R$ 为常数。",
+        "提示2：分别列出变化前后的理想气体状态方程 $p_1V_1 = nRT_1$ 和 $p_2V_2 = nRT_2$。",
+        "提示3：已知 $p_2 = 2p_1$，$T_2 = 1.5T_1$，将其代入方程求解 $V_2$ 与 $V_1$ 的关系。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：理想气体状态方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态时压强为 $P_1$，温度为 $T_1$，体积为 $V_1$。若压强变为原来的 2 倍，温度变为原来的 1.5 倍，那么此时气体的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：理想气体状态方程为 $PV = nRT$，本题中气体质量一定，即物质的量 $n$ 不变，$R$ 为常数",
+        "提示2：分别列出变化前后的理想气体状态方程 $P_1V_1 = nRT_1$ 和 $P_2V_2 = nRT_2$",
+        "提示3：根据已知条件 $P_2 = 2P_1$，$T_2 = 1.5T_1$，将其代入变化后的方程，再与变化前的方程联立求解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：溶度积计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态压强为 $p_1$，温度为 $T_1$，体积为 $V_1$。若压强变为原来的 2 倍，温度变为原来的 1.5 倍，根据理想气体状态方程 $pV = nRT$，此时气体的体积 $V_2$ 是原来体积 $V_1$ 的多少倍？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{3}{4}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{4}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{3}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{2}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先根据理想气体状态方程分别列出变化前后的等式",
+        "提示2：变化前 $p_1V_1 = nRT_1$，变化后 $p_2V_2 = nRT_2$",
+        "提示3：已知 $p_2 = 2p_1$，$T_2 = 1.5T_1$，将其代入变化后的等式，再与变化前的等式相比，求出 $\\frac{V_2}{V_1}$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电极方程式关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态下压强为 $p_1$，温度为 $T_1$，体积为 $V_1$。若压强变为原来的 2 倍，温度变为原来的 1.5 倍，那么变化后的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据理想气体状态方程 $pV = nRT$，对于一定质量的理想气体，$n$ 和 $R$ 是常数",
+        "提示2：分别列出变化前后的理想气体状态方程",
+        "提示3：将变化后的压强和温度代入方程，然后与初始方程相比，求解 $V_2$ 与 $V_1$ 的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：反应方向判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态压强为 $P_1$，温度为 $T_1$，体积为 $V_1$。若压强变为原来的 $2$ 倍，温度变为原来的 $\\frac{3}{2}$ 倍，那么变化后的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据理想气体状态方程 $PV = nRT$，因为气体质量一定，所以物质的量 $n$ 不变，$R$ 是常数也不变",
+        "提示2：分别列出变化前后的理想气体状态方程 $P_1V_1 = nRT_1$ 和 $P_2V_2 = nRT_2$",
+        "提示3：已知 $P_2 = 2P_1$，$T_2 = \\frac{3}{2}T_1$，将其代入方程求解 $V_2$ 与 $V_1$ 的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：标准电动势",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定量的理想气体，其状态变化遵循理想气体状态方程 $pV=nRT$。初始状态下，压强 $p_1 = 2\\text{ atm}$，体积 $V_1 = 4\\text{ L}$，温度 $T_1 = 300\\text{ K}$。若压强变为 $p_2 = 4\\text{ atm}$，温度变为 $T_2 = 600\\text{ K}$，则此时气体的体积 $V_2$ 为多少？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2\\text{ L}$"
+        },
+        {
+          "label": "B",
+          "content": "$4\\text{ L}$"
+        },
+        {
+          "label": "C",
+          "content": "$6\\text{ L}$"
+        },
+        {
+          "label": "D",
+          "content": "$8\\text{ L}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据理想气体状态方程，在物质的量 $n$ 不变的情况下，有 $\\frac{p_1V_1}{T_1}=\\frac{p_2V_2}{T_2}$。",
+        "提示2：将已知的 $p_1$、$V_1$、$T_1$、$p_2$、$T_2$ 代入上述等式。",
+        "提示3：求解等式得出 $V_2$ 的值。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：理想气体状态方程应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态下压强为 $p_1$，温度为 $T_1$，体积为 $V_1$。若压强变为原来的 2 倍，温度变为原来的 $\\frac{3}{2}$ 倍，则变化后的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确理想气体状态方程 $pV = nRT$，本题中气体质量一定，即物质的量 $n$ 不变，$R$ 为常量",
+        "提示2：分别列出变化前后的理想气体状态方程 $p_1V_1 = nRT_1$ 和 $p_2V_2 = nRT_2$",
+        "提示3：已知 $p_2 = 2p_1$，$T_2 = \\frac{3}{2}T_1$，将其代入变化后的方程并与变化前的方程联立求解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：理想气体状态方程的应用",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一定质量的理想气体，初始状态下压强为 $p_1$，温度为 $T_1$，体积为 $V_1$。若压强变为原来的 $2$ 倍，温度变为原来的 $1.5$ 倍，那么变化后的体积 $V_2$ 与初始体积 $V_1$ 的关系是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$V_2 = \\frac{3}{4}V_1$"
+        },
+        {
+          "label": "B",
+          "content": "$V_2 = \\frac{4}{3}V_1$"
+        },
+        {
+          "label": "C",
+          "content": "$V_2 = \\frac{2}{3}V_1$"
+        },
+        {
+          "label": "D",
+          "content": "$V_2 = \\frac{3}{2}V_1$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确理想气体状态方程为 $pV = nRT$",
+        "提示2：因为是一定质量的理想气体，物质的量 $n$ 和常数 $R$ 不变",
+        "提示3：分别列出变化前后的理想气体状态方程，然后联立求解"
+      ]
+    }
+  ],
+  "count": 20
+}

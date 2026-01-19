@@ -1,0 +1,165 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：多面截圆柱体",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个圆柱体被左右对称的两个侧平垂直截面和一个水平截截面截切，若该圆柱体底面半径为 $r$，高为 $h$，左右对称的侧平垂直截面与底面夹角为 $45^\\circ$，水平截面过圆柱体的中心，那么截得的立体图形在正投影图中，左右对称的侧平垂直截面的投影线与水平截面投影线的交点到圆柱体底面圆心投影点的距离为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$r$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{r}{2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\sqrt{2}r$"
+        },
+        {
+          "label": "D",
+          "content": "$2r$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先明确各个截面的位置关系以及投影的特点",
+        "提示2：考虑左右对称的侧平垂直截面与底面夹角为 $45^\\circ$ 这个条件",
+        "提示3：结合水平截面过圆柱体中心，分析交点到圆柱体底面圆心投影点的距离与底面半径的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：空心圆柱截口",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个圆柱体被左右对称的两个侧平垂直截面和一个水平截截面截切，其正投影中截交线的数量是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1条"
+        },
+        {
+          "label": "B",
+          "content": "2条"
+        },
+        {
+          "label": "C",
+          "content": "3条"
+        },
+        {
+          "label": "D",
+          "content": "4条"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的圆柱体被多个平面截切后正投影的情况",
+        "提示2：明确是左右对称的两个侧平垂直截面和一个水平截截面截切圆柱体",
+        "提示3：注意题目问的是正投影中截交线的数量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：空心圆柱截交线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个圆柱体被左右对称的两个侧平垂直截平面和一个水平截平面截切，其正投影中截交线有几条？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$ 条"
+        },
+        {
+          "label": "B",
+          "content": "$2$ 条"
+        },
+        {
+          "label": "C",
+          "content": "$3$ 条"
+        },
+        {
+          "label": "D",
+          "content": "$4$ 条"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的圆柱体被多个平面截切后正投影的情况",
+        "提示2：注意题目中明确指出是正投影中截交线的数量",
+        "提示3：视频中提到正投影中有三条线"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投影特征分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个圆柱体被左右对称的两个侧平垂直截面和一个水平截截面切割，其正投影中这三个截面形成的交线数量可能是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "2条"
+        },
+        {
+          "label": "B",
+          "content": "3条"
+        },
+        {
+          "label": "C",
+          "content": "4条"
+        },
+        {
+          "label": "D",
+          "content": "5条"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的圆柱体被特定截面切割后正投影的情况",
+        "提示2：考虑三个截面（两个侧平垂直截面和一个水平截面）在正投影中的表现",
+        "提示3：分析不同截面之间交线在正投影中的呈现数量"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：切口绘制要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个圆柱体被左右对称的两个侧平垂直剖切平面和一个水平剖切平面剖切，在正投影图中，代表这三个剖切平面的线条有几条？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "1条"
+        },
+        {
+          "label": "B",
+          "content": "2条"
+        },
+        {
+          "label": "C",
+          "content": "3条"
+        },
+        {
+          "label": "D",
+          "content": "4条"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的一个圆柱体被特定平面剖切后的正投影图情况",
+        "提示2：明确是左右对称的两个侧平垂直剖切平面和一个水平剖切平面",
+        "提示3：思考在正投影图中这三个平面所对应的线条数量"
+      ]
+    }
+  ],
+  "count": 5
+}

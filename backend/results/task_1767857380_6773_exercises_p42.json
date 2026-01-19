@@ -1,0 +1,165 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：单一剖切平面",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在剖切视图中，剖切平面可分为几种类型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "2种"
+        },
+        {
+          "label": "B",
+          "content": "3种"
+        },
+        {
+          "label": "C",
+          "content": "4种"
+        },
+        {
+          "label": "D",
+          "content": "5种"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中关于剖切平面类型的介绍",
+        "提示2：视频中明确提到了剖切平面的具体分类数量",
+        "提示3：可直接从视频内容中获取答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：几个平行剖切平面",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在剖视图中，剖切平面可以分为几种类型？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "2种"
+        },
+        {
+          "label": "B",
+          "content": "3种"
+        },
+        {
+          "label": "C",
+          "content": "4种"
+        },
+        {
+          "label": "D",
+          "content": "5种"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：仔细回顾视频中提到的剖切平面的分类情况",
+        "提示2：视频中明确列举了剖切平面的不同类型",
+        "提示3：注意要将所有提到的类型进行汇总统计"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：几个相交剖切平面",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在剖切视图中，剖切平面的类型不包含以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单一剖切平面"
+        },
+        {
+          "label": "B",
+          "content": "几个平行的剖切平面"
+        },
+        {
+          "label": "C",
+          "content": "几个垂直的剖切平面"
+        },
+        {
+          "label": "D",
+          "content": "相交的剖切平面与其他剖切平面相组合"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾视频中提到的剖切平面的分类",
+        "提示2：视频中明确指出了剖切平面有四种类型",
+        "提示3：逐一对比选项与视频中提到的类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：旋转剖原理",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在剖视图中，剖切平面的类型不包括以下哪种？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单一剖切平面"
+        },
+        {
+          "label": "B",
+          "content": "多个平行的剖切平面"
+        },
+        {
+          "label": "C",
+          "content": "多个相交的倾斜平面（注：视频提到的是多个相交的剖切平面，这里倾斜平面表述易混淆）"
+        },
+        {
+          "label": "D",
+          "content": "单一倾斜的投影面（此为错误类型，不属于视频中提到的剖切平面类型）"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "D",
+      "hints": [
+        "提示1：回顾视频中提到的剖切平面的分类情况",
+        "提示2：明确视频中提到的剖切平面有单一剖切平面、多个平行的剖切平面、多个相交的剖切平面以及相交的剖切平面与其他剖切平面相组合这几种类型",
+        "提示3：逐一分析每个选项是否属于视频中提到的类型"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：复合剖介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在剖视图中，剖切平面可分为多种类型，以下不属于视频中所讲剖切平面类型的是？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "单一剖切平面"
+        },
+        {
+          "label": "B",
+          "content": "两个相交但不共面的剖切平面"
+        },
+        {
+          "label": "C",
+          "content": "多个平行的剖切平面"
+        },
+        {
+          "label": "D",
+          "content": "相交的剖切平面与其他剖切平面相组合"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中提到的剖切平面的分类",
+        "提示2：明确视频中所讲的剖切平面类型有单一剖切平面、多个平行的剖切平面、多个相交的剖切平面以及相交的剖切平面与其他剖切平面相组合这几种",
+        "提示3：分析每个选项是否符合视频所讲的类型"
+      ]
+    }
+  ],
+  "count": 5
+}

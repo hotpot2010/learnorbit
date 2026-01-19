@@ -1,0 +1,197 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：化学平衡状态",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $aA + bB \\rightleftharpoons gG + hH$，下列关于经验平衡常数的说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "经验平衡常数只与反应物的初始浓度有关"
+        },
+        {
+          "label": "B",
+          "content": "经验平衡常数与反应的温度无关"
+        },
+        {
+          "label": "C",
+          "content": "经验平衡常数表达式为 $K = \\frac{[G]^g[H]^h}{[A]^a[B]^b}$，其中 $[A]$、$[B]$、$[G]$、$[H]$ 分别为各物质的平衡浓度"
+        },
+        {
+          "label": "D",
+          "content": "增大反应物 $A$ 的浓度，经验平衡常数 $K$ 会增大"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾经验平衡常数的定义和性质",
+        "提示2：思考经验平衡常数与温度、反应物浓度等因素的关系",
+        "提示3：明确经验平衡常数表达式中各物质浓度的含义"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：化学反应方向",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $aA + bB \\rightleftharpoons gG + hH$，以下说法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "反应达到平衡时，各物质的物质的量一定相等"
+        },
+        {
+          "label": "B",
+          "content": "该反应的经验平衡常数只与温度有关"
+        },
+        {
+          "label": "C",
+          "content": "反应开始时，正反应速率小于逆反应速率"
+        },
+        {
+          "label": "D",
+          "content": "平衡状态时，各物质的物质的量浓度不再变化，反应停止进行"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确化学平衡状态的定义和特征",
+        "提示2：了解经验平衡常数的影响因素",
+        "提示3：分析反应过程中正逆反应速率的变化情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平衡常数与Δrgm关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $aA + bB \\rightleftharpoons gG + hH$，引入的经验平衡常数表达式为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$K = \\frac{[G]^g[H]^h}{[A]^a[B]^b}$"
+        },
+        {
+          "label": "B",
+          "content": "$K = \\frac{[A]^a[B]^b}{[G]^g[H]^h}$"
+        },
+        {
+          "label": "C",
+          "content": "$K = [A]^a[B]^b[G]^g[H]^h$"
+        },
+        {
+          "label": "D",
+          "content": "$K = \\frac{[A][B]}{[G][H]}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：经验平衡常数是生成物浓度幂之积与反应物浓度幂之积的比值",
+        "提示2：注意各物质的浓度要以其化学计量数为指数",
+        "提示3：根据可逆反应 $aA + bB \\rightleftharpoons gG + hH$ 来确定表达式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平衡的移动",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $aA + bB \\rightleftharpoons gG + hH$，下列关于经验平衡常数的说法正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "经验平衡常数只与反应物的初始浓度有关"
+        },
+        {
+          "label": "B",
+          "content": "经验平衡常数表达式为 $K = \\frac{[G]^g[H]^h}{[A]^a[B]^b}$，其中 $[A]$、$[B]$、$[G]$、$[H]$ 为任意时刻各物质的浓度"
+        },
+        {
+          "label": "C",
+          "content": "经验平衡常数表达式为 $K = \\frac{[G]^g[H]^h}{[A]^a[B]^b}$，其中 $[A]$、$[B]$、$[G]$、$[H]$ 为平衡时各物质的浓度"
+        },
+        {
+          "label": "D",
+          "content": "改变反应的温度，经验平衡常数不变"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾经验平衡常数的定义和影响因素",
+        "提示2：明确经验平衡常数表达式中各物质浓度的含义",
+        "提示3：思考温度对经验平衡常数的影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：反应热与平衡常数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $aA + bB \\rightleftharpoons gG + hH$，其经验平衡常数 $K$ 的表达式正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$K = \\frac{[G]^g[H]^h}{[A]^a[B]^b}$"
+        },
+        {
+          "label": "B",
+          "content": "$K = \\frac{[A]^a[B]^b}{[G]^g[H]^h}$"
+        },
+        {
+          "label": "C",
+          "content": "$K = \\frac{[G][H]}{[A][B]}$"
+        },
+        {
+          "label": "D",
+          "content": "$K = \\frac{[A][B]}{[G][H]}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：经验平衡常数是指在一定温度下，可逆反应达到平衡时，生成物浓度幂之积与反应物浓度幂之积的比值。",
+        "提示2：幂的指数为各物质化学计量数。",
+        "提示3：根据可逆反应 $aA + bB \\rightleftharpoons gG + hH$ 来确定平衡常数表达式。"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：催化剂对反应的影响",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "对于可逆反应 $aA + bB \\rightleftharpoons gG + hH$，下列关于经验平衡常数的说法正确的是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "经验平衡常数只与反应物的初始浓度有关"
+        },
+        {
+          "label": "B",
+          "content": "经验平衡常数只与反应温度有关"
+        },
+        {
+          "label": "C",
+          "content": "经验平衡常数与反应物和生成物的浓度无关"
+        },
+        {
+          "label": "D",
+          "content": "经验平衡常数与反应的化学计量数无关"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾经验平衡常数的定义和性质",
+        "提示2：明确经验平衡常数与哪些因素有关",
+        "提示3：思考化学计量数对经验平衡常数的影响"
+      ]
+    }
+  ],
+  "count": 6
+}

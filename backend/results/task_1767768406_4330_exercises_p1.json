@@ -1,0 +1,647 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：点投影关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，若一个点 $A$ 在正投影面（$V$ 面）上的投影为 $a'$，在水平投影面（$H$ 面）上的投影为 $a$，在侧投影面（$W$ 面）上的投影为 $a''$，已知点 $A$ 的 $x$ 坐标为 $3$，$y$ 坐标为 $4$，$z$ 坐标为 $5$，则点 $a'$ 的坐标可能是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(3, 0, 5)$"
+        },
+        {
+          "label": "B",
+          "content": "$(3, 4, 0)$"
+        },
+        {
+          "label": "C",
+          "content": "$(0, 4, 5)$"
+        },
+        {
+          "label": "D",
+          "content": "$(3, 4, 5)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：明确正投影面（$V$ 面）的特点，$V$ 面是 $xOz$ 平面",
+        "提示2：在 $V$ 面上，点的 $y$ 坐标为 $0$",
+        "提示3：根据点 $A$ 的 $x$ 和 $z$ 坐标确定点 $a'$ 的坐标"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：点坐标求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在平面直角坐标系中，已知点 $A$ 在第二象限，且点 $A$ 到 $x$ 轴的距离为 3，到 $y$ 轴的距离为 2，则点 $A$ 的坐标是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(2,3)$"
+        },
+        {
+          "label": "B",
+          "content": "$(-2,3)$"
+        },
+        {
+          "label": "C",
+          "content": "$(-3,2)$"
+        },
+        {
+          "label": "D",
+          "content": "$(3,-2)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确点到坐标轴的距离与坐标的关系，点到 $x$ 轴的距离是纵坐标的绝对值，到 $y$ 轴的距离是横坐标的绝对值",
+        "提示2：根据点所在的象限确定横、纵坐标的正负，第二象限的点横坐标为负，纵坐标为正",
+        "提示3：结合已知条件求出点 $A$ 的横、纵坐标"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：点左右判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图复习中，老师要在 4 小时内带领大家复习完工程制图这门课，在复习过程中会讲解一些常见的考试案例。已知有一道考试案例题，在图纸上有 A、B、C 三个点，从图纸的正方向看，点 A 在点 B 的左边，点 C 在点 B 的右边且距离点 B 为 $d_1$，现有一个新点 D，若点 D 到点 A 的距离为 $d_2$，到点 B 的距离为 $d_3$，且 $d_2 = d_3$，那么点 D 相对于点 B 的位置是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "一定在点 B 的左边"
+        },
+        {
+          "label": "B",
+          "content": "一定在点 B 的右边"
+        },
+        {
+          "label": "C",
+          "content": "可能在点 B 的左边，也可能在点 B 的右边"
+        },
+        {
+          "label": "D",
+          "content": "一定与点 B 重合"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据点 D 到点 A 和点 B 的距离相等，可知点 D 在线段 AB 的垂直平分线上",
+        "提示2：考虑线段 AB 的垂直平分线与点 B 的位置关系",
+        "提示3：结合点 A 在点 B 的左边这一条件，分析垂直平分线的位置情况"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：点的位置判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，已知点 $A$ 的坐标为 $(3, 4, 5)$，点 $B$ 的坐标为 $(1, 2, 3)$，点 $C$ 在 $AB$ 线段上，且 $AC:CB = 2:1$，则点 $C$ 的 $x$ 坐标是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{4}{3}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{5}{3}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{7}{3}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{8}{3}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：首先明确线段定比分点公式，若有两点 $M(x_1,y_1,z_1)$，$N(x_2,y_2,z_2)$，点 $P$ 分 $MN$ 为 $MP:PN = \\lambda:1$，则 $P$ 的 $x$ 坐标公式为 $x_P=\\frac{x_1 + \\lambda x_2}{1 + \\lambda}$",
+        "提示2：确定本题中 $x_1$，$x_2$ 和 $\\lambda$ 的值，$x_1$ 是点 $A$ 的 $x$ 坐标，$x_2$ 是点 $B$ 的 $x$ 坐标，$\\lambda = 2$",
+        "提示3：将对应值代入公式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平行线分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "老师计划带领大家在 4 小时内复习完工程制图这门课，若复习过程中老师讲解常见的考试案例占总时间的 $\\frac{1}{4}$，那么讲解考试案例的时间是多少小时？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$0.5$ 小时"
+        },
+        {
+          "label": "B",
+          "content": "$1$ 小时"
+        },
+        {
+          "label": "C",
+          "content": "$1.5$ 小时"
+        },
+        {
+          "label": "D",
+          "content": "$2$ 小时"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：已知总复习时间和讲解考试案例占总时间的比例，求讲解考试案例的时间，用乘法计算",
+        "提示2：总时间是 4 小时，比例是 $\\frac{1}{4}$，两者相乘即可得到讲解考试案例的时间",
+        "提示3：$4\\times\\frac{1}{4}$ 的结果就是答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：垂直线分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图复习中，若要在 4 小时内复习完工程制图这门课，对于常见的考试案例和会做的题，应该怎么做？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "只做难题，简单题可以忽略"
+        },
+        {
+          "label": "B",
+          "content": "会做的题做对，该背的知识点记住"
+        },
+        {
+          "label": "C",
+          "content": "只背知识点，不用做题"
+        },
+        {
+          "label": "D",
+          "content": "随意做题，不用在意对错"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：回顾视频中老师对于复习工程制图的要求",
+        "提示2：关注对常见考试案例和会做的题的处理方式",
+        "提示3：明确复习过程中做题和背知识点的重要性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：投影线概念",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，投影线是一个重要概念。若有一个物体在投影面上形成投影，以下关于投影线的描述正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "投影线只能是平行的"
+        },
+        {
+          "label": "B",
+          "content": "投影线只能是相交于一点的"
+        },
+        {
+          "label": "C",
+          "content": "投影线可以是平行的，也可以是相交于一点的"
+        },
+        {
+          "label": "D",
+          "content": "投影线既不平行也不相交于一点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：回顾工程制图中投影的分类，有平行投影和中心投影",
+        "提示2：思考平行投影和中心投影中投影线的特点",
+        "提示3：平行投影的投影线是平行的，中心投影的投影线是相交于一点的"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：两直线位置判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，已知直线 $l_1$ 的方程为 $y = 2x + 3$，直线 $l_2$ 经过点 $(1, 5)$ 和 $(2, 7)$，那么这两条直线的位置关系是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平行"
+        },
+        {
+          "label": "B",
+          "content": "相交但不垂直"
+        },
+        {
+          "label": "C",
+          "content": "垂直"
+        },
+        {
+          "label": "D",
+          "content": "重合"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先根据两点式求出直线 $l_2$ 的方程",
+        "提示2：通过比较两条直线的斜率判断它们的位置关系",
+        "提示3：若两直线斜率相等，则两直线平行或重合，再判断截距是否相等来确定是平行还是重合"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：点线位置判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，已知一条直线 $l$ 的方程为 $y = 2x + 1$，有一个点 $P(3, m)$，若点 $P$ 在直线 $l$ 上，那么 $m$ 的值为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$5$"
+        },
+        {
+          "label": "B",
+          "content": "$6$"
+        },
+        {
+          "label": "C",
+          "content": "$7$"
+        },
+        {
+          "label": "D",
+          "content": "$8"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：因为点 $P(3, m)$ 在直线 $l$ 上，所以点 $P$ 的坐标满足直线 $l$ 的方程",
+        "提示2：将点 $P$ 的横坐标 $x = 3$ 代入直线方程 $y = 2x + 1$ 中",
+        "提示3：计算出对应的 $y$ 值，此值即为 $m$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：空间两直线特性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，若要复习完工程制图这门课并做好常见考试案例题目，以下做法正确的是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "不需要认真听课程，自己随意复习就行"
+        },
+        {
+          "label": "B",
+          "content": "会做的题目不用保证做对，重点复习不会的"
+        },
+        {
+          "label": "C",
+          "content": "跟着课程认真听，会做的题目做对，该背的知识点记住"
+        },
+        {
+          "label": "D",
+          "content": "只做难题，简单题不用做"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：参考视频中老师对于复习工程制图课程的要求",
+        "提示2：注意老师提到的认真听课、做对会做的题和记住知识点等要点",
+        "提示3：分析每个选项是否符合视频中的复习要求"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：判断线关系",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，已知两条直线 $l_1$ 和 $l_2$，直线 $l_1$ 的方程为 $y = 2x + 3$，直线 $l_2$ 过点 $(1, 4)$ 且与直线 $l_1$ 垂直，那么直线 $l_2$ 的方程是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$y = -\\frac{1}{2}x + \\frac{9}{2}$"
+        },
+        {
+          "label": "B",
+          "content": "$y = -2x + 6$"
+        },
+        {
+          "label": "C",
+          "content": "$y = \\frac{1}{2}x + \\frac{7}{2}$"
+        },
+        {
+          "label": "D",
+          "content": "$y = 2x + 2$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：两直线垂直，斜率之积为 $-1$，先求出直线 $l_2$ 的斜率",
+        "提示2：已知直线 $l_2$ 过一点和斜率，可使用点斜式方程 $y - y_0 = k(x - x_0)$ 来求直线方程",
+        "提示3：将点 $(1, 4)$ 代入点斜式方程并化简"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：画水平线",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图复习中，要在 4 小时内复习完工程制图这门课，对于会做的题和该背的知识点应该怎么做？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "会做的题不用做，该背的知识点不用背"
+        },
+        {
+          "label": "B",
+          "content": "会做的题做对，该背的知识点记住"
+        },
+        {
+          "label": "C",
+          "content": "会做的题随便做，该背的知识点随便记"
+        },
+        {
+          "label": "D",
+          "content": "只做会做的题，不背知识点"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：仔细回顾视频中对于会做的题和该背的知识点的要求",
+        "提示2：视频强调了要认真对待复习过程",
+        "提示3：明确会做的题和该背的知识点的正确处理方式"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：线的分类",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图复习中，老师会带领大家在 4 个小时内复习完工程制图这门课，过程中老师会讲解一些常见的考试案例。已知老师讲解的案例中有一道关于线分类的题目，若在一个复杂的机械零件图纸中，有直线、曲线、折线三种线，其中直线占总线条数的 $\\frac{1}{3}$，曲线比直线多 5 条，折线是直线和曲线总数的 $\\frac{1}{2}$，那么该图纸中总共有多少条线？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "30 条"
+        },
+        {
+          "label": "B",
+          "content": "45 条"
+        },
+        {
+          "label": "C",
+          "content": "60 条"
+        },
+        {
+          "label": "D",
+          "content": "75 条"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：设该图纸中总共有 $x$ 条线，先分别表示出直线、曲线、折线的数量",
+        "提示2：根据直线占总线条数的 $\\frac{1}{3}$，可得出直线数量为 $\\frac{1}{3}x$ 条",
+        "提示3：由曲线比直线多 5 条，可得出曲线数量为 $(\\frac{1}{3}x + 5)$ 条",
+        "提示4：根据折线是直线和曲线总数的 $\\frac{1}{2}$，可得出折线数量为 $\\frac{1}{2}(\\frac{1}{3}x + \\frac{1}{3}x + 5)$ 条",
+        "提示5：最后根据三种线的数量之和等于总线条数列出方程求解"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：相交平行判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，已知直线 $l_1$ 的方程为 $y = 2x + 3$，直线 $l_2$ 过点 $(1, 5)$ 且与直线 $l_1$ 平行，直线 $l_3$ 过点 $(2, 4)$ 且与直线 $l_1$ 相交成 $45^{\\circ}$ 角，那么直线 $l_2$ 与直线 $l_3$ 的位置关系是（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平行"
+        },
+        {
+          "label": "B",
+          "content": "相交但不垂直"
+        },
+        {
+          "label": "C",
+          "content": "垂直"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：先根据两直线平行斜率相等求出直线 $l_2$ 的方程",
+        "提示2：利用两直线夹角公式求出直线 $l_3$ 的斜率",
+        "提示3：根据两直线斜率关系判断直线 $l_2$ 与直线 $l_3$ 的位置关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：平行面讲解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，若有两个平面 $\\alpha$ 和 $\\beta$，已知平面 $\\alpha$ 内有两条相交直线 $a$ 和 $b$，且 $a \\parallel \\beta$，$b \\parallel \\beta$，那么平面 $\\alpha$ 与平面 $\\beta$ 的位置关系是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "平行"
+        },
+        {
+          "label": "B",
+          "content": "相交"
+        },
+        {
+          "label": "C",
+          "content": "垂直"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：回顾平面与平面平行的判定定理",
+        "提示2：判定定理中强调一个平面内两条相交直线与另一个平面平行",
+        "提示3：结合题目中给出的条件判断平面 $\\alpha$ 与平面 $\\beta$ 的关系"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：特殊平面介绍",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "老师计划带领大家在多长时间内复习完工程制图这门课？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "2 个小时"
+        },
+        {
+          "label": "B",
+          "content": "3 个小时"
+        },
+        {
+          "label": "C",
+          "content": "4 个小时"
+        },
+        {
+          "label": "D",
+          "content": "5 个小时"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：注意视频中提到的时间信息",
+        "提示2：仔细寻找关于复习工程制图课程时长的描述",
+        "提示3：锁定关键语句来确定答案"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求交线与可见性",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，对于两个立体图形相交求交线及判断可见性时，若一个三棱柱与一个圆柱相交，三棱柱的一个侧面平行于圆柱的轴线，以下关于交线和可见性的说法正确的是",
+      "choices": [
+        {
+          "label": "A",
+          "content": "交线一定是直线，且在三棱柱平行于圆柱轴线的侧面上的交线部分一定可见"
+        },
+        {
+          "label": "B",
+          "content": "交线可能是曲线，在三棱柱平行于圆柱轴线的侧面上的交线部分不一定可见"
+        },
+        {
+          "label": "C",
+          "content": "交线只能是直线，且在三棱柱平行于圆柱轴线的侧面上的交线部分不一定可见"
+        },
+        {
+          "label": "D",
+          "content": "交线可能是曲线，在三棱柱平行于圆柱轴线的侧面上的交线部分一定不可见"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：考虑三棱柱与圆柱相交的不同情况，分析交线的形状",
+        "提示2：判断可见性时要考虑两个立体图形的相对位置关系",
+        "提示3：当三棱柱与圆柱相交时，交线不一定只是直线，可能会出现曲线情况，同时可见性要根据具体投影来确定"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：线面交点判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，已知直线 $l$ 的方程为 $\\frac{x - 1}{2}=\\frac{y - 2}{3}=\\frac{z - 3}{4}$，平面 $\\alpha$ 的方程为 $2x + 3y - z = 5$，则直线 $l$ 与平面 $\\alpha$ 的交点坐标为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$(3, 5, 7)$"
+        },
+        {
+          "label": "B",
+          "content": "$(2, 4, 6)$"
+        },
+        {
+          "label": "C",
+          "content": "$(1, 2, 3)$"
+        },
+        {
+          "label": "D",
+          "content": "$(4, 6, 8)$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：设直线 $l$ 上一点坐标为 $(x,y,z)$，令 $\\frac{x - 1}{2}=\\frac{y - 2}{3}=\\frac{z - 3}{4}=t$，则可表示出 $x,y,z$ 关于 $t$ 的表达式",
+        "提示2：将表示出的 $x,y,z$ 代入平面 $\\alpha$ 的方程，求出 $t$ 的值",
+        "提示3：把求出的 $t$ 值代回 $x,y,z$ 关于 $t$ 的表达式，得到交点坐标"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求第三边方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个三角形中，已知两条边的长度分别为 $3$ 和 $5$，根据求第三边的方法，第三边的长度可能是以下哪个选项？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1$"
+        },
+        {
+          "label": "B",
+          "content": "$2$"
+        },
+        {
+          "label": "C",
+          "content": "$4$"
+        },
+        {
+          "label": "D",
+          "content": "$8$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：根据三角形三边关系：任意两边之和大于第三边，任意两边之差小于第三边",
+        "提示2：计算已知两边的和与差，即 $3 + 5 = 8$，$5 - 3 = 2$",
+        "提示3：第三边的长度范围应该是大于 $2$ 且小于 $8$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：图形补线方法",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在工程制图中，对于一个不规则的四边形 $ABCD$，其四个内角分别为 $\\angle A$、$\\angle B$、$\\angle C$、$\\angle D$，已知 $\\angle A + \\angle C = 180^{\\circ}$，为了更好地分析该四边形的性质，我们通常会采用补线的方法。以下哪种补线方法最有助于分析该四边形与圆的关系？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "连接 $AC$"
+        },
+        {
+          "label": "B",
+          "content": "连接 $BD$"
+        },
+        {
+          "label": "C",
+          "content": "过点 $A$ 作 $BC$ 的平行线"
+        },
+        {
+          "label": "D",
+          "content": "过点 $D$ 作 $AB$ 的垂线"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：思考圆内接四边形的性质，圆内接四边形对角互补",
+        "提示2：分析补线后能否利用已知的 $\\angle A + \\angle C = 180^{\\circ}$ 得到与圆相关的条件",
+        "提示3：连接 $BD$ 后，可以利用圆周角定理的逆定理来判断四边形是否内接于圆"
+      ]
+    }
+  ],
+  "count": 20
+}
