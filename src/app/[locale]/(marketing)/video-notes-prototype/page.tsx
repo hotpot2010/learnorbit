@@ -7432,7 +7432,41 @@ export default function VideoNotesPrototypePage() {
                         <>
                           <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-200 mb-4">
                             <div className="prose prose-sm max-w-none text-gray-800 leading-relaxed">
-                              <ReactMarkdown {...mathMarkdownPlugins}>{autoWrapLatex(generatedExercise.question || '')}</ReactMarkdown>
+                              <ReactMarkdown 
+                                {...mathMarkdownPlugins}
+                                components={{
+                                  table: ({ children, ...props }) => (
+                                    <div className="overflow-x-auto my-4">
+                                      <table className="min-w-full border-collapse border border-gray-300" {...props}>
+                                        {children}
+                                      </table>
+                                    </div>
+                                  ),
+                                  thead: ({ children, ...props }) => (
+                                    <thead className="bg-gray-100" {...props}>{children}</thead>
+                                  ),
+                                  tbody: ({ children, ...props }) => (
+                                    <tbody {...props}>{children}</tbody>
+                                  ),
+                                  tr: ({ children, ...props }) => (
+                                    <tr className="border-b border-gray-200" {...props}>{children}</tr>
+                                  ),
+                                  th: ({ children, ...props }) => (
+                                    <th className="border border-gray-300 px-4 py-2 text-left font-semibold" {...props}>{children}</th>
+                                  ),
+                                  td: ({ children, ...props }) => (
+                                    <td className="border border-gray-300 px-4 py-2" {...props}>{children}</td>
+                                  ),
+                                }}
+                              >
+                                {(() => {
+                                  const originalContent = generatedExercise.question || '';
+                                  console.log('📝 [练习题] 原始 LaTeX 内容:', originalContent);
+                                  const processedContent = autoWrapLatex(originalContent);
+                                  console.log('✨ [练习题] 处理后 LaTeX 内容:', processedContent);
+                                  return processedContent;
+                                })()}
+                              </ReactMarkdown>
                             </div>
                           </div>
 

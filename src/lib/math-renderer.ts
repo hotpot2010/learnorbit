@@ -5,14 +5,15 @@
 
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
 
 /**
- * ReactMarkdown的默认插件配置，包含数学公式支持
+ * ReactMarkdown的默认插件配置，包含数学公式支持和HTML支持
  */
 export const mathMarkdownPlugins = {
   remarkPlugins: [remarkMath],
-  rehypePlugins: [rehypeKatex],
+  rehypePlugins: [rehypeRaw, rehypeKatex], // rehypeRaw 必须在 rehypeKatex 之前，以支持 HTML 表格
 };
 
 /**
@@ -91,7 +92,40 @@ export const preprocessMathContent = (content: string | null | undefined | any):
 export const autoWrapLatex = (content: string): string => {
   if (!content || typeof content !== 'string') return content;
   
+  // 🔧 修复：如果内容包含 HTML 表格，直接返回原内容，交给 rehypeRaw 处理
+  // 这样可以避免占位符在 LaTeX 处理过程中被破坏
+  const hasHtmlTable = /<table[^>]*>[\s\S]*?<\/table>/i.test(content);
+  if (hasHtmlTable) {
+    console.log('🔍 检测到 HTML 表格，跳过 autoWrapLatex 处理，交由 rehypeRaw 插件处理');
+    return content;
+  }
+  
   let result = content;
+  
+  // 🔧 关键修复：在所有处理之前，先提取已存在的 $ 包裹的公式
+  // 这样可以保护它们不被后续的正则处理破坏
+  const preservedMathBlocks: Array<{ placeholder: string; content: string }> = [];
+  let preservedBlockIndex = 0;
+  
+  // 提取 $$...$$ (块级公式)
+  result = result.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
+    const placeholder = `__PRESERVED_MATH_BLOCK_${preservedBlockIndex}__`;
+    preservedMathBlocks.push({ placeholder, content: match });
+    console.log(`🛡️ [保护块级公式 ${preservedBlockIndex}]:`, match);
+    preservedBlockIndex++;
+    return placeholder;
+  });
+  
+  // 提取 $...$ (行内公式)
+  result = result.replace(/\$([^$]+?)\$/g, (match) => {
+    const placeholder = `__PRESERVED_MATH_INLINE_${preservedBlockIndex}__`;
+    preservedMathBlocks.push({ placeholder, content: match });
+    console.log(`🛡️ [保护行内公式 ${preservedBlockIndex}]:`, match);
+    preservedBlockIndex++;
+    return placeholder;
+  });
+  
+  console.log(`🛡️ [保护后的内容]:`, result);
   
   // 🔧 容错0.1: 先处理未包裹的数学表达式中的 ~ 符号（优先级最高）
   // 例如：X~U(a,b) 或 \lambda~N(\mu,\sigma^2) 或 X~U
@@ -169,6 +203,12 @@ export const autoWrapLatex = (content: string): string => {
   // 🔧 容错5: 修复 N(\mu,\sigma^2) 这种未包裹的公式
   // 匹配类似 N(...) 或 X(...) 这种单字母+括号的模式，且参数中包含 LaTeX 命令
   result = result.replace(/([^$\\])([A-Z])\s*\(([^)]*)\)/g, (match, before, letter, params) => {
+    // 🔧 修复：如果参数中已经包含 $ 符号，说明已被处理过，跳过以避免嵌套
+    // 例如：N($μ$, $σ$) 不应该被包裹成 $$N($μ$, $σ$)$$
+    if (params.includes('$')) {
+      return match;
+    }
+    
     // 检查参数中是否包含 LaTeX 命令（反斜杠、大括号、希腊字母等）
     if (/\\[a-zA-Z]|[\{\}]|[\u03B1-\u03FF]/.test(params)) {
       return `${before}$$${letter}(${params})$$`;
@@ -176,9 +216,23 @@ export const autoWrapLatex = (content: string): string => {
     return match;
   });
   
+  // 🔧 关键修复：容错5 可能生成了新的 $$...$$ 公式，需要立即保护它们
+  // 避免后续的容错5.1在其内部重复包裹希腊字母
+  result = result.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
+    const placeholder = `__PRESERVED_MATH_BLOCK_${preservedBlockIndex}__`;
+    preservedMathBlocks.push({ placeholder, content: match });
+    console.log(`🛡️ [保护新生成的块级公式 ${preservedBlockIndex}]:`, match);
+    preservedBlockIndex++;
+    return placeholder;
+  });
+  
   // 🔧 容错5.1: 修复单独的希腊字母或数学符号未包裹的情况
-  // 例如：λ、μ、σ 等
-  result = result.replace(/([^$\\])([\u03B1-\u03FF])([^$])/g, '$1$$$2$$$3');
+  // 例如：λ、μ、σ 等（已经被 $ 包裹的会在最开始被提取保护，这里只处理未包裹的）
+  // 匹配：希腊字母 + 可选的上标字符（²³¹⁰⁴⁵⁶⁷⁸⁹⁺⁻⁼等）
+  result = result.replace(/([^$\\])([\u03B1-\u03FF])([\u00B2\u00B3\u00B9\u2070-\u209F]*)/g, (match, before, greek, superscript) => {
+    console.log(`🔧 [包裹希腊字母]:`, match, '→', `${before}$${greek}${superscript}$`);
+    return `${before}$${greek}${superscript}$`;
+  });
   
   // 🔧 容错6: 将 \(...\) 转换为 $...$
   result = result.replace(/\\\((.*?)\\\)/g, '$$$1$$');
@@ -205,8 +259,16 @@ export const autoWrapLatex = (content: string): string => {
     result += '$';
   }
   
-  // 如果内容已经包含$包裹的公式，直接返回
-  if (/\$[^$]+\$/.test(result) || /\$\$[\s\S]*?\$\$/.test(result)) {
+  // 如果内容已经包含$包裹的公式，跳过后续的自动包裹处理
+  // 但仍然需要恢复占位符
+  const hasWrappedFormulas = /\$[^$]+\$/.test(result) || /\$\$[\s\S]*?\$\$/.test(result);
+  if (hasWrappedFormulas) {
+    // 🔧 恢复所有保护的公式后再返回
+    preservedMathBlocks.forEach(({ placeholder, content }) => {
+      result = result.replace(placeholder, content);
+      console.log(`🛡️ [恢复保护的公式]:`, placeholder, '→', content);
+    });
+    console.log(`✅ [最终处理结果 - 提前返回]:`, result);
     return result;
   }
   
@@ -258,6 +320,14 @@ export const autoWrapLatex = (content: string): string => {
              `$${match.text}$` + 
              result.substring(match.end);
   }
+  
+  // 🔧 最后：恢复所有在开始时保护的公式
+  preservedMathBlocks.forEach(({ placeholder, content }) => {
+    result = result.replace(placeholder, content);
+    console.log(`🛡️ [恢复保护的公式]:`, placeholder, '→', content);
+  });
+  
+  console.log(`✅ [最终处理结果]:`, result);
   
   return result;
 };
