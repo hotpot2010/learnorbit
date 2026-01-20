@@ -106,6 +106,42 @@ export function createBackendAPIAdapter() {
 
     return {
       id: 'backend-api-adapter',
+      async count({ model, where }: { model: string; where?: any[] }): Promise<number> {
+        debugLog(`[Backend API] count ${model}`, where);
+        try {
+          // 根据不同的模型和查询条件返回计数
+          if (!where || where.length === 0) return 0;
+          
+          if (model === 'session' && where[0].field === 'userId') {
+            const userId = where[0].value;
+            const results = await authAdapterAPI.session.findByUserId(userId);
+            return results.length;
+          } else if (model === 'account' && where[0].field === 'userId') {
+            const userId = where[0].value;
+            const results = await authAdapterAPI.account.findByUserId(userId);
+            return results.length;
+          }
+          
+          // 对于其他情况，尝试 findOne 查询，如果找到则返回 1
+          const firstCondition = where[0];
+          const field = transformFieldName(model, firstCondition.field);
+          
+          if (model === 'user') {
+            if (field === 'id') {
+              const result = await authAdapterAPI.user.findById(firstCondition.value);
+              return result ? 1 : 0;
+            } else if (field === 'email') {
+              const result = await authAdapterAPI.user.findByEmail(firstCondition.value);
+              return result ? 1 : 0;
+            }
+          }
+          
+          return 0;
+        } catch (error) {
+          console.error(`[Backend API] count ${model} error:`, error);
+          return 0;
+        }
+      },
       async create<T extends Record<string, any>, R = T>({ data, model, select }: { model: string; data: T; select?: string[] }): Promise<R> {
         debugLog(`[Backend API] create ${model}`, data);
         
