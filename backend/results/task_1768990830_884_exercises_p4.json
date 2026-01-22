@@ -1,0 +1,564 @@
+{
+  "exercises": [
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：表格求场强",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一道物理题中，给出一个带电的小玩具，已知其带电量为 $q = 2\\times10^{-6}C$，在距离它 $r = 0.1m$ 处求该点的电场强度大小。（静电力常量 $k = 9\\times10^{9}N\\cdot m^{2}/C^{2}$）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.8\\times10^{6}N/C$"
+        },
+        {
+          "label": "B",
+          "content": "$1.8\\times10^{5}N/C$"
+        },
+        {
+          "label": "C",
+          "content": "$1.8\\times10^{4}N/C$"
+        },
+        {
+          "label": "D",
+          "content": "$1.8\\times10^{3}N/C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据点电荷的电场强度公式 $E = k\\frac{q}{r^{2}}$ 来计算电场强度",
+        "提示2：将已知的带电量 $q$、距离 $r$ 和静电力常量 $k$ 的值代入公式",
+        "提示3：注意计算过程中的指数运算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：叠加求场强",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在真空中有两个带正电的小球 A 和 B，A 球带电量为 $Q_A = 2 \\times 10^{-6} C$，B 球带电量为 $Q_B = 3 \\times 10^{-6} C$，两球相距 $r = 0.3 m$。求在 A、B 两球连线中点处的电场强度大小（已知静电力常量 $k = 9.0 \\times 10^{9} N \\cdot m^{2}/C^{2}$）。",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.0 \\times 10^{6} N/C$"
+        },
+        {
+          "label": "B",
+          "content": "$2.0 \\times 10^{6} N/C$"
+        },
+        {
+          "label": "C",
+          "content": "$3.0 \\times 10^{6} N/C$"
+        },
+        {
+          "label": "D",
+          "content": "$4.0 \\times 10^{6} N/C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：先分别求出 A、B 两球在连线中点处产生的电场强度大小",
+        "提示2：根据点电荷电场强度公式 $E = k\\frac{Q}{r^{2}}$ 计算",
+        "提示3：再根据电场强度的叠加原理，判断两电场强度的方向并进行合成"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：点电荷场强计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个带电的小玩意，其带电量为 $Q = 2\\times10^{-6}C$，在距离它 $r = 0.1m$ 处的场强大小为多少？（静电力常量 $k = 9\\times10^{9}N\\cdot m^{2}/C^{2}$）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.8\\times10^{6}N/C$"
+        },
+        {
+          "label": "B",
+          "content": "$1.8\\times10^{5}N/C$"
+        },
+        {
+          "label": "C",
+          "content": "$1.8\\times10^{4}N/C$"
+        },
+        {
+          "label": "D",
+          "content": "$1.8\\times10^{3}N/C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确点电荷场强公式 $E = k\\frac{Q}{r^{2}}$",
+        "提示2：将题目中给定的 $Q$、$r$ 和 $k$ 的值代入公式",
+        "提示3：按照公式进行计算得出结果"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：均匀带电平面场强",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知题目中给出一个带电的小物件，其带电量为 $q = 2 \\times 10^{-6} C$，利用表格求该带电小物件在距离其 $r = 0.1 m$ 处产生的场强大小，已知静电力常量 $k = 9 \\times 10^{9} N \\cdot m^2 / C^2$，以下哪个选项正确？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.8 \\times 10^{6} N/C$"
+        },
+        {
+          "label": "B",
+          "content": "$1.8 \\times 10^{5} N/C$"
+        },
+        {
+          "label": "C",
+          "content": "$1.8 \\times 10^{4} N/C$"
+        },
+        {
+          "label": "D",
+          "content": "$1.8 \\times 10^{3} N/C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确求点电荷场强的公式为 $E = k\\frac{q}{r^2}$",
+        "提示2：将题目中给出的带电量 $q$、距离 $r$ 和静电力常量 $k$ 代入公式进行计算",
+        "提示3：注意计算过程中的指数运算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：均匀带电环场强",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知在一道题目中给出一个均匀带电的圆环，其带电量为 $Q$，半径为 $R$，在圆环轴线上距离圆心 $x$ 处的场强大小为 $E$，以下关于场强 $E$ 的表达式正确的是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$E = k\\frac{Q}{x^2}$"
+        },
+        {
+          "label": "B",
+          "content": "$E = k\\frac{Qx}{(R^2 + x^2)^{\\frac{3}{2}}}$"
+        },
+        {
+          "label": "C",
+          "content": "$E = k\\frac{Q}{R^2}$"
+        },
+        {
+          "label": "D",
+          "content": "$E = k\\frac{Q}{(R + x)^2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：不能简单地把圆环当成点电荷来计算场强，需要考虑圆环上电荷分布情况",
+        "提示2：利用微元法，将圆环分割成无数个点电荷，再对每个点电荷在轴线上产生的场强进行矢量合成",
+        "提示3：根据点电荷场强公式 $E = k\\frac{q}{r^2}$ 以及几何关系来推导"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：有缺口圆环场强",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个带正电的有缺口圆环，缺口部分对应的圆心角为 $\\theta$，圆环半径为 $R$，总带电量为 $Q$。若将该圆环放在真空中，求圆心处的场强大小。（静电力常量为 $k$）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{kQ\\theta}{2\\pi R^2}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{kQ(2\\pi - \\theta)}{2\\pi R^2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{kQ\\theta}{4\\pi^2 R^2}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{kQ(2\\pi - \\theta)}{4\\pi^2 R^2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先假设圆环是完整的，分析完整圆环在圆心处的场强情况",
+        "提示2：再计算缺口部分的带电量，根据点电荷场强公式计算其在圆心处产生的场强",
+        "提示3：因为完整圆环在圆心处场强为零，所以有缺口圆环在圆心处的场强与缺口部分在圆心处产生的场强大小相等，方向相反"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：点电荷场强分析",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个带正电的小玩具，它的带电量为 $Q = 2 \\times 10^{-6} C$，在距离它 $r = 0.2 m$ 处的点电荷场强大小为（静电力常量 $k = 9.0 \\times 10^{9} N \\cdot m^2 / C^2$）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$4.5 \\times 10^{5} N/C$"
+        },
+        {
+          "label": "B",
+          "content": "$9.0 \\times 10^{5} N/C$"
+        },
+        {
+          "label": "C",
+          "content": "$1.8 \\times 10^{6} N/C$"
+        },
+        {
+          "label": "D",
+          "content": "$3.6 \\times 10^{6} N/C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：点电荷场强公式为 $E = k\\frac{Q}{r^2}$",
+        "提示2：将题目中的 $Q$、$r$ 和 $k$ 的值代入公式进行计算",
+        "提示3：注意计算过程中的单位和指数运算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：带电球壳场强计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个带电球壳，其带电量为 $Q = 2 \\times 10^{-6} C$，在距离球壳中心 $r = 0.5 m$ 处的场强大小为（已知静电力常量 $k = 9 \\times 10^{9} N \\cdot m^{2}/C^{2}$）：",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$7.2 \\times 10^{4} N/C$"
+        },
+        {
+          "label": "B",
+          "content": "$3.6 \\times 10^{4} N/C$"
+        },
+        {
+          "label": "C",
+          "content": "$1.8 \\times 10^{4} N/C$"
+        },
+        {
+          "label": "D",
+          "content": "$9.0 \\times 10^{4} N/C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：对于均匀带电球壳，在球壳外某点的场强可以等效为球壳上的电荷都集中在球心时产生的场强",
+        "提示2：根据点电荷的场强公式 $E = k\\frac{Q}{r^{2}}$ 来计算场强",
+        "提示3：将已知的带电量 $Q$ 和距离 $r$ 以及静电力常量 $k$ 代入公式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：积分求场强步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在利用表格求场强的题目中，题目通常会在题干里给出我们一个带电的物体，并告知我们它的带电量大小。现有一个半径为 $R$ 的均匀带电圆环，带电量为 $Q$，求圆环轴线上距离圆心为 $x$ 处的场强大小。已知圆环上某一小段 $\\mathrm{d}l$ 的带电量为 $\\mathrm{d}q = \\frac{Q}{2\\pi R}\\mathrm{d}l$，以下哪个是正确的场强表达式？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$E = \\frac{kQx}{(R^2 + x^2)^{\\frac{3}{2}}}$"
+        },
+        {
+          "label": "B",
+          "content": "$E = \\frac{kQ}{(R^2 + x^2)}$"
+        },
+        {
+          "label": "C",
+          "content": "$E = \\frac{kQx}{(R^2 + x^2)}$"
+        },
+        {
+          "label": "D",
+          "content": "$E = \\frac{kQ}{(R^2 + x^2)^{\\frac{3}{2}}}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先根据点电荷场强公式 $E = \\frac{k\\mathrm{d}q}{r^2}$ 计算圆环上一小段 $\\mathrm{d}l$ 在轴线上某点产生的场强 $\\mathrm{d}E$，其中 $r = \\sqrt{R^2 + x^2}$",
+        "提示2：由于对称性，垂直于轴线方向的场强分量相互抵消，只需要计算沿轴线方向的场强分量 $\\mathrm{d}E_x = \\mathrm{d}E\\cos\\theta$，其中 $\\cos\\theta = \\frac{x}{r}$",
+        "提示3：对 $\\mathrm{d}E_x$ 在整个圆环上积分，即 $E = \\int_{0}^{2\\pi R}\\mathrm{d}E_x$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电荷密度计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一个静电场问题中，已知一个带正电的小球，其带电量为 $Q = 2 \\times 10^{-6} C$，该小球可看作均匀带电的球体，半径为 $R = 0.1 m$。现在求距离球心 $r = 0.2 m$ 处的电场强度大小。已知静电力常量 $k = 9 \\times 10^{9} N \\cdot m^{2}/C^{2}$，以下哪个选项正确？",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$4.5 \\times 10^{5} N/C$"
+        },
+        {
+          "label": "B",
+          "content": "$9 \\times 10^{5} N/C$"
+        },
+        {
+          "label": "C",
+          "content": "$1.8 \\times 10^{6} N/C$"
+        },
+        {
+          "label": "D",
+          "content": "$3.6 \\times 10^{6} N/C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：当求均匀带电球体外部某点的电场强度时，可将球体看作电荷集中于球心的点电荷",
+        "提示2：使用点电荷的电场强度公式 $E = k\\frac{Q}{r^{2}}$ 进行计算",
+        "提示3：注意公式中 $Q$ 为球体带电量，$r$ 为所求点到球心的距离"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：场强分量求解",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一道题目中给出一个带正电的小球，其带电量为 $q = 2\\times10^{-6}C$，该小球在距离它 $r = 0.1m$ 处产生的电场强度大小为（已知静电力常量 $k = 9\\times10^{9}N\\cdot m^{2}/C^{2}$）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.8\\times10^{6}N/C$"
+        },
+        {
+          "label": "B",
+          "content": "$1.8\\times10^{5}N/C$"
+        },
+        {
+          "label": "C",
+          "content": "$1.8\\times10^{4}N/C$"
+        },
+        {
+          "label": "D",
+          "content": "$1.8\\times10^{3}N/C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据点电荷电场强度公式 $E = k\\frac{q}{r^{2}}$ 来计算电场强度",
+        "提示2：明确公式中各物理量的数值，$k = 9\\times10^{9}N\\cdot m^{2}/C^{2}$，$q = 2\\times10^{-6}C$，$r = 0.1m$",
+        "提示3：将数值代入公式进行计算"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：场强积分计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个带电的小物件，其带电量为 $q = 2\\times10^{-6} C$，在真空中距离该小物件 $r = 0.5 m$ 处的场强大小为 ___ $N/C$。（静电力常量 $k = 9.0\\times10^{9} N\\cdot m^{2}/C^{2}$）",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "72",
+      "hints": [
+        "提示1：根据点电荷场强公式 $E = k\\frac{q}{r^{2}}$ 来计算场强",
+        "提示2：明确公式中各物理量的含义，$k$ 是静电力常量，$q$ 是点电荷的电荷量，$r$ 是该点到点电荷的距离",
+        "提示3：将题目中给定的 $q$、$r$ 和 $k$ 的值代入公式进行计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：圆柱面场强题",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "一个带正电的圆柱体玩具，带电量为 $Q$，半径为 $R$。在距离圆柱体轴线 $r$（$r > R$）处的场强大小为（已知静电常数为 $k$ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{kQ}{r}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{kQ}{r^2}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{kQ}{2\\pi r}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{kQ}{2\\pi r^2}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：根据点电荷的场强公式 $E = \\frac{kQ}{r^2}$ 来思考本题",
+        "提示2：当求距离带正电圆柱体轴线一定距离处的场强时，可将圆柱体等效为位于轴线上的点电荷",
+        "提示3：明确场强公式中各物理量的含义，$Q$ 是带电量，$r$ 是所求场强位置到等效点电荷的距离"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电场力方向判断",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知在一个电场中有一个带正电 $q = 2\\times10^{-6}C$ 的小球，该点电场强度 $E = 3\\times10^{3}N/C$，方向水平向右，那么该小球所受电场力的方向和大小分别为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "水平向右，$F = 6\\times10^{-3}N$"
+        },
+        {
+          "label": "B",
+          "content": "水平向左，$F = 6\\times10^{-3}N$"
+        },
+        {
+          "label": "C",
+          "content": "水平向右，$F = 3\\times10^{-3}N$"
+        },
+        {
+          "label": "D",
+          "content": "水平向左，$F = 3\\times10^{-3}N$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据电场力公式 $F = qE$ 计算电场力大小",
+        "提示2：正电荷所受电场力方向与电场强度方向相同",
+        "提示3：将已知的电荷量和电场强度代入公式计算"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电场力计算步骤",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一道利用表格求场强的题目中，已知一个带电的小玩意，其带电量为 $q = 2\\times10^{-6} C$，在某一位置受到的电场力为 $F = 4\\times10^{-3} N$，则该位置的场强 $E$ 为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$2\\times10^{3} N/C$"
+        },
+        {
+          "label": "B",
+          "content": "$2\\times10^{-3} N/C$"
+        },
+        {
+          "label": "C",
+          "content": "$8\\times10^{-9} N/C$"
+        },
+        {
+          "label": "D",
+          "content": "$8\\times10^{9} N/C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据电场强度的定义式 $E = \\frac{F}{q}$ 来计算场强",
+        "提示2：将已知的电场力 $F$ 和带电量 $q$ 的值代入公式",
+        "提示3：注意计算时指数的运算规则"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：场强注意要点",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在一道电场强度的题目中，已知一个带正电的小球，带电量为 $q = 2\\times10^{-6}\\ C$，该小球在某点产生的电场强度方向和大小需通过列表格的方法求解。以下关于这种解题方式的说法正确的是（）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "列表格求解电场强度只能用于正电荷产生的电场"
+        },
+        {
+          "label": "B",
+          "content": "通过列表格求解电场强度时，不需要考虑电荷的正负"
+        },
+        {
+          "label": "C",
+          "content": "列表格求解电场强度是一种有效的方法，可清晰梳理各物理量关系，且要结合电荷正负判断场强方向"
+        },
+        {
+          "label": "D",
+          "content": "列表格求解电场强度只适用于匀强电场"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "C",
+      "hints": [
+        "提示1：思考列表格求解场强的适用范围，是否只针对正电荷或匀强电场",
+        "提示2：明确电荷正负对电场强度方向的影响，在求解时是否需要考虑",
+        "提示3：结合题目中提到的列表格求解场强的知识点，分析各选项的正确性"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：电场强度方向",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个带正电的玩具，其带电量为 $Q = 2\\times10^{-6}C$，在距离它 $r = 0.1m$ 处的电场强度大小为 $E$，方向沿两者连线向外。若另有一个带电量为 $q = - 3\\times10^{-6}C$ 的点电荷放在该位置，此时该位置电场强度的方向是（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "沿两者连线指向带正电的玩具"
+        },
+        {
+          "label": "B",
+          "content": "沿两者连线背离带正电的玩具"
+        },
+        {
+          "label": "C",
+          "content": "根据新放入的点电荷方向确定"
+        },
+        {
+          "label": "D",
+          "content": "无法确定"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "B",
+      "hints": [
+        "提示1：明确电场强度是描述电场本身性质的物理量，与放入的试探电荷无关",
+        "提示2：回忆正电荷电场强度方向的规定",
+        "提示3：判断原来位置电场强度方向不受新放入电荷的影响"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：点电荷场强",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个带电的小玩意儿，其带电量为 $q = 2\\times10^{-6} C$，在距离它 $r = 0.1 m$ 处的场强大小为（静电力常量 $k = 9\\times10^{9} N\\cdot m^{2}/C^{2}$）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$1.8\\times10^{6} N/C$"
+        },
+        {
+          "label": "B",
+          "content": "$1.8\\times10^{5} N/C$"
+        },
+        {
+          "label": "C",
+          "content": "$1.8\\times10^{4} N/C$"
+        },
+        {
+          "label": "D",
+          "content": "$1.8\\times10^{3} N/C$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：根据点电荷场强公式 $E = k\\frac{q}{r^{2}}$ 来计算场强",
+        "提示2：明确公式中各物理量的含义，$k$ 是静电力常量，$q$ 是点电荷的带电量，$r$ 是所求场强处到点电荷的距离",
+        "提示3：将题目中给定的 $q$、$r$ 和 $k$ 的值代入公式进行计算"
+      ]
+    }
+  ],
+  "count": 18
+}

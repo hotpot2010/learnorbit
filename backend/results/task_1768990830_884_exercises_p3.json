@@ -1,0 +1,114 @@
+{
+  "exercises": [
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：求单缝衍射波长",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单缝衍射实验中，已知单缝宽度 $a = 0.1\\mathrm{mm}$，缝与屏的距离 $L = 1\\mathrm{m}$，在屏上某位置观察到的是第 2 级暗纹，该暗纹到中央明纹中心的距离为 $x = 2\\mathrm{cm}$，则该光的波长 $\\lambda$ 为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$5\\times10^{-7}\\mathrm{m}$",
+      "hints": [
+        "提示1：单缝衍射暗纹的位置公式为 $x = k\\frac{L\\lambda}{a}$（$k = \\pm1,\\pm2,\\pm3,\\cdots$）",
+        "提示2：已知该暗纹是第 2 级暗纹，所以 $k = 2$",
+        "提示3：将已知数据代入公式，求解波长 $\\lambda$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：确定条纹位置",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单缝衍射实验中，已知单缝宽度为 $a$，缝到光屏的距离为 $L$。若在光屏上某点看到的是第 $k$ 级暗纹，该点到中央明纹中心的距离为 $x$，则光的波长 $\\lambda$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{ax}{kL}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{2ax}{kL}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{ax}{(2k + 1)L}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{2ax}{(2k + 1)L}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：首先明确单缝衍射暗纹的条件公式",
+        "提示2：单缝衍射暗纹条件为 $a\\sin\\theta = k\\lambda$（$k = \\pm1,\\pm2,\\cdots$）",
+        "提示3：当 $\\theta$ 很小时，$\\sin\\theta \\approx \\tan\\theta$，而 $\\tan\\theta = \\frac{x}{L}$"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求中央明纹宽度",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单缝衍射实验中，已知单缝宽度 $a = 0.1\\mathrm{mm}$，缝与屏幕的距离 $D = 1\\mathrm{m}$，在屏幕上某位置看到的是第 2 级暗纹。若该暗纹到中央明纹中心的距离 $x = 1\\mathrm{cm}$，则该单色光的波长 $\\lambda$ 为（  ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$5 \\times 10^{-7}\\mathrm{m}$"
+        },
+        {
+          "label": "B",
+          "content": "$2.5 \\times 10^{-7}\\mathrm{m}$"
+        },
+        {
+          "label": "C",
+          "content": "$1 \\times 10^{-6}\\mathrm{m}$"
+        },
+        {
+          "label": "D",
+          "content": "$2 \\times 10^{-6}\\mathrm{m}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：先明确单缝衍射暗纹位置公式 $x = k\\frac{D\\lambda}{a}$，其中 $k$ 为暗纹级数，$D$ 为缝与屏幕的距离，$a$ 为单缝宽度，$\\lambda$ 为波长。",
+        "提示2：根据题目所给条件，确定 $k$、$D$、$a$ 和 $x$ 的值。",
+        "提示3：将已知值代入公式求解波长 $\\lambda$。"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：求半波带数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单缝衍射实验中，已知单缝宽度 $a = 0.1$ mm，缝与光屏的距离 $D = 1$ m，当在光屏上某点观察到第三级暗纹时，所用光的波长 $\\lambda$ 为 ___ nm。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "333.3",
+      "hints": [
+        "提示1：先明确单缝衍射暗纹的条件公式 $a\\sin\\theta = k\\lambda$，其中 $k$ 为暗纹级数",
+        "提示2：当 $\\theta$ 很小时，$\\sin\\theta \\approx \\tan\\theta = \\frac{x}{D}$，这里 $x$ 是暗纹到中央明纹中心的距离，但本题可根据暗纹条件先求波长",
+        "提示3：将已知的 $a$、$k$ 等数值代入公式求解 $\\lambda$，注意单位换算，1 m = 10^3 mm = 10^6 $\\mu$m = 10^9 nm"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：求明条纹级数",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "在单缝衍射实验中，已知单缝宽度 $a = 0.1\\text{mm}$，缝与光屏的距离 $D = 1\\text{m}$。在光屏上某点观察到第 $3$ 级明条纹，该明条纹到中央明条纹中心的距离为 $y = 15\\text{mm}$，则该单色光的波长 $\\lambda$ 为 ___ $\\text{nm}$。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "500",
+      "hints": [
+        "提示1：先明确单缝衍射明条纹的位置公式 $y = (2k + 1)\\frac{D\\lambda}{2a}$，其中 $k$ 为明条纹级数",
+        "提示2：将已知条件代入公式，求解波长 $\\lambda$",
+        "提示3：注意单位的换算，最后结果要换算成 $\\text{nm}$"
+      ]
+    }
+  ],
+  "count": 5
+}

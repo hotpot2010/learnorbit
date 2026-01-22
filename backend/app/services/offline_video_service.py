@@ -77,7 +77,8 @@ class OfflineVideoService:
         os.makedirs(self.results_dir, exist_ok=True)
         
         # 线程池用于执行同步阻塞操作（如下载、上传等）
-        self.executor = ThreadPoolExecutor(max_workers=4, thread_name_prefix="video_processing_")
+        # 转码任务并发设为1，确保转码操作串行执行
+        self.executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="video_processing_")
         
         # 初始化数据库
         try:
@@ -3195,21 +3196,43 @@ class OfflineVideoService:
         print(f"📊 同步统计: {result['message']}")
         return result
     
-    async def transcode_video(self, task_id: str):
+    async def transcode_video(self, task_id: str, mode: Optional[str] = None):
         """
         上传视频到云点播（替换原来的转码功能）
         使用API拉取上传，支持自适应码率
         
         Args:
             task_id: 任务ID
+            mode: 执行模式 (None: 正常执行, "continue": 只执行失败的分P, "retry": 重新执行成功的分P)
         """
         print(f"\n{'='*60}")
-        print(f"🎬 开始上传视频到云点播: {task_id}")
+        print(f"🎬 开始上传视频到云点播: {task_id} (mode={mode})")
         print(f"{'='*60}\n")
         
         task = self.get_task(task_id)
         if not task:
             raise ValueError(f"任务不存在: {task_id}")
+        
+        # 检查步骤状态，如果已经成功且不是retry模式，则跳过执行
+        step_info = task.get("steps", {}).get("transcode", {})
+        step_status = step_info.get("status")
+        step_message = step_info.get("message", "")
+        
+        # 智能判断状态：如果状态是running但消息包含"失败"，则认为实际状态是partial_success
+        if step_status == TaskStatus.RUNNING and "失败" in step_message:
+            step_status = TaskStatus.PARTIAL_SUCCESS
+        
+        # 如果任务已经成功且不是retry模式，检查是否需要跳过
+        if step_status == TaskStatus.SUCCESS and mode != "retry":
+            vod_file_id = task.get("vod_file_id")
+            vod_play_url = task.get("vod_play_url")
+            if vod_file_id and vod_play_url:
+                print(f"⏭️ [transcode] 任务已成功完成，跳过执行 (FileId={vod_file_id})")
+                return {
+                    "success": True,
+                    "message": "转码任务已完成，跳过执行",
+                    "skipped": True
+                }
         
         # 检查是否已有原视频URL
         video_url_data = task.get("video_url")
@@ -3249,12 +3272,115 @@ class OfflineVideoService:
                 # 多P视频
                 print(f"📹 处理多P视频，共 {len(video_urls)} 个分P")
                 
+                # 检查是否已有部分完成的结果
+                existing_result = step_info.get("result")
+                part_results_existing = existing_result.get("parts", []) if existing_result else []
+                
+                # 构建分P编号到结果的映射（用于快速查找）
+                part_results_map = {r.get("part_number"): r for r in part_results_existing if r.get("part_number")}
+                
+                # 解析已有的VOD结果
+                vod_file_ids_existing = []
+                vod_play_urls_existing = []
+                try:
+                    vod_file_id_data = task.get("vod_file_id")
+                    vod_play_url_data = task.get("vod_play_url")
+                    if vod_file_id_data:
+                        if isinstance(vod_file_id_data, str) and vod_file_id_data.startswith('['):
+                            vod_file_ids_existing = json.loads(vod_file_id_data)
+                        elif isinstance(vod_file_id_data, list):
+                            vod_file_ids_existing = vod_file_id_data
+                        else:
+                            vod_file_ids_existing = [vod_file_id_data]
+                    if vod_play_url_data:
+                        if isinstance(vod_play_url_data, str) and vod_play_url_data.startswith('['):
+                            vod_play_urls_existing = json.loads(vod_play_url_data)
+                        elif isinstance(vod_play_url_data, list):
+                            vod_play_urls_existing = vod_play_url_data
+                        else:
+                            vod_play_urls_existing = [vod_play_url_data]
+                except:
+                    pass
+                
                 vod_file_ids = []
                 vod_play_urls = []
                 part_results = []
                 total_parts = len(video_urls)
                 
+                print(f"📋 开始遍历 {total_parts} 个分P... (mode={mode})")
+                print(f"   已有 {len(part_results_existing)} 个分P结果记录")
+                
                 for idx, video_url in enumerate(video_urls, 1):
+                    # 查找该分P的已有结果
+                    existing_part = part_results_map.get(idx)
+                    existing_file_id = existing_part.get("file_id") if existing_part else None
+                    existing_play_url = existing_part.get("play_url") if existing_part else None
+                    existing_status = existing_part.get("status") if existing_part else None
+                    
+                    # 如果没有从part_results中找到，尝试从vod_file_ids_existing中获取
+                    if not existing_file_id and idx <= len(vod_file_ids_existing):
+                        existing_file_id = vod_file_ids_existing[idx - 1]
+                    if not existing_play_url and idx <= len(vod_play_urls_existing):
+                        existing_play_url = vod_play_urls_existing[idx - 1]
+                    
+                    # 判断是否需要执行该分P
+                    should_skip = False
+                    
+                    if mode == "continue":
+                        # 继续执行模式：只执行失败的或没有结果的分P
+                        if existing_status == "success" and existing_file_id and existing_play_url:
+                            print(f"⏭️ [continue] 跳过已成功的分P {idx}/{total_parts}: FileId={existing_file_id}")
+                            vod_file_ids.append(existing_file_id)
+                            vod_play_urls.append(existing_play_url)
+                            # 确保状态为success
+                            if existing_part:
+                                existing_part["status"] = "success"
+                            part_results.append(existing_part if existing_part else {
+                                "part_number": idx,
+                                "status": "success",
+                                "file_id": existing_file_id,
+                                "play_url": existing_play_url
+                            })
+                            should_skip = True
+                        elif existing_file_id and existing_play_url:
+                            print(f"⏭️ [continue] 跳过已有结果的分P {idx}/{total_parts}: FileId={existing_file_id}")
+                            vod_file_ids.append(existing_file_id)
+                            vod_play_urls.append(existing_play_url)
+                            # 确保状态为success（已有结果视为成功）
+                            if existing_part:
+                                existing_part["status"] = "success"
+                            part_results.append(existing_part if existing_part else {
+                                "part_number": idx,
+                                "status": "success",
+                                "file_id": existing_file_id,
+                                "play_url": existing_play_url
+                            })
+                            should_skip = True
+                        else:
+                            print(f"🔄 [continue] 需要执行分P {idx}/{total_parts}: status={existing_status}, file_id={existing_file_id}")
+                    elif mode == "retry":
+                        # 重新执行模式：重新执行所有分P
+                        print(f"🔄 [retry] 重新执行分P {idx}/{total_parts}")
+                    else:
+                        # 正常模式：跳过已有结果的分P
+                        if existing_file_id and existing_play_url:
+                            print(f"⏭️ 跳过已有结果的分P {idx}/{total_parts}: FileId={existing_file_id}")
+                            vod_file_ids.append(existing_file_id)
+                            vod_play_urls.append(existing_play_url)
+                            # 确保状态为success（已有结果视为成功）
+                            if existing_part:
+                                existing_part["status"] = "success"
+                            part_results.append(existing_part if existing_part else {
+                                "part_number": idx,
+                                "status": "success",
+                                "file_id": existing_file_id,
+                                "play_url": existing_play_url
+                            })
+                            should_skip = True
+                    
+                    if should_skip:
+                        continue
+                    
                     try:
                         print(f"\n--- 上传分P {idx}/{total_parts} 到云点播 ---")
                         
@@ -3284,7 +3410,7 @@ class OfflineVideoService:
                         # 拉取上传是异步操作，需要等待任务完成并查询FileId
                         print(f"⏳ 等待拉取上传任务完成...")
                         import time
-                        max_wait_time = 300  # 最多等待5分钟
+                        max_wait_time = 1800  # 最多等待30分钟
                         wait_interval = 5  # 每5秒查询一次
                         elapsed_time = 0
                         file_id = None
@@ -3367,13 +3493,21 @@ class OfflineVideoService:
                         continue
                 
                 # 检查是否全部失败
-                success_count = sum(1 for r in part_results if r["status"] == "success")
+                # 统计成功分P（success状态）
+                success_count = sum(1 for r in part_results if r.get("status") == "success")
+                failed_count = sum(1 for r in part_results if r.get("status") == "failed")
                 
                 if success_count == 0:
                     raise Exception("所有分P上传均失败")
                 
-                # 更新任务状态
-                final_status = TaskStatus.SUCCESS if success_count == total_parts else TaskStatus.PARTIAL_SUCCESS
+                # 更新任务状态：如果所有分P都有结果且没有失败的，则标记为SUCCESS
+                # 注意：需要确保part_results包含所有分P的结果
+                if len(part_results) == total_parts and failed_count == 0:
+                    final_status = TaskStatus.SUCCESS
+                    status_message = f"上传完成: 所有 {total_parts} 个分P均成功"
+                else:
+                    final_status = TaskStatus.PARTIAL_SUCCESS
+                    status_message = f"上传完成: {success_count}/{total_parts} 个分P成功"
                 
                 # 保存VOD相关字段
                 task["vod_file_id"] = json.dumps(vod_file_ids) if len(vod_file_ids) > 1 else (vod_file_ids[0] if vod_file_ids else None)
@@ -3385,7 +3519,7 @@ class OfflineVideoService:
                     "parts": part_results,
                     "total": total_parts,
                     "success": success_count,
-                    "failed": total_parts - success_count
+                    "failed": failed_count
                 }
                 
                 # 先更新缓存，再更新步骤状态（因为_update_step_status会从缓存读取）
@@ -3394,7 +3528,7 @@ class OfflineVideoService:
                 self._update_step_status(
                     task_id, "transcode",
                     final_status, 100,
-                    f"上传完成: {success_count}/{total_parts} 个分P成功"
+                    status_message
                 )
                 
                 print(f"\n{'='*60}")
@@ -3405,6 +3539,39 @@ class OfflineVideoService:
                 # 单P视频
                 video_url = video_urls[0]
                 print(f"📹 处理单P视频")
+                
+                # 检查是否已有结果
+                existing_file_id = task.get("vod_file_id")
+                existing_play_url = task.get("vod_play_url")
+                existing_result = step_info.get("result")
+                
+                # 判断是否需要执行
+                should_skip = False
+                
+                if mode == "continue":
+                    # 继续执行模式：只执行失败的或没有结果的任务
+                    if existing_file_id and existing_play_url:
+                        print(f"⏭️ [continue] 单P视频已有结果，跳过执行: FileId={existing_file_id}")
+                        should_skip = True
+                elif mode == "retry":
+                    # 重新执行模式：重新执行
+                    print(f"🔄 [retry] 重新执行单P视频")
+                else:
+                    # 正常模式：跳过已有结果的任务
+                    if existing_file_id and existing_play_url:
+                        print(f"⏭️ 单P视频已有结果，跳过执行: FileId={existing_file_id}")
+                        should_skip = True
+                
+                if should_skip:
+                    # 如果跳过执行，直接返回成功
+                    print(f"✅ 单P视频转码任务已完成，跳过执行")
+                    return {
+                        "success": True,
+                        "message": "转码任务已完成，跳过执行",
+                        "skipped": True,
+                        "file_id": existing_file_id,
+                        "play_url": existing_play_url
+                    }
                 
                 self._update_step_status(
                     task_id, "transcode",
@@ -3431,7 +3598,7 @@ class OfflineVideoService:
                 # 拉取上传是异步操作，需要等待任务完成并查询FileId
                 print(f"⏳ 等待拉取上传任务完成...")
                 import time
-                max_wait_time = 300  # 最多等待5分钟
+                max_wait_time = 1800  # 最多等待30分钟
                 wait_interval = 5  # 每5秒查询一次
                 elapsed_time = 0
                 file_id = None

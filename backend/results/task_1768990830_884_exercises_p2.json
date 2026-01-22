@@ -1,0 +1,127 @@
+{
+  "exercises": [
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：文字题求初相",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个简谐振动，振幅 $A = 2\\text{cm}$，当 $t = 0$ 时，位移 $x = \\sqrt{2}\\text{cm}$，且此时振子向正方向运动，求该简谐振动的初相 $\\varphi$ 为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{\\pi}{4}$",
+      "hints": [
+        "提示1：简谐振动的位移公式为 $x = A\\sin(\\omega t + \\varphi)$",
+        "提示2：将 $t = 0$，$A = 2$，$x = \\sqrt{2}$ 代入位移公式，求出 $\\sin\\varphi$ 的值",
+        "提示3：根据振子的运动方向确定 $\\varphi$ 的取值范围"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：图像题求初相",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个简谐振动的振幅 $A = 5\\text{cm}$，在初始时刻 $t = 0$ 时，位移 $x = \\frac{5\\sqrt{3}}{2}\\text{cm}$，该简谐振动的表达式为 $x = A\\sin(\\omega t + \\varphi)$，求其初相 $\\varphi$（$0 \\leq \\varphi < 2\\pi$）的值为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{\\pi}{3}$ 或 $\\frac{2\\pi}{3}$",
+      "hints": [
+        "提示1：将已知的 $A$、$t$、$x$ 的值代入简谐振动表达式 $x = A\\sin(\\omega t + \\varphi)$ 中",
+        "提示2：得到关于 $\\varphi$ 的方程，求解 $\\sin\\varphi$ 的值",
+        "提示3：结合 $0 \\leq \\varphi < 2\\pi$ 的条件，确定 $\\varphi$ 的具体值"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：求解振动方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个简谐振动，振幅 $A = 2\\text{cm}$，初始时刻 $t = 0$ 时，位移 $x = \\sqrt{2}\\text{cm}$，求该简谐振动在 $t = 0$ 时刻的相位 $\\varphi$ 为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\pm\\frac{\\pi}{4}$",
+      "hints": [
+        "提示1：简谐振动的位移方程为 $x = A\\cos(\\omega t + \\varphi)$",
+        "提示2：将 $t = 0$，$A = 2\\text{cm}$，$x = \\sqrt{2}\\text{cm}$ 代入位移方程",
+        "提示3：求解关于 $\\varphi$ 的三角函数方程"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：振动参数计算",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个简谐振动，振幅 $A = 5\\text{cm}$，当 $t = 0$ 时，位移 $x = 2.5\\text{cm}$，该简谐振动的初相 $\\varphi$ 为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{\\pi}{3}$",
+      "hints": [
+        "提示1：简谐振动的位移公式为 $x = A\\cos(\\omega t + \\varphi)$",
+        "提示2：将 $t = 0$，$A = 5\\text{cm}$，$x = 2.5\\text{cm}$ 代入位移公式",
+        "提示3：求解关于 $\\varphi$ 的方程"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：求振动时间",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个简谐振动的振幅 $A = 5\\text{cm}$，当 $t = 0$ 时，位移 $x = 2.5\\text{cm}$，该简谐振动的周期 $T = 4\\text{s}$，求从 $t = 0$ 时刻到物体第一次运动到最大位移处所需的时间为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{2}{3}\\text{s}$",
+      "hints": [
+        "提示1：先写出简谐振动的位移公式 $x = A\\cos(\\omega t + \\varphi)$",
+        "提示2：根据已知条件求出初相位 $\\varphi$",
+        "提示3：当物体运动到最大位移处时，$x = A$，代入位移公式求出时间 $t$"
+      ]
+    },
+    {
+      "type": "fill_blank",
+      "title": "知识点练习：写振动方程",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个简谐振动，振幅 $A = 2\\text{cm}$，初始时刻 $t = 0$ 时，位移 $x = \\sqrt{2}\\text{cm}$，求该简谐振动的初相 $\\varphi$ 为 ___ 。",
+      "blanks": 1,
+      "answer_type": "text",
+      "solution": "$\\frac{\\pi}{4}$ 或 $\\frac{7\\pi}{4}$",
+      "hints": [
+        "提示1：简谐振动的位移方程为 $x = A\\cos(\\omega t + \\varphi)$",
+        "提示2：将 $t = 0$，$A = 2\\text{cm}$，$x = \\sqrt{2}\\text{cm}$ 代入位移方程",
+        "提示3：求解 $\\cos\\varphi$ 的值，再根据余弦函数的性质确定 $\\varphi$ 的值"
+      ]
+    },
+    {
+      "type": "multiple_choice",
+      "title": "知识点练习：求振子速度和加速度",
+      "description": "根据视频内容，完成以下练习题",
+      "difficulty": "intermediate",
+      "question": "已知一个做简谐振动的振子，振幅 $A = 2\\text{cm}$，初始时刻 $t = 0$ 时，位移 $x = \\sqrt{2}\\text{cm}$，则该振子的初相 $\\varphi$ 可能为（ ）",
+      "choices": [
+        {
+          "label": "A",
+          "content": "$\\frac{\\pi}{4}$"
+        },
+        {
+          "label": "B",
+          "content": "$\\frac{3\\pi}{4}$"
+        },
+        {
+          "label": "C",
+          "content": "$\\frac{5\\pi}{4}$"
+        },
+        {
+          "label": "D",
+          "content": "$\\frac{7\\pi}{4}$"
+        }
+      ],
+      "answer_type": "single",
+      "solution": "A",
+      "hints": [
+        "提示1：简谐振动的位移公式为 $x = A\\cos(\\omega t + \\varphi)$",
+        "提示2：将 $t = 0$，$A = 2\\text{cm}$，$x = \\sqrt{2}\\text{cm}$ 代入位移公式",
+        "提示3：求解得到 $\\cos\\varphi$ 的值，再根据初相的取值范围确定 $\\varphi$ 的值"
+      ]
+    }
+  ],
+  "count": 7
+}

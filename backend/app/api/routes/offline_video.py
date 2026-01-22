@@ -201,6 +201,29 @@ async def execute_step(
                 "message": "步骤正在执行中"
             }
         
+        # 如果步骤已经成功且不是retry模式，检查是否需要跳过执行
+        if step_status == TaskStatus.SUCCESS and mode != "retry":
+            # 对于transcode步骤，检查是否有VOD结果
+            if step == "transcode":
+                vod_file_id = task.get("vod_file_id")
+                vod_play_url = task.get("vod_play_url")
+                if vod_file_id and vod_play_url:
+                    return {
+                        "success": False,
+                        "message": "转码任务已完成，如需重新执行请使用retry模式",
+                        "skipped": True
+                    }
+            # 对于其他步骤，如果有结果URL，也跳过执行
+            elif step in ["asr", "knowledge_points", "screenshots", "exercises"]:
+                result_url_key = f"{step}_result_url"
+                result_url = task.get(result_url_key)
+                if result_url:
+                    return {
+                        "success": False,
+                        "message": f"{step}任务已完成，如需重新执行请使用retry模式",
+                        "skipped": True
+                    }
+        
         # 辅助函数：智能判断步骤实际状态
         def get_actual_status(step_key):
             s = task["steps"][step_key]
@@ -276,7 +299,7 @@ async def execute_step(
                 elif step == "knowledge_points":
                     await offline_video_service.execute_step_knowledge_points(task_id, mode=mode)
                 elif step == "transcode":
-                    await offline_video_service.transcode_video(task_id)
+                    await offline_video_service.transcode_video(task_id, mode=mode)
                 elif step == "screenshots":
                     await offline_video_service.execute_step_screenshots(task_id, mode=mode)
                 elif step == "exercises":

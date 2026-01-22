@@ -287,7 +287,29 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
         player.on('error', (error: any) => {
           console.error('❌ [TCPlayer] 播放错误:', error);
           console.error('❌ [TCPlayer] 错误类型:', typeof error);
-          console.error('❌ [TCPlayer] 错误详情:', JSON.stringify(error, null, 2));
+          
+          // 安全地序列化错误对象，避免循环引用
+          try {
+            // 尝试提取错误的关键信息
+            const errorInfo: any = {};
+            if (error && typeof error === 'object') {
+              // 提取常见属性
+              if ('code' in error) errorInfo.code = error.code;
+              if ('message' in error) errorInfo.message = error.message;
+              if ('detail' in error) errorInfo.detail = error.detail;
+              if ('name' in error) errorInfo.name = error.name;
+              // 尝试获取TCPlayer特定的错误信息
+              if (error.errorCode !== undefined) errorInfo.errorCode = error.errorCode;
+              if (error.errorMsg !== undefined) errorInfo.errorMsg = error.errorMsg;
+            } else {
+              errorInfo.value = String(error);
+            }
+            console.error('❌ [TCPlayer] 错误详情:', errorInfo);
+          } catch (e) {
+            console.error('❌ [TCPlayer] 无法序列化错误对象:', e);
+            console.error('❌ [TCPlayer] 错误对象:', error);
+          }
+          
           console.error('❌ [TCPlayer] 当前配置:', {
             fileID: fileId,
             appID: appId,
@@ -298,7 +320,10 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
               src: videoElement.src,
               currentSrc: videoElement.currentSrc,
               readyState: videoElement.readyState,
-              error: videoElement.error,
+              error: videoElement.error ? {
+                code: videoElement.error.code,
+                message: videoElement.error.message,
+              } : null,
             } : null,
           });
           
@@ -316,7 +341,11 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
           }
           
           if (onError) {
-            onError(error);
+            // 传递一个简化的错误对象，避免循环引用
+            const safeError = error && typeof error === 'object' 
+              ? { code: error.code, message: error.message, detail: error.detail }
+              : error;
+            onError(safeError);
           }
         });
 
@@ -413,6 +442,16 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
     // 保存上次的参数，只在真正变化时重新初始化
     const lastParamsRef = useRef<{ fileId?: string; psign?: string; url?: string }>({});
     
+    // 当fileId变化时，清除旧的psign（除非是prop传入的）
+    useEffect(() => {
+      const lastFileId = lastParamsRef.current?.fileId;
+      if (fileId && lastFileId && lastFileId !== fileId && psign && !psignProp) {
+        console.log('🔄 [TCPlayer] FileId变化，清除旧的psign');
+        setPsign(undefined);
+        setIsLoadingPsign(false);
+      }
+    }, [fileId, psign, psignProp]);
+    
     // 当关键参数变化时，重新初始化
     useEffect(() => {
       // 检查参数是否真的变化了
@@ -429,14 +468,16 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
         return;
       }
       
+      console.log('🔄 [TCPlayer] 检测到参数变化');
+      console.log('🔄 [TCPlayer] 旧参数:', lastParams);
+      console.log('🔄 [TCPlayer] 新参数:', currentParams);
+      
       // 更新最后的参数
       lastParamsRef.current = currentParams;
       
-      // 只有在播放器已经初始化时才需要重新初始化
-      if (window.TCPlayer && isInitializedRef.current && playerRef.current) {
-        console.log('🔄 检测到参数变化，重新初始化播放器');
-        console.log('旧参数:', lastParams);
-        console.log('新参数:', currentParams);
+      // 如果fileId变化，需要销毁并重新初始化（即使psign还没加载）
+      if (lastParams.fileId !== currentParams.fileId && isInitializedRef.current && playerRef.current) {
+        console.log('🔄 [TCPlayer] FileId变化，销毁旧播放器');
         
         // 销毁旧播放器
         try {
@@ -450,20 +491,54 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
           } else if (typeof (playerRef.current as any).dispose === 'function') {
             (playerRef.current as any).dispose();
           }
+          // 清理video元素
+          const videoEl = containerRef.current?.querySelector('video');
+          if (videoEl) {
+            videoEl.pause();
+            videoEl.src = '';
+            videoEl.load();
+            videoEl.remove();
+          }
         } catch (error) {
-          console.error('❌ 销毁旧播放器失败:', error);
+          console.error('❌ [TCPlayer] 销毁旧播放器失败:', error);
         }
         playerRef.current = null;
         isInitializedRef.current = false;
-        
-        // 重新初始化
-        setTimeout(() => {
-          if ((fileId && psign) || url) {
-            initPlayer();
-          }
-        }, 100);
       }
-    }, [fileId, psign, url]);
+      
+      // 如果psign或url变化，且播放器已初始化，也需要重新初始化
+      if ((lastParams.psign !== currentParams.psign || lastParams.url !== currentParams.url) 
+          && isInitializedRef.current && playerRef.current) {
+        console.log('🔄 [TCPlayer] Psign/URL变化，重新初始化播放器');
+        
+        // 销毁旧播放器
+        try {
+          if (timeUpdateIntervalRef.current) {
+            clearInterval(timeUpdateIntervalRef.current);
+            timeUpdateIntervalRef.current = null;
+          }
+          if (typeof (playerRef.current as any).destroy === 'function') {
+            (playerRef.current as any).destroy();
+          } else if (typeof (playerRef.current as any).dispose === 'function') {
+            (playerRef.current as any).dispose();
+          }
+        } catch (error) {
+          console.error('❌ [TCPlayer] 销毁旧播放器失败:', error);
+        }
+        playerRef.current = null;
+        isInitializedRef.current = false;
+      }
+      
+      // 如果播放器未初始化，且满足初始化条件，则初始化
+      if (!isInitializedRef.current && window.TCPlayer) {
+        if ((fileId && psign) || url) {
+          console.log('🔄 [TCPlayer] 满足初始化条件，开始初始化');
+          setTimeout(() => {
+            initPlayer();
+          }, 100);
+        }
+      }
+    }, [fileId, psign, url, initPlayer]);
 
     // 清理函数
     useEffect(() => {
