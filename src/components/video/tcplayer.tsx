@@ -73,6 +73,8 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
     const timeUpdateIntervalRef = useRef<NodeJS.Timeout | null>(null);
     const isInitializedRef = useRef(false);
     const initializedFileIdRef = useRef<string | undefined>(undefined); // 记录已初始化的fileId
+    const errorRetryCountRef = useRef(0); // 错误重试计数器
+    const maxRetries = 2; // 最大重试次数
     const [psign, setPsign] = useState<string | undefined>(psignProp);
     const [isLoadingPsign, setIsLoadingPsign] = useState(false);
 
@@ -318,23 +320,37 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
           }
         });
 
-        player.on('error', (error: any) => {
+        player.on('error', async (error: any) => {
           console.error('❌ [TCPlayer] 播放错误:', error);
           console.error('❌ [TCPlayer] 错误类型:', typeof error);
           
           // 安全地序列化错误对象，避免循环引用
+          let errorCode: number | undefined;
+          let errorMessage: string | undefined;
           try {
             // 尝试提取错误的关键信息
             const errorInfo: any = {};
             if (error && typeof error === 'object') {
               // 提取常见属性
-              if ('code' in error) errorInfo.code = error.code;
-              if ('message' in error) errorInfo.message = error.message;
+              if ('code' in error) {
+                errorInfo.code = error.code;
+                errorCode = error.code;
+              }
+              if ('message' in error) {
+                errorInfo.message = error.message;
+                errorMessage = error.message;
+              }
               if ('detail' in error) errorInfo.detail = error.detail;
               if ('name' in error) errorInfo.name = error.name;
               // 尝试获取TCPlayer特定的错误信息
-              if (error.errorCode !== undefined) errorInfo.errorCode = error.errorCode;
-              if (error.errorMsg !== undefined) errorInfo.errorMsg = error.errorMsg;
+              if (error.errorCode !== undefined) {
+                errorInfo.errorCode = error.errorCode;
+                errorCode = error.errorCode;
+              }
+              if (error.errorMsg !== undefined) {
+                errorInfo.errorMsg = error.errorMsg;
+                errorMessage = error.errorMsg;
+              }
             } else {
               errorInfo.value = String(error);
             }
@@ -350,6 +366,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
             hasPsign: !!psign,
             psignLength: psign?.length || 0,
             url: url,
+            retryCount: errorRetryCountRef.current,
             videoElement: videoElement ? {
               src: videoElement.src,
               currentSrc: videoElement.currentSrc,
@@ -374,10 +391,97 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
             });
           }
           
+          // 检查是否是1009错误（通常是网络问题或psign问题）
+          const isError1009 = errorCode === 1009 || errorCode === '1009' || 
+                              (errorMessage && errorMessage.includes('1009')) ||
+                              (errorMessage && errorMessage.includes('ERR_NAME_NOT_RESOLVED'));
+          
+          // 检查是否是网络错误
+          const isNetworkError = videoElement?.error?.code === videoElement?.error?.MEDIA_ERR_NETWORK ||
+                                (errorMessage && (
+                                  errorMessage.includes('ERR_NAME_NOT_RESOLVED') ||
+                                  errorMessage.includes('network') ||
+                                  errorMessage.includes('Network')
+                                ));
+          
+          // 如果是1009错误或网络错误，且未超过重试次数，尝试重新获取psign并重新初始化
+          if ((isError1009 || isNetworkError) && fileId && errorRetryCountRef.current < maxRetries) {
+            errorRetryCountRef.current += 1;
+            console.log(`🔄 [TCPlayer] 检测到错误1009或网络错误，尝试重新获取psign (第${errorRetryCountRef.current}次重试)`);
+            
+            // 销毁当前播放器
+            try {
+              if (timeUpdateIntervalRef.current) {
+                clearInterval(timeUpdateIntervalRef.current);
+                timeUpdateIntervalRef.current = null;
+              }
+              if (playerRef.current) {
+                if (typeof (playerRef.current as any).destroy === 'function') {
+                  (playerRef.current as any).destroy();
+                } else if (typeof (playerRef.current as any).dispose === 'function') {
+                  (playerRef.current as any).dispose();
+                }
+                const videoEl = containerRef.current?.querySelector('video');
+                if (videoEl) {
+                  videoEl.pause();
+                  videoEl.src = '';
+                  videoEl.load();
+                  videoEl.remove();
+                }
+              }
+              playerRef.current = null;
+              isInitializedRef.current = false;
+              initializedFileIdRef.current = undefined;
+            } catch (e) {
+              console.error('❌ [TCPlayer] 销毁播放器失败:', e);
+            }
+            
+            // 清除旧的psign，重新获取
+            setPsign(undefined);
+            setIsLoadingPsign(true);
+            
+            // 延迟一下再重新获取psign，避免立即重试
+            setTimeout(async () => {
+              try {
+                console.log('🔄 [TCPlayer] 重新获取psign...');
+                const response = await vodAPI.getPsign(fileId, appId);
+                console.log('✅ [TCPlayer] 重新获取psign成功');
+                setPsign(response.psign);
+                setIsLoadingPsign(false);
+                // psign更新后会自动触发重新初始化
+              } catch (retryError) {
+                console.error('❌ [TCPlayer] 重新获取psign失败:', retryError);
+                setIsLoadingPsign(false);
+                errorRetryCountRef.current = maxRetries; // 标记为已重试失败
+                if (onError) {
+                  const safeError = {
+                    code: errorCode || 1009,
+                    message: isNetworkError 
+                      ? '网络连接失败，请检查网络连接后重试'
+                      : '播放失败，请刷新页面重试',
+                    detail: '重试获取psign失败',
+                    retried: true,
+                  };
+                  onError(safeError);
+                }
+              }
+            }, 1000); // 延迟1秒重试
+            
+            return; // 不继续执行，等待重试
+          }
+          
+          // 如果超过重试次数或不是可重试的错误，直接报告错误
           if (onError) {
             // 传递一个简化的错误对象，避免循环引用
             const safeError = error && typeof error === 'object' 
-              ? { code: error.code, message: error.message, detail: error.detail }
+              ? { 
+                  code: errorCode || error.code, 
+                  message: isNetworkError 
+                    ? '网络连接失败，请检查网络连接'
+                    : (errorMessage || error.message || '播放失败'),
+                  detail: error.detail,
+                  retried: errorRetryCountRef.current > 0,
+                }
               : error;
             onError(safeError);
           }
@@ -409,6 +513,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
         playerRef.current = player;
         isInitializedRef.current = true;
         initializedFileIdRef.current = fileId; // 记录已初始化的fileId
+        errorRetryCountRef.current = 0; // 重置错误重试计数器
         
         // 保存 video 元素引用，方便后续使用（截图、跳转等）
         if (videoElement) {
@@ -491,6 +596,8 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
           isInitializedRef.current = false;
           initializedFileIdRef.current = undefined;
         }
+        // 重置错误重试计数器
+        errorRetryCountRef.current = 0;
       }
     }, [fileId, psign, psignProp]);
     
