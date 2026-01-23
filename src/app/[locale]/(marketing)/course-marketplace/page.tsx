@@ -10,6 +10,7 @@ import { Routes } from '@/routes';
 import { Search, BookOpen } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState, useMemo } from 'react';
+import { expandSearchKeywords } from '@/lib/search-utils';
 
 
 
@@ -71,15 +72,23 @@ export default function CourseMarketplacePage() {
     fetchPublicCourses();
   }, []);
 
-  // 搜索过滤
+  // 搜索过滤（支持同义词扩展）
   const filteredCourses = useMemo(() => {
     if (!searchQuery.trim()) return courses;
     
-    const query = searchQuery.toLowerCase();
-    return courses.filter(course => 
-      course.title.toLowerCase().includes(query) ||
-      course.description.toLowerCase().includes(query)
-    );
+    // 使用共享工具函数扩展关键词
+    const expandedKeywords = expandSearchKeywords(searchQuery);
+    
+    const lowerQueries = expandedKeywords.map(kw => kw.toLowerCase());
+    return courses.filter(course => {
+      const title = course.title.toLowerCase();
+      const description = course.description.toLowerCase();
+      
+      // 检查是否匹配任何一个扩展后的关键词
+      return lowerQueries.some(query => 
+        title.includes(query) || description.includes(query)
+      );
+    });
   }, [courses, searchQuery]);
 
   if (!mounted) {

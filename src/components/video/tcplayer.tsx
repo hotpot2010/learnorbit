@@ -72,6 +72,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
     const containerRef = useRef<HTMLDivElement>(null);
     const timeUpdateIntervalRef = useRef<NodeJS.Timeout | null>(null);
     const isInitializedRef = useRef(false);
+    const initializedFileIdRef = useRef<string | undefined>(undefined); // 记录已初始化的fileId
     const [psign, setPsign] = useState<string | undefined>(psignProp);
     const [isLoadingPsign, setIsLoadingPsign] = useState(false);
 
@@ -122,13 +123,46 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
         return;
       }
       
-      if (isInitializedRef.current) {
-        console.warn('⚠️ [initPlayer] 播放器已初始化，跳过');
-        return;
-      }
-      
       if (!containerRef.current) {
         console.warn('⚠️ [initPlayer] containerRef.current 不存在，跳过');
+        return;
+      }
+
+      // 检查fileId是否变化：如果fileId变化，需要重新初始化
+      if (isInitializedRef.current && fileId && initializedFileIdRef.current !== fileId) {
+        console.log('🔄 [initPlayer] FileId变化，重置初始化状态');
+        console.log(`🔄 [initPlayer] 旧FileId: ${initializedFileIdRef.current}, 新FileId: ${fileId}`);
+        isInitializedRef.current = false;
+        initializedFileIdRef.current = undefined;
+        // 销毁旧播放器
+        try {
+          if (timeUpdateIntervalRef.current) {
+            clearInterval(timeUpdateIntervalRef.current);
+            timeUpdateIntervalRef.current = null;
+          }
+          if (playerRef.current) {
+            if (typeof (playerRef.current as any).destroy === 'function') {
+              (playerRef.current as any).destroy();
+            } else if (typeof (playerRef.current as any).dispose === 'function') {
+              (playerRef.current as any).dispose();
+            }
+            // 清理video元素
+            const videoEl = containerRef.current?.querySelector('video');
+            if (videoEl) {
+              videoEl.pause();
+              videoEl.src = '';
+              videoEl.load();
+              videoEl.remove();
+            }
+          }
+          playerRef.current = null;
+        } catch (error) {
+          console.error('❌ [initPlayer] 销毁旧播放器失败:', error);
+        }
+      }
+      
+      if (isInitializedRef.current) {
+        console.warn('⚠️ [initPlayer] 播放器已初始化，跳过');
         return;
       }
 
@@ -374,6 +408,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
 
         playerRef.current = player;
         isInitializedRef.current = true;
+        initializedFileIdRef.current = fileId; // 记录已初始化的fileId
         
         // 保存 video 元素引用，方便后续使用（截图、跳转等）
         if (videoElement) {
@@ -442,13 +477,20 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
     // 保存上次的参数，只在真正变化时重新初始化
     const lastParamsRef = useRef<{ fileId?: string; psign?: string; url?: string }>({});
     
-    // 当fileId变化时，清除旧的psign（除非是prop传入的）
+    // 当fileId变化时，清除旧的psign并重置初始化状态（除非是prop传入的）
     useEffect(() => {
       const lastFileId = lastParamsRef.current?.fileId;
-      if (fileId && lastFileId && lastFileId !== fileId && psign && !psignProp) {
-        console.log('🔄 [TCPlayer] FileId变化，清除旧的psign');
-        setPsign(undefined);
-        setIsLoadingPsign(false);
+      if (fileId && lastFileId && lastFileId !== fileId) {
+        console.log('🔄 [TCPlayer] FileId变化，清除旧的psign和初始化状态');
+        if (psign && !psignProp) {
+          setPsign(undefined);
+          setIsLoadingPsign(false);
+        }
+        // 重置初始化状态
+        if (isInitializedRef.current) {
+          isInitializedRef.current = false;
+          initializedFileIdRef.current = undefined;
+        }
       }
     }, [fileId, psign, psignProp]);
     
@@ -504,6 +546,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
         }
         playerRef.current = null;
         isInitializedRef.current = false;
+        initializedFileIdRef.current = undefined;
       }
       
       // 如果psign或url变化，且播放器已初始化，也需要重新初始化
@@ -527,6 +570,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
         }
         playerRef.current = null;
         isInitializedRef.current = false;
+        initializedFileIdRef.current = undefined;
       }
       
       // 如果播放器未初始化，且满足初始化条件，则初始化
@@ -569,6 +613,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
           playerRef.current = null;
         }
         isInitializedRef.current = false;
+        initializedFileIdRef.current = undefined;
       };
     }, []);
 
@@ -721,6 +766,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
             }
             playerRef.current = null;
             isInitializedRef.current = false;
+            initializedFileIdRef.current = undefined;
           } catch (error) {
             console.error('❌ TCPlayer destroy 失败:', error);
           }

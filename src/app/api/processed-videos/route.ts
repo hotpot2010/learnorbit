@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server';
+import { expandSearchKeywords } from '@/lib/search-utils';
 
 // 使用后端API URL配置（来自 .env.local）
 const BACKEND_API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -18,6 +19,9 @@ const KEYWORD_SYNONYMS: Record<string, string[]> = {
   '微分': ['微分', '微分方程'],
   '偏微分': ['偏微分', '偏微分方程'],
   '常微分': ['常微分', '常微分方程'],
+  '初会': ['初会', '初级会计', '初级会计实务', '会计初级'],
+  '中会': ['中会', '中级会计', '中级会计实务', '会计中级'],
+  '高会': ['高会', '高级会计', '高级会计实务', '会计高级'],
 };
 
 // 学科关键词列表（用于从自然语言中提取）
@@ -43,7 +47,9 @@ const SUBJECT_KEYWORDS = [
   '化学', '有机', '无机', '物化', '分析化学',
   
   // 其他学科
-  '经济', '管理', '会计', '金融', '法律', '历史', '政治',
+  '经济', '管理', '会计', '初级会计', '初会', '中级会计', '中会', '高级会计', '高会',
+  '会计初级', '会计中级', '会计高级', '初级会计实务', '中级会计实务', '高级会计实务',
+  '金融', '法律', '历史', '政治',
 ];
 
 // 从自然语言中提取关键词
@@ -51,14 +57,26 @@ function extractKeywords(input: string): string[] {
   const lowerInput = input.toLowerCase().trim();
   const extractedKeywords: string[] = [];
   
-  // 遍历所有学科关键词，查找匹配
-  for (const keyword of SUBJECT_KEYWORDS) {
-    if (lowerInput.includes(keyword.toLowerCase())) {
-      extractedKeywords.push(keyword);
+  // 1. 首先检查是否直接匹配同义词映射表的键（缩写）
+  for (const [key, synonyms] of Object.entries(KEYWORD_SYNONYMS)) {
+    if (lowerInput === key.toLowerCase() || lowerInput.includes(key.toLowerCase())) {
+      extractedKeywords.push(key);
+      // 同时添加同义词
+      extractedKeywords.push(...synonyms);
     }
   }
   
-  // 如果没有提取到关键词，返回原始输入
+  // 2. 遍历所有学科关键词，查找匹配
+  for (const keyword of SUBJECT_KEYWORDS) {
+    if (lowerInput.includes(keyword.toLowerCase())) {
+      // 避免重复添加
+      if (!extractedKeywords.includes(keyword)) {
+        extractedKeywords.push(keyword);
+      }
+    }
+  }
+  
+  // 3. 如果没有提取到关键词，返回原始输入
   if (extractedKeywords.length === 0) {
     return [input];
   }
@@ -66,19 +84,9 @@ function extractKeywords(input: string): string[] {
   return extractedKeywords;
 }
 
-// 扩展关键词（添加同义词）
+// 扩展关键词（添加同义词）- 使用共享工具函数
 function expandKeywords(keyword: string): string[] {
-  const lowerKeyword = keyword.toLowerCase().trim();
-  
-  // 检查是否有匹配的同义词
-  for (const [key, synonyms] of Object.entries(KEYWORD_SYNONYMS)) {
-    if (lowerKeyword === key.toLowerCase()) {
-      return synonyms;
-    }
-  }
-  
-  // 如果没有同义词，返回原始关键词
-  return [keyword];
+  return expandSearchKeywords(keyword);
 }
 
 export async function GET(request: NextRequest) {
