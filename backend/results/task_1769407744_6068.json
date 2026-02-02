@@ -1,0 +1,186 @@
+{
+  "task_id": "task_1769407744_6068",
+  "bilibili_url": "https://www.bilibili.com/video/BV1qD4y1m7fA/?share_source=copy_web&vd_source=406c2915ecba48ec3702134471f44902",
+  "video_title": "猴博士【电路】4小时不挂",
+  "steps": {
+    "asr": {
+      "error": null,
+      "result": null,
+      "status": "running",
+      "message": "正在处理第 4/6 个分P的ASR: 第三课 电阻电路的一般分析",
+      "progress": 47,
+      "retry_count": 0
+    },
+    "download": {
+      "error": null,
+      "result": {
+        "video_urls": [
+          "https://file.gsxservice.com/3473408972_rl7oclav.mp4",
+          "https://file.gsxservice.com/3473409862_a81z3z7x.mp4",
+          "https://file.gsxservice.com/3473410971_3viwzwab.mp4",
+          "https://file.gsxservice.com/3473413662_u9yizy6b.mp4",
+          "https://file.gsxservice.com/3473414470_fz0t9926.mp4",
+          "https://file.gsxservice.com/3473414921_c2v2q7qp.mp4"
+        ],
+        "total_parts": 6,
+        "failed_count": 0,
+        "part_results": [
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769407744_6068_p1.mp4",
+            "video_url": "https://file.gsxservice.com/3473408972_rl7oclav.mp4",
+            "part_number": 1
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769407744_6068_p2.mp4",
+            "video_url": "https://file.gsxservice.com/3473409862_a81z3z7x.mp4",
+            "part_number": 2
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769407744_6068_p3.mp4",
+            "video_url": "https://file.gsxservice.com/3473410971_3viwzwab.mp4",
+            "part_number": 3
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769407744_6068_p4.mp4",
+            "video_url": "https://file.gsxservice.com/3473413662_u9yizy6b.mp4",
+            "part_number": 4
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769407744_6068_p5.mp4",
+            "video_url": "https://file.gsxservice.com/3473414470_fz0t9926.mp4",
+            "part_number": 5
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769407744_6068_p6.mp4",
+            "video_url": "https://file.gsxservice.com/3473414921_c2v2q7qp.mp4",
+            "part_number": 6
+          }
+        ],
+        "success_count": 6
+      },
+      "status": "success",
+      "message": "完成 6/6 个分P",
+      "progress": 100,
+      "retry_count": 0
+    },
+    "exercises": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "transcode": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "screenshots": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "knowledge_points": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    }
+  },
+  "video_url": [
+    "https://file.gsxservice.com/3473408972_rl7oclav.mp4",
+    "https://file.gsxservice.com/3473409862_a81z3z7x.mp4",
+    "https://file.gsxservice.com/3473410971_3viwzwab.mp4",
+    "https://file.gsxservice.com/3473413662_u9yizy6b.mp4",
+    "https://file.gsxservice.com/3473414470_fz0t9926.mp4",
+    "https://file.gsxservice.com/3473414921_c2v2q7qp.mp4"
+  ],
+  "transcoded_video_url": null,
+  "asr_result_url": null,
+  "knowledge_points_result_url": null,
+  "screenshots_result_url": null,
+  "exercises_result_url": null,
+  "vod_file_id": null,
+  "vod_play_url": null,
+  "vod_cover_url": null,
+  "video_info": {
+    "bv_id": "BV1qD4y1m7fA",
+    "title": "猴博士【电路】4小时不挂",
+    "duration": 0,
+    "uploader": "",
+    "thumbnail": "",
+    "like_count": 0,
+    "view_count": 0,
+    "description": "",
+    "upload_date": "",
+    "thumbnail_cdn": "https://file.gsxservice.com/3473405865_958w8n7s.jpg"
+  },
+  "is_series": true,
+  "series_parts": [
+    {
+      "url": "https://www.bilibili.com/video/BV1qD4y1m7fA?p=1",
+      "bv_id": "BV1qD4y1m7fA_p1",
+      "duration": 664.647,
+      "full_title": "猴博士【电路】4小时不挂 p01 第零课 贼基础的知识",
+      "part_title": "第零课 贼基础的知识",
+      "part_number": 1
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1qD4y1m7fA?p=2",
+      "bv_id": "BV1qD4y1m7fA_p2",
+      "duration": 1179.6,
+      "full_title": "猴博士【电路】4小时不挂 p02 第一课 电阻电路的等效变换",
+      "part_title": "第一课 电阻电路的等效变换",
+      "part_number": 2
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1qD4y1m7fA?p=3",
+      "bv_id": "BV1qD4y1m7fA_p3",
+      "duration": 720.886,
+      "full_title": "猴博士【电路】4小时不挂 p03 第二课 基尔霍夫定律",
+      "part_title": "第二课 基尔霍夫定律",
+      "part_number": 3
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1qD4y1m7fA?p=4",
+      "bv_id": "BV1qD4y1m7fA_p4",
+      "duration": 1940.96,
+      "full_title": "猴博士【电路】4小时不挂 p04 第三课 电阻电路的一般分析",
+      "part_title": "第三课 电阻电路的一般分析",
+      "part_number": 4
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1qD4y1m7fA?p=5",
+      "bv_id": "BV1qD4y1m7fA_p5",
+      "duration": 21.072,
+      "full_title": "猴博士【电路】4小时不挂 p05 第四课 电路定理",
+      "part_title": "第四课 电路定理",
+      "part_number": 5
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1qD4y1m7fA?p=6",
+      "bv_id": "BV1qD4y1m7fA_p6",
+      "duration": 21.072,
+      "full_title": "猴博士【电路】4小时不挂 p06 第5~9课",
+      "part_title": "第5~9课",
+      "part_number": 6
+    }
+  ],
+  "created_at": "2026-01-26T14:09:14",
+  "updated_at": "2026-01-26T15:00:56.003769"
+}

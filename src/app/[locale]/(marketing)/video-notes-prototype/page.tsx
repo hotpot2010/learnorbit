@@ -1616,6 +1616,24 @@ export default function VideoNotesPrototypePage() {
         const vodPlayUrls = processedTaskDataRef.current.vod_play_url;
         const vodFileIds = processedTaskDataRef.current.vod_file_id;
         
+        // 先设置降级URL（转码后的视频或原始视频），即使有VOD也保留作为降级方案
+        const transcodedUrls = processedTaskDataRef.current.transcoded_video_url;
+        const videoUrls = transcodedUrls || processedTaskDataRef.current.video_url;
+        const isTranscoded = !!transcodedUrls;
+        
+        if (videoUrls) {
+          const videoUrlArray = typeof videoUrls === 'string' 
+            ? (videoUrls.startsWith('[') ? JSON.parse(videoUrls) : [videoUrls])
+            : videoUrls;
+          const videoUrl = Array.isArray(videoUrlArray) ? videoUrlArray[partIndex] : videoUrlArray;
+          if (videoUrl) {
+            // 确保使用 HTTPS
+            const secureVideoUrl = ensureHttps(videoUrl) as string;
+            setCdnVideoUrl(secureVideoUrl);
+            console.log(`✅ [降级URL] 设置降级视频URL (P${partIndex + 1}, ${isTranscoded ? '转码后' : '原始'}):`, secureVideoUrl.substring(0, 100) + '...');
+          }
+        }
+        
         if (vodPlayUrls && vodFileIds) {
           // 解析 VOD 数据（可能是数组或字符串）
           const vodPlayUrlArray = typeof vodPlayUrls === 'string' 
@@ -1633,32 +1651,15 @@ export default function VideoNotesPrototypePage() {
             console.log(`🎬 [VOD] FileId:`, vodFileId);
             console.log(`🎬 [VOD] Play URL:`, vodPlayUrl.substring(0, 150) + '...');
             setVodFileId(vodFileId);
-            setCdnVideoUrl(''); // 清空普通 URL，优先使用 VOD
+            // 不清空 cdnVideoUrl，保留作为降级方案
             console.log(`✅ [VOD] 已设置 VOD FileId，将使用 TCPlayer VOD 模式播放`);
             // 注意：vod_play_url 是带签名的完整 URL，但 TCPlayer VOD 模式只需要 fileId + psign
             // 所以这里只设置 fileId，TCPlayer 会自动获取 psign
+            // cdnVideoUrl 将作为 fallbackUrl 传递给 TCPlayer，用于降级方案
           }
-        }
-        
-        // 如果没有 VOD，使用转码后的视频或原始视频
-        if (!vodFileIds || !vodPlayUrls) {
-          const transcodedUrls = processedTaskDataRef.current.transcoded_video_url;
-          const videoUrls = transcodedUrls || processedTaskDataRef.current.video_url;
-          const isTranscoded = !!transcodedUrls;
-          
-          if (videoUrls) {
-            const videoUrlArray = typeof videoUrls === 'string' 
-              ? (videoUrls.startsWith('[') ? JSON.parse(videoUrls) : [videoUrls])
-              : videoUrls;
-            const videoUrl = Array.isArray(videoUrlArray) ? videoUrlArray[partIndex] : videoUrlArray;
-            if (videoUrl) {
-              // 确保使用 HTTPS
-              const secureVideoUrl = ensureHttps(videoUrl) as string;
-              setCdnVideoUrl(secureVideoUrl);
-              setVodFileId(null); // 清空 VOD FileId
-              console.log(`✅ [普通URL] 设置视频URL (P${partIndex + 1}, ${isTranscoded ? '转码后' : '原始'}):`, secureVideoUrl);
-            }
-          }
+        } else {
+          // 如果没有 VOD，清空 VOD FileId
+          setVodFileId(null);
         }
         
         // 获取知识点数据
@@ -5575,12 +5576,14 @@ export default function VideoNotesPrototypePage() {
                   // 优先使用 VOD 模式
                   if (vodFileId) {
                     console.log('🎬 [渲染] 渲染 TCPlayer VOD 模式，FileId:', vodFileId);
+                    console.log('🎬 [渲染] 降级URL:', cdnVideoUrl ? `${cdnVideoUrl.substring(0, 100)}...` : '无');
                     return (
                       <TCPlayer
                         ref={tcPlayerRef}
                         containerId={`tcplayer-${Date.now()}`}
                         fileId={vodFileId}
                         appId={vodAppId}
+                        fallbackUrl={cdnVideoUrl} // 传递降级URL
                         onTimeUpdate={handleTimeUpdate}
                         onPlay={() => setIsPlaying(true)}
                         onPause={() => setIsPlaying(false)}

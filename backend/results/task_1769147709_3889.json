@@ -1,0 +1,904 @@
+{
+  "task_id": "task_1769147709_3889",
+  "bilibili_url": "https://www.bilibili.com/video/BV1YV411a7o7?vd_source=c56a4db010f073556475172c7b3fbedf",
+  "video_title": "【2026年3月最新版】计算机二级MS office真题讲解",
+  "steps": {
+    "asr": {
+      "error": null,
+      "result": null,
+      "status": "running",
+      "message": "正在处理第 45/48 个分P的ASR: 真题16ppt",
+      "progress": 82,
+      "retry_count": 0
+    },
+    "download": {
+      "error": null,
+      "result": {
+        "video_urls": [
+          "https://file.gsxservice.com/3466525879_7z9uwghf.mp4",
+          "https://file.gsxservice.com/3466536810_tml0pp11.mp4",
+          "https://file.gsxservice.com/3466538203_dbudjluu.mp4",
+          "https://file.gsxservice.com/3466539188_i7ko9gon.mp4",
+          "https://file.gsxservice.com/3466539719_6s1wiicw.mp4",
+          "https://file.gsxservice.com/3466541818_ahmmzqh4.mp4",
+          "https://file.gsxservice.com/3466544817_xkewx5y6.mp4",
+          "https://file.gsxservice.com/3466546401_v787kr90.mp4",
+          "https://file.gsxservice.com/3466547664_eknu80xc.mp4",
+          "https://file.gsxservice.com/3466551583_4me8bobl.mp4",
+          "https://file.gsxservice.com/3466553904_ximyjlxr.mp4",
+          "https://file.gsxservice.com/3466554950_b0ywwe97.mp4",
+          "https://file.gsxservice.com/3466555650_as255ano.mp4",
+          "https://file.gsxservice.com/3466557525_li8vhb90.mp4",
+          "https://file.gsxservice.com/3466559862_ytn9r42v.mp4",
+          "https://file.gsxservice.com/3466562423_6apb64ki.mp4",
+          "https://file.gsxservice.com/3466565508_c2g0z18v.mp4",
+          "https://file.gsxservice.com/3466568216_n6v4t4bj.mp4",
+          "https://file.gsxservice.com/3466570527_nm714msx.mp4",
+          "https://file.gsxservice.com/3466572436_opsvxwwf.mp4",
+          "https://file.gsxservice.com/3466574516_t8c40tbj.mp4",
+          "https://file.gsxservice.com/3466577214_r31cxdd1.mp4",
+          "https://file.gsxservice.com/3466580142_xwou0ghz.mp4",
+          "https://file.gsxservice.com/3466582190_hhpdjceu.mp4",
+          "https://file.gsxservice.com/3466583575_20n1rogb.mp4",
+          "https://file.gsxservice.com/3466584541_0yzlrui5.mp4",
+          "https://file.gsxservice.com/3466585958_gcfpla1p.mp4",
+          "https://file.gsxservice.com/3466589094_bv38j1xb.mp4",
+          "https://file.gsxservice.com/3466592616_6zy1n02u.mp4",
+          "https://file.gsxservice.com/3466595883_nmsl85zt.mp4",
+          "https://file.gsxservice.com/3466597461_pfh3woy7.mp4",
+          "https://file.gsxservice.com/3466599660_erf0kutr.mp4",
+          "https://file.gsxservice.com/3466601368_z7cu72b7.mp4",
+          "https://file.gsxservice.com/3466605092_vd4f945j.mp4",
+          "https://file.gsxservice.com/3466607421_axziw3y6.mp4",
+          "https://file.gsxservice.com/3466609261_5mokzkdb.mp4",
+          "https://file.gsxservice.com/3466610737_wpwansgv.mp4",
+          "https://file.gsxservice.com/3466612118_85d2wpzb.mp4",
+          "https://file.gsxservice.com/3466613935_josa6jtg.mp4",
+          "https://file.gsxservice.com/3466615906_kfagqk0o.mp4",
+          "https://file.gsxservice.com/3466617996_9xjxnauc.mp4",
+          "https://file.gsxservice.com/3466620320_z2h518nh.mp4",
+          "https://file.gsxservice.com/3466622066_qvoqfj8z.mp4",
+          "https://file.gsxservice.com/3466624661_ov5wp7ej.mp4",
+          "https://file.gsxservice.com/3466626395_p3a2m9gu.mp4",
+          "https://file.gsxservice.com/3466635391_2dneep0i.mp4",
+          "https://file.gsxservice.com/3466644009_lhjiqxoi.mp4",
+          "https://file.gsxservice.com/3466647414_9704wxr4.mp4"
+        ],
+        "total_parts": 48,
+        "failed_count": 0,
+        "part_results": [
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p1.mp4",
+            "video_url": "https://file.gsxservice.com/3466525879_7z9uwghf.mp4",
+            "part_number": 1
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p2.mp4",
+            "video_url": "https://file.gsxservice.com/3466536810_tml0pp11.mp4",
+            "part_number": 2
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p3.mp4",
+            "video_url": "https://file.gsxservice.com/3466538203_dbudjluu.mp4",
+            "part_number": 3
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p4.mp4",
+            "video_url": "https://file.gsxservice.com/3466539188_i7ko9gon.mp4",
+            "part_number": 4
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p5.mp4",
+            "video_url": "https://file.gsxservice.com/3466539719_6s1wiicw.mp4",
+            "part_number": 5
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p6.mp4",
+            "video_url": "https://file.gsxservice.com/3466541818_ahmmzqh4.mp4",
+            "part_number": 6
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p7.mp4",
+            "video_url": "https://file.gsxservice.com/3466544817_xkewx5y6.mp4",
+            "part_number": 7
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p8.mp4",
+            "video_url": "https://file.gsxservice.com/3466546401_v787kr90.mp4",
+            "part_number": 8
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p9.mp4",
+            "video_url": "https://file.gsxservice.com/3466547664_eknu80xc.mp4",
+            "part_number": 9
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p10.mp4",
+            "video_url": "https://file.gsxservice.com/3466551583_4me8bobl.mp4",
+            "part_number": 10
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p11.mp4",
+            "video_url": "https://file.gsxservice.com/3466553904_ximyjlxr.mp4",
+            "part_number": 11
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p12.mp4",
+            "video_url": "https://file.gsxservice.com/3466554950_b0ywwe97.mp4",
+            "part_number": 12
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p13.mp4",
+            "video_url": "https://file.gsxservice.com/3466555650_as255ano.mp4",
+            "part_number": 13
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p14.mp4",
+            "video_url": "https://file.gsxservice.com/3466557525_li8vhb90.mp4",
+            "part_number": 14
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p15.mp4",
+            "video_url": "https://file.gsxservice.com/3466559862_ytn9r42v.mp4",
+            "part_number": 15
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p16.mp4",
+            "video_url": "https://file.gsxservice.com/3466562423_6apb64ki.mp4",
+            "part_number": 16
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p17.mp4",
+            "video_url": "https://file.gsxservice.com/3466565508_c2g0z18v.mp4",
+            "part_number": 17
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p18.mp4",
+            "video_url": "https://file.gsxservice.com/3466568216_n6v4t4bj.mp4",
+            "part_number": 18
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p19.mp4",
+            "video_url": "https://file.gsxservice.com/3466570527_nm714msx.mp4",
+            "part_number": 19
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p20.mp4",
+            "video_url": "https://file.gsxservice.com/3466572436_opsvxwwf.mp4",
+            "part_number": 20
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p21.mp4",
+            "video_url": "https://file.gsxservice.com/3466574516_t8c40tbj.mp4",
+            "part_number": 21
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p22.mp4",
+            "video_url": "https://file.gsxservice.com/3466577214_r31cxdd1.mp4",
+            "part_number": 22
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p23.mp4",
+            "video_url": "https://file.gsxservice.com/3466580142_xwou0ghz.mp4",
+            "part_number": 23
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p24.mp4",
+            "video_url": "https://file.gsxservice.com/3466582190_hhpdjceu.mp4",
+            "part_number": 24
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p25.mp4",
+            "video_url": "https://file.gsxservice.com/3466583575_20n1rogb.mp4",
+            "part_number": 25
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p26.mp4",
+            "video_url": "https://file.gsxservice.com/3466584541_0yzlrui5.mp4",
+            "part_number": 26
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p27.mp4",
+            "video_url": "https://file.gsxservice.com/3466585958_gcfpla1p.mp4",
+            "part_number": 27
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p28.mp4",
+            "video_url": "https://file.gsxservice.com/3466589094_bv38j1xb.mp4",
+            "part_number": 28
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p29.mp4",
+            "video_url": "https://file.gsxservice.com/3466592616_6zy1n02u.mp4",
+            "part_number": 29
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p30.mp4",
+            "video_url": "https://file.gsxservice.com/3466595883_nmsl85zt.mp4",
+            "part_number": 30
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p31.mp4",
+            "video_url": "https://file.gsxservice.com/3466597461_pfh3woy7.mp4",
+            "part_number": 31
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p32.mp4",
+            "video_url": "https://file.gsxservice.com/3466599660_erf0kutr.mp4",
+            "part_number": 32
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p33.mp4",
+            "video_url": "https://file.gsxservice.com/3466601368_z7cu72b7.mp4",
+            "part_number": 33
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p34.mp4",
+            "video_url": "https://file.gsxservice.com/3466605092_vd4f945j.mp4",
+            "part_number": 34
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p35.mp4",
+            "video_url": "https://file.gsxservice.com/3466607421_axziw3y6.mp4",
+            "part_number": 35
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p36.mp4",
+            "video_url": "https://file.gsxservice.com/3466609261_5mokzkdb.mp4",
+            "part_number": 36
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p37.mp4",
+            "video_url": "https://file.gsxservice.com/3466610737_wpwansgv.mp4",
+            "part_number": 37
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p38.mp4",
+            "video_url": "https://file.gsxservice.com/3466612118_85d2wpzb.mp4",
+            "part_number": 38
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p39.mp4",
+            "video_url": "https://file.gsxservice.com/3466613935_josa6jtg.mp4",
+            "part_number": 39
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p40.mp4",
+            "video_url": "https://file.gsxservice.com/3466615906_kfagqk0o.mp4",
+            "part_number": 40
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p41.mp4",
+            "video_url": "https://file.gsxservice.com/3466617996_9xjxnauc.mp4",
+            "part_number": 41
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p42.mp4",
+            "video_url": "https://file.gsxservice.com/3466620320_z2h518nh.mp4",
+            "part_number": 42
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p43.mp4",
+            "video_url": "https://file.gsxservice.com/3466622066_qvoqfj8z.mp4",
+            "part_number": 43
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p44.mp4",
+            "video_url": "https://file.gsxservice.com/3466624661_ov5wp7ej.mp4",
+            "part_number": 44
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p45.mp4",
+            "video_url": "https://file.gsxservice.com/3466626395_p3a2m9gu.mp4",
+            "part_number": 45
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p46.mp4",
+            "video_url": "https://file.gsxservice.com/3466635391_2dneep0i.mp4",
+            "part_number": 46
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p47.mp4",
+            "video_url": "https://file.gsxservice.com/3466644009_lhjiqxoi.mp4",
+            "part_number": 47
+          },
+          {
+            "status": "success",
+            "file_path": "D:\\learnorbit\\learnorbit\\backend\\downloads\\video_task_1769147709_3889_p48.mp4",
+            "video_url": "https://file.gsxservice.com/3466647414_9704wxr4.mp4",
+            "part_number": 48
+          }
+        ],
+        "success_count": 48
+      },
+      "status": "success",
+      "message": "完成 48/48 个分P",
+      "progress": 100,
+      "retry_count": 0
+    },
+    "exercises": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "transcode": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "screenshots": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    },
+    "knowledge_points": {
+      "error": null,
+      "result": null,
+      "status": "pending",
+      "message": "等待执行",
+      "progress": 0,
+      "retry_count": 0
+    }
+  },
+  "video_url": [
+    "https://file.gsxservice.com/3466525879_7z9uwghf.mp4",
+    "https://file.gsxservice.com/3466536810_tml0pp11.mp4",
+    "https://file.gsxservice.com/3466538203_dbudjluu.mp4",
+    "https://file.gsxservice.com/3466539188_i7ko9gon.mp4",
+    "https://file.gsxservice.com/3466539719_6s1wiicw.mp4",
+    "https://file.gsxservice.com/3466541818_ahmmzqh4.mp4",
+    "https://file.gsxservice.com/3466544817_xkewx5y6.mp4",
+    "https://file.gsxservice.com/3466546401_v787kr90.mp4",
+    "https://file.gsxservice.com/3466547664_eknu80xc.mp4",
+    "https://file.gsxservice.com/3466551583_4me8bobl.mp4",
+    "https://file.gsxservice.com/3466553904_ximyjlxr.mp4",
+    "https://file.gsxservice.com/3466554950_b0ywwe97.mp4",
+    "https://file.gsxservice.com/3466555650_as255ano.mp4",
+    "https://file.gsxservice.com/3466557525_li8vhb90.mp4",
+    "https://file.gsxservice.com/3466559862_ytn9r42v.mp4",
+    "https://file.gsxservice.com/3466562423_6apb64ki.mp4",
+    "https://file.gsxservice.com/3466565508_c2g0z18v.mp4",
+    "https://file.gsxservice.com/3466568216_n6v4t4bj.mp4",
+    "https://file.gsxservice.com/3466570527_nm714msx.mp4",
+    "https://file.gsxservice.com/3466572436_opsvxwwf.mp4",
+    "https://file.gsxservice.com/3466574516_t8c40tbj.mp4",
+    "https://file.gsxservice.com/3466577214_r31cxdd1.mp4",
+    "https://file.gsxservice.com/3466580142_xwou0ghz.mp4",
+    "https://file.gsxservice.com/3466582190_hhpdjceu.mp4",
+    "https://file.gsxservice.com/3466583575_20n1rogb.mp4",
+    "https://file.gsxservice.com/3466584541_0yzlrui5.mp4",
+    "https://file.gsxservice.com/3466585958_gcfpla1p.mp4",
+    "https://file.gsxservice.com/3466589094_bv38j1xb.mp4",
+    "https://file.gsxservice.com/3466592616_6zy1n02u.mp4",
+    "https://file.gsxservice.com/3466595883_nmsl85zt.mp4",
+    "https://file.gsxservice.com/3466597461_pfh3woy7.mp4",
+    "https://file.gsxservice.com/3466599660_erf0kutr.mp4",
+    "https://file.gsxservice.com/3466601368_z7cu72b7.mp4",
+    "https://file.gsxservice.com/3466605092_vd4f945j.mp4",
+    "https://file.gsxservice.com/3466607421_axziw3y6.mp4",
+    "https://file.gsxservice.com/3466609261_5mokzkdb.mp4",
+    "https://file.gsxservice.com/3466610737_wpwansgv.mp4",
+    "https://file.gsxservice.com/3466612118_85d2wpzb.mp4",
+    "https://file.gsxservice.com/3466613935_josa6jtg.mp4",
+    "https://file.gsxservice.com/3466615906_kfagqk0o.mp4",
+    "https://file.gsxservice.com/3466617996_9xjxnauc.mp4",
+    "https://file.gsxservice.com/3466620320_z2h518nh.mp4",
+    "https://file.gsxservice.com/3466622066_qvoqfj8z.mp4",
+    "https://file.gsxservice.com/3466624661_ov5wp7ej.mp4",
+    "https://file.gsxservice.com/3466626395_p3a2m9gu.mp4",
+    "https://file.gsxservice.com/3466635391_2dneep0i.mp4",
+    "https://file.gsxservice.com/3466644009_lhjiqxoi.mp4",
+    "https://file.gsxservice.com/3466647414_9704wxr4.mp4"
+  ],
+  "transcoded_video_url": null,
+  "asr_result_url": [
+    "https://file.gsxservice.com/3466305714_ec30v8je.txt",
+    "https://file.gsxservice.com/3466333948_8modtpeb.txt",
+    "https://file.gsxservice.com/3466336441_06hs4mph.txt",
+    "https://file.gsxservice.com/3466338142_gh3zjvey.txt",
+    "https://file.gsxservice.com/3466341270_peqb7u6w.txt",
+    "https://file.gsxservice.com/3466346244_ydbz2gk4.txt",
+    "https://file.gsxservice.com/3466349016_bnc3dmch.txt",
+    "https://file.gsxservice.com/3466352297_hs5ujdwe.txt",
+    "https://file.gsxservice.com/3466356055_lrt0m9eh.txt",
+    "https://file.gsxservice.com/3466359442_qqhlk3fa.txt",
+    "https://file.gsxservice.com/3466361249_p9xcob9j.txt",
+    "https://file.gsxservice.com/3466362991_8ez3dgi9.txt",
+    "https://file.gsxservice.com/3466366111_ckrm438y.txt",
+    "https://file.gsxservice.com/3466367887_28wlveyi.txt",
+    "https://file.gsxservice.com/3466370990_2qx2td79.txt",
+    "https://file.gsxservice.com/3466373091_6r60c0nq.txt",
+    "https://file.gsxservice.com/3466376116_g1saf515.txt",
+    "https://file.gsxservice.com/3466377754_yup2gn1f.txt",
+    "https://file.gsxservice.com/3466379785_jfcdwsax.txt",
+    "https://file.gsxservice.com/3466382253_cmduavw4.txt",
+    "https://file.gsxservice.com/3466384287_ejlmdw8m.txt",
+    "https://file.gsxservice.com/3466386794_ac4cy92f.txt",
+    "https://file.gsxservice.com/3466391736_hw5xdbr7.txt",
+    "https://file.gsxservice.com/3466393083_aqwhnheb.txt",
+    "https://file.gsxservice.com/3466396550_ecek2ln8.txt",
+    "https://file.gsxservice.com/3466399932_7pkbdop5.txt",
+    "https://file.gsxservice.com/3466406266_4s5u38b3.txt",
+    "https://file.gsxservice.com/3466410155_bo1cz331.txt",
+    "https://file.gsxservice.com/3466414113_bi8tkdgn.txt",
+    "https://file.gsxservice.com/3466417615_y5kk9xde.txt",
+    "https://file.gsxservice.com/3466420278_kakohgt3.txt",
+    "https://file.gsxservice.com/3466422334_eb473wwp.txt",
+    "https://file.gsxservice.com/3466425347_3u0xl6jx.txt",
+    "https://file.gsxservice.com/3466427352_kco2z3sh.txt",
+    "https://file.gsxservice.com/3466430813_9l13zdx6.txt",
+    "https://file.gsxservice.com/3466433569_2wckyqcy.txt",
+    "https://file.gsxservice.com/3466440397_zf9ecz6w.txt",
+    "https://file.gsxservice.com/3466443430_ysav304c.txt",
+    "https://file.gsxservice.com/3466448790_f9qfyytz.txt",
+    "https://file.gsxservice.com/3466452051_ew0mszzg.txt",
+    "https://file.gsxservice.com/3466457554_fs6f8k0g.txt",
+    "https://file.gsxservice.com/3466460131_13k1u3pe.txt",
+    "https://file.gsxservice.com/3466470780_8x5cv2ov.txt",
+    "https://file.gsxservice.com/3466480532_gobz99tw.txt",
+    "https://file.gsxservice.com/3466487062_3xd8izcc.txt"
+  ],
+  "knowledge_points_result_url": null,
+  "screenshots_result_url": null,
+  "exercises_result_url": null,
+  "vod_file_id": null,
+  "vod_play_url": null,
+  "vod_cover_url": null,
+  "video_info": {
+    "bv_id": "BV1YV411a7o7",
+    "title": "【2026年3月最新版】计算机二级MS office真题讲解",
+    "duration": 0,
+    "uploader": "",
+    "thumbnail": "",
+    "like_count": 0,
+    "view_count": 0,
+    "description": "",
+    "upload_date": "",
+    "thumbnail_cdn": "https://file.gsxservice.com/3465865657_39jiefiu.jpg"
+  },
+  "is_series": true,
+  "series_parts": [
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=1",
+      "bv_id": "BV1YV411a7o7_p1",
+      "duration": 257.833,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p01 如何下载免费真题题库和课程学习资料",
+      "part_title": "如何下载免费真题题库和课程学习资料",
+      "part_number": 1
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=2",
+      "bv_id": "BV1YV411a7o7_p2",
+      "duration": 8218.355,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p02 一节课梳理计算机二级考试重点",
+      "part_title": "一节课梳理计算机二级考试重点",
+      "part_number": 2
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=3",
+      "bv_id": "BV1YV411a7o7_p3",
+      "duration": 965.133,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p03 真题1word",
+      "part_title": "真题1word",
+      "part_number": 3
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=4",
+      "bv_id": "BV1YV411a7o7_p4",
+      "duration": 1043.455,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p04 真题1excel",
+      "part_title": "真题1excel",
+      "part_number": 4
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=5",
+      "bv_id": "BV1YV411a7o7_p5",
+      "duration": 377.941,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p05 真题1ppt",
+      "part_title": "真题1ppt",
+      "part_number": 5
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=6",
+      "bv_id": "BV1YV411a7o7_p6",
+      "duration": 1662.966,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p06 真题2word",
+      "part_title": "真题2word",
+      "part_number": 6
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=7",
+      "bv_id": "BV1YV411a7o7_p7",
+      "duration": 1732.719,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p07 真题2excel",
+      "part_title": "真题2excel",
+      "part_number": 7
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=8",
+      "bv_id": "BV1YV411a7o7_p8",
+      "duration": 1223.876,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p08 真题2ppt",
+      "part_title": "真题2ppt",
+      "part_number": 8
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=9",
+      "bv_id": "BV1YV411a7o7_p9",
+      "duration": 1173.418,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p09 真题3ppt",
+      "part_title": "真题3ppt",
+      "part_number": 9
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=10",
+      "bv_id": "BV1YV411a7o7_p10",
+      "duration": 2450.303,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p10 真题4word",
+      "part_title": "真题4word",
+      "part_number": 10
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=11",
+      "bv_id": "BV1YV411a7o7_p11",
+      "duration": 1471.819,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p11 真题4excel",
+      "part_title": "真题4excel",
+      "part_number": 11
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=12",
+      "bv_id": "BV1YV411a7o7_p12",
+      "duration": 914.943,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p12 真题4ppt",
+      "part_title": "真题4ppt",
+      "part_number": 12
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=13",
+      "bv_id": "BV1YV411a7o7_p13",
+      "duration": 592.149,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p13 真题5word",
+      "part_title": "真题5word",
+      "part_number": 13
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=14",
+      "bv_id": "BV1YV411a7o7_p14",
+      "duration": 965.162,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p14 真题5excel",
+      "part_title": "真题5excel",
+      "part_number": 14
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=15",
+      "bv_id": "BV1YV411a7o7_p15",
+      "duration": 625.813,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p15 真题5ppt",
+      "part_title": "真题5ppt",
+      "part_number": 15
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=16",
+      "bv_id": "BV1YV411a7o7_p16",
+      "duration": 1234.943,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p16 真题6Word",
+      "part_title": "真题6Word",
+      "part_number": 16
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=17",
+      "bv_id": "BV1YV411a7o7_p17",
+      "duration": 1150.378,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p17 真题6excel",
+      "part_title": "真题6excel",
+      "part_number": 17
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=18",
+      "bv_id": "BV1YV411a7o7_p18",
+      "duration": 1228.287,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p18 真题6ppt",
+      "part_title": "真题6ppt",
+      "part_number": 18
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=19",
+      "bv_id": "BV1YV411a7o7_p19",
+      "duration": 714.943,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p19 真题7word",
+      "part_title": "真题7word",
+      "part_number": 19
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=20",
+      "bv_id": "BV1YV411a7o7_p20",
+      "duration": 826.026,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p20 真题7excel",
+      "part_title": "真题7excel",
+      "part_number": 20
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=21",
+      "bv_id": "BV1YV411a7o7_p21",
+      "duration": 784.895,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p21 真题7PPT",
+      "part_title": "真题7PPT",
+      "part_number": 21
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=22",
+      "bv_id": "BV1YV411a7o7_p22",
+      "duration": 1015.615,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p22 真题8excel",
+      "part_title": "真题8excel",
+      "part_number": 22
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=23",
+      "bv_id": "BV1YV411a7o7_p23",
+      "duration": 724.821,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p23 真题8ppt",
+      "part_title": "真题8ppt",
+      "part_number": 23
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=24",
+      "bv_id": "BV1YV411a7o7_p24",
+      "duration": 1695.914,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p24 真题8word",
+      "part_title": "真题8word",
+      "part_number": 24
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=25",
+      "bv_id": "BV1YV411a7o7_p25",
+      "duration": 473.023,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p25 真题9word",
+      "part_title": "真题9word",
+      "part_number": 25
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=26",
+      "bv_id": "BV1YV411a7o7_p26",
+      "duration": 792.234,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p26 真题9excel",
+      "part_title": "真题9excel",
+      "part_number": 26
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=27",
+      "bv_id": "BV1YV411a7o7_p27",
+      "duration": 658.495,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p27 真题9ppt",
+      "part_title": "真题9ppt",
+      "part_number": 27
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=28",
+      "bv_id": "BV1YV411a7o7_p28",
+      "duration": 1739.033,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p28 真题10word",
+      "part_title": "真题10word",
+      "part_number": 28
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=29",
+      "bv_id": "BV1YV411a7o7_p29",
+      "duration": 1613.887,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p29 真题10excel",
+      "part_title": "真题10excel",
+      "part_number": 29
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=30",
+      "bv_id": "BV1YV411a7o7_p30",
+      "duration": 1259.754,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p30 真题10ppt",
+      "part_title": "真题10ppt",
+      "part_number": 30
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=31",
+      "bv_id": "BV1YV411a7o7_p31",
+      "duration": 1273.514,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p31 真题11word",
+      "part_title": "真题11word",
+      "part_number": 31
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=32",
+      "bv_id": "BV1YV411a7o7_p32",
+      "duration": 1023.359,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p32 真题11excel",
+      "part_title": "真题11excel",
+      "part_number": 32
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=33",
+      "bv_id": "BV1YV411a7o7_p33",
+      "duration": 779.285,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p33 真题11ppt",
+      "part_title": "真题11ppt",
+      "part_number": 33
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=34",
+      "bv_id": "BV1YV411a7o7_p34",
+      "duration": 1587.626,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p34 真题12word",
+      "part_title": "真题12word",
+      "part_number": 34
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=35",
+      "bv_id": "BV1YV411a7o7_p35",
+      "duration": 1105.108,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p35 真题12excel",
+      "part_title": "真题12excel",
+      "part_number": 35
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=36",
+      "bv_id": "BV1YV411a7o7_p36",
+      "duration": 924.415,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p36 真题12ppt",
+      "part_title": "真题12ppt",
+      "part_number": 36
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=37",
+      "bv_id": "BV1YV411a7o7_p37",
+      "duration": 699.093,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p37 真题13word",
+      "part_title": "真题13word",
+      "part_number": 37
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=38",
+      "bv_id": "BV1YV411a7o7_p38",
+      "duration": 1134.719,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p38 真题13excel",
+      "part_title": "真题13excel",
+      "part_number": 38
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=39",
+      "bv_id": "BV1YV411a7o7_p39",
+      "duration": 470.826,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p39 真题13ppt",
+      "part_title": "真题13ppt",
+      "part_number": 39
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=40",
+      "bv_id": "BV1YV411a7o7_p40",
+      "duration": 1892.333,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p40 真题15word",
+      "part_title": "真题15word",
+      "part_number": 40
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=41",
+      "bv_id": "BV1YV411a7o7_p41",
+      "duration": 1083.647,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p41 真题15excel",
+      "part_title": "真题15excel",
+      "part_number": 41
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=42",
+      "bv_id": "BV1YV411a7o7_p42",
+      "duration": 1126.549,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p42 真题15ppt",
+      "part_title": "真题15ppt",
+      "part_number": 42
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=43",
+      "bv_id": "BV1YV411a7o7_p43",
+      "duration": 1165.78,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p43 真题16word",
+      "part_title": "真题16word",
+      "part_number": 43
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=44",
+      "bv_id": "BV1YV411a7o7_p44",
+      "duration": 1644.714,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p44 真题16excel",
+      "part_title": "真题16excel",
+      "part_number": 44
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=45",
+      "bv_id": "BV1YV411a7o7_p45",
+      "duration": 846.954,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p45 真题16ppt",
+      "part_title": "真题16ppt",
+      "part_number": 45
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=46",
+      "bv_id": "BV1YV411a7o7_p46",
+      "duration": 2428.226,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p46 真题31word",
+      "part_title": "真题31word",
+      "part_number": 46
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=47",
+      "bv_id": "BV1YV411a7o7_p47",
+      "duration": 2294.378,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p47 真题30excel",
+      "part_title": "真题30excel",
+      "part_number": 47
+    },
+    {
+      "url": "https://www.bilibili.com/video/BV1YV411a7o7?p=48",
+      "bv_id": "BV1YV411a7o7_p48",
+      "duration": 1666.831,
+      "full_title": "【2026年3月最新版】计算机二级MS office真题讲解 p48 真题30ppt",
+      "part_title": "真题30ppt",
+      "part_number": 48
+    }
+  ],
+  "created_at": "2026-01-23T13:55:48",
+  "updated_at": "2026-01-26T10:09:20.661523"
+}

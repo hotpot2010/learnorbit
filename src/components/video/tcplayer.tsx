@@ -30,6 +30,8 @@ export interface TCPlayerProps {
   psign?: string;
   // 普通 URL 模式
   url?: string;
+  // 降级方案：当 VOD 播放失败时的备用 URL
+  fallbackUrl?: string;
   // 回调函数
   onTimeUpdate?: (currentTime: number) => void;
   onPlay?: () => void;
@@ -54,6 +56,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
       appId,
       psign: psignProp,
       url,
+      fallbackUrl: fallbackUrlProp,
       onTimeUpdate,
       onPlay,
       onPause,
@@ -75,8 +78,10 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
     const initializedFileIdRef = useRef<string | undefined>(undefined); // 记录已初始化的fileId
     const errorRetryCountRef = useRef(0); // 错误重试计数器
     const maxRetries = 2; // 最大重试次数
+    const hasFallenBackRef = useRef(false); // 是否已经降级到普通URL
     const [psign, setPsign] = useState<string | undefined>(psignProp);
     const [isLoadingPsign, setIsLoadingPsign] = useState(false);
+    const [fallbackUrl, setFallbackUrl] = useState<string | undefined>(undefined); // 降级URL状态
 
     // 如果使用 VOD 模式但没有提供 psign，动态获取
     useEffect(() => {
@@ -130,12 +135,16 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
         return;
       }
 
-      // 检查fileId是否变化：如果fileId变化，需要重新初始化
-      if (isInitializedRef.current && fileId && initializedFileIdRef.current !== fileId) {
+      // ⚠️ 重要：先检查fileId是否变化，必须在检查isInitializedRef之前
+      // 如果fileId变化，需要先重置状态并销毁旧播放器
+      const fileIdChanged = fileId && 
+                           initializedFileIdRef.current !== undefined && 
+                           initializedFileIdRef.current !== fileId;
+      
+      if (fileIdChanged) {
         console.log('🔄 [initPlayer] FileId变化，重置初始化状态');
         console.log(`🔄 [initPlayer] 旧FileId: ${initializedFileIdRef.current}, 新FileId: ${fileId}`);
-        isInitializedRef.current = false;
-        initializedFileIdRef.current = undefined;
+        
         // 销毁旧播放器
         try {
           if (timeUpdateIntervalRef.current) {
@@ -161,20 +170,44 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
         } catch (error) {
           console.error('❌ [initPlayer] 销毁旧播放器失败:', error);
         }
+        
+        // 重置状态
+        isInitializedRef.current = false;
+        initializedFileIdRef.current = undefined;
+        errorRetryCountRef.current = 0;
       }
       
-      if (isInitializedRef.current) {
-        console.warn('⚠️ [initPlayer] 播放器已初始化，跳过');
-        return;
+      // 检查是否已经初始化（在fileId变化检测之后）
+      // 如果fileId相同且已初始化，跳过（避免重复初始化）
+      if (isInitializedRef.current && !fileIdChanged) {
+        if (fileId && initializedFileIdRef.current === fileId) {
+          console.warn('⚠️ [initPlayer] 播放器已初始化（相同fileId），跳过');
+          return;
+        }
+        // 如果fileId不同但isInitializedRef还是true，说明状态不一致，强制重置
+        console.warn('⚠️ [initPlayer] 检测到状态不一致，强制重置');
+        isInitializedRef.current = false;
+        initializedFileIdRef.current = undefined;
       }
 
-      // 如果使用 VOD 模式但 psign 还未加载，等待
-      if (fileId && !psign && !url) {
+      // 如果已降级，使用降级URL；否则使用普通URL
+      const effectiveUrl = hasFallenBackRef.current 
+        ? (fallbackUrl || fallbackUrlProp || url)
+        : url;
+      
+      // 如果使用 VOD 模式但 psign 还未加载，等待（除非已降级）
+      if (fileId && !psign && !effectiveUrl && !hasFallenBackRef.current) {
         if (isLoadingPsign) {
           console.log('⏳ [initPlayer] VOD 模式，psign 正在加载中，等待...');
         } else {
           console.warn('⚠️ [initPlayer] VOD 模式但 psign 未加载且未在加载中，跳过');
         }
+        return;
+      }
+      
+      // 如果已降级，确保有降级URL
+      if (hasFallenBackRef.current && !effectiveUrl) {
+        console.warn('⚠️ [initPlayer] 已降级但无降级URL，无法播放');
         return;
       }
 
@@ -214,17 +247,26 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
           };
         }
 
-        // 如果是普通 URL 模式
-        if (!fileId && url) {
+        // 如果是普通 URL 模式（包括降级模式）
+        if (hasFallenBackRef.current && effectiveUrl) {
+          console.log('🔧 [initPlayer] 使用降级 URL 模式');
+          options.fileID = '';
+          options.sources = [
+            {
+              src: effectiveUrl,
+              type: effectiveUrl.includes('.m3u8') ? 'application/x-mpegURL' : 'video/mp4',
+            },
+          ];
+        } else if (!fileId && effectiveUrl) {
           console.log('🔧 [initPlayer] 使用普通 URL 模式');
           options.fileID = '';
           options.sources = [
             {
-              src: url,
-              type: url.includes('.m3u8') ? 'application/x-mpegURL' : 'video/mp4',
+              src: effectiveUrl,
+              type: effectiveUrl.includes('.m3u8') ? 'application/x-mpegURL' : 'video/mp4',
             },
           ];
-        } else if (fileId) {
+        } else if (fileId && !hasFallenBackRef.current) {
           console.log('🔧 [initPlayer] 使用 VOD 模式');
         }
 
@@ -256,6 +298,14 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
         console.log('🔧 [initPlayer] 创建 TCPlayer 实例');
         const player = window.TCPlayer(videoElement, options);
         console.log('✅ [initPlayer] TCPlayer 实例已创建:', player);
+
+        // 保存当前配置到局部变量，供错误回调使用（避免闭包问题）
+        const currentFileId = fileId;
+        const currentAppId = appId;
+        const currentPsign = psign;
+        const currentUrl = effectiveUrl;
+        const currentVideoElement = videoElement;
+        const currentFallbackUrl = fallbackUrlProp || fallbackUrl;
 
         // 监听事件
         player.on('loadedmetadata', () => {
@@ -360,27 +410,38 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
             console.error('❌ [TCPlayer] 错误对象:', error);
           }
           
-          console.error('❌ [TCPlayer] 当前配置:', {
-            fileID: fileId,
-            appID: appId,
-            hasPsign: !!psign,
-            psignLength: psign?.length || 0,
-            url: url,
-            retryCount: errorRetryCountRef.current,
-            videoElement: videoElement ? {
-              src: videoElement.src,
-              currentSrc: videoElement.currentSrc,
-              readyState: videoElement.readyState,
-              error: videoElement.error ? {
-                code: videoElement.error.code,
-                message: videoElement.error.message,
+          // 使用保存的局部变量，避免闭包问题
+          try {
+            console.error('❌ [TCPlayer] 当前配置:', {
+              fileID: currentFileId,
+              appID: currentAppId,
+              hasPsign: !!currentPsign,
+              psignLength: currentPsign?.length || 0,
+              url: currentUrl,
+              retryCount: errorRetryCountRef.current,
+              videoElement: currentVideoElement ? {
+                src: currentVideoElement.src,
+                currentSrc: currentVideoElement.currentSrc,
+                readyState: currentVideoElement.readyState,
+                error: currentVideoElement.error ? {
+                  code: currentVideoElement.error.code,
+                  message: currentVideoElement.error.message,
+                } : null,
               } : null,
-            } : null,
-          });
+            });
+          } catch (configError) {
+            console.error('❌ [TCPlayer] 无法打印配置:', configError);
+            // 降级方案：只打印基本信息
+            console.error('❌ [TCPlayer] 当前配置（简化）:', {
+              fileID: currentFileId || 'undefined',
+              hasPsign: !!currentPsign,
+              retryCount: errorRetryCountRef.current,
+            });
+          }
           
           // 尝试从 video 元素获取更详细的错误信息
-          if (videoElement && videoElement.error) {
-            const videoError = videoElement.error;
+          if (currentVideoElement && currentVideoElement.error) {
+            const videoError = currentVideoElement.error;
             console.error('❌ [TCPlayer] Video 元素错误:', {
               code: videoError.code,
               message: videoError.message,
@@ -397,15 +458,71 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
                               (errorMessage && errorMessage.includes('ERR_NAME_NOT_RESOLVED'));
           
           // 检查是否是网络错误
-          const isNetworkError = videoElement?.error?.code === videoElement?.error?.MEDIA_ERR_NETWORK ||
+          const isNetworkError = currentVideoElement?.error?.code === currentVideoElement?.error?.MEDIA_ERR_NETWORK ||
                                 (errorMessage && (
                                   errorMessage.includes('ERR_NAME_NOT_RESOLVED') ||
                                   errorMessage.includes('network') ||
                                   errorMessage.includes('Network')
                                 ));
           
+          // 检查是否是不支持的源错误（CODE:4 MEDIA_ERR_SRC_NOT_SUPPORTED）
+          const isSrcNotSupported = errorCode === 4 || 
+                                   errorCode === '4' ||
+                                   currentVideoElement?.error?.code === currentVideoElement?.error?.MEDIA_ERR_SRC_NOT_SUPPORTED ||
+                                   (errorMessage && (
+                                     errorMessage.includes('MEDIA_ERR_SRC_NOT_SUPPORTED') ||
+                                     errorMessage.includes('无法找到此视频兼容的源') ||
+                                     errorMessage.includes('无法播放该视频')
+                                   ));
+          
+          // 如果是不支持的源错误，且有降级URL，切换到降级方案
+          if (isSrcNotSupported && !hasFallenBackRef.current && currentFallbackUrl) {
+            const fallbackUrlToUse = currentFallbackUrl;
+            console.log('⚠️ [TCPlayer] 检测到不支持的源错误，切换到降级方案');
+            console.log('⚠️ [TCPlayer] 降级URL:', fallbackUrlToUse);
+            
+            // 标记已降级
+            hasFallenBackRef.current = true;
+            setFallbackUrl(fallbackUrlToUse);
+            
+            // 销毁当前播放器
+            try {
+              if (timeUpdateIntervalRef.current) {
+                clearInterval(timeUpdateIntervalRef.current);
+                timeUpdateIntervalRef.current = null;
+              }
+              if (playerRef.current) {
+                if (typeof (playerRef.current as any).destroy === 'function') {
+                  (playerRef.current as any).destroy();
+                } else if (typeof (playerRef.current as any).dispose === 'function') {
+                  (playerRef.current as any).dispose();
+                }
+                const videoEl = containerRef.current?.querySelector('video');
+                if (videoEl) {
+                  videoEl.pause();
+                  videoEl.src = '';
+                  videoEl.load();
+                  videoEl.remove();
+                }
+              }
+              playerRef.current = null;
+              isInitializedRef.current = false;
+              initializedFileIdRef.current = undefined;
+            } catch (e) {
+              console.error('❌ [TCPlayer] 销毁播放器失败:', e);
+            }
+            
+            // 延迟一下再重新初始化，使用降级URL
+            setTimeout(() => {
+              console.log('🔄 [TCPlayer] 使用降级URL重新初始化播放器');
+              initPlayer();
+            }, 500);
+            
+            return; // 不继续执行，等待降级初始化
+          }
+          
           // 如果是1009错误或网络错误，且未超过重试次数，尝试重新获取psign并重新初始化
-          if ((isError1009 || isNetworkError) && fileId && errorRetryCountRef.current < maxRetries) {
+          if ((isError1009 || isNetworkError) && currentFileId && errorRetryCountRef.current < maxRetries) {
             errorRetryCountRef.current += 1;
             console.log(`🔄 [TCPlayer] 检测到错误1009或网络错误，尝试重新获取psign (第${errorRetryCountRef.current}次重试)`);
             
@@ -444,7 +561,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
             setTimeout(async () => {
               try {
                 console.log('🔄 [TCPlayer] 重新获取psign...');
-                const response = await vodAPI.getPsign(fileId, appId);
+                const response = await vodAPI.getPsign(currentFileId, currentAppId);
                 console.log('✅ [TCPlayer] 重新获取psign成功');
                 setPsign(response.psign);
                 setIsLoadingPsign(false);
@@ -512,7 +629,8 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
 
         playerRef.current = player;
         isInitializedRef.current = true;
-        initializedFileIdRef.current = fileId; // 记录已初始化的fileId
+        // 如果使用降级URL，记录为undefined（表示不是VOD模式）
+        initializedFileIdRef.current = hasFallenBackRef.current ? undefined : fileId;
         errorRetryCountRef.current = 0; // 重置错误重试计数器
         
         // 保存 video 元素引用，方便后续使用（截图、跳转等）
@@ -525,7 +643,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
           onError(error);
         }
       }
-    }, [containerId, fileId, appId, psign, url, autoplay, controls, playbackRate, licenseUrl, licenseKey, onReady, onPlay, onPause, onEnded, onError, onTimeUpdate]);
+    }, [containerId, fileId, appId, psign, url, fallbackUrl, fallbackUrlProp, autoplay, controls, playbackRate, licenseUrl, licenseKey, onReady, onPlay, onPause, onEnded, onError, onTimeUpdate]);
 
     // 监听 SDK 加载完成事件并初始化播放器
     useEffect(() => {
@@ -555,10 +673,21 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
         hasPsign: !!psign,
         hasTCPlayer: !!window.TCPlayer,
         isInitialized: isInitializedRef.current,
+        initializedFileId: initializedFileIdRef.current,
       });
       
-      if (fileId && psign && window.TCPlayer && !isInitializedRef.current) {
-        console.log('🔄 [TCPlayer] psign 已加载，触发初始化');
+      // 检查fileId是否变化
+      const fileIdChanged = fileId && initializedFileIdRef.current !== undefined && initializedFileIdRef.current !== fileId;
+      
+      // 如果fileId变化，即使已初始化也需要重新初始化
+      const shouldInit = fileId && psign && window.TCPlayer && (!isInitializedRef.current || fileIdChanged);
+      
+      if (shouldInit) {
+        if (fileIdChanged) {
+          console.log('🔄 [TCPlayer] FileId变化且psign已加载，触发重新初始化');
+        } else {
+          console.log('🔄 [TCPlayer] psign 已加载，触发初始化');
+        }
         // 延迟一下确保状态更新完成
         setTimeout(() => {
           initPlayer();
@@ -573,8 +702,8 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
         if (!window.TCPlayer) {
           console.log('⏳ [TCPlayer] 等待 TCPlayer SDK 加载');
         }
-        if (isInitializedRef.current) {
-          console.log('✅ [TCPlayer] 播放器已初始化');
+        if (isInitializedRef.current && !fileIdChanged) {
+          console.log('✅ [TCPlayer] 播放器已初始化（相同fileId）');
         }
       }
     }, [fileId, psign, initPlayer]);
@@ -587,17 +716,45 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
       const lastFileId = lastParamsRef.current?.fileId;
       if (fileId && lastFileId && lastFileId !== fileId) {
         console.log('🔄 [TCPlayer] FileId变化，清除旧的psign和初始化状态');
+        console.log(`🔄 [TCPlayer] 旧FileId: ${lastFileId}, 新FileId: ${fileId}`);
+        
+        // 如果播放器已初始化，先销毁
+        if (isInitializedRef.current && playerRef.current) {
+          try {
+            if (timeUpdateIntervalRef.current) {
+              clearInterval(timeUpdateIntervalRef.current);
+              timeUpdateIntervalRef.current = null;
+            }
+            if (typeof (playerRef.current as any).destroy === 'function') {
+              (playerRef.current as any).destroy();
+            } else if (typeof (playerRef.current as any).dispose === 'function') {
+              (playerRef.current as any).dispose();
+            }
+            const videoEl = containerRef.current?.querySelector('video');
+            if (videoEl) {
+              videoEl.pause();
+              videoEl.src = '';
+              videoEl.load();
+              videoEl.remove();
+            }
+          } catch (error) {
+            console.error('❌ [TCPlayer] 销毁播放器失败:', error);
+          }
+          playerRef.current = null;
+        }
+        
+        // 清除旧的psign（如果不是prop传入的）
         if (psign && !psignProp) {
           setPsign(undefined);
           setIsLoadingPsign(false);
         }
-        // 重置初始化状态
-        if (isInitializedRef.current) {
-          isInitializedRef.current = false;
-          initializedFileIdRef.current = undefined;
-        }
-        // 重置错误重试计数器
+        
+        // 重置初始化状态和降级状态
+        isInitializedRef.current = false;
+        initializedFileIdRef.current = undefined;
         errorRetryCountRef.current = 0;
+        hasFallenBackRef.current = false; // 重置降级状态，允许新fileId尝试VOD
+        setFallbackUrl(undefined); // 清除降级URL
       }
     }, [fileId, psign, psignProp]);
     
@@ -625,35 +782,48 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
       lastParamsRef.current = currentParams;
       
       // 如果fileId变化，需要销毁并重新初始化（即使psign还没加载）
-      if (lastParams.fileId !== currentParams.fileId && isInitializedRef.current && playerRef.current) {
+      if (lastParams.fileId !== currentParams.fileId && currentParams.fileId) {
         console.log('🔄 [TCPlayer] FileId变化，销毁旧播放器');
+        console.log(`🔄 [TCPlayer] 旧FileId: ${lastParams.fileId}, 新FileId: ${currentParams.fileId}`);
         
-        // 销毁旧播放器
-        try {
-          if (timeUpdateIntervalRef.current) {
-            clearInterval(timeUpdateIntervalRef.current);
-            timeUpdateIntervalRef.current = null;
+        // 如果播放器已初始化，先销毁
+        if (isInitializedRef.current && playerRef.current) {
+          try {
+            if (timeUpdateIntervalRef.current) {
+              clearInterval(timeUpdateIntervalRef.current);
+              timeUpdateIntervalRef.current = null;
+            }
+            // TCPlayer 可能使用 dispose 而不是 destroy
+            if (typeof (playerRef.current as any).destroy === 'function') {
+              (playerRef.current as any).destroy();
+            } else if (typeof (playerRef.current as any).dispose === 'function') {
+              (playerRef.current as any).dispose();
+            }
+            // 清理video元素
+            const videoEl = containerRef.current?.querySelector('video');
+            if (videoEl) {
+              videoEl.pause();
+              videoEl.src = '';
+              videoEl.load();
+              videoEl.remove();
+            }
+          } catch (error) {
+            console.error('❌ [TCPlayer] 销毁旧播放器失败:', error);
           }
-          // TCPlayer 可能使用 dispose 而不是 destroy
-          if (typeof (playerRef.current as any).destroy === 'function') {
-            (playerRef.current as any).destroy();
-          } else if (typeof (playerRef.current as any).dispose === 'function') {
-            (playerRef.current as any).dispose();
-          }
-          // 清理video元素
-          const videoEl = containerRef.current?.querySelector('video');
-          if (videoEl) {
-            videoEl.pause();
-            videoEl.src = '';
-            videoEl.load();
-            videoEl.remove();
-          }
-        } catch (error) {
-          console.error('❌ [TCPlayer] 销毁旧播放器失败:', error);
         }
+        
+        // 重置状态（无论播放器是否已初始化）
         playerRef.current = null;
         isInitializedRef.current = false;
         initializedFileIdRef.current = undefined;
+        errorRetryCountRef.current = 0;
+        
+        // 清除旧的psign（如果不是prop传入的），触发重新获取
+        if (psign && !psignProp) {
+          console.log('🔄 [TCPlayer] FileId变化，清除旧的psign');
+          setPsign(undefined);
+          setIsLoadingPsign(false);
+        }
       }
       
       // 如果psign或url变化，且播放器已初始化，也需要重新初始化
@@ -681,15 +851,23 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
       }
       
       // 如果播放器未初始化，且满足初始化条件，则初始化
-      if (!isInitializedRef.current && window.TCPlayer) {
+      // 或者如果fileId变化了，即使已初始化也需要重新初始化
+      const shouldReinit = !isInitializedRef.current || 
+                          (lastParams.fileId !== currentParams.fileId && currentParams.fileId);
+      
+      if (shouldReinit && window.TCPlayer) {
         if ((fileId && psign) || url) {
           console.log('🔄 [TCPlayer] 满足初始化条件，开始初始化');
+          console.log(`🔄 [TCPlayer] 原因: ${!isInitializedRef.current ? '未初始化' : 'fileId变化'}`);
           setTimeout(() => {
             initPlayer();
           }, 100);
+        } else if (fileId && !psign && !isLoadingPsign) {
+          // fileId变化但psign还未加载，触发psign加载
+          console.log('🔄 [TCPlayer] FileId变化，但psign未加载，等待psign加载');
         }
       }
-    }, [fileId, psign, url, initPlayer]);
+    }, [fileId, psign, url, initPlayer, isLoadingPsign]);
 
     // 清理函数
     useEffect(() => {
