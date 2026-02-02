@@ -453,7 +453,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
           }
           
           // 检查是否是1009错误（通常是网络问题或psign问题）
-          const isError1009 = errorCode === 1009 || errorCode === '1009' || 
+          const isError1009 = errorCode === 1009 || String(errorCode) === '1009' || 
                               (errorMessage && errorMessage.includes('1009')) ||
                               (errorMessage && errorMessage.includes('ERR_NAME_NOT_RESOLVED'));
           
@@ -467,7 +467,7 @@ const TCPlayerComponent = forwardRef<TCPlayerInstance, TCPlayerProps>(
           
           // 检查是否是不支持的源错误（CODE:4 MEDIA_ERR_SRC_NOT_SUPPORTED）
           const isSrcNotSupported = errorCode === 4 || 
-                                   errorCode === '4' ||
+                                   String(errorCode) === '4' ||
                                    currentVideoElement?.error?.code === currentVideoElement?.error?.MEDIA_ERR_SRC_NOT_SUPPORTED ||
                                    (errorMessage && (
                                      errorMessage.includes('MEDIA_ERR_SRC_NOT_SUPPORTED') ||
